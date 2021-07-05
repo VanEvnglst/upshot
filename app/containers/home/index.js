@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 import styles from './styles';
-import { LearningCard } from '../../components';
+import { LearningCard, Wrapper } from '../../components';
 import { data } from './data';
 
 const HomeContainer = () => {
@@ -22,10 +22,11 @@ const HomeContainer = () => {
   };
 
   return (
-    <SafeAreaView>
+    <Wrapper>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{ width: '95%', marginBottom: 20 }}>
           <Text style={{ paddingLeft: 25, marginBottom: 10 }}>Alerts</Text>
+          {/* map data for alerts */}
           <AlertCard />
           <AlertCard />
         </View>
@@ -35,7 +36,7 @@ const HomeContainer = () => {
             paddingLeft: 25,
             marginBottom: 10,
           }}>
-          Learning
+          Guided Journeys
         </Text>
         {data.map((item, index) => {
           return (
@@ -48,7 +49,7 @@ const HomeContainer = () => {
           );
         })}
       </ScrollView>
-    </SafeAreaView>
+    </Wrapper>
   );
 };
 
