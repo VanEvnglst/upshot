@@ -29,7 +29,7 @@ const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 const MessageCard = item => {
   return (
-    <Animated.View style={styles.messageCard}>
+    <Animated.View style={styles.messageCard} key={item.id}>
       <Icon name={'person-circle-outline'} size={36} color={'#212121'} />
       {/* <Image source={{ uri: item.image }} style={styles.avatar} /> */}
       <View style={styles.content}>
