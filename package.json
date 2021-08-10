@@ -13,6 +13,7 @@
     "@react-native-async-storage/async-storage": "^1.15.3",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "^6.0.0",
+    "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
@@ -27,6 +28,7 @@
     "react-native-offline": "^5.8.0",
     "react-native-push-notification": "^7.4.0",
     "react-native-reanimated": "^2.1.0",
+    "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.1.1",
     "react-native-splash-screen": "^3.2.0",
@@ -43,6 +45,8 @@
     "@babel/core": "7.14.5",
     "@babel/runtime": "7.14.5",
     "@react-native-community/eslint-config": "2.0.0",
+    "@testing-library/jest-native": "^4.0.1",
+    "@testing-library/react-native": "^7.2.0",
     "babel-jest": "26.6.3",
     "eslint": "7.14.0",
     "jest": "26.6.3",
@@ -50,6 +54,12 @@
     "react-test-renderer": "17.0.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "setupFiles": [
+      "./jest-setup.js"
+    ]
   }
 }
