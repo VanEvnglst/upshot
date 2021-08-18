@@ -1,6 +1,6 @@
 import React from 'react';
+import { SignIn, Onboarding } from '../screens';
 
-import { SignIn, Onboarding } from '../containers';
 export default function (Stack) {
   return (
     <>
@@ -14,11 +14,6 @@ export default function (Stack) {
         component={Onboarding}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name={}
-        component={}
-        options={{ headerShown: false}}
-      /> */}
     </>
   )
 }
