@@ -1,94 +1,56 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StatusBar, Image, Animated } from 'react-native';
+import { View, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import faker from 'faker';
+import { Wrapper } from '../../components';
 
 import styles from './styles';
-import { data } from './data';
 
-const SPACING = 20;
-const AVATAR_SIZE = 70;
-const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
-
-// const DATA = [...Array(30).keys()].map((_, i) => {
-//   return {
-//     key: faker.random.uuid(),
-//     image: `https://randomuser.me/api/portratits/${faker.helpers.randomize([
-//       'women',
-//       'men',
-//     ])}/${faker.random.number(60)}.jpg`,
-//     name: faker.name.findName(),
-//     jobTitle: faker.name.jobTitle(),
-//     email: faker.internet.email(),
-//   };
-// });
-
-// const renderMessage = ({ item, index }) => {
-//   return;
-// };
-
-const MessageCard = item => {
+const ReminderSection = props => {
+  const { navigation } = props;
   return (
-    <Animated.View style={styles.messageCard} key={item.id}>
-      <Icon name={'person-circle-outline'} size={36} color={'#212121'} />
-      {/* <Image source={{ uri: item.image }} style={styles.avatar} /> */}
-      <View style={styles.content}>
-        <Text style={styles.textName}>{item.item.name}</Text>
-        <Text style={styles.messageHeader}>{item.item.header}</Text>
-        <Text style={styles.textMessage}>{item.item.message}</Text>
+    <View style={styles.reminderContainer}>
+      <View style={styles.contentContainer}>
+        <View style={styles.reminderHeaderContainer}>
+          <Text style={{ fontSize: 24 }}>Today's mindful moment</Text>
+          <Text style={{ marginTop: 20 }}>
+            Be mindful of moments throughout your day where you can help someone
+            do better...
+          </Text>
+        </View>
+        <View style={styles.readMoreContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate('Reminders')}>
+            <Text>Read More</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </Animated.View>
+    </View>
   );
 };
 
-const Messages = () => {
-  const scrollY = useRef(new Animated.Value(0)).current;
-
+const MessageCard = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar hidden />
-      <Animated.FlatList
-        data={data}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true },
-        )}
-        keyExtractor={item => item.key}
-        contentContainerStyle={{
-          padding: SPACING,
-          paddingTop: StatusBar.currentHeight || 42,
-        }}
-        renderItem={({ item, index }) => {
-          const inputRange = [
-            -1,
-            0,
-            ITEM_SIZE * index,
-            ITEM_SIZE * (index + 2),
-          ];
-
-          const opacityInputRange = [
-            -1,
-            0,
-            ITEM_SIZE * index,
-            ITEM_SIZE * (index + 1),
-          ];
-
-          const scale = scrollY.interpolate({
-            inputRange,
-            outputRange: [1, 1, 1, 0],
-          });
-          return (
-            // <View
-            //   style={{
-            //     backgroundColor: 'red',
-            //     width: '200',
-            //     height: '50',
-            //   }}></View>
-            <MessageCard item={item} />
-          );
-        }}
-      />
+    <View style={styles.messageCard}>
+      <Icon name={'person-circle-outline'} size={50} color={'#212121'} />
+      <View style={styles.content}>
+        <Text style={styles.messageHeader}>Welcome to Upshot!</Text>
+        <Text style={styles.textMessage}>
+          this is a system generated message
+        </Text>
+      </View>
     </View>
+  );
+};
+
+const Messages = props => {
+  return (
+    <Wrapper>
+      <Text style={styles.labelStyle}>Reminders</Text>
+      <ReminderSection {...props} />
+      <View style={styles.messagesContainer}>
+        <Text style={styles.labelStyle}>Messages</Text>
+        <MessageCard />
+      </View>
+    </Wrapper>
   );
 };
 
