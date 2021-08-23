@@ -7,7 +7,7 @@ export default function (Stack) {
       <Stack.Screen
         name={'Sign in'}
         component={SignIn}
-        options={{ headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={'Onboarding'}
@@ -15,5 +15,5 @@ export default function (Stack) {
         options={{ headerShown: false }}
       />
     </>
-  )
+  );
 }
