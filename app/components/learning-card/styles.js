@@ -4,18 +4,30 @@ export default styles = StyleSheet.create({
   cardContainer: {
     marginBottom: 12,
     borderRadius: 4,
-    // backgroundColor: 'red', //
+    // height: 320,
+    borderWidth: 1,
+    borderColor: '#0000001F',
+  },
+  mainCardContainer: {
     height: 320,
+  },
+  smallCardContainer: {
+    marginBottom: 12,
+    marginRight: 20,
+    borderRadius: 4,
+    height: 160,
+    width: 140,
     borderWidth: 1,
     borderColor: '#0000001F',
   },
   imageContainer: {
     flex: 2,
     backgroundColor: '#0000001F',
+    justifyContent: 'center'
   },
   image: {
-    width: '100%',
     borderTopRightRadius: 4,
+    width: '100%',
     borderTopLeftRadius: 4,
   },
   textContainer: {
@@ -25,7 +37,7 @@ export default styles = StyleSheet.create({
   },
   headline: {
     fontSize: 22,
-    fontWeight: '700',
+    fontWeight: '600',
     color: '#000000', //DE
     marginBottom: 10,
     // fontFamily: 'Raleway'
@@ -36,4 +48,14 @@ export default styles = StyleSheet.create({
     lineHeight: 25,
     letterSpacing: 0.5,
   },
+  smallTextContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    justifyContent: 'space-between',
+  },
+  smallHeadline: {
+    color: '#000000DE',
+    fontSize: 15,
+  }
 });
