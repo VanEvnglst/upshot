@@ -1,4 +1,8 @@
 export default {
+  homeTab: require('./images/home-outline.png'),
+  messagesTab: require('./images/chat-bubble-outline.png'),
+  activitiyTab: require('./images/activity-outline.png'),
+  accountTab: require('./images/account-outline.png'),
   feedbackCoaching: require('./images/feedback-coaching.png'),
   amReminder: require('./images/am-reminder.png'),
   pmReminder: require('./images/pm-reminder.png'),
