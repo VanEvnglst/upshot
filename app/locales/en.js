@@ -159,6 +159,8 @@ const labels = {
     triviaReminder: ' did you know...',
     morningContent:
       'Be mindful of moments throughout your day where you can help someone do better by giving them constructive feedback. \n\n Also be mindful of moments where you can motivate someone by recognizing a job well done. \n\n Take a look at your calendar today and anticipate these possible moments.',
+    morningCardHeader: "Today's mindful moment",
+    afternoonCardHeader: "Did you know?"
   },
 };
 
