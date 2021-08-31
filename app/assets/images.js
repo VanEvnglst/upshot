@@ -14,4 +14,6 @@ export default {
   simpleStories: require('./images/simple-stories.png'),
   rightness: require('./images/rightness.png'),
   agreeableness: require('./images/agreeableness.png'),
+  lockedContent: require('./images/icon-lock.png'),
+  hintIcon: require('./images/help-outline.png'),
 };
