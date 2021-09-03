@@ -53,9 +53,15 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   smallHeadline: {
     color: '#000000DE',
     fontSize: 15,
+  },
+  iconStyle: {
+    width: 24,
+    height: 24,
+    // paddingTop: 10,
   }
 });
