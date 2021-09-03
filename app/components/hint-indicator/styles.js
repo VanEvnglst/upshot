@@ -10,8 +10,10 @@ export default styles = showHint =>
       alignItems: 'center',
       marginTop: 10,
       backgroundColor: showHint ? 'green' : 'white',
+      borderWidth: 2,
+      borderColor: 'green',
     },
     iconStyle: {
-      color: showHint ? 'green' : 'white',
+      color: showHint ? 'white' : 'green',
     },
   });
