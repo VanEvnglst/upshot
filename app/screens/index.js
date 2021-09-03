@@ -10,4 +10,6 @@ export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
 
 // Feedback Stack
-export { default as FeedbackPreparation } from './feedback-preparation';
+export { default as FeedbackIntroduction } from './feedback/introduction';
+export { default as FeedbackGuide } from './feedback/guide';
+export { default as FeedbackDocumenting } from './feedback/documenting';
