@@ -36,7 +36,7 @@ const labels = {
     feedbackFor: 'Feedback for',
   },
   feedbackSignPost: {
-    tile: 'The feedback journey',
+    title: 'The feedback journey',
     description:
       "Below is an overview of the five steps of the feedback journey. We'll be here to guide you through each step when you start.",
     documenting: 'Documenting',
@@ -56,7 +56,9 @@ const labels = {
     giveFeedbackTo: 'I want to give feedback to',
     feedbackToGive: 'The feedback I want to give is',
     positive: 'Positive',
+    positiveHint: 'When you tell others what they are doing well',
     corrective: 'Corrective',
+    correctiveHint: 'When you tell others what they need to improve on',
     feedbackRelation: 'My feedback is related to',
     dateOfFeedback: "I'm giving feedback about something that happened",
     qualityImprovement: 'Quality - Mistakes or Improvement',
