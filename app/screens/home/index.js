@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, SafeAreaView } from 'react-native';
-import styles from './styles';
-import { LearningCard, Wrapper } from '../../components';
-import { data } from './data';
+import { View, ScrollView } from 'react-native';
+import { LearningCard, Wrapper, Text } from '../../components';
+import labels from '../../locales/en';
 import Images from '../../assets/images';
+import styles from './styles';
 
 const HomeContainer = props => {
+  const { homeScreen } = labels;
   const { navigation } = props;
 
-  const AlertCard = () => {
-    return (
-      <View
-        style={{
-          height: 60,
-          borderWidth: 0.6,
-          borderRadius: 8,
-          marginBottom: 12,
-          justifyContent: 'center',
-          paddingHorizontal: 20,
-        }}>
-        <Text>You have one upcoming event</Text>
-      </View>
-    );
-  };
+  // const AlertCard = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         height: 60,
+  //         borderWidth: 0.6,
+  //         borderRadius: 8,
+  //         marginBottom: 12,
+  //         justifyContent: 'center',
+  //         paddingHorizontal: 20,
+  //       }}>
+  //       <Text>You have one upcoming event</Text>
+  //     </View>
+  //   );
+  // };
 
   return (
     <Wrapper>
@@ -34,13 +35,8 @@ const HomeContainer = props => {
           <AlertCard />
         </View> */}
         <View>
-          <Text
-            style={{
-              alignSelf: 'flex-start',
-              paddingLeft: 25,
-              marginBottom: 10,
-            }}>
-            Guided Journeys
+          <Text type='overline' style={styles.overlineText}>
+            {homeScreen.guidedJourney}
           </Text>
           <LearningCard
             onPress={() => navigation.navigate('Feedback')}
@@ -52,14 +48,9 @@ const HomeContainer = props => {
             mainCard
           />
         </View>
-        <View style={{ marginTop: 20 }}>
-          <Text
-            style={{
-              alignSelf: 'flex-start',
-              paddingLeft: 25,
-              marginBottom: 10,
-            }}>
-            Coming soon
+        <View style={styles.horizontalCardContainer}>
+          <Text type='overline' style={styles.overlineText}>
+            {homeScreen.comingSoon}
           </Text>
           <ScrollView horizontal>
             <LearningCard
@@ -67,12 +58,14 @@ const HomeContainer = props => {
               image={Images.feedbackCoaching}
               headline={'Enabling Engagement'}
               smallCard
+              disabled
             />
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
               image={Images.feedbackCoaching}
               headline={'Managing Conflicts'}
               smallCard
+              disabled
             />
           </ScrollView>
         </View>
