@@ -1,0 +1,71 @@
+import { StyleSheet } from 'react-native';
+import Fonts from '../../theme/fonts';
+
+const { size, letterSpacing, fontFamily } = Fonts;
+export default styles = StyleSheet.create({
+  h1: {
+    fontSize: size.h1,
+    letterSpacing: letterSpacing.h1,
+   },
+   h2: {
+     fontSize: size.h2,
+     letterSpacing: letterSpacing.h2,
+   },
+   h3: {
+     fontSize: size.h3,
+     letterSpacing: letterSpacing.h3,
+   },
+   h4: {
+     fontSize: size.h4,
+     letterSpacing: letterSpacing.h4,
+   },
+   h5: {
+     fontSize: size.h5,
+     letterSpacing: letterSpacing.h5,
+   },
+   h6: {
+     fontSize: size.h6,
+     letterSpacing: letterSpacing.h6,
+     fontFamily: fontFamily.RalewayMedium
+   },
+   subtitle1: {
+     fontSize: size.body1,
+     letterSpacing: letterSpacing.subtitle1,
+     fontFamily: fontFamily.RalewayRegular
+   },
+   subtitle2: {
+     fontSize: size.body2,
+     letterSpacing: letterSpacing.subtitle2,
+     fontFamily: fontFamily.RalewayRegular,
+     fontWeight: '700',
+   },
+   body1: {
+     fontSize: size.body1,
+     letterSpacing: letterSpacing.body1,
+     fontFamily: fontFamily.RalewayRegular
+   },
+   body2: {
+     fontSize: size.body2,
+     letterSpacing: letterSpacing.body2,
+     fontFamily: fontFamily.RalewayRegular
+
+   },
+   button: {
+     fontSize: size.button,
+     letterSpacing: letterSpacing.button,
+     textTransform: 'uppercase',
+     fontFamily: fontFamily.RalewayRegular,
+     fontWeight: '700',
+   },
+   caption: {
+     fontSize: size.caption,
+     letterSpacing: letterSpacing.caption,
+     fontFamily: fontFamily.RalewayRegular
+   },
+   overline: {
+    fontSize: size.overline,
+    letterSpacing: letterSpacing.overline,
+    textTransform: 'uppercase',
+    fontFamily: fontFamily.RalewayRegular,
+   },
+});
