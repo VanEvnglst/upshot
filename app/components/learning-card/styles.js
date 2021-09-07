@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../theme/colors';
 
 export default styles = StyleSheet.create({
   cardContainer: {
     marginBottom: 12,
     borderRadius: 4,
-    // height: 320,
     borderWidth: 1,
     borderColor: '#0000001F',
   },
@@ -36,17 +36,15 @@ export default styles = StyleSheet.create({
     paddingVertical: 15,
   },
   headline: {
-    fontSize: 22,
-    fontWeight: '600',
     color: '#000000', //DE
-    marginBottom: 10,
-    // fontFamily: 'Raleway'
+    marginBottom: 10,  
   },
   subtitle: {
-    fontSize: 15,
     color: '#00000099',
-    lineHeight: 25,
-    letterSpacing: 0.5,
+    lineHeight: 20,
+  },
+  inProgressSubtitle: {
+    color: Colors.primary
   },
   smallTextContainer: {
     flexDirection: 'row',
@@ -57,11 +55,10 @@ export default styles = StyleSheet.create({
   },
   smallHeadline: {
     color: '#000000DE',
-    fontSize: 15,
+    flex: 1
   },
   iconStyle: {
     width: 24,
     height: 24,
-    // paddingTop: 10,
   }
 });
