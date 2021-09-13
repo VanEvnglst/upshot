@@ -1,24 +1,25 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from '../../theme/colors';
+import styles from './styles';
 
 const SignPostIndicator = props => {
+  const { isCompleted, isLastItem, disabled, current } = props;
   return (
-    <View style={{ alignItems: 'center', alignSelf: 'flex-start' }}>
+    <View style={styles.container}>
+      {isCompleted ? (
+        <Icon name={'checkmark-sharp'} size={24} color={Colors.primary} />
+      ) : (
+        <View style={[styles.postInProgress, disabled && styles.disabled]} />
+      )}
       <View
-        style={{
-          width: 24,
-          height: 24,
-          borderRadius: 24,
-          backgroundColor: 'red',
-        }}
-      />
-      <View
-        style={{
-          width: 2,
-          height: 70,
-          backgroundColor: 'gray',
-          opacity: 0.3,
-        }}
+        style={[
+          isLastItem ? null : styles.postLine,
+          isCompleted && styles.doneLine,
+          disabled && styles.disabledLine,
+          current && styles.postLineCurrent,
+        ]}
       />
     </View>
   );
