@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "984091495329",
+    "project_id": "upshot-platform",
+    "storage_bucket": "upshot-platform.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984091495329:android:bea8c3d5845f7bcc0819e0",
+        "android_client_info": {
+          "package_name": "com.upshot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984091495329-1auggnphnqgpb13m83s0hfehctge570s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPIdmyweBZhx6wLCnqZDciQnyFpI7-dy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984091495329-1auggnphnqgpb13m83s0hfehctge570s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
