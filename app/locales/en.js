@@ -19,6 +19,10 @@ const labels = {
     saveClose: 'Save & Close',
     saveChanges: 'Save changes',
   },
+  homeScreen: {
+    guidedJourney: 'Guided Journeys',
+    comingSoon: 'Coming Soon',
+  },
   bottomNavigation: {
     home: 'Home',
     messages: 'Message',
