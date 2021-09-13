@@ -1,33 +1,34 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, ScrollView } from 'react-native';
 import { FAB as FloatingAction } from 'react-native-paper';
-import { Wrapper, Header, SignPostIndicator } from '../../../components';
+import { Wrapper, Text, Header, SignPostIndicator } from '../../../components';
 import feedbackJourneySteps from '../../../enums/feedback-journey';
 import labels from '../../../locales/en';
+import styles from './styles';
 
 const FeedbackGuide = props => {
   const { navigation } = props;
-  const { feedbackSignPost } = labels;
+  const { feedbackSignPost, common } = labels;
   return (
     <Wrapper>
       <ScrollView>
         <Header headerLeft />
-        <View style={{ flex: 1, borderWidth: 1 }}>
-          <Text style={{ fontSize: 36, marginBottom: 10 }}>
+        <View style={styles.container}>
+          <Text type="h4" style={styles.textTitle}>
             {feedbackSignPost.title}
           </Text>
-          <Text style={{ fontSize: 20 }}>{feedbackSignPost.description}</Text>
+          <Text type="body1">{feedbackSignPost.description}</Text>
         </View>
-        <View style={{ marginTop: 20, flex: 2, borderWidth: 1 }}>
+        <View style={styles.signPostContainer}>
           {feedbackJourneySteps.map((item, i) => {
             return (
-              <View style={{ flexDirection: 'row' }}>
-                <SignPostIndicator />
-                <View
-                  style={{ flex: 2, marginLeft: 20, paddingHorizontal: 10 }}>
-                  <Text>{item.title}</Text>
-                  <Text>{item.description}</Text>
+              <View style={styles.contentContainer}>
+                <SignPostIndicator
+                  isLastItem={i === feedbackJourneySteps.length - 1}
+                />
+                <View style={styles.textContainer}>
+                  <Text type="subtitle1">{item.title}</Text>
+                  <Text type="body2">{item.description}</Text>
                 </View>
               </View>
             );
@@ -35,14 +36,9 @@ const FeedbackGuide = props => {
         </View>
       </ScrollView>
       <FloatingAction
-        label="Start"
-        icon='play'
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          alignSelf: 'center',
-          backgroundColor: 'red',
-        }}
+        label={common.start}
+        icon="play"
+        style={styles.fabStyle}
         uppercase
         onPress={() => navigation.navigate('FeedbackDocumenting')}
       />
