@@ -3,25 +3,33 @@ import Fonts from '../../theme/fonts';
 
 const { size, letterSpacing, fontFamily } = Fonts;
 export default styles = StyleSheet.create({
+  text: {
+    marginVertical: 5,
+  },
   h1: {
     fontSize: size.h1,
     letterSpacing: letterSpacing.h1,
+    fontFamily: fontFamily.Shrikhand
    },
    h2: {
      fontSize: size.h2,
      letterSpacing: letterSpacing.h2,
+     fontFamily: fontFamily.Shrikhand
    },
    h3: {
      fontSize: size.h3,
      letterSpacing: letterSpacing.h3,
+     fontFamily: fontFamily.Shrikhand
    },
    h4: {
      fontSize: size.h4,
      letterSpacing: letterSpacing.h4,
+     fontFamily: fontFamily.Shrikhand
    },
    h5: {
      fontSize: size.h5,
      letterSpacing: letterSpacing.h5,
+     fontFamily: fontFamily.Shrikhand
    },
    h6: {
      fontSize: size.h6,
@@ -36,8 +44,7 @@ export default styles = StyleSheet.create({
    subtitle2: {
      fontSize: size.body2,
      letterSpacing: letterSpacing.subtitle2,
-     fontFamily: fontFamily.RalewayRegular,
-     fontWeight: '700',
+     fontFamily: fontFamily.RalewaySemiBold,
    },
    body1: {
      fontSize: size.body1,
@@ -54,8 +61,7 @@ export default styles = StyleSheet.create({
      fontSize: size.button,
      letterSpacing: letterSpacing.button,
      textTransform: 'uppercase',
-     fontFamily: fontFamily.RalewayRegular,
-     fontWeight: '700',
+     fontFamily: fontFamily.RalewaySemiBold,
    },
    caption: {
      fontSize: size.caption,

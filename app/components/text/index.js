@@ -8,6 +8,7 @@ const Text = ({ children, style, type }) => {
     <TextComponent
       style={[
         style,
+        styles.text,
         type === 'h1' && styles.h1,
         type === 'h2' && styles.h2,
         type === 'h3' && styles.h3,
