@@ -1,17 +1,33 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FeedbackPreparation, Onboarding } from '../screens';
+import { FeedbackIntroduction, FeedbackGuide, FeedbackDocumenting, FeedbackSignPost, ActiveFeedbackJourney } from '../screens';
 
 const FeedbackStack = createStackNavigator();
 
 export default function FeedbackStackScreen() {
   return (
     <>
-      <FeedbackStack.Navigator>
+      <FeedbackStack.Navigator headerMode="none">
+        {/* <FeedbackStack.Screen
+          name={'ActiveFeedbackJourney'}
+          component={ActiveFeedbackJourney}
+        /> */}
+      {/* <FeedbackStack.Screen
+          name={'FeedbackSignPost'}
+          component={FeedbackSignPost}
+        /> */}
         <FeedbackStack.Screen
-          name={'FeedbackPrep'}
-          component={FeedbackPreparation}
-          options={{ headerShown: false }}
+          name={'FeedbackIntroduction'}
+          component={FeedbackIntroduction}
+        />
+        {/* Only appears when starting a new journey */}
+        <FeedbackStack.Screen
+          name={'FeedbackGuide'}
+          component={FeedbackGuide}
+        />
+        <FeedbackStack.Screen
+          name={'FeedbackDocumenting'}
+          component={FeedbackDocumenting}
         />
       </FeedbackStack.Navigator>
     </>
