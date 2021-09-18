@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, ScrollView } from 'react-native';
 import { FAB as FloatingAction } from 'react-native-paper';
 import { Wrapper, Text, Header, SignPostIndicator } from '../../../components';
@@ -9,10 +9,14 @@ import styles from './styles';
 const FeedbackGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, common } = labels;
+  const [signPost, setSignPost] = useState([]);
+
   return (
     <Wrapper>
       <ScrollView>
-        <Header headerLeft />
+        <Header headerLeft={{
+          onPress: () => navigation.goBack()
+        }}/>
         <View style={styles.container}>
           <Text type="h4" style={styles.textTitle}>
             {feedbackSignPost.title}
@@ -22,7 +26,7 @@ const FeedbackGuide = props => {
         <View style={styles.signPostContainer}>
           {feedbackJourneySteps.map((item, i) => {
             return (
-              <View style={styles.contentContainer}>
+              <View style={styles.contentContainer} key={item.id}>
                 <SignPostIndicator
                   isLastItem={i === feedbackJourneySteps.length - 1}
                 />
