@@ -1,15 +1,18 @@
 import { all, fork } from 'redux-saga/effects';
-//import { networkSaga } from 'react-native-offline;
+import { networkSaga } from 'react-native-offline';
 import watchAuthenticationSaga from './authentication-saga';
+import watchFeedbackSaga from './feedback-saga';
 
-//function* watchNetwork() {
-  //try {
-    //yield fork(networkSaga, { pingInterval: 20000 });
-  //} catch(error) {}
-//}
+function* watchNetwork() {
+  try {
+    yield fork(networkSaga, { pingInterval: 20000 });
+  } catch (error) {}
+}
 
 export default function* root() {
   yield all([
     fork(watchAuthenticationSaga),
+    fork(watchFeedbackSaga),
+    watchNetwork,
   ]);
-};
+}
