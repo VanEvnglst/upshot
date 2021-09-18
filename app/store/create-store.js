@@ -1,7 +1,11 @@
-import {applyMiddleware, compose, createStore} from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {persistReducer, persistStore} from 'redux-persist';
-import { createNetworkMiddleware, offlineActionCreators, checkInternetConnection } from 'react-native-offline';
+import { persistReducer, persistStore } from 'redux-persist';
+import {
+  createNetworkMiddleware,
+  offlineActionCreators,
+  checkInternetConnection,
+} from 'react-native-offline';
 
 import persistConfig from '../config/redux-persist-config';
 
@@ -33,15 +37,15 @@ export default (mainReducer, rootSaga) => {
     store = createStore(rootReducer, compose(...enhancers));
   }
 
-  // const { connectionChange } = offlineActionCreators;
+  const { connectionChange } = offlineActionCreators;
   const persistor = persistStore(store, null, () => {
     // Detect initial connetion after rehydration
     checkInternetConnection().then(isConnected => {
-    store.dispatch(connectionChange(isConnected));
+      store.dispatch(connectionChange(isConnected));
     });
   });
 
   sagaMiddleware.run(rootSaga);
 
-  return {store, persistor};
+  return { store, persistor };
 };
