@@ -1,52 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { Text } from '../../components';
 import styles from './styles';
+import Images from '../../assets/images';
 
-const CheckBox = () => {
-  const [isChecked, setCheck] = useState(false);
+const CheckBox = ({ selected, onPress }) => {
   return (
     <TouchableOpacity
       accessibilityRole="button"
-      onPress={() => setCheck(!isChecked)}
-      style={styles(isChecked).checkBoxContainer}>
-      {/* {isChecked && (
+      onPress={onPress}
+      style={[styles.checkBoxContainer, selected && styles.selectedCheckBox]}>
+      {selected && (
         <Image
-          source={}
-          resizeMode='contain'
+          source={Images.checkIcon}
+          resizeMode="contain"
           style={styles.checkIcon}
         />
-      )} */}
+      )}
     </TouchableOpacity>
   );
 };
 
-const RadioButton = () => {
-  const [isFilled, setRadio] = useState(false);
+const RadioButton = ({ selected, onPress }) => {
   return (
     <TouchableOpacity
       accessibilityRole="button"
-      onPress={() => setRadio(!isFilled)}
-      style={styles(isFilled).radioBtnContainer}>
-      {isFilled && <View style={styles().filledRadioBtn} />}
+      onPress={onPress}
+      style={[styles.radioBtnContainer, selected && styles.selectedRadioBtn]}>
+      {selected && <View style={styles.filledRadioBtn} />}
     </TouchableOpacity>
   );
 };
 
 const ButtonSelection = props => {
-  const { title, type, showHint, content } = props;
+  const { title, type, showHint, content, selected, disabled, onPress } = props;
   return (
-    <View style={styles(showHint).btnContainer}>
-      <View style={styles().selectionContainer}>
-        <Text>Sample</Text>
-        {type === 'Radio' && <RadioButton />}
-        {type === 'Check' && <CheckBox />}
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.btnContainer, showHint && styles.showHintContainer]}>
+      <View style={styles.selectionContainer}>
+        <View style={styles.titleContainer}>
+          <Text type={selected ? 'subtitle2' : 'body2'}>{title}</Text>
+        </View>
+        <View style={styles.typeContainer}>
+          {type === 'Radio' && (
+            <RadioButton selected={selected} onPress={onPress} />
+          )}
+          {type === 'Check' && (
+            <CheckBox selected={selected} onPress={onPress} />
+          )}
+        </View>
       </View>
       {showHint && (
-        <View style={styles().contentContainer}>
-          <Text>content</Text>
+        <View style={styles.contentContainer}>
+          <Text type="body2" style={styles.hintContent}>
+            {content}
+          </Text>
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../theme/colors';
 
-export default styles = (showHint, isFilled, isChecked) =>
+export default styles =
   StyleSheet.create({
     btnContainer: {
       borderWidth: 1,
@@ -8,41 +9,63 @@ export default styles = (showHint, isFilled, isChecked) =>
       borderColor: '#0000001F',
       backgroundColor: 'white',
       paddingHorizontal: 16,
-      paddingVertical: 10,
-      height: showHint ? 100 : 48,
+      height:  78,
+      marginVertical: 10,
+      justifyContent: 'center',
+    },
+    showHintContainer: {
+      height: 130,
     },
     selectionContainer: {
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
+    titleContainer: {
+      flex: 4,
+      marginRight: 20,
+      paddingTop: 5,
+    },
+    typeContainer: {
+      paddingTop: 4,
+      alignSelf: 'center',
+    },
     checkBoxContainer: {
       borderWidth: 2,
       borderRadius: 4,
       width: 24,
       height: 24,
-      borderColor: isChecked ? '#6200EE' : '#00000099',
-      backgroundColor: isChecked ? '#6200EE' : 'transparent',
+      borderColor: '#00000099',
+      backgroundColor: 'transparent',
+    },
+    selectedCheckBox: {
+      backgroundColor: Colors.primary,
+      borderColor: Colors.primary,
     },
     radioBtnContainer: {
       borderWidth: 2,
       borderRadius: 12,
-      backgroundColor: 'transparent',
       width: 24,
       height: 24,
       justifyContent: 'center',
       alignItems: 'center',
-      borderColor: isFilled ? '#6200EE' : '#00000099',
+      borderColor: '#00000099',
+    },
+    selectedRadioBtn: {
+      borderColor: Colors.primary
     },
     filledRadioBtn: {
       height: 14,
       width: 14,
       borderRadius: 10,
-      backgroundColor: '#6200EE',
+      backgroundColor: Colors.primary,
     },
     contentContainer: {
       marginTop: 15,
-      flex: 1,
+      width: '86%',
     },
-    content: {},
+    hintContent: {
+      color: Colors.black,
+      opacity: 0.5,
+    },
   });
