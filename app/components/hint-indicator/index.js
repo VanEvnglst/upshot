@@ -9,11 +9,13 @@ const HintIndicator = props => {
     <TouchableOpacity
       accessibilityRole="button"
       onPress={onPress}
-      style={styles(showHint).container}>
+      style={[styles.container,
+      showHint && styles.showHintContainer]}>
       <Icon
         name={'help-outline'}
         size={18}
-        style={styles(showHint).iconStyle}
+        style={[styles.iconStyle,
+        showHint && styles.showHintIcon]}
       />
     </TouchableOpacity>
   );
