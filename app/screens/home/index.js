@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { LearningCard, Wrapper, Text } from '../../components';
+import FeedbackActions from '../../store/feedbackRedux';
 import labels from '../../locales/en';
 import Images from '../../assets/images';
 import styles from './styles';
 
-const HomeContainer = props => {
+const HomeScreen = props => {
   const { homeScreen } = labels;
   const { navigation } = props;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchFeedbackFlow());
+  }, []);
 
   // const AlertCard = () => {
   //   return (
@@ -27,7 +35,7 @@ const HomeContainer = props => {
 
   return (
     <Wrapper>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView bounces={false} contentContainerStyle={styles.container}>
         {/* <View style={{ width: '95%', marginBottom: 20 }}>
           <Text style={{ paddingLeft: 25, marginBottom: 10 }}>Alerts</Text>
           {/* map data for alerts */}
@@ -35,7 +43,7 @@ const HomeContainer = props => {
           <AlertCard />
         </View> */}
         <View>
-          <Text type='overline' style={styles.overlineText}>
+          <Text type="overline" style={styles.overlineText}>
             {homeScreen.guidedJourney}
           </Text>
           <LearningCard
@@ -47,9 +55,19 @@ const HomeContainer = props => {
             }
             mainCard
           />
+          <LearningCard
+            onPress={() => console.log('Employee Engagement')}
+            image={Images.feedbackCoaching}
+            headline={'Employee Engagement'}
+            subtitle={
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+            }
+            mainCard
+            style={{ marginTop: 15 }}
+          />
         </View>
         <View style={styles.horizontalCardContainer}>
-          <Text type='overline' style={styles.overlineText}>
+          <Text type="overline" style={styles.overlineText}>
             {homeScreen.comingSoon}
           </Text>
           <ScrollView horizontal>
@@ -74,4 +92,4 @@ const HomeContainer = props => {
   );
 };
 
-export default HomeContainer;
+export default HomeScreen;
