@@ -1,7 +1,7 @@
-import { all, fork } from 'redux-saga/effects';
+ import { all, fork } from 'redux-saga/effects';
 import { networkSaga } from 'react-native-offline';
-import watchAuthenticationSaga from './authentication-saga';
-import watchFeedbackSaga from './feedback-saga';
+import watchAuthenticationSaga from './authenticationSaga';
+import watchFeedbackSaga from './feedbackSaga';
 
 function* watchNetwork() {
   try {
