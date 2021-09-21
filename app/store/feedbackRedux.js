@@ -28,6 +28,9 @@ const { Types, Creators } = createActions({
   fetchFeedbackType: [''],
   fetchFeedbackTypeSuccess: null,
   fetchFeedbackTypeFailure: ['error'],
+  fetchFeedbackTopics: [''],
+  fetchFeedbackTopicsSuccess: null,
+  fetchFeedbackTopicsFailure: ['error'],
   fetchTeamMembers: [''],
   fetchTeamMembersSuccess: null,
   fetchTeamMembersFailure: ['error'],
@@ -50,6 +53,9 @@ const fetchFeedbackFlowFailure = state => state.merge({});
 const fetchFeedbackType = state => state.merge({});
 const fetchFeedbackTypeSuccess = state => state.merge({});
 const fetchFeedbackTypeFailure = state => state.merge({});
+const fetchFeedbackTopics = state => state.merge({});
+const fetchFeedbackTopicsSuccess = state => state.merge({});
+const fetchFeedbackTopicsFailure = state => state.merge({});
 const fetchTeamMembers = state => state.merge({});
 const fetchTeamMembersSuccess = state => state.merge({});
 const fetchTeamMembersFailure = state => state.merge({});
@@ -69,6 +75,9 @@ export const feedbackReducers = createReducer(INITIAL_STATE, {
   [Types.FETCH_FEEDBACK_TYPE]: fetchFeedbackType,
   [Types.FETCH_FEEDBACK_TYPE_SUCCESS]: fetchFeedbackTypeSuccess,
   [Types.FETCH_FEEDBACK_TYPE_FAILURE]: fetchFeedbackTypeFailure,
+  [Types.FETCH_FEEDBACK_TOPICS]: fetchFeedbackTopics,
+  [Types.FETCH_FEEDBACK_TOPICS_SUCCESS]: fetchFeedbackTopicsSuccess,
+  [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
   [Types.FETCH_TEAM_MEMBERS]: fetchTeamMembers,
   [Types.FETCH_TEAM_MEMBERS_SUCCESS]: fetchTeamMembersSuccess,
   [Types.FETCH_TEAM_MEMBERS_FAILURE]: fetchTeamMembersFailure,
