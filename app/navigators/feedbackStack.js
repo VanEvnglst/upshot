@@ -1,6 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FeedbackIntroduction, FeedbackGuide, FeedbackDocumenting, FeedbackSignPost, ActiveFeedbackJourney } from '../screens';
+import {
+  FeedbackFlow,
+  FeedbackGuide,
+  FeedbackDocumenting,
+  FeedbackSignPost,
+  ActiveFeedbackJourney,
+} from '../screens';
 
 const FeedbackStack = createStackNavigator();
 
@@ -12,14 +18,11 @@ export default function FeedbackStackScreen() {
           name={'ActiveFeedbackJourney'}
           component={ActiveFeedbackJourney}
         /> */}
-      {/* <FeedbackStack.Screen
+        {/* <FeedbackStack.Screen
           name={'FeedbackSignPost'}
           component={FeedbackSignPost}
         /> */}
-        <FeedbackStack.Screen
-          name={'FeedbackIntroduction'}
-          component={FeedbackIntroduction}
-        />
+        <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
         {/* Only appears when starting a new journey */}
         <FeedbackStack.Screen
           name={'FeedbackGuide'}

@@ -1,15 +1,32 @@
 import React from 'react';
 import { Text } from 'react-native';
-import {
-  BottomTabBar,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Home, Messages, Activity, Profile } from '../containers';
+import { Home, Messages, Activity, Reminders, Profile } from '../screens';
+import FeedbackStackScreen from './feedbackStack';
 
 const BottomTab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
 
-const TabRoutes = () => {
+const HomeStackScreen = () => {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name={'Home'} component={TabRoutes} />
+      <HomeStack.Screen name={'Feedback'} component={FeedbackStackScreen} />
+      <HomeStack.Screen name={'Reminders'} component={Reminders} />
+    </HomeStack.Navigator>
+  );
+};
+
+// const TabItem = ({ }) => {
+//   return(
+//     <Image
+//     />
+//   )
+// }
+
+function TabRoutes() {
   return (
     <BottomTab.Navigator initialRouteName="Home">
       <BottomTab.Screen
@@ -58,7 +75,7 @@ const TabRoutes = () => {
       />
       <BottomTab.Screen
         name={'Activity'}
-        component={Activity}
+        component={Reminders}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -102,6 +119,6 @@ const TabRoutes = () => {
       />
     </BottomTab.Navigator>
   );
-};
+}
 
-export default TabRoutes;
+export default HomeStackScreen;

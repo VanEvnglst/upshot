@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeStackScreen from './tab-routes';
+import HomeStackScreen from './tabRoutes';
 
 export default function (Stack) {
   return (
