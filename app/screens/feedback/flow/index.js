@@ -13,7 +13,7 @@ import discussionTypes from '../../../enums/discussion-type';
 import styles from './styles';
 import labels from '../../../locales/en';
 
-const FeedbackIntroduction = props => {
+const FeedbackFlow = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const [discussion, selectDiscussion] = useState({
@@ -71,4 +71,4 @@ const FeedbackIntroduction = props => {
   );
 };
 
-export default FeedbackIntroduction;
+export default FeedbackFlow;
