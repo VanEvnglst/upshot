@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
+import { useSelector } from 'react-redux';
 import styles from './styles';
-import { Wrapper } from '../../components';
+import { Wrapper, Header, Text } from '../../components';
 import Images from '../../assets/images';
 import labels from '../../locales/en';
+import { getFirstName } from '../../store/userRedux';
 
-const ReminderScreen = () => {
+const ReminderScreen = props => {
+  const { navigation } = props;
   const { triviaReminder, morningReminder, morningContent } = labels.reminders;
+  const firstName = useSelector(getFirstName)
+  console.log('fi', firstName);
   const [currentTime, setTime] = useState(new Date().getHours());
   const [content, setContent] = useState({
     image: '',
@@ -36,16 +41,23 @@ const ReminderScreen = () => {
 
   return (
     <Wrapper>
-      <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+      <Header
+        headerLeft={{
+          onPress: () => navigation.goBack(),
+        }}
+      />
+      <View style={styles.imageContainer}>
         <Image source={content.image} resizeMode="contain" />
       </View>
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 32, marginBottom: 20 }}>{content.title}</Text>
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text>{content.content}</Text>
+      <View style={styles.titleContainer}>
+        <Text type="h4">
+          {firstName} {content.title}
+        </Text>
+        <View style={styles.contentContainer}>
+          <Text type="body1">{content.content}</Text>
         </View>
       </View>
-      <Text>Give Feedback</Text>
+      <Text type='button'>Give Feedback</Text>
     </Wrapper>
   );
 };
