@@ -2,7 +2,7 @@ import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import AuthenticationActions, {
   AuthenticationTypes,
-} from '../store/authentication-redux';
+} from '../store/authenticationRedux';
 
 export function* signInUser() {
   const connected = yield checkInternetConnection();
