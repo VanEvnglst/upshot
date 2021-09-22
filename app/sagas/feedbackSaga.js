@@ -10,9 +10,9 @@ export function* fetchFeedbackType() {
   }
   const response = yield call(api.getFeedbackType);
   if (response.ok) {
-
+    const feedbackTypeList = response.data.details;
+    yield put(FeedbackActions.fetchFeedbackTypeSucceess(feedbackTypeList));
   } else {
-    
   }
 }
 
@@ -25,7 +25,6 @@ export function* fetchFeedbackFlow() {
   if (flowResponse.ok) {
     console.log('res', flowResponse);
     const feedbackFlowList = flowResponse.data.details;
-    debugger;
     yield put(FeedbackActions.fetchFeedbackFlowSuccess(feedbackFlowList));
   } else {
     console.log('error');
