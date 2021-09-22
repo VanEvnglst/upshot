@@ -37,12 +37,17 @@ export function* fetchTeamMembers() {
 
 export function* fetchFeedbackTopics() {
   const response = yield call(api.getFeedbackTopics);
+  if (response.ok) {
+    const relatedTopicsList = response.data.details;
+    yield put(FeedbackActions.fetchFeedbackTopicsSuccess(relatedTopicsList));
+  } else {
+  }
 }
 
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_FLOW, fetchFeedbackFlow);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TYPE, fetchFeedbackType);
-  // yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
+  yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
   // yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
 }
 
