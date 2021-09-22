@@ -24,12 +24,12 @@ const { Types, Creators } = createActions({
   fetchFeedbackFlow: null,
   fetchFeedbackFlowSuccess: ['feedbackFlowList'],
   fetchFeedbackFlowFailure: ['error'],
-  fetchFeedbackType: [''],
-  // fetchFeedbackTypeSuccess: null,
-  // fetchFeedbackTypeFailure: ['error'],
-  // fetchFeedbackTopics: [''],
-  // fetchFeedbackTopicsSuccess: null,
-  // fetchFeedbackTopicsFailure: ['error'],
+  fetchFeedbackType: null,
+  fetchFeedbackTypeSuccess: ['feedbackTypeList'],
+  fetchFeedbackTypeFailure: ['error'],
+  fetchFeedbackTopics: [''],
+  fetchFeedbackTopicsSuccess: null,
+  fetchFeedbackTopicsFailure: ['error'],
   // fetchTeamMembers: [''],
   // fetchTeamMembersSuccess: null,
   // fetchTeamMembersFailure: ['error'],
@@ -54,7 +54,7 @@ const fetchFeedbackFlow = state =>
   });
 const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
   debugger;
-  state.merge({
+  return state.merge({
     feedbackFlow: {
       fetching: false,
       data: feedbackFlowList,
@@ -62,6 +62,7 @@ const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
   });
 };
 const fetchFeedbackFlowFailure = state => state.merge({});
+
 const fetchFeedbackType = state =>
   state.merge({
     feedbackType: {
@@ -69,8 +70,15 @@ const fetchFeedbackType = state =>
     },
   });
 
-// const fetchFeedbackTypeSuccess = state => state.merge({});
-// const fetchFeedbackTypeFailure = state => state.merge({});
+const fetchFeedbackTypeSuccess = (state, { feedbackTypeList }) => {
+  return state.merge({
+    feedbackType: {
+      fetching: false,
+      data: feedbackTypeList,
+    },
+  });
+};
+const fetchFeedbackTypeFailure = state => state.merge({});
 // const fetchFeedbackTopics = state => state.merge({});
 // const fetchFeedbackTopicsSuccess = state => state.merge({});
 // const fetchFeedbackTopicsFailure = state => state.merge({});
@@ -91,8 +99,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FEEDBACK_FLOW_SUCCESS]: fetchFeedbackFlowSuccess,
   [Types.FETCH_FEEDBACK_FLOW_FAILURE]: fetchFeedbackFlowFailure,
   [Types.FETCH_FEEDBACK_TYPE]: fetchFeedbackType,
-  // [Types.FETCH_FEEDBACK_TYPE_SUCCESS]: fetchFeedbackTypeSuccess,
-  // [Types.FETCH_FEEDBACK_TYPE_FAILURE]: fetchFeedbackTypeFailure,
+  [Types.FETCH_FEEDBACK_TYPE_SUCCESS]: fetchFeedbackTypeSuccess,
+  [Types.FETCH_FEEDBACK_TYPE_FAILURE]: fetchFeedbackTypeFailure,
   // [Types.FETCH_FEEDBACK_TOPICS]: fetchFeedbackTopics,
   // [Types.FETCH_FEEDBACK_TOPICS_SUCCESS]: fetchFeedbackTopicsSuccess,
   // [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
