@@ -1,15 +1,19 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { FeedbackTypes } from '../store/feedbackRedux';
+import FeedbackActions, { FeedbackTypes } from '../store/feedbackRedux';
 import api from '../services/apiService';
 
 export function* fetchFeedbackType() {
-  // const connected = yield checkInternetConnection();
-  // if (!connected) {
-  //   return;
-  // }
-  const typeResponse = yield call(api.getFeedbackType);
-  console.log('res', typeResponse);
+  const connected = yield checkInternetConnection();
+  if (!connected) {
+    return;
+  }
+  const response = yield call(api.getFeedbackType);
+  if (response.ok) {
+
+  } else {
+    
+  }
 }
 
 export function* fetchFeedbackFlow() {
@@ -18,11 +22,18 @@ export function* fetchFeedbackFlow() {
   //   return;
   // }
   const flowResponse = yield call(api.getFeedbackFlow);
-  console.log('res', flowResponse);
+  if (flowResponse.ok) {
+    console.log('res', flowResponse);
+    const feedbackFlowList = flowResponse.data.details;
+    debugger;
+    yield put(FeedbackActions.fetchFeedbackFlowSuccess(feedbackFlowList));
+  } else {
+    console.log('error');
+  }
 }
 
 export function* fetchTeamMembers() {
-  const response = yield call(api.getTeamMembers)
+  const response = yield call(api.getTeamMembers);
 }
 
 export function* fetchFeedbackTopics() {
@@ -32,8 +43,8 @@ export function* fetchFeedbackTopics() {
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_FLOW, fetchFeedbackFlow);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TYPE, fetchFeedbackType);
-  yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
-  yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
+  // yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
+  // yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
 }
 
 export default watchFeedbackSaga;
