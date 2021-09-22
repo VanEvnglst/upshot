@@ -52,6 +52,7 @@ const fetchFeedbackFlow = state =>
       fetching: true,
     },
   });
+
 const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
   debugger;
   return state.merge({
@@ -61,6 +62,7 @@ const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
     },
   });
 };
+
 const fetchFeedbackFlowFailure = state => state.merge({});
 
 const fetchFeedbackType = state =>
@@ -78,10 +80,23 @@ const fetchFeedbackTypeSuccess = (state, { feedbackTypeList }) => {
     },
   });
 };
+
 const fetchFeedbackTypeFailure = state => state.merge({});
-// const fetchFeedbackTopics = state => state.merge({});
-// const fetchFeedbackTopicsSuccess = state => state.merge({});
-// const fetchFeedbackTopicsFailure = state => state.merge({});
+const fetchFeedbackTopics = state =>
+  state.merge({
+    relatedTopics: {
+      fetching: true,
+    },
+  });
+const fetchFeedbackTopicsSuccess = (state, { relatedTopicsList }) => {
+  state.merge({
+    relatedTopics: {
+      fetching: false,
+      data: relatedTopicsList,
+    },
+  });
+};
+const fetchFeedbackTopicsFailure = state => state.merge({});
 // const fetchTeamMembers = state => state.merge({});
 // const fetchTeamMembersSuccess = state => state.merge({});
 // const fetchTeamMembersFailure = state => state.merge({});
@@ -101,9 +116,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FEEDBACK_TYPE]: fetchFeedbackType,
   [Types.FETCH_FEEDBACK_TYPE_SUCCESS]: fetchFeedbackTypeSuccess,
   [Types.FETCH_FEEDBACK_TYPE_FAILURE]: fetchFeedbackTypeFailure,
-  // [Types.FETCH_FEEDBACK_TOPICS]: fetchFeedbackTopics,
-  // [Types.FETCH_FEEDBACK_TOPICS_SUCCESS]: fetchFeedbackTopicsSuccess,
-  // [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
+  [Types.FETCH_FEEDBACK_TOPICS]: fetchFeedbackTopics,
+  [Types.FETCH_FEEDBACK_TOPICS_SUCCESS]: fetchFeedbackTopicsSuccess,
+  [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
   // [Types.FETCH_TEAM_MEMBERS]: fetchTeamMembers,
   // [Types.FETCH_TEAM_MEMBERS_SUCCESS]: fetchTeamMembersSuccess,
   // [Types.FETCH_TEAM_MEMBERS_FAILURE]: fetchTeamMembersFailure,
