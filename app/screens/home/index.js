@@ -3,6 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { LearningCard, Wrapper, Text } from '../../components';
 import FeedbackActions from '../../store/feedbackRedux';
+import UserActions from '../../store/userRedux';
 import labels from '../../locales/en';
 import Images from '../../assets/images';
 import styles from './styles';
@@ -15,6 +16,8 @@ const HomeScreen = props => {
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchFeedbackFlow());
+    dispatch(FeedbackActions.fetchFeedbackType());
+    dispatch(FeedbackActions.fetchFeedbackTopics());
   }, []);
 
   // const AlertCard = () => {
