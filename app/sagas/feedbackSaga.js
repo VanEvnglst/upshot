@@ -4,15 +4,17 @@ import FeedbackActions, { FeedbackTypes } from '../store/feedbackRedux';
 import api from '../services/apiService';
 
 export function* fetchFeedbackType() {
-  const connected = yield checkInternetConnection();
-  if (!connected) {
-    return;
-  }
+  // const connected = yield checkInternetConnection();
+  // if (!connected) {
+  //   return;
+  // }
   const response = yield call(api.getFeedbackType);
+  console.log('res', response);
   if (response.ok) {
     const feedbackTypeList = response.data.details;
-    yield put(FeedbackActions.fetchFeedbackTypeSucceess(feedbackTypeList));
+    yield put(FeedbackActions.fetchFeedbackTypeSuccess(feedbackTypeList));
   } else {
+    yield put(FeedbackActions.fetchFeedbackTypeFailure(response.data));
   }
 }
 
@@ -23,11 +25,10 @@ export function* fetchFeedbackFlow() {
   // }
   const flowResponse = yield call(api.getFeedbackFlow);
   if (flowResponse.ok) {
-    console.log('res', flowResponse);
     const feedbackFlowList = flowResponse.data.details;
     yield put(FeedbackActions.fetchFeedbackFlowSuccess(feedbackFlowList));
   } else {
-    console.log('error');
+    yield put(FeedbackActions.fetchFeedbackFlowFailure(response.data));
   }
 }
 
@@ -41,6 +42,7 @@ export function* fetchFeedbackTopics() {
     const relatedTopicsList = response.data.details;
     yield put(FeedbackActions.fetchFeedbackTopicsSuccess(relatedTopicsList));
   } else {
+    yield put(FeedbackActions.fetchFeedbackTopicsFailure(response.data));
   }
 }
 
