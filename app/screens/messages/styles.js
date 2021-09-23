@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../theme/colors';
+import Fonts from '../../theme/fonts';
 
 const SPACING = 20;
 const AVATAR_SIZE = 70;
@@ -12,13 +14,20 @@ export default styles = StyleSheet.create({
     marginVertical: 15,
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: 'grey',
+    borderColor: 'rgba(0,0,0,0.12)',
   },
   contentContainer: {
     padding: 10,
   },
-  reminderHeaderContainer: { 
-    marginBottom: 20 
+  reminderHeaderContainer: {
+    marginBottom: 20,
+  },
+  reminderTitle: {
+    color: Colors.primary,
+  },
+  textSnippet: {
+    marginTop: 20,
+    lineHeight: 22,
   },
   readMoreContainer: {
     height: 50,
@@ -37,23 +46,20 @@ export default styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   messageHeader: {
-    fontSize: 18,
-    fontWeight: '700',
     marginBottom: 5,
   },
   textMessage: {
-    fontSize: 14,
-    opacity: 0.7,
+    opacity: 0.8,
+    color: '#0099cc',
   },
-  // textMessage: {
-  //   fontSize: 12,
-  //   opacity: 0.8,
-  //   color: '#0099cc',
-  // },
+  unreadTextMessage: {
+    opacity: 1.0,
+    fontFamily: Fonts.fontFamily.RalewaySemiBold,
+  },
   content: {
     marginLeft: 15,
   },
-    // avatar: {
+  // avatar: {
   //   width: AVATAR_SIZE,
   //   height: AVATAR_SIZE,
   //   borderRadius: AVATAR_SIZE,
