@@ -21,14 +21,14 @@ export const INITIAL_STATE = Map({
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
-  fetchFeedbackFlow: null,
+  fetchFeedbackFlow: [''],
   fetchFeedbackFlowSuccess: ['feedbackFlowList'],
   fetchFeedbackFlowFailure: ['error'],
-  fetchFeedbackType: null,
+  fetchFeedbackType: [''],
   fetchFeedbackTypeSuccess: ['feedbackTypeList'],
   fetchFeedbackTypeFailure: ['error'],
   fetchFeedbackTopics: [''],
-  fetchFeedbackTopicsSuccess: null,
+  fetchFeedbackTopicsSuccess: ['relatedTopicsList'],
   fetchFeedbackTopicsFailure: ['error'],
   // fetchTeamMembers: [''],
   // fetchTeamMembersSuccess: null,
@@ -54,7 +54,6 @@ const fetchFeedbackFlow = state =>
   });
 
 const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
-  debugger;
   return state.merge({
     feedbackFlow: {
       fetching: false,
@@ -63,7 +62,13 @@ const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
   });
 };
 
-const fetchFeedbackFlowFailure = state => state.merge({});
+const fetchFeedbackFlowFailure = (state, { error }) =>
+  state.merge({
+    feedbackFlow: {
+      fetching: false,
+      error,
+    },
+  });
 
 const fetchFeedbackType = state =>
   state.merge({
@@ -81,7 +86,14 @@ const fetchFeedbackTypeSuccess = (state, { feedbackTypeList }) => {
   });
 };
 
-const fetchFeedbackTypeFailure = state => state.merge({});
+const fetchFeedbackTypeFailure = (state, { error }) =>
+  state.merge({
+    feedbackType: {
+      fetching: false,
+      error,
+    },
+  });
+
 const fetchFeedbackTopics = state =>
   state.merge({
     relatedTopics: {
@@ -89,14 +101,20 @@ const fetchFeedbackTopics = state =>
     },
   });
 const fetchFeedbackTopicsSuccess = (state, { relatedTopicsList }) => {
-  state.merge({
+  return state.merge({
     relatedTopics: {
       fetching: false,
       data: relatedTopicsList,
     },
   });
 };
-const fetchFeedbackTopicsFailure = state => state.merge({});
+const fetchFeedbackTopicsFailure = (state, { error }) =>
+  state.merge({
+    relatedTopics: {
+      fetching: false,
+      error,
+    },
+  });
 // const fetchTeamMembers = state => state.merge({});
 // const fetchTeamMembersSuccess = state => state.merge({});
 // const fetchTeamMembersFailure = state => state.merge({});
