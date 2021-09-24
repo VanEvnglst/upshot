@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { HintIndicator, ButtonSelection } from '../../../../components';
+import { View, ScrollView } from 'react-native';
+import { ButtonSelection, Text } from '../../../../components';
 import feedbackTopics from '../../../../enums/feedback-topics';
 // import styles from './styles';
 import labels from '../../../../locales/en';
@@ -16,7 +16,7 @@ const DocumentingStep3 = props => {
   return(
 
     <View style={styles.container}>
-      <Text>{labels.feedbackDocumenting.feedbackRelation}</Text>
+      <Text type='h6' style={{ marginTop: 20, marginBottom: 10 }}>{labels.feedbackDocumenting.feedbackRelation}</Text>
       {feedbackTopics.map((item, i) => (
         <ButtonSelection
           title={item.title}
