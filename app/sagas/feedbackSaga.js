@@ -28,7 +28,7 @@ export function* fetchFeedbackFlow() {
     const feedbackFlowList = flowResponse.data.details;
     yield put(FeedbackActions.fetchFeedbackFlowSuccess(feedbackFlowList));
   } else {
-    yield put(FeedbackActions.fetchFeedbackFlowFailure(response.data));
+    yield put(FeedbackActions.fetchFeedbackFlowFailure(flowResponse.data));
   }
 }
 
