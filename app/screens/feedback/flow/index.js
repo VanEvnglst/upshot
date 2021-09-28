@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Wrapper,
   Button,
@@ -9,22 +9,26 @@ import {
   Header,
   Text,
 } from '../../../components';
-import discussionTypes from '../../../enums/discussion-type';
-import styles from './styles';
+import { getFeedbackFlowList } from '../../../store/feedbackRedux';
 import labels from '../../../locales/en';
+import styles from './styles';
 
 const FeedbackFlow = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
+  const flowList = useSelector(getFeedbackFlowList);
+
   const [discussion, selectDiscussion] = useState({
     id: null,
     title: '',
     hint: '',
   });
+  const [completed, setCompleted] = useState(false);
   const [hint, showHint] = useState(false);
 
   const _handleSelection = item => {
     selectDiscussion(item);
+    setCompleted(true);
   };
 
   const proceedToNextStep = () => {
@@ -47,9 +51,10 @@ const FeedbackFlow = props => {
         <Text type="h6" style={styles.labelPadding}>
           {labels.feedbackIntro.action}
         </Text>
-        {discussionTypes.map((item, i) => (
+        {flowList.map((item, i) => (
           <ButtonSelection
-            title={item.title}
+            key={item.id}
+            title={item.display_name}
             type={'Radio'}
             content={item.hint}
             showHint={hint}
@@ -60,10 +65,7 @@ const FeedbackFlow = props => {
         <HintIndicator showHint={hint} onPress={() => showHint(!hint)} />
       </View>
       <View style={styles.btnContainer}>
-        <Button
-          onPress={() => proceedToNextStep()}
-          block
-          disabled={discussion.id === null}>
+        <Button onPress={() => proceedToNextStep()} block disabled={!completed}>
           Continue
         </Button>
       </View>
