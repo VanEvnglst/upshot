@@ -150,4 +150,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 });
 
 /* ------------- Selectors ------------- */
-export const getCurrentJourney = state => state.feedback.currentJourney;
+export const getCurrentJourney = state => state.feedback.get('currentJourney');
+export const getFeedbackFlowList = state =>
+  state.feedback.get('feedbackFlow').data;
