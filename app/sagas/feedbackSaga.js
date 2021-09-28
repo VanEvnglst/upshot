@@ -9,7 +9,6 @@ export function* fetchFeedbackType() {
   //   return;
   // }
   const response = yield call(api.getFeedbackType);
-  console.log('res', response);
   if (response.ok) {
     const feedbackTypeList = response.data.details;
     yield put(FeedbackActions.fetchFeedbackTypeSuccess(feedbackTypeList));
