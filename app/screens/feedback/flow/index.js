@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-native-paper';
 import {
   Wrapper,
-  Button,
   ButtonSelection,
   HintIndicator,
   Header,
   Text,
 } from '../../../components';
-import { getFeedbackFlowList } from '../../../store/feedbackRedux';
+import { getFeedbackFlowList } from '../../../store/selectors';
+import FeedbackActions from '../../../store/feedbackRedux';
 import labels from '../../../locales/en';
 import styles from './styles';
 
@@ -32,11 +33,7 @@ const FeedbackFlow = props => {
   };
 
   const proceedToNextStep = () => {
-    // console.log('discussion', discussion);
-    // dispatch({
-    //   type: 'setFeedbackFlow',
-    //   payload: discussion,
-    // });
+    dispatch(FeedbackActions.setFeedbackFlow(discussion));
     navigation.navigate('FeedbackGuide');
   };
 
@@ -65,8 +62,16 @@ const FeedbackFlow = props => {
         <HintIndicator showHint={hint} onPress={() => showHint(!hint)} />
       </View>
       <View style={styles.btnContainer}>
-        <Button onPress={() => proceedToNextStep()} block disabled={!completed}>
-          Continue
+        <Button
+          style={!completed ? styles.disabledBtn : styles.button}
+          onPress={() => proceedToNextStep()}
+          mode="contained"
+          disabled={!completed}>
+          <Text
+            type="button"
+            style={!completed ? styles.disabledText : styles.btnText}>
+            {labels.common.continue}
+          </Text>
         </Button>
       </View>
     </Wrapper>
