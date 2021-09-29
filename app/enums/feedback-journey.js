@@ -31,7 +31,7 @@ const feedbackJourneySteps = [
     id: 5,
     title: feedbackSignPost.followUp,
     description: feedbackSignPost.followUpDesc,
-    forOnTheSpot: true
+    forOnTheSpot: false
   },
 ];
 
