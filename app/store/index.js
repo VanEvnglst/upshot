@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as network } from 'react-native-offline';
 import { reducer as authentication } from './authenticationRedux';
-import { feedbackReducers } from './feedbackRedux';
+import { reducer as feedback } from './feedbackRedux';
 import { userReducers } from './userRedux';
 import rootSaga from '../sagas';
 
@@ -10,7 +10,7 @@ import configureStore from './createStore';
 export const mainReducer = combineReducers({
   network,
   authentication,
-  feedback: feedbackReducers,
+  feedback,
   user: userReducers,
 });
 
