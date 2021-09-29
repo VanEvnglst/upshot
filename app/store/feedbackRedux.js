@@ -32,9 +32,9 @@ const { Types, Creators } = createActions({
   fetchFeedbackTopicsSuccess: ['relatedTopicsList'],
   fetchFeedbackTopicsFailure: ['error'],
   setFeedbackFlow: ['chosenFlow'],
-  // fetchTeamMembers: [''],
-  // fetchTeamMembersSuccess: null,
-  // fetchTeamMembersFailure: ['error'],
+  fetchTeamMembers: [''],
+  fetchTeamMembersSuccess: ['teamMembersList'],
+  fetchTeamMembersFailure: ['error'],
   // postFeedbackJourney: [''],
   // postFeedbackJourneySuccess: null,
   // postFeedbackJourneyFailure: ['error'],
@@ -122,9 +122,33 @@ const setFeedbackFlow = (state, { chosenFlow }) =>
   state.merge({
     chosenFlow,
   });
-// const fetchTeamMembers = state => state.merge({});
-// const fetchTeamMembersSuccess = state => state.merge({});
-// const fetchTeamMembersFailure = state => state.merge({});
+const fetchTeamMembers = state =>
+  state.merge({
+    currentJourney: {
+      teamMembers: {
+        fetching: true,
+      },
+    },
+  });
+const fetchTeamMembersSuccess = (state, { teamMembersList }) => {
+  return state.merge({
+    currentJourney: {
+      teamMembers: {
+        fetching: false,
+        data: teamMembersList,
+      },
+    },
+  });
+};
+const fetchTeamMembersFailure = (state, error) =>
+  state.merge({
+    currentJourney: {
+      teamMembers: {
+        fetching: false,
+        error,
+      },
+    },
+  });
 // const postFeedbackJourney = state => state.merge({});
 // const postFeedbackJourneySuccess = state => state.merge({});
 // const postFeedbackJourneyFailure = state => state.merge({});
@@ -145,9 +169,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FEEDBACK_TOPICS_SUCCESS]: fetchFeedbackTopicsSuccess,
   [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
   [Types.SET_FEEDBACK_FLOW]: setFeedbackFlow,
-  // [Types.FETCH_TEAM_MEMBERS]: fetchTeamMembers,
-  // [Types.FETCH_TEAM_MEMBERS_SUCCESS]: fetchTeamMembersSuccess,
-  // [Types.FETCH_TEAM_MEMBERS_FAILURE]: fetchTeamMembersFailure,
+  [Types.FETCH_TEAM_MEMBERS]: fetchTeamMembers,
+  [Types.FETCH_TEAM_MEMBERS_SUCCESS]: fetchTeamMembersSuccess,
+  [Types.FETCH_TEAM_MEMBERS_FAILURE]: fetchTeamMembersFailure,
   // [Types.POST_FEEDBACK_JOURNEY]: postFeedbackJourney,
   // [Types.POST_FEEDBACK_JOURNEY_SUCCESS]: postFeedbackJourneySuccess,
   // [Types.POST_FEEDBACK_JOURNEY_FAILURE]: postFeedbackJourneyFailure,
@@ -156,5 +180,3 @@ export const reducer = createReducer(INITIAL_STATE, {
   // [Types.POST_FEEDBACK_DOCUMENTING_FAILURE]: postFeedbackDocumentingFailure,
   // [Types.UPDATE_FEEDBACK_DOCUMENTING]: updateFeedbackDocumenting,
 });
-
-/* ------------- Selectors ------------- */
