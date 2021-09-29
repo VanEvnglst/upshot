@@ -1,38 +1,65 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
 import { Wrapper, Text, Header, SignPostIndicator } from '../../../components';
 import feedbackJourneySteps from '../../../enums/feedback-journey';
 import labels from '../../../locales/en';
 import styles from './styles';
+import { getChosenFlow } from '../../../store/selectors';
 
 const FeedbackGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, common } = labels;
+  const flow = useSelector(getChosenFlow);
   const [signPost, setSignPost] = useState([]);
+
+  useEffect(() => {
+    handleContent();
+  }, []);
+
+  const handleContent = async () => {
+    let content = [];
+    if (flow.id === 1) {
+      content = feedbackJourneySteps;
+    } else {
+      content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
+    }
+    await setSignPost(content);
+  };
 
   return (
     <Wrapper>
-      <ScrollView>
-        <Header headerLeft={{
-          onPress: () => navigation.goBack()
-        }}/>
+      <ScrollView showsVerticalScrollIndicator={false} bouces={false}>
+        <Header
+          headerLeft={{
+            onPress: () => navigation.goBack(),
+          }}
+        />
         <View style={styles.container}>
-          <Text type="h4" style={styles.textTitle}>
+          <Text type="h4" style={[styles.textTitle, styles.mediumTextStyle]}>
             {feedbackSignPost.title}
           </Text>
-          <Text type="body1">{feedbackSignPost.description}</Text>
+          <Text
+            type="body1"
+            style={[styles.contentDescription, styles.mediumTextStyle]}>
+            {feedbackSignPost.description}
+          </Text>
         </View>
         <View style={styles.signPostContainer}>
-          {feedbackJourneySteps.map((item, i) => {
+          {signPost.map((item, i) => {
             return (
               <View style={styles.contentContainer} key={item.id}>
-                <SignPostIndicator
-                  isLastItem={i === feedbackJourneySteps.length - 1}
-                />
+                <SignPostIndicator isLastItem={i === signPost.length - 1} />
                 <View style={styles.textContainer}>
-                  <Text type="subtitle1">{item.title}</Text>
-                  <Text type="body2">{item.description}</Text>
+                  <Text type="subtitle1" style={styles.mediumTextStyle}>
+                    {item.title}
+                  </Text>
+                  <Text
+                    type="body2"
+                    style={[styles.lightTextStyle, styles.guideText]}>
+                    {item.description}
+                  </Text>
                 </View>
               </View>
             );

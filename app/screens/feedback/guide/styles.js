@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../../theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
@@ -6,6 +7,9 @@ export default styles = StyleSheet.create({
   },
   textTitle: {
     marginBottom: 10,
+  },
+  contentDescription: {
+    lineHeight: 24,
   },
   signPostContainer: {
     marginTop: 20,
@@ -18,12 +22,20 @@ export default styles = StyleSheet.create({
   textContainer: {
     flex: 2,
     marginLeft: 20,
-    marginTop: -6,
   },
   fabStyle: {
     position: 'absolute',
     bottom: 0,
     alignSelf: 'center',
-    backgroundColor: '#3700B3',
+    backgroundColor: Colors.primary,
   },
+  mediumTextStyle: {
+    color: Colors.mediumBlack
+  },
+  lightTextStyle: {
+    color: Colors.lightBlack
+  },
+  guideText: {
+    marginTop: 5,
+  }
 });
