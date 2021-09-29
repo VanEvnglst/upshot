@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../../theme/colors';
 
 export default styles = StyleSheet.create({
   contentContainer: {
@@ -13,5 +14,18 @@ export default styles = StyleSheet.create({
     flex: 1,
     marginBottom: 20,
     justifyContent: 'flex-end',
+  },
+  button: {
+    backgroundColor: Colors.primaryDark,
+  },
+  disabledBtn: {
+    backgroundColor: Colors.black,
+    opacity: 0.04,
+  },
+  disabledText: {
+    color: Colors.opaqueBlack,
+  },
+  btnText: {
+    color: Colors.white,
   },
 });
