@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image } from 'react-native';
 import { useSelector } from 'react-redux';
-import styles from './styles';
+
 import { Wrapper, Header, Text } from '../../components';
 import Images from '../../assets/images';
 import labels from '../../locales/en';
-import { getFirstName } from '../../store/userRedux';
-
+import { getUserFirstName } from '../../store/selectors';
+import styles from './styles';
 const ReminderScreen = props => {
   const { navigation } = props;
   const { triviaReminder, morningReminder, morningContent } = labels.reminders;
-  const firstName = useSelector(getFirstName)
-  console.log('fi', firstName);
+  const userFirstName = useSelector(getUserFirstName);
   const [currentTime, setTime] = useState(new Date().getHours());
   const [content, setContent] = useState({
     image: '',
@@ -51,13 +50,13 @@ const ReminderScreen = props => {
       </View>
       <View style={styles.titleContainer}>
         <Text type="h4">
-          {firstName} {content.title}
+          {userFirstName} {content.title}
         </Text>
         <View style={styles.contentContainer}>
           <Text type="body1">{content.content}</Text>
         </View>
       </View>
-      <Text type='button'>Give Feedback</Text>
+      <Text type="button">Give Feedback</Text>
     </Wrapper>
   );
 };
