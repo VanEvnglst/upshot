@@ -7,4 +7,5 @@ export const getFeedbackFlowList = state =>
   state.feedback.get('feedbackFlow').data;
 export const getFeedbackTypeList = state =>
   state.feedback.get('feedbackType').data;
+export const getRelatedTopicsList = state => state.feedbaback.get('relatedTopics').data;
 export const getChosenFlow = state => state.feedback.get('chosenFlow');
