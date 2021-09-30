@@ -16,4 +16,5 @@ export default {
   agreeableness: require('./images/agreeableness.png'),
   lockedContent: require('./images/icon-lock.png'),
   hintIcon: require('./images/help-outline.png'),
+  calendar: require('./images/calendar.png'),
 };
