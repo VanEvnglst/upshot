@@ -83,21 +83,21 @@ const labels = {
       "Preparing your comments can make the feedback discussion a positive experience. We'll be guiding you through an effective discussion process with your employee. The goal is to align understanding of the situation, collaborate on action plans, and committing to follow up meetings.",
     fiveStepGuide: 'Below are the five steps to guide your discussion:',
     checkIn: {
-      step1: 'Step 1',
+      step: 'Step 1',
       title: 'Check-in',
-      checkInContent: `It's important to set a positive tone at the start of the meeting to establish a safe environment to openly discuss issues. Aside from the usual "How's your day?", what can you say to establish rapport with the employee and make them feel at ease? \n\n Consider checking in with them about something you both know has been an important event or situation, such as their experience with a new assignment or of a new team member, or something with respect to family.`,
+      content: `It's important to set a positive tone at the start of the meeting to establish a safe environment to openly discuss issues. Aside from the usual "How's your day?", what can you say to establish rapport with the employee and make them feel at ease? \n\nConsider checking in with them about something you both know has been an important event or situation, such as their experience with a new assignment or of a new team member, or something with respect to family.`,
       checkInHint: 'What can you say to check-in?',
     },
     statePurpose: {
-      step2: 'Step 2',
+      step: 'Step 2',
       title: 'State the purpose of the discussion',
-      statePurposeContent:
+      content:
         "It's important for your employee to know the intention of the meeting, and that it's going to be a two-way conversation between both of you. \n\n Choose below what you might say:",
       statePurposeBtn:
         'I would like to discuss an observation and my intention is to have a two-way conversation on what happened and what we can do to address it',
     },
     describeDiscuss: {
-      step3: 'Step 3',
+      step: 'Step 3',
       title: 'Descibe and discuss the observations',
       describeEvent:
         'Describe the event. Be specific about the details surrounding the event. Mention the date, place, and circumstances',
@@ -110,17 +110,17 @@ const labels = {
       describeImpactHint: 'Describe the result',
     },
     createActionPlan: {
-      step4: 'Step 4',
+      step: 'Step 4',
       title: 'Create an action plan together',
-      actionPlanContent: 'Lastly, define your next steps using',
+      content: 'Lastly, define your next steps using',
       actionItalic: 'What, When, By Who, and How?',
       actionPlanCont:
         'You may want to write your actions down in a table like the one below:',
     },
     checkOut: {
-      step5: 'Step 5',
+      step: 'Step 5',
       title: 'Check-out and agree on a follow-up date',
-      checkoutContent:
+      content:
         "Just like in Step 1 (Check-in), it's important to end the conversation on a positive note and schedule a follow-up meeting to sustain improved performanct. \n\n What questions do you want to ask at the end of your discussion?",
       checkoutFeelings: 'How do you feel about this conversation?',
       checkoutComfortable:
