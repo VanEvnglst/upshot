@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { Wrapper, Text } from '../../../../components';
+import { Text, ButtonSelection } from '../../../../components';
 import labels from '../../../../locales/en';
 
-const PreparingStep3 = props => {
+const PreparingStep3B = props => {
   const { describeDiscuss } = labels.feedbackPreparing;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -14,12 +14,16 @@ const PreparingStep3 = props => {
             <Text type="h6">
               {describeDiscuss.step}: {describeDiscuss.title}
             </Text>
-            <Text type="body1">{describeDiscuss.describeEvent}</Text>
-            <TextInput placeholder={describeDiscuss.describeEventHint} />
-            <Text type="body1">{describeDiscuss.describeAction}</Text>
-            <TextInput placeholder={describeDiscuss.describeActionHint} />
-            <Text type="body1">{describeDiscuss.describeImpact}</Text>
-            <TextInput placeholder={describeDiscuss.describeImpactHint} />
+            <Text type="body1">{describeDiscuss.observationQuestion}</Text>
+            <ButtonSelection
+              type={'Check'}
+              title={describeDiscuss.observeOption1}
+            />
+            <ButtonSelection
+              type={'Check'}
+              title={describeDiscuss.observeOption2}
+            />
+            <TextInput placeholder={labels.common.somethingElse} />
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -27,4 +31,4 @@ const PreparingStep3 = props => {
   );
 };
 
-export default PreparingStep3;
+export default PreparingStep3B;
