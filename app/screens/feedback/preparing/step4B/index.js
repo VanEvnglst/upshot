@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
 import { Text, ButtonSelection } from '../../../../components';
 import labels from '../../../../locales/en';
 
-const PreparingStep4 = props => {
-  const dispatch = useDispatch();
-
+const PreparingStep4B = props => {
   const { createActionPlan } = labels.feedbackPreparing;
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
@@ -16,14 +14,18 @@ const PreparingStep4 = props => {
           <Text type="h6">
             {createActionPlan.step}: {createActionPlan.title}
           </Text>
-          <Text type="body1">{createActionPlan.content}</Text>
+          <Text type="body1">{createActionPlan.getSuggestions}</Text>
           <ButtonSelection
             type={'Check'}
-            title={createActionPlan.brainstormOption1}
+            title={createActionPlan.suggestionOption1}
           />
           <ButtonSelection
             type={'Check'}
-            title={createActionPlan.brainstormOption2}
+            title={createActionPlan.suggestionOption2}
+          />
+          <ButtonSelection
+            type={'Check'}
+            title={createActionPlan.suggestionOption3}
           />
           <TextInput placeholder={labels.common.somethingElse} />
         </View>
@@ -31,5 +33,3 @@ const PreparingStep4 = props => {
     </ScrollView>
   );
 };
-
-export default PreparingStep4;
