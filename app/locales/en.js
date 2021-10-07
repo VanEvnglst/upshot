@@ -108,11 +108,31 @@ const labels = {
       describeEventHint: 'Describe the event',
       describeActionHint: 'Describe their actions',
       describeImpactHint: 'Describe the result',
+      observationQuestion: `What question can you ask to gather your employee's thoughts about your observations`,
+      observeOption1: 'May I know your thoughts about what I shared?',
+      observeOption2: 'Were my observations aligned with what you experienced?',
+      listenToResponse: `Important: Listen to your employee's response`,
+      threeCContent:
+        'One way to establish trust is by listening to understand where the other person is coming from rather than just telling them what happened and what must be done. Remember to listen deeply, avoiding these 3 common mind traps:',
+      simpleStories: 'Simple Stories',
+      simpleStoriesContent:
+        'Be careful not to jump to conclusions before listening to everything. The story you believe may be simpler than what really happened.',
+      rightness: 'Rightness',
+      rightnessContent: `You may feel it's important for you to be right, but bosses don't really know everything. Humility on your part will be received as strength.`,
+      agreeableness: 'Agreeableness',
+      agreeablenessContent: `Your employee might get upset, but don't let this make you become too agreeable. You need to solve the problem and "tough love" is honest and more respected.`,
     },
     createActionPlan: {
       step: 'Step 4',
       title: 'Create an action plan together',
-      content: 'Lastly, define your next steps using',
+      content: `This step must be a collaborative effort between you and your employee.\n\n
+      First, you will brainstorm possible solutions or actions. What questions do you want to ask to start brainstorming together?`,
+      brainstormOption1: 'What do you think can be done to address the situation?',
+      brainstormOption2: 'What are the options we can explore to solve the problem?',
+      getSuggestions: `After getting your employee's suggestions, you can also provide your own. After exhausting possible options, you may want to evaluate which of the actions would be most effective.`,
+      suggestionOption1: 'What are the pros and cons of each option?',
+      suggestionOption2: 'Which option will generate high impact with least effort?',
+      suggestionOption3: 'Which option you like best? Why?',
       actionItalic: 'What, When, By Who, and How?',
       actionPlanCont:
         'You may want to write your actions down in a table like the one below:',
@@ -166,7 +186,7 @@ const labels = {
     morningContent:
       'Be mindful of moments throughout your day where you can help someone do better by giving them constructive feedback. \n\n Also be mindful of moments where you can motivate someone by recognizing a job well done. \n\n Take a look at your calendar today and anticipate these possible moments.',
     morningCardHeader: "Today's mindful moment",
-    afternoonCardHeader: "Did you know?"
+    afternoonCardHeader: 'Did you know?',
   },
 };
 
