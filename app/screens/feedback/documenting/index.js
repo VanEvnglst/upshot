@@ -29,19 +29,14 @@ const FeedbackDocumenting = () => {
 
   return (
     <Wrapper>
-      {/* <ScrollView
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ backgroundColor: 'white' }}> */}
-        <Header headerRight={{}} />
-        <Text type="overline">Documenting</Text>
-        <ProgressIndicator steps={4} currentIndex={currentStep} />
-        <View style={styles.contentContainer}>{handleStepContent()}</View>
-        <View style={styles.btnContainer}>
-          <Button mode="text">Back</Button>
-          <Button mode="contained">Next</Button>
-        </View>
-      {/* </ScrollView> */}
+      <Header
+        headerRight={{
+          onPress: () => console.log('Gawa ka bottom sheet'),
+        }}
+      />
+      <Text type="overline">Documenting</Text>
+      <ProgressIndicator steps={4} currentIndex={currentStep} />
+      <View style={styles.contentContainer}>{handleStepContent()}</View>
     </Wrapper>
   );
 };
