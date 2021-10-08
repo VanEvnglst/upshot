@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { Text } from '../../../../components';
-import Images from '../../../../assets/images';
-import labels from '../../../../locales/en';
+import { Text } from 'app/components';
+import Images from 'app/assets/images';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const GuideContent = ({ image, title, content }) => {
@@ -26,9 +26,9 @@ const PreparingStep3C = () => {
   const { describeDiscuss } = labels.feedbackPreparing;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>
-        <Text type="h6">{describeDiscuss.listenToResponse}</Text>
-        <Text type="body1" style={styles.contentText}>
+      <View style={styles.container}>
+        <Text type="h6" style={styles.stepTitleText}>{describeDiscuss.listenToResponse}</Text>
+        <Text type="body1" style={styles.descriptionText}>
           {describeDiscuss.threeCContent}
         </Text>
         <GuideContent

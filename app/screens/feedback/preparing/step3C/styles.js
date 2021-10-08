@@ -2,11 +2,18 @@ import { StyleSheet } from 'react-native';
 import Colors from '../../../../theme/colors';
 
 export default styles = StyleSheet.create({
+  container: {
+    paddingRight: 15,
+    marginBottom: 30
+  },
+  stepTitleText: {
+    color: Colors.mediumBlack,
+  },
   guideContainer: {
     marginVertical: 30,
     flexDirection: 'row' 
   },
-  contentText: {
+  descriptionText: {
     marginTop: 20,
     lineHeight: 24,
     color: Colors.mediumBlack,
@@ -24,7 +31,7 @@ export default styles = StyleSheet.create({
   },
   guideText: {
     marginTop: 8,
-    color: Colors.lightBlack
-    
+    color: Colors.lightBlack,
+    lineHeight: 20,
   }
 });
