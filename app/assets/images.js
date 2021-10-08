@@ -17,4 +17,7 @@ export default {
   lockedContent: require('./images/icon-lock.png'),
   hintIcon: require('./images/help-outline.png'),
   calendar: require('./images/calendar.png'),
+  testPassed: require('./images/test-passed.png'),
+  schedule: require('./images/schedule.png'),
+  manWindow: require('./images/window.png'),
 };
