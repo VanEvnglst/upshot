@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from 'react-native-paper';
 
 export default styles = StyleSheet.create({
   container: {
@@ -14,4 +15,19 @@ export default styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
+  overlineText: {
+    color: Colors.lightBlack
+  },
+  descriptionContainer: {
+    paddingRight: 15,
+    marginBottom: 30,
+  },
+  stepTitleText: {
+    color: Colors.mediumBlack
+  },
+  stepDescriptionText: {
+    lineHeight: 24,
+    marginTop: 20,
+    color: Colors.mediumBlack,
+  }
 });
