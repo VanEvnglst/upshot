@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { Text } from '../../../../components';
-import labels from '../../../../locales/en';
-import styles from './styles';
+import { Text } from 'app/components';
+import labels from 'app/locales/en';
+import styles from '../styles';
 
 const PreparingStep1 = props => {
   const { checkIn } = labels.feedbackPreparing;
@@ -19,17 +19,16 @@ const PreparingStep1 = props => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
-        <View>
-          <View style={styles.contentContainer}>
-            <Text type="h6">
+          <View style={styles.descriptionContainer}>
+            <Text type="h6" style={styles.stepTitleText}>
               {checkIn.step}: {checkIn.title}
             </Text>
-            <Text type="body1" style={styles.descriptionText}>
+            <Text type="body1" style={styles.stepDescriptionText}>
               {checkIn.content}
             </Text>
           </View>
 
-          <View style={{ marginTop: 30 }}>
+          <View>
             <TextInput
               type="flat"
               label={isFocused ? checkIn.checkInHint : null}
@@ -44,7 +43,6 @@ const PreparingStep1 = props => {
               theme={{ fonts: { regular: { fontFamily: 'Raleway-Regular' } } }}
             />
           </View>
-        </View>
       </KeyboardAvoidingView>
     </ScrollView>
   );
