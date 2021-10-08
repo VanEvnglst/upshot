@@ -3,21 +3,25 @@ import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper, ProgressIndicator, Header, Text } from '../../../components';
+import { Wrapper, ProgressIndicator, Header, Text } from 'app/components';
 import PreparingStep1 from './step1';
 import PreparingStep2 from './step2';
 import PreparingStep3 from './step3';
 import PreparingStep3B from './step3B';
 import PreparingStep3C from './step3C';
 import PreparingStep4 from './step4';
+import PreparingStep4B from './step4B';
+import PreparingStep4C from './step4C';
 import PreparingStep5 from './step5';
-import labels from '../../../locales/en';
+import PreparingStep5B from './step5B';
+import PreparingStep5C from './step5C';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const FeedbackPreparing = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const [currentStep, setCurrentStep] = useState(5);
+  const [currentStep, setCurrentStep] = useState(11);
 
   const handleStepContent = () => {
     switch (currentStep) {
@@ -40,9 +44,9 @@ const FeedbackPreparing = props => {
       case 9:
         return <PreparingStep5 />;
       case 10:
-        return <Preparing5B />;
+        return <PreparingStep5B />;
       case 11:
-        return <Preparing5C />;
+        return <PreparingStep5C />;
     }
   };
 
@@ -52,14 +56,17 @@ const FeedbackPreparing = props => {
         headerLeft={{
           onPress: () => navigation.goBack(),
         }}
+        headerRight={{}}
       />
-      <Text type="overline">{labels.feedbackSignPost.preparing}</Text>
+      <Text type="overline" style={styles.overlineText}>
+        {labels.feedbackSignPost.preparing}
+      </Text>
       <ProgressIndicator steps={5} currentIndex={currentStep} />
       <View style={styles.contentContainer}>{handleStepContent()}</View>
-      <View style={styles.btnContainer}>
+      {/* <View style={containerStyles.btnContainer}>
         <Button mode="text">Back</Button>
         <Button mode="contained">Next</Button>
-      </View>
+      </View> */}
     </Wrapper>
   );
 };
