@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { Text } from '../../../../components';
-import Images from '../../../../assets/images';
-import labels from '../../../../locales/en';
+import { Text } from 'app/components';
+import Images from 'app/assets/images';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const GuideContent = ({ image, title, content }) => {
@@ -26,25 +26,27 @@ const PreparingStep4C = () => {
   const { createActionPlan } = labels.feedbackPreparing;
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>
-        <Text type="h6">{describeDiscuss.listenToResponse}</Text>
-        <Text type="body1" style={styles.contentText}>
+      <View style={styles.container}>
+        <Text type="h6">
+          {createActionPlan.step}: {createActionPlan.title}
+        </Text>
+        <Text type="body1" style={styles.descriptionText}>
           {createActionPlan.defineNextSteps}
         </Text>
         <GuideContent
           title={createActionPlan.defineWhat}
           content={createActionPlan.defineWhatContent}
-          image={Images.simpleStories}
+          image={Images.testPassed}
         />
         <GuideContent
           title={createActionPlan.defineWhen}
           content={createActionPlan.defineWhenContent}
-          image={Images.rightness}
+          image={Images.schedule}
         />
         <GuideContent
           title={createActionPlan.defineWho}
           content={createActionPlan.defineWhoContent}
-          image={Images.agreeableness}
+          image={Images.manWindow}
         />
       </View>
     </ScrollView>
