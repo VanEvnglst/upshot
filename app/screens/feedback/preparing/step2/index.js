@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { Wrapper, Text, ButtonSelection } from '../../../../components';
-import labels from '../../../../locales/en';
-import styles from './styles';
+import { Text, ButtonSelection } from 'app/components';
+import labels from 'app/locales/en';
+import styles from '../styles';
 
 const PreparingStep2 = props => {
   const dispatch = useDispatch();
@@ -14,30 +14,28 @@ const PreparingStep2 = props => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
-        <View>
-          <View>
-            <Text type="h6">
-              {statePurpose.step}: {statePurpose.title}
-            </Text>
-            <Text type="body1" style={styles.descriptionText}>
-              {statePurpose.content}
-            </Text>
-          </View>
-          <ButtonSelection
-            type={'Radio'}
-            title={statePurpose.statePurposeBtn}
-            onPress={() => console.log('press')}
-            selected={false}
-          />
-          <TextInput
-            value={step2Data}
-            onChangeText={text => setStep2Data(text)}
-            placeholder={labels.common.inputHint}
-            onBlur={() => setFocus(false)}
-            onFocus={() => setFocus(true)}
-            style={{ marginTop: 10 }}
-          />
+        <View style={styles.descriptionContainer}>
+          <Text type="h6" style={styles.stepTitleText}>
+            {statePurpose.step}: {statePurpose.title}
+          </Text>
+          <Text type="body1" style={styles.stepDescriptionText}>
+            {statePurpose.content}
+          </Text>
         </View>
+        <ButtonSelection
+          type={'Radio'}
+          title={statePurpose.statePurposeBtn}
+          onPress={() => console.log('press')}
+          selected={false}
+        />
+        <TextInput
+          value={step2Data}
+          onChangeText={text => setStep2Data(text)}
+          placeholder={labels.common.inputHint}
+          onBlur={() => setFocus(false)}
+          onFocus={() => setFocus(true)}
+          style={{ marginTop: 10 }}
+        />
       </KeyboardAvoidingView>
     </ScrollView>
   );
