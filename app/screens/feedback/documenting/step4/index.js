@@ -6,9 +6,9 @@ import {
   HintIndicator,
   CalendarPicker,
   DateTimePicker,
-} from '../../../../components';
-import FeedbackActions from '../../../../store/feedbackRedux';
-import labels from '../../../../locales/en';
+} from 'app/components';
+import FeedbackActions from '../../../../store/feedback/feedbackRedux';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const DocumentingStep4 = props => {

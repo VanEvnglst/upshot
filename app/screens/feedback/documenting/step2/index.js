@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { HintIndicator, ButtonSelection, Text } from '../../../../components';
-import feedbackTypes from '../../../../enums/feedback-type';
+import { HintIndicator, ButtonSelection, Text } from 'app/components';
+import feedbackTypes from 'app/enums/feedback-type';
 import styles from './styles';
-import labels from '../../../../locales/en';
+import labels from 'app/locales/en';
 
 const DocumentingStep2 = props => {
   const [feedbackType, setFeedbackType] = useState({

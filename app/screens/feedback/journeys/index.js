@@ -6,9 +6,9 @@ import {
   SignPostIndicator,
   Header,
   JourneyIndicator,
-} from '../../../components';
-import feedbackJourneySteps from '../../../enums/feedback-journey';
-import labels from '../../../locales/en';
+} from 'app/components';
+import feedbackJourneySteps from 'app/enums/feedback-journey';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const ActiveFeedbackJourney = () => {

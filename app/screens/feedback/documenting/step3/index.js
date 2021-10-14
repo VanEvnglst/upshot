@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
-import { ButtonSelection, Text } from '../../../../components';
-import { getRelatedTopicsList } from '../../../../store/selectors';
-import feedbackTopics from '../../../../enums/feedback-topics';
+import { ButtonSelection, Text } from 'app/components';
+import { getRelatedTopicsList } from 'app/store/selectors';
 // import styles from './styles';
-import labels from '../../../../locales/en';
+import labels from 'app/locales/en';
 
 const DocumentingStep3 = props => {
   const feedbackList = useSelector(getRelatedTopicsList);

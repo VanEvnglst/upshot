@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
-import { Wrapper, Text, Header, SignPostIndicator } from '../../../components';
-import feedbackJourneySteps from '../../../enums/feedback-journey';
-import labels from '../../../locales/en';
+import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
+import feedbackJourneySteps from 'app/enums/feedback-journey';
+import labels from 'app/locales/en';
 import styles from './styles';
-import { getChosenFlow } from '../../../store/selectors';
+import { getChosenFlow } from 'app/store/selectors';
 
 const FeedbackGuide = props => {
   const { navigation } = props;
@@ -49,6 +49,7 @@ const FeedbackGuide = props => {
         <View style={styles.signPostContainer}>
           {signPost.map((item, i) => {
             return (
+              // TODO: Make separate component
               <View style={styles.contentContainer} key={item.id}>
                 <SignPostIndicator isLastItem={i === signPost.length - 1} />
                 <View style={styles.textContainer}>

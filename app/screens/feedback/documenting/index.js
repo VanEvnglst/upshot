@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper, ProgressIndicator, Header, Text } from '../../../components';
+import { Wrapper, ProgressIndicator, Header, Text } from 'app/components';
 import DocumentingStep4 from './step4';
 import DocumentingStep3 from './step3';
 import DocumentingStep2 from './step2';

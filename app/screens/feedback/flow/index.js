@@ -8,10 +8,10 @@ import {
   HintIndicator,
   Header,
   Text,
-} from '../../../components';
-import { getFeedbackFlowList } from '../../../store/selectors';
-import FeedbackActions from '../../../store/feedbackRedux';
-import labels from '../../../locales/en';
+} from 'app/components';
+import { getFeedbackFlowList } from 'app/store/selectors';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const FeedbackFlow = props => {

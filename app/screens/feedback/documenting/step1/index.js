@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip, Button } from 'react-native-paper';
-import { Text } from '../../../../components';
-import FeedbackActions from '../../../../store/feedbackRedux';
-import DocumentingActions from '../../../../store/feedback/documentingRedux';
-import labels from '../../../../locales/en';
+import { Text } from 'app/components';
+import FeedbackActions from '../../../../store/feedback/feedbackRedux';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const DocumentingStep1 = props => {
