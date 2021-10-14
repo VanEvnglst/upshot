@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../theme/colors';
+import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   cardContainer: {
@@ -23,7 +23,7 @@ export default styles = StyleSheet.create({
   imageContainer: {
     flex: 2,
     backgroundColor: '#0000001F',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   image: {
     borderTopRightRadius: 4,
@@ -37,14 +37,14 @@ export default styles = StyleSheet.create({
   },
   headline: {
     color: '#000000', //DE
-    marginBottom: 10,  
+    marginBottom: 10,
   },
   subtitle: {
     color: '#00000099',
     lineHeight: 20,
   },
   inProgressSubtitle: {
-    color: Colors.primary
+    color: Colors.primary,
   },
   smallTextContainer: {
     flexDirection: 'row',
@@ -55,10 +55,10 @@ export default styles = StyleSheet.create({
   },
   smallHeadline: {
     color: '#000000DE',
-    flex: 1
+    flex: 1,
   },
   iconStyle: {
     width: 24,
     height: 24,
-  }
+  },
 });

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../theme/colors';
+import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
@@ -26,16 +26,16 @@ export default styles = StyleSheet.create({
     opacity: 0.35,
   },
   descriptionText: {
-    marginTop: 20, 
-    opacity: 0.74
+    marginTop: 20,
+    opacity: 0.74,
   },
   currentText: {
     color: Colors.white,
   },
   buttonText: {
-    marginTop: 25,   
+    marginTop: 25,
   },
   reviewText: {
-    color: Colors.primaryDark
-  }
+    color: Colors.primaryDark,
+  },
 });

@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text } from '../../components';
+import { Text } from 'app/components';
 import styles from './styles';
-import Images from '../../assets/images';
+import Images from 'app/assets/images';
 
 const CheckBox = ({ selected, onPress }) => {
   return (

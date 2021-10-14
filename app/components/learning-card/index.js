@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { Text } from '../../components';
-import Images from '../../assets/images';
+import { Text } from 'app/components';
+import Images from 'app/assets/images';
 import styles from './styles';
 
 const LearningCard = props => {
