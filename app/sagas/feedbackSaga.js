@@ -1,7 +1,7 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import FeedbackActions, { FeedbackTypes } from '../store/feedbackRedux';
-import api from '../services/apiService';
+import FeedbackActions, { FeedbackTypes } from 'app/store/feedback/feedbackRedux';
+import api from 'app/services/apiService';
 
 export function* fetchFeedbackType() {
   // const connected = yield checkInternetConnection();
