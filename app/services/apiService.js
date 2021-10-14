@@ -2,6 +2,25 @@ import Config from 'react-native-config';
 import { upshotAPI } from '../config/apiConfig';
 
 export default {
+  signIn: async (email, password) => {
+    const payload = { email, passwd: password };
+    return upshotAPI.post('/login', payload);
+  },
+
+  signUp: async data => {
+    const { email, password, firstName, lastName, role, token } = data;
+    const payload = {
+      email,
+      passwd: password,
+      firstname: firstName,
+      lastname: lastName,
+      role,
+      token,
+    };
+    console.log('data', payload);
+    return upshotAPI.post('/signup', payload);
+  },
+
   getFeedbackType: async () => {
     return upshotAPI.get('/feedback/feedback-type');
   },
