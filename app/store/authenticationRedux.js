@@ -5,10 +5,11 @@ import { Map } from 'immutable';
 export const INITIAL_STATE = Map({
   isSignedIn: false,
   signInError: '',
+  loading: false,
 });
 
 const { Types, Creators } = createActions({
-  signInUser: ['username', 'password'],
+  signInUser: ['email', 'password'],
   signInUserSuccess: null,
   signInUserFailure: ['signInUserError'],
   signOutUser: [''],
@@ -18,7 +19,9 @@ export const AuthenticationTypes = Types;
 export default Creators;
 
 /* ------------- Reducers ------------- */
-const signInUser = state => state.merge({});
+const signInUser = state => state.merge({
+  loading: true,
+});
 const signInUserSuccess = state => state.merge({});
 const signInUserFailure = state => state.merge({});
 const signOutUser = state => state.merge({ ...INITIAL_STATE });
