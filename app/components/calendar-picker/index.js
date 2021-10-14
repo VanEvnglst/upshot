@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
-import { Text } from '../../components';
-import Images from '../../assets/images';
+import { Text } from 'app/components';
+import Images from 'app/assets/images';
 import styles from './styles';
 
 const CalendarPicker = ({ onPress, text }) => {
