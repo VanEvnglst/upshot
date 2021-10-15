@@ -13,3 +13,4 @@ export const getFeedbackTypeList = state =>
 export const getRelatedTopicsList = state =>
   state.feedbaback.get('relatedTopics').data;
 export const getChosenFlow = state => state.feedback.get('chosenFlow');
+export const getStaffList = state => state.feedback.get('teamMembers').data;
