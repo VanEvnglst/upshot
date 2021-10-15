@@ -1,6 +1,8 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import FeedbackActions, { FeedbackTypes } from 'app/store/feedback/feedbackRedux';
+import FeedbackActions, {
+  FeedbackTypes,
+} from 'app/store/feedback/feedbackRedux';
 import api from 'app/services/apiService';
 
 export function* fetchFeedbackType() {
@@ -33,6 +35,12 @@ export function* fetchFeedbackFlow() {
 
 export function* fetchTeamMembers() {
   const response = yield call(api.getTeamMembers);
+  if (response.ok) {
+    const staffList = response.data.staff;
+    yield put(FeedbackActions.fetchTeamMembersSuccess(staffList));
+  } else {
+    yield put(FeedbackActions.fetchTeamMembersFailure(response.data));
+  }
 }
 
 export function* fetchFeedbackTopics() {
@@ -49,7 +57,7 @@ function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_FLOW, fetchFeedbackFlow);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TYPE, fetchFeedbackType);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
-  // yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
+  yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
 }
 
 export default watchFeedbackSaga;
