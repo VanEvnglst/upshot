@@ -1,9 +1,11 @@
 import Config from 'react-native-config';
 import { upshotAPI } from '../config/apiConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default {
-  signIn: async (email, password) => {
+  signIn: async ({ email, password }) => {
     const payload = { email, passwd: password };
+    debugger;
     return upshotAPI.post('/login', payload);
   },
 
@@ -18,6 +20,7 @@ export default {
       token,
     };
     console.log('data', payload);
+    debugger;
     return upshotAPI.post('/signup', payload);
   },
 
@@ -33,17 +36,20 @@ export default {
     return upshotAPI.get('/feedback/feedback-topics');
   },
 
-  getTeamMembers: async uniqueId => {
+  getTeamMembers: async () => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
     return upshotAPI.get(`/${uniqueId}/get_staff`);
   },
 
   getTrivias: async () => {
     return upshotAPI.get('/trivias');
   },
-  postNewJourney: async uniqueId => {
+  postNewJourney: async () => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
     return upshotAPI.post(`/${uniqueId}/journey/new`);
   },
-  postFeedbackDocumenting: async uniqueId => {
+  postFeedbackDocumenting: async () => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`);
   },
   updateDocumenting: async () => {},
