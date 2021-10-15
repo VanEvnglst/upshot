@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { Formik } from 'formik';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import OnboardingActions from 'app/store/OnboardingRedux';
+
+import { TextInput } from 'app/components';
 import styles from './styles';
 
-const Onboarding = () => {
+const Onboarding = props => {
+  const { navigation } = props;
+  const dispatch = useDispatch();
   const [state, setState] = useState({
-    username: '',
+    email: '',
     password: '',
     firstName: '',
     lastName: '',
+    role: 1,
+    token: '',
   });
 
   const updateData = data => setState({ ...state, ...data });
 
   const validate = () => {
-    const { username, password, firstName, lastName } = props;
+    const { email, password, firstName, lastName } = state;
     const errors = {};
-    if (username.length === 0) {
-      errors.usernameError = 'Username is required';
+    if (email.length === 0) {
+      errors.emailError = 'Email is required';
     }
 
     if (password.length === 0) {
@@ -34,50 +49,109 @@ const Onboarding = () => {
     return errors;
   };
 
+  const retrieveToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('fcmToken');
+      updateData({ token: value });
+    } catch (e) {
+      console.log('retrieve error');
+    }
+  };
+
+  const testSignUp = async () => {
+    const body = {
+      email: 'ivantest@upshot.global',
+      password: 'password1',
+      token: token,
+      lastname: 'Test',
+      firstname: 'Ivan',
+    };
+    const response = await fetch('http://18.138.8.34/api/signup', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+    const json = await response.json();
+    console.log('json', json);
+  };
+
+  useEffect(() => {
+    //retrieveToken();
+    //testSignUp();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Email"
-        style={{
-          borderWidth: 1,
-          height: 60,
-          margin: 20,
-          paddingHorizontal: 10,
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <Formik
+        initialValues={{ state }}
+        validate={() => validate()}
+        validateOnChange={false}
+        onSubmit={() => dispatch(OnboardingActions.signUpUser(state))}>
+        {({ errors, handleSubmit }) => {
+          return (
+            <View style={styles.container}>
+              <TextInput
+                placeholder="Email"
+                style={{
+                  height: 60,
+                  margin: 20,
+                  paddingHorizontal: 10,
+                }}
+                value={state.email}
+                onChangeText={email => updateData({ email })}
+              />
+              <TextInput
+                placeholder="Password"
+                style={{
+                  height: 60,
+                  margin: 20,
+                  paddingHorizontal: 10,
+                }}
+                secureTextEntry
+                value={state.password}
+                onChangeText={password => updateData({ password })}
+              />
+              <TextInput
+                placeholder="First name"
+                style={{
+                  height: 60,
+                  margin: 20,
+                  paddingHorizontal: 10,
+                }}
+                value={state.firstName}
+                onChangeText={firstName => updateData({ firstName })}
+              />
+              <TextInput
+                placeholder="Last name"
+                style={{
+                  height: 60,
+                  margin: 20,
+                  paddingHorizontal: 10,
+                }}
+                value={state.lastName}
+                onChangeText={lastName => updateData({ lastName })}
+              />
+              <TouchableOpacity
+                style={{
+                  marginTop: 50,
+                  width: 250,
+                  height: 60,
+                  backgroundColor: 'blue',
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => handleSubmit()}>
+                <Text style={{ color: 'white' }}>Sign up</Text>
+              </TouchableOpacity>
+            </View>
+          );
         }}
-        onChangeText={username => updateData({ username })}
-      />
-      <TextInput
-        placeholder="Password"
-        style={{
-          borderWidth: 1,
-          height: 60,
-          margin: 20,
-          paddingHorizontal: 10,
-        }}
-        secureTextEntry
-        onChangeText={password => updateData({ password })}
-      />
-      <TextInput
-        placeholder="First name"
-        style={{
-          borderWidth: 1,
-          height: 60,
-          margin: 20,
-          paddingHorizontal: 10,
-        }}
-        onChangeText={firstName => updateData({ firstName })}
-      />
-      <TextInput
-        placeholder="Last name"
-        style={{
-          borderWidth: 1,
-          height: 60,
-          margin: 20,
-          paddingHorizontal: 10,
-        }}
-        onChangeText={lastName => updateData({ lastName })}
-      />
-    </View>
+      </Formik>
+    </KeyboardAvoidingView>
   );
 };
 
