@@ -19,10 +19,15 @@ export const AuthenticationTypes = Types;
 export default Creators;
 
 /* ------------- Reducers ------------- */
-const signInUser = state => state.merge({
-  loading: true,
-});
-const signInUserSuccess = state => state.merge({});
+const signInUser = state =>
+  state.merge({
+    loading: true,
+  });
+const signInUserSuccess = state =>
+  state.merge({
+    loading: false,
+    isSignedIn: true,
+  });
 const signInUserFailure = state => state.merge({});
 const signOutUser = state => state.merge({ ...INITIAL_STATE });
 
@@ -33,5 +38,3 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_USER_FAILURE]: signInUserFailure,
   [Types.SIGN_OUT_USER]: signOutUser,
 });
-
-
