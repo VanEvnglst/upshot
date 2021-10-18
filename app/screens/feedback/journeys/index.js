@@ -7,7 +7,7 @@ import {
   Header,
   JourneyIndicator,
 } from 'app/components';
-import feedbackJourneySteps from 'app/enums/feedback-journey';
+import feedbackJourneySteps from 'app/models/FeedbackJourney';
 import labels from 'app/locales/en';
 import styles from './styles';
 
