@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
-import feedbackJourneySteps from 'app/enums/feedback-journey';
+import feedbackJourneySteps from 'app/models/FeedbackJourney';
 import labels from 'app/locales/en';
 import styles from './styles';
 import { getChosenFlow } from 'app/store/selectors';
