@@ -1,38 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-native-paper';
 import { HintIndicator, ButtonSelection, Text } from 'app/components';
-import feedbackTypes from 'app/enums/feedback-type';
-import styles from './styles';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
+import { getFeedbackTypeList, getDocumentingStep } from 'app/store/selectors';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import labels from 'app/locales/en';
+import containerStyles from '../styles';
 
 const DocumentingStep2 = props => {
+  const dispatch = useDispatch();
+  const feedbackTypes = useSelector(getFeedbackTypeList);
+  const activeStep = useSelector(getDocumentingStep);
+  const [isCompleted, setCompletion] = useState(false);
   const [feedbackType, setFeedbackType] = useState({
     id: null,
-    title: '',
-    hint: '',
+    type: '',
   });
   const [hint, showHint] = useState(false);
 
   const _handleFeedbackType = item => {
     setFeedbackType(item);
+    setCompletion(true);
   };
+
+  const handleBack = () => {
+    dispatch(DocumentingActions.setActiveStep(activeStep - 1));
+  };
+  const handleNext = () => {
+    dispatch(DocumentingActions.setDocumentingData('step2', feedbackType));
+    dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+  };
+
   return (
-    <View style={styles.container}>
-      <Text type="h6" style={{ marginTop: 20, marginBottom: 10 }}>
+    <View style={containerStyles.container}>
+      <View style={containerStyles.contentContainer}>
+      <Text type="h6" style={containerStyles.stepTitleText}>
         {labels.feedbackDocumenting.feedbackToGive}
       </Text>
       {feedbackTypes.map((item, i) => (
         <ButtonSelection
-          title={item.title}
+          title={item.display_name}
           type={'Radio'}
           content={item.hint}
           showHint={hint}
           onPress={() => _handleFeedbackType(item)}
           selected={item.id === feedbackType.id}
-          key={i}
+          key={item.id}
         />
       ))}
       <HintIndicator showHint={hint} onPress={() => showHint(!hint)} />
+      </View>
+      <View style={containerStyles.btnContainer}>
+        <Button mode="text" onPress={() => handleBack()}>
+        {labels.common.back}
+        </Button>
+        <Button
+          style={styles.button}
+          disabled={!isCompleted}
+          onPress={() => handleNext()}
+          mode="contained">
+          {labels.common.next}
+        </Button>
+      </View>
     </View>
   );
 };
