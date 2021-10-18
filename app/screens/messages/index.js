@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Wrapper, Text } from '../../components';
-import labels from '../../locales/en';
+import { Wrapper, Text } from 'app/components';
+import labels from 'app/locales/en';
 
 import styles from './styles';
 

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../theme/colors';
-import Fonts from '../../theme/fonts';
+import Colors from 'app/theme/colors';
+import Fonts from 'app/theme/fonts';
 
 const SPACING = 20;
 const AVATAR_SIZE = 70;
