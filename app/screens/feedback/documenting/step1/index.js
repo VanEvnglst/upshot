@@ -2,26 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip, Button } from 'react-native-paper';
-
 import { Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import { getStaffList } from 'app/store/selectors';
+import { getStaffList, getDocumentingStep } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
+import containerStyles from '../styles';
 
 const DocumentingStep1 = props => {
   const dispatch = useDispatch();
-  const currentStep = useSelector(state => state.documenting.get('activeStep'));
+  const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
   const isLoading = useSelector(
     state => state.feedback.get('teamMembers').fetching,
   );
-  const [teamMember, setTeamMember] = useState();
+  const [teamMember, setTeamMember] = useState('');
+  const [isCompleted, setCompletion] = useState(false);
 
   const chooseTeamMember = name => {
-    debugger;
     setTeamMember(name);
+    setCompletion(true);
   };
 
   useEffect(() => {
@@ -29,13 +30,14 @@ const DocumentingStep1 = props => {
   }, []);
 
   const handleNext = () => {
-    //dispatch(DocumentingActions.setActiveStep(currentStep));
+    dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
+    dispatch(DocumentingActions.setActiveStep(activeStep + 1));
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text type="h6" style={styles.label}>
+        <Text type="h6" style={containerStyles.stepTitleText}>
           {labels.feedbackDocumenting.giveFeedbackTo}
         </Text>
 
@@ -45,20 +47,32 @@ const DocumentingStep1 = props => {
             staffList.map((item, i) => (
               <Chip
                 key={i}
-                onPress={val => chooseTeamMember(val)}
+                onPress={() => chooseTeamMember(item)}
                 mode="flat"
-                style={styles.chips}>
-                <Text type="body2">{item}</Text>
+                style={[
+                  styles.chips,
+                  teamMember === item && styles.selectedChip,
+                ]}>
+                <Text
+                  type="body2"
+                  style={
+                    teamMember === item
+                      ? styles.selectedChipText
+                      : styles.chipText
+                  }>
+                  {item}
+                </Text>
               </Chip>
             ))}
         </View>
       </View>
       <View style={styles.btnContainer}>
-        <Button disabled={currentStep === 1} mode="text">
-          Back
-        </Button>
-        <Button onPress={() => handleNext()} mode="contained">
-          Next
+        <Button
+          style={styles.button}
+          disabled={!isCompleted}
+          onPress={() => handleNext()}
+          mode="contained">
+          {labels.common.next}
         </Button>
       </View>
     </View>
