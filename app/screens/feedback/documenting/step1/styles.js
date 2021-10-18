@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
@@ -19,8 +20,23 @@ export default styles = StyleSheet.create({
     marginVertical: 10,
     marginRight: 10,
   },
+  chipText: {
+    color: Colors.mediumBlack,
+  },
+  selectedChip: {
+    backgroundColor: Colors.primary50,
+  },
+  selectedChipText: {
+    color: Colors.primary,
+  },
   btnContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginBottom: 20,
+  },
+  button: {
+    alignSelf: 'flex-end'
   }
-})
+});
