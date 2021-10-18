@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { Button, ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper, ProgressIndicator, Header, Text } from 'app/components';
+import { Wrapper, Header, Text } from 'app/components';
 import {
   getDocumentingStep,
   getDocumentingMaxSteps,
