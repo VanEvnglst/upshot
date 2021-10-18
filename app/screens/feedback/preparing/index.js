@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper, ProgressIndicator, Header, Text } from 'app/components';
+import { Wrapper, Header, Text } from 'app/components';
 import PreparingStep1 from './step1';
 import PreparingStep2 from './step2';
 import PreparingStep3 from './step3';
@@ -61,7 +61,7 @@ const FeedbackPreparing = props => {
       <Text type="overline" style={styles.overlineText}>
         {labels.feedbackSignPost.preparing}
       </Text>
-      <ProgressIndicator steps={5} currentIndex={currentStep} />
+      {/* <ProgressIndicator steps={5} currentIndex={currentStep} /> */}
       <View style={styles.contentContainer}>{handleStepContent()}</View>
       {/* <View style={containerStyles.btnContainer}>
         <Button mode="text">Back</Button>
