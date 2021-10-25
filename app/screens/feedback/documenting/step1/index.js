@@ -17,11 +17,14 @@ const DocumentingStep1 = props => {
   const isLoading = useSelector(
     state => state.feedback.get('teamMembers').fetching,
   );
-  const [teamMember, setTeamMember] = useState('');
+  const [teamMember, setTeamMember] = useState({
+    id: null,
+    name: '',
+  });
   const [isCompleted, setCompletion] = useState(false);
 
-  const chooseTeamMember = name => {
-    setTeamMember(name);
+  const chooseTeamMember = member => {
+    setTeamMember(member);
     setCompletion(true);
   };
 
@@ -46,21 +49,21 @@ const DocumentingStep1 = props => {
           {staffList &&
             staffList.map((item, i) => (
               <Chip
-                key={i}
+                key={item.id}
                 onPress={() => chooseTeamMember(item)}
                 mode="flat"
                 style={[
                   styles.chips,
-                  teamMember === item && styles.selectedChip,
+                  teamMember.name === item.name && styles.selectedChip,
                 ]}>
                 <Text
                   type="body2"
                   style={
-                    teamMember === item
+                    teamMember.name === item.name
                       ? styles.selectedChipText
                       : styles.chipText
                   }>
-                  {item}
+                  {item.name}
                 </Text>
               </Chip>
             ))}
