@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { Text } from 'app/components';
+import { Text, TextInput } from 'app/components';
 import labels from 'app/locales/en';
 import styles from '../styles';
 
@@ -11,7 +10,6 @@ const PreparingStep1 = props => {
   const dispatch = useDispatch();
   const [checkInValue, setCheckInValue] = useState();
   const [isComplete, setComplete] = useState(false);
-  const [isFocused, setFocus] = useState(false);
 
   const handleText = () => {
     //dispatch()
@@ -27,19 +25,15 @@ const PreparingStep1 = props => {
               {checkIn.content}
             </Text>
           </View>
-
           <View>
             <TextInput
-              type="flat"
-              label={isFocused ? checkIn.checkInHint : null}
-              placeholder={isFocused ? null : checkIn.checkInHint}
+              label={checkIn.checkInHint}
+              placeholder={checkIn.checkInHint}
               value={checkInValue}
               onChangeText={text => setCheckInValue(text)}
               textAlignVertical="top"
               multiline
               numberOfLines={5}
-              onBlur={() => setFocus(false)}
-              onFocus={() => setFocus(true)}
               theme={{ fonts: { regular: { fontFamily: 'Raleway-Regular' } } }}
             />
           </View>
