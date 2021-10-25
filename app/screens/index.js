@@ -9,13 +9,12 @@ export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
 
 /* ------------- Feedback Stack ------------- */
-export { default as ActiveFeedbackJourney } from './feedback/journeys';
-
+export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
+export { default as FeedbackGuide } from './feedback/guide';
+export { default as FeedbackJourneyList } from './feedback/journey-list';
 /* ------------- Feedback Documenting ------------- */
 export { default as FeedbackFlow } from './feedback/flow';
-export { default as FeedbackGuide } from './feedback/guide';
 export { default as FeedbackDocumenting } from './feedback/documenting';
-export { default as FeedbackSignPost } from './feedback/sign-post';
 
 /* ------------- Feedback Preparing ------------- */
 export { default as PreparingGuide } from './feedback/preparing/guide';
