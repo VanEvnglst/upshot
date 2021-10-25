@@ -3,7 +3,7 @@ import { networkSaga } from 'react-native-offline';
 import watchAuthenticationSaga from './AuthenticationSaga';
 import watchOnboardingSaga from './OnboardingSaga';
 import watchFeedbackSaga from './FeedbackSaga';
-import watchUserSaga from './userSaga';
+import watchUserSaga from './UserSaga';
 
 function* watchNetwork() {
   try {
