@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../theme/colors';
+import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // alignSelf: 'flex-start'
   },
   postInProgress: {
     width: 24,
@@ -14,12 +13,12 @@ export default styles = StyleSheet.create({
   },
   postLine: {
     width: 1,
-    backgroundColor: 'gray',
-    opacity: 0.3,
+    backgroundColor: Colors.black,
+    opacity: 0.12,
     height: 70,
   },
-  disabledLine:{
-    height: 40,
+  disabledLine: {
+    height: 50,
   },
   doneLine: {
     height: 90,
