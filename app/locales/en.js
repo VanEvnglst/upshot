@@ -38,6 +38,7 @@ const labels = {
       'When you gave feedback right after observing an event',
     feedbackCoaching: 'Feedback Coaching',
     feedbackFor: 'Feedback for',
+    history: 'History',
   },
   feedbackSignPost: {
     title: 'The feedback journey',
@@ -126,13 +127,17 @@ const labels = {
       step: 'Step 4',
       title: 'Create an action plan together',
       content: `This step must be a collaborative effort between you and your employee.\n\nFirst, you will brainstorm possible solutions or actions. What questions do you want to ask to start brainstorming together?`,
-      brainstormOption1: 'What do you think can be done to address the situation?',
-      brainstormOption2: 'What are the options we can explore to solve the problem?',
+      brainstormOption1:
+        'What do you think can be done to address the situation?',
+      brainstormOption2:
+        'What are the options we can explore to solve the problem?',
       getSuggestions: `After getting your employee's suggestions, you can also provide your own. After exhausting possible options, you may want to evaluate which of the actions would be most effective.`,
       suggestionOption1: 'What are the pros and cons of each option?',
-      suggestionOption2: 'Which option will generate high impact with least effort?',
+      suggestionOption2:
+        'Which option will generate high impact with least effort?',
       suggestionOption3: 'Which option you like best? Why?',
-      defineNextSteps: 'Lastly, you and your employee will need to define the next steps by answering the following questions:',
+      defineNextSteps:
+        'Lastly, you and your employee will need to define the next steps by answering the following questions:',
       defineWhat: 'What',
       defineWhatContent: 'What specific actions are we going to take?',
       defineWhen: 'When',
