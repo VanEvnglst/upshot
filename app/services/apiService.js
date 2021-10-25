@@ -44,13 +44,22 @@ export default {
   getTrivias: async () => {
     return upshotAPI.get('/trivias');
   },
-  postNewJourney: async () => {
+  postNewJourney: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    return upshotAPI.post(`/${uniqueId}/journey/new`);
+    const { feedbackTypeId } = data;
+    const payload = {
+      'feedback-type': feedbackTypeId
+    }
+    
+    return upshotAPI.post(`/${uniqueId}/journey/new`, payload);
   },
-  postFeedbackDocumenting: async () => {
+  postFeedbackDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    return upshotAPI.post(`/${uniqueId}/feedback/documenting`);
+    const {} = data;
+    const payload = {
+
+    }
+    return upshotAPI.post(`/${uniqueId}/feedback/documenting`, payload);
   },
   updateDocumenting: async () => {},
 };
