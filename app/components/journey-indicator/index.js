@@ -1,6 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Text } from 'app/components';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const JourneyIndicator = props => {
@@ -19,11 +20,14 @@ const JourneyIndicator = props => {
         style={[
           current && styles.currentText,
           disabled && styles.disabledText,
+          done && styles.doneTextTitle,
         ]}>
         {item.title}
       </Text>
       {current && (
-        <Text type="overline" style={current && styles.currentText}>
+        <Text
+          type="overline"
+          style={[current && styles.currentText, styles.descriptionText]}>
           15 minutes
         </Text>
       )}
@@ -35,27 +39,39 @@ const JourneyIndicator = props => {
         </Text>
       )}
       {done && (
-        <Text
-          type="button"
-          style={[
-            styles.reviewText,
-            styles.buttonText,
-            current && styles.currentText,
-          ]}>
-          Review
-        </Text>
+        <TouchableOpacity
+          accessibilityRole={'button'}
+          onPress={() => console.log('navigate review')}>
+          <Text
+            type="button"
+            style={[
+              styles.reviewText,
+              styles.buttonText,
+              current && styles.currentText,
+            ]}>
+            {labels.common.review}
+          </Text>
+        </TouchableOpacity>
       )}
       {hasProgress && (
-        <Text style={[styles.buttonText, current && styles.currentText]}>
-          Continue
-        </Text>
+        <TouchableOpacity
+          accessibilityRole={'button'}
+          onPress={() => console.log('navigate continue')}>
+          <Text style={[styles.buttonText, current && styles.currentText]}>
+            {labels.common.continue}
+          </Text>
+        </TouchableOpacity>
       )}
       {current && !hasProgress && (
-        <Text
-          type="button"
-          style={[styles.buttonText, current && styles.currentText]}>
-          Start
-        </Text>
+        <TouchableOpacity
+          accessibilityRole={'button'}
+          onPress={() => console.log('navigate start')}>
+          <Text
+            type="button"
+            style={[styles.buttonText, current && styles.currentText]}>
+            {labels.common.start}
+          </Text>
+        </TouchableOpacity>
       )}
     </View>
   );

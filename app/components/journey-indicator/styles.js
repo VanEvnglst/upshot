@@ -4,15 +4,15 @@ import Colors from 'app/theme/colors';
 export default styles = StyleSheet.create({
   container: {
     marginLeft: 20,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 4,
+    padding: 16,
+    borderWidth: 0.12,
+    borderRadius: 2,
     marginBottom: 15,
-    borderColor: 'rgba(0,0,0, 0.3)',
+    borderColor: Colors.black,
   },
   disabledCard: {
-    height: 50,
+    height: 60,
+    justifyContent: 'center',
   },
   inProgressCard: {
     height: 180,
@@ -23,19 +23,27 @@ export default styles = StyleSheet.create({
     height: 100,
   },
   disabledText: {
-    opacity: 0.35,
+    color: Colors.opaqueBlack,
   },
   descriptionText: {
-    marginTop: 20,
+    marginTop: 10,
     opacity: 0.74,
+    lineHeight: 20,
   },
   currentText: {
     color: Colors.white,
+  },
+  currentDescText: {
+    opacity: 0.74,
   },
   buttonText: {
     marginTop: 25,
   },
   reviewText: {
-    color: Colors.primaryDark,
+    color: Colors.primary,
+  },
+  doneTextTitle: {
+    color: Colors.mediumBlack,
+    lineHeight: 24,
   },
 });
