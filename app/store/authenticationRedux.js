@@ -9,10 +9,11 @@ export const INITIAL_STATE = Map({
 });
 
 const { Types, Creators } = createActions({
-  signInUser: ['email', 'password'],
+  signInUser: ['data'],
   signInUserSuccess: null,
   signInUserFailure: ['signInUserError'],
   signOutUser: [''],
+  setUserSignedIn: ['']
 });
 
 export const AuthenticationTypes = Types;
@@ -22,6 +23,7 @@ export default Creators;
 const signInUser = state =>
   state.merge({
     loading: true,
+    signInError: '',
   });
 const signInUserSuccess = state =>
   state.merge({
@@ -31,10 +33,15 @@ const signInUserSuccess = state =>
 const signInUserFailure = state => state.merge({});
 const signOutUser = state => state.merge({ ...INITIAL_STATE });
 
+const setUserSignedIn = state => state.merge({
+  isSignedIn: true
+})
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_USER]: signInUser,
   [Types.SIGN_IN_USER_SUCCESS]: signInUserSuccess,
   [Types.SIGN_IN_USER_FAILURE]: signInUserFailure,
   [Types.SIGN_OUT_USER]: signOutUser,
+  [Types.SET_USER_SIGNED_IN]: setUserSignedIn,
 });
