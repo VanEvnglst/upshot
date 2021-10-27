@@ -12,7 +12,6 @@ const { Types, Creators } = createActions({
   signUpUser: ['data'],
   signUpUserSuccess: null,
   signUpUserFailure: ['error'],
-
 });
 
 export const OnboardingTypes = Types;
