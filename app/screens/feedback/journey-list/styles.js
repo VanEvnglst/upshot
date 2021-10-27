@@ -26,8 +26,9 @@ export default styles = StyleSheet.create({
     marginBottom: 15,
   },
   inProgressCard: {
-    borderRadius: 3,
-    borderWidth: 0.12,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: Colors.outline,
     marginTop: 15,
   },
   inProgressContent: {

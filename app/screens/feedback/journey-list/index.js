@@ -86,7 +86,8 @@ const FeedbackJourneyList = props => {
         <Text type="overline" style={[styles.overlineText, styles.addedMargin]}>
           {labels.feedbackIntro.history}
         </Text>
-        <ScrollView horizontal>
+        <ScrollView horizontal
+        showsHorizontalScrollIndicator={false}>
           <HistoryCard />
           <HistoryCard />
           <HistoryCard />
