@@ -25,6 +25,10 @@ const Onboarding = props => {
     token: '',
   });
 
+  useEffect(() => {
+    retrieveToken();
+  }, []);
+
   const updateData = data => setState({ ...state, ...data });
 
   const validate = () => {
@@ -58,30 +62,9 @@ const Onboarding = props => {
     }
   };
 
-  const testSignUp = async () => {
-    const body = {
-      email: 'ivantest@upshot.global',
-      password: 'password1',
-      token: token,
-      lastname: 'Test',
-      firstname: 'Ivan',
-    };
-    const response = await fetch('http://18.138.8.34/api/signup', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: body,
-    });
-    const json = await response.json();
-    console.log('json', json);
+  const registerUser = () => {
+    dispatch(OnboardingActions.signUpUser(state));
   };
-
-  useEffect(() => {
-    //retrieveToken();
-    //testSignUp();
-  }, []);
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -89,7 +72,7 @@ const Onboarding = props => {
         initialValues={{ state }}
         validate={() => validate()}
         validateOnChange={false}
-        onSubmit={() => dispatch(OnboardingActions.signUpUser(state))}>
+        onSubmit={() => registerUser()}>
         {({ errors, handleSubmit }) => {
           return (
             <View style={styles.container}>
