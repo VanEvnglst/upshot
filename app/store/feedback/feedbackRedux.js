@@ -31,8 +31,7 @@ const { Types, Creators } = createActions({
   fetchTeamMembers: [''],
   fetchTeamMembersSuccess: ['teamMembersList'],
   fetchTeamMembersFailure: ['error'],
-  // setActiveStep: ['key', 'step'],
-  postFeedbackJourney: [''],
+  postFeedbackJourney: ['data'],
   postFeedbackJourneySuccess: null,
   postFeedbackJourneyFailure: ['error'],
   // postFeedbackDocumenting: [''],
@@ -143,22 +142,13 @@ const fetchTeamMembersFailure = (state, error) =>
     },
   });
 
-// TODO: Have this accept a key and then get the state value to where it merges
-// const setActiveStep = (state, { key, step }) => {
-//   console.log('key', key);
-//   const stepData = state.get(key);
-//   console.log('sd', state);
-//   return state.merge({
-//     activeStep: step,
-//   });
-// };
-
 const postFeedbackJourney = state =>
   state.merge({
     currentJourney: {
       fetching: true,
     },
   });
+
 const postFeedbackJourneySuccess = state => state.merge({});
 const postFeedbackJourneyFailure = state => state.merge({});
 // const postFeedbackDocumenting = state => state.merge({});
