@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { LearningCard, Wrapper, Text } from '../../components';
-import FeedbackActions from '../../store/feedbackRedux';
-import UserActions from '../../store/userRedux';
-import labels from '../../locales/en';
-import Images from '../../assets/images';
+import { useDispatch, useSelector } from 'react-redux';
+import { LearningCard, Wrapper, Text } from 'app/components';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import { getActiveJourneyLength } from 'app/store/selectors';
+import labels from 'app/locales/en';
+import Images from 'app/assets/images';
 import styles from './styles';
 
 const HomeScreen = props => {
@@ -13,6 +13,8 @@ const HomeScreen = props => {
   const { navigation } = props;
 
   const dispatch = useDispatch();
+
+  const activeJourneyLength = useSelector(getActiveJourneyLength);
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchFeedbackFlow());
@@ -36,6 +38,10 @@ const HomeScreen = props => {
   //   );
   // };
 
+  const handleNavigation = () => {
+    navigation.navigate('Feedback');
+  };
+
   return (
     <Wrapper>
       <ScrollView bounces={false} contentContainerStyle={styles.container}>
@@ -50,12 +56,15 @@ const HomeScreen = props => {
             {homeScreen.guidedJourney}
           </Text>
           <LearningCard
-            onPress={() => navigation.navigate('Feedback')}
+            onPress={() => handleNavigation()}
             image={Images.feedbackCoaching}
             headline={'Feedback Coaching'}
             subtitle={
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+              activeJourneyLength > 0
+                ? `${activeJourneyLength} feedback journey in progress`
+                : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
             }
+            hasInProgress={activeJourneyLength > 0}
             mainCard
           />
           <LearningCard
