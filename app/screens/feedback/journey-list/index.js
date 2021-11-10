@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { FAB as FloatingAction, ProgressBar } from 'react-native-paper';
-import {
-  Wrapper,
-  Text,
-  Header,
-} from 'app/components';
-
+import { Wrapper, Text, Header } from 'app/components';
+import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
+import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 
 const FeedbackJourneyList = props => {
   const { navigation } = props;
-  const HistoryCard = ({ navigation, name, date }) => {
+  const dispatch = useDispatch();
+  const recentJourneys = useSelector(getRecentJourneys);
+  const activeJourneys = useSelector(getActiveJourneys);
+
+  useEffect(() => {
+    dispatch(FeedbackHistoryActions.fetchRecentJourneys());
+  }, []);
+
+  const HistoryCard = ({ item }) => {
+    const nameArr = item.member.split(/[ ,]+/);
+    const lastName = nameArr[1].charAt(0);
+    const memberName = `${nameArr[0]} ${lastName}.`; 
     return (
       <TouchableOpacity
         accessibilityRole={'button'}
@@ -20,7 +29,7 @@ const FeedbackJourneyList = props => {
         onPress={() => console.log('sadsadd')}>
         <View style={styles.historyCardContent}>
           <Text type="subtitle1" style={styles.historyTeammateText}>
-            ABC D.
+            {memberName}
           </Text>
           <Text type="body2" style={styles.historyDateText}>
             2 weeks ago
@@ -30,17 +39,25 @@ const FeedbackJourneyList = props => {
     );
   };
 
-  const InProgressCard = ({ name, progress, date }) => {
+  const InProgressCard = ({ activeJourney }) => {
+    const { percent_complete: percent } = activeJourney;
+    const nameArr = activeJourney.member.split(/[ ,]+/);
+    const lastName = nameArr[1].charAt(0);
+    const memberName = `${nameArr[0]} ${lastName}.`; 
+    const progressValue = percent / 100;
+
     return (
       <TouchableOpacity
         accessibilityRole={'button'}
         style={styles.inProgressCard}
-        onPress={() => console.log('in progress')}>
+        onPress={() => handleNavigation('ActiveFeedbackJourney')}>
         <View style={styles.inProgressContent}>
-          <ProgressBar />
+          <ProgressBar
+            progress={progressValue}
+          />
           <View style={styles.inProgressText}>
             <Text type="h6" style={styles.feedbackForText}>
-              Feedback for A
+              Feedback for {memberName}
             </Text>
             <Text type="body2" style={styles.feedbackForDateText}>
               Last worked on ....
@@ -80,17 +97,18 @@ const FeedbackJourneyList = props => {
             {labels.common.inProgress}
           </Text>
         </View>
-        <InProgressCard />
-        <InProgressCard />
-
+        {activeJourneys &&
+          activeJourneys.map((item, i) => (
+            <InProgressCard key={item.id} activeJourney={item} />
+          ))}
         <Text type="overline" style={[styles.overlineText, styles.addedMargin]}>
           {labels.feedbackIntro.history}
         </Text>
-        <ScrollView horizontal
-        showsHorizontalScrollIndicator={false}>
-          <HistoryCard />
-          <HistoryCard />
-          <HistoryCard />
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {recentJourneys &&
+            recentJourneys.map((item, i) => (
+              <HistoryCard key={item.id} item={item} />
+            ))}
         </ScrollView>
       </ScrollView>
       <FloatingAction
