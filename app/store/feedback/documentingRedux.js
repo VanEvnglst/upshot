@@ -19,12 +19,12 @@ export const INITIAL_STATE = Map({
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
-  postFeedbackDocumenting: [''],
-  postFeedbackDocumentingSuccess: null,
+  postFeedbackDocumenting: ['data'],
+  postFeedbackDocumentingSuccess: ['documentingId'],
   postFeedbackDocumentingFailure: ['error'],
   updateFeedbackDocumenting: [''],
   setActiveStep: ['step'],
-  resetActiveStep: [''],
+  resetDocumentingState: null,
   setDocumentingData: ['key', 'data'],
 });
 
@@ -40,10 +40,8 @@ const setActiveStep = (state, { step }) => {
   return state.merge({ activeStep: step });
 };
 
-const resetActiveStep = state =>
-  state.merge({
-    activeStep: 1,
-  });
+const resetDocumentingState = state =>
+  state.merge(INITIAL_STATE);
 
 const setDocumentingData = (state, { key, data }) => {
   const stepData = state.get(key);
@@ -57,7 +55,12 @@ const postFeedbackDocumenting = state =>
     fetching: true,
   });
 
-const postFeedbackDocumentingSuccess = (state, { data }) => state.merge({});
+const postFeedbackDocumentingSuccess = (state, { documentingId }) => {
+  debugger;
+  return state.merge({
+    id: documentingId,
+  });
+};
 
 const postFeedbackDocumentingFailure = (state, { error }) => state.merge({});
 
@@ -66,7 +69,7 @@ const updateFeedbackDocumenting = state => state.merge({});
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_ACTIVE_STEP]: setActiveStep,
-  [Types.RESET_ACTIVE_STEP]: resetActiveStep,
+  [Types.RESET_DOCUMENTING_STATE]: resetDocumentingState,
   [Types.SET_DOCUMENTING_DATA]: setDocumentingData,
   [Types.POST_FEEDBACK_DOCUMENTING]: postFeedbackDocumenting,
   [Types.POST_FEEDBACK_DOCUMENTING_SUCCESS]: postFeedbackDocumentingSuccess,
