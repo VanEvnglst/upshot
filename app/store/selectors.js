@@ -14,9 +14,18 @@ export const getRelatedTopicsList = state =>
   state.feedback.get('relatedTopics').data;
 export const getChosenFlow = state => state.feedback.get('chosenFlow');
 export const getStaffList = state => state.feedback.get('teamMembers').data;
-export const getActiveJourneyLength = state =>
-  state.feedbackHistory.get('activeJourneyList').length;
+
+
+/* ------------- Feedback History Selectors ------------- */
+export const getActiveJourneys = state =>
+  state.feedbackHistory.get('activeJourneyList');
+export const getRecentJourneys = state => state.feedbackHistory.get('recentJourneyList');
+
 
 /* ------------- Feedback Documenting Selectors ------------- */
 export const getDocumentingStep = state => state.documenting.get('activeStep');
 export const getDocumentingMaxSteps = state => state.documenting.get('maxStep');
+export const getStep1Data = state => state.documenting.get('step1');
+export const getStep2Data = state => state.documenting.get('step2');
+export const getStep3Data = state => state.documenting.get('step3');
+
