@@ -37,5 +37,6 @@ export default styles = StyleSheet.create({
   },
   guideText: {
     marginTop: 5,
+    lineHeight: 20,
   }
 });

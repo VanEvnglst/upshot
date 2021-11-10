@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
+import { getChosenFlow } from 'app/store/selectors';
 import feedbackJourneySteps from 'app/models/FeedbackJourney';
 import labels from 'app/locales/en';
 import styles from './styles';
-import { getChosenFlow } from 'app/store/selectors';
 
 const FeedbackGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, common } = labels;
+  const dispatch = useDispatch();
   const flow = useSelector(getChosenFlow);
   const [signPost, setSignPost] = useState([]);
 
@@ -28,6 +30,10 @@ const FeedbackGuide = props => {
     await setSignPost(content);
   };
 
+  const handleNavigation = () => {
+    dispatch(DocumentingActions.resetDocumentingState());
+    navigation.navigate('FeedbackDocumenting');
+  };
   return (
     <Wrapper>
       <ScrollView showsVerticalScrollIndicator={false} bouces={false}>
@@ -72,7 +78,7 @@ const FeedbackGuide = props => {
         icon="play"
         style={styles.fabStyle}
         uppercase
-        onPress={() => navigation.navigate('FeedbackDocumenting')}
+        onPress={() => handleNavigation()}
       />
     </Wrapper>
   );
