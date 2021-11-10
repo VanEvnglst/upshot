@@ -1,26 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import { ButtonSelection, Text } from 'app/components';
-import { getRelatedTopicsList } from 'app/store/selectors';
+import {
+  getRelatedTopicsList,
+  getDocumentingStep,
+  getStep3Data,
+} from 'app/store/selectors';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
 const DocumentingStep3 = props => {
+  const dispatch = useDispatch();
+  const stepData = useSelector(getStep3Data);
+  const activeStep = useSelector(getDocumentingStep);
   const feedbackList = useSelector(getRelatedTopicsList);
   const [feedbackTopic, setFeedbackTopic] = useState([]);
-  const [hint, showHint] = useState(false);
   const [isCompleted, setCompletion] = useState(false);
 
-  const handleBack = () => {};
+  useEffect(() => {
+    if (stepData.data) setFeedbackTopic(stepData.data);
+  }, [stepData]);
 
-  const handleNext = () => {};
+  const handleBack = () => {
+    dispatch(DocumentingActions.setActiveStep(activeStep - 1));
+  };
+
+  const handleNext = () => {
+    dispatch(DocumentingActions.setDocumentingData('step3', feedbackTopic));
+    dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+  };
+
+  const checkSelectedTopic = item => {
+    if (item.topic_name === 'Others') {
+    }
+    console.log('item', item);
+    return feedbackTopic.some(topic => topic === item);
+  };
 
   const _handleFeedbackTopic = item => {
-    // TODO: Fix array handling
-    setFeedbackTopic({ ...feedbackTopic, item });
+    let newTopicList = feedbackTopic;
+    if (checkSelectedTopic(item))
+      newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
+    else newTopicList = [...newTopicList, item];
+    setFeedbackTopic(newTopicList);
+
+    if (newTopicList.length !== 0) setCompletion(true);
+    else setCompletion(false);
   };
+
   return (
     <View style={containerStyles.container}>
       <ScrollView>
@@ -29,18 +59,16 @@ const DocumentingStep3 = props => {
         </Text>
         {feedbackList.map((item, i) => (
           <ButtonSelection
-            title={item.title}
+            title={item.topic_name}
             type={'Check'}
-            content={item.hint}
-            showHint={hint}
             onPress={() => _handleFeedbackTopic(item)}
-            selected={item.id === feedbackTopic.id}
+            selected={checkSelectedTopic(item)}
             key={item.id}
           />
         ))}
         <View style={containerStyles.btnContainer}>
           <Button mode="text" onPress={() => handleBack()}>
-          {labels.common.back}
+            {labels.common.back}
           </Button>
           <Button
             mode="contained"
