@@ -24,31 +24,45 @@ export default Creators;
 
 /* ------------- Reducers ------------- */
 const fetchActiveJourneys = state => {
-  state.merge({
+  return state.merge({
     fetching: true,
+    error: '',
   });
 };
 
-const fetchActiveJourneysSuccess = state => {
-  state.merge({});
+const fetchActiveJourneysSuccess = (state, { activeJourneyList }) => {
+  return state.merge({
+    fetching: false,
+    activeJourneyList,
+  });
 };
 
-const fetchActiveJourneysFailure = state => {
-  state.merge({});
+const fetchActiveJourneysFailure = (state, { error }) => {
+  return state.merge({
+    fetching: false,
+    error,
+  });
 };
 
 const fetchRecentJourneys = state => {
-  state.merge({
+  return state.merge({
     fetching: true,
+    error: '',
   });
 };
 
-const fetchRecentJourneysSuccess = state => {
-  state.merge({});
+const fetchRecentJourneysSuccess = (state, { recentJourneyList }) => {
+  return state.merge({
+    fetching: false,
+    recentJourneyList,
+  });
 };
 
-const fetchRecentJourneysFailure = state => {
-  state.merge({});
+const fetchRecentJourneysFailure = (state, { error }) => {
+  return state.merge({
+    fetching: false,
+    error,
+  });
 };
 
 /* ------------- Hookup Reducers To Types ------------- */
