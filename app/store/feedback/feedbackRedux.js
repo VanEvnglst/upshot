@@ -31,13 +31,9 @@ const { Types, Creators } = createActions({
   fetchTeamMembers: [''],
   fetchTeamMembersSuccess: ['teamMembersList'],
   fetchTeamMembersFailure: ['error'],
-  postFeedbackJourney: ['data'],
-  postFeedbackJourneySuccess: null,
+  postFeedbackJourney: ['flow', 'teamMemberId'],
+  postFeedbackJourneySuccess: ['id'],
   postFeedbackJourneyFailure: ['error'],
-  // postFeedbackDocumenting: [''],
-  // postFeedbackDocumentingSuccess: null,
-  // postFeedbackDocumentingFailure: ['error'],
-  // updateFeedbackDocumenting: [''],
 });
 
 export const FeedbackTypes = Types;
@@ -48,6 +44,7 @@ const fetchFeedbackFlow = state =>
   state.merge({
     feedbackFlow: {
       fetching: true,
+      error: '',
     },
   });
 
@@ -72,6 +69,7 @@ const fetchFeedbackType = state =>
   state.merge({
     feedbackType: {
       fetching: true,
+      error: '',
     },
   });
 
@@ -96,6 +94,7 @@ const fetchFeedbackTopics = state =>
   state.merge({
     relatedTopics: {
       fetching: true,
+      error: '',
     },
   });
 const fetchFeedbackTopicsSuccess = (state, { relatedTopicsList }) => {
@@ -118,11 +117,13 @@ const setFeedbackFlow = (state, { chosenFlow }) =>
   state.merge({
     chosenFlow,
   });
+
 const fetchTeamMembers = state =>
   state.merge({
     teamMembers: {
       fetching: true,
       data: [],
+      error: '',
     },
   });
 
@@ -146,15 +147,19 @@ const postFeedbackJourney = state =>
   state.merge({
     currentJourney: {
       fetching: true,
+      error: '',
     },
   });
 
-const postFeedbackJourneySuccess = state => state.merge({});
+const postFeedbackJourneySuccess = (state, { id }) => {
+  return state.merge({
+    currentJourney: {
+      fetching: false,
+      data: id,
+    },
+  });
+};
 const postFeedbackJourneyFailure = state => state.merge({});
-// const postFeedbackDocumenting = state => state.merge({});
-// const postFeedbackDocumentingSuccess = state => state.merge({});
-// const postFeedbackDocumentingFailure = state => state.merge({});
-// const updateFeedbackDocumenting = state => state.merge({});
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const feedbackReducer = createReducer(INITIAL_STATE, {
