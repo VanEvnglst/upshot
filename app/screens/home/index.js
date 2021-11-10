@@ -3,7 +3,8 @@ import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { LearningCard, Wrapper, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
-import { getActiveJourneyLength } from 'app/store/selectors';
+import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
+import { getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import styles from './styles';
@@ -13,13 +14,13 @@ const HomeScreen = props => {
   const { navigation } = props;
 
   const dispatch = useDispatch();
-
-  const activeJourneyLength = useSelector(getActiveJourneyLength);
+  const activeJourneyLength = useSelector(getActiveJourneys);
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchFeedbackFlow());
     dispatch(FeedbackActions.fetchFeedbackType());
     dispatch(FeedbackActions.fetchFeedbackTopics());
+    dispatch(FeedbackHistoryActions.fetchActiveJourneys());
   }, []);
 
   // const AlertCard = () => {
@@ -60,11 +61,11 @@ const HomeScreen = props => {
             image={Images.feedbackCoaching}
             headline={'Feedback Coaching'}
             subtitle={
-              activeJourneyLength > 0
-                ? `${activeJourneyLength} feedback journey in progress`
+              activeJourneyLength.length > 0
+                ? `${activeJourneyLength.length} feedback journey in progress`
                 : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
             }
-            hasInProgress={activeJourneyLength > 0}
+            hasInProgress={activeJourneyLength.length > 0}
             mainCard
           />
           <LearningCard
