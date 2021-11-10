@@ -10,18 +10,18 @@ import {
   PreparingGuide,
   FeedbackPreparing,
 } from '../screens';
-import { getActiveJourneyLength } from 'app/store/selectors';
+import { getActiveJourneys } from 'app/store/selectors';
 
 const FeedbackStack = createStackNavigator();
 
 export default function FeedbackStackScreen() {
-  const activeJourneyLength = useSelector(getActiveJourneyLength);
+  const activeJourneyLength = useSelector(getActiveJourneys);
   
   return (
     <>
       <FeedbackStack.Navigator 
         headerMode="none"
-        initialRouteName={activeJourneyLength > 0 ? 'FeedbackJourneyList' : 'FeedbackFlow'}
+        initialRouteName={activeJourneyLength.length > 0 ? 'FeedbackJourneyList' : 'FeedbackFlow'}
       >
         <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
         {/* Only appears when starting a new journey */}
