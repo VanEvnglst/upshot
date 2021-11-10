@@ -3,7 +3,10 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import FeedbackActions, {
   FeedbackTypes,
 } from 'app/store/feedback/feedbackRedux';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
 import api from 'app/services/apiService';
+
+const STATUS_OK = 'ok';
 
 export function* fetchFeedbackType() {
   // const connected = yield checkInternetConnection();
@@ -53,11 +56,31 @@ export function* fetchFeedbackTopics() {
   }
 }
 
+export function* postFeedbackJourney({ flow, teamMemberId }) {
+  // const connected = yield checkInternetConnection();
+  // if (!connected) {
+  //   return;
+  // }
+  const response = yield call(api.postNewJourney, flow.id);
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+      const journeyId = response.data.details.journey_id;
+      yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
+      yield put(
+        DocumentingActions.postFeedbackDocumenting({ journeyId, teamMemberId }),
+      );
+    }
+    // save journey id to state using success action call
+    // call create documenting with journey id and team member passed in
+  }
+}
+
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_FLOW, fetchFeedbackFlow);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TYPE, fetchFeedbackType);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
+  yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
 }
 
 export default watchFeedbackSaga;
