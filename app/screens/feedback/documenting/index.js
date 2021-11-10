@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, ProgressBar } from 'react-native-paper';
+import { ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text } from 'app/components';
@@ -18,15 +18,13 @@ import styles from './styles';
 
 const FeedbackDocumenting = () => {
   const dispatch = useDispatch();
+
   const activeStep = useSelector(getDocumentingStep);
   const maxStep = useSelector(getDocumentingMaxSteps);
   const indexValue = activeStep / maxStep;
 
-  useEffect(() => {
-    console.log('step', activeStep);
-  });
   const handleStepContent = () => {
-    switch (1) {
+    switch (activeStep) {
       case 1:
         return <DocumentingStep1 />;
       case 2:
@@ -40,7 +38,7 @@ const FeedbackDocumenting = () => {
 
   const handleCloseBtn = () => {
     if (activeStep === 1) {
-      dispatch(DocumentingActions.resetActiveStep());
+      dispatch(DocumentingActions.resetDocumentingState());
     }
   };
 
