@@ -46,22 +46,51 @@ export default {
   },
   postNewJourney: async data => {
     const params = new URLSearchParams();
-    params.append('feedback-type',data);
+    params.append('flow_type', data);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/journey/new`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/journey`, params);
   },
 
   postFeedbackDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-    const {} = data;
-    params.append('journey_id', data)
-    params.append('staff_id')
-    params.append('topic_id')
-    params.append('incident_date')
-    params.append('reminder')
+    const {
+      journeyId,
+      teamMemberId,
+      feedbackType,
+      topicId,
+      incidentDate,
+      reminderDate,
+    } = data;
+    params.append('journey_id', journeyId);
+    params.append('staff_id', teamMemberId);
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
   },
-  updateDocumenting: async () => {},
+
+  updateDocumenting: async data => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+    const params = new URLSearchParams();
+
+    const { documentingId, feedbackType, topicId, incidentDate, reminderDate} = data;
+    params.append('documenting_id', documentingId);
+    params.append('topic_id', topicId);
+    params.append('incident_date', incidentDate);
+    params.append('pos_or_cor', feedbackType);
+    params.append('reminder_date', reminderDate);
+
+    return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
+  },
+
+  getOpenFeedbackJourneys: async () => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+    
+    return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-open`);
+  },
+
+  getClosedFeedbackJourneys: async () => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-closed`)
+  }
 };
