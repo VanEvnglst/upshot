@@ -5,23 +5,34 @@ import { Chip, Button } from 'react-native-paper';
 import { Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import { getStaffList, getDocumentingStep } from 'app/store/selectors';
+import {
+  getStaffList,
+  getDocumentingStep,
+  getChosenFlow,
+  getStep1Data,
+} from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 import containerStyles from '../styles';
 
 const DocumentingStep1 = props => {
   const dispatch = useDispatch();
+  const stepData = useSelector(getStep1Data);
   const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
   const isLoading = useSelector(
     state => state.feedback.get('teamMembers').fetching,
   );
+  const feedbackFlow = useSelector(getChosenFlow);
   const [teamMember, setTeamMember] = useState({
     id: null,
     name: '',
   });
   const [isCompleted, setCompletion] = useState(false);
+
+  useEffect(() => {
+    if(stepData.data) setTeamMember(stepData.data)
+  }, [stepData]);
 
   const chooseTeamMember = member => {
     setTeamMember(member);
@@ -33,11 +44,12 @@ const DocumentingStep1 = props => {
   }, []);
 
   const handleNext = () => {
+    // TODO: Change logic for existing journey
     dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
-    dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+    dispatch(FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id));
   };
 
-  return (
+  return(
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text type="h6" style={containerStyles.stepTitleText}>
