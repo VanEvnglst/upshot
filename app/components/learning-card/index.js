@@ -1,15 +1,26 @@
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import Images from 'app/assets/images';
 import styles from './styles';
 
 const LearningCard = props => {
-  const { image, headline, subtitle, onPress, smallCard, mainCard, disabled, hasInProgress } =
-    props;
+  const {
+    image,
+    headline,
+    subtitle,
+    onPress,
+    smallCard,
+    mainCard,
+    disabled,
+    hasInProgress,
+    testID,
+  } = props;
 
   return (
     <TouchableOpacity
+      testID={testID}
       accessibilityRole="button"
       onPress={onPress}
       style={[
@@ -42,10 +53,12 @@ const LearningCard = props => {
           />
         )}
         {mainCard && (
-          <Text 
-            type='body2'
-            style={[styles.subtitle,
-              hasInProgress && styles.inProgressSubtitle]}>
+          <Text
+            type="body2"
+            style={[
+              styles.subtitle,
+              hasInProgress && styles.inProgressSubtitle,
+            ]}>
             {subtitle}
           </Text>
         )}
@@ -55,3 +68,25 @@ const LearningCard = props => {
 };
 
 export default LearningCard;
+
+LearningCard.PropTypes = {
+  headline: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  subtitle: PropTypes.string,
+  smallCard: PropTypes.bool,
+  mainCard: PropTypes.bool,
+  disabled: PropTypes.bool,
+  hasInProgress: PropTypes.bool,
+  testID: PropTypes.string.isRequired,
+};
+
+LearningCard.defaultProps = {
+  headline: '',
+  onPress: () => {},
+  subtitle: '',
+  smallCard: false,
+  mainCard: false,
+  disabled: false,
+  hasInProgress: false,
+  testID: '',
+};
