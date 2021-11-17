@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Text } from 'app/components';
 import styles from './styles';
-import Images from 'app/assets/images';
 
 const CheckBox = ({ selected, onPress }) => {
   return (
@@ -11,11 +12,7 @@ const CheckBox = ({ selected, onPress }) => {
       onPress={onPress}
       style={[styles.checkBoxContainer, selected && styles.selectedCheckBox]}>
       {selected && (
-        <Image
-          source={Images.checkIcon}
-          resizeMode="contain"
-          style={styles.checkIcon}
-        />
+        <Icon name="checkmark-sharp" size={20} style={{ color: 'white' }} />
       )}
     </TouchableOpacity>
   );
@@ -63,3 +60,21 @@ const ButtonSelection = props => {
 };
 
 export default ButtonSelection;
+
+ButtonSelection.PropTypes = {
+  selected: PropTypes.bool.isRequired,
+  onPress: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  showHint: PropTypes.bool,
+};
+
+ButtonSelection.defaultProps = {
+  selected: false,
+  onPress: () => {},
+  title: '',
+  type: 'Radio',
+  content: '',
+  showHint: false,
+};
