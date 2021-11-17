@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -78,3 +79,19 @@ const JourneyIndicator = props => {
 };
 
 export default JourneyIndicator;
+
+JourneyIndicator.PropTypes = {
+  hasProgress: PropTypes.bool,
+  current: PropTypes.bool,
+  disabled: PropTypes.bool,
+  done: PropTypes.bool,
+  item: PropTypes.object.isRequired,
+};
+
+JourneyIndicator.defaultProps = {
+  hasProgress: false,
+  current: false,
+  disabled: false,
+  done: false,
+  item: {},
+};
