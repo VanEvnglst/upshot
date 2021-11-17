@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from 'app/theme/colors';
 import styles from './styles';
@@ -28,3 +29,18 @@ const SignPostIndicator = props => {
 };
 
 export default SignPostIndicator;
+
+
+SignPostIndicator.PropTypes = {
+  isCompleted: PropTypes.bool,
+  isLastItem: PropTypes.bool,
+  disabled: PropTypes.bool,
+  current: PropTypes.bool,
+};
+
+SignPostIndicator.defaultProps = { 
+  isCompleted: false,
+  isLastItem: false,
+  disabled: false,
+  current: false
+}
