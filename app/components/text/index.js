@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text as TextComponent } from 'react-native';
-
+import PropTypes from 'prop-types';
 import styles from './styles';
 
-const Text = ({ children, style, type }) => {
+const Text = ({ children, style, type, testID }) => {
   return (
     <TextComponent
+      testID={testID}
       style={[
         style,
         styles.text,
@@ -29,3 +30,15 @@ const Text = ({ children, style, type }) => {
 };
 
 export default Text;
+
+Text.PropTypes = {
+  children: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  testID: PropTypes.string.isRequired,
+};
+
+Text.defaultProps = {
+  children: '',
+  type: '',
+  testID: '',
+};
