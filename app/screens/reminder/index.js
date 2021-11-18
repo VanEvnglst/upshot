@@ -3,10 +3,11 @@ import { View, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Wrapper, Header, Text } from '../../components';
-import Images from '../../assets/images';
-import labels from '../../locales/en';
-import { getUserFirstName } from '../../store/selectors';
+import Images from 'app/assets/images';
+import labels from 'app/locales/en';
+import { getUserFirstName } from 'app/store/selectors';
 import styles from './styles';
+
 const ReminderScreen = props => {
   const { navigation } = props;
   const { triviaReminder, morningReminder, morningContent } = labels.reminders;

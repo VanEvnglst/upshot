@@ -4,16 +4,35 @@ import AuthenticationActions, {
   AuthenticationTypes,
 } from 'app/store/authenticationRedux';
 import api from 'app/services/apiService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const RESULT_SUCCESS = 'success';
+const RESULT_ERROR = 'error';
 
-export function* signInUser({ email, password }) {
+export function* signInUser({ data }) {
+  const { email, passwd } = data;
   const connected = yield checkInternetConnection();
   // if (!connected) {
   //   //yield showNetworkError();
   //   return;
   // }
-  const authResponse = yield call(api.signIn, { email, password });
+  // AsyncStorage.setItem('uniqueId', 'dabca8a9-2349-4840-98fa-2951c53cd67a');
+  // yield put(AuthenticationActions.signInUserSuccess());
+  // TODO: Find out why there's an error;
+  debugger;
+  const authResponse = yield call(api.signIn, { email, passwd });
+  debugger;
   if (authResponse.ok) {
-    console.log('auth ok', authResponse.data);
+    if (authResponse.data.result === RESULT_SUCCESS) {
+      debugger;
+      console.log('auth ok', authResponse.data);
+      // AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
+      yield put(AuthenticationActions.signInUserSuccess());
+    } else {
+      console.log('auth err', authResponse.data);
+    }
+  } else {
+    AuthenticationActions.signInUserFailure();
+    console.log('server err');
   }
 }
 

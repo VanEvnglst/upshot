@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import { FAB as FloatingAction, ProgressBar } from 'react-native-paper';
 import { Wrapper, Text, Header } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
@@ -19,9 +20,12 @@ const FeedbackJourneyList = props => {
   }, []);
 
   const HistoryCard = ({ item }) => {
-    const nameArr = item.member.split(/[ ,]+/);
+    const { last_modified: lastModified, member } = item;
+    const nameArr = member.split(/[ ,]+/);
+    const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr[1].charAt(0);
-    const memberName = `${nameArr[0]} ${lastName}.`; 
+    const memberName = `${nameArr[0]} ${lastName}.`;
+    const lastWorkedOn = moment(dateArr[0]).fromNow();
     return (
       <TouchableOpacity
         accessibilityRole={'button'}
@@ -32,7 +36,7 @@ const FeedbackJourneyList = props => {
             {memberName}
           </Text>
           <Text type="body2" style={styles.historyDateText}>
-            2 weeks ago
+            {lastWorkedOn}
           </Text>
         </View>
       </TouchableOpacity>
@@ -40,11 +44,17 @@ const FeedbackJourneyList = props => {
   };
 
   const InProgressCard = ({ activeJourney }) => {
-    const { percent_complete: percent } = activeJourney;
-    const nameArr = activeJourney.member.split(/[ ,]+/);
+    const {
+      percent_complete: percent,
+      last_modified: lastModified,
+      member,
+    } = activeJourney;
+    const nameArr = member.split(/[ ,]+/);
+    const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr[1].charAt(0);
-    const memberName = `${nameArr[0]} ${lastName}.`; 
+    const memberName = `${nameArr[0]} ${lastName}.`;
     const progressValue = percent / 100;
+    const lastWorkedOn = moment(dateArr[0]).fromNow();
 
     return (
       <TouchableOpacity
@@ -52,15 +62,13 @@ const FeedbackJourneyList = props => {
         style={styles.inProgressCard}
         onPress={() => handleNavigation('ActiveFeedbackJourney')}>
         <View style={styles.inProgressContent}>
-          <ProgressBar
-            progress={progressValue}
-          />
+          <ProgressBar progress={progressValue} />
           <View style={styles.inProgressText}>
             <Text type="h6" style={styles.feedbackForText}>
               Feedback for {memberName}
             </Text>
             <Text type="body2" style={styles.feedbackForDateText}>
-              Last worked on ....
+              Last worked on {lastWorkedOn}
             </Text>
           </View>
           <View style={styles.btnContainer}>
