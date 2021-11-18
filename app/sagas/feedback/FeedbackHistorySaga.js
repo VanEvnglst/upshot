@@ -40,7 +40,7 @@ export function* fetchRecentJourneys() {
 function* watchFeedbackHistorySaga() {
   yield takeLatest(
     FeedbackHistoryTypes.FETCH_ACTIVE_JOURNEYS,
-    fetchActiveJourneys,
+    fetchActiveJourneys,w
   );
   yield takeLatest(
     FeedbackHistoryTypes.FETCH_RECENT_JOURNEYS,

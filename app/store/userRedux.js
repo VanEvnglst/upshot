@@ -2,7 +2,7 @@ import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
 
 export const INITIAL_STATE = Map({
-  user: {},
+  firstName: 'Ivan',
 });
 
 const { Types, Creators } = createActions({
@@ -16,9 +16,9 @@ export default Creators;
 const setUser = (state, { user }) => state.merge({ user });
 const setPassword = state => state.merge({});
 
-export const userReducers = createReducer(INITIAL_STATE, {
+export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_PASSWORD]: setPassword,
   [Types.SET_USER]: setUser,
 });
 /* ------------- Selectors ------------- */
-export const getUser = state => state.user;
+// export const getUser = state => state.user;

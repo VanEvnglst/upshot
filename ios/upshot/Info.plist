@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -54,6 +54,14 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Raleway-Black.ttf</string>
+		<string>Raleway-Bold.ttf</string>
+		<string>Raleway-Medium.ttf</string>
+		<string>Raleway-Regular.ttf</string>
+		<string>Raleway-Thin.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>Raleway-SemiBold.ttf</string>
+		<string>Shrikhand-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

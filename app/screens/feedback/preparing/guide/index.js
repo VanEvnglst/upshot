@@ -7,7 +7,7 @@ import {
   SignPostIndicator,
 } from '../../../../components';
 import labels from '../../../../locales/en';
-import preparingGuide from '../../../../models/preparingGuide';
+import preparingGuide from '../../../../models/PreparingGuide';
 import styles from './styles';
 
 const PreparingGuide = props => {
