@@ -77,6 +77,7 @@ const labels = {
       content1: `You've finished "Documenting" - the first step on our guided journey of giving feedback.`,
       content2: `Would you like to continue on to the second step, "Preparing"? - this step takes 15 minutes.`,
     },
+    dateToGiveFeedback: `I'm giving feedback about something that happened`,
   },
   feedbackPreparing: {
     prepareDiscussion: 'Prepare for your discussion with your employee',
