@@ -72,7 +72,8 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
 
-    const { documentingId, feedbackType, topicId, incidentDate, reminderDate} = data;
+    const { documentingId, feedbackType, topicId, incidentDate, reminderDate } =
+      data;
     params.append('documenting_id', documentingId);
     params.append('topic_id', topicId);
     params.append('incident_date', incidentDate);
@@ -84,13 +85,22 @@ export default {
 
   getOpenFeedbackJourneys: async () => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    
+
     return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-open`);
   },
 
   getClosedFeedbackJourneys: async () => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-closed`)
-  }
+    return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-closed`);
+  },
+
+  getCurrentFeedbackJourney: async journeyId => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+    const params = new URLSearchParams();
+
+    params.append('journey_id', journeyId);
+
+    return upshotAPI.post(`/${uniqueId}/feedback/journey/get`);
+  },
 };
