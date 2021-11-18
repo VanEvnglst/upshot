@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip, Button } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
@@ -31,7 +32,7 @@ const DocumentingStep1 = props => {
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if(stepData.data) setTeamMember(stepData.data)
+    if (stepData.data) setTeamMember(stepData.data);
   }, [stepData]);
 
   const chooseTeamMember = member => {
@@ -45,14 +46,33 @@ const DocumentingStep1 = props => {
 
   const handleNext = () => {
     // TODO: Change logic for existing journey
+    // if stepData is existing, check if ID in stepData
+    // is the same as team Member ID, if true
+    // setActiveStep
+    // else setData + postjourney
+    // if (stepData.data) {
+
+    // } else {
     dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
     dispatch(FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id));
+    //}
   };
 
-  return(
+  // const checkExistingData = () => {
+  //   if (stepData.data) {
+  //     if ()
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text type="h6" style={containerStyles.stepTitleText}>
+        <Text
+          type="h6"
+          style={containerStyles.stepTitleText}
+          testID={'txt-documentingStep1-label'}>
           {labels.feedbackDocumenting.giveFeedbackTo}
         </Text>
 
@@ -61,6 +81,7 @@ const DocumentingStep1 = props => {
           {staffList &&
             staffList.map((item, i) => (
               <Chip
+                testID={'chip-documentingStep1-name'}
                 key={item.id}
                 onPress={() => chooseTeamMember(item)}
                 mode="flat"
@@ -86,7 +107,8 @@ const DocumentingStep1 = props => {
           style={styles.button}
           disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode="contained">
+          mode="contained"
+          testID={'btn-documentingStep1-next'}>
           {labels.common.next}
         </Button>
       </View>
@@ -95,3 +117,23 @@ const DocumentingStep1 = props => {
 };
 
 export default DocumentingStep1;
+
+DocumentingStep1.PropTypes = {
+  setDocumentingData: PropTypes.func,
+  stepData: PropTypes.object,
+  staffList: PropTypes.array,
+  isLoading: PropTypes.bool,
+  feedbackFlow: PropTypes.object,
+  fetchTeamMembers: PropTypes.func,
+  postFeedbackJourney: PropTypes.func,
+};
+
+DocumentingStep1.defaultProps = {
+  stepData: {},
+  staffList: [],
+  isLoading: false,
+  feedbackFlow: {},
+  setDocumentingData: () => {},
+  fetchTeamMembers: () => {},
+  postFeedbackJourney: () => {},
+};
