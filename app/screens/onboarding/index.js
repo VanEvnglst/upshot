@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
+import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingActions from 'app/store/OnboardingRedux';
-
 import { TextInput } from 'app/components';
 import styles from './styles';
 
@@ -77,6 +77,7 @@ const Onboarding = props => {
           return (
             <View style={styles.container}>
               <TextInput
+                testID={'fld-onboarding-email'}
                 placeholder="Email"
                 style={{
                   height: 60,
@@ -87,6 +88,7 @@ const Onboarding = props => {
                 onChangeText={email => updateData({ email })}
               />
               <TextInput
+                testID={'fld-onboarding-password'}
                 placeholder="Password"
                 style={{
                   height: 60,
@@ -98,6 +100,7 @@ const Onboarding = props => {
                 onChangeText={password => updateData({ password })}
               />
               <TextInput
+                testID={'fld-onboarding-firstName'}
                 placeholder="First name"
                 style={{
                   height: 60,
@@ -108,6 +111,7 @@ const Onboarding = props => {
                 onChangeText={firstName => updateData({ firstName })}
               />
               <TextInput
+                testID={'fld-onboarding-lastName'}
                 placeholder="Last name"
                 style={{
                   height: 60,
@@ -127,6 +131,7 @@ const Onboarding = props => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
+                testID={'btn-onboarding-submit'}
                 onPress={() => handleSubmit()}>
                 <Text style={{ color: 'white' }}>Sign up</Text>
               </TouchableOpacity>
@@ -139,3 +144,17 @@ const Onboarding = props => {
 };
 
 export default Onboarding;
+
+Onboarding.propTypes = {
+  signUpUser: PropTypes.func,
+  //resetUser: PropTypes.func,
+  onboardingLoading: PropTypes.bool,
+  onboardingError: PropTypes.object,
+};
+
+Onboarding.defaultProps = {
+  signUpUser: () => {},
+  resetUser: () => {},
+  onboardingLoading: false,
+  onboardingError: {}
+};
