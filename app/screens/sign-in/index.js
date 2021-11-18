@@ -1,16 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Button,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
+import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import AuthenticationActions from 'app/store/authenticationRedux';
+import { TextInput } from 'app/components';
 import styles from './styles';
 
 const SignIn = props => {
   const { navigation } = props;
-  console.warn('props', props);
-  const [username, setUsername] = useState('');
+  const dispatch = useDispatch();
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  });
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const validate = () => {
     const errors = {};
-    if (username.length === 0) {
+    if (email.length === 0) {
       errors.emailError = 'Email is required';
     }
 
@@ -22,50 +38,104 @@ const SignIn = props => {
     return errors;
   };
 
+  const signInUser = () => {
+    dispatch(
+      AuthenticationActions.signInUser({
+        email,
+        passwd: password,
+      }),
+    );
+  };
+
+  const testSignIn = async () => {
+    const body = {
+      email: email,
+      passwd: password,
+    };
+    const response = await fetch('http://18.138.8.34/api/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+    console.log('email', body.email.length);
+    debugger;
+    const json = await response.json();
+
+    console.log('json', json);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: 'red' }}></View>
-      <View
-        style={{
-          flex: 2,
-          marginTop: 30,
-          alignItems: 'center',
-        }}>
-        <TextInput
-          placeholder="Email"
-          style={{
-            borderWidth: 1,
-            width: '95%',
-            height: 60,
-            margin: 20,
-            paddingHorizontal: 10,
-          }}
-          onChangeText={username => setUsername(username)}
-        />
-        <TextInput
-          placeholder="Password"
-          style={{
-            borderWidth: 1,
-            width: '95%',
-            height: 60,
-            margin: 20,
-            paddingHorizontal: 10,
-          }}
-          secureTextEntry
-          onChangeText={password => setPassword(password)}
-        />
-
-        <Button
-          title="Sign in"
-          onPress={() => console.warn('state', username, password)}
-        />
-
-        <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
-          <Text>Register here</Text>
-        </TouchableOpacity>
+    <KeyboardAvoidingView style={styles.container}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontSize: 36 }}>Upshot</Text>
       </View>
-    </View>
+      <Formik
+        initialValues={{
+          email,
+          password,
+        }}
+        validate={() => validate()}
+        validateOnChange={false}
+        onSubmit={() => testSignIn()}>
+        {({ errors, handleSubmit }) => {
+          return (
+            <View
+              style={{
+                flex: 2,
+                marginTop: 30,
+                alignItems: 'center',
+              }}>
+              <TextInput
+                label="Email"
+                placeholder="Email"
+                style={{
+                  width: '95%',
+                  height: 60,
+                  margin: 20,
+                  paddingHorizontal: 10,
+                }}
+                value={email}
+                onChangeText={email => setEmail(email)}
+              />
+              <TextInput
+                label="Password"
+                placeholder="Password"
+                style={{
+                  margin: 20,
+                  width: '95%',
+                  height: 60,
+                  paddingHorizontal: 10,
+                }}
+                secureTextEntry
+                value={password}
+                onChangeText={password => setPassword(password)}
+              />
+
+              <Button title="Sign in" onPress={() => handleSubmit()} />
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Onboarding')}>
+                <Text>Register here</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      </Formik>
+    </KeyboardAvoidingView>
   );
 };
 
 export default SignIn;
+
+SignIn.PropTypes = {
+ signInUser: PropTypes.func,
+ authLoading: PropTypes.bool
+}
+
+SignIn.defaultProps = {
+  signInUser: () => {},
+  authLoading: false,
+}
