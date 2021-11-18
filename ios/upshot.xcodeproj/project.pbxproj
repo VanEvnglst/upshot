@@ -39,6 +39,7 @@
 		4F4EE8DFE5D61FDC421CD6CA /* Pods-upshot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-upshot.debug.xcconfig"; path = "Target Support Files/Pods-upshot/Pods-upshot.debug.xcconfig"; sourceTree = "<group>"; };
 		7E3837F8FB34AF4563516C3E /* Pods-upshot-upshotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-upshot-upshotTests.debug.xcconfig"; path = "Target Support Files/Pods-upshot-upshotTests/Pods-upshot-upshotTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = upshot/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		87F5E62A26B4018900D22546 /* upshot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = upshot.entitlements; path = upshot/upshot.entitlements; sourceTree = "<group>"; };
 		8E505F76A6311D5BC36D1E83 /* libPods-upshot-upshotTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-upshot-upshotTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B44E5E4979D4070A1BA4F20 /* Pods-upshot-upshotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-upshot-upshotTests.release.xcconfig"; path = "Target Support Files/Pods-upshot-upshotTests/Pods-upshot-upshotTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7083B1C09AE497D6C1198A7 /* Pods-upshot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-upshot.release.xcconfig"; path = "Target Support Files/Pods-upshot/Pods-upshot.release.xcconfig"; sourceTree = "<group>"; };
@@ -86,6 +87,7 @@
 		13B07FAE1A68108700A75B9A /* upshot */ = {
 			isa = PBXGroup;
 			children = (
+				87F5E62A26B4018900D22546 /* upshot.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -483,6 +485,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = upshot/upshot.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -510,6 +513,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = upshot/upshot.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = upshot/Info.plist;
