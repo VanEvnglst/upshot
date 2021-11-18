@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { LearningCard, Wrapper, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
@@ -12,7 +13,6 @@ import styles from './styles';
 const HomeScreen = props => {
   const { homeScreen } = labels;
   const { navigation } = props;
-
   const dispatch = useDispatch();
   const activeJourneyLength = useSelector(getActiveJourneys);
 
@@ -53,7 +53,10 @@ const HomeScreen = props => {
           <AlertCard />
         </View> */}
         <View>
-          <Text type="overline" style={styles.overlineText}>
+          <Text
+            type="overline"
+            style={styles.overlineText}
+            testID={'txt-home-journey'}>
             {homeScreen.guidedJourney}
           </Text>
           <LearningCard
@@ -62,11 +65,14 @@ const HomeScreen = props => {
             headline={'Feedback Coaching'}
             subtitle={
               activeJourneyLength.length > 0
-                ? `${activeJourneyLength.length} feedback journey in progress`
+                ? activeJourneyLength.length > 1
+                  ? `${activeJourneyLength.length} feedback journeys in progress`
+                  : `${activeJourneyLength.length} feedback journey in progress`
                 : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
             }
             hasInProgress={activeJourneyLength.length > 0}
             mainCard
+            testID={'card-home-feedback'}
           />
           <LearningCard
             onPress={() => console.log('Employee Engagement')}
@@ -80,7 +86,10 @@ const HomeScreen = props => {
           />
         </View>
         <View style={styles.horizontalCardContainer}>
-          <Text type="overline" style={styles.overlineText}>
+          <Text
+            type="overline"
+            style={styles.overlineText}
+            testID={'txt-home-comingSoon'}>
             {homeScreen.comingSoon}
           </Text>
           <ScrollView horizontal>
@@ -90,6 +99,7 @@ const HomeScreen = props => {
               headline={'Enabling Engagement'}
               smallCard
               disabled
+              testID={'card-home-comingSoon'}
             />
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
@@ -106,3 +116,19 @@ const HomeScreen = props => {
 };
 
 export default HomeScreen;
+
+HomeScreen.propTypes = {
+  activeJourneyLength: PropTypes.array,
+  fetchFeedbackFlow: PropTypes.func,
+  fetchFeedbackType: PropTypes.func,
+  fetchFeedbackTopics: PropTypes.func,
+  fetchActiveJourneys: PropTypes.func,
+};
+
+HomeScreen.defaultProps = {
+  activeJourneyLength: [],
+  fetchFeedbackFlow: () => {},
+  fetchActiveJourneys: () => {},
+  fetchFeedbackType: () => {},
+  fetchFeedbackTopics: () => {},
+};
