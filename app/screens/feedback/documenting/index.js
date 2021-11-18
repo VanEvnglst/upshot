@@ -24,7 +24,7 @@ const FeedbackDocumenting = () => {
   const indexValue = activeStep / maxStep;
 
   const handleStepContent = () => {
-    switch (activeStep) {
+    switch (4) {
       case 1:
         return <DocumentingStep1 />;
       case 2:
