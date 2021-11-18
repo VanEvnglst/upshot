@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import { HintIndicator, ButtonSelection, Text } from 'app/components';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
@@ -44,7 +45,11 @@ const DocumentingStep2 = props => {
   return (
     <View style={containerStyles.container}>
       <View style={containerStyles.contentContainer}>
-        <Text type="h6" style={containerStyles.stepTitleText}>
+        <Text 
+          type="h6" 
+          style={containerStyles.stepTitleText}
+          testID={'txt-documentingStep2-label'}  
+        >
           {labels.feedbackDocumenting.feedbackToGive}
         </Text>
         {feedbackTypes.map((item, i) => (
@@ -56,24 +61,56 @@ const DocumentingStep2 = props => {
             onPress={() => _handleFeedbackType(item)}
             selected={item.id === feedbackType.id}
             key={item.id}
+            testID={'select-documentingStep2-type'}
           />
         ))}
-        <HintIndicator showHint={hint} onPress={() => showHint(!hint)} />
+        <HintIndicator 
+          showHint={hint} 
+          onPress={() => showHint(!hint)} 
+          testID={'btn-documentingStep2-hint'}
+        />
       </View>
       <View style={containerStyles.btnContainer}>
-        <Button mode="text" onPress={() => handleBack()}>
+        <Button 
+          mode="text" 
+          onPress={() => handleBack()}
+          testID={'btn-documentingStep2-back'}
+        >
           {labels.common.back}
         </Button>
         <Button
           style={styles.button}
           disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode="contained">
+          mode="contained"
+          testID={'btn-documetingStep2-next'}
+        >
           {labels.common.next}
+          
         </Button>
       </View>
     </View>
   );
 };
 
+DocumentingStep2.PropTypes = {
+  stepData: PropTypes.object,
+  feedbackTypes: PropTypes.array,
+  activeStep: PropTypes.number,
+  setDocumentingData: PropTypes.func,
+  setActiveStep: PropTypes.func,
+  getStep2Data: PropTypes.object,
+};
+
+DocumentingStep2.defaultProps = {
+  stepData: {},
+  feedbackTypes: [],
+  activeStep: 0,
+  getStep2Data: {},
+  setDocumentingData: () => {},
+  setActiveStep: () => {},
+}
+
 export default DocumentingStep2;
+
+
