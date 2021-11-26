@@ -75,12 +75,56 @@ export function* postFeedbackJourney({ flow, teamMemberId }) {
   }
 }
 
+export function* fetchCurrentFeedback({ journeyId }) {
+  const response = yield call(api.getCurrentFeedbackJourney, journeyId);
+  debugger;
+  if (response.data.status === STATUS_OK) {
+    const journeyData = response.data.Journey;
+    const docuData = journeyData.Documenting;
+    const prepData = journeyData.Preparing;
+    const discussData = journeyData.Discussing;
+    const reflectData = journeyData.Reflecting;
+    if (docuData) retrieveDocumentingData(docuData);
+    if (prepData) retrievePreparingData(prepData);
+    // if ()
+    yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
+    yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
+  } else {
+    yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
+  }
+}
+
+function* retrieveDocumentingData(documentingData) {
+  yield put(DocumentingActions.setDocumentingData('id', documentingData.id));
+  yield put(
+    DocumentingActions.setDocumentingData('step1', documentingData.staff),
+  );
+  yield put(
+    DocumentingActions.setDocumentingData('step2', documentingData.pos_or_cor),
+  );
+  yield put(
+    DocumentingActions.setDocumentingData('step3', documentingData.topic),
+  );
+  yield put(
+    DocumentingActions.setDocumentingData(
+      'step4',
+      documentingData.incident_date,
+    ),
+  );
+  yield put(
+    DocumentingActions.setDocumentingData('closed', documentingData.closed),
+  );
+}
+
+function* retrievePreparingData(preparingData) {}
+
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_FLOW, fetchFeedbackFlow);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TYPE, fetchFeedbackType);
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
+  yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
 }
 
 export default watchFeedbackSaga;
