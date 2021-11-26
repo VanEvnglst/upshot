@@ -130,12 +130,12 @@ const SignIn = props => {
 
 export default SignIn;
 
-SignIn.PropTypes = {
- signInUser: PropTypes.func,
- authLoading: PropTypes.bool
-}
+SignIn.propTypes = {
+  signInUser: PropTypes.func,
+  authLoading: PropTypes.bool,
+};
 
 SignIn.defaultProps = {
   signInUser: () => {},
   authLoading: false,
-}
+};
