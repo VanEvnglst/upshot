@@ -16,6 +16,8 @@ export const PREPARING_STATE = Map({
   step3: { ...defaultState },
   step4: { ...defaultState },
   step5: { ...defaultState },
+  closed: false,
+  started: false,
 });
 
 /* ------------- Types and Action Creators ------------- */
