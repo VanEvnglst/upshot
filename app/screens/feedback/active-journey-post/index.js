@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import {
   Wrapper,
@@ -10,6 +11,7 @@ import {
   JourneyIndicator,
 } from 'app/components';
 import feedbackJourneySteps from 'app/models/FeedbackJourney';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -18,32 +20,87 @@ const JourneyCard = () => {
 };
 
 const ActiveFeedbackJourney = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const dispatch = useDispatch();
+  const staffName = useSelector(
+    state => state.documenting.get('step1').data.name,
+  );
+  const getFlow = useSelector(state => state.feedback.get('chosenFlow'));
+  const documentingClosed = useSelector(state =>
+    state.documenting.get('closed'),
+  );
+  const documentingStarted = useSelector(state =>
+    state.documenting.get('started'),
+  );
+  const preparingClosed = useSelector(state => state.preparing.get('closed'));
+  const preparingStarted = useSelector(state => state.preparing.get('started'));
+  const staffArr = staffName.split(/[ ,]+/);
+  const lastNameSplt = staffArr[1].charAt(0);
+  const memberName = `${staffArr[0]} ${lastNameSplt}.`;
+
+  const [phaseList, setPhaseList] = useState([]);
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
+    handlePhases();
+  }, []);
+
+  const handlePhases = async () => {
+    let content = [];
+    if (getFlow === 'prepared') {
+      console.log('rere');
+      feedbackJourneySteps[0] = {
+        ...feedbackJourneySteps[0],
+        closed: documentingClosed,
+        started: documentingStarted,
+      };
+      feedbackJourneySteps[1] = {
+        ...feedbackJourneySteps[1],
+        closed: preparingClosed,
+        started: preparingStarted,
+      };
+      // feedbackJourneySteps[2] = {
+      //   ...feedbackJourneySteps[2],
+      //   closed: discussingClosed,
+      //   started: discussingStarted,
+      // }
+      content = feedbackJourneySteps;
+      debugger;
+    } else {
+      console.log('nawp');
+      content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
+    }
+    await setPhaseList(content);
+  };
 
   return (
     <Wrapper>
       <ScrollView>
-        <Header headerLeft= {{
-          onPress: () => navigation.goBack() 
-        }} />
+        <Header
+          headerLeft={{
+            onPress: () => navigation.goBack(),
+          }}
+        />
         <View style={styles.nameContainer}>
-          <Text type="h4" style={styles.teammateName}>Ferdie A</Text>
+          <Text type="h4" style={styles.teammateName}>
+            {memberName}
+          </Text>
         </View>
         <View>
-          {feedbackJourneySteps.map((item, i) => {
+          {phaseList.map((item, i) => {
             return (
-              <View style={styles.signPost}>
+              <View key={item.id} style={styles.signPost}>
                 <SignPostIndicator
-                  isLastItem={i === feedbackJourneySteps.length - 1}
-                  isCompleted={item.id === 1}
-                  disabled={item.id > 2}
-                  current={item.id === 2}
+                  isLastItem={i === phaseList.length - 1}
+                  isCompleted={item.closed}
+                  disabled={!item.started}
+                  current={item.started && !item.closed}
                 />
                 <JourneyIndicator
                   style={{ flex: 2 }}
-                  disabled={item.id > 2}
-                  done={item.id === 1}
-                  current={item.id === 2}
+                  disabled={!item.started}
+                  done={item.closed}
+                  current={item.started && !item.closed}
+                  hasProgress={item.started && !item.closed}
                   item={item}
                 />
               </View>
@@ -53,6 +110,10 @@ const ActiveFeedbackJourney = props => {
       </ScrollView>
     </Wrapper>
   );
-}
+};
 
 export default ActiveFeedbackJourney;
+
+ActiveFeedbackJourney.propTypes = {};
+
+ActiveFeedbackJourney.defaultProps = {};
