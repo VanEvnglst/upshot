@@ -1,6 +1,7 @@
 import Config from 'react-native-config';
 import { upshotAPI } from '../config/apiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { select } from '@redux-saga/core/effects';
 
 export default {
   signIn: async payload => {
@@ -71,14 +72,14 @@ export default {
   updateDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-
-    const { documentingId, feedbackType, topicId, incidentDate, reminderDate } =
+    const { step2, step3, dateSelected, docuId } =
       data;
-    params.append('documenting_id', documentingId);
-    params.append('topic_id', topicId);
-    params.append('incident_date', incidentDate);
-    params.append('pos_or_cor', feedbackType);
-    params.append('reminder_date', reminderDate);
+      debugger;
+    params.append('documenting_id', docuId);
+    params.append('topic_id', step3[0].id);
+    params.append('incident_date', dateSelected);
+    params.append('pos_or_cor', step2.id);
+    // params.append('reminder_date', reminderDate);
 
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
   },
@@ -100,7 +101,6 @@ export default {
     const params = new URLSearchParams();
 
     params.append('journey_id', journeyId);
-
-    return upshotAPI.post(`/${uniqueId}/feedback/journey/get`);
+    return upshotAPI.post(`/${uniqueId}/feedback/journey/get`, params);
   },
 };
