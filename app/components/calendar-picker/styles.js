@@ -14,4 +14,7 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'space-between',
   },
+  placeholderText: {
+    color: Colors.lightBlack
+  }
 });
