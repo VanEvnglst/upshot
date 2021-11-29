@@ -26,11 +26,14 @@ const { Types, Creators } = createActions({
   postFeedbackDocumentingFailure: ['error'],
   updateFeedbackDocumenting: ['data'],
   updateFeedbackDocumentingSuccess: null,
-  updateFeedbackDocumenntingFailure: ['error'],
+  updateFeedbackDocumentingFailure: ['error'],
   setActiveStep: ['step'],
   resetDocumentingState: null,
   setDocumentingData: ['key', 'data'],
   setDocumentingStatus: ['key', 'status'],
+  deleteFeedbackDocumenting: [''],
+  deleteFeedbackDocumentingSuccess: null,
+  deleteFeedbackDocumentingFailure: ['error'],
 });
 
 /* ------------- Reducers ------------- */
@@ -88,6 +91,18 @@ const updateFeedbackDocumentingFailure = state =>
     fetching: false,
   });
 
+const deleteFeedbackDocumenting = state => state.merge({
+  fetching: true
+});
+
+const deleteFeedbackDocumentingSuccess = state => state.merge({
+  fetching: false,
+});
+
+const deleteFeedbackDocumentingFailure = state => state.merge({
+  fetching: false,
+});
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_ACTIVE_STEP]: setActiveStep,
@@ -99,6 +114,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_FEEDBACK_DOCUMENTING_FAILURE]: postFeedbackDocumentingFailure,
   [Types.UPDATE_FEEDBACK_DOCUMENTING]: updateFeedbackDocumenting,
   [Types.UPDATE_FEEDBACK_DOCUMENTING_SUCCESS]: updateFeedbackDocumentingSuccess,
-
-  // [Types.UPDATE_FEEDBACK_DOCUMENTING_FAILURE]: updateFeedbackDocumentingFailure,
+  [Types.UPDATE_FEEDBACK_DOCUMENTING_FAILURE]: updateFeedbackDocumentingFailure,
+  [Types.DELETE_FEEDBACK_DOCUMENTING]: deleteFeedbackDocumenting,
+  [Types.DELETE_FEEDBACK_DOCUMENTING_SUCCESS]: deleteFeedbackDocumentingSuccess,
+  [Types.DELETE_FEEDBACK_DOCUMENTING_FAILURE]: deleteFeedbackDocumentingFailure, 
 });
