@@ -72,13 +72,13 @@ export default {
   updateDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-    const { step2, step3, dateSelected, docuId } =
-      data;
-      debugger;
+    const { step2, step3, dateSelected, docuId } = data;
+    console.log('ste', step3.data[0]);
+    debugger;
     params.append('documenting_id', docuId);
-    params.append('topic_id', step3[0].id);
+    params.append('topic_id', step3.data[0].id);
     params.append('incident_date', dateSelected);
-    params.append('pos_or_cor', step2.id);
+    params.append('pos_or_cor', step2.data.id);
     // params.append('reminder_date', reminderDate);
 
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
