@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
@@ -15,9 +20,6 @@ import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import labels from 'app/locales/en';
 import styles from './styles';
 
-const JourneyCard = () => {
-  return <View></View>;
-};
 
 const ActiveFeedbackJourney = props => {
   const { navigation, route } = props;
@@ -34,6 +36,7 @@ const ActiveFeedbackJourney = props => {
   );
   const preparingClosed = useSelector(state => state.preparing.get('closed'));
   const preparingStarted = useSelector(state => state.preparing.get('started'));
+  const isLoading = useSelector(state => state.feedback.get('fetching'));
   const staffArr = staffName.split(/[ ,]+/);
   const lastNameSplt = staffArr[1].charAt(0);
   const memberName = `${staffArr[0]} ${lastNameSplt}.`;
@@ -47,7 +50,6 @@ const ActiveFeedbackJourney = props => {
   const handlePhases = async () => {
     let content = [];
     if (getFlow === 'prepared') {
-      console.log('rere');
       feedbackJourneySteps[0] = {
         ...feedbackJourneySteps[0],
         closed: documentingClosed,
@@ -66,10 +68,20 @@ const ActiveFeedbackJourney = props => {
       content = feedbackJourneySteps;
       debugger;
     } else {
-      console.log('nawp');
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
     }
     await setPhaseList(content);
+  };
+
+  const handleNavigation = index => {
+    console.log('index', index);
+    let screenName = '';
+    switch (index) {
+      case 0:
+        screenName = 'FeedbackDocumenting';
+        break;
+    }
+    navigation.navigate(screenName);
   };
 
   return (
@@ -80,6 +92,7 @@ const ActiveFeedbackJourney = props => {
             onPress: () => navigation.goBack(),
           }}
         />
+        {isLoading && <ActivityIndicator />}
         <View style={styles.nameContainer}>
           <Text type="h4" style={styles.teammateName}>
             {memberName}
@@ -102,6 +115,7 @@ const ActiveFeedbackJourney = props => {
                   current={item.started && !item.closed}
                   hasProgress={item.started && !item.closed}
                   item={item}
+                  onPress={() => handleNavigation(i)}
                 />
               </View>
             );
