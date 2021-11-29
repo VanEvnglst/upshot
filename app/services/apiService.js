@@ -7,7 +7,6 @@ export default {
     const params = new URLSearchParams();
     params.append('email', payload.email);
     params.append('passwd', payload.password);
-    debugger;
     return upshotAPI.post('/login', params);
   },
 
