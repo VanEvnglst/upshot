@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../../../theme/colors';
+import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   descriptionContainer: {
@@ -23,11 +23,29 @@ export default styles = StyleSheet.create({
     marginLeft: 20,
     paddingTop: 10,
   },
+  headerText: {
+    color: Colors.mediumBlack,
+  },
+  descriptionText: {
+    color: Colors.mediumBlack,
+  },
   stepText: {
     color: Colors.primaryDark,
-    marginBottom: 5
+    marginBottom: 5,
   },
   textTitle: {
-    color: Colors.lightBlack
+    color: Colors.lightBlack,
+    width: 150,
   },
+  btnContainer: {
+    flex: 1,
+    marginBottom: 20,
+    justifyContent: 'flex-end'
+  },
+  button: {
+    backgroundColor: Colors.primaryDark
+  },
+  btnText: {
+    color: Colors.white,
+  }
 });
