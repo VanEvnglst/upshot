@@ -22,7 +22,7 @@ const HintIndicator = props => {
 
 export default HintIndicator;
 
-HintIndicator.PropTypes = {
+HintIndicator.propTypes = {
   showHint: PropTypes.bool.isRequired,
   onPress: PropTypes.func.isRequired,
 };

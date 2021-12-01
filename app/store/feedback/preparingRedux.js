@@ -16,10 +16,13 @@ export const PREPARING_STATE = Map({
   step3: { ...defaultState },
   step4: { ...defaultState },
   step5: { ...defaultState },
+  closed: false,
+  started: false,
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
+  setPreparingStatus: ['key', 'data'],
   setPrepActiveStep: ['step'],
   resetPreparingState: null,
   setPreparingData: ['key', 'data'],
@@ -27,6 +30,7 @@ const { Types, Creators } = createActions({
   postPreparingSuccess: null,
   postPreparingFailure: ['error'],
   updatePreparing: [''],
+  resetPreparingState: null,
 });
 
 export const PreparingTypes = Types;
@@ -49,9 +53,17 @@ const setPreparingData = (state, { key, data }) => {
   });
 };
 
+const setPreparingStatus = (state, { key, data }) => {
+  return state.merge({
+    [key]: data
+  });
+}
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(PREPARING_STATE, {
   [Types.SET_PREP_ACTIVE_STEP]: setPrepActiveStep,
-  [Types.RESET_PREPARING_STATE]: resetPreparingState,
   [Types.SET_PREPARING_DATA]: setPreparingData,
+  [Types.SET_PREPARING_STATUS]: setPreparingStatus,
+  [Types.RESET_PREPARING_STATE]: resetPreparingState,
 });

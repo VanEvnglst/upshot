@@ -42,7 +42,7 @@ const JourneyIndicator = props => {
       {done && (
         <TouchableOpacity
           accessibilityRole={'button'}
-          onPress={() => console.log('navigate review')}>
+          onPress={onPress}>
           <Text
             type="button"
             style={[
@@ -57,8 +57,8 @@ const JourneyIndicator = props => {
       {hasProgress && (
         <TouchableOpacity
           accessibilityRole={'button'}
-          onPress={() => console.log('navigate continue')}>
-          <Text style={[styles.buttonText, current && styles.currentText]}>
+          onPress={onPress}>
+          <Text type='button' style={[styles.buttonText, current && styles.currentText]}>
             {labels.common.continue}
           </Text>
         </TouchableOpacity>
@@ -66,7 +66,7 @@ const JourneyIndicator = props => {
       {current && !hasProgress && (
         <TouchableOpacity
           accessibilityRole={'button'}
-          onPress={() => console.log('navigate start')}>
+          onPress={onPress}>
           <Text
             type="button"
             style={[styles.buttonText, current && styles.currentText]}>
@@ -80,7 +80,7 @@ const JourneyIndicator = props => {
 
 export default JourneyIndicator;
 
-JourneyIndicator.PropTypes = {
+JourneyIndicator.propTypes = {
   hasProgress: PropTypes.bool,
   current: PropTypes.bool,
   disabled: PropTypes.bool,
