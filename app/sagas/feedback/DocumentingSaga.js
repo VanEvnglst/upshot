@@ -29,10 +29,30 @@ export function* postFeedbackDocumenting({ data }) {
   }
 }
 
+export function* updateFeedbackDocumenting({ data }) {
+  const response = yield call(api.updateDocumenting, data);
+  if (response.ok) {
+  }
+}
+
+export function* deleteFeedbackDocumenting({ data }) {
+  const response = yield call(api.deleteDocumenting, data);
+  if (response.ok) {
+  }
+}
+
 function* watchDocumentingSaga() {
   yield takeLatest(
     DocumentingTypes.POST_FEEDBACK_DOCUMENTING,
     postFeedbackDocumenting,
+  );
+  yield takeLatest(
+    DocumentingTypes.UPDATE_FEEDBACK_DOCUMENTING,
+    updateFeedbackDocumenting,
+  );
+  yield takeLatest(
+    DocumentingTypes.DELETE_FEEDBACK_DOCUMENTING,
+    deleteFeedbackDocumenting,
   );
 }
 

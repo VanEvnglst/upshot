@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import { ButtonSelection, Text } from 'app/components';
+import { ButtonSelection, Text, TextInput } from 'app/components';
 import {
   getRelatedTopicsList,
   getDocumentingStep,
@@ -19,10 +19,16 @@ const DocumentingStep3 = props => {
   const activeStep = useSelector(getDocumentingStep);
   const feedbackList = useSelector(getRelatedTopicsList);
   const [feedbackTopic, setFeedbackTopic] = useState([]);
+  const [otherTopic, setOtherTopic] = useState({
+    id: 0,
+    value: ''
+  });
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) setFeedbackTopic(stepData.data);
+    if (stepData.data) 
+      setFeedbackTopic(stepData.data);
+      setCompletion(true);
   }, [stepData]);
 
   const handleBack = () => {
@@ -40,7 +46,7 @@ const DocumentingStep3 = props => {
     return feedbackTopic.some(topic => topic === item);
   };
 
-  const _handleFeedbackTopic = item => {
+  const handleFeedbackTopic = item => {
     let newTopicList = feedbackTopic;
     if (checkSelectedTopic(item))
       newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
@@ -50,6 +56,10 @@ const DocumentingStep3 = props => {
     if (newTopicList.length !== 0) setCompletion(true);
     else setCompletion(false);
   };
+
+  const handleOtherTopic = item => {
+    setOtherTopic({ value: item });
+  }
 
   return (
     <View style={containerStyles.container}>
@@ -65,11 +75,18 @@ const DocumentingStep3 = props => {
             testID={'btn-documentingStep3-topic'}
             title={item.topic_name}
             type={'Check'}
-            onPress={() => _handleFeedbackTopic(item)}
+            onPress={() => handleFeedbackTopic(item)}
             selected={checkSelectedTopic(item)}
             key={item.id}
           />
         ))}
+        <TextInput
+          label='Something else'
+          placeholder='Something else'
+          // style={{}}
+          value={otherTopic.value}
+          onChangeText={otherTopic => handleOtherTopic(otherTopic)}
+        />
         <View style={containerStyles.btnContainer}>
           <Button
             mode="text"
@@ -80,7 +97,6 @@ const DocumentingStep3 = props => {
           <Button
             mode="contained"
             disabled={!isCompleted}
-            style={styles.button}
             onPress={() => handleNext()}
             testID={'btn-documentingStep3-next'}>
             {labels.common.next}
@@ -93,7 +109,7 @@ const DocumentingStep3 = props => {
 
 export default DocumentingStep3;
 
-DocumentingStep3.PropTypes = {
+DocumentingStep3.propTypes = {
   stepData: PropTypes.object,
   activeStep: PropTypes.number,
   feedbackList: PropTypes.array,

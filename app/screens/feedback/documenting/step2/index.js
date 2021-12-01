@@ -93,7 +93,7 @@ const DocumentingStep2 = props => {
   );
 };
 
-DocumentingStep2.PropTypes = {
+DocumentingStep2.propTypes = {
   stepData: PropTypes.object,
   feedbackTypes: PropTypes.array,
   activeStep: PropTypes.number,

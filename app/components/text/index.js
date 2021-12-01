@@ -31,8 +31,8 @@ const Text = ({ children, style, type, testID }) => {
 
 export default Text;
 
-Text.PropTypes = {
-  children: PropTypes.string.isRequired,
+Text.propTypes = {
+  children: PropTypes.any.isRequired,
   type: PropTypes.string.isRequired,
   testID: PropTypes.string.isRequired,
 };

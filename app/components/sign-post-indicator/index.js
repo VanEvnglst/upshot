@@ -30,17 +30,16 @@ const SignPostIndicator = props => {
 
 export default SignPostIndicator;
 
-
-SignPostIndicator.PropTypes = {
+SignPostIndicator.propTypes = {
   isCompleted: PropTypes.bool,
   isLastItem: PropTypes.bool,
   disabled: PropTypes.bool,
   current: PropTypes.bool,
 };
 
-SignPostIndicator.defaultProps = { 
+SignPostIndicator.defaultProps = {
   isCompleted: false,
   isLastItem: false,
   disabled: false,
-  current: false
-}
+  current: false,
+};

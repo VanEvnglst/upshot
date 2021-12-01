@@ -61,7 +61,7 @@ const ButtonSelection = props => {
 
 export default ButtonSelection;
 
-ButtonSelection.PropTypes = {
+ButtonSelection.propTypes = {
   selected: PropTypes.bool.isRequired,
   onPress: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
