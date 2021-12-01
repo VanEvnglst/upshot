@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text } from 'app/components';
+import { getPreparingStep, getPreparingMaxSteps } from 'app/store/selectors';
+import PreparingActions from 'app/store/feedback/preparingRedux';
 import PreparingStep1 from './step1';
 import PreparingStep2 from './step2';
 import PreparingStep3 from './step3';
@@ -16,15 +18,18 @@ import PreparingStep5 from './step5';
 import PreparingStep5B from './step5B';
 import PreparingStep5C from './step5C';
 import labels from 'app/locales/en';
-import styles from './styles';
+import Colors from 'app/theme/colors';
+import containerStyles from './styles';
 
 const FeedbackPreparing = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const [currentStep, setCurrentStep] = useState(11);
+  const activeStep = useSelector(getPreparingStep);
+  const maxStep = useSelector(getPreparingMaxSteps);
+  const indexValue = activeStep / maxStep;
 
   const handleStepContent = () => {
-    switch (currentStep) {
+    switch (activeStep) {
       case 1:
         return <PreparingStep1 />;
       case 2:
@@ -50,25 +55,40 @@ const FeedbackPreparing = props => {
     }
   };
 
+  const handleClose = () => {};
+
   return (
     <Wrapper>
       <Header
-        headerLeft={{
-          onPress: () => navigation.goBack(),
+        headerRight={{
+          onPress: () => handleClose(),
         }}
-        headerRight={{}}
       />
-      <Text type="overline" style={styles.overlineText}>
+      <Text type="overline" style={containerStyles.overlineText}>
         {labels.feedbackSignPost.preparing}
       </Text>
-      {/* <ProgressIndicator steps={5} currentIndex={currentStep} /> */}
-      <View style={styles.contentContainer}>{handleStepContent()}</View>
-      {/* <View style={containerStyles.btnContainer}>
-        <Button mode="text">Back</Button>
-        <Button mode="contained">Next</Button>
-      </View> */}
+      <ProgressBar
+        progress={indexValue}
+        color={Colors.secondary}
+        style={containerStyles.progressBar}
+      />
+      <View style={containerStyles.contentContainer}>
+        {handleStepContent()}
+      </View>
     </Wrapper>
   );
 };
 
 export default FeedbackPreparing;
+
+FeedbackPreparing.propTypes = {
+  resetPreparingState: PropTypes.func,
+  activeStep: PropTypes.number,
+  maxStep: PropTypes.number,
+};
+
+FeedbackPreparing.defaultProps = {
+  resetPreparingState: () => {},
+  activeStep: 1,
+  maxStep: 11,
+};

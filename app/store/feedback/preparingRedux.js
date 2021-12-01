@@ -2,12 +2,12 @@ import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
 
 const defaultState = {
-  isComplete: false,
   data: null,
 };
 
 /* ------------- Initial State ------------- */
 export const PREPARING_STATE = Map({
+  fetching: false,
   id: null,
   activeStep: 1,
   maxStep: 11,
@@ -22,9 +22,10 @@ export const PREPARING_STATE = Map({
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
-  setPrepActiveStep: ['data'],
-  setPreparingData: ['key', 'data'],
   setPreparingStatus: ['key', 'data'],
+  setPrepActiveStep: ['step'],
+  resetPreparingState: null,
+  setPreparingData: ['key', 'data'],
   postPreparing: [''],
   postPreparingSuccess: null,
   postPreparingFailure: ['error'],
@@ -37,7 +38,7 @@ export default Creators;
 
 /* ------------- Reducers ------------- */
 const setPrepActiveStep = (state, { step }) => {
-  if (state.get('activeStep' >= state.get('maxStep'))) {
+  if(state.get('activeStep') >= state.get('maxStep')) {
     return;
   }
   return state.merge({ activeStep: step });
@@ -45,7 +46,8 @@ const setPrepActiveStep = (state, { step }) => {
 
 const resetPreparingState = state => state.merge(INITIAL_STATE);
 
-const setPreparingData = (state, { key, data}) => {
+const setPreparingData = (state, { key, data }) => {
+  const stepData = state.get(key);
   return state.merge({
     [key]: { data },
   });
@@ -56,6 +58,7 @@ const setPreparingStatus = (state, { key, data }) => {
     [key]: data
   });
 }
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(PREPARING_STATE, {
