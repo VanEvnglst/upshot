@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
@@ -74,6 +74,10 @@ const PreparingGuide = props => {
 
 export default PreparingGuide;
 
-PreparingGuide.propTypes = {};
+PreparingGuide.propTypes = {
+  preparingGuide: PropTypes.array,
+};
 
-PreparingGuide.defaultProps = {};
+PreparingGuide.defaultProps = {
+  preparingGuide: [],
+};
