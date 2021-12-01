@@ -44,7 +44,7 @@ export default function FeedbackStackScreen() {
           component={FeedbackDocumenting}
         />
         <FeedbackStack.Screen
-          name="PreparingGuide"
+          name={"PreparingGuide"}
           component={PreparingGuide}
         />
         <FeedbackStack.Screen

@@ -1,19 +1,15 @@
 import React from 'react';
-import { View, Image, ScrollView } from 'react-native';
-import {
-  Wrapper,
-  Text,
-  Header,
-  SignPostIndicator,
-} from '../../../../components';
-import labels from '../../../../locales/en';
-import preparingGuide from '../../../../models/PreparingGuide';
+import { View, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
+import { Button } from 'react-native-paper';
+import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
+import labels from 'app/locales/en';
+import preparingGuide from 'app/models/PreparingGuide';
 import styles from './styles';
 
 const PreparingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackPreparing } = labels;
-  const { checkIn } = feedbackPreparing;
 
   const SignPost = ({ item, isLastItem }) => {
     return (
@@ -30,6 +26,7 @@ const PreparingGuide = props => {
       </View>
     );
   };
+
   return (
     <Wrapper>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -38,7 +35,9 @@ const PreparingGuide = props => {
             onPress: () => navigation.goBack(),
           }}
         />
-        <Text type="h4">{feedbackSignPost.preparing}</Text>
+        <Text type="h4" style={styles.headerText}>
+          {feedbackSignPost.preparing}
+        </Text>
         <View style={styles.descriptionContainer}>
           <Text type="body1" style={styles.descStyle}>
             {feedbackPreparing.prepareDesc}
@@ -58,9 +57,27 @@ const PreparingGuide = props => {
             );
           })}
         </View>
+        <View style={styles.btnContainer}>
+          <Button
+            style={styles.button}
+            onPress={() => navigation.navigate('FeedbackPreparing')}
+            mode="contained">
+            <Text type="button" style={styles.btnText}>
+              {labels.common.start}
+            </Text>
+          </Button>
+        </View>
       </ScrollView>
     </Wrapper>
   );
 };
 
 export default PreparingGuide;
+
+PreparingGuide.propTypes = {
+  preparingGuide: PropTypes.array,
+};
+
+PreparingGuide.defaultProps = {
+  preparingGuide: [],
+};
