@@ -97,23 +97,24 @@ export function* fetchCurrentFeedback({ journeyId }) {
 function* retrieveDocumentingData(documentingData) {
   yield put(DocumentingActions.setDocumentingData('id', documentingData.id));
   yield put(
-    DocumentingActions.setDocumentingData('step1', documentingData.staff),
-  );
-  yield put(
-    DocumentingActions.setDocumentingData('step2', documentingData.pos_or_cor),
-  );
-  yield put(
-    DocumentingActions.setDocumentingData('step3', documentingData.topic),
-  );
-  yield put(
-    DocumentingActions.setDocumentingData(
-      'step4',
-      documentingData.incident_date,
-    ),
-  );
-  yield put(
     DocumentingActions.setDocumentingData('closed', documentingData.closed),
   );
+  yield put(DocumentingActions.setDocumentingData('started', true));
+  // yield put(
+  //   DocumentingActions.setDocumentingData('step1', documentingData.staff),
+  // );
+  // yield put(
+  //   DocumentingActions.setDocumentingData('step2', documentingData.pos_or_cor),
+  // );
+  // yield put(
+  //   DocumentingActions.setDocumentingData('step3', documentingData.topic),
+  // );
+  // yield put(
+  //   DocumentingActions.setDocumentingData(
+  //     'step4',
+  //     documentingData.incident_date,
+  //   ),
+  // );
 }
 
 function* retrievePreparingData(preparingData) {}
