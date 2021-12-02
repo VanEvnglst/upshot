@@ -6,6 +6,7 @@ import moment from 'moment';
 import { FAB as FloatingAction, ProgressBar } from 'react-native-paper';
 import { Wrapper, Text, Header } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
 import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -18,6 +19,7 @@ const FeedbackJourneyList = props => {
 
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
+    dispatch(DocumentingActions.resetDocumentingState());
   }, []);
 
   const HistoryCard = ({ item }) => {
@@ -76,7 +78,9 @@ const FeedbackJourneyList = props => {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               accessibilityRole={'button'}
-              onPress={() => handleNavigation('ActiveFeedbackJourney', id)}>
+              onPress={() =>
+                handleNavigation('ActiveFeedbackJourney', id, memberName)
+              }>
               <Text type="button" style={styles.inProgressBtn}>
                 {labels.common.continue}
               </Text>
@@ -87,10 +91,11 @@ const FeedbackJourneyList = props => {
     );
   };
 
-  const handleNavigation = (screenName, journeyId) => {
+  const handleNavigation = (screenName, journeyId, staffName) => {
     console.log('scr', journeyId);
     navigation.navigate(screenName, {
       journeyId,
+      staffName,
     });
   };
 

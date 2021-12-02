@@ -11,6 +11,7 @@ import {
   getDocumentingStep,
   getChosenFlow,
   getStep1Data,
+  getDocumentingId,
 } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -18,6 +19,7 @@ import containerStyles from '../styles';
 
 const DocumentingStep1 = props => {
   const dispatch = useDispatch();
+  const activeDocumenting = useSelector(getDocumentingId);
   const stepData = useSelector(getStep1Data);
   const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
@@ -30,6 +32,11 @@ const DocumentingStep1 = props => {
     name: '',
   });
   const [isCompleted, setCompletion] = useState(false);
+
+  useEffect(() => {
+    if (activeDocumenting)
+      dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+  }, []);
 
   useEffect(() => {
     if (stepData.data) chooseTeamMember(stepData.data);

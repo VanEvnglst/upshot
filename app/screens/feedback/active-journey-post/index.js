@@ -20,13 +20,10 @@ import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import labels from 'app/locales/en';
 import styles from './styles';
 
-
 const ActiveFeedbackJourney = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  const staffName = useSelector(
-    state => state.documenting.get('step1').data.name,
-  );
+
   const getFlow = useSelector(state => state.feedback.get('chosenFlow'));
   const documentingClosed = useSelector(state =>
     state.documenting.get('closed'),
@@ -37,11 +34,9 @@ const ActiveFeedbackJourney = props => {
   const preparingClosed = useSelector(state => state.preparing.get('closed'));
   const preparingStarted = useSelector(state => state.preparing.get('started'));
   const isLoading = useSelector(state => state.feedback.get('fetching'));
-  const staffArr = staffName.split(/[ ,]+/);
-  const lastNameSplt = staffArr[1].charAt(0);
-  const memberName = `${staffArr[0]} ${lastNameSplt}.`;
-
+  const staffName = route.params.staffName;
   const [phaseList, setPhaseList] = useState([]);
+
   useEffect(() => {
     dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
     handlePhases();
@@ -66,7 +61,6 @@ const ActiveFeedbackJourney = props => {
       //   started: discussingStarted,
       // }
       content = feedbackJourneySteps;
-      debugger;
     } else {
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
     }
@@ -95,7 +89,7 @@ const ActiveFeedbackJourney = props => {
         {isLoading && <ActivityIndicator />}
         <View style={styles.nameContainer}>
           <Text type="h4" style={styles.teammateName}>
-            {memberName}
+            {staffName}
           </Text>
         </View>
         <View>
@@ -110,7 +104,7 @@ const ActiveFeedbackJourney = props => {
                 />
                 <JourneyIndicator
                   style={{ flex: 2 }}
-                  disabled={!item.started}
+                  //disabled={!item.started}
                   done={item.closed}
                   current={item.started && !item.closed}
                   hasProgress={item.started && !item.closed}
