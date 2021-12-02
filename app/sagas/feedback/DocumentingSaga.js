@@ -41,6 +41,14 @@ export function* deleteFeedbackDocumenting({ data }) {
   }
 }
 
+export function* fetchCurentDocumenting({ documentingId }) {
+  const response  = yield call(api.getCurrentDocumenting, documentingId);
+  debugger;
+  if (response.ok) {
+    
+  }
+}
+
 function* watchDocumentingSaga() {
   yield takeLatest(
     DocumentingTypes.POST_FEEDBACK_DOCUMENTING,

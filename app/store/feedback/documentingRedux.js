@@ -34,6 +34,9 @@ const { Types, Creators } = createActions({
   deleteFeedbackDocumenting: [''],
   deleteFeedbackDocumentingSuccess: null,
   deleteFeedbackDocumentingFailure: ['error'],
+  fetchCurrentDocumenting: ['id'],
+  fetchCurrentDocumentingSuccess: ['data'],
+  fetchCurrentDocumentingFailure: ['error'],
 });
 
 /* ------------- Reducers ------------- */
@@ -103,6 +106,9 @@ const deleteFeedbackDocumentingFailure = state => state.merge({
   fetching: false,
 });
 
+const fetchCurrentDocumenting = state => state.merge({
+  fetching: true,
+});
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_ACTIVE_STEP]: setActiveStep,
@@ -117,5 +123,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_FEEDBACK_DOCUMENTING_FAILURE]: updateFeedbackDocumentingFailure,
   [Types.DELETE_FEEDBACK_DOCUMENTING]: deleteFeedbackDocumenting,
   [Types.DELETE_FEEDBACK_DOCUMENTING_SUCCESS]: deleteFeedbackDocumentingSuccess,
-  [Types.DELETE_FEEDBACK_DOCUMENTING_FAILURE]: deleteFeedbackDocumentingFailure, 
+  [Types.DELETE_FEEDBACK_DOCUMENTING_FAILURE]: deleteFeedbackDocumentingFailure,
+  [Types.FETCH_CURRENT_DOCUMENTING]: fetchCurrentDocumenting,
 });
