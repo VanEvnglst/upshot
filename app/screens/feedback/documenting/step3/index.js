@@ -26,9 +26,10 @@ const DocumentingStep3 = props => {
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) 
-      setFeedbackTopic(stepData.data);
-      setCompletion(true);
+    if (stepData.data)
+      console.log('step', stepData.data);
+      //setFeedbackTopic(stepData.data);
+      //setCompletion(true);
   }, [stepData]);
 
   const handleBack = () => {
