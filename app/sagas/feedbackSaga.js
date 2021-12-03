@@ -77,15 +77,14 @@ export function* postFeedbackJourney({ flow, teamMemberId }) {
 
 export function* fetchCurrentFeedback({ journeyId }) {
   const response = yield call(api.getCurrentFeedbackJourney, journeyId);
-  debugger;
   if (response.data.status === STATUS_OK) {
     const journeyData = response.data.Journey;
     const docuData = journeyData.Documenting;
     const prepData = journeyData.Preparing;
     const discussData = journeyData.Discussing;
     const reflectData = journeyData.Reflecting;
-    if (docuData) retrieveDocumentingData(docuData);
-    if (prepData) retrievePreparingData(prepData);
+    if (docuData) yield retrieveDocumentingData(docuData);
+    if (prepData) yield retrievePreparingData(prepData);
     // if ()
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
@@ -95,11 +94,11 @@ export function* fetchCurrentFeedback({ journeyId }) {
 }
 
 function* retrieveDocumentingData(documentingData) {
-  yield put(DocumentingActions.setDocumentingData('id', documentingData.id));
+  yield put(DocumentingActions.setDocumentingStatus('id', documentingData.id));
   yield put(
-    DocumentingActions.setDocumentingData('closed', documentingData.closed),
+    DocumentingActions.setDocumentingStatus('closed', documentingData.closed),
   );
-  yield put(DocumentingActions.setDocumentingData('started', true));
+  yield put(DocumentingActions.setDocumentingStatus('started', !documentingData.closed));
   // yield put(
   //   DocumentingActions.setDocumentingData('step1', documentingData.staff),
   // );
