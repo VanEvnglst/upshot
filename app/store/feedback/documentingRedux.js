@@ -34,7 +34,7 @@ const { Types, Creators } = createActions({
   deleteFeedbackDocumenting: [''],
   deleteFeedbackDocumentingSuccess: null,
   deleteFeedbackDocumentingFailure: ['error'],
-  fetchCurrentDocumenting: ['id'],
+  fetchCurrentDocumenting: ['documentingId'],
   fetchCurrentDocumentingSuccess: ['data'],
   fetchCurrentDocumentingFailure: ['error'],
 });
@@ -94,21 +94,25 @@ const updateFeedbackDocumentingFailure = state =>
     fetching: false,
   });
 
-const deleteFeedbackDocumenting = state => state.merge({
-  fetching: true
-});
+const deleteFeedbackDocumenting = state =>
+  state.merge({
+    fetching: true,
+  });
 
-const deleteFeedbackDocumentingSuccess = state => state.merge({
-  fetching: false,
-});
+const deleteFeedbackDocumentingSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
 
-const deleteFeedbackDocumentingFailure = state => state.merge({
-  fetching: false,
-});
+const deleteFeedbackDocumentingFailure = state =>
+  state.merge({
+    fetching: false,
+  });
 
-const fetchCurrentDocumenting = state => state.merge({
-  fetching: true,
-});
+const fetchCurrentDocumenting = state =>
+  state.merge({
+    fetching: true,
+  });
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_ACTIVE_STEP]: setActiveStep,
