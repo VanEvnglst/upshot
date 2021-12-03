@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
+import PreparingActions from 'app/store/feedback/preparingRedux';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
 import labels from 'app/locales/en';
 import preparingGuide from 'app/models/PreparingGuide';
@@ -10,6 +12,7 @@ import styles from './styles';
 const PreparingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackPreparing } = labels;
+  const dispatch = useDispatch();
 
   const SignPost = ({ item, isLastItem }) => {
     return (
@@ -27,6 +30,10 @@ const PreparingGuide = props => {
     );
   };
 
+  const handleNavigation = () => {
+    dispatch(PreparingActions.resetPreparingState());
+    navigation.navigate('FeedbackPreparing');
+  };
   return (
     <Wrapper>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -60,7 +67,7 @@ const PreparingGuide = props => {
         <View style={styles.btnContainer}>
           <Button
             style={styles.button}
-            onPress={() => navigation.navigate('FeedbackPreparing')}
+            onPress={() => handleNavigation()}
             mode="contained">
             <Text type="button" style={styles.btnText}>
               {labels.common.start}
