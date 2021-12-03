@@ -14,6 +14,7 @@ const PreparingStep1 = props => {
   const { checkIn } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
+  //TODO: useSelector for stepData
   const [checkInValue, setCheckInValue] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
@@ -22,7 +23,10 @@ const PreparingStep1 = props => {
     if (checkInValue !== '') setCompletion(true);
   };
 
+  // TODO: add useEffect for stepData
+
   const handleNext = () => {
+    // dispatch(PreparingActions.setPreparingData('step1', checkInValue));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
