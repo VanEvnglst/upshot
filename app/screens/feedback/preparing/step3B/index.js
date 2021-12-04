@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
-import { getPreparingStep } from 'app/store/selectors';
+import {
+  getPreparingStep,
+  //getPreparingStep3B
+} from 'app/store/selectors';
 import { Text, ButtonSelection, TextInput } from 'app/components';
-import preparingObservations from 'app/models/PreparingObservations';
+import preparingObservations from 'app/models/PreparingModel';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -14,19 +17,21 @@ const PreparingStep3B = () => {
   const { describeDiscuss } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  //TODO: useSelector for stepData
+  // stepData = useSelector(getPreparingStep3B);
   const [observationList, setObservations] = useState([]);
   const [additionalObservation, setAdditionalObservation] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
-  //TODO: handle stepData
+  useEffect(() => {
+    // if(stepData.data)
+  }, []);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    //TODO: saving of data
+    //TODO: dispatch(PreparingActions.setPreparingData());
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
