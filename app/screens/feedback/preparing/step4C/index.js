@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, ScrollView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
@@ -13,13 +13,21 @@ import containerStyles from '../styles';
 
 const GuideContent = ({ image, title, content }) => {
   return (
-    <View style={styles.guideContainer}>
-      <Image source={image} resizeMode={'contain'} style={styles.image} />
+    <View
+      style={styles.guideContainer}
+      testID={'view-preparingStep4C-guideCard'}>
+      <Image source={image} resizeMode={'contain'} />
       <View style={styles.guideContent}>
-        <Text type="overline" style={styles.guideTitle}>
+        <Text
+          type="overline"
+          style={styles.guideTitle}
+          testID={'txt-preparingStep4C-guideTitle'}>
           {title}
         </Text>
-        <Text type="body2" style={styles.guideText}>
+        <Text
+          type="body2"
+          style={styles.guideText}
+          testID={'txt-preparingStep4C-guideContent'}>
           {content}
         </Text>
       </View>
@@ -31,7 +39,6 @@ const PreparingStep4C = () => {
   const { createActionPlan } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  const [isCompleted, setCompletion] = useState(false);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
@@ -43,10 +50,16 @@ const PreparingStep4C = () => {
 
   return (
     <View style={containerStyles.container}>
-      <Text type="h6" style={containerStyles.stepTitleText}>
+      <Text
+        type="h6"
+        style={containerStyles.stepTitleText}
+        testID={'txt-preparingStep4C-title'}>
         {createActionPlan.step}: {createActionPlan.title}
       </Text>
-      <Text type="body1" style={containerStyles.stepDescriptionText}>
+      <Text
+        type="body1"
+        style={containerStyles.stepDescriptionText}
+        testID={'txt-preparingStep4C-content'}>
         {createActionPlan.defineNextSteps}
       </Text>
       <GuideContent
@@ -69,13 +82,13 @@ const PreparingStep4C = () => {
         <Button
           mode="text"
           onPress={() => handleBack()}
-          testID={'btn-preparingStep3B-back'}>
+          testID={'btn-preparingStep4C-back'}>
           {labels.common.back}
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
-          testID={'btn-preparingStep3B-next'}>
+          mode={'contained'}
+          testID={'btn-preparingStep4C-next'}>
           {labels.common.next}
         </Button>
       </View>
@@ -85,6 +98,10 @@ const PreparingStep4C = () => {
 
 export default PreparingStep4C;
 
-PreparingStep4C.propTypes = {};
+PreparingStep4C.propTypes = {
+  activeStep: PropTypes.number.isRequired,
+};
 
-PreparingStep4C.defaultProps = {};
+PreparingStep4C.defaultProps = {
+  activeStep: 1,
+};
