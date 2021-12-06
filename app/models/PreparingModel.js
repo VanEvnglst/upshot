@@ -14,8 +14,6 @@ const preparingObservations = [
   },
 ];
 
-export default preparingObservations;
-
 const preparingActionPlan = [
   {
     id: 1,
@@ -26,8 +24,6 @@ const preparingActionPlan = [
     title: createActionPlan.brainstormOption2
   },
 ];
-
-export default preparingActionPlan;
 
 const preparingSuggestions = [
   {
@@ -44,6 +40,8 @@ const preparingSuggestions = [
   }
 ];
 
-export default preparingSuggestions;
+
+export { preparingObservations, preparingActionPlan, preparingSuggestions };
+
 
 
