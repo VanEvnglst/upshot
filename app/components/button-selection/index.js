@@ -30,14 +30,16 @@ const RadioButton = ({ selected, onPress }) => {
 };
 
 const ButtonSelection = props => {
-  const { title, type, showHint, content, selected, disabled, onPress } = props;
+  const { title, type, showHint, content, selected, disabled, onPress, style } = props;
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.btnContainer, showHint && styles.showHintContainer]}>
+      style={[styles.btnContainer, showHint && styles.showHintContainer, style]}>
       <View style={styles.selectionContainer}>
         <View style={styles.titleContainer}>
-          <Text type={selected ? 'subtitle2' : 'body2'}>{title}</Text>
+          <Text type={selected ? 'subtitle2' : 'body2'}
+            style={[styles.textStyle]}
+          >{title}</Text>
         </View>
         <View style={styles.typeContainer}>
           {type === 'Radio' && (
