@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import { 
   getPreparingStep,
-  getPreparingStep4BData
+  getPrepStep4BData
 } from 'app/store/selectors';
 import { Text, ButtonSelection, TextInput } from 'app/components';
-import preparingSuggestions from 'app/models/PreparingModel';
+import { preparingSuggestions } from 'app/models/PreparingModel';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -17,22 +17,31 @@ const PreparingStep4B = () => {
   const { createActionPlan } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  // stepData = useSelector(getPreparingStep4BData)
+  const stepData = useSelector(getPrepStep4BData)
   const [suggestionList, setSuggestionList] = useState([]);
   const [additionalSuggestion, setAdditionalSuggestion] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    //TODO: if(stepData.data)
-  },[])
+    TODO: if(stepData.data) handleSelectedSuggestion(stepData.data);
+  },[stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
+    // dispatch(PreparingActions.setPreparingData());
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
+
+  const checkSelectedSuggestion = item => {
+
+  }
+
+  const handleSelectedSuggestion = item => {
+
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -53,7 +62,7 @@ const PreparingStep4B = () => {
             {createActionPlan.getSuggestions}
           </Text>
         </View>
-        {preapringSuggestions.map((item, i) => (
+        {preparingSuggestions.map((item, i) => (
           <ButtonSelection
             key={item.id}
             testID={'btn-preparingStep4B-action'}
@@ -63,18 +72,6 @@ const PreparingStep4B = () => {
             selected={checkSelectedSuggestion(item)}
           />
         ))}
-        {/* <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.suggestionOption1}
-        />
-        <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.suggestionOption2}
-        />
-        <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.suggestionOption3}
-        /> */}
         <TextInput 
           label={labels.common.inputHint}
           placeholder={labels.common.inputHint} 
@@ -104,10 +101,14 @@ export default PreparingStep4B;
 
 PreparingStep4B.propTypes = {
   setPrepActiveStep: PropTypes.func,
+  setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
+  stepData: PropTypes.object
 };
 
 PreparingStep4B.defaultProps = {
   setPrepActiveStep: () => {},
-  activeStep: 1
+  setPreparingData: () => {},
+  activeStep: 1,
+  stepData: {},
 };
