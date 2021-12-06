@@ -14,8 +14,12 @@ export const PREPARING_STATE = Map({
   step1: { ...defaultState },
   step2: { ...defaultState },
   step3: { ...defaultState },
+  step3B: { ...defaultState },
   step4: { ...defaultState },
+  step4B: { ...defaultState },
   step5: { ...defaultState },
+  step5B: { ...defaultState },
+  step5C: { ...defaultState },
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -34,8 +38,8 @@ export default Creators;
 
 /* ------------- Reducers ------------- */
 const setPrepActiveStep = (state, { step }) => {
-  if(state.get('activeStep') >= state.get('maxStep')) {
-    return;
+  if(state.get('activeStep') > state.get('maxStep')) {
+    return state.get('activeStep');
   }
   return state.merge({ activeStep: step });
 }
