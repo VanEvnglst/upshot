@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import { 
   getPreparingStep,
-  //getPreparingStep4Data
+  getPrepStep4Data
 } from 'app/store/selectors';
 import { Text, ButtonSelection, TextInput } from 'app/components';
-import preparingActionPlan from 'app/models/PreparingModel';
+import { preparingActionPlan } from 'app/models/PreparingModel';
 import containerStyles from '../styles';
 import labels from 'app/locales/en';
 
@@ -18,14 +18,15 @@ const PreparingStep4 =
   const { createActionPlan } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  // stepData = useSelector(getPreparingStep4Data)
+  const stepData = useSelector(getPrepStep4Data)
   const [actionPlanList, setActionPlanList] = useState([]);
   const [additionalPlan, setAdditionalPlan] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    //if(stepData.data)
-  },[]);
+    if(stepData.data) handleSelectedActionPlan(stepData.data)
+    // TODO: fix data handling
+  },[stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
@@ -80,20 +81,11 @@ const PreparingStep4 =
             selected={checkSelectedActionPlan(item)}
           />
         ))}
-        {/* <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.brainstormOption1}
-        />
-        <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.brainstormOption2}
-        /> */}
         <TextInput 
           label={labels.common.inputHint}
           placeholder={labels.common.inputHint} 
           style={{ marginTop: 15 }}
           testID={'input-preparingStep4-additional'}
-
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
@@ -118,10 +110,14 @@ export default PreparingStep4;
 
 PreparingStep4.propTypes = {
   setPrepActiveStep: PropTypes.func,
+  setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
+  stepData: PropTypes.object,
 };
 
 PreparingStep4.defaultProps = {
   setPrepActiveStep: () => {},
-  activeStep: 1
+  setPreparingData: () => {},
+  activeStep: 1,
+  stepData: {},
 };
