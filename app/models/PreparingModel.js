@@ -1,6 +1,6 @@
 import labels from 'app/locales/en';
 
-const { describeDiscuss, createActionPlan } =
+const { describeDiscuss, createActionPlan, checkOut } =
   labels.feedbackPreparing;
 
 const preparingObservations = [
@@ -40,8 +40,23 @@ const preparingSuggestions = [
   }
 ];
 
+const preparingCheckout = [
+  {
+    id: 1,
+    title: checkOut.checkoutFeelings
+  },
+  {
+    id: 2,
+    title: checkOut.checkoutComfortable
+  },
+  {
+    id: 3,
+    title: checkOut.checkout.anythingElse
+  }
+]
 
-export { preparingObservations, preparingActionPlan, preparingSuggestions };
+
+export { preparingObservations, preparingActionPlan, preparingSuggestions, preparingCheckout };
 
 
 
