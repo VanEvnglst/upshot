@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import {
   getPreparingStep,
-  //getPreparingStep3B
+  getPrepStep3BData
 } from 'app/store/selectors';
 import { Text, ButtonSelection, TextInput } from 'app/components';
-import preparingObservations from 'app/models/PreparingModel';
+import { preparingObservations } from 'app/models/PreparingModel';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -17,14 +17,14 @@ const PreparingStep3B = () => {
   const { describeDiscuss } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  // stepData = useSelector(getPreparingStep3B);
+  const stepData = useSelector(getPreparingStep3B);
   const [observationList, setObservations] = useState([]);
   const [additionalObservation, setAdditionalObservation] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    // if(stepData.data)
-  }, []);
+    if(stepData.data) setObservations(stepData.data)
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
@@ -47,7 +47,10 @@ const PreparingStep3B = () => {
   };
 
   const checkSelectedObservation = item => {
-    // if ()
+    // if (item.title === 'Others) {
+
+    //}
+    return observationList.some(observation => observation === item);
   };
 
   return (
@@ -106,10 +109,14 @@ export default PreparingStep3B;
 
 PreparingStep3B.propTypes = {
   setPrepActiveStep: PropTypes.func,
+  setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
+  stepData: PropTypes.object
 };
 
 PreparingStep3B.defaultProps = {
   setPrepActiveStep: () => {},
+  setPreparingData: () => {},
   activeStep: 1,
+  stepData: {}
 };
