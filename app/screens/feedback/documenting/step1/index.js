@@ -11,6 +11,7 @@ import {
   getDocumentingStep,
   getChosenFlow,
   getStep1Data,
+  getDocumentingId,
 } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -18,6 +19,7 @@ import containerStyles from '../styles';
 
 const DocumentingStep1 = props => {
   const dispatch = useDispatch();
+  const activeDocumenting = useSelector(getDocumentingId);
   const stepData = useSelector(getStep1Data);
   const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
@@ -32,7 +34,12 @@ const DocumentingStep1 = props => {
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) setTeamMember(stepData.data);
+    if (activeDocumenting)
+      dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+  }, []);
+
+  useEffect(() => {
+    if (stepData.data) chooseTeamMember(stepData.data);
   }, [stepData]);
 
   const chooseTeamMember = member => {
@@ -45,26 +52,16 @@ const DocumentingStep1 = props => {
   }, []);
 
   const handleNext = () => {
-    // TODO: Change logic for existing journey
-    // if stepData is existing, check if ID in stepData
-    // is the same as team Member ID, if true
-    // setActiveStep
-    // else setData + postjourney
-    // if (stepData.data) {
-
-    // } else {
-    dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
-    dispatch(FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id));
-    //}
+    if (stepData.data && stepData.data.id === teamMember.id) {
+      dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+    } else {
+      dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
+      dispatch(DocumentingActions.setDocumentingStatus('started', true));
+      dispatch(
+        FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id),
+      );
+    }
   };
-
-  // const checkExistingData = () => {
-  //   if (stepData.data) {
-  //     if ()
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   return (
     <View style={styles.container}>
@@ -118,7 +115,7 @@ const DocumentingStep1 = props => {
 
 export default DocumentingStep1;
 
-DocumentingStep1.PropTypes = {
+DocumentingStep1.propTypes = {
   setDocumentingData: PropTypes.func,
   stepData: PropTypes.object,
   staffList: PropTypes.array,
@@ -126,6 +123,7 @@ DocumentingStep1.PropTypes = {
   feedbackFlow: PropTypes.object,
   fetchTeamMembers: PropTypes.func,
   postFeedbackJourney: PropTypes.func,
+  setDocumentingStatus: PropTypes.func,
 };
 
 DocumentingStep1.defaultProps = {
@@ -136,4 +134,5 @@ DocumentingStep1.defaultProps = {
   setDocumentingData: () => {},
   fetchTeamMembers: () => {},
   postFeedbackJourney: () => {},
+  setDocumentingStatus: () => {},
 };

@@ -69,7 +69,7 @@ const LearningCard = props => {
 
 export default LearningCard;
 
-LearningCard.PropTypes = {
+LearningCard.propTypes = {
   headline: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   subtitle: PropTypes.string,
