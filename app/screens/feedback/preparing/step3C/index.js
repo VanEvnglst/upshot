@@ -110,9 +110,11 @@ const PreparingStep3C = () => {
 export default PreparingStep3C;
 
 PreparingStep3C.propTypes = {
+  setPrepActiveStep: PropTypes.func,
   activeStep: PropTypes.number.isRequired,
 };
 
 PreparingStep3C.defaultProps = {
+  setPrepActiveStep: () => {},
   activeStep: 1
 };

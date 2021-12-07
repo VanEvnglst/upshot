@@ -3,7 +3,7 @@ import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
-import { getPreparingStep } from 'app/store/selectors';
+import { getPreparingStep, getPrepStep2Data } from 'app/store/selectors';
 import PropTypes from 'prop-types';
 import { Text, ButtonSelection, TextInput } from 'app/components';
 import labels from 'app/locales/en';
@@ -13,12 +13,14 @@ const PreparingStep2 = props => {
   const dispatch = useDispatch();
   const { statePurpose } = labels.feedbackPreparing;
   const activeStep = useSelector(getPreparingStep);
-  //TODO: use selector for stepdata
+  const stepData = useSelector(getPrepStep2Data);
   const [discussionPurpose, setDiscussionPurpose] = useState();
   const [isCompleted, setCompletion] = useState(false);
   const [additionalPurpose, setAdditionalPurpose] = useState();
 
-  //TODO: add stepData handling 
+  useEffect(() => {
+    if(stepData.data) handleDiscussionPurpose(stepData.data)
+  },[stepData]); 
 
   const handleDiscussionPurpose = text => {
     setDiscussionPurpose(text);
@@ -35,7 +37,7 @@ const PreparingStep2 = props => {
   };
 
   const handleNext = () => {
-    //TODO: add dispatch to store data
+    //TODO: dispatch(PreparingActions.setPreparingData(discussionPurpose));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   }
 
@@ -95,10 +97,14 @@ export default PreparingStep2;
 
 PreparingStep2.propTypes = {
   setPrepActiveStep: PropTypes.func,
+  setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
+  stepData: PropTypes.object
 };
 
 PreparingStep2.defaultProps = {
   setPrepActiveStep: () => {},
+  setPreparingData: () => {},
   activeStep: 1,
+  stepData: {},
 };
