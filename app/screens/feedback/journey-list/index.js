@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FAB as FloatingAction, ProgressBar } from 'react-native-paper';
 import { Wrapper, Text, Header } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
 import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -17,6 +19,7 @@ const FeedbackJourneyList = props => {
 
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
+    dispatch(DocumentingActions.resetDocumentingState());
   }, []);
 
   const HistoryCard = ({ item }) => {
@@ -48,13 +51,14 @@ const FeedbackJourneyList = props => {
       percent_complete: percent,
       last_modified: lastModified,
       member,
+      id,
     } = activeJourney;
     const nameArr = member.split(/[ ,]+/);
     const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
     const progressValue = percent / 100;
-    const lastWorkedOn = moment(dateArr[0]).fromNow();
+    const lastWorkedOn = `${moment(dateArr[0]).fromNow()}`;
 
     return (
       <TouchableOpacity
@@ -74,7 +78,9 @@ const FeedbackJourneyList = props => {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               accessibilityRole={'button'}
-              onPress={() => handleNavigation('ActiveFeedbackJourney')}>
+              onPress={() =>
+                handleNavigation('ActiveFeedbackJourney', id, memberName)
+              }>
               <Text type="button" style={styles.inProgressBtn}>
                 {labels.common.continue}
               </Text>
@@ -85,8 +91,12 @@ const FeedbackJourneyList = props => {
     );
   };
 
-  const handleNavigation = screenName => {
-    navigation.navigate(screenName);
+  const handleNavigation = (screenName, journeyId, staffName) => {
+    console.log('scr', journeyId);
+    navigation.navigate(screenName, {
+      journeyId,
+      staffName,
+    });
   };
 
   return (
@@ -131,3 +141,15 @@ const FeedbackJourneyList = props => {
 };
 
 export default FeedbackJourneyList;
+
+FeedbackJourneyList.propTypes = {
+  fetchRecentJourneys: PropTypes.func,
+  recentJourneys: PropTypes.array,
+  activeJourneys: PropTypes.array,
+};
+
+FeedbackJourneyList.defaultProps = {
+  fetchRecentJourneys: () => {},
+  recentJourneys: [],
+  activeJourneys: [],
+};
