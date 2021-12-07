@@ -1,6 +1,8 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import PreparingActions, { PreparingTypes } from 'app/store/feedback/preparingRedux';
+import PreparingActions, {
+  PreparingTypes,
+} from 'app/store/feedback/preparingRedux';
 import api from 'app/services/apiService';
 
 const activeStep = state => state.preparing.get('activeStep');
@@ -8,7 +10,7 @@ const activeStep = state => state.preparing.get('activeStep');
 export function* postFeedbackPreparing({ data }) {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
-    // return;
+  // return;
   // }
   const response = yield call(api.postFeedbackPreparing, data);
   debugger;
@@ -16,17 +18,35 @@ export function* postFeedbackPreparing({ data }) {
     if (response.data.status === 'ok') {
       const step = yield select(activeStep);
       const preparingId = response.data.details.id;
-      yield put (PreparingActions.postFeedbackPreparingSuccess(preparingId));
-      yield put(PreparingActions.setPrepActiveStep(step + 1 ));
-    } 
+      yield put(PreparingActions.postFeedbackPreparingSuccess(preparingId));
+      yield put(PreparingActions.setPrepActiveStep(step + 1));
+    }
   } else {
     yield put(PreparingActions.postFeedbackPreparingFailure(response.data));
   }
 }
 
+export function* updateFeedbackPreparing({ data }) {
+  //const connected = yield checkInternetConnection();
+  // if (!connected) {}
+  // return;
+
+  const response = yield call(api.updateFeedbackPreparing, data);
+  debugger;
+  if (response.ok) {
+    if (response.data.status === 'ok') {
+      debugger;
+      yield put(PreparingActions.updateFeedbackPreparingSuccess());
+    }
+  } else {
+    yield put(PreparingActions.updateFeedbackPreparingFailure());
+  }
+}
+
 function* watchPreparingSaga() {
   yield takeLatest(
-    PreparingTypes.POST_FEEDBACK_PREPARING, postFeedbackPreparing
+    PreparingTypes.POST_FEEDBACK_PREPARING,
+    postFeedbackPreparing,
   );
 }
 
