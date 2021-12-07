@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -20,7 +20,13 @@ const PreparingStep1 = () => {
 
   const handleText = text => {
     setCheckInValue(text);
-    if (checkInValue !== '') setCompletion(true);
+    setTimeout(() => {
+      console.warn('txt', checkInValue);
+      if (checkInValue !== '') setCompletion(true);
+      else setCompletion(false);
+    }, 300);
+    
+    
   };
 
   useEffect(() => {
@@ -28,7 +34,9 @@ const PreparingStep1 = () => {
   },[stepData]);
 
   const handleNext = () => {
+    if(checkInValue === '') setCompletion(false)
     // dispatch(PreparingActions.setPreparingData('step1', checkInValue));
+    else
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -39,10 +47,18 @@ const PreparingStep1 = () => {
       >
         <KeyboardAvoidingView>
           <View style={containerStyles.descriptionContainer}>
-            <Text type="h6" style={containerStyles.stepTitleText}>
+            <Text 
+              type="h6" 
+              style={containerStyles.stepTitleText}
+              testID={'txt-preparingStep1-title'}  
+            >
               {checkIn.step}: {checkIn.title}
             </Text>
-            <Text type="body1" style={containerStyles.stepDescriptionText}>
+            <Text 
+              type="body1" 
+              style={containerStyles.stepDescriptionText}
+              testID={'txt-preparingStep1-description'}  
+            >
               {checkIn.content}
             </Text>
           </View>
@@ -56,6 +72,7 @@ const PreparingStep1 = () => {
               multiline
               numberOfLines={5}
               theme={{ fonts: { regular: { fontFamily: 'Raleway-Regular' } } }}
+              testID={'input-preparingStep1-checkIn'}
             />
           </View>
         </KeyboardAvoidingView>
