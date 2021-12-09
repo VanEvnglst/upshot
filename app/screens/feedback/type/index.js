@@ -97,5 +97,5 @@ FeedbackType.propTypes = {
 
 FeedbackType.defaultProps = {
   setFeedbackType: () => {},
-  typeList = [],
+  typeList: [],
 };
