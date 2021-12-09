@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {
   FeedbackFlow,
   FeedbackGuide,
+  FeedbackType,
   FeedbackDocumenting,
   ActiveFeedbackJourney,
   FeedbackJourneyList,
@@ -26,12 +27,20 @@ export default function FeedbackStackScreen() {
         }
         //FeedbackJourneyList
       >
-        <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
+        <FeedbackStack.Screen 
+          name={'FeedbackFlow'} 
+          component={FeedbackFlow} 
+        />
+        <FeedbackStack.Screen
+          name={'FeedbackType'}
+          component={FeedbackType}
+        />
         {/* Only appears when starting a new journey */}
         <FeedbackStack.Screen
           name={'FeedbackGuide'}
           component={FeedbackGuide}
         />
+
         {/* Shows the user's current journey */}
         <FeedbackStack.Screen
           name={'ActiveFeedbackJourney'}

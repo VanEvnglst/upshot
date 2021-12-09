@@ -13,6 +13,7 @@ export const getFeedbackTypeList = state =>
 export const getRelatedTopicsList = state =>
   state.feedback.get('relatedTopics').data;
 export const getChosenFlow = state => state.feedback.get('chosenFlow');
+export const getChosenType = state => state.feedback.get('chosenType');
 export const getStaffList = state => state.feedback.get('teamMembers').data;
 
 /* ------------- Feedback History Selectors ------------- */

@@ -14,6 +14,7 @@ export { default as FeedbackGuide } from './feedback/guide';
 export { default as FeedbackJourneyList } from './feedback/journey-list';
 /* ------------- Feedback Documenting ------------- */
 export { default as FeedbackFlow } from './feedback/flow';
+export { default as FeedbackType } from './feedback/type';
 export { default as FeedbackDocumenting } from './feedback/documenting';
 
 /* ------------- Feedback Preparing ------------- */

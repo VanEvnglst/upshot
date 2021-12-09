@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import {
   Wrapper,
   ButtonSelection,
@@ -79,3 +80,13 @@ const FeedbackFlow = props => {
 };
 
 export default FeedbackFlow;
+
+FeedbackFlow.propTypes = {
+  setFeedbackFlow: PropTypes.func,
+  flowList: PropTypes.array,
+};
+
+FeedbackFlow.defaultProps = {
+  setFeedbackFlow: () => {},
+  flowList: [],
+};
