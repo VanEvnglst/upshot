@@ -10,6 +10,7 @@ import {
   getStaffList,
   getDocumentingStep,
   getChosenFlow,
+  getChosenType,
   getStep1Data,
   getDocumentingId,
 } from 'app/store/selectors';
@@ -18,7 +19,10 @@ import styles from './styles';
 import containerStyles from '../styles';
 
 const DocumentingStep1 = props => {
+  const { route } = props;
+  const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
+  const feedbackType = useSelector(getChosenType);
   const activeDocumenting = useSelector(getDocumentingId);
   const stepData = useSelector(getStep1Data);
   const activeStep = useSelector(getDocumentingStep);
@@ -70,7 +74,7 @@ const DocumentingStep1 = props => {
           type="h6"
           style={containerStyles.stepTitleText}
           testID={'txt-documentingStep1-label'}>
-          {labels.feedbackDocumenting.giveFeedbackTo}
+          {`${feedbackDocumenting.giveFeedbackTo} ${feedbackType} ${feedbackDocumenting.giveFeedbackToCont}`}
         </Text>
 
         <View style={styles.namesContainer}>
