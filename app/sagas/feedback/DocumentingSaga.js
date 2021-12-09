@@ -13,7 +13,6 @@ export function* postFeedbackDocumenting({ data }) {
   //  return;
   //}
   const response = yield call(api.postFeedbackDocumenting, data);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       const step = yield select(activeStep);
@@ -21,7 +20,6 @@ export function* postFeedbackDocumenting({ data }) {
       yield put(
         DocumentingActions.postFeedbackDocumentingSuccess(documentingId),
       );
-      debugger;
       yield put(DocumentingActions.setActiveStep(step + 1));
     }
   } else {
@@ -41,11 +39,13 @@ export function* deleteFeedbackDocumenting({ data }) {
   }
 }
 
-export function* fetchCurentDocumenting({ documentingId }) {
+export function* fetchCurrentDocumenting({ documentingId }) {
   const response  = yield call(api.getCurrentDocumenting, documentingId);
   debugger;
   if (response.ok) {
-    
+    if(response.data.status === 'ok') {
+      
+    }
   }
 }
 
@@ -61,6 +61,10 @@ function* watchDocumentingSaga() {
   yield takeLatest(
     DocumentingTypes.DELETE_FEEDBACK_DOCUMENTING,
     deleteFeedbackDocumenting,
+  );
+  yield takeLatest(
+    DocumentingTypes.FETCH_CURRENT_DOCUMENTING,
+    fetchCurrentDocumenting,
   );
 }
 
