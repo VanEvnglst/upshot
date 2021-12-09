@@ -23,12 +23,10 @@ const DocumentingStep4 = props => {
   const step3 = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
   const activeStep = useSelector(getDocumentingStep);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [dateSelected, setDate] = useState('');
-  const [dateLabel, setDateLabel] = useState('');
+  
+ 
   const [isCompleted, setCompletion] = useState(false);
-  const dateToday = moment().format('ll');
-  const yesterday = moment().subtract(1, 'days').format('ll');
+  
 
   useEffect(() => {
     if (stepData.data) setDate({ value: stepData.data });
@@ -36,34 +34,12 @@ const DocumentingStep4 = props => {
     console.log('tod', dateToday);
   }, [stepData]);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
 
-  const selectDate = (dateLabel, date) => {
-    console.log('dateLabel', dateLabel);
-    console.log('date', date);
 
-    if (dateLabel === ('Today' || 'Yesterday')) {
-      setDateLabel('On a different date');
-    } else {
-      setDateLabel(dateLabel);
-    }
-    setDate(date);
-    setCompletion(true);
-  };
 
-  const handleDatePicked = date => {
-    const modDate = moment(date).format('llll');
-    const dateArr = modDate.split(/[ ,]+/);
-    const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    selectDate(dateLabel, date);
-    hideDatePicker();
-  };
+
+
 
   const handleBack = () => {
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
@@ -78,37 +54,21 @@ const DocumentingStep4 = props => {
     }
     dispatch(
       DocumentingActions.setDocumentingData('step4', {
-        dateLabel,
-        dateSelected,
+       
       }),
     );
-    dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
+    
   };
 
   return (
     <View style={styles.container}>
       <Text type="h6" style={containerStyles.stepTitleText}>
-        {labels.feedbackDocumenting.dateToGiveFeedback}
+        
       </Text>
-      <ButtonSelection
-        title={labels.common.today}
-        type={'Radio'}
-        onPress={() => selectDate(labels.common.today, dateToday)}
-        selected={dateSelected === dateToday}
-      />
-      <ButtonSelection
-        title={labels.common.yesterday}
-        type={'Radio'}
-        onPress={() => selectDate(labels.common.yesterday, yesterday)}
-        selected={dateSelected === yesterday}
-      />
-      <CalendarPicker onPress={() => showDatePicker()} text={dateLabel} />
-      <DateTimePicker
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleDatePicked}
-        onCancel={hideDatePicker}
-      />
+      
+      
+     
+      
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
