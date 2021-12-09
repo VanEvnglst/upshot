@@ -20,4 +20,5 @@ export default {
   testPassed: require('./images/test-passed.png'),
   schedule: require('./images/schedule.png'),
   manWindow: require('./images/window.png'),
+  confirmation: require('./images/confirmation.png'),
 };
