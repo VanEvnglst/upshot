@@ -79,3 +79,13 @@ const FeedbackFlow = props => {
 };
 
 export default FeedbackFlow;
+
+FeedbackFlow.propTypes = {
+  setFeedbackFlow: PropTypes.func,
+  flowList: PropTypes.array,
+};
+
+FeedbackFlow.defaultProps = {
+  setFeedbackFlow: () => {},
+  flowList: [],
+};
