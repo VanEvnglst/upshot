@@ -1,60 +1,88 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
-import { getPreparingStep } from 'app/store/selectors';
-import { Text, ButtonSelection } from 'app/components';
+import { getPreparingStep, getPrepStep5CData } from 'app/store/selectors';
+import { Text, ButtonSelection, TextInput } from 'app/components';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
-const PreparingStep5C = props => {
+const PreparingStep5C = () => {
   const { checkOut } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
+  const stepData = useSelector(getPrepStep5CData);
+  const [touchbaseDetails, setTouchbaseDetails] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
+
+  useEffect(() => {
+    //if(stepData.data)
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
+    //dispatch(PreparingActions.setPreparingData());
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
+  };
+
+  const checkSelectedValue = item => {
+
+  };
+
+  const handleSelectedValue = item => {
+
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
         <View style={containerStyles.descriptionContainer}>
-          <Text type="h6" style={containerStyles.stepTitleText}>
+          <Text 
+            type="h6" 
+            style={containerStyles.stepTitleText}
+            testID={'txt-preparingStep5C-title'}  
+          >
             {checkOut.step}: {checkOut.title}
           </Text>
-          <Text style="body1" style={containerStyles.stepDescriptionText}>
+          <Text 
+            style="body1" 
+            style={containerStyles.stepDescriptionText}
+            testID={'txt-preparingStep5C-description'}
+          >
             {checkOut.checkoutDate}
           </Text>
         </View>
         <ButtonSelection
           type={'Check'}
           title={checkOut.checkoutTouchbase}
+          selected={checkSelectedValue()}
+          onPress={() => handleSelectedValue()}
+          testID={'btn-preparingStep5C-detail'}
         />
         <TextInput
+          label={labels.common.inputHint}
           placeholder={labels.common.inputHint}
+          testID={'input-preparingStep5C-somethingElse'}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
       <Button
           mode='text'
           onPress={() => handleBack()}
-          testID={'btn-preparingStep3B-back'}
+          testID={'btn-preparingStep5C-back'}
         >
           {labels.common.back}
         </Button>
         <Button
           onPress={() => handleNext()}
           mode={isCompleted ? 'contained' : 'text'}
-          testID={'btn-preparingStep3B-next'}
+          testID={'btn-preparingStep5C-next'}
         >
           {labels.common.next}
         </Button>
@@ -65,6 +93,16 @@ const PreparingStep5C = props => {
 
 export default PreparingStep5C;
 
-PreparingStep5C.propTypes = {};
+PreparingStep5C.propTypes = {
+  setPrepActiveStep: PropTypes.func,
+  setPreparingData: PropTypes.func,
+  activeStep: PropTypes.number,
+  stepData: PropTypes.object,
+};
 
-PreparingStep5C.defaultProps = {};
+PreparingStep5C.defaultProps = {
+  setPrepActiveStep: () => {},
+  setPreparingData: () => {},
+  activeStep: 1,
+  stepData: {},
+};

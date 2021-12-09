@@ -16,12 +16,15 @@ const FeedbackStack = createStackNavigator();
 
 export default function FeedbackStackScreen() {
   const activeJourneyLength = useSelector(getActiveJourneys);
-  
+
   return (
     <>
-      <FeedbackStack.Navigator 
+      <FeedbackStack.Navigator
         headerMode="none"
-        initialRouteName={activeJourneyLength.length > 0 ? 'FeedbackJourneyList' : 'FeedbackFlow'}
+        initialRouteName={
+          activeJourneyLength.length > 0 ? 'FeedbackPreparing' : 'FeedbackFlow'
+        }
+        //FeedbackJourneyList
       >
         <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
         {/* Only appears when starting a new journey */}
@@ -44,7 +47,7 @@ export default function FeedbackStackScreen() {
           component={FeedbackDocumenting}
         />
         <FeedbackStack.Screen
-          name={"PreparingGuide"}
+          name={'PreparingGuide'}
           component={PreparingGuide}
         />
         <FeedbackStack.Screen

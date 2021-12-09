@@ -1,60 +1,104 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
-import { getPreparingStep } from 'app/store/selectors';
-import { Text, ButtonSelection } from 'app/components';
+import { 
+  getPreparingStep,
+  getPrepStep4Data
+} from 'app/store/selectors';
+import { Text, ButtonSelection, TextInput } from 'app/components';
+import { preparingActionPlan } from 'app/models/PreparingModel';
 import containerStyles from '../styles';
 import labels from 'app/locales/en';
 
-const PreparingStep4 = props => {
+const PreparingStep4 = 
+() => {
   const { createActionPlan } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
+  const stepData = useSelector(getPrepStep4Data)
+  const [actionPlanList, setActionPlanList] = useState([]);
+  const [additionalPlan, setAdditionalPlan] = useState();
   const [isCompleted, setCompletion] = useState(false);
+
+  useEffect(() => {
+    if(stepData.data) handleSelectedActionPlan(stepData.data)
+    // TODO: fix data handling
+  },[stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
+    //TODO: dispatch(PreparingActions.setPreparingData());
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
+  };
+
+  const handleSelectedActionPlan = item => {
+    let newList = actionPlanList;
+    if (checkSelectedActionPlan(item))
+      newList = newList.filter(newAction => newAction.id !== item.id);
+    else newList = [...newList, item];
+    setActionPlanList(newList);
+
+    if (newList.length !== 0) setCompletion(true);
+    else setCompletion(false);
+  };
+
+  const checkSelectedActionPlan = item => {
+    // if ()
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
         <View style={containerStyles.descriptionContainer}>
-          <Text type="h6" style={containerStyles.stepTitleText}>
+          <Text 
+            type="h6" 
+            style={containerStyles.stepTitleText}
+            testID={'txt-preparingStep4-title'}
+          >
             {createActionPlan.step}: {createActionPlan.title}
           </Text>
-          <Text type="body1" style={containerStyles.stepDescriptionText}>
+          <Text 
+            type="body1" 
+            style={containerStyles.stepDescriptionText}
+            testID={'txt-preparingStep4-description'}  
+          >
             {createActionPlan.content}
           </Text>
         </View>
-        <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.brainstormOption1}
+        {preparingActionPlan.map((item, i) => (
+          <ButtonSelection
+            key={item.id}
+            testID={'btn-preparingStep4-action'}
+            type={'Check'}
+            title={item.title}
+            onPress={() => handleSelectedActionPlan(item)}
+            selected={checkSelectedActionPlan(item)}
+          />
+        ))}
+        <TextInput 
+          label={labels.common.inputHint}
+          placeholder={labels.common.inputHint} 
+          style={{ marginTop: 15 }}
+          testID={'input-preparingStep4-additional'}
         />
-        <ButtonSelection
-          type={'Check'}
-          title={createActionPlan.brainstormOption2}
-        />
-        <TextInput placeholder={labels.common.somethingElse} />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
           onPress={() => handleBack()}
-          testID={'btn-preparingStep3B-back'}>
+          testID={'btn-preparingStep4-back'}>
           {labels.common.back}
         </Button>
         <Button
           onPress={() => handleNext()}
           mode={isCompleted ? 'contained' : 'text'}
-          testID={'btn-preparingStep3B-next'}>
+          testID={'btn-preparingStep4-next'}>
           {labels.common.next}
         </Button>
       </View>
@@ -64,6 +108,16 @@ const PreparingStep4 = props => {
 
 export default PreparingStep4;
 
-PreparingStep4.propTypes = {};
+PreparingStep4.propTypes = {
+  setPrepActiveStep: PropTypes.func,
+  setPreparingData: PropTypes.func,
+  activeStep: PropTypes.number,
+  stepData: PropTypes.object,
+};
 
-PreparingStep4.defaultProps = {};
+PreparingStep4.defaultProps = {
+  setPrepActiveStep: () => {},
+  setPreparingData: () => {},
+  activeStep: 1,
+  stepData: {},
+};

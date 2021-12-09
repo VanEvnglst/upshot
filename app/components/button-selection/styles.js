@@ -68,4 +68,8 @@ export default styles =
       color: Colors.black,
       opacity: 0.5,
     },
+    textStyle: {
+      lineHeight: 20,
+      color: Colors.mediumBlack
+    }
   });

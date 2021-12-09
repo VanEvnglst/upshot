@@ -111,11 +111,20 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/get`, params);
   },
 
+  postFeedbackPreparing: async journeyId => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+    const params = new URLSearchParams();
+
+    params.append('journey_id', journeyId);
+
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing`);
+},
+
   getCurrentPreparing: async preparingId => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
 
     params.append('preparing_id', preparingId);
     return upshotAPI.post(`/${uniqueId}/feedback/preparing/get`, params);
-  }
+  },
 };
