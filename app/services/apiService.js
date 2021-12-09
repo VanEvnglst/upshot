@@ -1,5 +1,5 @@
 import Config from 'react-native-config';
-import { upshotAPI } from '../config/apiConfig';
+import { upshotAPI } from '../config/ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { select } from '@redux-saga/core/effects';
 

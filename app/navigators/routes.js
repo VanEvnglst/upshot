@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import { navigationRef } from 'app/services/NavigationService';
-import AuthStack from './authStack';
-import MainStack from './mainStack';
+import AuthStack from './AuthStack';
+import MainStack from './MainStack';
 import { getSignInState } from 'app/store/selectors';
 import { initPushNotif } from '../services/notification-service';
 
