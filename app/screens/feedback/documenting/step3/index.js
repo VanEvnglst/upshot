@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import { Button } from 'react-native-paper';
-import { ButtonSelection, Text, TextInput } from 'app/components';
+import { ButtonSelection, Text, CalendarPicker, DateTimePicker } from 'app/components';
 import {
-  getRelatedTopicsList,
+  
   getDocumentingStep,
   getStep3Data,
 } from 'app/store/selectors';
@@ -14,15 +15,16 @@ import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
 const DocumentingStep3 = props => {
+  const { route } = props;
+  const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
   const stepData = useSelector(getStep3Data);
   const activeStep = useSelector(getDocumentingStep);
-  const feedbackList = useSelector(getRelatedTopicsList);
-  const [feedbackTopic, setFeedbackTopic] = useState([]);
-  const [otherTopic, setOtherTopic] = useState({
-    id: 0,
-    value: ''
-  });
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [dateSelected, setDate] = useState('');
+  const [dateLabel, setDateLabel] = useState('');
+  const dateToday = moment().format('ll');
+  const yesterday = moment().subtract(1, 'days').format('ll');
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
@@ -32,78 +34,88 @@ const DocumentingStep3 = props => {
       //setCompletion(true);
   }, [stepData]);
 
+  const showDatePicker = () => setDatePickerVisibility(true);
+  const hideDatePicker = () => setDatePickerVisibility(false);
+
+
+  const selectDate = (dateLabel, date) => {
+    console.log('dateLabel', dateLabel);
+    console.log('date', date);
+
+    if (dateLabel === ('Today' || 'Yesterday')) {
+      setDateLabel('On a different date');
+    } else {
+      setDateLabel(dateLabel);
+    }
+    setDate(date);
+    setCompletion(true);
+  };
+
+  const handleDatePicked = date => {
+    const modDate = moment(date).format('llll');
+    const dateArr = modDate.split(/[ ,]+/);
+    const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
+    selectDate(dateLabel, date);
+    hideDatePicker();
+  };
+
   const handleBack = () => {
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(DocumentingActions.setDocumentingData('step3', feedbackTopic));
-    dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+    dispatch(DocumentingActions.setDocumentingData('step3',  dateLabel, dateSelected));
+    dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
+    // dispatch(DocumentingActions.setActiveStep(activeStep + 1));
   };
-
-  const checkSelectedTopic = item => {
-    if (item.topic_name === 'Others') {
-    }
-    return feedbackTopic.some(topic => topic === item);
-  };
-
-  const handleFeedbackTopic = item => {
-    let newTopicList = feedbackTopic;
-    if (checkSelectedTopic(item))
-      newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
-    else newTopicList = [...newTopicList, item];
-    setFeedbackTopic(newTopicList);
-
-    if (newTopicList.length !== 0) setCompletion(true);
-    else setCompletion(false);
-  };
-
-  const handleOtherTopic = item => {
-    setOtherTopic({ value: item });
-  }
 
   return (
     <View style={containerStyles.container}>
-      <ScrollView>
-        <Text
-          type="h6"
-          style={containerStyles.stepTitleText}
-          testID={'txt-documentingStep3-label'}>
-          {labels.feedbackDocumenting.feedbackRelation}
-        </Text>
-        {feedbackList.map((item, i) => (
-          <ButtonSelection
-            testID={'btn-documentingStep3-topic'}
-            title={item.topic_name}
-            type={'Check'}
-            onPress={() => handleFeedbackTopic(item)}
-            selected={checkSelectedTopic(item)}
-            key={item.id}
-          />
-        ))}
-        <TextInput
-          label='Something else'
-          placeholder='Something else'
-          // style={{}}
-          value={otherTopic.value}
-          onChangeText={otherTopic => handleOtherTopic(otherTopic)}
-        />
-        <View style={containerStyles.btnContainer}>
-          <Button
-            mode="text"
-            onPress={() => handleBack()}
-            testID={'btn-documentingStep3-back'}>
-            {labels.common.back}
-          </Button>
-          <Button
-            mode="contained"
-            disabled={!isCompleted}
-            onPress={() => handleNext()}
-            testID={'btn-documentingStep3-next'}>
-            {labels.common.next}
-          </Button>
-        </View>
-      </ScrollView>
+      <Text
+        type="h6"
+        style={containerStyles.stepTitleText}
+        testID={'txt-documentingStep3-label'}
+      >
+        {feedbackDocumenting.dateToGiveFeedback}
+      </Text>
+      <ButtonSelection
+        title={labels.common.today}
+        type={'Radio'}
+        onPress={() => selectDate(labels.common.today, dateToday)}
+        selected={dateSelected === dateToday}
+      />
+      <ButtonSelection
+        title={labels.common.yesterday}
+        type={'Radio'}
+        onPress={() => selectDate(labels.common.yesterday, yesterday)}
+        selected={dateSelected === yesterday}
+      />
+      <CalendarPicker 
+        onPress={() => showDatePicker()} 
+        text={dateLabel} 
+      />
+      <DateTimePicker
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDatePicked}
+        onCancel={hideDatePicker}
+      />
+      <View style={containerStyles.btnContainer}>
+        <Button
+          mode="text"
+          onPress={() => handleBack()}
+          testID={'btn-documentingStep3-back'}>
+          {labels.common.back}
+        </Button>
+        <Button
+          mode="contained"
+          disabled={!isCompleted}
+          onPress={() => handleNext()}
+          testID={'btn-documentingStep3-next'}
+        >
+          {labels.common.next}
+        </Button>
+      </View>
     </View>
   );
 };
@@ -113,7 +125,6 @@ export default DocumentingStep3;
 DocumentingStep3.propTypes = {
   stepData: PropTypes.object,
   activeStep: PropTypes.number,
-  feedbackList: PropTypes.array,
   setActiveStep: PropTypes.func,
   setDocumentingData: PropTypes.func,
 };
@@ -121,7 +132,6 @@ DocumentingStep3.propTypes = {
 DocumentingStep3.defaultProps = {
   stepData: {},
   activeStep: 1,
-  feedbackList: [],
   setActiveStep: () => {},
   setDocumentingData: () => {},
 };
