@@ -12,6 +12,7 @@ export { default as Reminders } from './reminder';
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
 export { default as FeedbackGuide } from './feedback/guide';
 export { default as FeedbackJourneyList } from './feedback/journey-list';
+export { default as FeedbackConfirmation } from './feedback/confirmation';
 /* ------------- Feedback Documenting ------------- */
 export { default as FeedbackFlow } from './feedback/flow';
 export { default as FeedbackType } from './feedback/type';
