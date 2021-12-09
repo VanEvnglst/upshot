@@ -7,7 +7,7 @@ import {
   checkInternetConnection,
 } from 'react-native-offline';
 
-import persistConfig from '../config/reduxPersistConfig';
+import persistConfig from '../config/ReduxPersistConfig';
 
 export default (mainReducer, rootSaga) => {
   const middleware = [];
