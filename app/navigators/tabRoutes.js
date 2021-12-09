@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Home, Messages, Activity, Reminders, Profile } from '../screens';
-import FeedbackStackScreen from './feedbackStack';
+import FeedbackStackScreen from './FeedbackStack';
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
