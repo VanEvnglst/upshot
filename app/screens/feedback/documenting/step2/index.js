@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
-import { HintIndicator, ButtonSelection, Text } from 'app/components';
+import { ButtonSelection, Text, TextInput } from 'app/components';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import {
-  getFeedbackTypeList,
+  getRelatedTopicsList,
   getDocumentingStep,
   getStep2Data,
 } from 'app/store/selectors';
@@ -14,88 +14,102 @@ import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
 const DocumentingStep2 = props => {
+  const { route } = props;
+  const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
   const stepData = useSelector(getStep2Data);
-  const feedbackTypes = useSelector(getFeedbackTypeList);
+  const feedbackList = useSelector(getRelatedTopicsList);
   const activeStep = useSelector(getDocumentingStep);
   const [isCompleted, setCompletion] = useState(false);
-  const [feedbackType, setFeedbackType] = useState({
-    id: null,
-    type: '',
+  const [feedbackTopic, setFeedbackTopic] = useState([]);
+  const [otherTopic, setOtherTopic] = useState({
+    id: 0,
+    value: '',
   });
-  const [hint, showHint] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) _handleFeedbackType(stepData.data);
+    // if (stepData.data) _handleFeedbackType(stepData.data);
   }, [stepData]);
-
-  const _handleFeedbackType = item => {
-    setFeedbackType(item);
-    setCompletion(true);
-  };
 
   const handleBack = () => {
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
   const handleNext = () => {
-    dispatch(DocumentingActions.setDocumentingData('step2', feedbackType));
+    dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
     dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+  };
+
+  const checkSelectedTopic = item => {
+    if (item.topic_name === 'Others') {
+    }
+    return feedbackTopic.some(topic => topic === item);
+  };
+
+  const handleFeedbackTopic = item => {
+    let newTopicList = feedbackTopic;
+    if (checkSelectedTopic(item))
+      newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
+    else newTopicList = [...newTopicList, item];
+    setFeedbackTopic(newTopicList);
+
+    if (newTopicList.length !== 0) setCompletion(true);
+    else setCompletion(false);
+  };
+
+  const handleOtherTopic = item => {
+    setOtherTopic({ value: item });
   };
 
   return (
     <View style={containerStyles.container}>
-      <View style={containerStyles.contentContainer}>
-        <Text 
-          type="h6" 
+      <ScrollView>
+        <Text
+          type="h6"
           style={containerStyles.stepTitleText}
-          testID={'txt-documentingStep2-label'}  
-        >
-          {labels.feedbackDocumenting.feedbackToGive}
+          testID={'txt-documentingStep2-label'}>
+          {feedbackDocumenting.feedbackRelation}
         </Text>
-        {feedbackTypes.map((item, i) => (
+        {feedbackList.map((item, i) => (
           <ButtonSelection
-            title={item.display_name}
-            type={'Radio'}
-            content={item.hint}
-            showHint={hint}
-            onPress={() => _handleFeedbackType(item)}
-            selected={item.id === feedbackType.id}
+            testID={'btn-documentingStep2-topic'}
+            title={item.topic_name}
+            type={'Check'}
+            onPress={() => handleFeedbackTopic(item)}
+            selected={checkSelectedTopic(item)}
             key={item.id}
-            testID={'select-documentingStep2-type'}
           />
         ))}
-        <HintIndicator 
-          showHint={hint} 
-          onPress={() => showHint(!hint)} 
-          testID={'btn-documentingStep2-hint'}
+        <TextInput
+          label="Something else"
+          placeholder="Something else"
+          // style={{}}
+          value={otherTopic.value}
+          onChangeText={otherTopic => handleOtherTopic(otherTopic)}
         />
-      </View>
-      <View style={containerStyles.btnContainer}>
-        <Button 
-          mode="text" 
-          onPress={() => handleBack()}
-          testID={'btn-documentingStep2-back'}
-        >
-          {labels.common.back}
-        </Button>
-        <Button
-          style={styles.button}
-          disabled={!isCompleted}
-          onPress={() => handleNext()}
-          mode="contained"
-          testID={'btn-documetingStep2-next'}
-        >
-          {labels.common.next}
-          
-        </Button>
-      </View>
+        <View style={containerStyles.btnContainer}>
+          <Button
+            mode="text"
+            onPress={() => handleBack()}
+            testID={'btn-documentingStep2-back'}>
+            {labels.common.back}
+          </Button>
+          <Button
+            style={styles.button}
+            disabled={!isCompleted}
+            onPress={() => handleNext()}
+            mode="contained"
+            testID={'btn-documetingStep2-next'}>
+            {labels.common.next}
+          </Button>
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
 DocumentingStep2.propTypes = {
   stepData: PropTypes.object,
-  feedbackTypes: PropTypes.array,
+  feedbackList: PropTypes.array,
   activeStep: PropTypes.number,
   setDocumentingData: PropTypes.func,
   setActiveStep: PropTypes.func,
@@ -104,13 +118,11 @@ DocumentingStep2.propTypes = {
 
 DocumentingStep2.defaultProps = {
   stepData: {},
-  feedbackTypes: [],
+  feedbackList: [],
   activeStep: 0,
   getStep2Data: {},
   setDocumentingData: () => {},
   setActiveStep: () => {},
-}
+};
 
 export default DocumentingStep2;
-
-

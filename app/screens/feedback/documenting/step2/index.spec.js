@@ -1,46 +1,48 @@
 import React from 'react';
 import { fireEvent, waitFor } from '@testing-library/react-native';
 import { renderPage, getEndpoint, serverStatus } from 'app/utils/test/helpers';
-import DocumentingStep2 from './';
+import DocumentingStep3 from './';
 import labels from 'app/locales/en';
+import { Iterable } from 'immutable';
+import { exportAllDeclaration } from '@babel/types';
 
-describe('[SCREEN] Documenting Step 2', () => {
-  let backBtn;
+
+describe('[SCREEN] Documenting Step 3', () => {
   let nextBtn;
-  let feedbackTypeBtn;
-  let feedbackTypeGuide;
-  let hint;
+  let topicSelection;
+  let backBtn;
+  let feedbackTopicGuide;
+  let otherTopicField;
 
   beforeEach(() => {
-    const { page, mockStore } = renderPage(<DocumentingStep2 {...props} />);
+    const { page, mockStore } = renderPage(<DocumentingStep3 {...props} />);
     pageRendered = page;
     store = mockStore;
 
-    feedbackTypeGuide = pageRendered.getByTestId('txt-documentingStep2-label');
-    feedbackTypeBtn = pageRendered.getByTestId('select-documentingStep2-type');
-    nextBtn = pageRendered.getByTestId('btn-documentingStep2-next');
-    backBtn = pageRendered.getByTestId('btn-documentingStep2-back');
-    hint = pageRendered.getByTestId('btn-documentingStep2-hint');
+    feedbackTopicGuide = pageRendered.getByTestId();
+    topicSelection = pageRendered.getByTestId();
+    otherTopicField = pageRendered.getByTestId();
+    nextBtn = pageRendered.getByTestId();
+    backBtn = pageRendered.getByTestId();
   });
 
   describe('Rendering', () => {
     it('should render the components correctly', () => {
-      expect(feedbackTypeGuide).toBeDefined();
-      expect(feedbackTypeBtn).toBeDefined();
-      expect(backBtn).toBeDefined();
-      expect(nextBtn).toBeDefined();
+      expect(feedbackTopicGuide).toBeDefined('txt-documentingStep3-label');
+      expect(topicSelection).toBeDefined('btn-documentingStep3-topic');
+      expect(otherTopicField).toBeDefined('input-documentingStep3-otherTopic');
+      expect(nextBtn).toBeDefined('btn-documentingStep3-next');
+      expect(backBtn).toBeDefined('btn-documentingStep3-back');
     });
 
-    it('should render the right text label', () => {
-      expect(feedbackTypeGuide).toEqual();
+    it('should show the right text for the label', () => {
+
     });
 
-    it('should show two buttons for selection', () => {
-      expect(feedbackTypeBtn).toEqual(2);
-    });
+    it('should render the right number of selections', () => {
 
-    it('should show the Next button to be disabled when nothing is selected', () => {});
+    });
   });
 
-  describe('Selection process', () => {});
-});
+  // describe('')
+})
