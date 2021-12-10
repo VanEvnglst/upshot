@@ -19,9 +19,9 @@ const FeedbackConfirmation = props => {
   }, []);
 
   const handleContent = () => {
-    // get route.params.type
-    // const confirmationContent = confirmationModel.find(x => x.type === route.params.type)
-    //setContent(content);
+    //get route.params.type
+    const confirmationContent = confirmationModel.find(x => x.type === route.params.type)
+    setContent(confirmationContent);
   };
 
   const handleTimeSelection = time => {
@@ -43,9 +43,9 @@ const FeedbackConfirmation = props => {
         <View style={{ flex: 2 }}>
           <Text type="h4">You did it!</Text>
           <Text type="body1">{content}</Text>
-          <TouchableOpacity onPress={() => showModal()}>
+          {/* <TouchableOpacity onPress={() => showModal()}>
             <Text>Press</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </Wrapper>
       <DateTimePicker
