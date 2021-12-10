@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { ProgressBar, Modal, Button } from 'react-native-paper';
+import { ProgressBar, Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper, Header, Text } from 'app/components';
+import { Wrapper, Header, Text, Modal } from 'app/components';
 import {
   getDocumentingStep,
   getDocumentingMaxSteps,
@@ -68,7 +68,7 @@ const FeedbackDocumenting = props => {
       <Modal
         visible={isModalVisible}
         onDismiss={hideModal}
-        contentContainerStyle={{ backgroundColor: 'white', padding: 20, width: 300, height: 200, }}>
+        contentContainerStyle={{ padding: 20, width: 300, height: 200, }}>
         <Text>Exmaple modal</Text>
         <View style={{ flexDirection: 'row'}}>
           <Text>Cancel</Text>
