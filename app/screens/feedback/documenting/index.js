@@ -72,7 +72,7 @@ const FeedbackDocumenting = props => {
         <Text>Exmaple modal</Text>
         <View style={{ flexDirection: 'row'}}>
           <Text>Cancel</Text>
-          <Text>{Save & Close}</Text>
+          <Text>Save & Close</Text>
         </View>
       </Modal>
     </View>
