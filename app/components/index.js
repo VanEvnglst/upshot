@@ -10,3 +10,4 @@ export { default as Text } from './text';
 export { default as JourneyIndicator } from './journey-indicator';
 export { default as CalendarPicker } from './calendar-picker';
 export { default as DateTimePicker } from './calendar';
+export { default as Modal } from './modal';
