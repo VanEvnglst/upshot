@@ -74,7 +74,7 @@ const DocumentingStep1 = props => {
           type="h6"
           style={containerStyles.stepTitleText}
           testID={'txt-documentingStep1-label'}>
-          {`${feedbackDocumenting.giveFeedbackTo} ${feedbackType} ${feedbackDocumenting.giveFeedbackToCont}`}
+          {`${feedbackDocumenting.giveFeedbackTo} ${feedbackType.display_name} ${feedbackDocumenting.giveFeedbackToCont}`}
         </Text>
 
         <View style={styles.namesContainer}>
@@ -108,7 +108,7 @@ const DocumentingStep1 = props => {
           style={styles.button}
           disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode="contained"
+          mode={isCompleted ? "contained" : 'text'}
           testID={'btn-documentingStep1-next'}>
           {labels.common.next}
         </Button>
@@ -125,6 +125,7 @@ DocumentingStep1.propTypes = {
   staffList: PropTypes.array,
   isLoading: PropTypes.bool,
   feedbackFlow: PropTypes.object,
+  feedbackType: PropTypes.object,
   fetchTeamMembers: PropTypes.func,
   postFeedbackJourney: PropTypes.func,
   setDocumentingStatus: PropTypes.func,
@@ -135,6 +136,7 @@ DocumentingStep1.defaultProps = {
   staffList: [],
   isLoading: false,
   feedbackFlow: {},
+  feedbackType: {},
   setDocumentingData: () => {},
   fetchTeamMembers: () => {},
   postFeedbackJourney: () => {},
