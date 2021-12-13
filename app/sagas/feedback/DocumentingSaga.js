@@ -6,7 +6,12 @@ import DocumentingActions, {
 import api from 'app/services/apiService';
 
 const activeStep = state => state.documenting.get('activeStep');
-
+const step2Data = state => state.documenting.get('step2').data;
+const step3Data = state =>
+state.documenting.get('step3').data;
+const feedbackType = state =>
+state.feedback.get('chosenType');
+const docuId = state => state.documenting.get('id');
 export function* postFeedbackDocumenting({ data }) {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
@@ -28,8 +33,28 @@ export function* postFeedbackDocumenting({ data }) {
 }
 
 export function* updateFeedbackDocumenting({ data }) {
+  // const step2 = yield select(state.documenting.get('step2').data);
+  // const step3 = yield select(state.documenting.get('step3').data);
+  // const feedbackType = yield select(state.feedback.get('chosenType'));
+  // const docuId = yield select(state.documenting.get('id'));
+  // const payload = {
+  //   data,
+  //   step2Data,
+  //   step3Data,
+  //   feedbackType,
+  //   docuId
+  // }
+  debugger;
   const response = yield call(api.updateDocumenting, data);
+  debugger;
   if (response.ok) {
+    if(response.data.status === 'ok') {
+      yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
+      //Navigate to FeedbackConfirmation
+      //{type: 'documenting'};
+    }
+  } else {
+    yield put(DocumentingActions.updateFeedbackDocumentingFailure());
   }
 }
 
