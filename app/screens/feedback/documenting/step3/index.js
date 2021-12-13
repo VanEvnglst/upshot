@@ -6,7 +6,8 @@ import moment from 'moment';
 import { Button } from 'react-native-paper';
 import { ButtonSelection, Text, CalendarPicker, DateTimePicker } from 'app/components';
 import {
-  
+  getDocumentingId,
+  getStep2Data,
   getDocumentingStep,
   getStep3Data,
 } from 'app/store/selectors';
@@ -18,11 +19,15 @@ const DocumentingStep3 = props => {
   const { route } = props;
   const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
+  const step2Data = useSelector(getStep2Data);
   const stepData = useSelector(getStep3Data);
+  const docuId = useSelector(getDocumentingId);
   const activeStep = useSelector(getDocumentingStep);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [dateSelected, setDate] = useState('');
-  const [dateLabel, setDateLabel] = useState('');
+  const [dateSelected, setDateSelected] = useState({
+    label: '',
+    value: ''
+  });
   const dateToday = moment().format('ll');
   const yesterday = moment().subtract(1, 'days').format('ll');
   const [isCompleted, setCompletion] = useState(false);
@@ -39,15 +44,12 @@ const DocumentingStep3 = props => {
 
 
   const selectDate = (dateLabel, date) => {
-    console.log('dateLabel', dateLabel);
-    console.log('date', date);
-
     if (dateLabel === ('Today' || 'Yesterday')) {
-      setDateLabel('On a different date');
+      setDateSelected({ label: 'On a different date'});
     } else {
-      setDateLabel(dateLabel);
+      setDateSelected({ label: dateLabel} );
     }
-    setDate(date);
+    setDateSelected({ value: date});
     setCompletion(true);
   };
 
@@ -55,7 +57,7 @@ const DocumentingStep3 = props => {
     const modDate = moment(date).format('llll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    selectDate(dateLabel, date);
+    selectDateSelected({ label: dateLabel, value: date});
     hideDatePicker();
   };
 
@@ -64,9 +66,13 @@ const DocumentingStep3 = props => {
   };
 
   const handleNext = () => {
-    dispatch(DocumentingActions.setDocumentingData('step3',  dateLabel, dateSelected));
-    dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
-    // dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+    // dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
+    const data = {
+      docuId,
+      step2Data,
+      dateSelected,
+    }
+    dispatch(DocumentingActions.updateFeedbackDocumenting(data));
   };
 
   return (
@@ -82,17 +88,17 @@ const DocumentingStep3 = props => {
         title={labels.common.today}
         type={'Radio'}
         onPress={() => selectDate(labels.common.today, dateToday)}
-        selected={dateSelected === dateToday}
+        selected={dateSelected.value === dateToday}
       />
       <ButtonSelection
         title={labels.common.yesterday}
         type={'Radio'}
         onPress={() => selectDate(labels.common.yesterday, yesterday)}
-        selected={dateSelected === yesterday}
+        selected={dateSelected.value === yesterday}
       />
       <CalendarPicker 
         onPress={() => showDatePicker()} 
-        text={dateLabel} 
+        text={dateSelected.dateLabel} 
       />
       <DateTimePicker
         isVisible={isDatePickerVisible}
