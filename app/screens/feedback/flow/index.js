@@ -35,7 +35,7 @@ const FeedbackFlow = props => {
 
   const proceedToNextStep = () => {
     dispatch(FeedbackActions.setFeedbackFlow(discussion));
-    navigation.navigate('FeedbackGuide');
+    navigation.navigate('FeedbackType');
   };
 
   return (

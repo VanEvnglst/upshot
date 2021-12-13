@@ -58,10 +58,6 @@ export default {
     const {
       journeyId,
       teamMemberId,
-      feedbackType,
-      topicId,
-      incidentDate,
-      reminderDate,
     } = data;
     params.append('journey_id', journeyId);
     params.append('staff_id', teamMemberId);
@@ -71,27 +67,24 @@ export default {
   updateDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-    const { step2, step3, dateSelected, docuId } = data;
-    console.log('ste', step3.data[0]);
+    const { step2, step3, feedId, docuId } = data;
     debugger;
     params.append('documenting_id', docuId);
-    params.append('topic_id', step3.data[0].id);
-    params.append('incident_date', dateSelected);
-    params.append('pos_or_cor', step2.data.id);
-    // params.append('reminder_date', reminderDate);
+    //params.append('topic_id', step2.data);
+    //params.append('incident_date', dateSelected);
+    //params.append('pos_or_cor', step2.data.id);
+    //params.append('reminder_date', reminderDate);
 
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
   },
 
   getOpenFeedbackJourneys: async () => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-
     return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-open`);
   },
 
   getClosedFeedbackJourneys: async () => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-
     return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-closed`);
   },
 

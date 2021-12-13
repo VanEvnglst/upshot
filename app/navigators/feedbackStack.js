@@ -23,9 +23,8 @@ export default function FeedbackStackScreen() {
       <FeedbackStack.Navigator
         headerMode="none"
         initialRouteName={
-          activeJourneyLength.length > 0 ? 'FeedbackPreparing' : 'FeedbackFlow'
+          activeJourneyLength.length > 0 ? 'FeedbackJourneyList' : 'FeedbackFlow'
         }
-        //FeedbackJourneyList
       >
         <FeedbackStack.Screen 
           name={'FeedbackFlow'} 

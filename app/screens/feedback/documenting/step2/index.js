@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
@@ -40,8 +40,8 @@ const DocumentingStep2 = props => {
   };
 
   const checkSelectedTopic = item => {
-    if (item.topic_name === 'Others') {
-    }
+    // if (item.topic_name === 'Others') {
+    // }
     return feedbackTopic.some(topic => topic === item);
   };
 
@@ -97,7 +97,7 @@ const DocumentingStep2 = props => {
             style={styles.button}
             disabled={!isCompleted}
             onPress={() => handleNext()}
-            mode="contained"
+            mode={isCompleted ? "contained" : 'text'}
             testID={'btn-documetingStep2-next'}>
             {labels.common.next}
           </Button>
