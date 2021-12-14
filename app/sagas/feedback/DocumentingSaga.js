@@ -3,15 +3,11 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import DocumentingActions, {
   DocumentingTypes,
 } from 'app/store/feedback/documentingRedux';
+import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
 const activeStep = state => state.documenting.get('activeStep');
-const step2Data = state => state.documenting.get('step2').data;
-const step3Data = state =>
-state.documenting.get('step3').data;
-const feedbackType = state =>
-state.feedback.get('chosenType');
-const docuId = state => state.documenting.get('id');
+
 export function* postFeedbackDocumenting({ data }) {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
@@ -33,28 +29,34 @@ export function* postFeedbackDocumenting({ data }) {
 }
 
 export function* updateFeedbackDocumenting({ data }) {
-  // const step2 = yield select(state.documenting.get('step2').data);
-  // const step3 = yield select(state.documenting.get('step3').data);
-  // const feedbackType = yield select(state.feedback.get('chosenType'));
-  // const docuId = yield select(state.documenting.get('id'));
-  // const payload = {
-  //   data,
-  //   step2Data,
-  //   step3Data,
-  //   feedbackType,
-  //   docuId
-  // }
   debugger;
   const response = yield call(api.updateDocumenting, data);
   debugger;
   if (response.ok) {
-    if(response.data.status === 'ok') {
+    if (response.data.status === 'ok') {
       yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
-      //Navigate to FeedbackConfirmation
-      //{type: 'documenting'};
+      yield put(DocumentingActions.setDocumentingStatus('closed', true));
+      yield NavigationService.navigate('FeedbackConfirmation', {
+        type: 'documenting',
+      });
     }
   } else {
     yield put(DocumentingActions.updateFeedbackDocumentingFailure());
+  }
+}
+
+export function* updateDocumentingReminder({ data }) {
+  debugger;
+  const response = yield call(api.updateDocumentingReminder, data);
+  debugger;
+  if (response.ok) {
+    if (response.data.status === 'ok') {
+      yield put(DocumentingActions.updateDocumentingReminderSuccess());
+      yield put(DocumentingActions.setDocumentingStatus('closed', true));
+      yield NavigationService.navigate('ActiveFeedbackJourney');
+    }
+  } else {
+    yield put(DocumentingActions.updateDocumentingReminderFailure());
   }
 }
 
@@ -65,11 +67,14 @@ export function* deleteFeedbackDocumenting({ data }) {
 }
 
 export function* fetchCurrentDocumenting({ documentingId }) {
-  const response  = yield call(api.getCurrentDocumenting, documentingId);
+  const response = yield call(api.getCurrentDocumenting, documentingId);
   debugger;
   if (response.ok) {
-    if(response.data.status === 'ok') {
-      
+    if (response.data.status === 'ok') {
+      const docuDetails = response.data.details;
+      DocumentingActions.setDocumentingData('step1', docuDetails.staff);
+      DocumentingActions.setDocumentingData('step2', docuDetails.topics);
+      DocumentingActions.setDocumentingData('step3', docuDetails.incident_date);
     }
   }
 }
@@ -82,6 +87,10 @@ function* watchDocumentingSaga() {
   yield takeLatest(
     DocumentingTypes.UPDATE_FEEDBACK_DOCUMENTING,
     updateFeedbackDocumenting,
+  );
+  yield takeLatest(
+    DocumentingTypes.UPDATE_DOCUMENTING_REMINDER,
+    updateDocumentingReminder,
   );
   yield takeLatest(
     DocumentingTypes.DELETE_FEEDBACK_DOCUMENTING,
