@@ -4,12 +4,20 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Button } from 'react-native-paper';
-import { ButtonSelection, Text, CalendarPicker, DateTimePicker } from 'app/components';
+import {
+  ButtonSelection,
+  Text,
+  CalendarPicker,
+  DateTimePicker,
+} from 'app/components';
 import {
   getDocumentingId,
+  getCurrentJourney,
+  getChosenType,
   getStep2Data,
-  getDocumentingStep,
   getStep3Data,
+  getDocumentingStep,
+  getReminderDate,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import labels from 'app/locales/en';
@@ -22,34 +30,33 @@ const DocumentingStep3 = props => {
   const step2Data = useSelector(getStep2Data);
   const stepData = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
+  const typeId = useSelector(getChosenType);
   const activeStep = useSelector(getDocumentingStep);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [dateSelected, setDateSelected] = useState({
     label: '',
-    value: ''
+    value: '',
   });
   const dateToday = moment().format('ll');
   const yesterday = moment().subtract(1, 'days').format('ll');
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data)
-      console.log('step', stepData.data);
-      //setFeedbackTopic(stepData.data);
-      //setCompletion(true);
+    if (stepData.data) console.log('step', stepData.data);
+    //setFeedbackTopic(stepData.data);
+    //setCompletion(true);
   }, [stepData]);
 
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
 
-
   const selectDate = (dateLabel, date) => {
     if (dateLabel === ('Today' || 'Yesterday')) {
-      setDateSelected({ label: 'On a different date'});
+      setDateSelected({ label: 'On a different date' });
     } else {
-      setDateSelected({ label: dateLabel} );
+      setDateSelected({ label: dateLabel });
     }
-    setDateSelected({ value: date});
+    setDateSelected({ value: date });
     setCompletion(true);
   };
 
@@ -57,7 +64,7 @@ const DocumentingStep3 = props => {
     const modDate = moment(date).format('llll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    selectDateSelected({ label: dateLabel, value: date});
+    selectDateSelected({ label: dateLabel, value: date });
     hideDatePicker();
   };
 
@@ -67,11 +74,13 @@ const DocumentingStep3 = props => {
 
   const handleNext = () => {
     // dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
+    const step2 = step2Data.data.map(obj => obj.id);
     const data = {
       docuId,
-      step2Data,
-      dateSelected,
-    }
+      typeId: typeId.id,
+      step2,
+      dateSelected: dateSelected.value,
+    };
     dispatch(DocumentingActions.updateFeedbackDocumenting(data));
   };
 
@@ -80,8 +89,7 @@ const DocumentingStep3 = props => {
       <Text
         type="h6"
         style={containerStyles.stepTitleText}
-        testID={'txt-documentingStep3-label'}
-      >
+        testID={'txt-documentingStep3-label'}>
         {feedbackDocumenting.dateToGiveFeedback}
       </Text>
       <ButtonSelection
@@ -96,9 +104,9 @@ const DocumentingStep3 = props => {
         onPress={() => selectDate(labels.common.yesterday, yesterday)}
         selected={dateSelected.value === yesterday}
       />
-      <CalendarPicker 
-        onPress={() => showDatePicker()} 
-        text={dateSelected.dateLabel} 
+      <CalendarPicker
+        onPress={() => showDatePicker()}
+        text={dateSelected.dateLabel}
       />
       <DateTimePicker
         isVisible={isDatePickerVisible}
@@ -117,8 +125,7 @@ const DocumentingStep3 = props => {
           mode="contained"
           disabled={!isCompleted}
           onPress={() => handleNext()}
-          testID={'btn-documentingStep3-next'}
-        >
+          testID={'btn-documentingStep3-next'}>
           {labels.common.next}
         </Button>
       </View>
