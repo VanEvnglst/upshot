@@ -18,7 +18,6 @@ export function* signUpUser({ data }) {
       yield put(OnboardingActions.signUpUserSuccess());
       yield put(AuthenticationActions.setUserSignedIn());
     } else {
-      console.log('register error', response.data);
       OnboardingActions.signUpUserFailure(response.data);
     }
   } else {
