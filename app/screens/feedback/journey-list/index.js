@@ -6,6 +6,7 @@ import moment from 'moment';
 import { FAB as FloatingAction, ProgressBar } from 'react-native-paper';
 import { Wrapper, Text, Header } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
@@ -55,7 +56,7 @@ const FeedbackJourneyList = props => {
     } = activeJourney;
     const nameArr = member.split(/[ ,]+/);
     const dateArr = lastModified.split(/[ ,]+/);
-    const lastName = nameArr[1].charAt(0);
+    const lastName = nameArr && nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
     const progressValue = percent / 100;
     const lastWorkedOn = `${moment(dateArr[0]).fromNow()}`;
@@ -69,7 +70,7 @@ const FeedbackJourneyList = props => {
           <ProgressBar progress={progressValue} />
           <View style={styles.inProgressText}>
             <Text type="h6" style={styles.feedbackForText}>
-              Feedback for {memberName}
+              Feedback for {memberName ? memberName : ''}
             </Text>
             <Text type="body2" style={styles.feedbackForDateText}>
               Last worked on {lastWorkedOn}
@@ -92,7 +93,7 @@ const FeedbackJourneyList = props => {
   };
 
   const handleNavigation = (screenName, journeyId, staffName) => {
-    console.log('scr', journeyId);
+    dispatch(FeedbackActions.fetchCurrentFeedback(journeyId));
     navigation.navigate(screenName, {
       journeyId,
       staffName,
