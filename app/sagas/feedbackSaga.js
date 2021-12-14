@@ -80,11 +80,16 @@ export function* fetchCurrentFeedback({ journeyId }) {
   if (response.data.status === STATUS_OK) {
     const journeyData = response.data.Journey;
     const docuData = journeyData.Documenting;
-    const prepData = journeyData.Preparing;
-    const discussData = journeyData.Discussing;
-    const reflectData = journeyData.Reflecting;
-    if (docuData) yield retrieveDocumentingData(docuData);
-    if (prepData) yield retrievePreparingData(prepData);
+    // const prepData = journeyData.Preparing;
+    // const discussData = journeyData.Discussing;
+    // const reflectData = journeyData.Reflecting;
+    if (docuData) {
+      yield put(
+        DocumentingActions.setDocumentingStatus('closed', docuData.closed),
+      );
+      yield put(DocumentingActions.setDocumentingStatus('started', true));
+    }
+    // if (prepData) yield retrievePreparingData(prepData);
     // if ()
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
@@ -98,7 +103,9 @@ function* retrieveDocumentingData(documentingData) {
   yield put(
     DocumentingActions.setDocumentingStatus('closed', documentingData.closed),
   );
-  yield put(DocumentingActions.setDocumentingStatus('started', !documentingData.closed));
+  yield put(
+    DocumentingActions.setDocumentingStatus('started', !documentingData.closed),
+  );
   // yield put(
   //   DocumentingActions.setDocumentingData('step1', documentingData.staff),
   // );
