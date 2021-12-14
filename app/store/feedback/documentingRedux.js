@@ -1,5 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
+import PreparingStep5C from '../../screens/feedback/preparing/step5C';
 
 const defaultState = {
   data: null,
@@ -26,6 +27,9 @@ const { Types, Creators } = createActions({
   updateFeedbackDocumenting: ['data'],
   updateFeedbackDocumentingSuccess: null,
   updateFeedbackDocumentingFailure: ['error'],
+  updateDocumentingReminder: ['data'],
+  updateDocumentingReminderSuccess: null,
+  updateDocumentingReminderFailure: ['error'],
   setActiveStep: ['step'],
   resetDocumentingState: null,
   setDocumentingData: ['key', 'data'],
@@ -112,6 +116,23 @@ const fetchCurrentDocumenting = state =>
   state.merge({
     fetching: true,
   });
+
+const updateDocumentingReminder = state =>
+  state.merge({
+    fetching: true,
+  });
+
+const updateDocumentingReminderSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const updateDocumentingReminderFailure = (state, error) => {
+  return state.merge({
+    fetching: false,
+    error
+  });
+}
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_ACTIVE_STEP]: setActiveStep,
@@ -128,4 +149,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.DELETE_FEEDBACK_DOCUMENTING_SUCCESS]: deleteFeedbackDocumentingSuccess,
   [Types.DELETE_FEEDBACK_DOCUMENTING_FAILURE]: deleteFeedbackDocumentingFailure,
   [Types.FETCH_CURRENT_DOCUMENTING]: fetchCurrentDocumenting,
+  [Types.UPDATE_DOCUMENTING_REMINDER]: updateDocumentingReminder,
+  [Types.UPDATE_DOCUMENTING_REMINDER_SUCCESS]: updateDocumentingReminderSuccess,
+  [Types.UPDATE_DOCUMENTING_REMINDER_FAILURE]: updateDocumentingReminderFailure,
 });
