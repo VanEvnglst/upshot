@@ -62,7 +62,9 @@ const DocumentingStep2 = props => {
 
   return (
     <View style={containerStyles.container}>
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={containerStyles.container}
+      >
         <Text
           type="h6"
           style={containerStyles.stepTitleText}
@@ -103,7 +105,7 @@ const DocumentingStep2 = props => {
           </Button>
         </View>
       </ScrollView>
-    </View>
+      </View>
   );
 };
 
