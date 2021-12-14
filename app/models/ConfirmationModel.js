@@ -1,12 +1,12 @@
 import labels from 'app/locales/en';
 
-// const {}
+const { feedbackDocumenting } = labels;
 
 const confirmationModel = [
   {
     id: 1,
     type: 'documenting',
-    content: `${labels.feedbackDocumenting.content1} ${labels.feedbackDocumenting.content2}`,
+    content: `${feedbackDocumenting.confirmation.content1} \n\n\n${feedbackDocumenting.confirmation.content2}`,
   },
   {
     id: 2,
