@@ -53,6 +53,7 @@ export function* updateDocumentingReminder({ data }) {
     if (response.data.status === 'ok') {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
       yield put(DocumentingActions.setDocumentingStatus('closed', true));
+      yield put(DocumentingActions.closeFeedbackDocumenting(data.documentingId))
       yield NavigationService.navigate('ActiveFeedbackJourney');
     }
   } else {
