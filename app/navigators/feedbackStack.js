@@ -10,6 +10,7 @@ import {
   FeedbackJourneyList,
   PreparingGuide,
   FeedbackPreparing,
+  FeedbackConfirmation
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -39,7 +40,6 @@ export default function FeedbackStackScreen() {
           name={'FeedbackGuide'}
           component={FeedbackGuide}
         />
-
         {/* Shows the user's current journey */}
         <FeedbackStack.Screen
           name={'ActiveFeedbackJourney'}
@@ -49,6 +49,10 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'FeedbackJourneyList'}
           component={FeedbackJourneyList}
+        />
+        <FeedbackStack.Screen
+          name={'FeedbackConfirmation'}
+          component={FeedbackConfirmation}
         />
         <FeedbackStack.Screen
           name={'FeedbackDocumenting'}
