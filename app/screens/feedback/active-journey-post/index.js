@@ -38,8 +38,10 @@ const ActiveFeedbackJourney = props => {
   const [phaseList, setPhaseList] = useState([]);
 
   useEffect(() => {
-    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
-    handlePhases();
+    // dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
+    setTimeout(() => {
+      handlePhases();
+    }, 1000);
   }, []);
 
   const handlePhases = async () => {
@@ -60,6 +62,7 @@ const ActiveFeedbackJourney = props => {
       //   closed: discussingClosed,
       //   started: discussingStarted,
       // }
+      debugger;
       content = feedbackJourneySteps;
     } else {
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
@@ -68,7 +71,6 @@ const ActiveFeedbackJourney = props => {
   };
 
   const handleNavigation = index => {
-    console.log('index', index);
     let screenName = '';
     switch (index) {
       case 0:
