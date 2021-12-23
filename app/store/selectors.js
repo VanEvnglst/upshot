@@ -15,7 +15,7 @@ export const getRelatedTopicsList = state =>
 export const getChosenFlow = state => state.feedback.get('chosenFlow');
 export const getChosenType = state => state.feedback.get('chosenType');
 export const getStaffList = state => state.feedback.get('teamMembers').data;
-
+export const getStaffName = state => state.feedback.get('chosenTeamMember');
 /* ------------- Feedback History Selectors ------------- */
 export const getActiveJourneys = state =>
   state.feedbackHistory.get('activeJourneyList');
