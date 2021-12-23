@@ -3,6 +3,7 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import DocumentingActions, {
   DocumentingTypes,
 } from 'app/store/feedback/documentingRedux';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
@@ -34,6 +35,7 @@ export function* updateFeedbackDocumenting({ data }) {
   debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
+      yield put(DocumentingActions.closeFeedbackDocumenting(data.docuId));
       yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
       yield put(DocumentingActions.setDocumentingStatus('closed', true));
       yield NavigationService.navigate('FeedbackConfirmation', {
@@ -53,7 +55,6 @@ export function* updateDocumentingReminder({ data }) {
     if (response.data.status === 'ok') {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
       yield put(DocumentingActions.setDocumentingStatus('closed', true));
-      yield put(DocumentingActions.closeFeedbackDocumenting(data.documentingId))
       yield NavigationService.navigate('ActiveFeedbackJourney');
     }
   } else {
@@ -73,9 +74,19 @@ export function* fetchCurrentDocumenting({ documentingId }) {
   if (response.ok) {
     if (response.data.status === 'ok') {
       const docuDetails = response.data.details;
-      DocumentingActions.setDocumentingData('step1', docuDetails.staff);
-      DocumentingActions.setDocumentingData('step2', docuDetails.topics);
-      DocumentingActions.setDocumentingData('step3', docuDetails.incident_date);
+      yield put(FeedbackActions.setFeedbackType(docuDetails.pos_or_cor));
+      yield put(
+        DocumentingActions.setDocumentingData('step1', docuDetails.staff),
+      );
+      yield put(
+        DocumentingActions.setDocumentingData('step2', docuDetails.topics),
+      );
+      yield put(
+        DocumentingActions.setDocumentingData(
+          'step3',
+          docuDetails.incident_date,
+        ),
+      );
     }
   }
 }
