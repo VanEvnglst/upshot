@@ -1,6 +1,5 @@
 import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
-import PreparingStep5C from '../../screens/feedback/preparing/step5C';
 
 const defaultState = {
   data: null,
@@ -15,6 +14,7 @@ export const INITIAL_STATE = Map({
   step2: { ...defaultState },
   step3: { ...defaultState },
   reminderTime: null,
+  otherTopic: '',
   closed: false,
   started: false,
 });
@@ -120,6 +120,11 @@ const fetchCurrentDocumenting = state =>
     fetching: true,
   });
 
+const fetchCurrentDocumentingSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
 const updateDocumentingReminder = state =>
   state.merge({
     fetching: true,
@@ -133,11 +138,11 @@ const updateDocumentingReminderSuccess = state =>
 const updateDocumentingReminderFailure = (state, error) => {
   return state.merge({
     fetching: false,
-    error
+    error,
   });
-}
+};
 
-const closeFeedbackDocumenting = state => 
+const closeFeedbackDocumenting = state =>
   state.merge({
     fetching: true,
     error: '',
@@ -159,6 +164,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.DELETE_FEEDBACK_DOCUMENTING_SUCCESS]: deleteFeedbackDocumentingSuccess,
   [Types.DELETE_FEEDBACK_DOCUMENTING_FAILURE]: deleteFeedbackDocumentingFailure,
   [Types.FETCH_CURRENT_DOCUMENTING]: fetchCurrentDocumenting,
+  [Types.FETCH_CURRENT_DOCUMENTING_SUCCESS]: fetchCurrentDocumentingSuccess,
   [Types.UPDATE_DOCUMENTING_REMINDER]: updateDocumentingReminder,
   [Types.UPDATE_DOCUMENTING_REMINDER_SUCCESS]: updateDocumentingReminderSuccess,
   [Types.UPDATE_DOCUMENTING_REMINDER_FAILURE]: updateDocumentingReminderFailure,
