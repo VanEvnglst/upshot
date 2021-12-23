@@ -17,6 +17,7 @@ const FeedbackJourneyList = props => {
   const dispatch = useDispatch();
   const recentJourneys = useSelector(getRecentJourneys);
   const activeJourneys = useSelector(getActiveJourneys);
+  const hasRecentJourneys = recentJourneys && recentJourneys.length !== 0;
 
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
@@ -93,7 +94,7 @@ const FeedbackJourneyList = props => {
   };
 
   const handleNavigation = (screenName, journeyId, staffName) => {
-    dispatch(FeedbackActions.fetchCurrentFeedback(journeyId));
+    dispatch(FeedbackActions.setTeamMember(staffName));
     navigation.navigate(screenName, {
       journeyId,
       staffName,
@@ -120,15 +121,20 @@ const FeedbackJourneyList = props => {
           activeJourneys.map((item, i) => (
             <InProgressCard key={item.id} activeJourney={item} />
           ))}
-        <Text type="overline" style={[styles.overlineText, styles.addedMargin]}>
-          {labels.feedbackIntro.history}
-        </Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {recentJourneys &&
-            recentJourneys.map((item, i) => (
-              <HistoryCard key={item.id} item={item} />
-            ))}
-        </ScrollView>
+        {hasRecentJourneys && (
+          <View>
+            <Text
+              type="overline"
+              style={[styles.overlineText, styles.addedMargin]}>
+              {labels.feedbackIntro.history}
+            </Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {recentJourneys.map((item, i) => (
+                <HistoryCard key={item.id} item={item} />
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </ScrollView>
       <FloatingAction
         style={styles.floatingAction}
