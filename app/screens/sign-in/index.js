@@ -47,26 +47,6 @@ const SignIn = props => {
     );
   };
 
-  // const testSignIn = async () => {
-  //   const body = {
-  //     email: email,
-  //     passwd: password,
-  //   };
-  //   const response = await fetch('http://18.138.8.34/api/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: body,
-  //   });
-  //   console.log('email', body.email.length);
-  //   debugger;
-  //   const json = await response.json();
-
-  //   console.log('json', json);
-  // };
-
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -129,7 +109,6 @@ const SignIn = props => {
 };
 
 export default SignIn;
-
 
 SignIn.propTypes = {
   signInUser: PropTypes.func,
