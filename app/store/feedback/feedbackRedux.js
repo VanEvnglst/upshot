@@ -11,6 +11,7 @@ export const INITIAL_STATE = Map({
   currentJourney: { ...defaultState },
   chosenFlow: {},
   chosenType: {},
+  chosenTeamMember: {},
   feedbackFlow: { ...defaultState },
   feedbackType: { ...defaultState },
   relatedTopics: { ...defaultState },
@@ -30,6 +31,7 @@ const { Types, Creators } = createActions({
   fetchFeedbackTopicsFailure: ['error'],
   setFeedbackFlow: ['chosenFlow'],
   setFeedbackType: ['chosenType'],
+  setTeamMember: ['chosenTeamMember'],
   fetchTeamMembers: [''],
   fetchTeamMembersSuccess: ['teamMembersList'],
   fetchTeamMembersFailure: ['error'],
@@ -38,7 +40,8 @@ const { Types, Creators } = createActions({
   postFeedbackJourneyFailure: ['error'],
   fetchCurrentFeedback: ['journeyId'],
   fetchCurrentFeedbackSuccess: ['id'],
-  fetchCurrentFeedbackFailure: ['error']
+  fetchCurrentFeedbackFailure: ['error'],
+  resetFeedbackState: null,
 });
 
 export const FeedbackTypes = Types;
@@ -48,6 +51,7 @@ export default Creators;
 const fetchFeedbackFlow = state =>
   state.merge({
     feedbackFlow: {
+      ...state.get('feedbackFlow'),
       fetching: true,
       error: '',
     },
@@ -73,6 +77,7 @@ const fetchFeedbackFlowFailure = (state, { error }) =>
 const fetchFeedbackType = state =>
   state.merge({
     feedbackType: {
+      ...state.get('feedbackType'),
       fetching: true,
       error: '',
     },
@@ -98,6 +103,7 @@ const fetchFeedbackTypeFailure = (state, { error }) =>
 const fetchFeedbackTopics = state =>
   state.merge({
     relatedTopics: {
+      ...state.get('relatedTopics'),
       fetching: true,
       error: '',
     },
@@ -125,11 +131,18 @@ const setFeedbackFlow = (state, { chosenFlow }) =>
 
 const setFeedbackType = (state, { chosenType }) =>
   state.merge({
-    chosenType
+    chosenType,
+  });
+
+const setTeamMember = (state, { chosenTeamMember }) =>
+  state.merge({
+    ...state.get('chosenTeamMember'),
+    chosenTeamMember,
   });
 
 const fetchTeamMembers = state =>
   state.merge({
+    ...state.get('teamMembers'),
     teamMembers: {
       fetching: true,
       data: [],
@@ -171,24 +184,33 @@ const postFeedbackJourneySuccess = (state, { id }) => {
 };
 const postFeedbackJourneyFailure = state => state.merge({});
 
-
-const fetchCurrentFeedback = state => state.merge({
-  currentJourney: {
-    fetching: true,
-    error: ''
-  }
-});
+const fetchCurrentFeedback = state =>
+  state.merge({
+    currentJourney: {
+      ...state.get('currentJourney'),
+      fetching: true,
+      error: '',
+    },
+  });
 
 const fetchCurrentFeedbackSuccess = (state, { id }) => {
   return state.merge({
     currentJourney: {
+      ...state.get('currentJourney'),
       fetching: false,
       data: id,
     },
   });
-}
+};
 
 const fetchCurrentFeedbackFailure = state => state.merge({});
+
+const resetFeedbackState = state =>
+  state.merge({
+    currentJourney: {
+      ...defaultState,
+    },
+  });
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const feedbackReducer = createReducer(INITIAL_STATE, {
@@ -203,6 +225,7 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
   [Types.SET_FEEDBACK_FLOW]: setFeedbackFlow,
   [Types.SET_FEEDBACK_TYPE]: setFeedbackType,
+  [Types.SET_TEAM_MEMBER]: setTeamMember,
   [Types.FETCH_TEAM_MEMBERS]: fetchTeamMembers,
   [Types.FETCH_TEAM_MEMBERS_SUCCESS]: fetchTeamMembersSuccess,
   [Types.FETCH_TEAM_MEMBERS_FAILURE]: fetchTeamMembersFailure,
@@ -211,5 +234,6 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.POST_FEEDBACK_JOURNEY_FAILURE]: postFeedbackJourneyFailure,
   [Types.FETCH_CURRENT_FEEDBACK]: fetchCurrentFeedback,
   [Types.FETCH_CURRENT_FEEDBACK_SUCCESS]: fetchCurrentFeedbackSuccess,
-  [Types.FETCH_CURRENT_FEEDBACK_FAILURE]: fetchCurrentFeedbackFailure
+  [Types.FETCH_CURRENT_FEEDBACK_FAILURE]: fetchCurrentFeedbackFailure,
+  [Types.RESET_FEEDBACK_STATE]: resetFeedbackState,
 });
