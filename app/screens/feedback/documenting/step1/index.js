@@ -36,18 +36,26 @@ const DocumentingStep1 = props => {
     name: '',
   });
   const [isCompleted, setCompletion] = useState(false);
+  const [isSelected, setSelected] = useState(false);
 
-  useEffect(() => {
-    if (activeDocumenting)
-      dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
-  }, []);
+  // useEffect(() => {
+  //   if (activeDocumenting)
+  //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+  // }, []);
 
   useEffect(() => {
     if (stepData.data) chooseTeamMember(stepData.data);
   }, [stepData]);
 
+  const checkSelectedMember = member => {
+    if (stepData.data !== null)
+      if (member.id === teamMember.id) setSelected(true);
+    debugger;
+  };
+
   const chooseTeamMember = member => {
     setTeamMember(member);
+    setTimeout(() => checkSelectedMember(member), 200);
     setCompletion(true);
   };
 
@@ -60,7 +68,7 @@ const DocumentingStep1 = props => {
       dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     } else {
       dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
-      dispatch(DocumentingActions.setDocumentingStatus('started', true));
+      // dispatch(DocumentingActions.setDocumentingStatus('started', true));
       dispatch(
         FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id),
       );
@@ -86,10 +94,7 @@ const DocumentingStep1 = props => {
                 key={item.id}
                 onPress={() => chooseTeamMember(item)}
                 mode="flat"
-                style={[
-                  styles.chips,
-                  teamMember.name === item.name && styles.selectedChip,
-                ]}>
+                style={[styles.chips, isSelected && styles.selectedChip]}>
                 <Text
                   type="body2"
                   style={
@@ -108,7 +113,7 @@ const DocumentingStep1 = props => {
           style={styles.button}
           disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode={isCompleted ? "contained" : 'text'}
+          mode={isCompleted ? 'contained' : 'text'}
           testID={'btn-documentingStep1-next'}>
           {labels.common.next}
         </Button>
