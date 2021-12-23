@@ -58,7 +58,7 @@ const FeedbackConfirmation = props => {
   const handleNavigation = () => {};
 
   const handleTimeSelection = time => {
-    const reminderDate = moment(time).format('MMM DD YYYY HH:mm');
+    const reminderDate = moment(time).format('MMM DD, YYYY HH:mm');
     const data = {
       reminderDate,
       docuId,
