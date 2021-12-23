@@ -12,12 +12,11 @@ import {
 } from 'app/components';
 import {
   getDocumentingId,
-  getCurrentJourney,
   getChosenType,
+  getStep1Data,
   getStep2Data,
   getStep3Data,
   getDocumentingStep,
-  getReminderDate,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import labels from 'app/locales/en';
@@ -27,6 +26,7 @@ const DocumentingStep3 = props => {
   const { route } = props;
   const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
+  const step1Data = useSelector(getStep1Data);
   const step2Data = useSelector(getStep2Data);
   const stepData = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
@@ -73,11 +73,11 @@ const DocumentingStep3 = props => {
   };
 
   const handleNext = () => {
-    // dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
     const step2 = step2Data.data.map(obj => obj.id);
     const data = {
       docuId,
       typeId: typeId.id,
+      step1: step1Data,
       step2,
       dateSelected: dateSelected.value,
     };
