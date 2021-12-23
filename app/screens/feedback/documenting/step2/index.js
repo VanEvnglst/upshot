@@ -22,13 +22,12 @@ const DocumentingStep2 = props => {
   const activeStep = useSelector(getDocumentingStep);
   const [isCompleted, setCompletion] = useState(false);
   const [feedbackTopic, setFeedbackTopic] = useState([]);
-  const [otherTopic, setOtherTopic] = useState({
-    id: 0,
-    value: '',
-  });
+  const [otherTopic, setOtherTopic] = useState();
+
+  // useEffect for handling data if coming from review route to change button container
 
   useEffect(() => {
-    // if (stepData.data) _handleFeedbackType(stepData.data);
+    if (stepData.data) setFeedbackTopic(stepData.data);
   }, [stepData]);
 
   const handleBack = () => {
@@ -36,12 +35,12 @@ const DocumentingStep2 = props => {
   };
   const handleNext = () => {
     dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
+    if (otherTopic && otherTopic.length !== 0)
+      dispatch(DocumentingActions.setDocumentingData('otherTopic', otherTopic));
     dispatch(DocumentingActions.setActiveStep(activeStep + 1));
   };
 
   const checkSelectedTopic = item => {
-    // if (item.topic_name === 'Others') {
-    // }
     return feedbackTopic.some(topic => topic === item);
   };
 
@@ -57,14 +56,12 @@ const DocumentingStep2 = props => {
   };
 
   const handleOtherTopic = item => {
-    setOtherTopic({ value: item });
+    setOtherTopic(item);
   };
 
   return (
     <View style={containerStyles.container}>
-      <ScrollView
-        contentContainerStyle={containerStyles.container}
-      >
+      <ScrollView>
         <Text
           type="h6"
           style={containerStyles.stepTitleText}
@@ -85,7 +82,7 @@ const DocumentingStep2 = props => {
           label="Something else"
           placeholder="Something else"
           // style={{}}
-          value={otherTopic.value}
+          value={otherTopic}
           onChangeText={otherTopic => handleOtherTopic(otherTopic)}
         />
         <View style={containerStyles.btnContainer}>
@@ -99,13 +96,13 @@ const DocumentingStep2 = props => {
             style={styles.button}
             disabled={!isCompleted}
             onPress={() => handleNext()}
-            mode={isCompleted ? "contained" : 'text'}
+            mode={isCompleted ? 'contained' : 'text'}
             testID={'btn-documetingStep2-next'}>
             {labels.common.next}
           </Button>
         </View>
       </ScrollView>
-      </View>
+    </View>
   );
 };
 
