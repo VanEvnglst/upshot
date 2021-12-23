@@ -13,7 +13,7 @@ const { Types, Creators } = createActions({
   signInUserSuccess: null,
   signInUserFailure: ['signInUserError'],
   signOutUser: [''],
-  setUserSignedIn: ['']
+  setUserSignedIn: [''],
 });
 
 export const AuthenticationTypes = Types;
@@ -27,15 +27,18 @@ const signInUser = state =>
   });
 const signInUserSuccess = state =>
   state.merge({
+    ...state.get('isSignedIn'),
     loading: false,
     isSignedIn: true,
   });
 const signInUserFailure = state => state.merge({});
 const signOutUser = state => state.merge({ ...INITIAL_STATE });
 
-const setUserSignedIn = state => state.merge({
-  isSignedIn: true
-})
+const setUserSignedIn = state =>
+  state.merge({
+    ...state.get('isSignedIn'),
+    isSignedIn: true,
+  });
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
