@@ -84,10 +84,7 @@ export function* fetchCurrentFeedback({ journeyId }) {
     // const discussData = journeyData.Discussing;
     // const reflectData = journeyData.Reflecting;
     if (docuData) {
-      yield put(
-        DocumentingActions.setDocumentingStatus('closed', docuData.closed),
-      );
-      yield put(DocumentingActions.setDocumentingStatus('started', true));
+      yield retrieveDocumentingData(docuData);
     }
     // if (prepData) yield retrievePreparingData(prepData);
     // if ()
@@ -113,7 +110,7 @@ function* retrieveDocumentingData(documentingData) {
   //   DocumentingActions.setDocumentingData('step2', documentingData.pos_or_cor),
   // );
   // yield put(
-  //   DocumentingActions.setDocumentingData('step3', documentingData.topic),
+  //   DocumentingActions.setDocumentingData('step2', documentingData.topic),
   // );
   // yield put(
   //   DocumentingActions.setDocumentingData(
