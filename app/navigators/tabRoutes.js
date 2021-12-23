@@ -14,7 +14,7 @@ const HomeStackScreen = () => {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name={'Home'} component={TabRoutes} />
       <HomeStack.Screen name={'Feedback'} component={FeedbackStackScreen} />
-      <HomeStack.Screen name={'Reminders'} component={Reminders} />
+      {/* <HomeStack.Screen name={'Reminders'} component={Reminders} /> */}
     </HomeStack.Navigator>
   );
 };
@@ -73,7 +73,7 @@ function TabRoutes() {
           },
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name={'Activity'}
         component={Reminders}
         options={{
@@ -116,7 +116,7 @@ function TabRoutes() {
             );
           },
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }
