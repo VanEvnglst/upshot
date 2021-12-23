@@ -17,6 +17,8 @@ import {
 } from 'app/components';
 import feedbackJourneySteps from 'app/models/FeedbackJourney';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import DocumentingActions from 'app/store/feedback/documentingRedux';
+import { getStaffName, getDocumentingId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -25,6 +27,7 @@ const ActiveFeedbackJourney = props => {
   const dispatch = useDispatch();
 
   const getFlow = useSelector(state => state.feedback.get('chosenFlow'));
+  const documentingId = useSelector(getDocumentingId);
   const documentingClosed = useSelector(state =>
     state.documenting.get('closed'),
   );
@@ -33,16 +36,23 @@ const ActiveFeedbackJourney = props => {
   );
   const preparingClosed = useSelector(state => state.preparing.get('closed'));
   const preparingStarted = useSelector(state => state.preparing.get('started'));
-  const isLoading = useSelector(state => state.feedback.get('fetching'));
-  const staffName = route.params.staffName;
+  const isLoading = useSelector(
+    state => state.feedback.get('currentJourney').fetching,
+  );
+  const staffName = useSelector(getStaffName);
+
   const [phaseList, setPhaseList] = useState([]);
+  const journeyId = useSelector(
+    state => state.feedback.get('currentJourney').data,
+  );
 
   useEffect(() => {
-    // dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
-    setTimeout(() => {
-      handlePhases();
-    }, 1000);
+    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
   }, []);
+
+  useEffect(() => {
+    handlePhases();
+  }, [journeyId]);
 
   const handlePhases = async () => {
     let content = [];
@@ -62,7 +72,6 @@ const ActiveFeedbackJourney = props => {
       //   closed: discussingClosed,
       //   started: discussingStarted,
       // }
-      debugger;
       content = feedbackJourneySteps;
     } else {
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
@@ -70,11 +79,17 @@ const ActiveFeedbackJourney = props => {
     await setPhaseList(content);
   };
 
+  const handleBackNavigation = () => {
+    dispatch(FeedbackActions.resetFeedbackState());
+    navigation.goBack();
+  };
+
   const handleNavigation = index => {
     let screenName = '';
     switch (index) {
       case 0:
         screenName = 'FeedbackDocumenting';
+        dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
         break;
     }
     navigation.navigate(screenName);
@@ -85,10 +100,10 @@ const ActiveFeedbackJourney = props => {
       <ScrollView>
         <Header
           headerLeft={{
-            onPress: () => navigation.goBack(),
+            onPress: () => handleBackNavigation(),
           }}
         />
-        {isLoading && <ActivityIndicator />}
+
         <View style={styles.nameContainer}>
           <Text type="h4" style={styles.teammateName}>
             {staffName}
@@ -118,6 +133,7 @@ const ActiveFeedbackJourney = props => {
           })}
         </View>
       </ScrollView>
+      {isLoading && <ActivityIndicator />}
     </Wrapper>
   );
 };
