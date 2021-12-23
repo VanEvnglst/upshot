@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { ProgressBar, Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,10 +7,13 @@ import { Wrapper, Header, Text, Modal } from 'app/components';
 import {
   getDocumentingStep,
   getDocumentingMaxSteps,
-  getDocumentingId
+  getDocumentingId,
+  getStep1Data,
+  getStep2Data,
+  getStep3Data,
+  getChosenType,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import DocumentingStep4 from './step4';
 import DocumentingStep3 from './step3';
 import DocumentingStep2 from './step2';
 import DocumentingStep1 from './step1';
@@ -24,6 +27,10 @@ const FeedbackDocumenting = props => {
   const maxStep = useSelector(getDocumentingMaxSteps);
   const indexValue = activeStep / maxStep;
   const documentingId = useSelector(getDocumentingId);
+  const typeId = useSelector(getChosenType);
+  const step1Data = useSelector(getStep1Data);
+  const step2Data = useSelector(getStep2Data);
+  const step3Data = useSelector(getStep3Data);
   const [isModalVisible, setModalVisible] = useState(false);
 
   const handleStepContent = () => {
@@ -34,8 +41,6 @@ const FeedbackDocumenting = props => {
         return <DocumentingStep2 />;
       case 3:
         return <DocumentingStep3 />;
-      case 4:
-        return <DocumentingStep4 />;
     }
   };
 
@@ -43,20 +48,31 @@ const FeedbackDocumenting = props => {
   const hideModal = () => setModalVisible(false);
 
   const handleCloseBtn = () => {
-    if (activeStep === 1 && !documentingId)
-      navigation.goBack();
-    else dispatch(DocumentingActions.resetDocumentingState());
+    const payload = {
+      docuId: documentingId,
+      typeId,
+      step1: step1Data,
+      step2: step2Data,
+      dateSelected: step3Data,
+    };
+    // pag step 1 and no documentingId,
+    // navigate,
+    // else dispatch update action & reset
+    if (activeStep === 1 && !documentingId) navigation.goBack();
+    else {
+      dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
+      dispatch(DocumentingActions.resetDocumentingState());
+    }
   };
 
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Wrapper>
         <Header
           headerRight={{
             onPress: () => showModal(),
           }}
         />
-
         <Text type="overline">Documenting</Text>
         <ProgressBar
           progress={indexValue}
@@ -66,13 +82,31 @@ const FeedbackDocumenting = props => {
         <View style={styles.contentContainer}>{handleStepContent()}</View>
       </Wrapper>
       <Modal
-        visible={isModalVisible}
+        isVisible={isModalVisible}
         onDismiss={hideModal}
-        contentContainerStyle={{ padding: 20, width: 300, height: 200, }}>
-        <Text>Exmaple modal</Text>
-        <View style={{ flexDirection: 'row'}}>
-          <Text>Cancel</Text>
-          <Text>Save & Close</Text>
+        style={{
+          padding: 20,
+          width: 300,
+          height: 140,
+        }}>
+        <View style={{ flex: 1 }}>
+          <Text type="body2" style={{ marginTop: 10 }}>
+            Close your feedback for now?
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignSelf: 'flex-end',
+            alignItems: 'flex-end',
+            marginTop: 20,
+          }}>
+          <Button mode="text" onPress={() => hideModal()}>
+            <Text>Cancel</Text>
+          </Button>
+          <Button mode="text" onPress={() => handleCloseBtn()}>
+            <Text>Save & Close</Text>
+          </Button>
         </View>
       </Modal>
     </View>
@@ -92,6 +126,5 @@ FeedbackDocumenting.defaultProps = {
   activeStep: 1,
   maxStep: 3,
   documentingId: 1,
-  resetDocumentingState:() => {},
-
+  resetDocumentingState: () => {},
 };
