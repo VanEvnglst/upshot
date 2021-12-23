@@ -55,10 +55,7 @@ export default {
   postFeedbackDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-    const {
-      journeyId,
-      teamMemberId,
-    } = data;
+    const { journeyId, teamMemberId } = data;
     params.append('journey_id', journeyId);
     params.append('staff_id', teamMemberId);
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
@@ -67,21 +64,27 @@ export default {
   updateDocumenting: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-    const { step2, dateSelected, typeId, docuId } = data;
+    const { step1, step2, dateSelected, typeId, docuId } = data;
+    var topicStr = '[';
+    step2.forEach((item, index) => {
+      if (index !== step2.length - 1) topicStr += `${item},`;
+      else topicStr += `${item}`;
+    });
+    topicStr += ']';
     params.append('documenting_id', docuId);
-    params.append('topic_id', step2);
+    params.append('staff_id', step1.data.id);
+    params.append('topics', topicStr);
     params.append('incident_date', dateSelected);
     params.append('pos_or_cor', typeId);
-
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
 
   updateDocumentingReminder: async data => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     const params = new URLSearchParams();
-    const { reminder, docuId } = data;
+    const { reminderDate, docuId } = data;
     params.append('documenting_id', docuId);
-    params.append('reminder_date', reminder);
+    params.append('reminder_date', reminderDate);
 
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
@@ -127,7 +130,7 @@ export default {
     params.append('journey_id', journeyId);
 
     return upshotAPI.post(`/${uniqueId}/feedback/preparing`);
-},
+  },
 
   getCurrentPreparing: async preparingId => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
