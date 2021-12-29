@@ -10,7 +10,9 @@ import {
   FeedbackJourneyList,
   PreparingGuide,
   FeedbackPreparing,
-  FeedbackConfirmation
+  FeedbackConfirmation,
+  DiscussingGuide,
+  DiscussingMeeting,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -24,17 +26,12 @@ export default function FeedbackStackScreen() {
       <FeedbackStack.Navigator
         headerMode="none"
         initialRouteName={
-          activeJourneyLength.length > 0 ? 'FeedbackJourneyList' : 'FeedbackFlow'
-        }
-      >
-        <FeedbackStack.Screen 
-          name={'FeedbackFlow'} 
-          component={FeedbackFlow} 
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackType'}
-          component={FeedbackType}
-        />
+          activeJourneyLength.length > 0
+            ? 'FeedbackJourneyList'
+            : 'DiscussingGuide'
+        }>
+        <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
+        <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
         {/* Only appears when starting a new journey */}
         <FeedbackStack.Screen
           name={'FeedbackGuide'}
@@ -65,6 +62,14 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'FeedbackPreparing'}
           component={FeedbackPreparing}
+        />
+        <FeedbackStack.Screen
+          name={'DiscussingGuide'}
+          component={DiscussingGuide}
+        />
+        <FeedbackStack.Screen
+          name={'DiscussingMeeting'}
+          component={DiscussingMeeting}
         />
       </FeedbackStack.Navigator>
     </>
