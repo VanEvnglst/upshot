@@ -21,4 +21,8 @@ export default {
   schedule: require('./images/schedule.png'),
   manWindow: require('./images/window.png'),
   confirmation: require('./images/confirmation.png'),
+  cueCards: require('./images/cue-cards.png'),
+  voiceRecording: require('./images/voice-recording.png'),
+  meetingNotes: require('./images/meeting-notes.png'),
+  cardSwipeGuide: require('./images/card-swipe.png')
 };
