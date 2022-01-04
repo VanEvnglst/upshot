@@ -21,7 +21,7 @@ export default function Routes() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
-        {isSignedIn ? MainStack(Stack) : AuthStack(Stack)}
+        {true ? MainStack(Stack) : AuthStack(Stack)}
       </Stack.Navigator>
     </NavigationContainer>
   );
