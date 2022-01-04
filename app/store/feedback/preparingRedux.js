@@ -6,7 +6,7 @@ const defaultState = {
 };
 
 /* ------------- Initial State ------------- */
-export const PREPARING_STATE = Map({
+export const INITIAL_STATE = Map({
   fetching: false,
   id: null,
   activeStep: 1,
@@ -30,7 +30,7 @@ const { Types, Creators } = createActions({
   setPrepActiveStep: ['step'],
   resetPreparingState: null,
   setPreparingData: ['key', 'data'],
-  postFeedbackPreparing: [''],
+  postFeedbackPreparing: ['journeyId'],
   postFeedbackPreparingSuccess: ['preparingId'],
   postFeedbackPreparingFailure: ['error'],
   updateFeedbackPreparing: ['data'],
@@ -41,11 +41,11 @@ export default Creators;
 
 /* ------------- Reducers ------------- */
 const setPrepActiveStep = (state, { step }) => {
-  if(state.get('activeStep') > state.get('maxStep')) {
+  if (state.get('activeStep') > state.get('maxStep')) {
     return state.get('activeStep');
   }
   return state.merge({ activeStep: step });
-}
+};
 
 const resetPreparingState = state => state.merge(INITIAL_STATE);
 
@@ -56,38 +56,41 @@ const setPreparingData = (state, { key, data }) => {
   });
 };
 
-const postFeedbackPreparing = state => state.merge({
-  fetching: true,
-  error: '',
-});
+const postFeedbackPreparing = state =>
+  state.merge({
+    ...state.get('INITIAL_STATE'),
+    fetching: true,
+    error: '',
+  });
 
-const postFeedbackPreparingSuccess = (state, preparingId ) => {
+const postFeedbackPreparingSuccess = (state, preparingId) => {
   return state.merge({
     fetching: false,
-    id: preparingId
+    id: preparingId,
   });
-}
+};
 
 const postFeedbackPreparingFailure = (state, error) => {
   return state.merge({
     fetching: false,
-    error
+    error,
   });
-}
+};
 
-const updateFeedbackPreparing = state => state.merge({
-  fetching: true,
-});
+const updateFeedbackPreparing = state =>
+  state.merge({
+    fetching: true,
+  });
 
 const setPreparingStatus = (state, { key, data }) => {
   return state.merge({
-    [key]: data
+    ...state.get(key),
+    [key]: data,
   });
-}
-
+};
 
 /* ------------- Hookup Reducers To Types ------------- */
-export const reducer = createReducer(PREPARING_STATE, {
+export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_PREP_ACTIVE_STEP]: setPrepActiveStep,
   [Types.SET_PREPARING_DATA]: setPreparingData,
   [Types.POST_FEEDBACK_PREPARING]: postFeedbackPreparing,
