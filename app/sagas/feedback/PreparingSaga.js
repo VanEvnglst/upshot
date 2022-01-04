@@ -3,23 +3,25 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import PreparingActions, {
   PreparingTypes,
 } from 'app/store/feedback/preparingRedux';
+import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
 const activeStep = state => state.preparing.get('activeStep');
 
-export function* postFeedbackPreparing({ data }) {
+export function* postFeedbackPreparing({ journeyId }) {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
   // return;
   // }
-  const response = yield call(api.postFeedbackPreparing, data);
+  const response = yield call(api.postFeedbackPreparing, journeyId);
   debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
-      const step = yield select(activeStep);
+      // const step = yield select(activeStep);
       const preparingId = response.data.details.id;
       yield put(PreparingActions.postFeedbackPreparingSuccess(preparingId));
-      yield put(PreparingActions.setPrepActiveStep(step + 1));
+      yield NavigationService.navigate('FeedbackPreparing');
+      // yield put(PreparingActions.setPrepActiveStep(step + 1));
     }
   } else {
     yield put(PreparingActions.postFeedbackPreparingFailure(response.data));
