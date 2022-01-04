@@ -168,6 +168,7 @@ const fetchTeamMembersFailure = (state, error) =>
 
 const postFeedbackJourney = state =>
   state.merge({
+    ...state.get('currentJourney'),
     currentJourney: {
       fetching: true,
       error: '',
