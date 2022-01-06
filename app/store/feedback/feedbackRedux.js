@@ -142,8 +142,8 @@ const setTeamMember = (state, { chosenTeamMember }) =>
 
 const fetchTeamMembers = state =>
   state.merge({
-    ...state.get('teamMembers'),
     teamMembers: {
+      ...state.get('teamMembers'),
       fetching: true,
       data: [],
       error: '',
