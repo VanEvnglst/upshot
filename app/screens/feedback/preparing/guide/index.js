@@ -16,6 +16,7 @@ const PreparingGuide = props => {
   const journeyId = useSelector(
     state => state.feedback.get('currentJourney').data,
   );
+  const preparingId = useSelector(state => state.preparing.get('id'));
 
   const SignPost = ({ item, isLastItem }) => {
     return (
@@ -38,7 +39,8 @@ const PreparingGuide = props => {
     navigation.navigate('FeedbackPreparing');
   };
   const handleNavigation = () => {
-    dispatch(PreparingActions.postFeedbackPreparing());
+    if (preparingId) navigation.navigate('FeedbackPreparing');
+    else dispatch(PreparingActions.postFeedbackPreparing(journeyId));
   };
   return (
     <Wrapper>
