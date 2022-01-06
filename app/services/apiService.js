@@ -89,6 +89,15 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
 
+  postCloseDocumenting: async data => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+    const params = new URLSearchParams();
+
+    params.append('documenting_id', data);
+
+    return upshotAPI.post(`/${uniqueId}/feedback/documenting/close`, params);
+  },
+
   getOpenFeedbackJourneys: async () => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-open`);
