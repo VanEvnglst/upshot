@@ -31,11 +31,15 @@ const PreparingStep5B = () => {
   };
 
   const checkSelectedValue = item => {
-
+    return acknowledgeDetails.some(detail => detail == item);
   }
 
   const handleSelectedValue = item => {
-
+    let newList = acknowledgeDetails;
+    if(checkSelectedValue(item))
+      newList = newList.filter(newDetail => newDetail.id !== item.id);
+    else newList = [...newList, item];
+    setAcknowledgeDetails(newList);
   }
 
   return (
@@ -80,7 +84,7 @@ const PreparingStep5B = () => {
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep5B-next'}
         >
           {labels.common.next}
