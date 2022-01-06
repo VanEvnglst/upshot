@@ -27,16 +27,21 @@ const PreparingStep5C = () => {
   };
 
   const handleNext = () => {
-    //dispatch(PreparingActions.setPreparingData());
+    dispatch(PreparingActions.setPreparingData('step5C', touchbaseDetails));
+    dispatch(PreparingActions.updateFeedbackPreparing())
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   const checkSelectedValue = item => {
-
+    return touchbaseDetails.some(detail => detail === item);
   };
 
   const handleSelectedValue = item => {
-
+    let newList = touchbaseDetails;
+    if(checkSelectedValue(item))
+      newList = newList.filter(touchBase => touchBase.id !== item.id);
+    else newList = [...newList, item];
+    setTouchbaseDetails(newList);
   };
 
   return (
@@ -81,7 +86,7 @@ const PreparingStep5C = () => {
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep5C-next'}
         >
           {labels.common.next}
