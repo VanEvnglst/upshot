@@ -34,6 +34,8 @@ const { Types, Creators } = createActions({
   postFeedbackPreparingSuccess: ['preparingId'],
   postFeedbackPreparingFailure: ['error'],
   updateFeedbackPreparing: ['data'],
+  updateFeedbackPreparingSuccess: [],
+  updateFeedbackPreparingFailure: ['error'],
 });
 
 export const PreparingTypes = Types;
@@ -80,8 +82,19 @@ const postFeedbackPreparingFailure = (state, error) => {
 const updateFeedbackPreparing = state =>
   state.merge({
     fetching: true,
+    error: '',
   });
 
+const updateFeedbackPreparingSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const updateFeedbackPreparingFailure = (state, error) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
 const setPreparingStatus = (state, { key, data }) => {
   return state.merge({
     ...state.get(key),
@@ -97,6 +110,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_FEEDBACK_PREPARING_SUCCESS]: postFeedbackPreparingSuccess,
   [Types.POST_FEEDBACK_PREPARING_FAILURE]: postFeedbackPreparingFailure,
   [Types.UPDATE_FEEDBACK_PREPARING]: updateFeedbackPreparing,
+  [Types.UPDATE_FEEDBACK_PREPARING_SUCCESS]: updateFeedbackPreparingSuccess,
+  [Types.UPDATE_FEEDBACK_PREPARING_FAILURE]: updateFeedbackPreparingFailure,
   [Types.SET_PREPARING_STATUS]: setPreparingStatus,
   [Types.RESET_PREPARING_STATE]: resetPreparingState,
 });
