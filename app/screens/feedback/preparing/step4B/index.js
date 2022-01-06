@@ -31,16 +31,20 @@ const PreparingStep4B = () => {
   };
 
   const handleNext = () => {
-    // dispatch(PreparingActions.setPreparingData());
+    dispatch(PreparingActions.setPreparingData('step4B', suggestionList));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   const checkSelectedSuggestion = item => {
-
+    return suggestionList.some(suggestion => suggestion === item);
   }
 
   const handleSelectedSuggestion = item => {
-
+    let newList = suggestionList;
+    if(checkSelectedSuggestion(item))
+      newList = newList.filter(newSuggestion => newSuggestion.id !== item.id);
+    else newList = [...newList, item];
+    setSuggestionList(newList);
   }
 
   return (
@@ -88,7 +92,7 @@ const PreparingStep4B = () => {
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep4B-next'}>
           {labels.common.next}
         </Button>
