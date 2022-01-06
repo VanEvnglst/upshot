@@ -148,6 +148,12 @@ const closeFeedbackDocumenting = state =>
     error: '',
   });
 
+const closeFeedbackDocumentingSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_ACTIVE_STEP]: setActiveStep,
@@ -169,4 +175,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_DOCUMENTING_REMINDER_SUCCESS]: updateDocumentingReminderSuccess,
   [Types.UPDATE_DOCUMENTING_REMINDER_FAILURE]: updateDocumentingReminderFailure,
   [Types.CLOSE_FEEDBACK_DOCUMENTING]: closeFeedbackDocumenting,
+  [Types.CLOSE_FEEDBACK_DOCUMENTING_SUCCESS]: closeFeedbackDocumentingSuccess
 });
