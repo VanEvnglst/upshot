@@ -28,11 +28,11 @@ const PreparingStep3 = props => {
 
   const handleDescriptionText = (key, text) => {
     setDetails(key,text);
-    setTimeout(() => {
-      console.log(details);
-    }, 200)
-    if (details.event && details.action && details.result)
-      setCompletion(true);
+    // setTimeout(() => {
+    //   console.log(details);
+    // }, 200)
+    // if (details.event && details.action && details.result)
+    //   setCompletion(true);
   };
 
   const handleBack = () => {
@@ -40,7 +40,7 @@ const PreparingStep3 = props => {
   };
 
   const handleNext = () => {
-    //TODO: dispatch(PreparingActions.setPreparingData(details))
+    dispatch(PreparingActions.setPreparingData('step3', details))
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -114,9 +114,9 @@ const PreparingStep3 = props => {
           {labels.common.back}
         </Button>
         <Button
-          disabled={!isCompleted}
+          // disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep3-next'}>
           {labels.common.next}
         </Button>
