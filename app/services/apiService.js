@@ -138,7 +138,7 @@ export default {
 
     params.append('journey_id', journeyId);
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing`);
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing`, params);
   },
 
   getCurrentPreparing: async preparingId => {
