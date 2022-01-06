@@ -27,7 +27,7 @@ const PreparingStep5 = () => {
   };
 
   const handleNext = () => {
-    //dispatch(PreparingActions.setPreparingData());
+    dispatch(PreparingActions.setPreparingData('step5', checkoutDetails));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -84,7 +84,7 @@ const PreparingStep5 = () => {
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep5-next'}
         >
           {labels.common.next}
