@@ -129,23 +129,31 @@ export default {
     const params = new URLSearchParams();
 
     params.append('documenting_id', documentingId);
-    return upshotAPI.post(`${uniqueId}/feedback/documenting/close`);
+    return upshotAPI.post(`${uniqueId}/feedback/documenting/close`, params);
   },
 
-  postFeedbackPreparing: async journeyId => {
+  postFeedbackPreparing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-
-    params.append('journey_id', journeyId);
 
     return upshotAPI.post(`/${uniqueId}/feedback/preparing`, params);
   },
 
-  getCurrentPreparing: async preparingId => {
+  getCurrentPreparing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-
-    params.append('preparing_id', preparingId);
+  
     return upshotAPI.post(`/${uniqueId}/feedback/preparing/get`, params);
   },
+
+  updateFeedbackPreparing: async data => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing/edit`, data);
+  },
+
+  postCloseFeedbackPreparing: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+    
+    return upshotAPI.post(`${uniqueId}/feedback/documenting/close`, params);
+  },
+
 };
