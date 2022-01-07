@@ -36,6 +36,15 @@ const { Types, Creators } = createActions({
   updateFeedbackPreparing: ['data'],
   updateFeedbackPreparingSuccess: [],
   updateFeedbackPreparingFailure: ['error'],
+  updatePreparingSchedule: ['data'],
+  updatePreparingScheduleSuccess: null,
+  updatePreparingScheduleFailure: ['error'],
+  closeFeedbackPreparing: ['preparingId'],
+  closeFeedbackPreparingSuccess: null,
+  closeFeedbackPreparingFailure: ['error'],
+  fetchCurrentPreparing: ['preparingId'],
+  fetchCurrentPreparingSuccess: ['data'],
+  fetchCurrentPreparingFailure: ['error'],
 });
 
 export const PreparingTypes = Types;
@@ -95,12 +104,64 @@ const updateFeedbackPreparingFailure = (state, error) =>
     fetching: false,
     error,
   });
+
 const setPreparingStatus = (state, { key, data }) => {
   return state.merge({
     ...state.get(key),
     [key]: data,
   });
 };
+
+const closeFeedbackPreparing = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const closeFeedbackPreparingSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const closeFeedbackPreparingFailure = (state, error) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
+
+const fetchCurrentPreparing = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchCurrentPreparingSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const fetchCurrentPreparingFailure = (state, error) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
+
+const updatePreparingSchedule = state => 
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const updatePreparingScheduleSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const updatePreparingScheduleFailure = (state, error) => 
+  state.merge({
+    fetching: false,
+    error,
+  })
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -114,4 +175,16 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_FEEDBACK_PREPARING_FAILURE]: updateFeedbackPreparingFailure,
   [Types.SET_PREPARING_STATUS]: setPreparingStatus,
   [Types.RESET_PREPARING_STATE]: resetPreparingState,
+  [Types.CLOSE_FEEDBACK_PREPARING]: closeFeedbackPreparing,
+  [Types.CLOSE_FEEDBACK_PREPARING_SUCCESS]: closeFeedbackPreparingSuccess,
+  [Types.CLOSE_FEEDBACK_PREPARING_FAILURE]: closeFeedbackPreparingFailure,
+  [Types.FETCH_CURRENT_PREPARING]: fetchCurrentPreparing,
+  [Types.FETCH_CURRENT_PREPARING_SUCCESS]: fetchCurrentPreparingSuccess,
+  [Types.FETCH_CURRENT_PREPARING_FAILURE]: fetchCurrentPreparingFailure,
+  [Types.UPDATE_PREPARING_SCHEDULE]:
+  updatePreparingSchedule,
+  [Types.UPDATE_PREPARING_SCHEDULE_SUCCESS]:
+  updatePreparingScheduleSuccess,
+  [Types.UPDATE_PREPARING_SCHEDULE_FAILURE]:
+  updatePreparingScheduleFailure,
 });
