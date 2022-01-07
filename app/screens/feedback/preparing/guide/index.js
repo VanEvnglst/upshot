@@ -34,14 +34,13 @@ const PreparingGuide = props => {
     );
   };
 
-  const handleGoBack = () => {
-    dispatch(PreparingActions.resetPreparingState());
-    navigation.navigate('FeedbackPreparing');
-  };
   const handleNavigation = () => {
-    if (preparingId) navigation.navigate('FeedbackPreparing');
-    else dispatch(PreparingActions.postFeedbackPreparing(journeyId));
+    if (preparingId) {
+      dispatch(PreparingActions.resetPreparingState());
+      navigation.navigate('FeedbackPreparing');
+    } else dispatch(PreparingActions.postFeedbackPreparing(journeyId));
   };
+  
   return (
     <Wrapper>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
