@@ -15,7 +15,7 @@ const PreparingStep1 = () => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep1Data);
-  const [checkInValue, setCheckInValue] = useState();
+  const [checkInValue, setCheckInValue] = useState('');
   const [isCompleted, setCompletion] = useState(false);
 
   const handleText = text => {
