@@ -16,8 +16,7 @@ const PreparingStep3B = () => {
   const activeStep = useSelector(getPreparingStep);
   // const stepData = useSelector(getPreparingStep3B);
   const [observationList, setObservations] = useState([]);
-  const [additionalObservation, setAdditionalObservation] = useState();
-  const [isCompleted, setCompletion] = useState(false);
+  const [additionalObservation, setAdditionalObservation] = useState('');
 
   // useEffect(() => {
   //   if(stepData.data) setObservations(stepData.data)
@@ -28,23 +27,32 @@ const PreparingStep3B = () => {
   };
 
   const handleNext = () => {
-    dispatch(PreparingActions.setPreparingData('step3B', observationList));
+    dispatch(
+      PreparingActions.setPreparingData('step3B', {
+        observationList,
+        additionalObservation,
+      }),
+    );
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
+  };
+
+  const handleObservationText = text => {
+    setAdditionalObservation(text);
   };
 
   const handleSelectedObservation = item => {
     let newList = observationList;
     if (checkSelectedObservation(item))
       newList = newList.filter(newObservation => newObservation.id !== item.id);
-    else newList = [...newList, item];
+    else newList = [...newList, item.title];
     setObservations(newList);
 
-    if (newList.length !== 0) setCompletion(true);
-    else setCompletion(false);
+    // if (newList.length !== 0) setCompletion(true);
+    // else setCompletion(false);
   };
 
   const checkSelectedObservation = item => {
-    return observationList.some(observation => observation === item);
+    return observationList.some(observation => observation === item.title);
   };
 
   return (
@@ -65,22 +73,26 @@ const PreparingStep3B = () => {
               {describeDiscuss.observationQuestion}
             </Text>
           </View>
-          {preparingObservations.map((item, i) => (
-            <ButtonSelection
-              key={item.id}
-              testID={'btn-preparingStep3B-observation'}
-              title={item.title}
-              type={'Check'}
-              onPress={() => handleSelectedObservation(item)}
-              selected={checkSelectedObservation(item)}
+          <View style={{ marginBottom: 40 }}>
+            {preparingObservations.map((item, i) => (
+              <ButtonSelection
+                key={item.id}
+                testID={'btn-preparingStep3B-observation'}
+                title={item.title}
+                type={'Check'}
+                onPress={() => handleSelectedObservation(item)}
+                selected={checkSelectedObservation(item)}
+              />
+            ))}
+            <TextInput
+              label={labels.common.inputHint}
+              placeholder={labels.common.inputHint}
+              style={{ marginTop: 15 }}
+              testID={'input-preparingStep3B-additional'}
+              onChangeText={text => handleObservationText(text)}
+              value={additionalObservation}
             />
-          ))}
-          <TextInput
-            label={labels.common.inputHint}
-            placeholder={labels.common.inputHint}
-            style={{ marginTop: 15 }}
-            testID={'input-preparingStep3B-additional'}
-          />
+          </View>
         </KeyboardAvoidingView>
         <View style={containerStyles.btnContainer}>
           <Button
