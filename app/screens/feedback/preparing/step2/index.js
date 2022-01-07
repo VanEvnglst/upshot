@@ -16,7 +16,7 @@ const PreparingStep2 = props => {
   const stepData = useSelector(getPrepStep2Data);
   const [discussionPurpose, setDiscussionPurpose] = useState();
   const [isCompleted, setCompletion] = useState(false);
-  const [additionalPurpose, setAdditionalPurpose] = useState();
+  const [additionalPurpose, setAdditionalPurpose] = useState('');
 
   useEffect(() => {
     if (stepData.data) handleDiscussionPurpose(stepData.data);
