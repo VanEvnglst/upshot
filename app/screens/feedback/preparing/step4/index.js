@@ -17,7 +17,7 @@ const PreparingStep4 = () => {
   const stepData = useSelector(getPrepStep4Data);
   const [actionPlanList, setActionPlanList] = useState([]);
   const [additionalPlan, setAdditionalPlan] = useState();
-  const [isCompleted, setCompletion] = useState(false);
+  // const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
     if (stepData.data) handleSelectedActionPlan(stepData.data);
@@ -29,23 +29,27 @@ const PreparingStep4 = () => {
   };
 
   const handleNext = () => {
-    dispatch(PreparingActions.setPreparingData('ste4', actionPlanList));
+    dispatch(PreparingActions.setPreparingData('step4', { actionPlanList, additionalPlan}));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
+
+  const handleAdditionalPlanText = text => {
+    setAdditionalPlan(text);
+  }
 
   const handleSelectedActionPlan = item => {
     let newList = actionPlanList;
     if (checkSelectedActionPlan(item))
       newList = newList.filter(newAction => newAction.id !== item.id);
-    else newList = [...newList, item];
+    else newList = [...newList, item.title];
     setActionPlanList(newList);
 
-    if (newList.length !== 0) setCompletion(true);
-    else setCompletion(false);
+    // if (newList.length !== 0) setCompletion(true);
+    // else setCompletion(false);
   };
 
   const checkSelectedActionPlan = item => {
-    return actionPlanList.some(action => action === item);
+    return actionPlanList.some(action => action === item.title);
   };
 
   return (
@@ -80,6 +84,8 @@ const PreparingStep4 = () => {
           placeholder={labels.common.inputHint}
           style={{ marginTop: 15 }}
           testID={'input-preparingStep4-additional'}
+          onChangeText={text => handleAdditionalPlanText(text)}
+          value={additionalPlan}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
