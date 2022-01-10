@@ -18,6 +18,7 @@ const PreparingGuide = props => {
   );
   const preparingId = useSelector(state => state.preparing.get('id'));
 
+
   const SignPost = ({ item, isLastItem }) => {
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -35,12 +36,10 @@ const PreparingGuide = props => {
   };
 
   const handleNavigation = () => {
-    if (preparingId) {
-      dispatch(PreparingActions.resetPreparingState());
-      navigation.navigate('FeedbackPreparing');
-    } else dispatch(PreparingActions.postFeedbackPreparing(journeyId));
+    dispatch(PreparingActions.resetPreparingState());
+    dispatch(PreparingActions.postFeedbackPreparing(journeyId));
   };
-  
+
   return (
     <Wrapper>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
