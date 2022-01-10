@@ -28,6 +28,11 @@ const FeedbackPreparing = props => {
   const maxStep = useSelector(getPreparingMaxSteps);
   const indexValue = activeStep / maxStep;
 
+  useEffect(() => {
+    dispatch(PreparingActions.setPreparingStatus('activeStep', 1));
+  }, []);
+  
+
   const handleStepContent = () => {
     switch (activeStep) {
       case 1:
@@ -55,7 +60,10 @@ const FeedbackPreparing = props => {
     }
   };
 
-  const handleClose = () => {};
+  const handleClose = () => {
+    dispatch(PreparingActions.resetPreparingState());
+    navigation.navigate('PreparingGuide');
+  };
 
   return (
     <Wrapper>
