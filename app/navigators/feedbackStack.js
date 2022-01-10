@@ -11,6 +11,7 @@ import {
   PreparingGuide,
   FeedbackPreparing,
   FeedbackConfirmation,
+  PreparingSchedule
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -66,6 +67,10 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'FeedbackPreparing'}
           component={FeedbackPreparing}
+        />
+        <FeedbackStack.Screen
+          name={'PreparingSchedule'}
+          component={PreparingSchedule}
         />
       </FeedbackStack.Navigator>
     </>
