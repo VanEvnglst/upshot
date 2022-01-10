@@ -36,6 +36,7 @@ const ActiveFeedbackJourney = props => {
   );
   const preparingClosed = useSelector(state => state.preparing.get('closed'));
   const preparingStarted = useSelector(state => state.preparing.get('started'));
+  const preparingId = useSelector(state => state.preparing.get('id'));
   const isLoading = useSelector(
     state => state.feedback.get('currentJourney').fetching,
   );
@@ -65,13 +66,18 @@ const ActiveFeedbackJourney = props => {
       feedbackJourneySteps[1] = {
         ...feedbackJourneySteps[1],
         closed: preparingClosed,
-        started: preparingStarted,
+        started: true,
       };
-      // feedbackJourneySteps[2] = {
-      //   ...feedbackJourneySteps[2],
-      //   closed: discussingClosed,
-      //   started: discussingStarted,
-      // }
+      feedbackJourneySteps[2] = {
+        ...feedbackJourneySteps[2],
+        closed: false,
+        started: true,
+      };
+      feedbackJourneySteps[3] = {
+        ...feedbackJourneySteps[3],
+        closed: false,
+        started: true,
+      };
       content = feedbackJourneySteps;
     } else {
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
@@ -89,7 +95,17 @@ const ActiveFeedbackJourney = props => {
     switch (index) {
       case 0:
         screenName = 'FeedbackDocumenting';
-        dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
+        // dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
+        break;
+      case 1:
+        if (preparingId) screenName = 'FeedbackPreparing';
+        else screenName = 'PreparingGuide';
+        break;
+      case 2:
+        screenName = 'DiscussingGuide';
+        break;
+      case 3:
+        screenName = 'ReflectingGuide';
         break;
     }
     navigation.navigate(screenName);
@@ -121,7 +137,6 @@ const ActiveFeedbackJourney = props => {
                 />
                 <JourneyIndicator
                   style={{ flex: 2 }}
-                  //disabled={!item.started}
                   done={item.closed}
                   current={item.started && !item.closed}
                   hasProgress={item.started && !item.closed}

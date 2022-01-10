@@ -10,6 +10,7 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+    alignSelf: 'flex-end',
     marginBottom: 20,
   },
   button: {
