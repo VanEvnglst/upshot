@@ -21,4 +21,5 @@ export default {
   schedule: require('./images/schedule.png'),
   manWindow: require('./images/window.png'),
   confirmation: require('./images/confirmation.png'),
+  preparingConfirmHint: require('./images/preparing-confirm-hint.png'),
 };
