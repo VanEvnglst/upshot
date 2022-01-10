@@ -124,14 +124,6 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/get`, params);
   },
 
-  postCloseFeedbackDocumenting: async documentingId => {
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-
-    params.append('documenting_id', documentingId);
-    return upshotAPI.post(`${uniqueId}/feedback/documenting/close`, params);
-  },
-
   postFeedbackPreparing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
@@ -150,10 +142,10 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/preparing/edit`, data);
   },
 
-  postCloseFeedbackPreparing: async params => {
+  postClosePreparing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
     
-    return upshotAPI.post(`${uniqueId}/feedback/documenting/close`, params);
+    return upshotAPI.post(`${uniqueId}/feedback/preparing/close`, params);
   },
 
 };
