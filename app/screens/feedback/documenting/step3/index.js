@@ -72,7 +72,7 @@ const DocumentingStep3 = props => {
     const modDate = moment(date).format('llll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    selectDateSelected({ label: dateLabel, value: date });
+    setDateSelected({ label: dateLabel, value: date });
     hideDatePicker();
   };
 
