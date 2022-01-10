@@ -36,6 +36,7 @@ const ActiveFeedbackJourney = props => {
   );
   const preparingClosed = useSelector(state => state.preparing.get('closed'));
   const preparingStarted = useSelector(state => state.preparing.get('started'));
+  const preparingId = useSelector(state => state.preparing.get('id'));
   const isLoading = useSelector(
     state => state.feedback.get('currentJourney').fetching,
   );
@@ -97,7 +98,8 @@ const ActiveFeedbackJourney = props => {
         // dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
         break;
       case 1:
-        screenName = 'PreparingGuide';
+        if (preparingId) screenName = 'FeedbackPreparing';
+        else screenName = 'PreparingGuide';
         break;
       case 2:
         screenName = 'DiscussingGuide';
