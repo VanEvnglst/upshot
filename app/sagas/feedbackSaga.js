@@ -78,7 +78,6 @@ export function* postFeedbackJourney({ flow, teamMemberId }) {
 
 export function* fetchCurrentFeedback({ journeyId }) {
   const response = yield call(api.getCurrentFeedbackJourney, journeyId);
-  debugger;
   if (response.data.status === STATUS_OK) {
     const journeyData = response.data.Journey;
     const docuData = journeyData.Documenting;
