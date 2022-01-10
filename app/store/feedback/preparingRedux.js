@@ -58,7 +58,8 @@ const setPrepActiveStep = (state, { step }) => {
   return state.merge({ activeStep: step });
 };
 
-const resetPreparingState = state => state.merge(INITIAL_STATE);
+const resetPreparingState = state =>
+  state.merge(INITIAL_STATE);
 
 const setPreparingData = (state, { key, data }) => {
   const stepData = state.get(key);
@@ -146,7 +147,7 @@ const fetchCurrentPreparingFailure = (state, error) =>
     error,
   });
 
-const updatePreparingSchedule = state => 
+const updatePreparingSchedule = state =>
   state.merge({
     fetching: true,
     error: '',
@@ -157,11 +158,11 @@ const updatePreparingScheduleSuccess = state =>
     fetching: false,
   });
 
-const updatePreparingScheduleFailure = (state, error) => 
+const updatePreparingScheduleFailure = (state, error) =>
   state.merge({
     fetching: false,
     error,
-  })
+  });
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -181,10 +182,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_CURRENT_PREPARING]: fetchCurrentPreparing,
   [Types.FETCH_CURRENT_PREPARING_SUCCESS]: fetchCurrentPreparingSuccess,
   [Types.FETCH_CURRENT_PREPARING_FAILURE]: fetchCurrentPreparingFailure,
-  [Types.UPDATE_PREPARING_SCHEDULE]:
-  updatePreparingSchedule,
-  [Types.UPDATE_PREPARING_SCHEDULE_SUCCESS]:
-  updatePreparingScheduleSuccess,
-  [Types.UPDATE_PREPARING_SCHEDULE_FAILURE]:
-  updatePreparingScheduleFailure,
+  [Types.UPDATE_PREPARING_SCHEDULE]: updatePreparingSchedule,
+  [Types.UPDATE_PREPARING_SCHEDULE_SUCCESS]: updatePreparingScheduleSuccess,
+  [Types.UPDATE_PREPARING_SCHEDULE_FAILURE]: updatePreparingScheduleFailure,
 });
