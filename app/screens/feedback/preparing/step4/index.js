@@ -16,7 +16,7 @@ const PreparingStep4 = () => {
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep4Data);
   const [actionPlanList, setActionPlanList] = useState([]);
-  const [additionalPlan, setAdditionalPlan] = useState();
+  const [additionalPlan, setAdditionalPlan] = useState('');
   // const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
