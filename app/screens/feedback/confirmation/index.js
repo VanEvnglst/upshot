@@ -47,6 +47,8 @@ const FeedbackConfirmation = props => {
     switch (type) {
       case 'documenting':
         return <DocumentingCTA />;
+      case 'discussing':
+        return <DiscussingCTA />;
       case 'preparing':
         return <PreparingCTA />;
     }
@@ -67,6 +69,20 @@ const FeedbackConfirmation = props => {
     );
   };
 
+  const DiscussingCTA = () => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          type={'text'}
+          onPress={() => navigation.navigate('PreparingGuide')}>
+          <Text>Keep going</Text>
+        </Button>
+        <Button type={'text'} onPress={() => showModal()}>
+          <Text>remind me later</Text>
+        </Button>
+</View>
+)
+}
   const PreparingCTA = () => {
     return (
       <View style={{

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { LearningCard, Wrapper, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
@@ -21,7 +22,31 @@ const HomeScreen = props => {
     dispatch(FeedbackActions.fetchFeedbackType());
     dispatch(FeedbackActions.fetchFeedbackTopics());
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
+    dispatch(FeedbackActions.resetFeedbackState());
   }, []);
+
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
 
   // const AlertCard = () => {
   //   return (
@@ -74,8 +99,18 @@ const HomeScreen = props => {
             mainCard
             testID={'card-home-feedback'}
           />
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          )}
           <LearningCard
-            onPress={() => console.log('Employee Engagement')}
+            onPress={() => console.log('Next time')}
             image={Images.feedbackCoaching}
             headline={'Employee Engagement'}
             subtitle={
