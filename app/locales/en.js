@@ -21,6 +21,7 @@ const labels = {
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',
+    feedbackDesc: 'Feedback Coaching Module enables managers to adopt effective leadership practices and habits in providing timely and objective performance feedback to their employees resulting in high-performing and engaged team members',
     comingSoon: 'Coming Soon',
   },
   bottomNavigation: {

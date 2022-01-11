@@ -93,7 +93,7 @@ const HomeScreen = props => {
                 ? activeJourneyLength.length > 1
                   ? `${activeJourneyLength.length} feedback journeys in progress`
                   : `${activeJourneyLength.length} feedback journey in progress`
-                : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
+                : labels.homeScreen.feedbackDesc
             }
             hasInProgress={activeJourneyLength.length > 0}
             mainCard
@@ -113,9 +113,7 @@ const HomeScreen = props => {
             onPress={() => console.log('Next time')}
             image={Images.feedbackCoaching}
             headline={'Employee Engagement'}
-            subtitle={
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'
-            }
+            subtitle={labels.homeScreen.feedbackDesc}
             mainCard
             style={{ marginTop: 15 }}
           />

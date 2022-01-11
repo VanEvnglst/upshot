@@ -25,7 +25,7 @@ const LearningCard = props => {
       onPress={onPress}
       style={[
         styles.cardContainer,
-        mainCard && styles.mainCardContainer,
+        // mainCard && styles.mainCardContainer,
         smallCard && styles.smallCardContainer,
       ]}
       disabled={disabled}>

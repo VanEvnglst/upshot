@@ -68,7 +68,7 @@ function* watchDiscussingSaga() {
     updateFeedbackDiscussing
   );
   yield takeLatest(
-    DiscussingTypes.UPDTE_DISCUSSING_REMINDER,
+    DiscussingTypes.UPDATE_DISCUSSING_REMINDER,
     updateDiscussingReminder
   );
   yield takeLatest(
