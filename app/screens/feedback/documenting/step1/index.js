@@ -72,7 +72,6 @@ const DocumentingStep1 = props => {
 
   const chooseTeamMember = member => {
     setTeamMember(member);
-    setTimeout(() => checkSelectedMember(member), 200);
     setCompletion(true);
   };
 
