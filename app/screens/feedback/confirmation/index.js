@@ -37,10 +37,27 @@ const FeedbackConfirmation = props => {
     switch (type) {
       case 'documenting':
         return <DocumentingCTA />;
+      case 'discussing':
+        return <DiscussingCTA />;
     }
   };
 
   const DocumentingCTA = () => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          type={'text'}
+          onPress={() => navigation.navigate('PreparingGuide')}>
+          <Text>Keep going</Text>
+        </Button>
+        <Button type={'text'} onPress={() => showModal()}>
+          <Text>remind me later</Text>
+        </Button>
+      </View>
+    );
+  };
+
+  const DiscussingCTA = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
         <Button

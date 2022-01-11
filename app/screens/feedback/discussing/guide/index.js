@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView, Image, FlatList } from 'react-native';
 import { Button } from 'react-native-paper';
 import { Wrapper, Header, Text } from 'app/components';
+import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import labels from 'app/locales/en';
 import discussingGuide from 'app/models/DiscussingGuide';
 import styles from './styles';
