@@ -44,6 +44,21 @@ const DocumentingStep1 = props => {
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchTeamMembers());
+  // useEffect(() => {
+  //   if (activeDocumenting)
+  //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+  }, []);
+  
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchTeamMembers());
+    async function retrieveData() {
+      debugger;
+      if (activeDocumenting)
+        await dispatch(
+          DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
+        );
+    }
+    retrieveData();
   }, []);
 
   useEffect(() => {
@@ -60,6 +75,10 @@ const DocumentingStep1 = props => {
     setTimeout(() => checkSelectedMember(member), 200);
     setCompletion(true);
   };
+
+  // useEffect(() => {
+  //   dispatch(FeedbackActions.fetchTeamMembers());
+  // }, []);
 
   const handleNext = () => {
     if (stepData.data && stepData.data.id === teamMember.id) {

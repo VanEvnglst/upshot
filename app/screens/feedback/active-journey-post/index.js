@@ -83,6 +83,84 @@ const ActiveFeedbackJourney = props => {
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
     }
     await setPhaseList(content);
+  }
+
+  useEffect(() => {
+    async function fetchFeedback() {
+      await dispatch(
+        FeedbackActions.fetchCurrentFeedback(route.params.journeyId),
+      );
+    }
+    fetchFeedback();
+    // setTimeout(() => {
+    //   handlePhases();
+    // }, 200);
+  }, []);
+
+  const SignPost = () => {
+    const documentingClosed = useSelector(state =>
+      state.documenting.get('closed'),
+    );
+    const documentingStarted = useSelector(state =>
+      state.documenting.get('started'),
+    );
+    useEffect(() => {
+      handlePhases();
+    }, []);
+
+    const handlePhases = async () => {
+      let content = [];
+
+      if (getFlow === 'prepared') {
+        feedbackJourneySteps[0] = {
+          ...feedbackJourneySteps[0],
+          closed: documentingClosed,
+          started: documentingStarted,
+        };
+        // feedbackJourneySteps[1] = {
+        //   ...feedbackJourneySteps[1],
+        //   closed: preparingClosed,
+        //   started: preparingStarted,
+        // };
+        // feedbackJourneySteps[2] = {
+        //   ...feedbackJourneySteps[2],
+        //   closed: discussingClosed,
+        //   started: discussingStarted,
+        // }
+        debugger;
+        content = feedbackJourneySteps;
+      } else {
+        content = feedbackJourneySteps.filter(
+          item => item.forOnTheSpot === true,
+        );
+      }
+      await setPhaseList(content);
+    };
+
+    return (
+      <View>
+        {phaseList.map((item, i) => {
+          return (
+            <View key={item.id} style={styles.signPost}>
+              <SignPostIndicator
+                isLastItem={i === phaseList.length - 1}
+                isCompleted={item.closed}
+                disabled={!item.started}
+                current={item.started && !item.closed}
+              />
+              <JourneyIndicator
+                style={{ flex: 2 }}
+                done={item.closed}
+                current={true}
+                hasProgress={item.started && !item.closed}
+                item={item}
+                onPress={() => handleNavigation(i)}
+              />
+            </View>
+          );
+        })}
+      </View>
+    );
   };
 
   const handleBackNavigation = () => {
