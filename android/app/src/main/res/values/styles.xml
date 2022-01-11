@@ -27,6 +27,9 @@
 
     <style name='TimePicker.Theme' parent="Theme.AppCompat.Light.Dialog">
          <item name="android:fontFamily">@font/raleway_regular</item>
-        <item name="colorPrimary">#FFFFFF</item>
+         <item name="colorPrimary">#6200EE</item>
+         <item name="colorAccent">#6200EE</item>
+        <item name="colorPrimaryDark">#3700B3</item>
+        <item name="android:textColorPrimary">#000000</item>
     </style>
 </resources>

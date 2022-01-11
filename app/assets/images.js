@@ -22,4 +22,10 @@ export default {
   manWindow: require('./images/window.png'),
   confirmation: require('./images/confirmation.png'),
   preparingGuide: require('./images/preparing-guide.png'),
+  preparingConfirmHint: require('./images/preparing-confirm-hint.png'),
+  cueCards: require('./images/cue-cards.png'),
+  voiceRecording: require('./images/voice-recording.png'),
+  meetingNotes: require('./images/meeting-notes.png'),
+  cardSwipeGuide: require('./images/card-swipe.png'),
+ 
 };

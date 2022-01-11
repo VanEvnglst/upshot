@@ -41,14 +41,22 @@ const DocumentingStep3 = props => {
   const yesterday = moment().subtract(1, 'days').format('ll');
   const [isCompleted, setCompletion] = useState(false);
 
-  useEffect(() => {
-    if (stepData.data) console.log('step', stepData.data);
-    //setFeedbackTopic(stepData.data);
-    //setCompletion(true);
-  }, [stepData]);
+  // useEffect(() => {
+  //   // if (stepData.data) (stepData.data)
+  //   //setFeedbackTopic(stepData.data);
+  //   //setCompletion(true);
+  // }, [stepData]);
 
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
+  
+
+  // const handleExistingDate = date => {
+  //   console.log('exist', date);
+  //   if(date === moment(new Date().format('ll')))
+  //     setDateSelected({ label: 'Today', value: dateToday });
+  //   if(date !== )
+  // }
 
   const selectDate = (dateLabel, date) => {
     if (dateLabel === ('Today' || 'Yesterday')) {
@@ -64,7 +72,7 @@ const DocumentingStep3 = props => {
     const modDate = moment(date).format('llll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    selectDateSelected({ label: dateLabel, value: date });
+    setDateSelected({ label: dateLabel, value: date });
     hideDatePicker();
   };
 

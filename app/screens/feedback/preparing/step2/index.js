@@ -16,31 +16,33 @@ const PreparingStep2 = props => {
   const stepData = useSelector(getPrepStep2Data);
   const [discussionPurpose, setDiscussionPurpose] = useState();
   const [isCompleted, setCompletion] = useState(false);
-  const [additionalPurpose, setAdditionalPurpose] = useState();
+  const [additionalPurpose, setAdditionalPurpose] = useState('');
 
   useEffect(() => {
-    if(stepData.data) handleDiscussionPurpose(stepData.data)
-  },[stepData]); 
+    if (stepData.data) handleDiscussionPurpose(stepData.data);
+  }, [stepData]);
 
   const handleDiscussionPurpose = text => {
     setDiscussionPurpose(text);
     setCompletion(true);
-  }
+  };
 
   const handleAdditionalPurpose = text => {
-    setAdditionalPurpose(text)
-    if(additionalPurpose !== '') setCompletion(true)
-  }
+    setAdditionalPurpose(text);
+    // if(additionalPurpose !== '') setCompletion(true)
+  };
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    //TODO: dispatch(PreparingActions.setPreparingData(discussionPurpose));
+    if (additionalPurpose !== '')
+      dispatch(PreparingActions.setPreparingData('step2', additionalPurpose));
+    else
+      dispatch(PreparingActions.setPreparingData('step2', discussionPurpose));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
-  }
-
+  };
 
   return (
     <View style={containerStyles.container}>
@@ -64,7 +66,7 @@ const PreparingStep2 = props => {
           title={statePurpose.statePurposeBtn}
           onPress={() => handleDiscussionPurpose(statePurpose.statePurposeBtn)}
           selected={discussionPurpose === statePurpose.statePurposeBtn}
-          style={{ height: 120, }}
+          style={{ height: 120 }}
         />
         <TextInput
           label={labels.common.inputHint}
@@ -82,9 +84,9 @@ const PreparingStep2 = props => {
           {labels.common.back}
         </Button>
         <Button
-          disabled={!isCompleted}
+          // disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep2-next'}>
           {labels.common.next}
         </Button>
@@ -99,7 +101,7 @@ PreparingStep2.propTypes = {
   setPrepActiveStep: PropTypes.func,
   setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
-  stepData: PropTypes.object
+  stepData: PropTypes.object,
 };
 
 PreparingStep2.defaultProps = {

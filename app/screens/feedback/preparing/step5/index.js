@@ -16,35 +16,45 @@ const PreparingStep5 = () => {
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep5Data);
   const [checkoutDetails, setCheckoutDetails] = useState([]);
+  const [additionalCheckout, setAdditionalCheckout] = useState('');
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    // if(stepData.data) 
-  }, [stepData])
+    // if(stepData.data)
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    //dispatch(PreparingActions.setPreparingData());
+    dispatch(
+      PreparingActions.setPreparingData('step5', {
+        checkoutDetails,
+        additionalCheckout,
+      }),
+    );
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
+  const handleAddtionalCheckout = text => setAdditionalCheckout(text);
+
   const checkSelectedValue = item => {
-    return checkoutDetails.some(value => value === item);
-  }
+    return checkoutDetails.some(value => value === item.title);
+  };
 
   const handleSelectedValue = item => {
     let newDetailsList = checkoutDetails;
-    if(checkSelectedValue(item))
-      newDetailsList = newDetailsList.filter(newDetail => newDetail.id !== item.id);
-    else newDetailsList = [ ...newDetailsList, item];
+    if (checkSelectedValue(item))
+      newDetailsList = newDetailsList.filter(
+        newDetail => newDetail.id !== item.id,
+      );
+    else newDetailsList = [...newDetailsList, item.title];
     setCheckoutDetails(newDetailsList);
 
-    if(newDetailsList.length !== 0) setCompletion(true);
+    if (newDetailsList.length !== 0) setCompletion(true);
     else setCompletion(false);
-  }
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -72,21 +82,21 @@ const PreparingStep5 = () => {
           placeholder={labels.common.inputHint}
           style={{ marginTop: 15 }}
           testID={'input-preparingStep5-somethingElse'}
+          onChangeText={text => handleAddtionalCheckout(text)}
+          value={additionalCheckout}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
-      <Button
-          mode='text'
+        <Button
+          mode="text"
           onPress={() => handleBack()}
-          testID={'btn-preparingStep5-back'}
-        >
+          testID={'btn-preparingStep5-back'}>
           {labels.common.back}
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
-          testID={'btn-preparingStep5-next'}
-        >
+          mode={'contained'}
+          testID={'btn-preparingStep5-next'}>
           {labels.common.next}
         </Button>
       </View>
@@ -100,13 +110,12 @@ PreparingStep5.propTypes = {
   setPrepActiveStep: PropTypes.func,
   setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
-  stepData: PropTypes.object
+  stepData: PropTypes.object,
 };
-
 
 PreparingStep5.defaultProps = {
   setPrepActiveStep: () => {},
-  setPreparingData:() => {},
+  setPreparingData: () => {},
   activeStep: 1,
   stepData: {},
 };

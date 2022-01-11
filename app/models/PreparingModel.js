@@ -51,7 +51,7 @@ const preparingCheckout = [
   },
   {
     id: 3,
-    title: checkOut.checkout.anythingElse
+    title: checkOut.anythingElse
   }
 ]
 

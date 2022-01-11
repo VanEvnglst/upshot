@@ -14,25 +14,31 @@ const PreparingStep3 = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep3Data);
-  const [details, setDetails] =  useState({
+  const [details, setDetails] = useState({
     event: '',
     action: '',
-    result: ''
+    result: '',
   });
+  const [event, setEvent] = useState();
+  const [action, setAction] = useState();
+  const [result, setResult] = useState();
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if(stepData.data) handleDescriptionText(stepData.data)
+    if (stepData.data) handleDescriptionText(stepData.data);
     //TODO: fix function call
-  },[stepData])
+  }, [stepData]);
 
   const handleDescriptionText = (key, text) => {
-    setDetails(key,text);
-    setTimeout(() => {
-      console.log(details);
-    }, 200)
-    if (details.event && details.action && details.result)
-      setCompletion(true);
+    setDetails(prevState => ({
+      ...prevState,
+      [key]: text,
+    }));
+    // setTimeout(() => {
+    //   console.log(details);
+    // }, 200)
+    // if (details.event && details.action && details.result)
+    //   setCompletion(true);
   };
 
   const handleBack = () => {
@@ -40,7 +46,7 @@ const PreparingStep3 = props => {
   };
 
   const handleNext = () => {
-    //TODO: dispatch(PreparingActions.setPreparingData(details))
+    dispatch(PreparingActions.setPreparingData('step3', details));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -48,18 +54,16 @@ const PreparingStep3 = props => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
         <View style={containerStyles.descriptionContainer}>
-          <Text 
-            type="h6" 
+          <Text
+            type="h6"
             style={containerStyles.stepTitleText}
-            testID={'txt-preparingStep3-title'}
-          >
+            testID={'txt-preparingStep3-title'}>
             {describeDiscuss.step}: {describeDiscuss.title}
           </Text>
-          <Text 
-            type="body1" 
+          <Text
+            type="body1"
             style={containerStyles.stepDescriptionText}
-            testID={'txt-preparingStep3-describeEvent'}  
-          >
+            testID={'txt-preparingStep3-describeEvent'}>
             {describeDiscuss.describeEvent}
           </Text>
         </View>
@@ -73,10 +77,9 @@ const PreparingStep3 = props => {
         />
         <View style={containerStyles.descriptionContainer}>
           <Text
-            type="body1" 
+            type="body1"
             style={containerStyles.stepDescriptionText}
-            testID={'txt-preparingStep3-describeAction'}
-          >
+            testID={'txt-preparingStep3-describeAction'}>
             {describeDiscuss.describeAction}
           </Text>
         </View>
@@ -89,11 +92,10 @@ const PreparingStep3 = props => {
           onChangeText={text => handleDescriptionText('action', text)}
         />
         <View style={containerStyles.descriptionContainer}>
-          <Text 
-            type="body1" 
+          <Text
+            type="body1"
             style={containerStyles.stepDescriptionText}
-            testID={'txt-preparingStep3-describeResult'}  
-          >
+            testID={'txt-preparingStep3-describeResult'}>
             {describeDiscuss.describeImpact}
           </Text>
         </View>
@@ -114,9 +116,9 @@ const PreparingStep3 = props => {
           {labels.common.back}
         </Button>
         <Button
-          disabled={!isCompleted}
+          // disabled={!isCompleted}
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep3-next'}>
           {labels.common.next}
         </Button>
@@ -131,7 +133,7 @@ PreparingStep3.propTypes = {
   setPrepActiveStep: PropTypes.func,
   setPreparingData: PropTypes.func,
   activeStep: PropTypes.number,
-  stepData: PropTypes.object
+  stepData: PropTypes.object,
 };
 
 PreparingStep3.defaultProps = {

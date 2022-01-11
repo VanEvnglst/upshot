@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import PreparingActions from 'app/store/feedback/preparingRedux';
@@ -13,6 +13,11 @@ const PreparingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackPreparing } = labels;
   const dispatch = useDispatch();
+  const journeyId = useSelector(
+    state => state.feedback.get('currentJourney').data,
+  );
+  const preparingId = useSelector(state => state.preparing.get('id'));
+
 
   const SignPost = ({ item, isLastItem }) => {
     return (
@@ -32,8 +37,9 @@ const PreparingGuide = props => {
 
   const handleNavigation = () => {
     dispatch(PreparingActions.resetPreparingState());
-    navigation.navigate('FeedbackPreparing');
+    dispatch(PreparingActions.postFeedbackPreparing(journeyId));
   };
+
   return (
     <Wrapper>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>

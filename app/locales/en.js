@@ -21,6 +21,7 @@ const labels = {
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',
+    feedbackDesc: 'Feedback Coaching Module enables managers to adopt effective leadership practices and habits in providing timely and objective performance feedback to their employees resulting in high-performing and engaged team members',
     comingSoon: 'Coming Soon',
   },
   bottomNavigation: {
@@ -186,6 +187,38 @@ const labels = {
     changeType: 'I want to change the type of feedback I give',
     issueResolved: 'The issue was resolved without my feedback',
   },
+  feedbackDiscussing: {
+    discussingDesc: `We've created a few tools for you to use during your discussion. These are optional. Feel free to use whatever feels comfortable and natural to you.`,
+    cueCardsTitle: 'cue cards',
+    cueCardsDesc: `We've turned the discussion points you prepared into cue cards. Swipe through them during your meeting, or refer to them at the end to make sure you haven't missed anything important.`,
+    voiceRecordingTitle: 'Voice Recording',
+    voiceRecordingDesc: `Record your discussion so you can listen deeply, without the distraction of taking notes. This is a great way to accurately capture what's been said.`,
+    meetingNotesTitle: 'Meeting notes',
+    meetingNotesDesc: `Use this space to jot down anything important that comes up during your discussion. Notes and voice recordings are automatically saved when you tap "end meeting"`,
+    discussingFootNote: `We strongly recommend you record every discussion. Why? Research shows that people forget an average of 50% of new information within just one hour. After 24 hours, it's 70%. And one week later? 90% of that information has been lost.`,
+    discussingActionPlan: {
+      title: 'Send the action plan to your employee',
+      description: 'While you may have already agreed on an action plan',
+      descDuring: 'during',
+      descCont: `your meeting, it's good practice to write it down and send it to your employee. This way, you can check that you have a shared understanding of what's going to happen next.`,
+    },
+    discussingNextSteps: {
+      title: 'Did you agree on a follow up date and time?',
+      description:
+        'Following up with your employee increases your chances of good results because it: ',
+      reason1:
+        '(1) Shows you are committed to providing support to improve performance.',
+      reason2: '(2) Provides encouragement and recognition as appropriate, and',
+      reason3: '(3) Allows you to adjust and change strategies as needed',
+    },
+    noNeedToFollowUp: {
+      reason: `Why don't you need a follow up meeting?`,
+      option1:
+        'The issue can be resolved immediately without the need for a follow up',
+      option2:
+        'I can check the status during our regular one-on-one or team meetings',
+    },
+  },
   feedbackReflecting: {
     guideContent: `Self-reflection is the key to self-awareness. It allows you to look neutrally at your thoughts, feelings, emotions, and actions. It enables you to identify areas where you are strong, but also areas where you can improve`,
     listenToRecording: 'Would you like to listen to your audio recording?',
@@ -226,6 +259,7 @@ const labels = {
     reviewActionPlanDesc: 'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
     confirmation: `You've finished "Reflecting". Based on your answers, we've recommemded a reading list we think you'll find helpful:`,
   },
+
   reminders: {
     morningReminder: 'Today is a new day, ',
     triviaReminder: ' did you know...',

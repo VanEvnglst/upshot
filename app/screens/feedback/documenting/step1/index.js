@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Chip, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
-import { Text } from 'app/components';
+import { Text, Chip } from 'app/components';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import {
@@ -28,7 +28,7 @@ const DocumentingStep1 = props => {
   const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
   const isLoading = useSelector(
-    state => state.feedback.get('teamMembers').fetching,
+    state => state.documenting.get('fetching'),
   );
   const feedbackFlow = useSelector(getChosenFlow);
   const [teamMember, setTeamMember] = useState({
@@ -36,12 +36,30 @@ const DocumentingStep1 = props => {
     name: '',
   });
   const [isCompleted, setCompletion] = useState(false);
-  const [isSelected, setSelected] = useState(false);
 
+  useEffect(() => {
+    if (activeDocumenting)
+      dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+  }, []);
+
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchTeamMembers());
   // useEffect(() => {
   //   if (activeDocumenting)
   //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
-  // }, []);
+  }, []);
+  
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchTeamMembers());
+    async function retrieveData() {
+      debugger;
+      if (activeDocumenting)
+        await dispatch(
+          DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
+        );
+    }
+    retrieveData();
+  }, []);
 
   useEffect(() => {
     if (stepData.data) chooseTeamMember(stepData.data);
@@ -50,25 +68,22 @@ const DocumentingStep1 = props => {
   const checkSelectedMember = member => {
     if (stepData.data !== null)
       if (member.id === teamMember.id) setSelected(true);
-    debugger;
   };
 
   const chooseTeamMember = member => {
     setTeamMember(member);
-    setTimeout(() => checkSelectedMember(member), 200);
     setCompletion(true);
   };
 
-  useEffect(() => {
-    dispatch(FeedbackActions.fetchTeamMembers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(FeedbackActions.fetchTeamMembers());
+  // }, []);
 
   const handleNext = () => {
     if (stepData.data && stepData.data.id === teamMember.id) {
       dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     } else {
       dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
-      // dispatch(DocumentingActions.setDocumentingStatus('started', true));
       dispatch(
         FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id),
       );
@@ -78,6 +93,7 @@ const DocumentingStep1 = props => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
+        {isLoading && <ActivityIndicator />}
         <Text
           type="h6"
           style={containerStyles.stepTitleText}
@@ -86,7 +102,7 @@ const DocumentingStep1 = props => {
         </Text>
 
         <View style={styles.namesContainer}>
-          {isLoading && <ActivityIndicator />}
+          {/* {isLoading && <ActivityIndicator />} */}
           {staffList &&
             staffList.map((item, i) => (
               <Chip
@@ -94,17 +110,10 @@ const DocumentingStep1 = props => {
                 key={item.id}
                 onPress={() => chooseTeamMember(item)}
                 mode="flat"
-                style={[styles.chips, isSelected && styles.selectedChip]}>
-                <Text
-                  type="body2"
-                  style={
-                    teamMember.name === item.name
-                      ? styles.selectedChipText
-                      : styles.chipText
-                  }>
-                  {item.name}
-                </Text>
-              </Chip>
+                isSelected={item.id === teamMember.id}
+                children={item.name}
+                //style={[styles.chips, isSelected && styles.selectedChip]}
+              />
             ))}
         </View>
       </View>

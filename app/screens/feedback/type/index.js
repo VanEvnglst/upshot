@@ -55,7 +55,7 @@ const FeedbackType = props => {
           <ButtonSelection
             title={item.display_name}
             type={'Radio'}
-            content={'item.hint'}
+            content={item.hint}
             showHint={hint}
             onPress={() => handleFeedbackType(item)}
             selected={item.id === feedbackType.id}

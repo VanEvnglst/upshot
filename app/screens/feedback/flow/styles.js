@@ -19,8 +19,7 @@ export default styles = StyleSheet.create({
     backgroundColor: Colors.primaryDark,
   },
   disabledBtn: {
-    backgroundColor: Colors.black,
-    opacity: 0.04,
+    backgroundColor: 'rgba(0,0,0,0.04)',
   },
   disabledText: {
     color: Colors.opaqueBlack,
