@@ -10,6 +10,7 @@ import {
   FeedbackJourneyList,
   PreparingGuide,
   FeedbackPreparing,
+  PreparingSchedule,
   FeedbackConfirmation,
   DiscussingGuide,
   DiscussingMeeting,
@@ -28,10 +29,16 @@ export default function FeedbackStackScreen() {
         initialRouteName={
           activeJourneyLength.length > 0
             ? 'FeedbackJourneyList'
-            : 'DiscussingGuide'
-        }>
-        <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
-        <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
+            : 'DiscussingGuide' //: 'FeedbackFlow'
+    }>
+        <FeedbackStack.Screen 
+          name={'FeedbackFlow'} 
+          component={FeedbackFlow} 
+        />
+        <FeedbackStack.Screen 
+          name={'FeedbackType'}
+          component={FeedbackType}
+        />
         {/* Only appears when starting a new journey */}
         <FeedbackStack.Screen
           name={'FeedbackGuide'}
@@ -63,6 +70,10 @@ export default function FeedbackStackScreen() {
           name={'FeedbackPreparing'}
           component={FeedbackPreparing}
         />
+        <FeedbackStack.Screen
+          name={'PreparingSchedule'}
+          component={PreparingSchedule}
+         />
         <FeedbackStack.Screen
           name={'DiscussingGuide'}
           component={DiscussingGuide}

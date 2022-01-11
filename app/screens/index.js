@@ -21,6 +21,7 @@ export { default as FeedbackDocumenting } from './feedback/documenting';
 /* ------------- Feedback Preparing ------------- */
 export { default as PreparingGuide } from './feedback/preparing/guide';
 export { default as FeedbackPreparing } from './feedback/preparing';
+export { default as PreparingSchedule } from './feedback/preparing/scheduling';
 
 /* ------------- Feedback Discussing ------------- */
 export { default as DiscussingGuide } from './feedback/discussing/guide';

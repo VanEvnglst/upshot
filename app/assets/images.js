@@ -24,5 +24,6 @@ export default {
   cueCards: require('./images/cue-cards.png'),
   voiceRecording: require('./images/voice-recording.png'),
   meetingNotes: require('./images/meeting-notes.png'),
-  cardSwipeGuide: require('./images/card-swipe.png')
+  cardSwipeGuide: require('./images/card-swipe.png'),
+  preparingConfirmHint: require('./images/preparing-confirm-hint.png'),
 };

@@ -6,9 +6,17 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { getDocumentingId } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import { Text, Wrapper, Header, DateTimePicker } from 'app/components';
+import {
+  Text,
+  Wrapper,
+  Header,
+  DateTimePicker,
+  HintIndicator,
+} from 'app/components';
 import Images from 'app/assets/images';
+import labels from 'app/locales/en';
 import confirmationModel from 'app/models/ConfirmationModel';
+import Colors from 'app/theme/colors';
 
 const FeedbackConfirmation = props => {
   const { navigation, route } = props;
@@ -17,6 +25,8 @@ const FeedbackConfirmation = props => {
   const [content, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
+  const [preparingHintVisible, setPrepHintVisible] = useState(false);
+
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
 
@@ -39,6 +49,8 @@ const FeedbackConfirmation = props => {
         return <DocumentingCTA />;
       case 'discussing':
         return <DiscussingCTA />;
+      case 'preparing':
+        return <PreparingCTA />;
     }
   };
 
@@ -68,6 +80,22 @@ const FeedbackConfirmation = props => {
         <Button type={'text'} onPress={() => showModal()}>
           <Text>remind me later</Text>
         </Button>
+</View>
+)
+}
+  const PreparingCTA = () => {
+    return (
+      <View style={{
+        marginBottom: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Button
+          type={'text'}
+          onPress={() => navigation.navigate('PreparingSchedule')}>
+          <Text>Schedule Discussion</Text>
+        </Button>
+        {/* <HintIndicator
+          showHint={preparingHintVisible}
+          onPress={() => setPrepHintVisible(!preparingHintVisible)}
+        /> */}
       </View>
     );
   };
@@ -107,6 +135,18 @@ const FeedbackConfirmation = props => {
             {content}
           </Text>
         </View>
+        {preparingHintVisible && (
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: Colors.opaqueBlack,
+              borderRadius: 16,
+            }}>
+            <Text type="body2" style={{ color: Colors.primary900 }}>
+              {labels.feedbackPreparing.confirmationHint}
+            </Text>
+          </View>
+        )}
         <View
           style={{
             flex: 1,

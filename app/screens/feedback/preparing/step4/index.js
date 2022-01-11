@@ -4,70 +4,68 @@ import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/preparingRedux';
-import { 
-  getPreparingStep,
-  getPrepStep4Data
-} from 'app/store/selectors';
+import { getPreparingStep, getPrepStep4Data } from 'app/store/selectors';
 import { Text, ButtonSelection, TextInput } from 'app/components';
 import { preparingActionPlan } from 'app/models/PreparingModel';
 import containerStyles from '../styles';
 import labels from 'app/locales/en';
 
-const PreparingStep4 = 
-() => {
+const PreparingStep4 = () => {
   const { createActionPlan } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  const stepData = useSelector(getPrepStep4Data)
+  const stepData = useSelector(getPrepStep4Data);
   const [actionPlanList, setActionPlanList] = useState([]);
-  const [additionalPlan, setAdditionalPlan] = useState();
-  const [isCompleted, setCompletion] = useState(false);
+  const [additionalPlan, setAdditionalPlan] = useState('');
+  // const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if(stepData.data) handleSelectedActionPlan(stepData.data)
+    if (stepData.data) handleSelectedActionPlan(stepData.data);
     // TODO: fix data handling
-  },[stepData]);
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    //TODO: dispatch(PreparingActions.setPreparingData());
+    dispatch(PreparingActions.setPreparingData('step4', { actionPlanList, additionalPlan}));
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
+
+  const handleAdditionalPlanText = text => {
+    setAdditionalPlan(text);
+  }
 
   const handleSelectedActionPlan = item => {
     let newList = actionPlanList;
     if (checkSelectedActionPlan(item))
       newList = newList.filter(newAction => newAction.id !== item.id);
-    else newList = [...newList, item];
+    else newList = [...newList, item.title];
     setActionPlanList(newList);
 
-    if (newList.length !== 0) setCompletion(true);
-    else setCompletion(false);
+    // if (newList.length !== 0) setCompletion(true);
+    // else setCompletion(false);
   };
 
   const checkSelectedActionPlan = item => {
-    // if ()
+    return actionPlanList.some(action => action === item.title);
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView>
         <View style={containerStyles.descriptionContainer}>
-          <Text 
-            type="h6" 
+          <Text
+            type="h6"
             style={containerStyles.stepTitleText}
-            testID={'txt-preparingStep4-title'}
-          >
+            testID={'txt-preparingStep4-title'}>
             {createActionPlan.step}: {createActionPlan.title}
           </Text>
-          <Text 
-            type="body1" 
+          <Text
+            type="body1"
             style={containerStyles.stepDescriptionText}
-            testID={'txt-preparingStep4-description'}  
-          >
+            testID={'txt-preparingStep4-description'}>
             {createActionPlan.content}
           </Text>
         </View>
@@ -81,11 +79,13 @@ const PreparingStep4 =
             selected={checkSelectedActionPlan(item)}
           />
         ))}
-        <TextInput 
+        <TextInput
           label={labels.common.inputHint}
-          placeholder={labels.common.inputHint} 
+          placeholder={labels.common.inputHint}
           style={{ marginTop: 15 }}
           testID={'input-preparingStep4-additional'}
+          onChangeText={text => handleAdditionalPlanText(text)}
+          value={additionalPlan}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
@@ -97,7 +97,7 @@ const PreparingStep4 =
         </Button>
         <Button
           onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
+          mode={'contained'}
           testID={'btn-preparingStep4-next'}>
           {labels.common.next}
         </Button>

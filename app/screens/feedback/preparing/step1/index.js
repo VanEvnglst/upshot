@@ -15,78 +15,75 @@ const PreparingStep1 = () => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep1Data);
-  const [checkInValue, setCheckInValue] = useState();
+  const [checkInValue, setCheckInValue] = useState('');
   const [isCompleted, setCompletion] = useState(false);
 
   const handleText = text => {
     setCheckInValue(text);
-    setTimeout(() => {
-      console.warn('txt', checkInValue);
-      if (checkInValue !== '') setCompletion(true);
-      else setCompletion(false);
-    }, 300);
-    
-    
+    // setTimeout(() => {
+    //   if (checkInValue !== '') setCompletion(true);
+    //   else setCompletion(false);
+    // }, 300);
   };
 
   useEffect(() => {
-    if (stepData.data) handleText(stepData.data)
-  },[stepData]);
+    if (stepData.data) handleText(stepData.data);
+  }, [stepData]);
 
   const handleNext = () => {
-    if(checkInValue === '') setCompletion(false)
-    // dispatch(PreparingActions.setPreparingData('step1', checkInValue));
-    else
+    // if (checkInValue === '') setCompletion(false);
+    dispatch(PreparingActions.setPreparingData('step1', checkInValue));
+    // else 
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
-        <KeyboardAvoidingView>
-          <View style={containerStyles.descriptionContainer}>
-            <Text 
-              type="h6" 
+    // 
+    <View>
+      <ScrollView 
+    showsVerticalScrollIndicator={false}>
+      <View style={containerStyles.descriptionContainer}>
+            <Text
+              type="h6"
               style={containerStyles.stepTitleText}
-              testID={'txt-preparingStep1-title'}  
-            >
+              testID={'txt-preparingStep1-title'}>
               {checkIn.step}: {checkIn.title}
             </Text>
-            <Text 
-              type="body1" 
+            <Text
+              type="body1"
               style={containerStyles.stepDescriptionText}
-              testID={'txt-preparingStep1-description'}  
-            >
+              testID={'txt-preparingStep1-description'}>
               {checkIn.content}
             </Text>
           </View>
-          <View>
+          <View style={{ marginBottom: 30}}>
             <TextInput
               label={checkIn.checkInHint}
               placeholder={checkIn.checkInHint}
               value={checkInValue}
               onChangeText={text => handleText(text)}
-              textAlignVertical="top"
               multiline
-              numberOfLines={5}
+              numberOfLines={10}
               theme={{ fonts: { regular: { fontFamily: 'Raleway-Regular' } } }}
               testID={'input-preparingStep1-checkIn'}
             />
           </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
-      <View style={styles.btnContainer}>
-        <Button
-          style={styles.button}
-          disabled={!isCompleted}
-          onPress={() => handleNext()}
-          mode={isCompleted ? 'contained' : 'text'}
-          testID={'btn-preparingStep1-next'}>
-          {labels.common.next}
-        </Button>
-      </View>
+        {/* <KeyboardAvoidingView>
+          
+         
+        </KeyboardAvoidingView> */}
+
+        <View style={styles.btnContainer}>
+          <Button
+            style={styles.button}
+            // disabled={!isCompleted}
+            onPress={() => handleNext()}
+            mode={'contained'}
+            testID={'btn-preparingStep1-next'}>
+            {labels.common.next}
+          </Button>
+        </View>
+        </ScrollView>
     </View>
   );
 };
