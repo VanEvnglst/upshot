@@ -8,6 +8,7 @@ import { reducer as preparing } from './feedback/preparingRedux';
 import { reducer as user } from './UserRedux';
 import { reducer as onboarding } from './OnboardingRedux';
 import { reducer as discussing } from './feedback/DiscussingRedux';
+import { reducer as reflecting } from './feedback/ReflectingRedux';
 import rootSaga from '../sagas';
 
 import configureStore from './createStore';
@@ -21,6 +22,7 @@ export const mainReducer = combineReducers({
   documenting,
   preparing,
   discussing,
+  reflecting,
   user,
 });
 
