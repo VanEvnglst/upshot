@@ -18,6 +18,7 @@ const labels = {
     readMore: 'Read More',
     saveClose: 'Save & Close',
     saveChanges: 'Save changes',
+    closeFeedback: 'Close your feedback for now?'
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',
@@ -220,7 +221,7 @@ const labels = {
     },
   },
   feedbackReflecting: {
-    guideContent: `Self-reflection is the key to self-awareness. It allows you to look neutrally at your thoughts, feelings, emotions, and actions. It enables you to identify areas where you are strong, but also areas where you can improve`,
+    guideContent: `Self-reflection is the key to self-awareness. It allows you to look neutrally at your thoughts, feelings, emotions, and actions. It enables you to identify areas where you are strong, but also areas where you can improve.`,
     listenToRecording: 'Would you like to listen to your audio recording?',
     listenToRecordingDesc: `It looks like you recorded your feedback discussion! You can listen to it while you're answering the next questions. Pause, play, and rewind at any time.`,
     howDidYouFeel: 'How did you feel after giving feedback?',
