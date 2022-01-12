@@ -11,12 +11,11 @@ import {
   PreparingGuide,
   FeedbackPreparing,
   FeedbackConfirmation,
-  FeedbackReflecting,
-  ReflectingGuide,
   PreparingSchedule,
-  FeedbackConfirmation,
   DiscussingGuide,
   DiscussingMeeting,
+  FeedbackReflecting,
+  ReflectingGuide,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -74,12 +73,6 @@ export default function FeedbackStackScreen() {
           component={FeedbackPreparing}
         />
         <FeedbackStack.Screen
-          name={'ReflectingGuide'}
-          component={ReflectingGuide}
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackReflecting'}
-          component={FeedbackReflecting}
           name={'PreparingSchedule'}
           component={PreparingSchedule}
          />
@@ -90,6 +83,14 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'DiscussingMeeting'}
           component={DiscussingMeeting}
+        />
+         <FeedbackStack.Screen
+          name={'ReflectingGuide'}
+          component={ReflectingGuide}
+        />
+        <FeedbackStack.Screen
+          name={'FeedbackReflecting'}
+          component={FeedbackReflecting}
         />
       </FeedbackStack.Navigator>
     </>
