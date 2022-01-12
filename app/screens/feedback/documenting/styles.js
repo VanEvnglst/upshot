@@ -29,4 +29,21 @@ export default containerStyles = StyleSheet.create({
     borderRadius: 4,
     height: 4,
   },
+  modal: {
+    padding: 20,
+    width: 300,
+    height: 140,
+  },
+  modalTextContainer: { 
+    flex: 1 
+  },
+  modalText: {
+    marginTop: 10,
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+    marginTop: 20,
+  },
 });
