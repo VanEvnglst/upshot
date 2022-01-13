@@ -45,3 +45,7 @@ export const getPrepStep4BData = state => state.preparing.get('step4B');
 export const getPrepStep5Data = state => state.preparing.get('step5');
 export const getPrepStep5BData = state => state.preparing.get('step5B');
 export const getPrepStep5CData = state => state.preparing.get('step5C');
+
+
+export const getReflectingStep = state => state.reflecting.get('activeStep');
+export const getReflectingMaxSteps = state => state.reflecting.get('maxStep');
