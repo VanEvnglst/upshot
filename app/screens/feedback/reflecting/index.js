@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Header, Text, Modal } from 'app/components';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
+import { getReflectingStep, getReflectingMaxSteps} from 'app/store/selectors';
+import ReflectingStep1 from './step1';
+import ReflectingStep2 from './step2';
+import ReflectingStep3 from './step3';
 import Colors from 'app/theme/colors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -22,6 +26,8 @@ const FeedbackReflecting = props => {
     switch(activeStep) {
       case 1:
         return <ReflectingStep1 />;
+      case 2:
+        return <ReflectingStep2 />;
     }
   };
 
