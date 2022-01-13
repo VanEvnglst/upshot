@@ -7,6 +7,7 @@ import watchFeedbackHistorySaga from './feedback/FeedbackHistorySaga';
 import watchDocumentingSaga from './feedback/DocumentingSaga';
 import watchPreparingSaga from './feedback/PreparingSaga';
 import watchDiscussingSaga from './feedback/DiscussingSaga';
+import watchReflectingSaga from './feedback/ReflectingSaga';
 import watchUserSaga from './UserSaga';
 
 function* watchNetwork() {
@@ -25,6 +26,7 @@ export default function* root() {
     fork(watchDocumentingSaga),
     fork(watchPreparingSaga),
     fork(watchDiscussingSaga),
+    fork(watchReflectingSaga),
     watchNetwork,
   ]);
 }

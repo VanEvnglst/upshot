@@ -10,8 +10,7 @@ export default containerStyles = StyleSheet.create({
   },
   btnContainer: {
     flex: 1,
-    marginTop: 30,
-    marginBottom: 20,
+    marginVertical: 30,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -34,8 +33,8 @@ export default containerStyles = StyleSheet.create({
     width: 300,
     height: 140,
   },
-  modalTextContainer: { 
-    flex: 1 
+  modalTextContainer: {
+    flex: 1,
   },
   modalText: {
     marginTop: 10,
