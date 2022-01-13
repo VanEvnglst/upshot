@@ -12,3 +12,4 @@ export { default as CalendarPicker } from './calendar-picker';
 export { default as DateTimePicker } from './calendar';
 export { default as Modal } from './modal';
 export { default as Chip } from './chip';
+export { default as Slider } from './slider';
