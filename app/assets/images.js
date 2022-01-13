@@ -27,5 +27,12 @@ export default {
   meetingNotes: require('./images/meeting-notes.png'),
   cardSwipeGuide: require('./images/card-swipe.png'),
   reflectingGuide: require('./images/reflecting-guide.png'),
- 
+  happyEmoji: require('./images/happy-emoji.png'),
+  neutralEmoji: require('./images/neutral-emoji.png'),
+  sadEmoji: require('./images/sad-emoji.png'),
+  dissatisfiedEmoji: require('./images/dissatisfied-emoji.png'),
+  satisfiedEmoji: require('./images/satisfied-emoji.png'),
+  sliderPin: require('./images/slider-pin.png'),
+  thumbsDownEmoji: require('./images/thumbs-down.png'),
+  thumbsUpEmoji: require('./images/thumbs-up.png'),
 };
