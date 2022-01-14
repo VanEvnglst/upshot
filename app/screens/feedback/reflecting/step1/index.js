@@ -18,9 +18,18 @@ const ReflectingStep1 = props => {
   const { feedbackReflecting } = labels;
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
-  const [feelingValue, setFeelingValue] = useState(0);
+  const [feelingValue, setFeelingValue] = useState(3);
+  const [didSliderMove, setDidSliderMove] = useState(false);
 
+  const handleSliderValue = value => {
+    setFeelingValue(value);
+    setDidSliderMove(true);
+  };
   const handleNext = () => {
+    console.log('did slider move', didSliderMove);
+    if (didSliderMove)
+      dispatch(ReflectingActions.setReflectingData('step1', feelingValue));
+    else dispatch(ReflectingActions.setReflectingData('step1', 0));
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep + 1));
   };
 
@@ -44,12 +53,12 @@ const ReflectingStep1 = props => {
         <Slider
           leftImage={Images.sadEmoji}
           rightImage={Images.happyEmoji}
-          minValue={0}
+          minValue={1}
           maxValue={5}
           step={1}
           value={feelingValue}
-          onSlidingStart={value => setFeelingValue(value)}
-          onSlidingComplete={value => setFeelingValue(value)}
+          onSlidingStart={value => handleSliderValue(value)}
+          onSlidingComplete={value => handleSliderValue(value)}
         />
         {/* <View style={{ flexDirection: 'row' }}>
           <Image source={Images.sadEmoji} />
