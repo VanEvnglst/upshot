@@ -9,6 +9,8 @@ import { getReflectingStep, getReflectingMaxSteps} from 'app/store/selectors';
 import ReflectingStep1 from './step1';
 import ReflectingStep2 from './step2';
 import ReflectingStep3 from './step3';
+import ReflectingStep4 from './step4';
+import ReflectingStep5 from './step5';
 import Colors from 'app/theme/colors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -28,6 +30,12 @@ const FeedbackReflecting = props => {
         return <ReflectingStep1 />;
       case 2:
         return <ReflectingStep2 />;
+      case 3:
+        return <ReflectingStep3 />;
+      case 4:
+        return <ReflectingStep4 />;
+      case 5:
+        return <ReflectingStep5 />;
     }
   };
 
