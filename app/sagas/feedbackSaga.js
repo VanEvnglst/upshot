@@ -5,6 +5,7 @@ import FeedbackActions, {
 } from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
+import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import api from 'app/services/apiService';
 
 const STATUS_OK = 'ok';
@@ -82,13 +83,13 @@ export function* fetchCurrentFeedback({ journeyId }) {
     const journeyData = response.data.Journey;
     const docuData = journeyData.Documenting;
     const prepData = journeyData.Preparing;
-    // const discussData = journeyData.Discussing;
-    // const reflectData = journeyData.Reflecting;
+    //const discussData = journeyData.Discussing;
+    const reflectData = journeyData.Reflecting;
     if (docuData) {
       yield retrieveDocumentingData(docuData);
     }
     if (prepData) yield retrievePreparingData(prepData);
-    // if ()
+    if (reflectData) yield retrieveReflectingData(reflectData);
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
   } else {
@@ -113,6 +114,16 @@ function* retrievePreparingData(preparingData) {
   );
   yield put(
     PreparingActions.setPreparingStatus('started', !preparingData.closed),
+  );
+}
+
+function* retrieveReflectingData(reflectingData) {
+  yield put(ReflectingActions.setReflectingStatus('id', reflectingData.id));
+  yield put(
+    ReflectingActions.setReflectingStatus('close', reflectingData.closed),
+  );
+  yield put(
+    ReflectingActions.setReflectingStatus('started', !reflectingData.closed),
   );
 }
 
