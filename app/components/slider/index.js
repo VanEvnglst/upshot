@@ -18,7 +18,8 @@ const SliderComponent = props => {
 
   return (
     <View style={{ flexDirection: 'row' }}>
-      <Image source={leftImage} />
+      <Image style={{ width: 24, height: 24 }} 
+      source={leftImage} />
       <Slider
         minimumValue={minValue}
         maximumValue={maxValue}
@@ -32,7 +33,9 @@ const SliderComponent = props => {
         onSlidingStart={onSlidingStart}
         onSlidingComplete={onSlidingComplete}
       />
-      <Image source={rightImage} />
+      <Image 
+        style={{ width: 24, height: 24 }} 
+      source={rightImage} />
     </View>
   );
 };
