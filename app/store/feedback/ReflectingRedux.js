@@ -5,21 +5,21 @@ const defaultState = {
   data: null,
 };
 
-
 export const INITIAL_STATE = Map({
   fetching: false,
   id: null,
   activeStep: 1,
   maxStep: 5,
+  lastStep: null,
   step1: { ...defaultState },
   step2: { ...defaultState },
   step3: { ...defaultState },
   step4: { ...defaultState },
   step5: { ...defaultState },
+  staffRating: { fetching: false, ...defaultState, error: '' },
   close: false,
   started: false,
 });
-
 
 const { Types, Creators } = createActions({
   setReflectingStatus: ['key', 'data'],
@@ -38,21 +38,23 @@ const { Types, Creators } = createActions({
   fetchCurrentReflecting: ['reflectingId'],
   fetchCurrentReflectingSuccess: ['data'],
   fetchCurrentReflectingFailure: ['error'],
+  fetchStaffRatings: [''],
+  fetchStaffRatingsSuccess: ['ratings'],
+  fetchStaffRatingsFailure: ['error'],
 });
 
 export const ReflectingTypes = Types;
 export default Creators;
 
-
 const setReflectingStatus = (state, { key, data }) => {
   return state.merge({
     ...state.get(key),
-    [key]: data
+    [key]: data,
   });
 };
 
 const setReflectingActiveStep = (state, { step }) => {
-  if(state.get('activeStep') > state.get('maxStep')) {
+  if (state.get('activeStep') > state.get('maxStep')) {
     return state.get('activeStep');
   }
   return state.merge({ activeStep: step });
@@ -84,7 +86,7 @@ const postFeedbackReflectingSuccess = (state, reflectingId) => {
 const postFeedbackReflectingFailure = (state, { error }) =>
   state.merge({
     fetching: false,
-    error
+    error,
   });
 
 const updateFeedbackReflecting = state =>
@@ -99,19 +101,19 @@ const updateFeedbackReflectingSuccess = state =>
     fetching: false,
   });
 
-const updateFeedbackReflectingFailure = (state, { error }) => 
+const updateFeedbackReflectingFailure = (state, { error }) =>
   state.merge({
     fetching: false,
-    error
+    error,
   });
 
-const closeFeedbackReflecting = state => 
+const closeFeedbackReflecting = state =>
   state.merge({
     fetching: true,
     error: '',
   });
 
-const closeFeedbackReflectingSuccess = state => 
+const closeFeedbackReflectingSuccess = state =>
   state.merge({
     fetching: false,
   });
@@ -119,10 +121,10 @@ const closeFeedbackReflectingSuccess = state =>
 const closeFeedbackReflectingFailure = (state, { error }) =>
   state.merge({
     fetching: false,
-    error
+    error,
   });
 
-const fetchCurrentReflecting = state => 
+const fetchCurrentReflecting = state =>
   state.merge({
     fetching: true,
     error: '',
@@ -133,32 +135,55 @@ const fetchCurrentReflectingSuccess = state =>
     fetching: false,
   });
 
-const fetchCurrentReflectingFailure = (state, { error}) =>
+const fetchCurrentReflectingFailure = (state, { error }) =>
   state.merge({
     fetching: false,
-    error
+    error,
   });
 
-
-
-export const reducer = createReducer(
-  INITIAL_STATE, {
-    [Types.SET_REFLECTING_DATA]: setReflectingData,
-    [Types.SET_REFLECTING_ACTIVE_STEP]: setReflectingActiveStep,
-    [Types.SET_REFLECTING_STATUS]: setReflectingStatus,
-    [Types.RESET_REFLECTING_STATE]:
-    resetReflectingState,
-    [Types.POST_FEEDBACK_REFLECTING]: postFeedbackReflecting,
-    [Types.POST_FEEDBACK_REFLECTING_SUCCESS]: postFeedbackReflectingSuccess,
-    [Types.POST_FEEDBACK_REFLECTING_FAILURE]: postFeedbackReflectingFailure,
-    [Types.UPDATE_FEEDBACK_REFLECTING]: updateFeedbackReflecting,
-    [Types.UPDATE_FEEDBACK_REFLECTING_SUCCESS]: updateFeedbackReflectingSuccess,
-    [Types.UPDATE_FEEDBACK_REFLECTING_FAILURE]: updateFeedbackReflectingFailure,
-    [Types.CLOSE_FEEDBACK_REFLECTING]: closeFeedbackReflecting,
-    [Types.CLOSE_FEEDBACK_REFLECTING_SUCCESS]: closeFeedbackReflectingSuccess,
-    [Types.CLOSE_FEEDBACK_REFLECTING_FAILURE]: closeFeedbackReflectingFailure,
-    [Types.FETCH_CURRENT_REFLECTING]: fetchCurrentReflecting,
-    [Types.FETCH_CURRENT_REFLECTING_SUCCESS]:
-    fetchCurrentReflectingSuccess,
-    [Types.FETCH_CURRENT_REFLECTING_FAILURE]: fetchCurrentReflectingFailure,
+const fetchStaffRatings = state =>
+  state.merge({
+    staffRating: {
+      fetching: true,
+      error: '',
+    }
   });
+
+const fetchStaffRatingsSuccess = (state, {ratings}) => {
+  return state.merge({
+    staffRating: {
+      data: ratings,
+      fetching: false
+    }
+  })
+}
+
+const fetchStaffRatingsFailure = (state, {error}) => 
+  state.merge({
+    staffRating: {
+      fetching: false,
+      error
+    }
+  });
+
+export const reducer = createReducer(INITIAL_STATE, {
+  [Types.SET_REFLECTING_DATA]: setReflectingData,
+  [Types.SET_REFLECTING_ACTIVE_STEP]: setReflectingActiveStep,
+  [Types.SET_REFLECTING_STATUS]: setReflectingStatus,
+  [Types.RESET_REFLECTING_STATE]: resetReflectingState,
+  [Types.POST_FEEDBACK_REFLECTING]: postFeedbackReflecting,
+  [Types.POST_FEEDBACK_REFLECTING_SUCCESS]: postFeedbackReflectingSuccess,
+  [Types.POST_FEEDBACK_REFLECTING_FAILURE]: postFeedbackReflectingFailure,
+  [Types.UPDATE_FEEDBACK_REFLECTING]: updateFeedbackReflecting,
+  [Types.UPDATE_FEEDBACK_REFLECTING_SUCCESS]: updateFeedbackReflectingSuccess,
+  [Types.UPDATE_FEEDBACK_REFLECTING_FAILURE]: updateFeedbackReflectingFailure,
+  [Types.CLOSE_FEEDBACK_REFLECTING]: closeFeedbackReflecting,
+  [Types.CLOSE_FEEDBACK_REFLECTING_SUCCESS]: closeFeedbackReflectingSuccess,
+  [Types.CLOSE_FEEDBACK_REFLECTING_FAILURE]: closeFeedbackReflectingFailure,
+  [Types.FETCH_CURRENT_REFLECTING]: fetchCurrentReflecting,
+  [Types.FETCH_CURRENT_REFLECTING_SUCCESS]: fetchCurrentReflectingSuccess,
+  [Types.FETCH_CURRENT_REFLECTING_FAILURE]: fetchCurrentReflectingFailure,
+  [Types.FETCH_STAFF_RATINGS]: fetchStaffRatings,
+  [Types.FETCH_STAFF_RATINGS_SUCCESS]: fetchStaffRatingsSuccess,
+  [Types.FETCH_STAFF_RATINGS_FAILURE]: fetchStaffRatingsFailure,
+});
