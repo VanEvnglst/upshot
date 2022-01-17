@@ -34,6 +34,7 @@ export const getReminderDate = state => state.documenting.get('reminderTime');
 
 /* ------------- Feedback Preparing Selectors ------------- */
 export const getPreparingLoading = state => state.preparing.get('fetching');
+export const getPreparingId = state => state.preparing.get('id');
 export const getPreparingStep = state => state.preparing.get('activeStep');
 export const getPreparingMaxSteps = state => state.preparing.get('maxStep');
 export const getPrepStep1Data = state => state.preparing.get('step1');
@@ -45,6 +46,9 @@ export const getPrepStep4BData = state => state.preparing.get('step4B');
 export const getPrepStep5Data = state => state.preparing.get('step5');
 export const getPrepStep5BData = state => state.preparing.get('step5B');
 export const getPrepStep5CData = state => state.preparing.get('step5C');
+
+
+export const getDiscussingId = state => state.discussing.get('id');
 
 
 export const getReflectingStep = state => state.reflecting.get('activeStep');
