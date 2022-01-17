@@ -1,6 +1,6 @@
 import labels from 'app/locales/en';
 
-const { feedbackDocumenting, feedbackPreparing } = labels;
+const { feedbackDocumenting, feedbackPreparing, feedbackDiscussing } = labels;
 
 const confirmationModel = [
   {
@@ -16,16 +16,12 @@ const confirmationModel = [
   {
     id: 3,
     type: 'discussing',
-    content: '',
+    content: `${feedbackDiscussing.confirmation}`,
   },
   {
     id: 4,
     type: 'reflecting',
     content: '',
-  },
-  {
-    id: 5,
-    type: 'following up',
   },
 ];
 

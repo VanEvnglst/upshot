@@ -7,7 +7,7 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import api from 'app/services/apiService';
-
+import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 const STATUS_OK = 'ok';
 
 export function* fetchFeedbackType() {
@@ -83,13 +83,16 @@ export function* fetchCurrentFeedback({ journeyId }) {
     const journeyData = response.data.Journey;
     const docuData = journeyData.Documenting;
     const prepData = journeyData.Preparing;
-    //const discussData = journeyData.Discussing;
+    const discussData = journeyData.Discussing;
     const reflectData = journeyData.Reflecting;
+
     if (docuData) {
       yield retrieveDocumentingData(docuData);
     }
     if (prepData) yield retrievePreparingData(prepData);
     if (reflectData) yield retrieveReflectingData(reflectData);
+    if (discussData) yield retrieveDiscussingData(discussData);
+
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
   } else {
@@ -125,6 +128,14 @@ function* retrieveReflectingData(reflectingData) {
   yield put(
     ReflectingActions.setReflectingStatus('started', !reflectingData.closed),
   );
+}
+
+
+
+function* retrieveDiscussingData(discussingData) {
+  yield put(DiscussingActions.setDiscussingStatus('id', discussingData.id));
+  yield put(DiscussingActions.setDiscussingStatus('closed', discussingData.closed));
+  yield put(DiscussingActions.setDiscussingStatus('started', !discussingData.closed));
 }
 
 function* watchFeedbackSaga() {
