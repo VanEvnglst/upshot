@@ -181,7 +181,7 @@ export default {
   postFeedbackReflecting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/reflecting`, params);
+    return upshotAPI.post(`${uniqueId}/feedback/reflecting/`, params);
   },
 
   getCurrentReflecting: async params => {

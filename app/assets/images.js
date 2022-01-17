@@ -35,4 +35,6 @@ export default {
   sliderPin: require('./images/slider-pin.png'),
   thumbsDownEmoji: require('./images/thumbs-down.png'),
   thumbsUpEmoji: require('./images/thumbs-up.png'),
+  noRatings: require('./images/no-ratings.png'),
+  hidden: require('./images/hidden-emoji.png'),
 };

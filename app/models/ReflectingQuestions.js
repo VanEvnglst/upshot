@@ -5,35 +5,43 @@ const { feedbackReflecting } = labels;
 const reflectingQuestions = [
   {
     id: 1,
-    question: feedbackReflecting.provideInfo
+    key: 'provideInfo',
+    question: feedbackReflecting.provideInfo,
   },
   {
     id: 2,
-    question: feedbackReflecting.calmFeedback
+    key: 'calmFeedback',
+    question: feedbackReflecting.calmFeedback,
   },
   {
     id: 3,
-    question: feedbackReflecting.listenToEmployee
+    key: 'listenToEmployee',
+    question: feedbackReflecting.listenToEmployee,
   },
   {
     id: 4,
-    question: feedbackReflecting.gaveFeedbackSoon
+    key: 'gaveFeedbackSoon',
+    question: feedbackReflecting.gaveFeedbackSoon,
   },
   {
     id: 5,
-    question: feedbackReflecting.establishRapport
+    key: 'establishRapport',
+    question: feedbackReflecting.establishRapport,
   },
   {
     id: 6,
-    question: feedbackReflecting.clearlyStatePurpose
+    key: 'clearlyStatePurpose',
+    question: feedbackReflecting.clearlyStatePurpose,
   },
   {
     id: 7,
-    question: feedbackReflecting.involveEmployee
+    key: 'involveEmployee',
+    question: feedbackReflecting.involveEmployee,
   },
   {
     id: 8,
-    question: feedbackReflecting.documentAndSend
+    key: 'documentAndSend',
+    question: feedbackReflecting.documentAndSend,
   },
 ];
 

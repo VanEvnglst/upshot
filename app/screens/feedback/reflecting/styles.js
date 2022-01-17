@@ -45,4 +45,11 @@ export default containerStyles = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 20,
   },
+  stepDescriptionText: {
+    lineHeight: 24,
+    marginTop: 10,
+    marginBottom: 20,
+    width: '90%',
+    color: Colors.mediumBlack,
+  },
 });
