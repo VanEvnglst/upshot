@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getDocumentingId } from 'app/store/selectors';
+import { getDocumentingId, getCurrentJourney } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import {
   Text,
   Wrapper,
@@ -23,6 +24,7 @@ const FeedbackConfirmation = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
   const docuId = useSelector(getDocumentingId);
+  const journeyId = useSelector(getCurrentJourney);
   const [content, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
@@ -53,6 +55,8 @@ const FeedbackConfirmation = props => {
         return <DiscussingCTA />;
       case 'preparing':
         return <PreparingCTA />;
+      case 'reflecting':
+        return <ReflectingCTA />;
     }
   };
 
@@ -111,7 +115,23 @@ const FeedbackConfirmation = props => {
     );
   };
 
-  const handleNavigation = () => {};
+  const ReflectingCTA = () => {
+    return (
+      <View style={{
+        marginBottom: 20,
+        flex: 1,
+      }}>
+        <Button
+          mode='contained'
+          onPress={() => closeJourney()}
+        >Got it</Button>
+      </View>
+    )
+  }
+
+  const closeJourney = () => {
+    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data))
+  };
 
   const handleTimeSelection = time => {
     const reminderDate = moment(time).format('MMM DD, YYYY HH:mm');
@@ -197,3 +217,7 @@ const FeedbackConfirmation = props => {
 };
 
 export default FeedbackConfirmation;
+
+FeedbackConfirmation.propTypes = {};
+
+FeedbackConfirmation.defaultProps = {};

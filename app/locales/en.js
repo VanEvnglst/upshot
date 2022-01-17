@@ -46,6 +46,8 @@ const labels = {
     positiveHint: 'When you tell others what they are doing well',
     corrective: 'Corrective',
     correctiveHint: 'When you tell others what they need to improve on',
+    journeyEndTitle: 'Woohoo!',
+    journeyEndContent: `Congratulations! You completed your feedback. You can now find this journey under History.`,
   },
   feedbackSignPost: {
     title: 'The feedback journey',
@@ -238,6 +240,9 @@ const labels = {
     },
     confirmation: `You've finished "Discussing." You can review your notes and audio recording any time.\n\nWould you like to continue on to the next part, "Reflecting?" - this usually takes around 10 minutes.`,
     confirmationHint: `People forget an average of 70% of what was discussed after 24 hours.\n\nThe sooner you start your reflection, the easier it will be for you to remember what you were thinking and how you were feeling during your feedback discussion.`,
+    review: {
+      actionPlan: "Review your action plan",
+    }
   },
   feedbackReflecting: {
     guideContent: `Self-reflection is the key to self-awareness. It allows you to look neutrally at your thoughts, feelings, emotions, and actions. It enables you to identify areas where you are strong, but also areas where you can improve.`,
@@ -274,11 +279,10 @@ const labels = {
     stopDoing: 'Stop doing',
     startDoing: 'Start doing',
     continueDoing: 'Continue doing',
-    reviewActionPlan: 'Review you action plan',
+    reviewActionPlan: 'Review your action plan',
     reviewActionPlanDesc: 'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
     confirmation: `You've finished "Reflecting". Based on your answers, we've recommemded a reading list we think you'll find helpful:`,
   },
-
   reminders: {
     morningReminder: 'Today is a new day, ',
     triviaReminder: ' did you know...',
@@ -287,6 +291,7 @@ const labels = {
     morningCardHeader: "Today's mindful moment",
     afternoonCardHeader: 'Did you know?',
   },
+  
 };
 
 export default labels;

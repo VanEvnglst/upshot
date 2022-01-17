@@ -42,6 +42,9 @@ const { Types, Creators } = createActions({
   fetchCurrentFeedbackSuccess: ['id'],
   fetchCurrentFeedbackFailure: ['error'],
   resetFeedbackState: null,
+  postCloseFeedbackJourney: ['journeyId'],
+  postCloseFeedbackJourneySuccess: null,
+  postCloseFeedbackJourneyFailure: ['error'],
 });
 
 export const FeedbackTypes = Types;
@@ -194,6 +197,30 @@ const fetchCurrentFeedback = state =>
     },
   });
 
+const postCloseFeedbackJourney = state =>
+  state.merge({
+    ...state.get('currentJourney'),
+    currentJourney: {
+      fetching: true,
+      error: '',
+    },
+  });
+
+const postCloseFeedbackJourneySuccess = state =>
+  state.merge({
+    currentJourney: {
+      fetching: false,
+    },
+  });
+
+const postCloseFeedbackJourneyFailure = (state, { error }) =>
+  state.merge({
+    currentJourney: {
+      fetching: false,
+      error,
+    },
+  });
+
 const fetchCurrentFeedbackSuccess = (state, { id }) => {
   return state.merge({
     currentJourney: {
@@ -237,4 +264,7 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_CURRENT_FEEDBACK_SUCCESS]: fetchCurrentFeedbackSuccess,
   [Types.FETCH_CURRENT_FEEDBACK_FAILURE]: fetchCurrentFeedbackFailure,
   [Types.RESET_FEEDBACK_STATE]: resetFeedbackState,
+  [Types.POST_CLOSE_FEEDBACK_JOURNEY]: postCloseFeedbackJourney,
+  [Types.POST_CLOSE_FEEDBACK_JOURNEY_SUCCESS]: postCloseFeedbackJourneySuccess,
+  [Types.POST_CLOSE_FEEDBACK_JOURNEY_FAILURE]: postCloseFeedbackJourneyFailure,
 });

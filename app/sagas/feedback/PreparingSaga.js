@@ -28,7 +28,6 @@ export function* postFeedbackPreparing({ journeyId }) {
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postFeedbackPreparing, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingId = response.data.details.id;
@@ -84,7 +83,6 @@ export function* updateFeedbackPreparing({ data }) {
   );
 
   const response = yield call(api.updateFeedbackPreparing, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.updateFeedbackPreparingSuccess());
@@ -138,7 +136,6 @@ export function* closeFeedbackPreparing({ preparingId }) {
   params.append('preparing_id', preparingId);
 
   const response = yield call(api.postClosePreparing, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.closeFeedbackPreparingSuccess());
