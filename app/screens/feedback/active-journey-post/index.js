@@ -18,7 +18,7 @@ import {
 import feedbackJourneySteps from 'app/models/FeedbackJourney';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import { getStaffName, getDocumentingId } from 'app/store/selectors';
+import { getStaffName, getDocumentingId, getPreparingId, getDiscussingId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -36,7 +36,8 @@ const ActiveFeedbackJourney = props => {
   );
   const preparingClosed = useSelector(state => state.preparing.get('closed'));
   const preparingStarted = useSelector(state => state.preparing.get('started'));
-  const preparingId = useSelector(state => state.preparing.get('id'));
+  const preparingId = useSelector(getPreparingId);
+  const discussingId = useSelector(getDiscussingId);
   const isLoading = useSelector(
     state => state.feedback.get('currentJourney').fetching,
   );
@@ -180,7 +181,8 @@ const ActiveFeedbackJourney = props => {
         else screenName = 'PreparingGuide';
         break;
       case 2:
-        screenName = 'DiscussingGuide';
+        if (discussingId) screenName = 'DiscussingMeeting';
+        else screenName = 'DiscussingGuide';
         break;
       case 3:
         screenName = 'ReflectingGuide';
@@ -190,6 +192,7 @@ const ActiveFeedbackJourney = props => {
   };
 
   return (
+    <View style={{ flex: 1 }}>
     <Wrapper>
       <ScrollView>
         <Header
@@ -197,7 +200,6 @@ const ActiveFeedbackJourney = props => {
             onPress: () => handleBackNavigation(),
           }}
         />
-
         <View style={styles.nameContainer}>
           <Text type="h4" style={styles.teammateName}>
             {staffName}
@@ -228,6 +230,7 @@ const ActiveFeedbackJourney = props => {
       </ScrollView>
       {isLoading && <ActivityIndicator />}
     </Wrapper>
+    </View>
   );
 };
 

@@ -1,64 +1,74 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  View,
-  Animated,
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import { View, Animated, Dimensions, Image, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import { getDiscussingId } from 'app/store/selectors';
 import { Header, Text, Wrapper } from 'app/components';
+import labels from 'app/locales/en';
+import Images from 'app/assets/images';
+import styles from './styles';
 
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 const SPACING = 10;
-const ITEM_WIDTH = width * 0.8;
-
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.8;
 const ITEM_HEIGHT = ITEM_SIZE * 1.6;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 3;
 
 const DiscussingMeeting = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { cueCards } = labels.feedbackDiscussing;
   const scrollX = useRef(new Animated.Value(0)).current;
+  const dispatch = useDispatch();
+  const activeDiscussing = useSelector(getDiscussingId);
 
   const contentValues = [
     { key: 'empty-left' },
     {
-      title: 'Check in',
-      content: '',
+      id: 1,
+      title: cueCards.checkIn,
+      content: cueCards.checkInContent,
     },
     {
-      title: 'State the purpose of this meeting',
-      content: '',
+      id: 2,
+      title: cueCards.statePurpose,
+      content: cueCards.statePurposeContent,
     },
     {
-      title: 'Describe your observations',
-      content: '',
+      id: 3,
+      title: cueCards.observation,
+      content: cueCards.observationContent,
     },
     {
-      title: 'Listen deeply',
-      content: '',
+      id: 4,
+      title: cueCards.listenDeeply,
+      content: cueCards.listenDeeplyContent,
     },
     {
-      title: 'Brainstorm an action plan together',
-      content: '',
+      id: 5,
+      title: cueCards.brainstorm,
+      content: cueCards.brainstormContent,
     },
     {
-      title: 'Evaluate ideas together',
-      content: '',
+      id: 6,
+      title: cueCards.evaluateIdeas,
+      content: cueCards.evaluateIdeasContent,
     },
     {
-      title: 'Agreen on your next steps',
-      content: '',
+      id: 7,
+      title: cueCards.nextSteps,
+      content: cueCards.nextStepsContent,
     },
     {
-      title: 'Check-out',
-      content: '',
+      id: 8,
+      title: cueCards.checkOut,
+      content: cueCards.checkOutContent,
     },
     {
-      title: 'Thank and support them',
-      content: '',
+      id: 9,
+      title: cueCards.thankAndSupport,
+      content: cueCards.thankAndSupportContent,
     },
     { key: 'empty-right' },
   ];
@@ -79,10 +89,22 @@ const DiscussingMeeting = props => {
           marginHorizontal: 12,
           padding: 20,
         }}>
-        <Text type="h5">{title}</Text>
+        <Text type="h5" style={{ color: '#3700B3' }}>
+          {title}
+        </Text>
         <Text>{content}</Text>
       </View>
     );
+  };
+
+  // TODO: implement current discussing when data is final
+  // useEffect(() => {
+  //   if(activeDiscussing)
+  //   dispatch(DiscussingActions.fetchCurrentDiscussing(activeDiscussing));
+  // }, []);
+
+  const handleNext = () => {
+    navigation.navigate('FeedbackDiscussing');
   };
 
   return (
@@ -102,7 +124,6 @@ const DiscussingMeeting = props => {
           snapToAlignment="start"
           decelerationRate={0}
           bounces={false}
-          // scrollEventThrottle={16}
           data={data}
           keyExtractor={item => item.key}
           pagingEnabled
@@ -110,82 +131,54 @@ const DiscussingMeeting = props => {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
             if (!item.title) {
-              return <View style={{ width: EMPTY_ITEM_SIZE }} />;
+              return <View style={styles.cardSpacer} />;
             }
             const inputRange = [
               (index - 2) * ITEM_SIZE,
               (index - 1) * ITEM_SIZE,
               index * ITEM_SIZE,
             ];
-            // const translateX = scrollX.interpolate({
-            //   inputRange,
-            //   outputRange: [-width * 0.7, 0, width * 0.7],
-            // });
-
             return (
               <View
-                style={{
-                  width: ITEM_SIZE,
-                }}>
+                style={styles.cardContainer}>
                 <View
-                  style={{
-                    backgroundColor: '#F5F5F5',
-                    height: ITEM_HEIGHT,
-                    marginHorizontal: SPACING,
-                    padding: SPACING * 2,
-                    borderRadius: 10,
-                    shadowColor: '#000',
-                    shadowRadius: 30,
-                    shadowOpacity: 0.5,
-                    shadowOffset: {
-                      width: 0,
-                      height: 0,
-                    },
-                    elevation: 4
-                  }}>
-                  <Text type="h5">{item.title}</Text>
+                  style={styles.card}>
+                  <Text type="h5" style={styles.cardTitle}>
+                    {item.title}
+                  </Text>
+                  <View style={styles.cardContentContainer}>
+                    <Text type="body1" style={styles.cardContent}>{item.content}</Text>
+                  </View>
+                  {index === 1 && (
+                    <View style={styles.cardGuideContainer}>
+                      <Image
+                        source={Images.cardSwipeGuide}
+                        resizeMode="contain"
+                      />
+                      <Text type="overline" style={styles.guideText}>
+                        Swipe to see next card
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </View>
-              // <View style={styles.content}>
-              //   <Animated.View
-              //   style={{
-              //
-              //       width: ITEM_SIZE,
-              //
-              //       borderWidth: 1,
-              //       borderColor: '#000',
-              //
-              //       padding: 20,
-              //       marginHorizontal: 10,
-              //       // transform: [{translateX}]
-              //   }}
-              //       >
-              //   <Text type="h5">{item.title}</Text>
-              //     <View style={styles.imgContainer}>
-
-              //     </View>
-              //   </Animated.View>
-              // </View>
-              // <View
-              //
-              // }}>
-              //   </View>
             );
           }}
         />
-        <View
-          style={{
-            marginVertical: 20,
-            marginHorizontal: 10,
-          }}>
-          <Button 
-            mode="contained" 
-            onPress={() => console.log('End meeting')}
-            style={{ height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderWidth: 0.5, }}  
-          >
-            <Text type="button" style={{ color: '#00000'}}>End Meeting</Text>
-          </Button>
-        </View>
+        {/* {route.params.type === 'actionPlan' ? (
+          <View style={styles.btnContainer}></View>
+        ) : ( */}
+          <View style={styles.singleBtnContainer}>
+            <Button
+              mode="contained"
+              onPress={() => handleNext()}
+              style={styles.endMeetingBtn}>
+              <Text type="button" style={styles.endMeetingBtnText}>
+                End Meeting
+              </Text>
+            </Button>
+          </View>
+        {/* )} */}
         {/* <View
          
           
@@ -208,51 +201,3 @@ export default DiscussingMeeting;
 
 DiscussingMeeting.propTypes = {};
 DiscussingMeeting.defaultProps = {};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    width,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  card: {
-    borderRadius: 18,
-    shadowColor: '#000',
-    shadowRadius: 30,
-    shadowOpacity: 0.5,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    padding: 12,
-    backgroundColor: 'white',
-  },
-  imgContainer: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-    overflow: 'hidden',
-    alignItems: 'center',
-    borderRadius: 14,
-  },
-  image: {
-    width: ITEM_WIDTH * 1.4,
-    height: ITEM_HEIGHT,
-    resizeMode: 'cover',
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 60,
-    borderWidth: 6,
-    borderColor: 'white',
-    position: 'absolute',
-    bottom: -30,
-    right: 60,
-  },
-});

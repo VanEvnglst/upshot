@@ -26,6 +26,7 @@ export { default as PreparingSchedule } from './feedback/preparing/scheduling';
 /* ------------- Feedback Discussing ------------- */
 export { default as DiscussingGuide } from './feedback/discussing/guide';
 export { default as DiscussingMeeting } from './feedback/discussing/meeting';
+export { default as FeedbackDiscussing } from './feedback/discussing';
 
 /* ------------- Feedback Reflecting ------------- */
 export { default as ReflectingGuide } from './feedback/reflecting/guide';
