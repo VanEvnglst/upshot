@@ -6,6 +6,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { getDocumentingId } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
+import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import {
   Text,
   Wrapper,
@@ -26,6 +27,7 @@ const FeedbackConfirmation = props => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
   const [preparingHintVisible, setPrepHintVisible] = useState(false);
+  const [discussingHintVisible, setDiscussHintVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
@@ -74,19 +76,28 @@ const FeedbackConfirmation = props => {
       <View style={{ flexDirection: 'row' }}>
         <Button
           type={'text'}
-          onPress={() => navigation.navigate('PreparingGuide')}>
+          onPress={() => navigation.navigate('ReflectingGuide')}>
           <Text>Keep going</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
           <Text>remind me later</Text>
         </Button>
-</View>
-)
-}
+        {/* <HintIndicator
+          showHint={discussingHintVisible}
+          onPress={() => setDiscussHintVisible(!discussingHintVisible)}
+        /> */}
+      </View>
+    );
+  };
   const PreparingCTA = () => {
     return (
-      <View style={{
-        marginBottom: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+      <View
+        style={{
+          marginBottom: 20,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <Button
           type={'text'}
           onPress={() => navigation.navigate('PreparingSchedule')}>
@@ -108,7 +119,12 @@ const FeedbackConfirmation = props => {
       reminderDate,
       docuId,
     };
-    dispatch(DocumentingActions.updateDocumentingReminder(data));
+    if (route.params.type === 'documenting') {
+      dispatch(DocumentingActions.updateDocumentingReminder(data));
+    }
+    if (route.params.type === 'discussing') {
+      dispatch(DiscussingActions.updateDiscussingReminder(data));
+    }
     hideModal();
   };
 
@@ -144,6 +160,18 @@ const FeedbackConfirmation = props => {
             }}>
             <Text type="body2" style={{ color: Colors.primary900 }}>
               {labels.feedbackPreparing.confirmationHint}
+            </Text>
+          </View>
+        )}
+        {discussingHintVisible && (
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: Colors.opaqueBlack,
+              borderRadius: 16,
+            }}>
+            <Text type="body2" style={{ color: Colors.primary900 }}>
+              {labels.feedbackDiscussing.confirmationHint}
             </Text>
           </View>
         )}
