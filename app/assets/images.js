@@ -37,4 +37,5 @@ export default {
   thumbsUpEmoji: require('./images/thumbs-up.png'),
   noRatings: require('./images/no-ratings.png'),
   hidden: require('./images/hidden-emoji.png'),
+  journeyEnd: require('./images/journey-end.png'),
 };
