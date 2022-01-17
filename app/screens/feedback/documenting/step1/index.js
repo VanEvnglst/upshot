@@ -52,7 +52,6 @@ const DocumentingStep1 = props => {
   useEffect(() => {
     dispatch(FeedbackActions.fetchTeamMembers());
     async function retrieveData() {
-      debugger;
       if (activeDocumenting)
         await dispatch(
           DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
