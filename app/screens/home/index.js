@@ -109,14 +109,14 @@ const HomeScreen = props => {
               onChange={onChange}
             />
           )}
-          <LearningCard
+          {/* <LearningCard
             onPress={() => console.log('Next time')}
             image={Images.feedbackCoaching}
             headline={'Employee Engagement'}
             subtitle={labels.homeScreen.feedbackDesc}
             mainCard
             style={{ marginTop: 15 }}
-          />
+          /> */}
         </View>
         <View style={styles.horizontalCardContainer}>
           <Text
@@ -129,7 +129,7 @@ const HomeScreen = props => {
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
               image={Images.feedbackCoaching}
-              headline={'Enabling Engagement'}
+              headline={'Stress & Resilience Management'}
               smallCard
               disabled
               testID={'card-home-comingSoon'}
@@ -137,7 +137,7 @@ const HomeScreen = props => {
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
               image={Images.feedbackCoaching}
-              headline={'Managing Conflicts'}
+              headline={'Handling Conflicts Positively'}
               smallCard
               disabled
             />
