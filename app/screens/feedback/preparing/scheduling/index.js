@@ -71,7 +71,6 @@ const PreparingSchedule = props => {
   const handleTimePicked = time => {
     const timeLabel = moment(time).format('hh:mm a');
     const timePicked = moment(time).format('HH:mm');
-    debugger;
     setTimeSelected({ label: timeLabel, value: timePicked });
   };
 
