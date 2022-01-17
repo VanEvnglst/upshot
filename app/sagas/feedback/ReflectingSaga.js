@@ -43,17 +43,20 @@ export function* updateFeedbackReflecting({ data }) {
   const step1 = yield select(step1Data);
   const step2 = yield select(step2Data);
   const step4 = yield select(step4Data);
-  
+
   debugger;
   params.append('reflecting_id', reflectId);
   params.append('feel_int', step1.data);
-  params.append('how_did_you_do_int',step2.data.provideInfo);
+  params.append('how_did_you_do_int', step2.data.provideInfo);
   params.append('calm_int', step2.data.calmFeedback);
   params.append('listened_int', step2.data.listenToEmployee);
   params.append('gave_feedback_int', step2.data.gaveFeedbackSoon);
   params.append('established_rapport_int', step2.data.establishRapport);
   params.append('clearly_stated_purpose_int', step2.data.clearlyStatePurpose);
-  params.append('involved_employee_action_plan_int', step2.data.involveEmployee);
+  params.append(
+    'involved_employee_action_plan_int',
+    step2.data.involveEmployee,
+  );
   params.append('documented_int', step2.data.documentAndSend);
 
   const response = yield call(api.updateFeedbackReflecting, params);
@@ -61,6 +64,7 @@ export function* updateFeedbackReflecting({ data }) {
   if (response.ok) {
     if (response.data.status == 'ok') {
       yield put(ReflectingActions.updateFeedbackReflectingSuccess());
+      yield put(ReflectingActions.closeFeedbackReflecting(reflectId));
     }
   } else {
     yield put(ReflectingActions.updateFeedbackReflectingFailure(response.data));
@@ -68,7 +72,7 @@ export function* updateFeedbackReflecting({ data }) {
 }
 
 export function* fetchCurrentReflecting({ reflectingId }) {
-    //const connected = yield checkInternetConnection();
+  //const connected = yield checkInternetConnection();
   // if (!connected) {}
   // return;
 
@@ -87,17 +91,20 @@ export function* fetchCurrentReflecting({ reflectingId }) {
 }
 
 export function* closeFeedbackReflecting({ reflectingId }) {
-    //const connected = yield checkInternetConnection();
+  //const connected = yield checkInternetConnection();
   // if (!connected) {}
   // return;
 
   const params = new URLSearchParams();
   params.append('reflecting_id', reflectingId);
-  const response = yield call(api.closeFeedbackReflecting, params);
+  const response = yield call(api.postCloseReflecting, params);
   debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
-      // yield put(ReflectingActions.closeFeedbackReflectingSuccess());
+      yield put(ReflectingActions.closeFeedbackReflectingSuccess());
+      yield NavigationService.navigate('FeedbackConfirmation', {
+        type: 'reflecting',
+      });
     }
   } else {
     yield put(ReflectingActions.closeFeedbackReflectingFailure(response.data));
@@ -105,7 +112,7 @@ export function* closeFeedbackReflecting({ reflectingId }) {
 }
 
 export function* fetchStaffRatings() {
-    //const connected = yield checkInternetConnection();
+  //const connected = yield checkInternetConnection();
   // if (!connected) {}
   // return;
 
