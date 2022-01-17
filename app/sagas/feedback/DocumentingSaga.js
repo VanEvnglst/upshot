@@ -31,9 +31,7 @@ export function* postFeedbackDocumenting({ data }) {
 }
 
 export function* updateFeedbackDocumenting({ data }) {
-  debugger;
   const response = yield call(api.updateDocumenting, data);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DocumentingActions.closeFeedbackDocumenting(data.docuId));
@@ -49,9 +47,7 @@ export function* updateFeedbackDocumenting({ data }) {
 }
 
 export function* updateDocumentingReminder({ data }) {
-  debugger;
   const response = yield call(api.updateDocumentingReminder, data);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
