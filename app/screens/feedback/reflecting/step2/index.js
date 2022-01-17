@@ -46,7 +46,7 @@ const ReflectingStep2 = props => {
     await validateSliderMovement();
     console.warn('state', state);
     // debugger;
-    // dispatch(ReflectingActions.setReflectingData('step2', state));
+    dispatch(ReflectingActions.setReflectingData('step2', state));
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep + 1));
   };
 
