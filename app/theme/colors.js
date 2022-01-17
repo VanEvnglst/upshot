@@ -1,6 +1,7 @@
 export default {
   error: '#B00020',
   black: '#000000',
+  gray: '#F5F5F5',
   mediumBlack: 'rgba(0,0,0,0.87)',
   lightBlack: 'rgba(0,0,0,0.60)',
   opaqueBlack: 'rgba(0,0,0,0.38)',
