@@ -128,7 +128,6 @@ const ActiveFeedbackJourney = props => {
         //   closed: discussingClosed,
         //   started: discussingStarted,
         // }
-        debugger;
         content = feedbackJourneySteps;
       } else {
         content = feedbackJourneySteps.filter(
