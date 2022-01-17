@@ -14,6 +14,7 @@ import {
   PreparingSchedule,
   DiscussingGuide,
   DiscussingMeeting,
+  FeedbackDiscussing,
   FeedbackReflecting,
   ReflectingGuide,
 } from '../screens';
@@ -83,6 +84,10 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'DiscussingMeeting'}
           component={DiscussingMeeting}
+        />
+        <FeedbackStack.Screen
+          name={'FeedbackDiscussing'}
+          component={FeedbackDiscussing}
         />
          <FeedbackStack.Screen
           name={'ReflectingGuide'}
