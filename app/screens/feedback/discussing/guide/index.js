@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, ScrollView, Image, FlatList } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text } from 'app/components';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import { getCurrentJourney } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import discussingGuide from 'app/models/DiscussingGuide';
 import styles from './styles';
@@ -10,9 +12,12 @@ import styles from './styles';
 const DiscussingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackDiscussing } = labels;
+  const dispatch = useDispatch();
+  const journeyId = useSelector(getCurrentJourney).data;
 
   const handleNavigation = () => {
-    navigation.navigate('DiscussingMeeting');
+    dispatch(DiscussingActions.postFeedbackDiscussing(journeyId));
+    // navigation.navigate('DiscussingMeeting');
   };
 
   const GuidePost = ({ item }) => {
