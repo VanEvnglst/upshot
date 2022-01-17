@@ -32,7 +32,7 @@ export default function FeedbackStackScreen() {
         initialRouteName={
           activeJourneyLength.length > 0
             ? 'FeedbackJourneyList'
-            : 'DiscussingGuide' //: 'FeedbackFlow'
+            : 'FeedbackFlow'
     }>
         <FeedbackStack.Screen 
           name={'FeedbackFlow'} 
