@@ -6,8 +6,9 @@ import FeedbackActions, {
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import api from 'app/services/apiService';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import * as NavigationService from 'app/services/NavigationService';
+import api from 'app/services/apiService';
 const STATUS_OK = 'ok';
 
 export function* fetchFeedbackType() {
@@ -74,6 +75,24 @@ export function* postFeedbackJourney({ flow, teamMemberId }) {
     }
     // save journey id to state using success action call
     // call create documenting with journey id and team member passed in
+  }
+}
+
+export function* postCloseFeedbackJourney({ journeyId }) {
+
+  const params = new URLSearchParams();
+  params.append('journey_id', journeyId);
+
+  const response = yield call(api.postCloseJourney, params);
+  if (response.ok) {
+    if (response.data.status == 'ok') {
+      yield put(FeedbackActions.postCloseFeedbackJourneySuccess())
+      yield NavigationService.navigate('FeedbackJourneyList', {
+        type: 'journeyEnd'
+      });
+    }
+  } else {
+    yield put(FeedbackActions.postCloseFeedbackJourneyFailure(response.data));
   }
 }
 
@@ -144,6 +163,7 @@ function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
+  yield takeLatest(FeedbackTypes.POST_CLOSE_FEEDBACK_JOURNEY, postCloseFeedbackJourney);
   yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
 }
 
