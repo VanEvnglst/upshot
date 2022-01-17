@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FAB as FloatingAction, ProgressBar } from 'react-native-paper';
-import { Wrapper, Text, Header } from 'app/components';
+import { FAB as FloatingAction, ProgressBar, Button } from 'react-native-paper';
+import { Wrapper, Text, Header, Modal } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
+import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
 
 const FeedbackJourneyList = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
   const recentJourneys = useSelector(getRecentJourneys);
   const activeJourneys = useSelector(getActiveJourneys);
   const hasRecentJourneys = recentJourneys && recentJourneys.length !== 0;
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const hideModal = () => setModalVisible(false);
 
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
+    dispatch(FeedbackHistoryActions.fetchActiveJourneys());
     dispatch(DocumentingActions.resetDocumentingState());
+    if (route.params && route.params.type === 'journeyEnd') {
+      setModalVisible(true);
+    }
   }, []);
 
   const HistoryCard = ({ item }) => {
@@ -30,7 +38,8 @@ const FeedbackJourneyList = props => {
     const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
-    const lastWorkedOn = moment(dateArr[0]).fromNow();
+    const lastWorkedOn = moment(lastModified).fromNow();
+
     return (
       <TouchableOpacity
         accessibilityRole={'button'}
@@ -60,7 +69,7 @@ const FeedbackJourneyList = props => {
     const lastName = nameArr && nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
     const progressValue = percent / 100;
-    const lastWorkedOn = `${moment(dateArr[0]).fromNow()}`;
+    const lastWorkedOn = `${moment(lastModified).fromNow()}`;
 
     return (
       <TouchableOpacity
@@ -102,48 +111,71 @@ const FeedbackJourneyList = props => {
   };
 
   return (
-    <Wrapper>
-      <ScrollView>
-        <Header
-          headerLeft={{
-            onPress: () => navigation.goBack(),
-          }}
-        />
-        <Text type="h3" style={styles.screenTitle}>
-          {labels.feedbackIntro.feedbackCoaching}
-        </Text>
-        <View style={{ marginTop: 40 }}>
-          <Text type="overline" style={styles.overlineText}>
-            {labels.common.inProgress}
+    <View style={{ flex: 1 }}>
+      <Wrapper>
+        <ScrollView>
+          <Header
+            headerLeft={{
+              onPress: () => navigation.goBack(),
+            }}
+          />
+          <Text type="h3" style={styles.screenTitle}>
+            {labels.feedbackIntro.feedbackCoaching}
           </Text>
-        </View>
-        {activeJourneys &&
-          activeJourneys.map((item, i) => (
-            <InProgressCard key={item.id} activeJourney={item} />
-          ))}
-        {hasRecentJourneys && (
-          <View>
-            <Text
-              type="overline"
-              style={[styles.overlineText, styles.addedMargin]}>
-              {labels.feedbackIntro.history}
+          <View style={{ marginTop: 40 }}>
+            <Text type="overline" style={styles.overlineText}>
+              {labels.common.inProgress}
             </Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {recentJourneys.map((item, i) => (
-                <HistoryCard key={item.id} item={item} />
-              ))}
-            </ScrollView>
           </View>
-        )}
-      </ScrollView>
-      <FloatingAction
-        style={styles.floatingAction}
-        label={labels.common.giveFeedback}
-        icon={'plus'}
-        uppercase
-        onPress={() => handleNavigation('FeedbackFlow')}
-      />
-    </Wrapper>
+          {activeJourneys &&
+            activeJourneys.map((item, i) => (
+              <InProgressCard key={item.id} activeJourney={item} />
+            ))}
+          {hasRecentJourneys && (
+            <View>
+              <Text
+                type="overline"
+                style={[styles.overlineText, styles.addedMargin]}>
+                {labels.feedbackIntro.history}
+              </Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {recentJourneys.map((item, i) => (
+                  <HistoryCard key={item.id} item={item} />
+                ))}
+              </ScrollView>
+            </View>
+          )}
+        </ScrollView>
+        <FloatingAction
+          style={styles.floatingAction}
+          label={labels.common.giveFeedback}
+          icon={'plus'}
+          uppercase
+          onPress={() => handleNavigation('FeedbackFlow')}
+        />
+      </Wrapper>
+      <Modal
+        isVisible={isModalVisible}
+        onDismiss={hideModal}
+        style={{
+          padding: 20,
+          height: 400,
+          marginHorizontal: 40,
+        }}>
+        <View style={{ flex: 1 }}>
+          <Image source={Images.journeyEnd} resizeMode="cover" />
+          <Text type="h6" style={{ marginTop: 20 }}>
+            {labels.feedbackIntro.journeyEndTitle}
+          </Text>
+          <Text type="body2" style={{ marginTop: 20, lineHeight: 24 }}>
+            {labels.feedbackIntro.journeyEndContent}
+          </Text>
+          <View style={{ alignItems: 'flex-end', marginTop: 20 }}>
+            <Button onPress={() => hideModal()}>Got it</Button>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
