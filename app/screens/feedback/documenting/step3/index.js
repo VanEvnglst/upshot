@@ -19,6 +19,7 @@ import {
   getDocumentingStep,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
+import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -41,11 +42,12 @@ const DocumentingStep3 = props => {
   const yesterday = moment().subtract(1, 'days').format('ll');
   const [isCompleted, setCompletion] = useState(false);
 
-  // useEffect(() => {
-  //   // if (stepData.data) (stepData.data)
-  //   //setFeedbackTopic(stepData.data);
-  //   //setCompletion(true);
-  // }, [stepData]);
+  useEffect(() => {
+    if (stepData.data) {      
+      selectDate(stepData.data);
+      setCompletion(true);
+    }
+  }, [stepData]);
 
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
@@ -62,9 +64,13 @@ const DocumentingStep3 = props => {
     if (dateLabel === ('Today' || 'Yesterday')) {
       setDateSelected({ label: 'On a different date' });
     } else {
-      setDateSelected({ label: dateLabel });
+      setDateSelected(prevState => ({ 
+        ...prevState,
+        label: dateLabel }));
     }
-    setDateSelected({ value: date });
+    setDateSelected(prevState => ({ 
+      ...prevState,
+      value: date }));
     setCompletion(true);
   };
 
@@ -72,7 +78,7 @@ const DocumentingStep3 = props => {
     const modDate = moment(date).format('llll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    setDateSelected({ label: dateLabel, value: date });
+    selectDate(dateLabel, date);
     hideDatePicker();
   };
 
@@ -82,14 +88,20 @@ const DocumentingStep3 = props => {
 
   const handleNext = () => {
     const step2 = step2Data.data.map(obj => obj.id);
-    const data = {
-      docuId,
-      typeId: typeId.id,
-      step1: step1Data,
-      step2,
-      dateSelected: dateSelected.value,
-    };
-    dispatch(DocumentingActions.updateFeedbackDocumenting(data));
+    var topicListStr = '[';
+    step2.forEach((item, index) => {
+      if (index !== step2.length - 1)
+        topicListStr += `${item},`;
+      else topicListStr += `${item}`;
+    });
+    topicListStr += ']';
+    const params = new URLSearchParams();
+    params.append('documenting_id', docuId);
+    params.append('staff_id', step1Data.data.id);
+    params.append('topics', topicListStr);
+    params.append('incident_date', dateSelected.value);
+    params.append('pos_or_cor', typeId.id);
+    dispatch(DocumentingActions.updateFeedbackDocumenting(params));
   };
 
   return (
@@ -114,7 +126,8 @@ const DocumentingStep3 = props => {
       />
       <CalendarPicker
         onPress={() => showDatePicker()}
-        text={dateSelected.dateLabel}
+        text={dateSelected.label}
+        icon={Images.calendar}
       />
       <DateTimePicker
         isVisible={isDatePickerVisible}
