@@ -110,33 +110,6 @@ const ActiveFeedbackJourney = props => {
       handlePhases();
     }, []);
 
-    const handlePhases = async () => {
-      let content = [];
-
-      if (getFlow === 'prepared') {
-        feedbackJourneySteps[0] = {
-          ...feedbackJourneySteps[0],
-          closed: documentingClosed,
-          started: documentingStarted,
-        };
-        // feedbackJourneySteps[1] = {
-        //   ...feedbackJourneySteps[1],
-        //   closed: preparingClosed,
-        //   started: preparingStarted,
-        // };
-        // feedbackJourneySteps[2] = {
-        //   ...feedbackJourneySteps[2],
-        //   closed: discussingClosed,
-        //   started: discussingStarted,
-        // }
-        content = feedbackJourneySteps;
-      } else {
-        content = feedbackJourneySteps.filter(
-          item => item.forOnTheSpot === true,
-        );
-      }
-      await setPhaseList(content);
-    };
 
     return (
       <View>
@@ -175,7 +148,6 @@ const ActiveFeedbackJourney = props => {
     switch (index) {
       case 0:
         screenName = 'FeedbackDocumenting';
-        // dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
         break;
       case 1:
         if (preparingId) screenName = 'FeedbackPreparing';
