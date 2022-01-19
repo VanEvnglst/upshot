@@ -66,14 +66,17 @@ const FeedbackDocumenting = props => {
       step2: step2Data,
       dateSelected: step3Data,
     };
+    navigation.goBack();
     // pag step 1 and no documentingId,
     // navigate,
     // else dispatch update action & reset
-    if (activeStep === 1 && !documentingId) navigation.goBack();
-    else {
-      dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
-      dispatch(DocumentingActions.resetDocumentingState());
-    }
+    // TODO: double check flow
+    
+    // if (activeStep === 1 && !documentingId) navigation.goBack();
+    // else {
+    //   dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
+    //   dispatch(DocumentingActions.resetDocumentingState());
+    // }
   };
 
   return (
