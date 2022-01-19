@@ -57,10 +57,7 @@ export default {
 
   postFeedbackDocumenting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    // const params = new URLSearchParams();
-    // const { journeyId, teamMemberId } = data;
-    // params.append('journey_id', journeyId);
-    // params.append('staff_id', teamMemberId);
+
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
   },
 
@@ -70,27 +67,21 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
 
-  updateDocumentingReminder: async data => {
+  updateDocumentingReminder: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-    const { reminderDate, docuId } = data;
-    params.append('documenting_id', docuId);
-    params.append('reminder_date', reminderDate);
-
+    
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
 
-  postCloseDocumenting: async data => {
+  postCloseDocumenting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-
-    params.append('documenting_id', data);
 
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/close`, params);
   },
 
   getOpenFeedbackJourneys: async () => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
+
     return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-open`);
   },
 
@@ -107,11 +98,9 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/journey/get`, params);
   },
 
-  getCurrentDocumenting: async documentingId => {
+  getCurrentDocumenting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
 
-    params.append('documenting_id', documentingId);
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/get`, params);
   },
 
