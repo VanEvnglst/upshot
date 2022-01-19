@@ -76,7 +76,8 @@ export function* fetchCurrentDocumenting({ documentingId }) {
 
   params.append('documenting_id', documentingId);
   
-  const response = yield call(api.getCurrentDocumenting, documentingId);
+  const response = yield call(api.getCurrentDocumenting, params);
+
   if (response.ok) {
     if (response.data.status === 'ok') {
       const docuDetails = response.data.details;
