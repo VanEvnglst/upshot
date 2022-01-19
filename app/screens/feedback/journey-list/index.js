@@ -75,7 +75,7 @@ const FeedbackJourneyList = props => {
       <TouchableOpacity
         accessibilityRole={'button'}
         style={styles.inProgressCard}
-        onPress={() => handleNavigation('ActiveFeedbackJourney')}>
+        onPress={() => handleNavigation('ActiveFeedbackJourney', id, memberName)}>
         <View style={styles.inProgressContent}>
           <ProgressBar progress={progressValue} />
           <View style={styles.inProgressText}>
@@ -105,8 +105,8 @@ const FeedbackJourneyList = props => {
   const handleNavigation = (screenName, journeyId, staffName) => {
     dispatch(FeedbackActions.setTeamMember(staffName));
     navigation.navigate(screenName, {
+      from: "journeyList",
       journeyId,
-      staffName,
     });
   };
 
