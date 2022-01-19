@@ -35,17 +35,10 @@ const DocumentingStep1 = props => {
   });
   const [isCompleted, setCompletion] = useState(false);
   
-  useEffect(() => {
-    if (activeDocumenting)
-      dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
-  }, []);
-
-  useEffect(() => {
-    dispatch(FeedbackActions.fetchTeamMembers());
-    // useEffect(() => {
-    //   if (activeDocumenting)
-    //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
-  }, []);
+  // useEffect(() => {
+  //   if (activeDocumenting)
+  //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+  // }, []);
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchTeamMembers());
@@ -71,10 +64,6 @@ const DocumentingStep1 = props => {
     setTeamMember(member);
     setCompletion(true);
   };
-
-  // useEffect(() => {
-  //   dispatch(FeedbackActions.fetchTeamMembers());
-  // }, []);
 
   const handleNext = () => {
     if (stepData.data && stepData.data.id === teamMember.id) {
