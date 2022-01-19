@@ -11,6 +11,7 @@ import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 const STATUS_OK = 'ok';
 
+const staff = state => state.documenting.get('step1').data.id;
 export function* fetchFeedbackType() {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
@@ -59,18 +60,26 @@ export function* fetchFeedbackTopics() {
   }
 }
 
-export function* postFeedbackJourney({ flow, teamMemberId }) {
+export function* postFeedbackJourney({ data }) {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
   //   return;
   // }
-  const response = yield call(api.postNewJourney, flow.id);
+  
+  const documentingParams = new URLSearchParams();
+  const staffId = yield select(staff);
+
+  const response = yield call(api.postNewJourney, data);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const journeyId = response.data.details.journey_id;
       yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
+
+      documentingParams.append('journey_id', journeyId);
+      documentingParams.append('staff_id', staffId)
+
       yield put(
-        DocumentingActions.postFeedbackDocumenting({ journeyId, teamMemberId }),
+        DocumentingActions.postFeedbackDocumenting(documentingParams),
       );
     }
     // save journey id to state using success action call
