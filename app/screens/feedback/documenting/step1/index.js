@@ -27,16 +27,14 @@ const DocumentingStep1 = props => {
   const stepData = useSelector(getStep1Data);
   const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
-  const isLoading = useSelector(
-    state => state.documenting.get('fetching'),
-  );
+  const isLoading = useSelector(state => state.documenting.get('fetching'));
   const feedbackFlow = useSelector(getChosenFlow);
   const [teamMember, setTeamMember] = useState({
     id: null,
     name: '',
   });
   const [isCompleted, setCompletion] = useState(false);
-
+  
   useEffect(() => {
     if (activeDocumenting)
       dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
@@ -44,11 +42,11 @@ const DocumentingStep1 = props => {
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchTeamMembers());
-  // useEffect(() => {
-  //   if (activeDocumenting)
-  //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
+    // useEffect(() => {
+    //   if (activeDocumenting)
+    //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
   }, []);
-  
+
   useEffect(() => {
     dispatch(FeedbackActions.fetchTeamMembers());
     async function retrieveData() {
@@ -83,11 +81,15 @@ const DocumentingStep1 = props => {
       dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     } else {
       dispatch(DocumentingActions.setDocumentingData('step1', teamMember));
-      dispatch(
-        FeedbackActions.postFeedbackJourney(feedbackFlow, teamMember.id),
-      );
+      postNewJourney();
     }
   };
+
+  const postNewJourney = () => {
+    const params = new URLSearchParams();
+    params.append('flow_type', feedbackFlow.id);
+    dispatch(FeedbackActions.postFeedbackJourney(params));
+  }
 
   return (
     <View style={styles.container}>
@@ -106,7 +108,6 @@ const DocumentingStep1 = props => {
             staffList.map((item, i) => (
               <Chip
                 testID={'chip-documentingStep1-name'}
-                key={item.id}
                 onPress={() => chooseTeamMember(item)}
                 mode="flat"
                 isSelected={item.id === teamMember.id}

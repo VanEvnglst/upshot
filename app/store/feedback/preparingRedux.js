@@ -75,14 +75,14 @@ const postFeedbackPreparing = state =>
     error: '',
   });
 
-const postFeedbackPreparingSuccess = (state, preparingId) => {
+const postFeedbackPreparingSuccess = (state, {preparingId}) => {
   return state.merge({
     fetching: false,
     id: preparingId,
   });
 };
 
-const postFeedbackPreparingFailure = (state, error) => {
+const postFeedbackPreparingFailure = (state, {error}) => {
   return state.merge({
     fetching: false,
     error,

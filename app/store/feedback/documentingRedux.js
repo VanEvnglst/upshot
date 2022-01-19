@@ -82,7 +82,10 @@ const postFeedbackDocumentingSuccess = (state, { documentingId }) => {
   });
 };
 
-const postFeedbackDocumentingFailure = (state, { error }) => state.merge({});
+const postFeedbackDocumentingFailure = (state, { error }) => state.merge({
+  fetching: false,
+  error,
+});
 
 const updateFeedbackDocumenting = state =>
   state.merge({

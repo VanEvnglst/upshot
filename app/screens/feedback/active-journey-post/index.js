@@ -18,7 +18,12 @@ import {
 import feedbackJourneySteps from 'app/models/FeedbackJourney';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import { getStaffName, getDocumentingId, getPreparingId, getDiscussingId } from 'app/store/selectors';
+import {
+  getStaffName,
+  getDocumentingId,
+  getPreparingId,
+  getDiscussingId,
+} from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -49,8 +54,14 @@ const ActiveFeedbackJourney = props => {
   );
 
   useEffect(() => {
-    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId));
+    async function fetchFeedback() {
+      const feedbackId = route.params &&route.params.from === 'journeyList' ? route.params.journeyId : journeyId;
+      await dispatch(
+        FeedbackActions.fetchCurrentFeedback(feedbackId));
+    }
+    fetchFeedback();
   }, []);
+
 
   useEffect(() => {
     handlePhases();
@@ -84,19 +95,9 @@ const ActiveFeedbackJourney = props => {
       content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
     }
     await setPhaseList(content);
-  }
+  };
 
-  useEffect(() => {
-    async function fetchFeedback() {
-      await dispatch(
-        FeedbackActions.fetchCurrentFeedback(route.params.journeyId),
-      );
-    }
-    fetchFeedback();
-    // setTimeout(() => {
-    //   handlePhases();
-    // }, 200);
-  }, []);
+
 
   const SignPost = () => {
     const documentingClosed = useSelector(state =>
@@ -109,33 +110,6 @@ const ActiveFeedbackJourney = props => {
       handlePhases();
     }, []);
 
-    const handlePhases = async () => {
-      let content = [];
-
-      if (getFlow === 'prepared') {
-        feedbackJourneySteps[0] = {
-          ...feedbackJourneySteps[0],
-          closed: documentingClosed,
-          started: documentingStarted,
-        };
-        // feedbackJourneySteps[1] = {
-        //   ...feedbackJourneySteps[1],
-        //   closed: preparingClosed,
-        //   started: preparingStarted,
-        // };
-        // feedbackJourneySteps[2] = {
-        //   ...feedbackJourneySteps[2],
-        //   closed: discussingClosed,
-        //   started: discussingStarted,
-        // }
-        content = feedbackJourneySteps;
-      } else {
-        content = feedbackJourneySteps.filter(
-          item => item.forOnTheSpot === true,
-        );
-      }
-      await setPhaseList(content);
-    };
 
     return (
       <View>
@@ -145,14 +119,15 @@ const ActiveFeedbackJourney = props => {
               <SignPostIndicator
                 isLastItem={i === phaseList.length - 1}
                 isCompleted={item.closed}
-                disabled={!item.started}
+                //disabled={!item.started}
                 current={item.started && !item.closed}
               />
               <JourneyIndicator
                 style={{ flex: 2 }}
-                done={item.closed}
+                //done={item.closed}
                 current={true}
-                hasProgress={item.started && !item.closed}
+                hasProgress={true}
+                // item.started && !item.closed
                 item={item}
                 onPress={() => handleNavigation(i)}
               />
@@ -173,7 +148,6 @@ const ActiveFeedbackJourney = props => {
     switch (index) {
       case 0:
         screenName = 'FeedbackDocumenting';
-        // dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
         break;
       case 1:
         if (preparingId) screenName = 'FeedbackPreparing';
@@ -192,43 +166,46 @@ const ActiveFeedbackJourney = props => {
 
   return (
     <View style={{ flex: 1 }}>
-    <Wrapper>
-      <ScrollView>
-        <Header
-          headerLeft={{
-            onPress: () => handleBackNavigation(),
-          }}
-        />
-        <View style={styles.nameContainer}>
-          <Text type="h4" style={styles.teammateName}>
-            {staffName}
-          </Text>
-        </View>
-        <View>
-          {phaseList.map((item, i) => {
-            return (
-              <View key={item.id} style={styles.signPost}>
-                <SignPostIndicator
-                  isLastItem={i === phaseList.length - 1}
-                  isCompleted={item.closed}
-                  disabled={!item.started}
-                  current={item.started && !item.closed}
-                />
-                <JourneyIndicator
-                  style={{ flex: 2 }}
-                  done={item.closed}
-                  current={item.started && !item.closed}
-                  hasProgress={item.started && !item.closed}
-                  item={item}
-                  onPress={() => handleNavigation(i)}
-                />
-              </View>
-            );
-          })}
-        </View>
-      </ScrollView>
-      {isLoading && <ActivityIndicator />}
-    </Wrapper>
+      <Wrapper>
+        <ScrollView>
+          <Header
+            headerLeft={{
+              onPress: () => handleBackNavigation(),
+            }}
+          />
+          <View style={styles.nameContainer}>
+            <Text type="h4" style={styles.teammateName}>
+              {staffName}
+            </Text>
+          </View>
+          <View>
+            {phaseList.map((item, i) => {
+              return (
+                <View key={item.id} style={styles.signPost}>
+                  <SignPostIndicator
+                    isLastItem={i === phaseList.length - 1}
+                    isCompleted={item.closed}
+                    disabled={!item.started}
+                    current={item.started && !item.closed}
+                  />
+                  <JourneyIndicator
+                    style={{ flex: 2 }}
+                    done={false}
+                    // item.closed
+                    current={true}
+                    // item.started && !item.closed
+                    hasProgress={true}
+                    // item.started && !item.closed
+                    item={item}
+                    onPress={() => handleNavigation(i)}
+                  />
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
+        {isLoading && <ActivityIndicator />}
+      </Wrapper>
     </View>
   );
 };

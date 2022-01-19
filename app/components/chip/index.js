@@ -27,7 +27,7 @@ const Chip = props => {
 export default Chip;
 
 Chip.propTypes = {
-  key: PropTypes.number.isRequired,
+  key: PropTypes.number,
   testID: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,

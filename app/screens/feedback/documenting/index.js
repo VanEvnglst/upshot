@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, BackHandler } from 'react-native';
 import { ProgressBar, Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +32,17 @@ const FeedbackDocumenting = props => {
   const step2Data = useSelector(getStep2Data);
   const step3Data = useSelector(getStep3Data);
   const [isModalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        return true;
+      });
+  }, []);
 
   const handleStepContent = () => {
     switch (activeStep) {

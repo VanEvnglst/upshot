@@ -57,7 +57,6 @@ export function* updateFeedbackPreparing({ data }) {
   params.append('preparing_id', prepId);
   params.append('check_in', step1.data);
   params.append('purpose', step2.data);
-  // params.append('additional_purpose');
   params.append('event', step3.data.event);
   params.append('actions', step3.data.action);
   params.append('result', step3.data.result);
