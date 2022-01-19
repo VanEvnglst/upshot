@@ -8,6 +8,9 @@ import { Wrapper, Text, Header, Modal } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/feedbackHistoryRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
+import PreparingActions from 'app/store/feedback/preparingRedux';
+import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
@@ -26,10 +29,17 @@ const FeedbackJourneyList = props => {
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-    dispatch(DocumentingActions.resetDocumentingState());
+   
     if (route.params && route.params.type === 'journeyEnd') {
       setModalVisible(true);
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(DocumentingActions.resetDocumentingState());
+    dispatch(PreparingActions.resetPreparingState());
+    dispatch(DiscussingActions.resetDiscussingState());
+    dispatch(ReflectingActions.resetReflectingState());
   }, []);
 
   const HistoryCard = ({ item }) => {
