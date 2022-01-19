@@ -35,7 +35,7 @@ const { Types, Creators } = createActions({
   fetchTeamMembers: [''],
   fetchTeamMembersSuccess: ['teamMembersList'],
   fetchTeamMembersFailure: ['error'],
-  postFeedbackJourney: ['flow', 'teamMemberId'],
+  postFeedbackJourney: ['data'],
   postFeedbackJourneySuccess: ['id'],
   postFeedbackJourneyFailure: ['error'],
   fetchCurrentFeedback: ['journeyId'],
@@ -188,14 +188,15 @@ const postFeedbackJourneySuccess = (state, { id }) => {
 };
 const postFeedbackJourneyFailure = state => state.merge({});
 
-const fetchCurrentFeedback = state =>
-  state.merge({
+const fetchCurrentFeedback = state => {
+  return state.merge({
+    ...state.get('currentJourney'),
     currentJourney: {
-      ...state.get('currentJourney'),
       fetching: true,
       error: '',
     },
   });
+};
 
 const postCloseFeedbackJourney = state =>
   state.merge({
@@ -231,7 +232,11 @@ const fetchCurrentFeedbackSuccess = (state, { id }) => {
   });
 };
 
-const fetchCurrentFeedbackFailure = state => state.merge({});
+const fetchCurrentFeedbackFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
 
 const resetFeedbackState = state =>
   state.merge({
@@ -239,6 +244,7 @@ const resetFeedbackState = state =>
       ...defaultState,
     },
   });
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const feedbackReducer = createReducer(INITIAL_STATE, {
