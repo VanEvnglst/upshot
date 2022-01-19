@@ -47,7 +47,13 @@ export function* updateFeedbackDocumenting({ data }) {
 }
 
 export function* updateDocumentingReminder({ data }) {
-  const response = yield call(api.updateDocumentingReminder, data);
+
+  const params = new URLSearchParams();
+  const { reminderDate, docuId } = data;
+    params.append('documenting_id', docuId);
+    params.append('reminder_date', reminderDate);
+
+  const response = yield call(api.updateDocumentingReminder, params);
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
@@ -66,6 +72,10 @@ export function* deleteFeedbackDocumenting({ data }) {
 }
 
 export function* fetchCurrentDocumenting({ documentingId }) {
+  const params = new URLSearchParams();
+
+  params.append('documenting_id', documentingId);
+  
   const response = yield call(api.getCurrentDocumenting, documentingId);
   if (response.ok) {
     if (response.data.status === 'ok') {
@@ -89,6 +99,9 @@ export function* fetchCurrentDocumenting({ documentingId }) {
 }
 
 export function* closeFeedbackDocumenting({ documentingId }) {
+  const params = new URLSearchParams();
+  params.append('documenting_id', documentingId);
+
   const response = yield call(api.postCloseDocumenting, documentingId);
   if (response.ok) {
     if (response.data.status === 'ok') {
