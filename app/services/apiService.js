@@ -1,7 +1,6 @@
 import Config from 'react-native-config';
 import { upshotAPI } from '../config/ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { select } from '@redux-saga/core/effects';
 
 export default {
   signIn: async payload => {
@@ -44,9 +43,7 @@ export default {
   getTrivias: async () => {
     return upshotAPI.get('/trivias');
   },
-  postNewJourney: async data => {
-    const params = new URLSearchParams();
-    params.append('flow_type', data);
+  postNewJourney: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/journey`, params);
@@ -58,30 +55,18 @@ export default {
     return upshotAPI.post(`${uniqueId}/feedback/journey/close`, params);
   },
 
-  postFeedbackDocumenting: async data => {
+  postFeedbackDocumenting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-    const { journeyId, teamMemberId } = data;
-    params.append('journey_id', journeyId);
-    params.append('staff_id', teamMemberId);
+    // const params = new URLSearchParams();
+    // const { journeyId, teamMemberId } = data;
+    // params.append('journey_id', journeyId);
+    // params.append('staff_id', teamMemberId);
     return upshotAPI.post(`/${uniqueId}/feedback/documenting`, params);
   },
 
-  updateDocumenting: async data => {
+  updateDocumenting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    const params = new URLSearchParams();
-    const { step1, step2, dateSelected, typeId, docuId } = data;
-    var topicStr = '[';
-    step2.forEach((item, index) => {
-      if (index !== step2.length - 1) topicStr += `${item},`;
-      else topicStr += `${item}`;
-    });
-    topicStr += ']';
-    params.append('documenting_id', docuId);
-    params.append('staff_id', step1.data.id);
-    params.append('topics', topicStr);
-    params.append('incident_date', dateSelected);
-    params.append('pos_or_cor', typeId);
+
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
 
