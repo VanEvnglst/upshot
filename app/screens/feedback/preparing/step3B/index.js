@@ -14,13 +14,22 @@ const PreparingStep3B = () => {
   const { describeDiscuss } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
-  // const stepData = useSelector(getPreparingStep3B);
+  const stepData = useSelector(getPrepStep3BData);
   const [observationList, setObservations] = useState([]);
   const [additionalObservation, setAdditionalObservation] = useState('');
 
-  // useEffect(() => {
-  //   if(stepData.data) setObservations(stepData.data)
-  // }, [stepData]);
+  useEffect(() => {
+    if(stepData.data) {
+    const dataArr = stepData.data.split(',');
+    const dataList = [];
+    dataArr.forEach((item, i) => 
+      dataList.push({
+        id: i + 1,
+        title: item,
+      })),
+      setObservations(dataList)
+    }    
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
@@ -44,11 +53,9 @@ const PreparingStep3B = () => {
     let newList = observationList;
     if (checkSelectedObservation(item))
       newList = newList.filter(newObservation => newObservation.id !== item.id);
-    else newList = [...newList, item.title];
+    else 
+      newList  = [...newList, item.title]
     setObservations(newList);
-
-    // if (newList.length !== 0) setCompletion(true);
-    // else setCompletion(false);
   };
 
   const checkSelectedObservation = item => {
