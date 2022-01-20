@@ -16,7 +16,9 @@ import {
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import { getStaffName } from 'app/store/selectors';
 
+
 const PreparingSchedule = props => {
+  const { navigation } = props;
   const dispatch = useDispatch();
   const staffName = useSelector(getStaffName);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -105,7 +107,9 @@ const PreparingSchedule = props => {
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
-        <Header headerRight={{}} />
+        <Header headerRight={{
+          onPress: () => navigation.goBack()
+        }} />
         <Text type="h6">
           Schedule your feedback discussion with {staffName}
         </Text>

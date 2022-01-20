@@ -27,12 +27,6 @@ const feedbackJourneySteps = [
     description: feedbackSignPost.reflectingDesc,
     forOnTheSpot: true
   },
-  {
-    id: 5,
-    title: feedbackSignPost.followUp,
-    description: feedbackSignPost.followUpDesc,
-    forOnTheSpot: false
-  },
 ];
 
 export default feedbackJourneySteps;

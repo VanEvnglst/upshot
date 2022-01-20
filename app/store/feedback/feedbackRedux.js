@@ -139,7 +139,6 @@ const setFeedbackType = (state, { chosenType }) =>
 
 const setTeamMember = (state, { chosenTeamMember }) =>
   state.merge({
-    ...state.get('chosenTeamMember'),
     chosenTeamMember,
   });
 
@@ -171,8 +170,8 @@ const fetchTeamMembersFailure = (state, error) =>
 
 const postFeedbackJourney = state =>
   state.merge({
-    ...state.get('currentJourney'),
     currentJourney: {
+      ...state.get('currentJourney'),
       fetching: true,
       error: '',
     },
@@ -186,12 +185,17 @@ const postFeedbackJourneySuccess = (state, { id }) => {
     },
   });
 };
-const postFeedbackJourneyFailure = state => state.merge({});
+const postFeedbackJourneyFailure = (state, { error }) => state.merge({
+  currentJourney: {
+    fetching: false,
+    error
+  },
+});
 
 const fetchCurrentFeedback = state => {
   return state.merge({
-    ...state.get('currentJourney'),
     currentJourney: {
+      ...state.get('currentJourney'),
       fetching: true,
       error: '',
     },
@@ -200,8 +204,8 @@ const fetchCurrentFeedback = state => {
 
 const postCloseFeedbackJourney = state =>
   state.merge({
-    ...state.get('currentJourney'),
     currentJourney: {
+      ...state.get('currentJourney'),
       fetching: true,
       error: '',
     },

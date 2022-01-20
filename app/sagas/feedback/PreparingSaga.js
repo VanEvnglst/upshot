@@ -86,7 +86,7 @@ export function* updateFeedbackPreparing({ data }) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.updateFeedbackPreparingSuccess());
       yield NavigationService.navigate('FeedbackConfirmation', {
-        type: 'preparing'
+        type: 'preparing',
       });
     }
   } else {
@@ -97,9 +97,10 @@ export function* updateFeedbackPreparing({ data }) {
 export function* updatePreparingSchedule({ data }) {
   const prepId = yield select(preparingId);
   const { timeSelected, dateSelected, alertTime } = data;
-  const faceToFace = `${moment(dateSelected.value).format('YYYY-MM-DD')} ${timeSelected.value}`;
+  const faceToFace = `${moment(dateSelected.value).format('YYYY-MM-DD')} ${
+    timeSelected.value
+  }`;
   const params = new URLSearchParams();
-
 
   params.append('preparing_id', prepId);
   params.append('schedule_of_face2face', faceToFace);
@@ -125,8 +126,61 @@ export function* fetchCurrentPreparing({ preparingId }) {
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingDetails = response.data.details;
+      const { event, actions: action, result, observation_questions: observationQuestions, action_plan_questions: actionPlan, additional_action_plan_questions: additionalActionPlan, action_plan_evaluate_options: evaluateOptions,
+      additional_action_plan_evaluate_options: additionalOptions,
+      checkout_question: checkoutQuestions,
+      additional_checkout_question: additionalCheckout,
+      checkout_acknowledge: checkoutAcknowledge,
+      additional_checkout_acknowledge: additionalAcknowledge,
+       } = preparingDetails
+      yield put(
+        PreparingActions.setPreparingData('step1', preparingDetails.check_in),
+      );
+      yield put(
+        PreparingActions.setPreparingData('step2', preparingDetails.purpose),
+      );
+      yield put(
+        PreparingActions.setPreparingData(
+          'step3',
+          {event,
+          action,
+          result}
+        ),
+      );
+      yield put(
+        PreparingActions.setPreparingData(
+          'step3B',
+          observationQuestions,
+        ),
+      );
+      yield put(
+        PreparingActions.setPreparingData(
+          'step4',
+          { actionPlan, additionalActionPlan }
+        ),
+      );
+      yield put(
+        PreparingActions.setPreparingData(
+          'step4B',
+          { evaluateOptions, additionalOptions }
+        ),
+      );
+      yield put(
+        PreparingActions.setPreparingData(
+          'step5',
+          { checkoutQuestions,  additionalCheckout}
+        ),
+      );
+      yield put(
+        PreparingActions.setPreparingData(
+          'step5B',
+          { checkoutAcknowledge, additionalAcknowledge }
+        ),
+      );
+      yield put(PreparingActions.fetchCurrentPreparingSuccess());
     }
   } else {
+    yield put(PreparingActions.fetchCurrentPreparingFailure(response.data));
   }
 }
 
@@ -158,7 +212,7 @@ function* watchPreparingSaga() {
   );
   yield takeLatest(
     PreparingTypes.FETCH_CURRENT_PREPARING,
-    fetchCurrentPreparing``,
+    fetchCurrentPreparing,
   );
   yield takeLatest(
     PreparingTypes.CLOSE_FEEDBACK_PREPARING,

@@ -43,15 +43,17 @@ const DocumentingStep3 = props => {
   const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) {      
-      selectDate(stepData.data);
+    if (stepData.data) {
+      const modDate = moment(stepData.data).format('llll');
+      const dateArr = modDate.split(/[ ,]+/);
+      const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
+      selectDate(dateLabel, stepData.data);
       setCompletion(true);
     }
   }, [stepData]);
 
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
-  
 
   // const handleExistingDate = date => {
   //   console.log('exist', date);
@@ -64,13 +66,15 @@ const DocumentingStep3 = props => {
     if (dateLabel === ('Today' || 'Yesterday')) {
       setDateSelected({ label: 'On a different date' });
     } else {
-      setDateSelected(prevState => ({ 
+      setDateSelected(prevState => ({
         ...prevState,
-        label: dateLabel }));
+        label: dateLabel,
+      }));
     }
-    setDateSelected(prevState => ({ 
+    setDateSelected(prevState => ({
       ...prevState,
-      value: date }));
+      value: date,
+    }));
     setCompletion(true);
   };
 
@@ -90,8 +94,7 @@ const DocumentingStep3 = props => {
     const step2 = step2Data.data.map(obj => obj.id);
     var topicListStr = '[';
     step2.forEach((item, index) => {
-      if (index !== step2.length - 1)
-        topicListStr += `${item},`;
+      if (index !== step2.length - 1) topicListStr += `${item},`;
       else topicListStr += `${item}`;
     });
     topicListStr += ']';

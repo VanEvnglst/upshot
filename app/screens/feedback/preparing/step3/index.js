@@ -19,14 +19,14 @@ const PreparingStep3 = props => {
     action: '',
     result: '',
   });
-  const [event, setEvent] = useState();
-  const [action, setAction] = useState();
-  const [result, setResult] = useState();
-  const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) handleDescriptionText(stepData.data);
-    //TODO: fix function call
+    if (stepData.data) 
+    setDetails({
+      event: stepData.data.event,
+      action: stepData.data.action,
+      result: stepData.data.result
+    });
   }, [stepData]);
 
   const handleDescriptionText = (key, text) => {
@@ -34,11 +34,6 @@ const PreparingStep3 = props => {
       ...prevState,
       [key]: text,
     }));
-    // setTimeout(() => {
-    //   console.log(details);
-    // }, 200)
-    // if (details.event && details.action && details.result)
-    //   setCompletion(true);
   };
 
   const handleBack = () => {

@@ -69,7 +69,7 @@ const ActiveFeedbackJourney = props => {
 
   const handlePhases = async () => {
     let content = [];
-    if (getFlow === 'prepared') {
+    // if (getFlow === 'prepared') {
       feedbackJourneySteps[0] = {
         ...feedbackJourneySteps[0],
         closed: documentingClosed,
@@ -91,9 +91,9 @@ const ActiveFeedbackJourney = props => {
         started: true,
       };
       content = feedbackJourneySteps;
-    } else {
-      content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
-    }
+    // } else {
+    //   content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
+    // }
     await setPhaseList(content);
   };
 

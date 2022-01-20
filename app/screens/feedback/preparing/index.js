@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { ProgressBar } from 'react-native-paper';
+import { View, BackHandler } from 'react-native';
+import { Button, ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Wrapper, Header, Text } from 'app/components';
-import { getPreparingStep, getPreparingMaxSteps } from 'app/store/selectors';
+import { Wrapper, Header, Text, Modal } from 'app/components';
+import { getPreparingStep, getPreparingMaxSteps, getPreparingId } from 'app/store/selectors';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import PreparingStep1 from './step1';
 import PreparingStep2 from './step2';
@@ -26,12 +26,40 @@ const FeedbackPreparing = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const maxStep = useSelector(getPreparingMaxSteps);
+  const activePreparing = useSelector(getPreparingId);
   const indexValue = activeStep / maxStep;
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(PreparingActions.setPreparingStatus('activeStep', 1));
+    async function retrieveData() {
+      if(activePreparing)
+      await dispatch(PreparingActions.fetchCurrentPreparing(activePreparing));
+    }
+    retrieveData();
+  }, [])
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        return true;
+      });
   }, []);
-  
+
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
+
+  const handleCloseBtn = () => {
+    // if (activeStep === 1 && !preparingId)
+    navigation.goBack();
+    // else {
+    //   dispatch(PreparingActions.updateFeedbackPreparing());
+    //   dispatch(PreparingActions.resetPreparingState());
+    // }
+  };
 
   const handleStepContent = () => {
     switch (activeStep) {
@@ -66,24 +94,54 @@ const FeedbackPreparing = props => {
   };
 
   return (
-    <Wrapper>
-      <Header
-        headerRight={{
-          onPress: () => handleClose(),
-        }}
-      />
-      <Text type="overline" style={containerStyles.overlineText}>
-        {labels.feedbackSignPost.preparing}
-      </Text>
-      <ProgressBar
-        progress={indexValue}
-        color={Colors.secondary}
-        style={containerStyles.progressBar}
-      />
-      <View style={containerStyles.contentContainer}>
-        {handleStepContent()}
-      </View>
-    </Wrapper>
+    <View style={{ flex: 1 }}>
+      <Wrapper>
+        <Header
+          headerRight={{
+            onPress: () => showModal(),
+          }}
+        />
+        <Text type="overline" style={containerStyles.overlineText}>
+          {labels.feedbackSignPost.preparing}
+        </Text>
+        <ProgressBar
+          progress={indexValue}
+          color={Colors.secondary}
+          style={containerStyles.progressBar}
+        />
+        <View style={containerStyles.contentContainer}>
+          {handleStepContent()}
+        </View>
+      </Wrapper>
+      <Modal
+        isVisible={isModalVisible}
+        onDismiss={hideModal}
+        style={{
+          padding: 20,
+          width: 300,
+          height: 140,
+        }}>
+        <View style={{ flex: 1 }}>
+          <Text type="body2" style={{ marginTop: 10 }}>
+            Close your feedback for now?
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignSelf: 'flex-end',
+            alignItems: 'flex-end',
+            marginTop: 20,
+          }}>
+          <Button mode="text" onPress={() => hideModal()}>
+            Cancel
+          </Button>
+          <Button mode="text" onPress={() => handleCloseBtn()}>
+            Save & Close
+          </Button>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
