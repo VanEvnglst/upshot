@@ -125,13 +125,13 @@ export default {
   postClosePreparing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/preparing/close`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing/close`, params);
   },
 
   postFeedbackDiscussing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/discussing/`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/discussing/`, params);
   },
 
   getCurrentDiscussing: async params => {
@@ -155,30 +155,30 @@ export default {
   postFeedbackReflecting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/reflecting/`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/`, params);
   },
 
   getCurrentReflecting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/reflecting/get`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get`, params);
   },
 
   updateFeedbackReflecting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/reflecting/edit`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/edit`, params);
   },
 
   postCloseReflecting: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/reflecting/close`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/close`, params);
   },
 
   getStaffRatings: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`${uniqueId}/feedback/reflecting/get_staff_feedback`,params);
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get_staff_feedback`,params);
   }
 };
