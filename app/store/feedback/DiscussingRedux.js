@@ -53,10 +53,11 @@ const setDiscussingStatus = (state, { key, status }) => {
 };
 
 const postFeedbackDiscussing = state => state.merge({
-  fetching: true
+  fetching: true,
+  error: '',
 });
 
-const postFeedbackDiscussingSuccess = (state, discussingId) => state.merge({
+const postFeedbackDiscussingSuccess = (state, { discussingId }) => state.merge({
   id: discussingId,
   fetching: false,
 });
