@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 // import Slider from '@react-native-community/slider';
 import { Text, Slider } from 'app/components';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import { getReflectingStep } from 'app/store/selectors';
+import { getReflectingStep, getReflectStep1Data } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Colors from 'app/theme/colors';
 import styles from './styles';
@@ -18,15 +18,20 @@ const ReflectingStep1 = props => {
   const { feedbackReflecting } = labels;
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
+  const stepData = useSelector(getReflectStep1Data);
   const [feelingValue, setFeelingValue] = useState(3);
   const [didSliderMove, setDidSliderMove] = useState(false);
+
+  useEffect(() => {
+    if (stepData.data) 
+    setFeelingValue(stepData.data);
+  }, [stepData]);
 
   const handleSliderValue = value => {
     setFeelingValue(value);
     setDidSliderMove(true);
   };
   const handleNext = () => {
-    console.log('did slider move', didSliderMove);
     if (didSliderMove)
       dispatch(ReflectingActions.setReflectingData('step1', feelingValue));
     else dispatch(ReflectingActions.setReflectingData('step1', 0));
