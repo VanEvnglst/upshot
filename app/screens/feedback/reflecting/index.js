@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, BackHandler, Dimensions, ActivityIndicator } from 'react-native';
 import { ProgressBar, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Header, Text, Modal } from 'app/components';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import { getReflectingStep, getReflectingMaxSteps} from 'app/store/selectors';
+import { getReflectingStep, getReflectingMaxSteps, getReflectingId } from 'app/store/selectors';
 import ReflectingStep1 from './step1';
 import ReflectingStep2 from './step2';
 import ReflectingStep3 from './step3';
@@ -16,13 +16,35 @@ import labels from 'app/locales/en';
 import styles from './styles';
 
 const FeedbackReflecting = props => {
+  const { width, height } = Dimensions.get('screen');
   const { navigation } = props;
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
   const maxStep = useSelector(getReflectingMaxSteps);
+  const activeReflecting = useSelector(getReflectingId);
+  const isLoading = useSelector(state => state.reflecting.get('fetching'));
   const indexValue = activeStep / maxStep;
 
   const [isModalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        return true;
+      });
+  }, []);
+
+  useEffect(() => {
+    async function retrieveData() {
+      if (activeReflecting)
+      await dispatch(ReflectingActions.fetchCurrentReflecting(activeReflecting));
+    }
+    retrieveData();
+  }, []);
 
   const handleStepContent = () => {
     switch(activeStep) {
@@ -93,6 +115,17 @@ const FeedbackReflecting = props => {
             </Button>
           </View>
         </Modal>
+      {isLoading && 
+        <View style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+        position: 'absolute',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        height: height,
+        width: width
+      }}><ActivityIndicator size='large'/></View>}
     </View>
   )
 };
