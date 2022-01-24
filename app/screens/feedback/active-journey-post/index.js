@@ -23,6 +23,7 @@ import {
   getDocumentingId,
   getPreparingId,
   getDiscussingId,
+  getReflectingId,
 } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -43,6 +44,7 @@ const ActiveFeedbackJourney = props => {
   const preparingStarted = useSelector(state => state.preparing.get('started'));
   const preparingId = useSelector(getPreparingId);
   const discussingId = useSelector(getDiscussingId);
+  const reflectingId = useSelector(getReflectingId);
   const isLoading = useSelector(
     state => state.feedback.get('currentJourney').fetching,
   );
@@ -158,7 +160,10 @@ const ActiveFeedbackJourney = props => {
         else screenName = 'DiscussingGuide';
         break;
       case 3:
-        screenName = 'ReflectingGuide';
+        if (reflectingId) 
+          screenName = 'FeedbackReflecting'
+        else 
+          screenName = 'ReflectingGuide';
         break;
     }
     navigation.navigate(screenName);
