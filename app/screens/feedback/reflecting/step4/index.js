@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, TextInput } from 'app/components';
-import { getReflectingStep } from 'app/store/selectors';
+import { getReflectingStep, getReflectStep4Data } from 'app/store/selectors';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
@@ -15,11 +15,23 @@ const ReflectingStep4 = props => {
   const { feedbackReflecting } = labels;
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
+  const stepData = useSelector(getReflectStep4Data);
   const [developmentPlan, setDevelopmentPlan] = useState({
     stopDoing: '',
     startDoing: '',
     continueDoing: '',
-  })
+  });
+
+  useEffect(() => {
+    if(stepData.data)
+    debugger;
+    const { stopDoing, startDoing, continueDoing } = stepData.data
+      setDevelopmentPlan({
+        stopDoing: stopDoing === null ? '' : stopDoing,
+        startDoing: startDoing === null ? '' : startDoing,
+        continueDoing: continueDoing === null ? '' : continueDoing,
+      })
+  },[stepData]);
   
   const handleBack = () => {
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep - 1));
