@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Slider } from 'app/components';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import { getReflectingStep } from 'app/store/selectors';
+import { getReflectingStep, getReflectStep2Data } from 'app/store/selectors';
 import reflectingQuestions from 'app/models/ReflectingQuestions';
 import labels from 'app/locales/en';
 import Colors from 'app/theme/colors';
@@ -17,6 +17,7 @@ const ReflectingStep2 = props => {
   const { feedbackReflecting } = labels;
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
+  const stepData = useSelector(getReflectStep2Data);
   const [state, setState] = useState({
     provideInfo: 3,
     calmFeedback: 3,
@@ -38,24 +39,33 @@ const ReflectingStep2 = props => {
     documentAndSend: false,
   });
 
+  useEffect(() => {
+    if (stepData.data) {
+      const existingDataArr = Object.keys(stepData.data);
+      const valueArr = Object.values(stepData.data);
+      for (i = 0; i < existingDataArr.length; i++ ) {
+        setSliderValue(existingDataArr[i],valueArr[i]);
+      }
+      // dataArr.forEach(item => setSliderValue(item[key], item[value]))
+      // stepData.data.split(',');
+    }
+    //setSliderValue(stepData.data)
+  }, [stepData]);
+
   const handleBack = () => {
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep - 1));
   };
   const handleNext = async () => {
-   
-    await validateSliderMovement();
-    console.warn('state', state);
-    // debugger;
-    dispatch(ReflectingActions.setReflectingData('step2', state));
-    dispatch(ReflectingActions.setReflectingActiveStep(activeStep + 1));
-  };
-
-  const validateSliderMovement = () => {
     let results = Object.keys(sliderMovement).filter(
       key => sliderMovement[key] === false,
     );
     results.forEach((item, i) => setSliderValue(item, 0));
+    debugger;
+      dispatch(ReflectingActions.setReflectingData('step2', state));
+      dispatch(ReflectingActions.setReflectingActiveStep(activeStep + 1));
   };
+
+  const validateSliderMovement = () => {};
 
   const setSliderValue = (key, value) => {
     setState(prevState => ({
@@ -109,12 +119,6 @@ const ReflectingStep2 = props => {
             {feedbackReflecting.howDidyouDo}
           </Text>
         </View>
-        {/* {reflectingQuestions.map((item, index) => (
-            <QuestionForm
-            item={item}
-            key={item.id}
-            name={state[item.key]}
-          />))} */}
         <View style={{ marginTop: 30 }}>
           <View
             style={{
