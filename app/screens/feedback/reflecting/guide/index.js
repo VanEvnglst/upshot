@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,13 +18,14 @@ const ReflectingGuide = props => {
   );
   const reflectingId = useSelector(state => state.reflecting.get('id'));
 
+  
+
   const handleNavigation = () => {
     // if (reflectingId) {
-      navigation.navigate('FeedbackReflecting');
+    //  navigation.navigate('FeedbackReflecting');
     // } else {
     //   dispatch(ReflectingActions.resetReflectingState());
-    //   dispatch(ReflectingActions.postFeedbackReflecting(journeyId));
-    // }
+      dispatch(ReflectingActions.postFeedbackReflecting(journeyId));
   };
 
   return (
