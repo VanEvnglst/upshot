@@ -98,11 +98,12 @@ const DocumentingStep3 = props => {
       else topicListStr += `${item}`;
     });
     topicListStr += ']';
+    const dateSel = moment(dateSelected.value).format('MMM DD, YYYY');
     const params = new URLSearchParams();
     params.append('documenting_id', docuId);
     params.append('staff_id', step1Data.data.id);
     params.append('topics', topicListStr);
-    params.append('incident_date', dateSelected.value);
+    params.append('incident_date', dateSel);
     params.append('pos_or_cor', typeId.id);
     dispatch(DocumentingActions.updateFeedbackDocumenting(params));
   };
