@@ -22,7 +22,6 @@ export function* postFeedbackReflecting({ journeyId }) {
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postFeedbackReflecting, params);
-  debugger;
   if (response.ok) {
     if (response.data.status == 'ok') {
       const reflectingId = response.data.details.id;
@@ -44,7 +43,6 @@ export function* updateFeedbackReflecting({ data }) {
   const step2 = yield select(step2Data);
   const step4 = yield select(step4Data);
 
-  debugger;
   params.append('reflecting_id', reflectId);
   params.append('feel_int', step1.data);
   params.append('how_did_you_do_int', step2.data.provideInfo);
@@ -58,6 +56,9 @@ export function* updateFeedbackReflecting({ data }) {
     step2.data.involveEmployee,
   );
   params.append('documented_int', step2.data.documentAndSend);
+  params.append('dev_plan_stop_doing', step4.data.stopDoing);
+  params.append('dev_plan_start_doing', step4.data.startDoing);
+  params.append('dev_plan_stop_doing', step4.data.continueDoing);
 
   const response = yield call(api.updateFeedbackReflecting, params);
   debugger;
@@ -80,10 +81,44 @@ export function* fetchCurrentReflecting({ reflectingId }) {
   params.append('reflecting_id', reflectingId);
 
   const response = yield call(api.getCurrentReflecting, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
-      // yield put(ReflectingActions.fetchCurrentReflectingSuccess())
+      const reflectDetails = response.data.details;
+      const { 
+        how_did_you_do: provideInfo,
+        calm: calmFeedback,
+        listened: listenToEmployee,
+        gave_feedback: gaveFeedbackSoon,
+        established_rapport: establishRapport,
+        clearly_stated_purpose: clearlyStatePurpose,
+        involved_employee_action_plan: involveEmployee,
+        // clear_next_steps: ,
+        documented: documentAndSend,
+        // development_plan: ,
+        dev_plan_stop_doing: stopDoing,
+        dev_plan_start_doing: startDoing,
+        dev_plan_continue_doing: continueDoing,
+        action_plans: actionPlans,
+      } = reflectDetails;
+      yield put(ReflectingActions.setReflectingData('step1', reflectDetails.feel));
+      yield put(ReflectingActions.setReflectingData('step2', 
+      {
+        provideInfo,
+        calmFeedback,
+        listenToEmployee,
+        gaveFeedbackSoon,
+        establishRapport,
+        clearlyStatePurpose,
+        involveEmployee,
+        documentAndSend,
+      }))
+      yield put(ReflectingActions.setReflectingData('step4', {
+        stopDoing,
+        startDoing,
+        continueDoing,
+      }))
+      yield put(ReflectingActions.setReflectingData('step5', actionPlans))
+      yield put(ReflectingActions.fetchCurrentReflectingSuccess())
     }
   } else {
     yield put(ReflectingActions.fethCurrentReflectingFailure(response.data));

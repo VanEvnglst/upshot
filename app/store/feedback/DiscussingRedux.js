@@ -21,7 +21,7 @@ export const INITIAL_STATE = Map({
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
-  postFeedbackDiscussing: ['data'],
+  postFeedbackDiscussing: ['journeyId'],
   postFeedbackDiscussingSuccess: ['discussingId'],
   postFeedbackDiscussingFailure: ['error'],
   updateFeedbackDiscussing: ['data'],

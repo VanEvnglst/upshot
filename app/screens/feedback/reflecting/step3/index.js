@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import { getReflectingStep } from 'app/store/selectors';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
+import reflectingRatings from 'app/models/ReflectingRatings';
 import labels from 'app/locales/en';
 import styles from './styles';
 import Images from 'app/assets/images';

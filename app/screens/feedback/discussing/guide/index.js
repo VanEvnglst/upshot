@@ -13,10 +13,10 @@ const DiscussingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackDiscussing } = labels;
   const dispatch = useDispatch();
-  const journeyId = useSelector(getCurrentJourney).data;
+  const journeyId = useSelector(getCurrentJourney);
 
   const handleNavigation = () => {
-    dispatch(DiscussingActions.postFeedbackDiscussing(journeyId));
+    dispatch(DiscussingActions.postFeedbackDiscussing(journeyId.data));
     // navigation.navigate('DiscussingMeeting');
   };
 
