@@ -148,12 +148,18 @@ const FeedbackConfirmation = props => {
     hideModal();
   };
 
+  const handleClose = () => {
+    if(route.params.type === 'reflecting')
+    closeJourney();
+    else navigation.navigate('ActiveFeedbackJourney')
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
         <Header
           headerRight={{
-            onPress: () => navigation.navigate('ActiveFeedbackJourney'),
+            onPress: () => handleClose(),
           }}
         />
         <View style={{ flex: 2 }}>
