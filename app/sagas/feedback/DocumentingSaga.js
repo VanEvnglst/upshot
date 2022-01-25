@@ -42,7 +42,7 @@ export function* updateFeedbackDocumenting({ data }) {
       });
     }
   } else {
-    yield put(DocumentingActions.updateFeedbackDocumentingFailure());
+    yield put(DocumentingActions.updateFeedbackDocumentingFailure(response.data));
   }
 }
 
