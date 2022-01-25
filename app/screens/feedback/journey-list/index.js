@@ -11,7 +11,11 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import { getRecentJourneys, getActiveJourneys } from 'app/store/selectors';
+import {
+  getRecentJourneys,
+  getActiveJourneys,
+  getCurrentJourney,
+} from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -21,6 +25,7 @@ const FeedbackJourneyList = props => {
   const dispatch = useDispatch();
   const recentJourneys = useSelector(getRecentJourneys);
   const activeJourneys = useSelector(getActiveJourneys);
+  const journeyId = useSelector(getCurrentJourney);
   const hasRecentJourneys = recentJourneys && recentJourneys.length !== 0;
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -29,11 +34,16 @@ const FeedbackJourneyList = props => {
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-   
+  }, []);
+
+  useEffect(() => {
+    dispatch(FeedbackHistoryActions.fetchRecentJourneys());
+    dispatch(FeedbackHistoryActions.fetchActiveJourneys());
+    debugger;
     if (route.params && route.params.type === 'journeyEnd') {
       setModalVisible(true);
     }
-  }, []);
+  }, [journeyId.data]);
 
   useEffect(() => {
     dispatch(DocumentingActions.resetDocumentingState());
@@ -85,7 +95,9 @@ const FeedbackJourneyList = props => {
       <TouchableOpacity
         accessibilityRole={'button'}
         style={styles.inProgressCard}
-        onPress={() => handleNavigation('ActiveFeedbackJourney', id, memberName)}>
+        onPress={() =>
+          handleNavigation('ActiveFeedbackJourney', id, memberName)
+        }>
         <View style={styles.inProgressContent}>
           <ProgressBar progress={progressValue} />
           <View style={styles.inProgressText}>
@@ -115,7 +127,7 @@ const FeedbackJourneyList = props => {
   const handleNavigation = (screenName, journeyId, staffName) => {
     dispatch(FeedbackActions.setTeamMember(staffName));
     navigation.navigate(screenName, {
-      from: "journeyList",
+      from: 'journeyList',
       journeyId,
     });
   };
