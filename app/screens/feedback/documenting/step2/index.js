@@ -52,7 +52,6 @@ const DocumentingStep2 = props => {
 
   const handleFeedbackTopic = item => {
     let newTopicList = feedbackTopic;
-    debugger;
     // if (stepData.data) {
     //   stepData.data.forEach(val => 
     //     newTopicList = [...newTopicList, val],  
