@@ -57,13 +57,14 @@ const ActiveFeedbackJourney = props => {
 
   useEffect(() => {
     async function fetchFeedback() {
-      const feedbackId = route.params &&route.params.from === 'journeyList' ? route.params.journeyId : journeyId;
-      await dispatch(
-        FeedbackActions.fetchCurrentFeedback(feedbackId));
+      const feedbackId =
+        route.params && route.params.from === 'journeyList'
+          ? route.params.journeyId
+          : journeyId;
+      await dispatch(FeedbackActions.fetchCurrentFeedback(feedbackId));
     }
     fetchFeedback();
   }, []);
-
 
   useEffect(() => {
     handlePhases();
@@ -72,34 +73,32 @@ const ActiveFeedbackJourney = props => {
   const handlePhases = async () => {
     let content = [];
     // if (getFlow === 'prepared') {
-      feedbackJourneySteps[0] = {
-        ...feedbackJourneySteps[0],
-        closed: documentingClosed,
-        started: documentingStarted,
-      };
-      feedbackJourneySteps[1] = {
-        ...feedbackJourneySteps[1],
-        closed: preparingClosed,
-        started: true,
-      };
-      feedbackJourneySteps[2] = {
-        ...feedbackJourneySteps[2],
-        closed: false,
-        started: true,
-      };
-      feedbackJourneySteps[3] = {
-        ...feedbackJourneySteps[3],
-        closed: false,
-        started: true,
-      };
-      content = feedbackJourneySteps;
+    feedbackJourneySteps[0] = {
+      ...feedbackJourneySteps[0],
+      closed: documentingClosed,
+      started: documentingStarted,
+    };
+    feedbackJourneySteps[1] = {
+      ...feedbackJourneySteps[1],
+      closed: preparingClosed,
+      started: true,
+    };
+    feedbackJourneySteps[2] = {
+      ...feedbackJourneySteps[2],
+      closed: false,
+      started: true,
+    };
+    feedbackJourneySteps[3] = {
+      ...feedbackJourneySteps[3],
+      closed: false,
+      started: true,
+    };
+    content = feedbackJourneySteps;
     // } else {
     //   content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
     // }
     await setPhaseList(content);
   };
-
-
 
   const SignPost = () => {
     const documentingClosed = useSelector(state =>
@@ -111,7 +110,6 @@ const ActiveFeedbackJourney = props => {
     useEffect(() => {
       handlePhases();
     }, []);
-
 
     return (
       <View>
@@ -142,7 +140,7 @@ const ActiveFeedbackJourney = props => {
 
   const handleBackNavigation = () => {
     dispatch(FeedbackActions.resetFeedbackState());
-    navigation.goBack();
+    navigation.navigate('FeedbackJourneyList');
   };
 
   const handleNavigation = index => {
@@ -160,10 +158,8 @@ const ActiveFeedbackJourney = props => {
         else screenName = 'DiscussingGuide';
         break;
       case 3:
-        if (reflectingId) 
-          screenName = 'FeedbackReflecting'
-        else 
-          screenName = 'ReflectingGuide';
+        if (reflectingId) screenName = 'FeedbackReflecting';
+        else screenName = 'ReflectingGuide';
         break;
     }
     navigation.navigate(screenName);
