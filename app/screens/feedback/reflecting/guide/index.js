@@ -19,11 +19,10 @@ const ReflectingGuide = props => {
   const reflectingId = useSelector(state => state.reflecting.get('id'));
 
   
-
   const handleNavigation = () => {
-    // if (reflectingId) {
-    //  navigation.navigate('FeedbackReflecting');
-    // } else {
+    if (reflectingId)
+     navigation.navigate('FeedbackReflecting');
+     else
     //   dispatch(ReflectingActions.resetReflectingState());
       dispatch(ReflectingActions.postFeedbackReflecting(journeyId));
   };
