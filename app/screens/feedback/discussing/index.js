@@ -28,15 +28,38 @@ const FeedbackDiscussing = props => {
     dispatch(DiscussingActions.updateFeedbackDiscussing(actionPlan));
   };
 
-  const handleTextChange = (key, text) => {
+  const handleTextChange = (key, text, index) => {
     setActionPlan(prevState => ({
       ...prevState,
       [key]: text,
     }));
+
+    // let planList = [...actionPlanList];
+    // let oldItem = planList[index];
+    // planList[index] = { ...oldItem, [key]: text };
+    //setActionPlan(planList[index]);
+      // setActionPlanList(planList);
+    // object
+    // setActionPlanList(prevState => ({
+    //   ...prevState,
+    //   [index]: {
+    //     ...oldItem,
+    //     [key]: text,
+    //   }
+    // }));
+  };
+
+  const handleList = item => {
+    debugger;
+    // let planList = [...actionPlanList];
+    // let oldItem = planList[index];
+    // planList[index] = { ...oldItem, [key]: text };
+    setActionPlanList(planList);
   };
 
   const addAnotherItem = () => {
-    actionPlanList.push(actionPlan)
+    // const newList = [...actionPlanList, actionPlan];
+    // setActionPlanList(newList);
   };
 
   const ActionPlan = ({ item, index }) => {
@@ -45,27 +68,45 @@ const FeedbackDiscussing = props => {
         <TextInput
           label={discussingActionPlan.specificAction}
           placeholder={discussingActionPlan.specificAction}
-          value={item.specificAction}
-          onChangeText={text => handleTextChange('specificAction', text)}
+          value={actionPlan.specificAction}
+          onChangeText={text => handleTextChange('specificAction', text, index)}
           style={{ marginBottom: 20 }}
+          // onBlur={text => {
+          //   handleList(actionPlanList[index].specificAction);
+          //   setActionPlan(defaultState);
+          // }}
         />
         <TextInput
           label={discussingActionPlan.whenWillThisHappen}
           placeholder={discussingActionPlan.whenWillThisHappen}
-          value={item.whenWillItHappen}
-          onChangeText={text => handleTextChange('whenWillItHappen', text)}
+          value={actionPlan.whenWillItHappen}
+          // actionPlanist[index]
+          onChangeText={text =>
+            handleTextChange('whenWillItHappen', text, index)
+          }
           style={{ marginBottom: 20 }}
         />
         <TextInput
           label={discussingActionPlan.whoWillMakeIt}
           placeholder={discussingActionPlan.whoWillMakeIt}
-          value={item.whoWillMakeIt}
-          onChangeText={text => handleTextChange('whoWillMakeIt', text)}
+          value={actionPlan.whoWillMakeIt}
+          onChangeText={text => handleTextChange('whoWillMakeIt', text, index)}
           style={{ marginBottom: 20 }}
         />
       </View>
     );
   };
+
+  const renderPlanList = () => {
+    return (
+      <View>
+        {actionPlanList.map((item, i) => (
+          <ActionPlan item={item} index={i} />
+        ))}
+      </View>
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
@@ -74,13 +115,16 @@ const FeedbackDiscussing = props => {
             onPress: () => console.log(),
           }}
         />
-        <KeyboardAvoidingView>
-        <Text type="overline">Discussing</Text>
-        <View>
-          <Text type="h6">{discussingActionPlan.title}</Text>
-          <Text type="body1">{discussingActionPlan.description}</Text>
-        </View>
-        <View style={{ marginTop: 30 }}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag">
+          <KeyboardAvoidingView>
+            <Text type="overline">Discussing</Text>
+            <View>
+              <Text type="h6">{discussingActionPlan.title}</Text>
+              <Text type="body1">{discussingActionPlan.description}</Text>
+            </View>
+            {/* <View style={{ marginTop: 30 }}>
         <TextInput
           label={discussingActionPlan.specificAction}
           placeholder={discussingActionPlan.specificAction}
@@ -102,8 +146,8 @@ const FeedbackDiscussing = props => {
           onChangeText={text => handleTextChange('whoWillMakeIt', text)}
           style={{ marginBottom: 20 }}
         />
-      </View>
-        {/* <FlatList
+      </View> */}
+            {/* <FlatList
           bounces={false}
           data={actionPlanList}
           showsVerticalScrollIndicator={false}
@@ -116,31 +160,28 @@ const FeedbackDiscussing = props => {
             )
           }}
         /> */}
-        {/* {actionPlanList.map((item, i) => (
-          <ActionPlan
-            key={i}
-            item={item}
-            index={i}
-          />
-        ))} */}
-        <View>
-          <Button
-            mode="contained"
-            style={{
-              borderWidth: 0.5,
-              height: 55,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'white',
-            }}
-            onPress={() => addAnotherItem()}
-          >
-            <Text type="button" style={{ color: '#000000' }}>
-              Add another item
-            </Text>
-          </Button>
-        </View>
-        </KeyboardAvoidingView>
+            {/* {actionPlanList.map((item, i) => (
+              <ActionPlan item={item} index={i} />
+            ))} */}
+            {renderPlanList()}
+            <View>
+              <Button
+                mode="contained"
+                style={{
+                  borderWidth: 0.5,
+                  height: 55,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                }}
+                onPress={() => addAnotherItem()}>
+                <Text type="button" style={{ color: '#000000' }}>
+                  Add another item
+                </Text>
+              </Button>
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>
         <View
           style={{
             marginBottom: 30,
