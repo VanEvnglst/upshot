@@ -21,6 +21,7 @@ export default function Routes() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
+        {/* TODO: Add conditions based on the user role  */}
         {isSignedIn ? MainStack(Stack) : AuthStack(Stack)}
       </Stack.Navigator>
     </NavigationContainer>
