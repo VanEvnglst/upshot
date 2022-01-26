@@ -74,11 +74,13 @@ const setDocumentingStatus = (state, { key, status }) => {
 const postFeedbackDocumenting = state =>
   state.merge({
     fetching: true,
+    error: '',
   });
 
 const postFeedbackDocumentingSuccess = (state, { documentingId }) => {
   return state.merge({
     id: documentingId,
+    fetching: false,
   });
 };
 
