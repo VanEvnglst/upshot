@@ -3,23 +3,11 @@ import { upshotAPI } from '../config/ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default {
-  signIn: async payload => {
-    const params = new URLSearchParams();
-    params.append('email', payload.email);
-    params.append('passwd', payload.password);
+  signIn: async params => {
     return upshotAPI.post('/login', params);
   },
 
-  signUp: async data => {
-    const { email, password, firstName, lastName, token, role } = data;
-    const params = new URLSearchParams();
-    params.append('email', email);
-    params.append('passwd', password);
-    params.append('firstname', firstName);
-    params.append('lastname', lastName);
-    params.append('token', token);
-    params.append('role', role);
-
+  signUp: async params => {
     return upshotAPI.post('/signup', params);
   },
 
