@@ -21,7 +21,7 @@ const Onboarding = props => {
     password: '',
     firstName: '',
     lastName: '',
-    role: 1,
+    role: '',
     token: '',
   });
 
@@ -120,6 +120,17 @@ const Onboarding = props => {
                 }}
                 value={state.lastName}
                 onChangeText={lastName => updateData({ lastName })}
+              />
+              <TextInput
+                testID={'fld-onboarding-role'}
+                placeholder="Role"
+                style={{
+                  height: 60,
+                  margin: 20,
+                  paddingHorizontal: 10,
+                }}
+                value={state.role}
+                onChangeText={role => updateData({ role })}
               />
               <TouchableOpacity
                 style={{
