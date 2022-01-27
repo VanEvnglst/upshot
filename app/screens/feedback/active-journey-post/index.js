@@ -15,7 +15,7 @@ import {
   SignPostIndicator,
   JourneyIndicator,
 } from 'app/components';
-import feedbackJourneySteps from 'app/models/FeedbackJourney';
+import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import {
@@ -66,9 +66,9 @@ const ActiveFeedbackJourney = props => {
     fetchFeedback();
   }, []);
 
-  useEffect(() => {
-    handlePhases();
-  }, [journeyId]);
+  // useEffect(() => {
+  //   handlePhases();
+  // }, [journeyId]);
 
   const handlePhases = async () => {
     let content = [];
@@ -176,7 +176,7 @@ const ActiveFeedbackJourney = props => {
           />
           <View style={styles.nameContainer}>
             <Text type="h4" style={styles.teammateName}>
-              {staffName}
+              {staffName.firstName} {staffName.lastName}.
             </Text>
           </View>
           <View>
