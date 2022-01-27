@@ -50,9 +50,12 @@ const labels = {
     journeyEndContent: `Congratulations! You completed your feedback. You can now find this journey under History.`,
   },
   feedbackSignPost: {
-    title: 'The feedback journey',
-    description:
-      "Below is an overview of the five steps of the feedback journey. We'll be here to guide you through each step when you start.",
+    scheduledCorr: 'Giving corrective feedback in 4 steps',
+    scheduledCorrDesc:
+      "Below is an overview of the four steps of the feedback journey. We'll be here to guide you through each step when you start.",
+    scheduledPos: 'Giving positive feedback in 3 steps',
+    scheduledPosDesc: `Below is an overview of your positive feedback journey. We'll be here to guide you through each one when you start.`,
+    onTheSpotTitle: 'Learning from your feedback in 2 steps',
     documenting: 'Documenting',
     documentingDesc: 'Taking notes to remember the details of the event',
     preparing: 'Preparing',
@@ -63,8 +66,6 @@ const labels = {
       'Accurately capturing the discussion between you and your employee',
     reflecting: 'Reflecting',
     reflectingDesc: 'Learning from self-reflection and feedback from others',
-    scheduledPos: 'Giving positive feedback in 3 steps',
-    scheduledPosDesc: `Below is an overview of your positive feedback journey. We'll be here to guide you through each one when you start.`,
     sharing: 'Sharing',
     sharingDesc: 'Communicating your feedback to your employee and your team',
   },
