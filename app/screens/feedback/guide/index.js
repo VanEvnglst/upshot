@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
-import { getChosenFlow } from 'app/store/selectors';
-import feedbackJourneySteps from 'app/models/FeedbackJourney';
+import { getChosenFlow, getChosenType } from 'app/store/selectors';
+import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
+import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -14,26 +15,39 @@ const FeedbackGuide = props => {
   const { feedbackSignPost, common } = labels;
   const dispatch = useDispatch();
   const flow = useSelector(getChosenFlow);
+  const type = useSelector(getChosenType);
   const [signPost, setSignPost] = useState([]);
+  const [signPostHeader, setSignPostHeader] = useState({
+    title: '',
+    description: '',
+  });
 
   useEffect(() => {
     handleContent();
   }, []);
 
-  const handleContent = async () => {
+  const handleContent = () => {
     let content = [];
     if (flow.id === 1) {
-      content = feedbackJourneySteps;
-    } else {
-      content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
+      if (type.id === 1) {
+        content = scheduledPositiveSteps;
+        setSignPostHeader({
+          title: feedbackSignPost.scheduledPos,
+          description: feedbackSignPost.scheduledPosDesc,
+        });
+      } else content = scheduledCorrectiveSteps;
     }
-    await setSignPost(content);
+    // else {
+    //   content = scheduledCorrectiveSteps.filter(item => item.forOnTheSpot === true);
+    // }
+    setSignPost(content);
   };
 
   const handleNavigation = () => {
     dispatch(DocumentingActions.resetDocumentingState());
     navigation.navigate('FeedbackDocumenting');
   };
+
   return (
     <Wrapper>
       <ScrollView showsVerticalScrollIndicator={false} bouces={false}>
@@ -44,18 +58,17 @@ const FeedbackGuide = props => {
         />
         <View style={styles.container}>
           <Text type="h4" style={[styles.textTitle, styles.mediumTextStyle]}>
-            {feedbackSignPost.title}
+            {signPostHeader.title}
           </Text>
           <Text
             type="body1"
             style={[styles.contentDescription, styles.mediumTextStyle]}>
-            {feedbackSignPost.description}
+            {signPostHeader.description}
           </Text>
         </View>
         <View style={styles.signPostContainer}>
           {signPost.map((item, i) => {
             return (
-              // TODO: Make separate component
               <View style={styles.contentContainer} key={item.id}>
                 <SignPostIndicator isLastItem={i === signPost.length - 1} />
                 <View style={styles.textContainer}>
