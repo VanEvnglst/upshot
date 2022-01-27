@@ -88,6 +88,10 @@ const FeedbackJourneyList = props => {
     const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr && nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
+    const staff = {
+      firstName: nameArr[0],
+      lastName: lastName
+    }
     const progressValue = percent / 100;
     const lastWorkedOn = `${moment(lastModified).fromNow()}`;
 
@@ -96,7 +100,7 @@ const FeedbackJourneyList = props => {
         accessibilityRole={'button'}
         style={styles.inProgressCard}
         onPress={() =>
-          handleNavigation('ActiveFeedbackJourney', id, memberName)
+          handleNavigation('ActiveFeedbackJourney', id, staff)
         }>
         <View style={styles.inProgressContent}>
           <ProgressBar progress={progressValue} />
@@ -112,7 +116,7 @@ const FeedbackJourneyList = props => {
             <TouchableOpacity
               accessibilityRole={'button'}
               onPress={() =>
-                handleNavigation('ActiveFeedbackJourney', id, memberName)
+                handleNavigation('ActiveFeedbackJourney', id, staff)
               }>
               <Text type="button" style={styles.inProgressBtn}>
                 {labels.common.continue}
