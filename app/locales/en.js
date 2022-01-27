@@ -63,8 +63,10 @@ const labels = {
       'Accurately capturing the discussion between you and your employee',
     reflecting: 'Reflecting',
     reflectingDesc: 'Learning from self-reflection and feedback from others',
-    followUp: 'Following up',
-    followUpDesc: "Sustaining your employee's improved performance",
+    scheduledPos: 'Giving positive feedback in 3 steps',
+    scheduledPosDesc: `Below is an overview of your positive feedback journey. We'll be here to guide you through each one when you start.`,
+    sharing: 'Sharing',
+    sharingDesc: 'Communicating your feedback to your employee and your team',
   },
   feedbackDocumenting: {
     giveFeedbackTo: 'I want to give',
@@ -73,8 +75,9 @@ const labels = {
     dateOfFeedback: "I'm giving feedback about something that happened",
     confirmation: {
       title: 'You did it!',
-      content1: `You've finished "Documenting" - the first step on our guided journey of giving feedback.`,
-      content2: `Would you like to continue on to the second step, "Preparing"? - this step takes 15 minutes.`,
+      content1: `You've finished "Documenting" - the first step of our feedback coaching journey.`,
+      content2: `Would you like to continue on to the second step, "Preparing?" - this step takes 15 minutes.`,
+      schedPosContent: `Would you like to continue on to the next part, "Sharing?" - this usually takes around 15 minutes.`
     },
     dateToGiveFeedback: `I'm giving feedback about something that happened`,
   },
@@ -288,7 +291,6 @@ const labels = {
     morningCardHeader: "Today's mindful moment",
     afternoonCardHeader: 'Did you know?',
   },
-  
 };
 
 export default labels;
