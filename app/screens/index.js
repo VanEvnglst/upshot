@@ -31,3 +31,7 @@ export { default as FeedbackDiscussing } from './feedback/discussing';
 /* ------------- Feedback Reflecting ------------- */
 export { default as ReflectingGuide } from './feedback/reflecting/guide';
 export { default as FeedbackReflecting } from './feedback/reflecting';
+
+
+/* ------------- Feedback Sharing ------------- */
+export { default as FeedbackSharing } from './feedback/sharing';

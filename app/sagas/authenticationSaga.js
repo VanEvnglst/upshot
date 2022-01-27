@@ -9,18 +9,21 @@ const RESULT_SUCCESS = 'success';
 const RESULT_ERROR = 'error';
 
 export function* signInUser({ data }) {
+  const params = new URLSearchParams();
+  params.append('email', data.email);
+  params.append('passwd', data.password);
+
   const connected = yield checkInternetConnection();
   if (!connected) {
     //   //yield showNetworkError();
     return;
   }
-  const authResponse = yield call(api.signIn, data);
+  const authResponse = yield call(api.signIn, params);
   if (authResponse.ok) {
     if (authResponse.data.result === RESULT_SUCCESS) {
       AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
       yield put(AuthenticationActions.signInUserSuccess());
     } else {
-      console.log('auth err', authResponse.data);
       yield put(
         AuthenticationActions.signInUserFailure(authResponse.data.details),
       );
