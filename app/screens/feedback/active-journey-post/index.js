@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   ScrollView,
-  TouchableOpacity,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes, { objectOf } from 'prop-types';
+import PropTypes  from 'prop-types';
 import { Button } from 'react-native-paper';
 import {
   Wrapper,
@@ -21,17 +20,19 @@ import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
 import onTheSpotSteps from 'app/models/OnTheSpotSteps';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
+import PreparingActions from 'app/store/feedback/preparingRedux';
+import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import {
   getStaffName,
   getCurrentJourney,
   getChosenFlow,
   getChosenType,
-  getDocumentingId,
-  getPreparingId,
-  getDiscussingId,
-  getReflectingId,
+  getDocumenting,
+  getPreparing,
+  getDiscussing,
+  getReflecting,
 } from 'app/store/selectors';
-import labels from 'app/locales/en';
 import styles from './styles';
 
 const { width, height } = Dimensions.get('screen');
@@ -40,27 +41,13 @@ const ActiveFeedbackJourney = props => {
   const dispatch = useDispatch();
   const staffName = useSelector(getStaffName);
   const journey = useSelector(getCurrentJourney);
+  const isLoading = journey.fetching;
   const flow = useSelector(getChosenFlow);
   const type = useSelector(getChosenType);
-  const documenting = useSelector(state => state.documenting);
-  const preparing = useSelector(state => state.preparing);
-  const discussing = useSelector(state => state.discussing);
-  const reflecting = useSelector(state => state.reflecting);
-  // const documentingId = useSelector(getDocumentingId);
-  // const documentingClosed = useSelector(state =>
-  //   state.documenting.get('closed'),
-  // );
-  // const documentingStarted = useSelector(state =>
-  //   state.documenting.get('started'),
-  // );
-  // const preparingClosed = useSelector(state => state.preparing.get('closed'));
-  // const preparingStarted = useSelector(state => state.preparing.get('started'));
-  // const preparingId = useSelector(getPreparingId);
-  // const discussingId = useSelector(getDiscussingId);
-  // const reflectingId = useSelector(getReflectingId);
-  const isLoading = useSelector(
-    state => state.feedback.get('currentJourney').fetching,
-  );
+  const documenting = useSelector(getDocumenting);
+  const preparing = useSelector(getPreparing);
+  const discussing = useSelector(getDiscussing);
+  const reflecting = useSelector(getReflecting);
   const [phaseList, setPhaseList] = useState([]);
 
   useEffect(() => {
@@ -70,104 +57,80 @@ const ActiveFeedbackJourney = props => {
           ? route.params.journeyId
           : journey.data;
       await dispatch(FeedbackActions.fetchCurrentFeedback(feedbackId));
-      await handlePhases();
     }
     fetchFeedback();
   }, []);
 
-  // useEffect(() => {
-  //   handlePhases();
-  // }, [journey.data]);
+  useEffect(() => {
+    handlePhases();
+  }, [journey.data]);
 
   const handlePhases = async () => {
     let content = [];
     if (flow === 'prepared') {
-      console.warn('flow', scheduledCorrectiveSteps);
       if (type.id === 1) {
-        // scheduledPositiveSteps[0] = {
-        //   ...scheduledPositiveSteps[0],
-        //   closed: false,
-        //   started: true
-        // }
+        handleScheduledPosContent()
       } else {
-        content = scheduledCorrectiveSteps.map(obj => {
-          console.warn('ib', obj);
-          if (obj.id === 1)
-            return {
-              ...obj,
-              closed: documenting.closed,
-              started: documenting.started,
-            };
-          if (obj.id === 2)
-            return {
-              ...obj,
-              closed: preparing.closed,
-              started: preparing.started,
-            };
-          if (obj.id === 3)
-            return {
-              ...obj,
-              closed: discussing.closed,
-              started: discussing.started,
-            };
-          if (obj.id === 4)
-            return {
-              ...obj,
-              closed: reflecting.closed,
-              started: reflecting.started,
-            };
-        });
-        setPhaseList(content);
+        handleScheduledCorrContent()
       }
-      //   const corrArr =
-      // scheduledCorrectiveSteps[0] = {
-      //   ...scheduledCorrectiveSteps[0],
-
-      // };
-
-      // scheduledCorrectiveSteps[1] = {
-      //   ...scheduledCorrectiveSteps[1],
-
-      // };
-      //   scheduledCorrectiveSteps[2] = {
-      //     ...scheduledCorrectiveSteps[2],
-      //     closed: discussing.closed,
-      //     started: discussing.started
-      //   }
-      //   scheduledCorrectiveSteps[3] = {
-      //     ...scheduledCorrectiveSteps[3],
-      //     closed: reflecting.closed,
-      //     started: reflecting.started
-      //   }
-      //   content = corrArr;
-
-      // }
     }
-    // feedbackJourneySteps[0] = {
-    //   ...feedbackJourneySteps[0],
-    //   closed: documentingClosed,
-    //   started: documentingStarted,
-    // };
-    // feedbackJourneySteps[1] = {
-    //   ...feedbackJourneySteps[1],
-    //   closed: preparingClosed,
-    //   started: true,
-    // };
-    // feedbackJourneySteps[2] = {
-    //   ...feedbackJourneySteps[2],
-    //   closed: false,
-    //   started: true,
-    // };
-    // feedbackJourneySteps[3] = {
-    //   ...feedbackJourneySteps[3],
-    //   closed: false,
-    //   started: true,
-    // };
-    // content = feedbackJourneySteps;
-    // } else {
-    //   content = feedbackJourneySteps.filter(item => item.forOnTheSpot === true);
-    // }
   };
+
+  const handleScheduledCorrContent = () => {
+    let content = [];
+    content = scheduledCorrectiveSteps.map(obj => {
+      if (obj.id === 1)
+        return {
+          ...obj,
+          closed: documenting.get('closed'),
+          started: documenting.get('started'),
+        };
+      if (obj.id === 2)
+        return {
+          ...obj,
+          closed: preparing.get('closed'),
+          started: preparing.get('started'),
+        };
+      if (obj.id === 3)
+        return {
+          ...obj,
+          closed: discussing.get('closed'),
+          started: discussing.get('started'),
+        };
+      if (obj.id === 4)
+        return {
+          ...obj,
+          closed: reflecting.get('closed'),
+          started: reflecting.get('started'),
+        };
+    });
+    setPhaseList(content);
+  }
+
+  const handleScheduledPosContent = () => {
+    let content = [];
+    content = scheduledPositiveSteps.map(obj => {
+      if (obj.id === 1)
+        return {
+          ...obj,
+          closed: documenting.closed,
+          started: documenting.started,
+        };
+      // if (obj.id === 2)
+      //   return {
+      //     ...obj,
+      //     closed: sharing.closed,
+      //     started: sharing.started,
+      //   };
+      if (obj.id === 3)
+        return {
+          ...obj,
+          closed: reflecting.closed,
+          started: reflecting.started,
+        };
+    });
+    setPhaseList(content);
+  }
 
   const SignPost = () => {
     const documentingClosed = useSelector(state =>
@@ -209,6 +172,10 @@ const ActiveFeedbackJourney = props => {
 
   const handleBackNavigation = () => {
     dispatch(FeedbackActions.resetFeedbackState());
+    dispatch(DocumentingActions.resetDocumentingState());
+    dispatch(PreparingActions.resetPreparingState());
+    dispatch(DiscussingActions.resetDiscussingState());
+    dispatch(ReflectingActions.resetReflectingState());
     navigation.navigate('FeedbackJourneyList');
   };
 
@@ -219,15 +186,15 @@ const ActiveFeedbackJourney = props => {
         screenName = 'FeedbackDocumenting';
         break;
       case 1:
-        if (preparingId) screenName = 'FeedbackPreparing';
+        if (preparing.get('id')) screenName = 'FeedbackPreparing';
         else screenName = 'PreparingGuide';
         break;
       case 2:
-        if (discussingId) screenName = 'DiscussingMeeting';
+        if (discussing.get('id')) screenName = 'DiscussingMeeting';
         else screenName = 'DiscussingGuide';
         break;
       case 3:
-        if (reflectingId) screenName = 'FeedbackReflecting';
+        if (reflecting.get('id')) screenName = 'FeedbackReflecting';
         else screenName = 'ReflectingGuide';
         break;
     }
@@ -262,9 +229,7 @@ const ActiveFeedbackJourney = props => {
                     style={{ flex: 2 }}
                     done={item.closed}
                     current={item.started && !item.closed}
-                    //
                     hasProgress={item.started && !item.closed}
-                    //
                     item={item}
                     onPress={() => handleNavigation(i)}
                   />
@@ -292,6 +257,36 @@ const ActiveFeedbackJourney = props => {
 
 export default ActiveFeedbackJourney;
 
-ActiveFeedbackJourney.propTypes = {};
+ActiveFeedbackJourney.propTypes = {
+  getStaffName: PropTypes.object,
+  getCurrentJourney: PropTypes.object,
+  getChosenFlow: PropTypes.string,
+  getChosenType: PropTypes.object,
+  getDocumenting: PropTypes.object,
+  getPreparing: PropTypes.object,
+  getDiscussing: PropTypes.object,
+  getReflecting: PropTypes.object,
+  fetchCurrentFeedback: PropTypes.func,
+  resetFeedbackState: PropTypes.func,
+  resetDocumentingState: PropTypes.func,
+  resetPreparingState: PropTypes.func,
+  resetDiscussingState: PropTypes.func,
+  resetReflectingState: PropTypes.func,
+};
 
-ActiveFeedbackJourney.defaultProps = {};
+ActiveFeedbackJourney.defaultProps = {
+  getStaffName: {},
+  getCurrentJourney: {},
+  getChosenFlow: '',
+  getChosenType: {},
+  getDocumenting: {},
+  getPreparing: {},
+  getDiscussing: {},
+  getReflecting: {},
+  fetchCurrentFeedback: () => {},
+  resetFeedbackState: () => {},
+  resetDiscussingState: () => {},
+  resetDocumentingState: () => {},
+  resetPreparingState: () => {},
+  resetReflectingState: () => {},
+};
