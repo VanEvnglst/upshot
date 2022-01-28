@@ -282,7 +282,20 @@ const labels = {
     continueDoing: 'Continue doing',
     reviewActionPlan: 'Review your action plan',
     reviewActionPlanDesc: 'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
-    confirmation: `You've finished "Reflecting". Based on your answers, we've recommemded a reading list we think you'll find helpful:`,
+    confirmation: `You've finished "Reflecting". Based on your answers, we've rœecommemded a reading list we think you'll find helpful:`,
+  },
+  feedbackSharing: {
+    description: `Preparing your commments can make the feedback discussion a positive experience. Describe the observations made to support your feedback.\n\nOnce done, you can choose to share your positive feedback with everyone.`,
+    writeMessage: {
+      step: 'Step 2',
+      title: 'Write a message',
+      content: 'Would you like to add a short message to',
+    },
+    shareFeedback: {
+      step: 'Step 3',
+      title: 'Review and send feedback',
+      content: 'Review your feedback before sharing',
+    },
   },
   reminders: {
     morningReminder: 'Today is a new day, ',
