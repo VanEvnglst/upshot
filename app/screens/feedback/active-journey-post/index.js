@@ -116,12 +116,12 @@ const ActiveFeedbackJourney = props => {
           closed: documenting.closed,
           started: documenting.started,
         };
-      // if (obj.id === 2)
-      //   return {
-      //     ...obj,
-      //     closed: sharing.closed,
-      //     started: sharing.started,
-      //   };
+      if (obj.id === 2)
+        return {
+          ...obj,
+          closed: false, //sharing.closed,
+          started: false, //sharing.started,
+        };
       if (obj.id === 3)
         return {
           ...obj,
@@ -181,22 +181,39 @@ const ActiveFeedbackJourney = props => {
 
   const handleNavigation = index => {
     let screenName = '';
-    switch (index) {
-      case 0:
-        screenName = 'FeedbackDocumenting';
-        break;
-      case 1:
-        if (preparing.get('id')) screenName = 'FeedbackPreparing';
-        else screenName = 'PreparingGuide';
-        break;
-      case 2:
-        if (discussing.get('id')) screenName = 'DiscussingMeeting';
-        else screenName = 'DiscussingGuide';
-        break;
-      case 3:
-        if (reflecting.get('id')) screenName = 'FeedbackReflecting';
-        else screenName = 'ReflectingGuide';
-        break;
+    if (flow === 'prepared') {
+      if (type.id === 1) {
+        switch(index) {
+          case 0:
+          screenName ='FeedbackDocumenting';
+          break;
+          case 1:
+            screenName = 'SharingGuide';
+          break;
+          case 2:
+            if (reflecting.get('id')) screenName = 'FeedbackReflecting';
+            else screenName = 'ReflectingGuide';
+            break;
+        }
+      } else {
+        switch (index) {
+          case 0:
+            screenName = 'FeedbackDocumenting';
+            break;
+          case 1:
+            if (preparing.get('id')) screenName = 'FeedbackPreparing';
+            else screenName = 'PreparingGuide';
+            break;
+          case 2:
+            if (discussing.get('id')) screenName = 'DiscussingMeeting';
+            else screenName = 'DiscussingGuide';
+            break;
+          case 3:
+            if (reflecting.get('id')) screenName = 'FeedbackReflecting';
+            else screenName = 'ReflectingGuide';
+            break;
+        }
+      }
     }
     navigation.navigate(screenName);
   };

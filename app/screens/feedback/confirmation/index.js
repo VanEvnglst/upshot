@@ -4,7 +4,7 @@ import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getDocumentingId, getCurrentJourney } from 'app/store/selectors';
+import { getDocumentingId, getCurrentJourney, getChosenFlow, getChosenType } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
@@ -25,6 +25,8 @@ const FeedbackConfirmation = props => {
   const dispatch = useDispatch();
   const docuId = useSelector(getDocumentingId);
   const journeyId = useSelector(getCurrentJourney);
+  const flow = useSelector(getChosenFlow);
+  const type = useSelector(getChosenType);
   const [content, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
@@ -65,7 +67,7 @@ const FeedbackConfirmation = props => {
       <View style={{ flexDirection: 'row' }}>
         <Button
           type={'text'}
-          onPress={() => navigation.navigate('PreparingGuide')}>
+          onPress={() => handleDocumentingNav()}>
           <Text>Keep going</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
@@ -74,6 +76,20 @@ const FeedbackConfirmation = props => {
       </View>
     );
   };
+
+  const handleDocumentingNav = () => {
+    let screenName = '';
+    if (flow.id === 1) {
+      if (type.id === 1)
+        screenName = 'SharingGuide';
+      else 
+        screenName = 'PreparingGuide';
+    } else {
+      screenName = 'ReflectingGuide'
+    }
+
+    navigation.navigate(screenName);
+  }
 
   const DiscussingCTA = () => {
     return (
@@ -224,6 +240,22 @@ const FeedbackConfirmation = props => {
 
 export default FeedbackConfirmation;
 
-FeedbackConfirmation.propTypes = {};
+FeedbackConfirmation.propTypes = {
+  getDocumentingId: PropTypes.number,
+  getCurrentJourney: PropTypes.object,
+  getChosenFlow: PropTypes.object,
+  getChosenType: PropTypes.object,
+  updateDocumentingReminder: PropTypes.func,
+  updateDiscussingReminder: PropTypes.func,
+  postCloseFeedbackJourney: PropTypes.func,
+};
 
-FeedbackConfirmation.defaultProps = {};
+FeedbackConfirmation.defaultProps = {
+  getDocumentingId: 1,
+  getCurrentJourney: {},
+  getChosenType: {},
+  getChosenFlow: {},
+  updateDiscussingReminder: () => {},
+  updateDocumentingReminder: () => {},
+  postCloseFeedbackJourney: () => {},
+};
