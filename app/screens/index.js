@@ -34,4 +34,5 @@ export { default as FeedbackReflecting } from './feedback/reflecting';
 
 
 /* ------------- Feedback Sharing ------------- */
+export { default as SharingGuide } from './feedback/sharing/guide';
 export { default as FeedbackSharing } from './feedback/sharing';
