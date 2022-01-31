@@ -17,8 +17,8 @@ const sharingGuide = [
   },
   {
     image: Images.sharingStep3,
-    step: feedbackSharing.shareFeedback.step3,
-    content: feedbackSharing.shareFeedback.step3Title
+    step: feedbackSharing.shareFeedback.step,
+    content: feedbackSharing.shareFeedback.title
   }
 ];
 
