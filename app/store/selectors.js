@@ -64,3 +64,10 @@ export const getReflectingId = state => state.reflecting.get('id');
 export const getReflectStep1Data = state => state.reflecting.get('step1');
 export const getReflectStep2Data = state => state.reflecting.get('step2');
 export const getReflectStep4Data = state => state.reflecting.get('step4');
+
+
+/* ------------- Feedback Sharing Selectors ------------- */
+// export const getSharing = state => state.sharing;
+// export const getSharingStep = state => state.sharing.get('activeStep');
+// export const getSharingMaxSteps = state => state.sharing.get('maxStep');
+// export const getSharingStep1Data = state => state.sharing.get('step1');

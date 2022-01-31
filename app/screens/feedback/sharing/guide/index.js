@@ -77,7 +77,7 @@ const SharingGuide = props => {
               <SignPost
                 key={i}
                 item={item}
-                isLastIem={i === sharingGuide.length - 1}
+                isLastItem={i === sharingGuide.length - 1}
               />
             );
           })}

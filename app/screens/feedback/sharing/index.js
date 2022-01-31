@@ -4,7 +4,7 @@ import { Button, ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text, Modal } from 'app/components';
-import { getSharingStep, getSharingMaxSteps } from 'app/store/selectors';
+// import { getSharingStep, getSharingMaxSteps } from 'app/store/selectors';
 import SharingStep1 from './step1';
 import SharingStep2 from './step2';
 import SharingStep3 from './step3';
@@ -15,9 +15,10 @@ import containerStyles from './styles';
 const FeedbackSharing = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const activeStep = useSelector(getSharingStep);
-  const maxStep = useSelector(getSharingMaxSteps);
-  const indexValue = activeStep / maxStep;
+  // const activeStep = useSelector(getSharingStep);
+  // const maxStep = useSelector(getSharingMaxSteps);
+  const indexValue = 1/3
+  // activeStep / maxStep;
   const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const FeedbackSharing = props => {
 
 
   const handleStepContent = () => {
-    switch(activeStep) {
+    switch(3) {
       case 1:
         return <SharingStep1 />;
       case 2:
