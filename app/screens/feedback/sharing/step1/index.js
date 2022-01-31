@@ -11,7 +11,7 @@ import containerStyles from '../styles';
 const SharingStep1 = props => {
   const { describeDiscuss } = labels.feedbackPreparing;
   const dispatch = useDispatch();
-  const activeStep = useSelector(getSharingStep);
+  // const activeStep = useSelector(getSharingStep);
   // const stepData = useSelector(getSharingStep1Data);
   const [details, setDetails] = useState({
     event: '',
@@ -73,7 +73,7 @@ const SharingStep1 = props => {
             label={describeDiscuss.describeActionHint}
             placeholder={describeDiscuss.describeActionHint}
             value={details.action}
-            onChangeText={text => onChangeText('action', text)}
+            onChangeText={text => handleTextChange('action', text)}
           />
         </View>
         <View style={containerStyles.descriptionContainer}>
@@ -89,7 +89,7 @@ const SharingStep1 = props => {
             label={describeDiscuss.describeImpactHint}
             placeholder={describeDiscuss.describeImpactHint}
             value={details.result}
-            onChangeText={text => onChangeText('result', text)}
+            onChangeText={text => handleTextChange('result', text)}
           />
         </View>
       </KeyboardAvoidingView>
