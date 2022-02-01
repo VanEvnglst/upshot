@@ -59,6 +59,8 @@ const FeedbackConfirmation = props => {
         return <PreparingCTA />;
       case 'reflecting':
         return <ReflectingCTA />;
+      case 'sharing':
+        return <SharingCTA />;
     }
   };
 
@@ -145,6 +147,21 @@ const FeedbackConfirmation = props => {
     )
   }
 
+  const SharingCTA = () => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          type={'text'}
+          onPress={() => navigation.navigate('ReflectingGuide')}>
+          <Text>Keep going</Text>
+        </Button>
+        <Button type={'text'} onPress={() => showModal()}>
+          <Text>remind me later</Text>
+        </Button>
+      </View>
+    );
+  }
+
   const closeJourney = () => {
     dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data))
   };
@@ -160,6 +177,9 @@ const FeedbackConfirmation = props => {
     }
     if (route.params.type === 'discussing') {
       dispatch(DiscussingActions.updateDiscussingReminder(data));
+    }
+    if(route.params.type === 'sharing') {
+      //dispatch(SharingActions.updateSharingReminder(data))
     }
     hideModal();
   };
