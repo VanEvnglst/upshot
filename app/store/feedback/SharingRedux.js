@@ -19,6 +19,9 @@ const { Types, Creators } = createActions({
   updateFeedbackSharing: ['data'],
   updateFeedbackSharingSuccess: null,
   updateFeedbackSharingFailure: ['error'],
+  updateFeedbackSharingReminder: ['data'],
+  updateFeedbackSharingReminderSuccess: null,
+  updateFeedbackSharingReminderFailure: ['error'],
   setSharingActiveStep: ['step'],
   setSharingData: ['key', 'data'],
   setSharingStatus: ['key', 'status'],
@@ -91,6 +94,20 @@ const updateFeedbackSharingFailure = (state, { error}) =>
     error
   });
 
+const updateFeedbackSharingReminder = state => state.merge({
+  fetching: true,
+  error: ''
+});
+
+const updateFeedbackSharingReminderSuccess = state => state.merge({
+  fetching: false,
+});
+
+const updateFeedbackSharingReminderFailure = (state, {error}) => state.merge({
+  fetching: false,
+  error
+})
+
 const fetchCurrentSharing = state =>
   state.merge({
     fetching: true,
@@ -137,6 +154,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_FEEDBACK_SHARING]: updateFeedbackSharing,
   [Types.UPDATE_FEEDBACK_SHARING_SUCCESS]: updateFeedbackSharingSuccess,
   [Types.UPDATE_FEEDBACK_SHARING_FAILURE]: updateFeedbackSharingFailure,
+  [Types.UPDATE_FEEDBACK_SHARING_REMINDER]: updateFeedbackSharingReminder,
+  [Types.UPDATE_FEEDBACK_SHARING_REMINDER_SUCCESS]: updateFeedbackSharingReminderSuccess,
+  [Types.UPDATE_FEEDBACK_SHARING_REMINDER_FAILURE]: updateFeedbackSharingReminderFailure,
   [Types.FETCH_CURRENT_SHARING]: fetchCurrentSharing,
   [Types.FETCH_CURRENT_SHARING_SUCCESS]: fetchCurrentSharingSuccess,
   [Types.FETCH_CURRENT_SHARING_FAILURE]: fetchCurrentSharingFailure,
