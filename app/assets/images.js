@@ -40,4 +40,5 @@ export default {
   journeyEnd: require('./images/journey-end.png'),
   sharingStep2: require('./images/sharing-step2.png'),
   sharingStep3: require('./images/sharing-step3.png'),
+  avatar: require('./images/temp-avatar.png'),
 };
