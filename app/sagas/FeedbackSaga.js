@@ -122,6 +122,7 @@ export function* fetchCurrentFeedback({ journeyId }) {
     if (discussData) yield retrieveDiscussingData(discussData);
 
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
+    yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
   } else {
     yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
