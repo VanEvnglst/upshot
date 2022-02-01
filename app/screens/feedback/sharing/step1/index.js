@@ -3,6 +3,7 @@ import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text, TextInput } from 'app/components';
 import { getSharingStep } from 'app/store/selectors';
 import labels from 'app/locales/en';
@@ -11,13 +12,17 @@ import containerStyles from '../styles';
 const SharingStep1 = props => {
   const { describeDiscuss } = labels.feedbackPreparing;
   const dispatch = useDispatch();
-  // const activeStep = useSelector(getSharingStep);
-  // const stepData = useSelector(getSharingStep1Data);
+  const activeStep = useSelector(getSharingStep);
+  const stepData = useSelector(getSharingStep1Data);
   const [details, setDetails] = useState({
     event: '',
     action: '',
     result: '',
   });
+
+  useEffect(() => {
+// TODO: step data loading
+  }, []);
 
   const handleTextChange = (key, text) => {
     setDetails(prevState => ({
@@ -31,8 +36,8 @@ const SharingStep1 = props => {
   };
 
   const handleNext = () => {
-    // dispatch(SharingActions.setSharingActiveStep(activeStep + 1));
-    // dispatch(SharingActions.setSharingData('step1', details));
+    dispatch(SharingActions.setSharingActiveStep(activeStep + 1));
+    dispatch(SharingActions.setSharingData('step1', details));
   };
 
   return (
