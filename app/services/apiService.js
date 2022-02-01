@@ -168,5 +168,29 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get_staff_feedback`,params);
+  },
+
+  postFeedbackSharing: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/sharing`, params);
+  },
+
+  getCurrentSharing: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/sharing/get`, params);
+  },
+  
+  updateFeedbackSharing: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/sharing/edit`, params);
+  },
+
+  postCloseSharing: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/sharing/close`, params);
   }
 };
