@@ -57,7 +57,7 @@ export default styles = StyleSheet.create({
     fontFamily: fontFamily.RalewayRegular,
   },
   button: {
-    fontSize: size.button,
+    fontSize: size.body2,
     letterSpacing: letterSpacing.button,
     textTransform: 'uppercase',
     fontFamily: fontFamily.RalewaySemiBold,
