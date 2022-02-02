@@ -14,7 +14,7 @@ const SharingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackSharing } = labels;
   const dispatch = useDispatch();
-  const journeyId = useSelector(getCurrentJourney.data);
+  const journeyId = useSelector(getCurrentJourney);
   const sharingId = useSelector(getSharingId);
 
   const SignPost = ({ item, isLastItem }) => {
@@ -46,7 +46,7 @@ const SharingGuide = props => {
     if(sharingId) 
       navigation.navigate('FeedbackSharing')
     else
-    dispatch(SharingActions.postFeedbackSharing(journeyId));
+    dispatch(SharingActions.postFeedbackSharing(journeyId.data));
   }
 
   return (
