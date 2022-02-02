@@ -65,7 +65,7 @@ export function* postFeedbackJourney({ data }) {
   // if (!connected) {
   //   return;
   // }
-  
+
   const documentingParams = new URLSearchParams();
   const staffId = yield select(staff);
 
@@ -76,11 +76,9 @@ export function* postFeedbackJourney({ data }) {
       yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
 
       documentingParams.append('journey_id', journeyId);
-      documentingParams.append('staff_id', staffId)
+      documentingParams.append('staff_id', staffId);
 
-      yield put(
-        DocumentingActions.postFeedbackDocumenting(documentingParams),
-      );
+      yield put(DocumentingActions.postFeedbackDocumenting(documentingParams));
     }
     // save journey id to state using success action call
     // call create documenting with journey id and team member passed in
@@ -88,16 +86,15 @@ export function* postFeedbackJourney({ data }) {
 }
 
 export function* postCloseFeedbackJourney({ journeyId }) {
-
   const params = new URLSearchParams();
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postCloseJourney, params);
   if (response.ok) {
     if (response.data.status == 'ok') {
-      yield put(FeedbackActions.postCloseFeedbackJourneySuccess())
+      yield put(FeedbackActions.postCloseFeedbackJourneySuccess());
       yield NavigationService.navigate('FeedbackJourneyList', {
-        type: 'journeyEnd'
+        type: 'journeyEnd',
       });
     }
   } else {
@@ -114,14 +111,13 @@ export function* fetchCurrentFeedback({ journeyId }) {
     const discussData = journeyData.Discussing;
     const reflectData = journeyData.Reflecting;
 
-    if (docuData) {
-      yield retrieveDocumentingData(docuData);
-    }
+    if (docuData) yield retrieveDocumentingData(docuData);
     if (prepData) yield retrievePreparingData(prepData);
     if (reflectData) yield retrieveReflectingData(reflectData);
     if (discussData) yield retrieveDiscussingData(discussData);
 
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
+    yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
   } else {
     yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
@@ -158,12 +154,14 @@ function* retrieveReflectingData(reflectingData) {
   );
 }
 
-
-
 function* retrieveDiscussingData(discussingData) {
   yield put(DiscussingActions.setDiscussingStatus('id', discussingData.id));
-  yield put(DiscussingActions.setDiscussingStatus('closed', discussingData.closed));
-  yield put(DiscussingActions.setDiscussingStatus('started', !discussingData.closed));
+  yield put(
+    DiscussingActions.setDiscussingStatus('closed', discussingData.closed),
+  );
+  yield put(
+    DiscussingActions.setDiscussingStatus('started', !discussingData.closed),
+  );
 }
 
 function* watchFeedbackSaga() {
@@ -172,7 +170,10 @@ function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
-  yield takeLatest(FeedbackTypes.POST_CLOSE_FEEDBACK_JOURNEY, postCloseFeedbackJourney);
+  yield takeLatest(
+    FeedbackTypes.POST_CLOSE_FEEDBACK_JOURNEY,
+    postCloseFeedbackJourney,
+  );
   yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
 }
 

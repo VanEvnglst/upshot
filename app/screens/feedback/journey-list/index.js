@@ -39,7 +39,6 @@ const FeedbackJourneyList = props => {
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-    debugger;
     if (route.params && route.params.type === 'journeyEnd') {
       setModalVisible(true);
     }

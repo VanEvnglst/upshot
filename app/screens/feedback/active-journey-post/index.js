@@ -23,6 +23,7 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   getStaffName,
   getCurrentJourney,
@@ -32,6 +33,7 @@ import {
   getPreparing,
   getDiscussing,
   getReflecting,
+  getSharing,
 } from 'app/store/selectors';
 import styles from './styles';
 
@@ -48,6 +50,7 @@ const ActiveFeedbackJourney = props => {
   const preparing = useSelector(getPreparing);
   const discussing = useSelector(getDiscussing);
   const reflecting = useSelector(getReflecting);
+  const sharing = useSelector(getSharing);
   const [phaseList, setPhaseList] = useState([]);
 
   useEffect(() => {
@@ -67,13 +70,14 @@ const ActiveFeedbackJourney = props => {
 
   const handlePhases = async () => {
     let content = [];
-    if (flow === 'prepared') {
+    if (flow.id === 1) {
       if (type.id === 1) {
-        handleScheduledPosContent()
+        content = await handleScheduledPosContent()
       } else {
-        handleScheduledCorrContent()
+        content = await handleScheduledCorrContent()
       }
     }
+    setPhaseList(content);
   };
 
   const handleScheduledCorrContent = () => {
@@ -104,7 +108,7 @@ const ActiveFeedbackJourney = props => {
           started: reflecting.get('started'),
         };
     });
-    setPhaseList(content);
+    return content;
   }
 
   const handleScheduledPosContent = () => {
@@ -119,8 +123,8 @@ const ActiveFeedbackJourney = props => {
       if (obj.id === 2)
         return {
           ...obj,
-          closed: false, //sharing.closed,
-          started: false, //sharing.started,
+          closed: sharing.closed, 
+          started: sharing.started,
         };
       if (obj.id === 3)
         return {
@@ -129,7 +133,7 @@ const ActiveFeedbackJourney = props => {
           started: reflecting.started,
         };
     });
-    setPhaseList(content);
+    return content;
   }
 
   const SignPost = () => {
@@ -176,19 +180,21 @@ const ActiveFeedbackJourney = props => {
     dispatch(PreparingActions.resetPreparingState());
     dispatch(DiscussingActions.resetDiscussingState());
     dispatch(ReflectingActions.resetReflectingState());
+    dispatch(SharingActions.resetSharingState());
     navigation.navigate('FeedbackJourneyList');
   };
 
   const handleNavigation = index => {
     let screenName = '';
-    if (flow === 'prepared') {
+    if (flow.id === 1) {
       if (type.id === 1) {
         switch(index) {
           case 0:
           screenName ='FeedbackDocumenting';
           break;
           case 1:
-            screenName = 'SharingGuide';
+            if (sharing.get('id')) screenName = 'FeedbackSharing'
+            else screenName = 'SharingGuide';
           break;
           case 2:
             if (reflecting.get('id')) screenName = 'FeedbackReflecting';
@@ -283,12 +289,14 @@ ActiveFeedbackJourney.propTypes = {
   getPreparing: PropTypes.object,
   getDiscussing: PropTypes.object,
   getReflecting: PropTypes.object,
+  getSharing: PropTypes.object,
   fetchCurrentFeedback: PropTypes.func,
   resetFeedbackState: PropTypes.func,
   resetDocumentingState: PropTypes.func,
   resetPreparingState: PropTypes.func,
   resetDiscussingState: PropTypes.func,
   resetReflectingState: PropTypes.func,
+  resetSharingState: PropTypes.func
 };
 
 ActiveFeedbackJourney.defaultProps = {
@@ -300,10 +308,12 @@ ActiveFeedbackJourney.defaultProps = {
   getPreparing: {},
   getDiscussing: {},
   getReflecting: {},
+  getSharing: {},
   fetchCurrentFeedback: () => {},
   resetFeedbackState: () => {},
   resetDiscussingState: () => {},
   resetDocumentingState: () => {},
   resetPreparingState: () => {},
   resetReflectingState: () => {},
+  resetSharingState: () => {},
 };

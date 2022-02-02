@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
+import { getCurrentJourney, getSharingId } from 'app/store/selectors';
 import sharingGuide from 'app/models/SharingGuide';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -12,6 +14,8 @@ const SharingGuide = props => {
   const { navigation } = props;
   const { feedbackSignPost, feedbackSharing } = labels;
   const dispatch = useDispatch();
+  const journeyId = useSelector(getCurrentJourney);
+  const sharingId = useSelector(getSharingId);
 
   const SignPost = ({ item, isLastItem }) => {
     return (
@@ -39,7 +43,10 @@ const SharingGuide = props => {
   };
 
   const handleNavigation = () => {
-    navigation.navigate('FeedbackSharing');
+    if(sharingId) 
+      navigation.navigate('FeedbackSharing')
+    else
+    dispatch(SharingActions.postFeedbackSharing(journeyId.data));
   }
 
   return (
@@ -103,6 +110,14 @@ const SharingGuide = props => {
 
 export default SharingGuide;
 
-SharingGuide.propTypes = {};
+SharingGuide.propTypes = {
+  postFeedbackSharing: PropTypes.func.isRequired,
+  getCurrentJourney: PropTypes.object,
+  getSharingId: PropTypes.number
+};
 
-SharingGuide.defaultProps = {};
+SharingGuide.defaultProps = {
+  postFeedbackSharing: () => {},
+  getCurrentJourney: {},
+  getSharingId: 1
+};
