@@ -9,6 +9,7 @@ import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
 const activeStep = state => state.documenting.get('activeStep');
+const documentingId = state => state.documenting.get('id');
 
 export function* postFeedbackDocumenting({ data }) {
   // const connected = yield checkInternetConnection();
@@ -34,7 +35,7 @@ export function* updateFeedbackDocumenting({ data }) {
   const response = yield call(api.updateDocumenting, data);
   if (response.ok) {
     if (response.data.status === 'ok') {
-      yield put(DocumentingActions.closeFeedbackDocumenting(data.docuId));
+      yield put(DocumentingActions.closeFeedbackDocumenting());
       yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
       yield put(DocumentingActions.setDocumentingStatus('closed', true));
       yield NavigationService.navigate('FeedbackConfirmation', {
@@ -99,11 +100,12 @@ export function* fetchCurrentDocumenting({ documentingId }) {
   }
 }
 
-export function* closeFeedbackDocumenting({ documentingId }) {
+export function* closeFeedbackDocumenting() {
   const params = new URLSearchParams();
-  params.append('documenting_id', documentingId);
+  const docuId = yield select(documentingId);
+  params.append('documenting_id', docuId);
 
-  const response = yield call(api.postCloseDocumenting, documentingId);
+  const response = yield call(api.postCloseDocumenting, params);
   debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
