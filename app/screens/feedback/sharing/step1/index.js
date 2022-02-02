@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text, TextInput } from 'app/components';
-import { getSharingStep } from 'app/store/selectors';
+import { getSharingStep, getSharingStep1Data } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
+import styles from './styles';
 
 const SharingStep1 = props => {
   const { describeDiscuss } = labels.feedbackPreparing;
@@ -29,10 +30,6 @@ const SharingStep1 = props => {
       ...prevState,
       [key]: text,
     }));
-  };
-
-  const handleBack = () => {
-    // dispatch(SharingActions.setSharingActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
@@ -98,14 +95,9 @@ const SharingStep1 = props => {
           />
         </View>
       </KeyboardAvoidingView>
-      <View style={containerStyles.btnContainer}>
+      <View style={styles.btnContainer}>
         <Button
-          mode="text"
-          onPress={() => handleBack()}
-          testID={'btn-sharingStep1-back'}>
-          {labels.common.back}
-        </Button>
-        <Button
+          style={styles.button}
           mode="contained"
           onPress={() => handleNext()}
           testID={'btn-sharingStep1-next'}>
