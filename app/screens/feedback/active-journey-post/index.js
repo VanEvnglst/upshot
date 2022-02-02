@@ -151,7 +151,7 @@ const ActiveFeedbackJourney = props => {
           style={{ flex: 2 }}
           done={item.closed}
           current={item.shouldStart || (item.started && !item.closed)}
-          shouldStart={item.shouldStart}
+          shouldStart={item.shouldStart && !item.started}
           hasProgress={item.started && !item.closed}
           item={item}
           onPress={() => handleNavigation(i)}
