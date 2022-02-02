@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSharingStep, getSharingStep1Data, getSharingStep2Data, getStaffName } from 'app/store/selectors';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text } from 'app/components';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
@@ -11,7 +14,37 @@ import styles from './styles';
 
 const SharingStep3 = () => {
   const { shareFeedback } = labels.feedbackSharing;
+  const activeStep = useSelector(getSharingStep);
+  const step1Data = useSelector(getSharingStep1Data);
+  const step2Data = useSelector(getSharingStep2Data);
+  const staffName = useSelector(getStaffName);
   const dispatch = useDispatch();
+  const [message, setMessage] = useState('');
+  const [details, setDetails] = useState({
+    event: '',
+    action: '',
+    result: '',
+  });
+
+  useEffect(() => {
+    const { event, action, result } = step1Data.data;
+    setDetails({
+      event: event === '' ? feedbackSharing.skippedStep : event,
+      action: action === '' ? feedbackSharing.skippedStep : action,
+      resutl: result === '' ? feedbackSharing.skippedStep : result
+    });
+    setMessage(step2Data.data);
+  }, []);
+
+  const handleEditNavigation = () => {};
+
+  const handleBack = () => {
+    dispatch(SharingActions.setSharingActiveStep(activeStep - 1));
+  };
+
+  const handleNext = () => {
+    //dispatch update
+  };
 
   const EditButton = () => {
     return (
@@ -32,11 +65,7 @@ const SharingStep3 = () => {
     );
   };
 
-  const handleEditNavigation = () => {};
 
-  const handleBack = () => {};
-
-  const handleNext = () => {};
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
@@ -63,39 +92,39 @@ const SharingStep3 = () => {
                 Ivan Evangelista
               </Text>
               <Text type="caption" style={styles.staffNameText}>
-                To: staff
+                To: {staffName.firstName}
               </Text>
             </View>
           </View>
           <View style={{ marginTop: 30 }}>
             <Text type="body2"
               style={styles.bodyText}
-            >Text description</Text>
+            >{message}</Text>
             <EditButton />
           </View>
           <View style={styles.earContainer}>
           <View style={styles.earContent}>
             <Text type="overline" style={styles.overlineEAR}>
-                Event
+                {feedbackSharing.event}
               </Text>
               <Text type="body2" style={styles.bodyText}>
-                Lorem ipsum
+                {details.event}
               </Text>
             </View>
             <View style={styles.earContent}>
             <Text type="overline" style={styles.overlineEAR}>
-                Action
+                {feedbackSharing.action}
               </Text>
               <Text type="body2" style={styles.bodyText}>
-                Lorem ipsum
+                {details.action}
               </Text>
             </View>
             <View style={styles.earContent}>
             <Text type="overline" style={styles.overlineEAR}>
-                Result
+                {feedbackSharing.result}
               </Text>
               <Text type="body2" style={styles.bodyText}>
-                Lorem ipsum
+                {details.result}
               </Text>
             </View>
           </View>
@@ -122,6 +151,19 @@ const SharingStep3 = () => {
 
 export default SharingStep3;
 
-SharingStep3.propTypes = {};
+SharingStep3.propTypes = {
+  getSharingStep: PropTypes.number,
+  getSharingStep1Data: PropTypes.object,
+  getSharingStep2Data: PropTypes.object,
+  getStaffName: PropTypes.object,
+  setSharingActiveStep: PropTypes.func,
+  // update
+};
 
-SharingStep3.defaultProps = {};
+SharingStep3.defaultProps = {
+  getSharingStep: 1,
+  getSharingStep1Data: {},
+  getSharingStep2Data: {},
+  getStaffName: {},
+  setSharingActiveStep: () => {},
+};

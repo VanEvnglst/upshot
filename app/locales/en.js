@@ -296,6 +296,10 @@ const labels = {
       title: 'Review and send feedback',
       content: 'Review your feedback before sharing',
     },
+    event: 'Event',
+    action: 'Action',
+    result: 'Result',
+    skippedStep: 'You skipped this step',
   },
   reminders: {
     morningReminder: 'Today is a new day, ',

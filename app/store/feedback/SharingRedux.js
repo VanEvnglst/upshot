@@ -62,7 +62,7 @@ const setSharingStatus = (state, { key, status }) => {
 
 const postFeedbackSharing = state => state.merge({
   fetching: true,
-  error,
+  error: '',
 });
 
 const postFeedbackSharingSuccess = (state, { sharingId }) =>
