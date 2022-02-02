@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  ScrollView,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
+import { View, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes  from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import {
   Wrapper,
@@ -72,9 +67,9 @@ const ActiveFeedbackJourney = props => {
     let content = [];
     if (flow.id === 1) {
       if (type.id === 1) {
-        content = await handleScheduledPosContent()
+        content = await handleScheduledPosContent();
       } else {
-        content = await handleScheduledCorrContent()
+        content = await handleScheduledCorrContent();
       }
     }
     setPhaseList(content);
@@ -88,28 +83,32 @@ const ActiveFeedbackJourney = props => {
           ...obj,
           closed: documenting.get('closed'),
           started: documenting.get('started'),
+          shouldStart: false,
         };
       if (obj.id === 2)
         return {
           ...obj,
           closed: preparing.get('closed'),
           started: preparing.get('started'),
+          shouldStart: documenting.get('closed'),
         };
       if (obj.id === 3)
         return {
           ...obj,
           closed: discussing.get('closed'),
           started: discussing.get('started'),
+          shouldStart: preparing.get('closed'),
         };
       if (obj.id === 4)
         return {
           ...obj,
           closed: reflecting.get('closed'),
           started: reflecting.get('started'),
+          shouldStart: discussing.get('closed'),
         };
     });
     return content;
-  }
+  };
 
   const handleScheduledPosContent = () => {
     let content = [];
@@ -117,59 +116,46 @@ const ActiveFeedbackJourney = props => {
       if (obj.id === 1)
         return {
           ...obj,
-          closed: documenting.closed,
-          started: documenting.started,
+          closed: documenting.get('closed'),
+          started: documenting.get('started'),
+          shouldStart: false,
         };
       if (obj.id === 2)
         return {
           ...obj,
-          closed: sharing.closed, 
-          started: sharing.started,
+          closed: sharing.get('closed'),
+          started: sharing.get('started'),
+          shouldStart: documenting.get('closed'),
         };
       if (obj.id === 3)
         return {
           ...obj,
-          closed: reflecting.closed,
-          started: reflecting.started,
+          closed: reflecting.get('closed'),
+          started: reflecting.get('started'),
+          shouldStart: sharing.get('closed')
         };
     });
     return content;
-  }
+  };
 
-  const SignPost = () => {
-    const documentingClosed = useSelector(state =>
-      state.documenting.get('closed'),
-    );
-    const documentingStarted = useSelector(state =>
-      state.documenting.get('started'),
-    );
-    useEffect(() => {
-      handlePhases();
-    }, []);
-
+  const SignPost = ({ item, i }) => {
     return (
-      <View>
-        {phaseList.map((item, i) => {
-          return (
-            <View key={item.id} style={styles.signPost}>
-              <SignPostIndicator
-                isLastItem={i === phaseList.length - 1}
-                isCompleted={item.closed}
-                //disabled={!item.started}
-                current={item.started && !item.closed}
-              />
-              <JourneyIndicator
-                style={{ flex: 2 }}
-                //done={item.closed}
-                current={true}
-                hasProgress={true}
-                // item.started && !item.closed
-                item={item}
-                onPress={() => handleNavigation(i)}
-              />
-            </View>
-          );
-        })}
+      <View key={item.id} style={styles.signPost}>
+        <SignPostIndicator
+          isLastItem={i === phaseList.length - 1}
+          isCompleted={item.closed}
+          disabled={!item.started && !item.closed}
+          current={item.shouldStart || (item.started && !item.closed)}
+        />
+        <JourneyIndicator
+          style={{ flex: 2 }}
+          done={item.closed}
+          current={item.shouldStart || (item.started && !item.closed)}
+          shouldStart={item.shouldStart && !item.started}
+          hasProgress={item.started && !item.closed}
+          item={item}
+          onPress={() => handleNavigation(i)}
+        />
       </View>
     );
   };
@@ -188,14 +174,14 @@ const ActiveFeedbackJourney = props => {
     let screenName = '';
     if (flow.id === 1) {
       if (type.id === 1) {
-        switch(index) {
+        switch (index) {
           case 0:
-          screenName ='FeedbackDocumenting';
-          break;
+            screenName = 'FeedbackDocumenting';
+            break;
           case 1:
-            if (sharing.get('id')) screenName = 'FeedbackSharing'
+            if (sharing.get('id')) screenName = 'FeedbackSharing';
             else screenName = 'SharingGuide';
-          break;
+            break;
           case 2:
             if (reflecting.get('id')) screenName = 'FeedbackReflecting';
             else screenName = 'ReflectingGuide';
@@ -241,22 +227,7 @@ const ActiveFeedbackJourney = props => {
           <View>
             {phaseList.map((item, i) => {
               return (
-                <View key={item.id} style={styles.signPost}>
-                  <SignPostIndicator
-                    isLastItem={i === phaseList.length - 1}
-                    isCompleted={item.closed}
-                    disabled={!item.started}
-                    current={item.started && !item.closed}
-                  />
-                  <JourneyIndicator
-                    style={{ flex: 2 }}
-                    done={item.closed}
-                    current={item.started && !item.closed}
-                    hasProgress={item.started && !item.closed}
-                    item={item}
-                    onPress={() => handleNavigation(i)}
-                  />
-                </View>
+                <SignPost item={item} i={i} />
               );
             })}
           </View>
@@ -296,7 +267,7 @@ ActiveFeedbackJourney.propTypes = {
   resetPreparingState: PropTypes.func,
   resetDiscussingState: PropTypes.func,
   resetReflectingState: PropTypes.func,
-  resetSharingState: PropTypes.func
+  resetSharingState: PropTypes.func,
 };
 
 ActiveFeedbackJourney.defaultProps = {
