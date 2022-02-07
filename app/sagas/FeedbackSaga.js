@@ -7,6 +7,7 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 const STATUS_OK = 'ok';
@@ -110,11 +111,13 @@ export function* fetchCurrentFeedback({ journeyId }) {
     const prepData = journeyData.Preparing;
     const discussData = journeyData.Discussing;
     const reflectData = journeyData.Reflecting;
+    const shareData = journeyData.Sharing;
 
     if (docuData) yield retrieveDocumentingData(docuData);
     if (prepData) yield retrievePreparingData(prepData);
     if (reflectData) yield retrieveReflectingData(reflectData);
     if (discussData) yield retrieveDiscussingData(discussData);
+    if (shareData) yield retrieveSharingData(shareData);
 
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
     yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
@@ -162,6 +165,12 @@ function* retrieveDiscussingData(discussingData) {
   yield put(
     DiscussingActions.setDiscussingStatus('started', !discussingData.closed),
   );
+}
+
+function* retrieveSharingData(sharingData) {
+  yield put(SharingActions.setSharingStatus('id', sharingData.id));
+  yield put(SharingActions.setDiscussingStatus('closed', sharingData.closed));
+  yield put(SharingActions.setDiscussingStatus('started', !sharingData.closed));
 }
 
 function* watchFeedbackSaga() {
