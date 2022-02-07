@@ -4,6 +4,7 @@ import { Button, ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text, Modal } from 'app/components';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import { getSharingStep, getSharingMaxSteps, getSharingId } from 'app/store/selectors';
 import SharingStep1 from './step1';
 import SharingStep2 from './step2';
