@@ -22,8 +22,13 @@ const SharingStep1 = props => {
   });
 
   useEffect(() => {
-// TODO: step data loading
-  }, []);
+    if (stepData.data)
+      setDetails({
+        event: stepData.data.event,
+        action: stepData.data.action,
+        result: stepData.data.result,
+      });
+  }, [stepData]);
 
   const handleTextChange = (key, text) => {
     setDetails(prevState => ({
@@ -110,6 +115,16 @@ const SharingStep1 = props => {
 
 export default SharingStep1;
 
-SharingStep1.propTypes = {};
+SharingStep1.propTypes = {
+  getSharingStep: PropTypes.number,
+  getSharingStep1Data: PropTypes.object,
+  setSharingData: PropTypes.func,
+  setSharingActiveStep: PropTypes.func,
+};
 
-SharingStep1.defaultProps = {};
+SharingStep1.defaultProps = {
+  getSharingStep: 1,
+  getSharingStep1Data: PropTypes.object,
+  setSharingData: () => {},
+  setSharingActiveStep: () => {}
+};
