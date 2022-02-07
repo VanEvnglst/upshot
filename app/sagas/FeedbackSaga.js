@@ -169,8 +169,8 @@ function* retrieveDiscussingData(discussingData) {
 
 function* retrieveSharingData(sharingData) {
   yield put(SharingActions.setSharingStatus('id', sharingData.id));
-  yield put(SharingActions.setDiscussingStatus('closed', sharingData.closed));
-  yield put(SharingActions.setDiscussingStatus('started', !sharingData.closed));
+  yield put(SharingActions.setSharingStatus('closed', sharingData.closed));
+  yield put(SharingActions.setSharingStatus('started', !sharingData.closed));
 }
 
 function* watchFeedbackSaga() {
