@@ -18,7 +18,11 @@ const labels = {
     readMore: 'Read More',
     saveClose: 'Save & Close',
     saveChanges: 'Save changes',
-    closeFeedback: 'Close your feedback for now?'
+    closeFeedback: 'Close your feedback for now?',
+    gotIt: 'Got it',
+    keepGoing: 'Keep Going',
+    remindMeLater: 'Remind me later',
+    youDidIt: 'You did it!'
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',
@@ -75,7 +79,6 @@ const labels = {
     feedbackRelation: 'My feedback is related to',
     dateOfFeedback: "I'm giving feedback about something that happened",
     confirmation: {
-      title: 'You did it!',
       content1: `You've finished "Documenting" - the first step of our feedback coaching journey.`,
       content2: `Would you like to continue on to the second step, "Preparing?" - this step takes 15 minutes.`,
       schedPosContent: `Would you like to continue on to the next part, "Sharing?" - this usually takes around 15 minutes.`
@@ -103,7 +106,7 @@ const labels = {
     },
     describeDiscuss: {
       step: 'Step 3',
-      title: 'Descibe and discuss the observations',
+      title: 'Describe and discuss the observations',
       describeEvent:
         'Describe the event. Be specific about the details surrounding the event. Mention the date, place, and circumstances',
       describeAction:
@@ -300,6 +303,7 @@ const labels = {
     action: 'Action',
     result: 'Result',
     skippedStep: 'You skipped this step',
+    confirmation: `You've finished "Sharing" You can review your feedback any time.\n\nWould you like to continue on to the next part, "Reflecting?" - this usually takes around 10 minutes.`,
   },
   reminders: {
     morningReminder: 'Today is a new day, ',
