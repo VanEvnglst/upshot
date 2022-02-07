@@ -17,7 +17,7 @@ export const INITIAL_STATE = Map({
   step4: { ...defaultState },
   step5: { ...defaultState },
   staffRating: { fetching: false, ...defaultState, error: '' },
-  close: false,
+  closed: false,
   started: false,
 });
 

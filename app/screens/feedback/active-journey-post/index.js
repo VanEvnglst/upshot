@@ -132,7 +132,7 @@ const ActiveFeedbackJourney = props => {
           ...obj,
           closed: reflecting.get('closed'),
           started: reflecting.get('started'),
-          shouldStart: sharing.get('closed')
+          shouldStart: sharing.get('closed'),
         };
     });
     return content;
@@ -144,7 +144,7 @@ const ActiveFeedbackJourney = props => {
         <SignPostIndicator
           isLastItem={i === phaseList.length - 1}
           isCompleted={item.closed}
-          disabled={!item.started && !item.closed}
+          disabled={!item.started && !item.closed && !item.shouldStart}
           current={item.shouldStart || (item.started && !item.closed)}
         />
         <JourneyIndicator
@@ -154,7 +154,9 @@ const ActiveFeedbackJourney = props => {
           shouldStart={item.shouldStart && !item.started}
           hasProgress={item.started && !item.closed}
           item={item}
-          onPress={() => handleNavigation(i)}
+          onPress={() =>
+            item.closed ? handleReviewNavigation(i) : handleNavigation(i)
+          }
         />
       </View>
     );
@@ -169,6 +171,7 @@ const ActiveFeedbackJourney = props => {
     dispatch(SharingActions.resetSharingState());
     navigation.navigate('FeedbackJourneyList');
   };
+
 
   const handleNavigation = index => {
     let screenName = '';
@@ -210,6 +213,47 @@ const ActiveFeedbackJourney = props => {
     navigation.navigate(screenName);
   };
 
+
+  const handleReviewNavigation = () => {
+    let screenName = '';
+    if (flow.id === 1) {
+      if (type.id === 1) {
+        switch (index) {
+          case 0:
+            screenName = 'FeedbackDocumenting';
+            break;
+          case 1:
+            if (sharing.get('id')) screenName = 'FeedbackSharing';
+            else screenName = 'SharingGuide';
+            break;
+          case 2:
+            if (reflecting.get('id')) screenName = 'FeedbackReflecting';
+            else screenName = 'ReflectingGuide';
+            break;
+        }
+      } else {
+        switch (index) {
+          case 0:
+            screenName = 'FeedbackDocumenting';
+            break;
+          case 1:
+            if (preparing.get('id')) screenName = 'FeedbackPreparing';
+            else screenName = 'PreparingGuide';
+            break;
+          case 2:
+            if (discussing.get('id')) screenName = 'DiscussingMeeting';
+            else screenName = 'DiscussingGuide';
+            break;
+          case 3:
+            if (reflecting.get('id')) screenName = 'FeedbackReflecting';
+            else screenName = 'ReflectingGuide';
+            break;
+        }
+      }
+    }
+    //navigation.navigate(screenName);
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
@@ -226,9 +270,7 @@ const ActiveFeedbackJourney = props => {
           </View>
           <View>
             {phaseList.map((item, i) => {
-              return (
-                <SignPost item={item} i={i} />
-              );
+              return <SignPost key={item.id} item={item} i={i} />;
             })}
           </View>
         </ScrollView>

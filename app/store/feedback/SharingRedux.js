@@ -19,9 +19,9 @@ const { Types, Creators } = createActions({
   updateFeedbackSharing: ['data'],
   updateFeedbackSharingSuccess: null,
   updateFeedbackSharingFailure: ['error'],
-  updateFeedbackSharingReminder: ['data'],
-  updateFeedbackSharingReminderSuccess: null,
-  updateFeedbackSharingReminderFailure: ['error'],
+  updateSharingReminder: ['data'],
+  updateSharingReminderSuccess: null,
+  updateSharingReminderFailure: ['error'],
   setSharingActiveStep: ['step'],
   setSharingData: ['key', 'data'],
   setSharingStatus: ['key', 'status'],
@@ -94,16 +94,16 @@ const updateFeedbackSharingFailure = (state, { error}) =>
     error
   });
 
-const updateFeedbackSharingReminder = state => state.merge({
+const updateSharingReminder = state => state.merge({
   fetching: true,
   error: ''
 });
 
-const updateFeedbackSharingReminderSuccess = state => state.merge({
+const updateSharingReminderSuccess = state => state.merge({
   fetching: false,
 });
 
-const updateFeedbackSharingReminderFailure = (state, {error}) => state.merge({
+const updateSharingReminderFailure = (state, {error}) => state.merge({
   fetching: false,
   error
 })
@@ -154,9 +154,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_FEEDBACK_SHARING]: updateFeedbackSharing,
   [Types.UPDATE_FEEDBACK_SHARING_SUCCESS]: updateFeedbackSharingSuccess,
   [Types.UPDATE_FEEDBACK_SHARING_FAILURE]: updateFeedbackSharingFailure,
-  [Types.UPDATE_FEEDBACK_SHARING_REMINDER]: updateFeedbackSharingReminder,
-  [Types.UPDATE_FEEDBACK_SHARING_REMINDER_SUCCESS]: updateFeedbackSharingReminderSuccess,
-  [Types.UPDATE_FEEDBACK_SHARING_REMINDER_FAILURE]: updateFeedbackSharingReminderFailure,
+  [Types.UPDATE_SHARING_REMINDER]: updateSharingReminder,
+  [Types.UPDATE_SHARING_REMINDER_SUCCESS]: updateSharingReminderSuccess,
+  [Types.UPDATE_SHARING_REMINDER_FAILURE]: updateSharingReminderFailure,
   [Types.FETCH_CURRENT_SHARING]: fetchCurrentSharing,
   [Types.FETCH_CURRENT_SHARING_SUCCESS]: fetchCurrentSharingSuccess,
   [Types.FETCH_CURRENT_SHARING_FAILURE]: fetchCurrentSharingFailure,

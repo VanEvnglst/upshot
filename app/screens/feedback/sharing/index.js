@@ -4,7 +4,8 @@ import { Button, ProgressBar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text, Modal } from 'app/components';
-import { getSharingStep, getSharingMaxSteps } from 'app/store/selectors';
+import SharingActions from 'app/store/feedback/SharingRedux';
+import { getSharingStep, getSharingMaxSteps, getSharingId } from 'app/store/selectors';
 import SharingStep1 from './step1';
 import SharingStep2 from './step2';
 import SharingStep3 from './step3';
@@ -17,8 +18,18 @@ const FeedbackSharing = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getSharingStep);
   const maxStep = useSelector(getSharingMaxSteps);
+  const activeSharing = useSelector(getSharingId);
   const indexValue =  activeStep / maxStep;
   const [isModalVisible, setModalVisible] = useState(false);
+
+  
+  useEffect(() => {
+    async function retrieveData() {
+      if(activeSharing)
+      await dispatch(SharingActions.fetchCurrentSharing(activeSharing));
+    }
+    retrieveData();
+  }, []);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -117,11 +128,15 @@ const FeedbackSharing = props => {
 export default FeedbackSharing;
 
 FeedbackSharing.propTypes = {
-  activeStep: PropTypes.number,
-  maxStep: PropTypes.number,
+  getSharingStep: PropTypes.number,
+  getSharingMaxSteps: PropTypes.number,
+  getSharingId: PropTypes.number,
+  fetchCurrentSharing: PropTypes.func,
 };
 
 FeedbackSharing.defaultProps = {
-  activeStep: 1,
-  maxStep: 3
+  getSharingStep: 1,
+  getSharingMaxSteps: 3,
+  getSharingId: 1,
+  fetchCurrentSharing: () => {}
 };

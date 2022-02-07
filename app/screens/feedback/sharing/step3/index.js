@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSharingStep, getSharingStep1Data, getSharingStep2Data, getStaffName } from 'app/store/selectors';
+import {
+  getSharingStep,
+  getSharingStep1Data,
+  getSharingStep2Data,
+  getStaffName,
+} from 'app/store/selectors';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text } from 'app/components';
 import Images from 'app/assets/images';
@@ -13,7 +18,8 @@ import containerStyles from '../styles';
 import styles from './styles';
 
 const SharingStep3 = () => {
-  const { shareFeedback } = labels.feedbackSharing;
+  const { feedbackSharing } = labels;
+  const { shareFeedback } = feedbackSharing;
   const activeStep = useSelector(getSharingStep);
   const step1Data = useSelector(getSharingStep1Data);
   const step2Data = useSelector(getSharingStep2Data);
@@ -31,32 +37,35 @@ const SharingStep3 = () => {
     setDetails({
       event: event === '' ? feedbackSharing.skippedStep : event,
       action: action === '' ? feedbackSharing.skippedStep : action,
-      resutl: result === '' ? feedbackSharing.skippedStep : result
+      result: result === '' ? feedbackSharing.skippedStep : result,
     });
     setMessage(step2Data.data);
   }, []);
-
-  const handleEditNavigation = () => {};
 
   const handleBack = () => {
     dispatch(SharingActions.setSharingActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    //dispatch update
+    const data = {
+      message,
+      details,
+    };
+    dispatch(SharingActions.updateFeedbackSharing(data));
   };
 
-  const EditButton = () => {
+  const handleEditNavigation = step => {
+    dispatch(SharingActions.setSharingActiveStep(activeStep - step));
+  };
+
+  const EditButton = ({ step }) => {
     return (
       <TouchableOpacity
         accessibilityRole="button"
         style={styles.editButton}
-        onPress={() => handleEditNavigation()}>
+        onPress={() => handleEditNavigation(step)}>
         <View style={styles.editContainer}>
-          {/* <Icon
-                name='mode_edit'
-                size={18}
-              /> */}
+          <Icon name="pencil" size={18} />
           <Text type="button" style={styles.editText}>
             Edit
           </Text>
@@ -64,8 +73,6 @@ const SharingStep3 = () => {
       </TouchableOpacity>
     );
   };
-
-
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
@@ -97,14 +104,14 @@ const SharingStep3 = () => {
             </View>
           </View>
           <View style={{ marginTop: 30 }}>
-            <Text type="body2"
-              style={styles.bodyText}
-            >{message}</Text>
-            <EditButton />
+            <Text type="body2" style={styles.bodyText}>
+              {message}
+            </Text>
+            <EditButton step={2} />
           </View>
           <View style={styles.earContainer}>
-          <View style={styles.earContent}>
-            <Text type="overline" style={styles.overlineEAR}>
+            <View style={styles.earContent}>
+              <Text type="overline" style={styles.overlineEAR}>
                 {feedbackSharing.event}
               </Text>
               <Text type="body2" style={styles.bodyText}>
@@ -112,7 +119,7 @@ const SharingStep3 = () => {
               </Text>
             </View>
             <View style={styles.earContent}>
-            <Text type="overline" style={styles.overlineEAR}>
+              <Text type="overline" style={styles.overlineEAR}>
                 {feedbackSharing.action}
               </Text>
               <Text type="body2" style={styles.bodyText}>
@@ -120,7 +127,7 @@ const SharingStep3 = () => {
               </Text>
             </View>
             <View style={styles.earContent}>
-            <Text type="overline" style={styles.overlineEAR}>
+              <Text type="overline" style={styles.overlineEAR}>
                 {feedbackSharing.result}
               </Text>
               <Text type="body2" style={styles.bodyText}>
@@ -128,7 +135,7 @@ const SharingStep3 = () => {
               </Text>
             </View>
           </View>
-          <EditButton />
+          <EditButton step={1} />
         </View>
       </View>
       <View style={containerStyles.btnContainer}>
@@ -157,7 +164,7 @@ SharingStep3.propTypes = {
   getSharingStep2Data: PropTypes.object,
   getStaffName: PropTypes.object,
   setSharingActiveStep: PropTypes.func,
-  // update
+  updateFeedbackSharing: PropTypes.func,
 };
 
 SharingStep3.defaultProps = {
@@ -166,4 +173,5 @@ SharingStep3.defaultProps = {
   getSharingStep2Data: {},
   getStaffName: {},
   setSharingActiveStep: () => {},
+  updateFeedbackSharing: () => {},
 };

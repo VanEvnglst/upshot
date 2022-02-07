@@ -8,6 +8,7 @@ import { getDocumentingId, getCurrentJourney, getChosenFlow, getChosenType } fro
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   Text,
   Wrapper,
@@ -70,10 +71,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => handleDocumentingNav()}>
-          <Text>Keep going</Text>
+          <Text>{labels.common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{labels.common.remindMeLater}</Text>
         </Button>
       </View>
     );
@@ -99,10 +100,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>Keep going</Text>
+          <Text>{labels.common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{labels.common.remindMeLater}</Text>
         </Button>
         {/* <HintIndicator
           showHint={discussingHintVisible}
@@ -123,7 +124,7 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text>Schedule Discussion</Text>
+          <Text>{labels.feedbackPreparing.schedule}</Text>
         </Button>
         {/* <HintIndicator
           showHint={preparingHintVisible}
@@ -142,7 +143,7 @@ const FeedbackConfirmation = props => {
         <Button
           mode='contained'
           onPress={() => closeJourney()}
-        >Got it</Button>
+        >{labels.common.gotIt}</Button>
       </View>
     )
   }
@@ -153,10 +154,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>Keep going</Text>
+          <Text>{labels.common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{labels.common.remindMeLater}</Text>
         </Button>
       </View>
     );
@@ -179,7 +180,7 @@ const FeedbackConfirmation = props => {
       dispatch(DiscussingActions.updateDiscussingReminder(data));
     }
     if(route.params.type === 'sharing') {
-      //dispatch(SharingActions.updateSharingReminder(data))
+      dispatch(SharingActions.updateSharingReminder(data))
     }
     hideModal();
   };
@@ -206,10 +207,10 @@ const FeedbackConfirmation = props => {
           />
         </View>
         <View style={{ flex: 2 }}>
-          <Text type="h4">You did it!</Text>
+          <Text type="h4">{labels.common.youDidIt}</Text>
           <Text
             type="body1"
-            style={{ lineHeight: 24, marginTop: 35, width: '90%' }}>
+            style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
             {content}
           </Text>
         </View>
