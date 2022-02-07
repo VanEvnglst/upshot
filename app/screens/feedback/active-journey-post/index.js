@@ -270,7 +270,7 @@ const ActiveFeedbackJourney = props => {
           </View>
           <View>
             {phaseList.map((item, i) => {
-              return <SignPost item={item} i={i} />;
+              return <SignPost key={item.id} item={item} i={i} />;
             })}
           </View>
         </ScrollView>
