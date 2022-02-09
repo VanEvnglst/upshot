@@ -64,6 +64,8 @@ export const getReflectingId = state => state.reflecting.get('id');
 export const getReflectStep1Data = state => state.reflecting.get('step1');
 export const getReflectStep2Data = state => state.reflecting.get('step2');
 export const getReflectStep4Data = state => state.reflecting.get('step4');
+export const getReflectingCriteria = state =>
+state.reflecting.get('reflectingCriteria');
 
 
 /* ------------- Feedback Sharing Selectors ------------- */
