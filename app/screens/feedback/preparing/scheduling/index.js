@@ -111,7 +111,7 @@ const PreparingSchedule = props => {
           onPress: () => navigation.goBack()
         }} />
         <Text type="h6">
-          Schedule your feedback discussion with {staffName}
+          Schedule your feedback discussion with {staffName.firstName} {staffName.lastName}
         </Text>
         <View style={{ flex: 3, marginTop: 30 }}>
           <CalendarPicker
