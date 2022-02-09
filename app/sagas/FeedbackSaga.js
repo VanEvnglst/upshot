@@ -177,7 +177,6 @@ function* retrieveSharingData(sharingData) {
 
 function* setPhaseSteps(flow, type) {
   // set max step value for phase depending on flow and type
-  console.log('set phase');
   if(flow.id === 1) {
     if (type.id === 1) {
       yield put(ReflectingActions.setReflectingStatus('maxStep', 4));
