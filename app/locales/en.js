@@ -266,7 +266,7 @@ const labels = {
     involveEmployee: 'I involved my employee in developing an action plan',
     documentAndSend: 'I documented and sent the agreed action plan to my employee',
     feedbackFromTeam: 'Looking at feedback from your team',
-    feedbackFromTeamDesc: `Getting feedback from your team members is another way to increase self-awareness. Being willing to look at yourself through others' eyes will help you gain invaluable insight into how you can become a more effective leader.\n\n Every time you give feedback, we ask your employees for their input. When we receive at least 5 responses, we share the results with you.`,
+    feedbackFromTeamDesc: `Getting feedback from your team members is another way to increase self-awareness. Being willing to look at yourself through others' eyes will help you gain invaluable insight into how you can become a more effective leader.\n\nEvery time you give feedback, we ask your employees for their input. When we receive at least 5 responses, we share the results with you.`,
     notEnoughResponses: `Hmm... It looks like you don't have enough employee responses right now`,
     allFeedback: 'All Feedback',
     preparedFeedback: 'Prepared Feedback',
