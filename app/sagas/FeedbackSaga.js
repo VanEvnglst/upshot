@@ -10,6 +10,7 @@ import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
+
 const STATUS_OK = 'ok';
 
 const staff = state => state.documenting.get('step1').data.id;
@@ -121,6 +122,7 @@ export function* fetchCurrentFeedback({ journeyId }) {
 
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
     yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
+    yield setPhaseSteps(journeyData.feedback_flow, journeyData.feedback_type)
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
   } else {
     yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
@@ -171,6 +173,17 @@ function* retrieveSharingData(sharingData) {
   yield put(SharingActions.setSharingStatus('id', sharingData.id));
   yield put(SharingActions.setSharingStatus('closed', sharingData.closed));
   yield put(SharingActions.setSharingStatus('started', !sharingData.closed));
+}
+
+function* setPhaseSteps(flow, type) {
+  // set max step value for phase depending on flow and type
+  console.log('set phase');
+  if(flow.id === 1) {
+    if (type.id === 1) {
+      yield put(ReflectingActions.setReflectingStatus('maxStep', 4));
+    }
+  }
+
 }
 
 function* watchFeedbackSaga() {
