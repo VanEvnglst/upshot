@@ -4,10 +4,16 @@ import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getDocumentingId, getCurrentJourney, getChosenFlow, getChosenType } from 'app/store/selectors';
+import {
+  getDocumentingId,
+  getCurrentJourney,
+  getChosenFlow,
+  getChosenType,
+} from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   Text,
   Wrapper,
@@ -59,19 +65,19 @@ const FeedbackConfirmation = props => {
         return <PreparingCTA />;
       case 'reflecting':
         return <ReflectingCTA />;
+      case 'sharing':
+        return <SharingCTA />;
     }
   };
 
   const DocumentingCTA = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <Button
-          type={'text'}
-          onPress={() => handleDocumentingNav()}>
-          <Text>Keep going</Text>
+        <Button type={'text'} onPress={() => handleDocumentingNav()}>
+          <Text>{labels.common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{labels.common.remindMeLater}</Text>
         </Button>
       </View>
     );
@@ -80,16 +86,14 @@ const FeedbackConfirmation = props => {
   const handleDocumentingNav = () => {
     let screenName = '';
     if (flow.id === 1) {
-      if (type.id === 1)
-        screenName = 'SharingGuide';
-      else 
-        screenName = 'PreparingGuide';
+      if (type.id === 1) screenName = 'SharingGuide';
+      else screenName = 'PreparingGuide';
     } else {
-      screenName = 'ReflectingGuide'
+      screenName = 'ReflectingGuide';
     }
 
     navigation.navigate(screenName);
-  }
+  };
 
   const DiscussingCTA = () => {
     return (
@@ -97,10 +101,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>Keep going</Text>
+          <Text>{labels.common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{labels.common.remindMeLater}</Text>
         </Button>
         {/* <HintIndicator
           showHint={discussingHintVisible}
@@ -121,7 +125,7 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text>Schedule Discussion</Text>
+          <Text>{labels.feedbackPreparing.schedule}</Text>
         </Button>
         {/* <HintIndicator
           showHint={preparingHintVisible}
@@ -133,20 +137,35 @@ const FeedbackConfirmation = props => {
 
   const ReflectingCTA = () => {
     return (
-      <View style={{
-        marginBottom: 20,
-        flex: 1,
-      }}>
-        <Button
-          mode='contained'
-          onPress={() => closeJourney()}
-        >Got it</Button>
+      <View
+        style={{
+          marginBottom: 20,
+          flex: 1,
+        }}>
+        <Button mode="contained" onPress={() => closeJourney()}>
+          {labels.common.gotIt}
+        </Button>
       </View>
-    )
-  }
+    );
+  };
+
+  const SharingCTA = () => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          type={'text'}
+          onPress={() => navigation.navigate('ReflectingGuide')}>
+          <Text>{labels.common.keepGoing}</Text>
+        </Button>
+        <Button type={'text'} onPress={() => showModal()}>
+          <Text>{labels.common.remindMeLater}</Text>
+        </Button>
+      </View>
+    );
+  };
 
   const closeJourney = () => {
-    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data))
+    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data));
   };
 
   const handleTimeSelection = time => {
@@ -161,14 +180,16 @@ const FeedbackConfirmation = props => {
     if (route.params.type === 'discussing') {
       dispatch(DiscussingActions.updateDiscussingReminder(data));
     }
+    if (route.params.type === 'sharing') {
+      dispatch(SharingActions.updateSharingReminder(data));
+    }
     hideModal();
   };
 
   const handleClose = () => {
-    if(route.params.type === 'reflecting')
-    closeJourney();
-    else navigation.navigate('ActiveFeedbackJourney')
-  }
+    if (route.params.type === 'reflecting') closeJourney();
+    else navigation.navigate('ActiveFeedbackJourney');
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -186,11 +207,19 @@ const FeedbackConfirmation = props => {
           />
         </View>
         <View style={{ flex: 2 }}>
-          <Text type="h4">You did it!</Text>
+          <Text type="h4">{labels.common.youDidIt}</Text>
           <Text
             type="body1"
-            style={{ lineHeight: 24, marginTop: 35, width: '90%' }}>
-            {content}
+            style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
+            {
+              route.params.type === 'documenting'
+                ? flow.id === 1
+                  ? type.id === 1
+                    ? labels.feedbackDocumenting.confirmation.schedPosContent
+                    : content // sched corr content
+                  : content // TODO: change to on the spot content
+                : content // regular content for each phase
+            }
           </Text>
         </View>
         {preparingHintVisible && (

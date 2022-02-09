@@ -39,7 +39,6 @@ const FeedbackJourneyList = props => {
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-    debugger;
     if (route.params && route.params.type === 'journeyEnd') {
       setModalVisible(true);
     }
@@ -153,6 +152,7 @@ const FeedbackJourneyList = props => {
               {labels.common.inProgress}
             </Text>
           </View>
+          {/* TODO: Update to Flatlist */}
           {activeJourneys &&
             activeJourneys.map((item, i) => (
               <InProgressCard key={item.id} activeJourney={item} />
@@ -165,6 +165,7 @@ const FeedbackJourneyList = props => {
                 {labels.feedbackIntro.history}
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {/* TODO: Update to Flatlist */}
                 {recentJourneys.map((item, i) => (
                   <HistoryCard key={item.id} item={item} />
                 ))}

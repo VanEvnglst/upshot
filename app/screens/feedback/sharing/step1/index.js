@@ -3,21 +3,32 @@ import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text, TextInput } from 'app/components';
-import { getSharingStep } from 'app/store/selectors';
+import { getSharingStep, getSharingStep1Data } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
+import styles from './styles';
 
 const SharingStep1 = props => {
-  const { describeDiscuss } = labels.feedbackPreparing;
+  const { describeDiscuss, checkIn } = labels.feedbackPreparing;
   const dispatch = useDispatch();
-  // const activeStep = useSelector(getSharingStep);
-  // const stepData = useSelector(getSharingStep1Data);
+  const activeStep = useSelector(getSharingStep);
+  const stepData = useSelector(getSharingStep1Data);
   const [details, setDetails] = useState({
     event: '',
     action: '',
     result: '',
   });
+
+  useEffect(() => {
+    if (stepData.data)
+      setDetails({
+        event: stepData.data.event,
+        action: stepData.data.action,
+        result: stepData.data.result,
+      });
+  }, [stepData]);
 
   const handleTextChange = (key, text) => {
     setDetails(prevState => ({
@@ -26,13 +37,9 @@ const SharingStep1 = props => {
     }));
   };
 
-  const handleBack = () => {
-    // dispatch(SharingActions.setSharingActiveStep(activeStep - 1));
-  };
-
   const handleNext = () => {
-    // dispatch(SharingActions.setSharingActiveStep(activeStep + 1));
-    // dispatch(SharingActions.setSharingData('step1', details));
+    dispatch(SharingActions.setSharingActiveStep(activeStep + 1));
+    dispatch(SharingActions.setSharingData('step1', details));
   };
 
   return (
@@ -43,7 +50,7 @@ const SharingStep1 = props => {
             type="h6"
             style={containerStyles.stepTitleText}
             testID={'txt-sharingStep1-title'}>
-            {describeDiscuss.step}: {describeDiscuss.title}
+            {checkIn.step}: {describeDiscuss.title}
           </Text>
           <Text
             type="body1"
@@ -93,14 +100,9 @@ const SharingStep1 = props => {
           />
         </View>
       </KeyboardAvoidingView>
-      <View style={containerStyles.btnContainer}>
+      <View style={styles.btnContainer}>
         <Button
-          mode="text"
-          onPress={() => handleBack()}
-          testID={'btn-sharingStep1-back'}>
-          {labels.common.back}
-        </Button>
-        <Button
+          style={styles.button}
           mode="contained"
           onPress={() => handleNext()}
           testID={'btn-sharingStep1-next'}>
@@ -113,6 +115,16 @@ const SharingStep1 = props => {
 
 export default SharingStep1;
 
-SharingStep1.propTypes = {};
+SharingStep1.propTypes = {
+  getSharingStep: PropTypes.number,
+  getSharingStep1Data: PropTypes.object,
+  setSharingData: PropTypes.func,
+  setSharingActiveStep: PropTypes.func,
+};
 
-SharingStep1.defaultProps = {};
+SharingStep1.defaultProps = {
+  getSharingStep: 1,
+  getSharingStep1Data: {},
+  setSharingData: () => {},
+  setSharingActiveStep: () => {}
+};
