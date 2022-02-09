@@ -32,12 +32,12 @@ const ReflectingStep3 = props => {
 
   const NoRating = () => {
     return (
-      <View style={{ backgroundColor: '#f5f5f5', padding: 20, justifyContent: 'center', alignItems: 'center', borderRadius: 16 }}>
+      <View style={styles.noRatingCard}>
         <Image
           source={Images.noRatings}
           resizeMode='contain'
         />
-        <Text type='body2' style={{ marginTop: 20 }}>{feedbackReflecting.notEnoughResponses}</Text>
+        <Text type='body2' style={styles.noRatingText}>{feedbackReflecting.notEnoughResponses}</Text>
       </View>
     )
   }
@@ -52,23 +52,25 @@ const ReflectingStep3 = props => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
       <View>
         <Text type="h6" style={containerStyles.stepTitleText}>
           {feedbackReflecting.feedbackFromTeam}
         </Text>
         <Text type="body1" style={containerStyles.stepDescriptionText}>{feedbackReflecting.feedbackFromTeamDesc}</Text>
       </View>
-      <View style={{ marginVertical: 30, }}>
+      <View style={styles.ratingsContainer}>
         <NoRating />
         </View>
       <View style={containerStyles.btnContainer}>
         <Button mode="text" onPress={() => handleBack()}>
-          Back
+          {labels.common.back}
         </Button>
         <Button mode="contained" onPress={() => handleNext()}>
-          Next
+          {labels.common.next}
         </Button>
       </View>
       </ScrollView>
@@ -78,6 +80,14 @@ const ReflectingStep3 = props => {
 
 export default ReflectingStep3;
 
-ReflectingStep3.propTypes = {};
+ReflectingStep3.propTypes = {
+  getReflectingStep: PropTypes.number,
+  setReflectingActiveStep: PropTypes.func,
+  fetchStaffRatings: PropTypes.func,
+};
 
-ReflectingStep3.defaultProps = {};
+ReflectingStep3.defaultProps = {
+  getReflectingStep: 1,
+  setReflectingActiveStep: () => {},
+  fetchStaffRatings: () => {},
+};
