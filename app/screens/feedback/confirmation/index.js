@@ -4,7 +4,12 @@ import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getDocumentingId, getCurrentJourney, getChosenFlow, getChosenType } from 'app/store/selectors';
+import {
+  getDocumentingId,
+  getCurrentJourney,
+  getChosenFlow,
+  getChosenType,
+} from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
@@ -68,9 +73,7 @@ const FeedbackConfirmation = props => {
   const DocumentingCTA = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <Button
-          type={'text'}
-          onPress={() => handleDocumentingNav()}>
+        <Button type={'text'} onPress={() => handleDocumentingNav()}>
           <Text>{labels.common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
@@ -83,16 +86,14 @@ const FeedbackConfirmation = props => {
   const handleDocumentingNav = () => {
     let screenName = '';
     if (flow.id === 1) {
-      if (type.id === 1)
-        screenName = 'SharingGuide';
-      else 
-        screenName = 'PreparingGuide';
+      if (type.id === 1) screenName = 'SharingGuide';
+      else screenName = 'PreparingGuide';
     } else {
-      screenName = 'ReflectingGuide'
+      screenName = 'ReflectingGuide';
     }
 
     navigation.navigate(screenName);
-  }
+  };
 
   const DiscussingCTA = () => {
     return (
@@ -136,17 +137,17 @@ const FeedbackConfirmation = props => {
 
   const ReflectingCTA = () => {
     return (
-      <View style={{
-        marginBottom: 20,
-        flex: 1,
-      }}>
-        <Button
-          mode='contained'
-          onPress={() => closeJourney()}
-        >{labels.common.gotIt}</Button>
+      <View
+        style={{
+          marginBottom: 20,
+          flex: 1,
+        }}>
+        <Button mode="contained" onPress={() => closeJourney()}>
+          {labels.common.gotIt}
+        </Button>
       </View>
-    )
-  }
+    );
+  };
 
   const SharingCTA = () => {
     return (
@@ -161,10 +162,10 @@ const FeedbackConfirmation = props => {
         </Button>
       </View>
     );
-  }
+  };
 
   const closeJourney = () => {
-    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data))
+    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data));
   };
 
   const handleTimeSelection = time => {
@@ -179,17 +180,16 @@ const FeedbackConfirmation = props => {
     if (route.params.type === 'discussing') {
       dispatch(DiscussingActions.updateDiscussingReminder(data));
     }
-    if(route.params.type === 'sharing') {
-      dispatch(SharingActions.updateSharingReminder(data))
+    if (route.params.type === 'sharing') {
+      dispatch(SharingActions.updateSharingReminder(data));
     }
     hideModal();
   };
 
   const handleClose = () => {
-    if(route.params.type === 'reflecting')
-    closeJourney();
-    else navigation.navigate('ActiveFeedbackJourney')
-  }
+    if (route.params.type === 'reflecting') closeJourney();
+    else navigation.navigate('ActiveFeedbackJourney');
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -211,7 +211,15 @@ const FeedbackConfirmation = props => {
           <Text
             type="body1"
             style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
-            {content}
+            {
+              route.params.type === 'documenting'
+                ? flow.id === 1
+                  ? type.id === 1
+                    ? labels.feedbackDocumenting.confirmation.schedPosContent
+                    : content // sched corr content
+                  : content // TODO: change to on the spot content
+                : content // regular content for each phase
+            }
           </Text>
         </View>
         {preparingHintVisible && (
