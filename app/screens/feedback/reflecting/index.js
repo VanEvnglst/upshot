@@ -24,7 +24,6 @@ const FeedbackReflecting = props => {
   const activeReflecting = useSelector(getReflectingId);
   const isLoading = useSelector(state => state.reflecting.get('fetching'));
   const indexValue = activeStep / maxStep;
-
   const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -44,6 +43,10 @@ const FeedbackReflecting = props => {
       await dispatch(ReflectingActions.fetchCurrentReflecting(activeReflecting));
     }
     retrieveData();
+  }, []);
+
+  useEffect(() => {
+    dispatch(ReflectingActions.fetchReflectingCriteria());
   }, []);
 
   const handleStepContent = () => {

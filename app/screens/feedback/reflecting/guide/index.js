@@ -23,7 +23,6 @@ const ReflectingGuide = props => {
     if (reflectingId)
      navigation.navigate('FeedbackReflecting');
      else
-    //   dispatch(ReflectingActions.resetReflectingState());
       dispatch(ReflectingActions.postFeedbackReflecting(journeyId));
   };
 
