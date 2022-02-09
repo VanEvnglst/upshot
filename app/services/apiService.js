@@ -170,6 +170,12 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get_staff_feedback`,params);
   },
 
+  getReflectingCriteria: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/getcriteria`, params);
+  },
+
   postFeedbackSharing: async params => {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
