@@ -173,7 +173,7 @@ const labels = {
       checkoutTouchbase:
         'When can we touch base again to check how we are progressing and how I can help you further?',
     },
-    confirmation: `You've finished "Preparing". We've created a discussion guide for you to review and use during your feedback session. \n\n Now that you're prepared, it's time to schedule your face-to-face discussion.`,
+    confirmation: `You've finished "Preparing". We've created a discussion guide for you to review and use during your feedback session. \n\nNow that you're prepared, it's time to schedule your face-to-face discussion.`,
     confirmationHint:
       'The best time to give feedback is shortly after the moment has occurred, and no later than a week from the incident. The longer you wait, the longer the incident affects the way you think - and the way the other person acts.',
     schedule: 'Schedule discussion',
@@ -285,7 +285,7 @@ const labels = {
     continueDoing: 'Continue doing',
     reviewActionPlan: 'Review your action plan',
     reviewActionPlanDesc: 'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
-    confirmation: `You've finished "Reflecting". Based on your answers, we've rœecommemded a reading list we think you'll find helpful:`,
+    confirmation: `You've finished "Reflecting". Based on your answers, we've recommended a reading list we think you'll find helpful:`,
   },
   feedbackSharing: {
     description: `Preparing your commments can make the feedback discussion a positive experience. Describe the observations made to support your feedback.\n\nOnce done, you can choose to share your positive feedback with everyone.`,
