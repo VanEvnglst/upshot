@@ -80,7 +80,7 @@ const postFeedbackReflecting = state =>
     error: '',
   });
 
-const postFeedbackReflectingSuccess = (state, reflectingId) => {
+const postFeedbackReflectingSuccess = (state, {reflectingId}) => {
   return state.merge({
     fetching: false,
     id: reflectingId,
