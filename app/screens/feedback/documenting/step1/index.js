@@ -34,7 +34,7 @@ const DocumentingStep1 = props => {
     name: '',
   });
   const [isCompleted, setCompletion] = useState(false);
-  
+
   // useEffect(() => {
   //   if (activeDocumenting)
   //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
@@ -78,7 +78,7 @@ const DocumentingStep1 = props => {
     const params = new URLSearchParams();
     params.append('flow_type', feedbackFlow.id);
     dispatch(FeedbackActions.postFeedbackJourney(params));
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -95,14 +95,15 @@ const DocumentingStep1 = props => {
           {/* {isLoading && <ActivityIndicator />} */}
           {staffList &&
             staffList.map((item, i) => (
+              <View key={item.id}>
               <Chip
                 testID={'chip-documentingStep1-name'}
                 onPress={() => chooseTeamMember(item)}
                 mode="flat"
                 isSelected={item.id === teamMember.id}
                 children={item.name}
-                //style={[styles.chips, isSelected && styles.selectedChip]}
               />
+              </View>
             ))}
         </View>
       </View>
