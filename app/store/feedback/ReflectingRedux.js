@@ -20,6 +20,7 @@ export const INITIAL_STATE = Map({
   reflectingCriteria: [],
   closed: false,
   started: false,
+  error: '',
 });
 
 const { Types, Creators } = createActions({
@@ -80,7 +81,7 @@ const postFeedbackReflecting = state =>
     error: '',
   });
 
-const postFeedbackReflectingSuccess = (state, {reflectingId}) => {
+const postFeedbackReflectingSuccess = (state, { reflectingId }) => {
   return state.merge({
     fetching: false,
     id: reflectingId,
@@ -177,10 +178,10 @@ const fetchReflectingCriteria = state =>
   });
 
 const fetchReflectingCriteriaSuccess = (state, { criteriaList }) =>
-    state.merge({
-      fetching: false,
-      reflectingCriteria: criteriaList,
-    }); 
+  state.merge({
+    fetching: false,
+    reflectingCriteria: criteriaList,
+  });
 
 const fetchReflectingCriteriaFailure = (state, { error }) =>
   state.merge({

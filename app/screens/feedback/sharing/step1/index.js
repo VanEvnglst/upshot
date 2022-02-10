@@ -58,15 +58,16 @@ const SharingStep1 = props => {
             testID={'txt-sharingStep1-describeEvent'}>
             {describeDiscuss.describeEvent}
           </Text>
-          <TextInput
-            testID={'input-sharingStep1-event'}
-            type="flat"
-            label={describeDiscuss.describeEventHint}
-            placeholder={describeDiscuss.describeEventHint}
-            value={details.event}
-            onChangeText={text => handleTextChange('event', text)}
-          />
         </View>
+        <TextInput
+          testID={'input-sharingStep1-event'}
+          type="flat"
+          label={describeDiscuss.describeEventHint}
+          placeholder={describeDiscuss.describeEventHint}
+          value={details.event}
+          onChangeText={text => handleTextChange('event', text)}
+        />
+
         <View style={containerStyles.descriptionContainer}>
           <Text
             type="body1"
@@ -74,6 +75,7 @@ const SharingStep1 = props => {
             testID={'txt-sharingStep1-describeAction'}>
             {describeDiscuss.describeAction}
           </Text>
+          </View>
           <TextInput
             testID={'input-sharingStep1-action'}
             type="flat"
@@ -82,7 +84,7 @@ const SharingStep1 = props => {
             value={details.action}
             onChangeText={text => handleTextChange('action', text)}
           />
-        </View>
+        
         <View style={containerStyles.descriptionContainer}>
           <Text
             type="body1"
@@ -90,6 +92,7 @@ const SharingStep1 = props => {
             testID={'txt-sharingStep1-describeResult'}>
             {describeDiscuss.describeImpact}
           </Text>
+          </View>
           <TextInput
             testID={'input-sharingStep1-result'}
             type="flat"
@@ -98,7 +101,6 @@ const SharingStep1 = props => {
             value={details.result}
             onChangeText={text => handleTextChange('result', text)}
           />
-        </View>
       </KeyboardAvoidingView>
       <View style={styles.btnContainer}>
         <Button
@@ -126,5 +128,5 @@ SharingStep1.defaultProps = {
   getSharingStep: 1,
   getSharingStep1Data: {},
   setSharingData: () => {},
-  setSharingActiveStep: () => {}
+  setSharingActiveStep: () => {},
 };

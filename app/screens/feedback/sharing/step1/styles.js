@@ -11,6 +11,7 @@ export default styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     alignSelf: 'flex-end',
+    marginTop: 30,
     marginBottom: 20
   },
   button: {

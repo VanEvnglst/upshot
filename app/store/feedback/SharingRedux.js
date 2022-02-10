@@ -1,12 +1,19 @@
 import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
 
+const defaultState = {
+  data: null
+};
+
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
   fetching: false,
   id: null,
+  error: '',
   activeStep: 1,
   maxStep: 3,
+  step1: { ...defaultState },
+  step2: { ...defaultState },
   closed: false,
   started: false,
 });

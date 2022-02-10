@@ -181,7 +181,6 @@ const FeedbackJourneyList = props => {
               <FlatList
                 data={recentJourneys}
                 keyExtractor={item => item.key}
-                pagingEnabled
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 bounces={false}
