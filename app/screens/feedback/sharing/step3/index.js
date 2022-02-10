@@ -65,7 +65,7 @@ const SharingStep3 = () => {
         style={styles.editButton}
         onPress={() => handleEditNavigation(step)}>
         <View style={styles.editContainer}>
-          <Icon name="pencil" size={18} />
+          <Icon name="pencil" size={18} style={styles.editIcon} />
           <Text type="button" style={styles.editText}>
             Edit
           </Text>
