@@ -145,13 +145,13 @@ const ActiveFeedbackJourney = props => {
           isLastItem={i === phaseList.length - 1}
           isCompleted={item.closed}
           disabled={!item.started && !item.closed && !item.shouldStart}
-          current={(item.shouldStart && !item.closed) || (item.started && !item.closed)}
+          current={(item.shouldStart || item.started) && !item.closed}
         />
         <JourneyIndicator
           style={{ flex: 2 }}
           done={item.closed}
-          current={(item.shouldStart && !item.closed) || (item.started && !item.closed)}
-          shouldStart={item.shouldStart && !item.started}
+          current={(item.shouldStart || item.started) && !item.closed}
+          shouldStart={item.shouldStart && !item.started && !item.closed}
           hasProgress={item.started && !item.closed}
           item={item}
           onPress={() =>
