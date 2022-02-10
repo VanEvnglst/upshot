@@ -6,10 +6,9 @@ import { Text } from 'app/components';
 import styles from './styles';
 
 const Chip = props => {
-  const { key, testID, onPress, mode, style, children, isSelected } = props;
+  const { testID, onPress, mode, style, children, isSelected } = props;
   return (
   <RNChip
-    key={key}
     testID={testID}
     onPress={onPress}
     mode={mode}
