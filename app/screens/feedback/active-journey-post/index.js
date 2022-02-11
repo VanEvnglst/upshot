@@ -57,11 +57,12 @@ const ActiveFeedbackJourney = props => {
       await dispatch(FeedbackActions.fetchCurrentFeedback(feedbackId));
     }
     fetchFeedback();
-  }, []);
-
-  useEffect(() => {
     handlePhases();
   }, [journey.data]);
+
+  // useEffect(() => {
+  //   handlePhases();
+  // }, [journey.data]);
 
   const handlePhases = async () => {
     let content = [];
@@ -172,7 +173,6 @@ const ActiveFeedbackJourney = props => {
     navigation.navigate('FeedbackJourneyList');
   };
 
-
   const handleNavigation = index => {
     let screenName = '';
     if (flow.id === 1) {
@@ -213,7 +213,6 @@ const ActiveFeedbackJourney = props => {
     navigation.navigate(screenName);
   };
 
-
   const handleReviewNavigation = () => {
     let screenName = '';
     if (flow.id === 1) {
@@ -252,10 +251,22 @@ const ActiveFeedbackJourney = props => {
       }
     }
     //navigation.navigate(screenName);
-  }
+  };
 
   return (
     <View style={{ flex: 1 }}>
+      {isLoading && (
+        <View
+          style={{
+            width: width,
+            opacity: 0.4,
+            height: height,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      )}
       <Wrapper>
         <ScrollView>
           <Header
@@ -275,18 +286,6 @@ const ActiveFeedbackJourney = props => {
           </View>
         </ScrollView>
       </Wrapper>
-      {isLoading && (
-        <View
-          style={{
-            width: width,
-            opacity: 0.4,
-            height: height,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
-      )}
     </View>
   );
 };
