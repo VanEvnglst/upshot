@@ -52,7 +52,6 @@ export function* updateFeedbackReflecting({ data }) {
     else criteriaStr += `{ "c_id": "${item.id}", "score": "${item.score}"}`;
   });
   criteriaStr += ']';
-  debugger;
   
   params.append('reflecting_id', reflectId);
   params.append('feel_int', step1.data);
@@ -61,7 +60,7 @@ export function* updateFeedbackReflecting({ data }) {
   params.append('dev_plan_start_doing', step4.data.startDoing);
   params.append('dev_plan_continue_doing', step4.data.continueDoing);
   const response = yield call(api.updateFeedbackReflecting, params);
-  debugger;
+
   if (response.ok) {
     if (response.data.status == STATUS_OK) {
       yield put(ReflectingActions.updateFeedbackReflectingSuccess());
@@ -81,7 +80,7 @@ export function* fetchCurrentReflecting({ reflectingId }) {
   params.append('reflecting_id', reflectingId);
 
   const response = yield call(api.getCurrentReflecting, params);
-  debugger;
+  
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const reflectDetails = response.data.details;
@@ -116,7 +115,7 @@ export function* closeFeedbackReflecting({ reflectingId }) {
   const params = new URLSearchParams();
   params.append('reflecting_id', reflectingId);
   const response = yield call(api.postCloseReflecting, params);
-  debugger;
+  
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(ReflectingActions.closeFeedbackReflectingSuccess());
