@@ -50,7 +50,6 @@ const FeedbackDiscussing = props => {
   };
 
   const handleList = item => {
-    debugger;
     // let planList = [...actionPlanList];
     // let oldItem = planList[index];
     // planList[index] = { ...oldItem, [key]: text };
