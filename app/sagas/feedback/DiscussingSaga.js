@@ -17,7 +17,6 @@ export function* postFeedbackDiscussing({ journeyId }) {
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postFeedbackDiscussing, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       const discussingId = response.data.details.id;
@@ -61,7 +60,6 @@ export function* updateDiscussingReminder({ data }) {
   const discussId = yield select(discussingId);
   params.append('discussing_id', discussId);
   params.append('reminder_date', data.reminderDate);
-  debugger;
   const response = yield call(api.updateFeedbackDiscussing, params);
   if (response.ok) {
     if (response.data.status === 'ok') {

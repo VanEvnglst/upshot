@@ -25,6 +25,7 @@ export const getRecentJourneys = state =>
 
 /* ------------- Feedback Documenting Selectors ------------- */
 export const getDocumenting = state => state.documenting;
+export const getDocumentingFetching = state => state.documenting.get('fetching');
 export const getDocumentingId = state => state.documenting.get('id');
 export const getDocumentingStep = state => state.documenting.get('activeStep');
 export const getDocumentingMaxSteps = state => state.documenting.get('maxStep');

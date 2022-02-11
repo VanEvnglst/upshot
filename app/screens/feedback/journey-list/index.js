@@ -18,6 +18,7 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   getRecentJourneys,
   getActiveJourneys,
@@ -60,6 +61,7 @@ const FeedbackJourneyList = props => {
     dispatch(PreparingActions.resetPreparingState());
     dispatch(DiscussingActions.resetDiscussingState());
     dispatch(ReflectingActions.resetReflectingState());
+    dispatch(SharingActions.resetSharingState());
   }, []);
 
   const HistoryCard = ({ item }) => {
