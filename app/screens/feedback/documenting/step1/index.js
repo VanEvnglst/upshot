@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -13,11 +13,13 @@ import {
   getChosenType,
   getStep1Data,
   getDocumentingId,
+  getDocumentingFetching,
 } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 import containerStyles from '../styles';
 
+const { width, height } = Dimensions.get('screen');
 const DocumentingStep1 = props => {
   const { route } = props;
   const { feedbackDocumenting } = labels;
@@ -27,7 +29,7 @@ const DocumentingStep1 = props => {
   const stepData = useSelector(getStep1Data);
   const activeStep = useSelector(getDocumentingStep);
   const staffList = useSelector(getStaffList);
-  const isLoading = useSelector(state => state.documenting.get('fetching'));
+  const isLoading = useSelector(getDocumentingFetching);
   const feedbackFlow = useSelector(getChosenFlow);
   const [teamMember, setTeamMember] = useState({
     id: null,
@@ -83,7 +85,6 @@ const DocumentingStep1 = props => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {isLoading && <ActivityIndicator />}
         <Text
           type="h6"
           style={containerStyles.stepTitleText}
@@ -96,13 +97,13 @@ const DocumentingStep1 = props => {
           {staffList &&
             staffList.map((item, i) => (
               <View key={item.id}>
-              <Chip
-                testID={'chip-documentingStep1-name'}
-                onPress={() => chooseTeamMember(item)}
-                mode="flat"
-                isSelected={item.id === teamMember.id}
-                children={item.name}
-              />
+                <Chip
+                  testID={'chip-documentingStep1-name'}
+                  onPress={() => chooseTeamMember(item)}
+                  mode="flat"
+                  isSelected={item.id === teamMember.id}
+                  children={item.name}
+                />
               </View>
             ))}
         </View>
@@ -117,6 +118,18 @@ const DocumentingStep1 = props => {
           {labels.common.next}
         </Button>
       </View>
+      {isLoading && (
+        <View
+          style={{
+            width: width,
+            opacity: 0.4,
+            height: height,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#3700B3" />
+        </View>
+      )}
     </View>
   );
 };
