@@ -41,6 +41,10 @@ editButton: {
 editContainer: {
   flexDirection: 'row'
 },
+editIcon: {
+  color: Colors.primaryDark,
+},
+
 editText: {
   color: Colors.primaryDark,
   marginLeft: 10,

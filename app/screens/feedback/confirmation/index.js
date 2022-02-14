@@ -28,6 +28,7 @@ import Colors from 'app/theme/colors';
 
 const FeedbackConfirmation = props => {
   const { navigation, route } = props;
+  const { common, feedbackDocumenting, feedbackPreparing, feedbackDiscussing } = labels;
   const dispatch = useDispatch();
   const docuId = useSelector(getDocumentingId);
   const journeyId = useSelector(getCurrentJourney);
@@ -74,10 +75,10 @@ const FeedbackConfirmation = props => {
     return (
       <View style={{ flexDirection: 'row' }}>
         <Button type={'text'} onPress={() => handleDocumentingNav()}>
-          <Text>{labels.common.keepGoing}</Text>
+          <Text>{common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>{labels.common.remindMeLater}</Text>
+          <Text>{common.remindMeLater}</Text>
         </Button>
       </View>
     );
@@ -101,10 +102,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>{labels.common.keepGoing}</Text>
+          <Text>{common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>{labels.common.remindMeLater}</Text>
+          <Text>{common.remindMeLater}</Text>
         </Button>
         {/* <HintIndicator
           showHint={discussingHintVisible}
@@ -113,6 +114,7 @@ const FeedbackConfirmation = props => {
       </View>
     );
   };
+
   const PreparingCTA = () => {
     return (
       <View
@@ -125,7 +127,7 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text>{labels.feedbackPreparing.schedule}</Text>
+          <Text>{feedbackPreparing.schedule}</Text>
         </Button>
         {/* <HintIndicator
           showHint={preparingHintVisible}
@@ -143,7 +145,7 @@ const FeedbackConfirmation = props => {
           flex: 1,
         }}>
         <Button mode="contained" onPress={() => closeJourney()}>
-          {labels.common.gotIt}
+          {common.gotIt}
         </Button>
       </View>
     );
@@ -155,10 +157,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>{labels.common.keepGoing}</Text>
+          <Text>{common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>{labels.common.remindMeLater}</Text>
+          <Text>{common.remindMeLater}</Text>
         </Button>
       </View>
     );
@@ -207,7 +209,7 @@ const FeedbackConfirmation = props => {
           />
         </View>
         <View style={{ flex: 2 }}>
-          <Text type="h4">{labels.common.youDidIt}</Text>
+          <Text type="h4">{common.youDidIt}</Text>
           <Text
             type="body1"
             style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
@@ -215,7 +217,7 @@ const FeedbackConfirmation = props => {
               route.params.type === 'documenting'
                 ? flow.id === 1
                   ? type.id === 1
-                    ? labels.feedbackDocumenting.confirmation.schedPosContent
+                    ? `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`
                     : content // sched corr content
                   : content // TODO: change to on the spot content
                 : content // regular content for each phase
@@ -230,7 +232,7 @@ const FeedbackConfirmation = props => {
               borderRadius: 16,
             }}>
             <Text type="body2" style={{ color: Colors.primary900 }}>
-              {labels.feedbackPreparing.confirmationHint}
+              {feedbackPreparing.confirmationHint}
             </Text>
           </View>
         )}
@@ -242,7 +244,7 @@ const FeedbackConfirmation = props => {
               borderRadius: 16,
             }}>
             <Text type="body2" style={{ color: Colors.primary900 }}>
-              {labels.feedbackDiscussing.confirmationHint}
+              {feedbackDiscussing.confirmationHint}
             </Text>
           </View>
         )}

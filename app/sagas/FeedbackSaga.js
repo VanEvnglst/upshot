@@ -13,7 +13,7 @@ import api from 'app/services/apiService';
 
 const STATUS_OK = 'ok';
 
-const staff = state => state.documenting.get('step1').data.id;
+const staffData = state => state.documenting.get('step1').data;
 export function* fetchFeedbackType() {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
@@ -69,16 +69,22 @@ export function* postFeedbackJourney({ data }) {
   // }
 
   const documentingParams = new URLSearchParams();
-  const staffId = yield select(staff);
+  const staff = yield select(staffData);
+  const nameArr = staff.name.split(/[ ,]+/);
+  const lastName = nameArr && nameArr[2].charAt(0);
+  const staffName = {
+    firstName: nameArr[0],
+    lastName: lastName,
+  };
 
   const response = yield call(api.postNewJourney, data);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const journeyId = response.data.details.journey_id;
       yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
-
+      yield put(FeedbackActions.setTeamMember(staffName))
       documentingParams.append('journey_id', journeyId);
-      documentingParams.append('staff_id', staffId);
+      documentingParams.append('staff_id', staff.id);
 
       yield put(DocumentingActions.postFeedbackDocumenting(documentingParams));
     }

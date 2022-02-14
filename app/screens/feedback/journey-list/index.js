@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  ScrollView,
+  LogBox,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -11,6 +18,7 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   getRecentJourneys,
   getActiveJourneys,
@@ -32,6 +40,10 @@ const FeedbackJourneyList = props => {
   const hideModal = () => setModalVisible(false);
 
   useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
+
+  useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchRecentJourneys());
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
   }, []);
@@ -49,6 +61,7 @@ const FeedbackJourneyList = props => {
     dispatch(PreparingActions.resetPreparingState());
     dispatch(DiscussingActions.resetDiscussingState());
     dispatch(ReflectingActions.resetReflectingState());
+    dispatch(SharingActions.resetSharingState());
   }, []);
 
   const HistoryCard = ({ item }) => {
@@ -89,8 +102,8 @@ const FeedbackJourneyList = props => {
     const memberName = `${nameArr[0]} ${lastName}.`;
     const staff = {
       firstName: nameArr[0],
-      lastName: lastName
-    }
+      lastName: lastName,
+    };
     const progressValue = percent / 100;
     const lastWorkedOn = `${moment(lastModified).fromNow()}`;
 
@@ -98,9 +111,7 @@ const FeedbackJourneyList = props => {
       <TouchableOpacity
         accessibilityRole={'button'}
         style={styles.inProgressCard}
-        onPress={() =>
-          handleNavigation('ActiveFeedbackJourney', id, staff)
-        }>
+        onPress={() => handleNavigation('ActiveFeedbackJourney', id, staff)}>
         <View style={styles.inProgressContent}>
           <ProgressBar progress={progressValue} />
           <View style={styles.inProgressText}>
@@ -152,24 +163,33 @@ const FeedbackJourneyList = props => {
               {labels.common.inProgress}
             </Text>
           </View>
-          {/* TODO: Update to Flatlist */}
-          {activeJourneys &&
-            activeJourneys.map((item, i) => (
-              <InProgressCard key={item.id} activeJourney={item} />
-            ))}
+          {activeJourneys && (
+            <FlatList
+              data={activeJourneys}
+              keyExtractor={item => item.key}
+              pagingEnabled
+              renderItem={({ item, index }) => {
+                return <InProgressCard key={item.id} activeJourney={item} />;
+              }}
+            />
+          )}
           {hasRecentJourneys && (
-            <View>
+            <View style={{ marginBottom: 20 }}>
               <Text
                 type="overline"
                 style={[styles.overlineText, styles.addedMargin]}>
                 {labels.feedbackIntro.history}
               </Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {/* TODO: Update to Flatlist */}
-                {recentJourneys.map((item, i) => (
-                  <HistoryCard key={item.id} item={item} />
-                ))}
-              </ScrollView>
+              <FlatList
+                data={recentJourneys}
+                keyExtractor={item => item.key}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                bounces={false}
+                renderItem={({ item, index }) => {
+                  return <HistoryCard key={item.id} item={item} />;
+                }}
+              />
             </View>
           )}
         </ScrollView>

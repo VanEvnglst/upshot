@@ -57,11 +57,12 @@ const ActiveFeedbackJourney = props => {
       await dispatch(FeedbackActions.fetchCurrentFeedback(feedbackId));
     }
     fetchFeedback();
-  }, []);
-
-  useEffect(() => {
     handlePhases();
   }, [journey.data]);
+
+  // useEffect(() => {
+  //   handlePhases();
+  // }, [journey.data]);
 
   const handlePhases = async () => {
     let content = [];
@@ -145,13 +146,13 @@ const ActiveFeedbackJourney = props => {
           isLastItem={i === phaseList.length - 1}
           isCompleted={item.closed}
           disabled={!item.started && !item.closed && !item.shouldStart}
-          current={(item.shouldStart && !item.closed) || (item.started && !item.closed)}
+          current={(item.shouldStart || item.started) && !item.closed}
         />
         <JourneyIndicator
           style={{ flex: 2 }}
           done={item.closed}
-          current={(item.shouldStart && !item.closed) || (item.started && !item.closed)}
-          shouldStart={item.shouldStart && !item.started}
+          current={(item.shouldStart || item.started) && !item.closed}
+          shouldStart={item.shouldStart && !item.started && !item.closed}
           hasProgress={item.started && !item.closed}
           item={item}
           onPress={() =>
@@ -171,7 +172,6 @@ const ActiveFeedbackJourney = props => {
     dispatch(SharingActions.resetSharingState());
     navigation.navigate('FeedbackJourneyList');
   };
-
 
   const handleNavigation = index => {
     let screenName = '';
@@ -213,7 +213,6 @@ const ActiveFeedbackJourney = props => {
     navigation.navigate(screenName);
   };
 
-
   const handleReviewNavigation = () => {
     let screenName = '';
     if (flow.id === 1) {
@@ -252,10 +251,22 @@ const ActiveFeedbackJourney = props => {
       }
     }
     //navigation.navigate(screenName);
-  }
+  };
 
   return (
     <View style={{ flex: 1 }}>
+      {isLoading && (
+        <View
+          style={{
+            width: width,
+            opacity: 0.4,
+            height: height,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      )}
       <Wrapper>
         <ScrollView>
           <Header
@@ -275,18 +286,6 @@ const ActiveFeedbackJourney = props => {
           </View>
         </ScrollView>
       </Wrapper>
-      {isLoading && (
-        <View
-          style={{
-            width: width,
-            opacity: 0.4,
-            height: height,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
-      )}
     </View>
   );
 };

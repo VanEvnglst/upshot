@@ -14,7 +14,7 @@ export function* postFeedbackSharing({ journeyId }) {
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postFeedbackSharing, params);
-  debugger;
+  
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const sharingId = response.data.details.id;
@@ -30,7 +30,7 @@ export function* updateFeedbackSharing({ data }) {
   //const connected = yield checkInternetConnection();
   // if(!connected) { return };
   const { message, details } = data;
-  debugger;
+  
   const params = new URLSearchParams();
   const sharingId = yield select(sharing);
   params.append('sharing_id', sharingId);
@@ -63,7 +63,7 @@ export function* updateSharingReminder({ data }) {
   if(response.ok) {
     if(response.data.status === STATUS_OK) {
       yield put(SharingActions.updateFeedbackSharingSuccess())
-      yield NavigationService.navigaate('ActiveFeedbackJourney');
+      yield NavigationService.navigate('ActiveFeedbackJourney');
     }
   } else {
     yield put(SharingActions.updateFeedbackSharingFailure(response.data));

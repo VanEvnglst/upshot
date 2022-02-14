@@ -56,7 +56,6 @@ const DocumentingStep2 = props => {
     //   stepData.data.forEach(val => 
     //     newTopicList = [...newTopicList, val],  
     //   )
-    //   debugger;
     //   return setFeedbackTopic(newTopicList);
     // }
     

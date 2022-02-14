@@ -106,7 +106,6 @@ export function* closeFeedbackDocumenting() {
   params.append('documenting_id', docuId);
 
   const response = yield call(api.postCloseDocumenting, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DocumentingActions.closeFeedbackDocumentingSuccess());
