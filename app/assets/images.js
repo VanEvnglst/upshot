@@ -38,4 +38,7 @@ export default {
   noRatings: require('./images/no-ratings.png'),
   hidden: require('./images/hidden-emoji.png'),
   journeyEnd: require('./images/journey-end.png'),
+  sharingStep2: require('./images/sharing-step2.png'),
+  sharingStep3: require('./images/sharing-step3.png'),
+  avatar: require('./images/temp-avatar.png'),
 };

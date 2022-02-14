@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import { getChosenFlow, getChosenType } from 'app/store/selectors';
 import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
+import onTheSpotSteps from 'app/models/OnTheSpotSteps';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -35,11 +37,19 @@ const FeedbackGuide = props => {
           title: feedbackSignPost.scheduledPos,
           description: feedbackSignPost.scheduledPosDesc,
         });
-      } else content = scheduledCorrectiveSteps;
+      } else {
+        content = scheduledCorrectiveSteps;
+        setSignPostHeader({
+          title: feedbackSignPost.scheduledCorr,
+          description: feedbackSignPost.scheduledCorrDesc,
+        })
+      }
+    } else {
+      setSignPostHeader({
+        title: feedbackSignPost.onTheSpotTitle,
+      });
+      content = onTheSpotSteps;
     }
-    // else {
-    //   content = scheduledCorrectiveSteps.filter(item => item.forOnTheSpot === true);
-    // }
     setSignPost(content);
   };
 
@@ -98,3 +108,15 @@ const FeedbackGuide = props => {
 };
 
 export default FeedbackGuide;
+
+FeedbackGuide.propTypes = {
+  flow: PropTypes.object,
+  type: PropTypes.object,
+  resetDocumentingState: PropTypes.func,
+};
+
+FeedbackGuide.defaultProps = {
+  flow: {},
+  type: {},
+  resetDocumentingState: () => {},
+};

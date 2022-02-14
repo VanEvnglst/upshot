@@ -17,8 +17,10 @@ export const INITIAL_STATE = Map({
   step4: { ...defaultState },
   step5: { ...defaultState },
   staffRating: { fetching: false, ...defaultState, error: '' },
-  close: false,
+  reflectingCriteria: [],
+  closed: false,
   started: false,
+  error: '',
 });
 
 const { Types, Creators } = createActions({
@@ -41,6 +43,9 @@ const { Types, Creators } = createActions({
   fetchStaffRatings: [''],
   fetchStaffRatingsSuccess: ['ratings'],
   fetchStaffRatingsFailure: ['error'],
+  fetchReflectingCriteria: [''],
+  fetchReflectingCriteriaSuccess: ['criteriaList'],
+  fetchReflectingCriteriaFailure: ['error'],
 });
 
 export const ReflectingTypes = Types;
@@ -76,7 +81,7 @@ const postFeedbackReflecting = state =>
     error: '',
   });
 
-const postFeedbackReflectingSuccess = (state, reflectingId) => {
+const postFeedbackReflectingSuccess = (state, { reflectingId }) => {
   return state.merge({
     fetching: false,
     id: reflectingId,
@@ -146,24 +151,42 @@ const fetchStaffRatings = state =>
     staffRating: {
       fetching: true,
       error: '',
-    }
+    },
   });
 
-const fetchStaffRatingsSuccess = (state, {ratings}) => {
+const fetchStaffRatingsSuccess = (state, { ratings }) => {
   return state.merge({
     staffRating: {
       data: ratings,
-      fetching: false
-    }
-  })
-}
+      fetching: false,
+    },
+  });
+};
 
-const fetchStaffRatingsFailure = (state, {error}) => 
+const fetchStaffRatingsFailure = (state, { error }) =>
   state.merge({
     staffRating: {
       fetching: false,
-      error
-    }
+      error,
+    },
+  });
+
+const fetchReflectingCriteria = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchReflectingCriteriaSuccess = (state, { criteriaList }) =>
+  state.merge({
+    fetching: false,
+    reflectingCriteria: criteriaList,
+  });
+
+const fetchReflectingCriteriaFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
   });
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -186,4 +209,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_STAFF_RATINGS]: fetchStaffRatings,
   [Types.FETCH_STAFF_RATINGS_SUCCESS]: fetchStaffRatingsSuccess,
   [Types.FETCH_STAFF_RATINGS_FAILURE]: fetchStaffRatingsFailure,
+  [Types.FETCH_REFLECTING_CRITERIA]: fetchReflectingCriteria,
+  [Types.FETCH_REFLECTING_CRITERIA_SUCCESS]: fetchReflectingCriteriaSuccess,
+  [Types.FETCH_REFLECTING_CRITERIA_FAILURE]: fetchReflectingCriteriaFailure,
 });

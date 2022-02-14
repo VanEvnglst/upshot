@@ -1,5 +1,5 @@
-import labels from '../locales/en';
-import Images from '../assets/images';
+import labels from 'app/locales/en';
+import Images from 'app/assets/images';
 
 const { checkIn, statePurpose, describeDiscuss, createActionPlan, checkOut } =
   labels.feedbackPreparing;

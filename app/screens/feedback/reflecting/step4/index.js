@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, TextInput } from 'app/components';
-import { getReflectingStep, getReflectStep4Data } from 'app/store/selectors';
+import { getReflectingStep, getReflectStep4Data, getChosenType, getChosenFlow } from 'app/store/selectors';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
+import FeedbackFlow from '../../flow';
 
 
 const ReflectingStep4 = props => {
@@ -16,6 +17,8 @@ const ReflectingStep4 = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
   const stepData = useSelector(getReflectStep4Data);
+  const type = useSelector(getChosenType);
+  const flow = useSelector(getChosenFlow);
   const [developmentPlan, setDevelopmentPlan] = useState({
     stopDoing: '',
     startDoing: '',
@@ -23,23 +26,28 @@ const ReflectingStep4 = props => {
   });
 
   useEffect(() => {
-    if(stepData.data)
-    debugger;
-    const { stopDoing, startDoing, continueDoing } = stepData.data
+    if(stepData.data) {
+    const { stopDoing, startDoing, continueDoing} = stepData.data
       setDevelopmentPlan({
         stopDoing: stopDoing === null ? '' : stopDoing,
         startDoing: startDoing === null ? '' : startDoing,
         continueDoing: continueDoing === null ? '' : continueDoing,
       })
+    }
   },[stepData]);
   
   const handleBack = () => {
+    dispatch(ReflectingActions.setReflectingData('step4', developmentPlan));
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep - 1));
   }
 
   const handleNext = () => {
     dispatch(ReflectingActions.setReflectingData('step4',developmentPlan));
+    if (flow.id === 1 && type.id === 2)
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep + 1));
+    else 
+    dispatch(ReflectingActions.updateFeedbackReflecting())
+    
   }
 
   const handleDevelopmentText = (key, text) => {
@@ -82,13 +90,13 @@ const ReflectingStep4 = props => {
         <Button
           mode='text'
           onPress={() => handleBack()}>
-            Back
+            {labels.common.back}
           </Button>
         <Button
           mode='contained'
           onPress={() => handleNext()}
         >
-          Next
+          {labels.common.next}
         </Button>
       </View>
       </ScrollView>      
@@ -99,6 +107,16 @@ const ReflectingStep4 = props => {
 export default ReflectingStep4;
 
 
-ReflectingStep4.propTypes = {};
+ReflectingStep4.propTypes = {
+  getReflectingStep: PropTypes.number,
+  getReflectStep4Data: PropTypes.object,
+  setReflectingActiveStep: PropTypes.func,
+  setReflectingData: PropTypes.func,
+};
 
-ReflectingStep4.defaultProps = {};
+ReflectingStep4.defaultProps = {
+  getReflectingStep: 1,
+  getReflectStep4Data: {},
+  setReflectingActiveStep: () => {},
+  setReflectingData: () => {}
+};

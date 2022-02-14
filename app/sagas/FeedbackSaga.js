@@ -7,11 +7,13 @@ import DocumentingActions from 'app/store/feedback/documentingRedux';
 import PreparingActions from 'app/store/feedback/preparingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
+
 const STATUS_OK = 'ok';
 
-const staff = state => state.documenting.get('step1').data.id;
+const staffData = state => state.documenting.get('step1').data;
 export function* fetchFeedbackType() {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
@@ -65,22 +67,26 @@ export function* postFeedbackJourney({ data }) {
   // if (!connected) {
   //   return;
   // }
-  
+
   const documentingParams = new URLSearchParams();
-  const staffId = yield select(staff);
+  const staff = yield select(staffData);
+  const nameArr = staff.name.split(/[ ,]+/);
+  const lastName = nameArr && nameArr[2].charAt(0);
+  const staffName = {
+    firstName: nameArr[0],
+    lastName: lastName,
+  };
 
   const response = yield call(api.postNewJourney, data);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const journeyId = response.data.details.journey_id;
       yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
-
+      yield put(FeedbackActions.setTeamMember(staffName))
       documentingParams.append('journey_id', journeyId);
-      documentingParams.append('staff_id', staffId)
+      documentingParams.append('staff_id', staff.id);
 
-      yield put(
-        DocumentingActions.postFeedbackDocumenting(documentingParams),
-      );
+      yield put(DocumentingActions.postFeedbackDocumenting(documentingParams));
     }
     // save journey id to state using success action call
     // call create documenting with journey id and team member passed in
@@ -88,16 +94,15 @@ export function* postFeedbackJourney({ data }) {
 }
 
 export function* postCloseFeedbackJourney({ journeyId }) {
-
   const params = new URLSearchParams();
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postCloseJourney, params);
   if (response.ok) {
     if (response.data.status == 'ok') {
-      yield put(FeedbackActions.postCloseFeedbackJourneySuccess())
+      yield put(FeedbackActions.postCloseFeedbackJourneySuccess());
       yield NavigationService.navigate('FeedbackJourneyList', {
-        type: 'journeyEnd'
+        type: 'journeyEnd',
       });
     }
   } else {
@@ -113,15 +118,17 @@ export function* fetchCurrentFeedback({ journeyId }) {
     const prepData = journeyData.Preparing;
     const discussData = journeyData.Discussing;
     const reflectData = journeyData.Reflecting;
+    const shareData = journeyData.Sharing;
 
-    if (docuData) {
-      yield retrieveDocumentingData(docuData);
-    }
+    if (docuData) yield retrieveDocumentingData(docuData);
     if (prepData) yield retrievePreparingData(prepData);
     if (reflectData) yield retrieveReflectingData(reflectData);
     if (discussData) yield retrieveDiscussingData(discussData);
+    if (shareData) yield retrieveSharingData(shareData);
 
     yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
+    yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
+    yield setPhaseSteps(journeyData.feedback_flow, journeyData.feedback_type)
     yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
   } else {
     yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
@@ -158,12 +165,30 @@ function* retrieveReflectingData(reflectingData) {
   );
 }
 
-
-
 function* retrieveDiscussingData(discussingData) {
   yield put(DiscussingActions.setDiscussingStatus('id', discussingData.id));
-  yield put(DiscussingActions.setDiscussingStatus('closed', discussingData.closed));
-  yield put(DiscussingActions.setDiscussingStatus('started', !discussingData.closed));
+  yield put(
+    DiscussingActions.setDiscussingStatus('closed', discussingData.closed),
+  );
+  yield put(
+    DiscussingActions.setDiscussingStatus('started', !discussingData.closed),
+  );
+}
+
+function* retrieveSharingData(sharingData) {
+  yield put(SharingActions.setSharingStatus('id', sharingData.id));
+  yield put(SharingActions.setSharingStatus('closed', sharingData.closed));
+  yield put(SharingActions.setSharingStatus('started', !sharingData.closed));
+}
+
+function* setPhaseSteps(flow, type) {
+  // set max step value for phase depending on flow and type
+  if(flow.id === 1) {
+    if (type.id === 1) {
+      yield put(ReflectingActions.setReflectingStatus('maxStep', 4));
+    }
+  }
+
 }
 
 function* watchFeedbackSaga() {
@@ -172,7 +197,10 @@ function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_FEEDBACK_TOPICS, fetchFeedbackTopics);
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
-  yield takeLatest(FeedbackTypes.POST_CLOSE_FEEDBACK_JOURNEY, postCloseFeedbackJourney);
+  yield takeLatest(
+    FeedbackTypes.POST_CLOSE_FEEDBACK_JOURNEY,
+    postCloseFeedbackJourney,
+  );
   yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
 }
 

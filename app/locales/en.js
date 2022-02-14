@@ -18,7 +18,11 @@ const labels = {
     readMore: 'Read More',
     saveClose: 'Save & Close',
     saveChanges: 'Save changes',
-    closeFeedback: 'Close your feedback for now?'
+    closeFeedback: 'Close your feedback for now?',
+    gotIt: 'Got it',
+    keepGoing: 'Keep Going',
+    remindMeLater: 'Remind me later',
+    youDidIt: 'You did it!'
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',
@@ -50,9 +54,12 @@ const labels = {
     journeyEndContent: `Congratulations! You completed your feedback. You can now find this journey under History.`,
   },
   feedbackSignPost: {
-    title: 'The feedback journey',
-    description:
-      "Below is an overview of the five steps of the feedback journey. We'll be here to guide you through each step when you start.",
+    scheduledCorr: 'Giving corrective feedback in 4 steps',
+    scheduledCorrDesc:
+      "Below is an overview of the four steps of the feedback journey. We'll be here to guide you through each step when you start.",
+    scheduledPos: 'Giving positive feedback in 3 steps',
+    scheduledPosDesc: `Below is an overview of your positive feedback journey. We'll be here to guide you through each one when you start.`,
+    onTheSpotTitle: 'Learning from your feedback in 2 steps',
     documenting: 'Documenting',
     documentingDesc: 'Taking notes to remember the details of the event',
     preparing: 'Preparing',
@@ -63,8 +70,6 @@ const labels = {
       'Accurately capturing the discussion between you and your employee',
     reflecting: 'Reflecting',
     reflectingDesc: 'Learning from self-reflection and feedback from others',
-    scheduledPos: 'Giving positive feedback in 3 steps',
-    scheduledPosDesc: `Below is an overview of your positive feedback journey. We'll be here to guide you through each one when you start.`,
     sharing: 'Sharing',
     sharingDesc: 'Communicating your feedback to your employee and your team',
   },
@@ -74,7 +79,6 @@ const labels = {
     feedbackRelation: 'My feedback is related to',
     dateOfFeedback: "I'm giving feedback about something that happened",
     confirmation: {
-      title: 'You did it!',
       content1: `You've finished "Documenting" - the first step of our feedback coaching journey.`,
       content2: `Would you like to continue on to the second step, "Preparing?" - this step takes 15 minutes.`,
       schedPosContent: `Would you like to continue on to the next part, "Sharing?" - this usually takes around 15 minutes.`
@@ -102,7 +106,7 @@ const labels = {
     },
     describeDiscuss: {
       step: 'Step 3',
-      title: 'Descibe and discuss the observations',
+      title: 'Describe and discuss the observations',
       describeEvent:
         'Describe the event. Be specific about the details surrounding the event. Mention the date, place, and circumstances',
       describeAction:
@@ -169,7 +173,7 @@ const labels = {
       checkoutTouchbase:
         'When can we touch base again to check how we are progressing and how I can help you further?',
     },
-    confirmation: `You've finished "Preparing". We've created a discussion guide for you to review and use during your feedback session. \n\n Now that you're prepared, it's time to schedule your face-to-face discussion.`,
+    confirmation: `You've finished "Preparing". We've created a discussion guide for you to review and use during your feedback session. \n\nNow that you're prepared, it's time to schedule your face-to-face discussion.`,
     confirmationHint:
       'The best time to give feedback is shortly after the moment has occurred, and no later than a week from the incident. The longer you wait, the longer the incident affects the way you think - and the way the other person acts.',
     schedule: 'Schedule discussion',
@@ -262,7 +266,7 @@ const labels = {
     involveEmployee: 'I involved my employee in developing an action plan',
     documentAndSend: 'I documented and sent the agreed action plan to my employee',
     feedbackFromTeam: 'Looking at feedback from your team',
-    feedbackFromTeamDesc: `Getting feedback from your team members is another way to increase self-awareness. Being willing to look at yourself through others' eyes will help you gain invaluable insight into how you can become a more effective leader.\n\n Every time you give feedback, we ask your employees for their input. When we receive at least 5 responses, we share the results with you.`,
+    feedbackFromTeamDesc: `Getting feedback from your team members is another way to increase self-awareness. Being willing to look at yourself through others' eyes will help you gain invaluable insight into how you can become a more effective leader.\n\nEvery time you give feedback, we ask your employees for their input. When we receive at least 5 responses, we share the results with you.`,
     notEnoughResponses: `Hmm... It looks like you don't have enough employee responses right now`,
     allFeedback: 'All Feedback',
     preparedFeedback: 'Prepared Feedback',
@@ -281,7 +285,25 @@ const labels = {
     continueDoing: 'Continue doing',
     reviewActionPlan: 'Review your action plan',
     reviewActionPlanDesc: 'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
-    confirmation: `You've finished "Reflecting". Based on your answers, we've recommemded a reading list we think you'll find helpful:`,
+    confirmation: `You've finished "Reflecting". Based on your answers, we've recommended a reading list we think you'll find helpful:`,
+  },
+  feedbackSharing: {
+    description: `Preparing your commments can make the feedback discussion a positive experience. Describe the observations made to support your feedback.\n\nOnce done, you can choose to share your positive feedback with everyone.`,
+    writeMessage: {
+      step: 'Step 2',
+      title: 'Write a message',
+      content: 'Would you like to add a short message to',
+    },
+    shareFeedback: {
+      step: 'Step 3',
+      title: 'Review and send feedback',
+      content: 'Review your feedback before sharing',
+    },
+    event: 'Event',
+    action: 'Action',
+    result: 'Result',
+    skippedStep: 'You skipped this step',
+    confirmation: `You've finished "Sharing" You can review your feedback any time.\n\nWould you like to continue on to the next part, "Reflecting?" - this usually takes around 10 minutes.`,
   },
   reminders: {
     morningReminder: 'Today is a new day, ',

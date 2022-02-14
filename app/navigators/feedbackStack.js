@@ -17,6 +17,7 @@ import {
   FeedbackDiscussing,
   FeedbackReflecting,
   ReflectingGuide,
+  SharingGuide,
   FeedbackSharing
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
@@ -97,6 +98,10 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'FeedbackReflecting'}
           component={FeedbackReflecting}
+        />
+        <FeedbackStack.Screen
+          name={'SharingGuide'}
+          component={SharingGuide}
         />
         <FeedbackStack.Screen
           name={'FeedbackSharing'}

@@ -149,12 +149,16 @@ export default FeedbackPreparing;
 
 FeedbackPreparing.propTypes = {
   resetPreparingState: PropTypes.func,
-  activeStep: PropTypes.number,
-  maxStep: PropTypes.number,
+  getPreparingStep: PropTypes.number,
+  getPreparingMaxSteps: PropTypes.number,
+  getPreparingId: PropTypes.number,
+  fetchCurrentPreparing: PropTypes.func,
 };
 
 FeedbackPreparing.defaultProps = {
   resetPreparingState: () => {},
-  activeStep: 1,
-  maxStep: 11,
+  getPreparingStep: 1,
+  getPreparingMaxSteps: 11,
+  getPreparingId: 1,
+  fetchCurrentPreparing: () => {}
 };

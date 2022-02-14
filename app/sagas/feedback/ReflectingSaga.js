@@ -6,6 +6,7 @@ import ReflectingActions, {
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
+const STATUS_OK = 'ok';
 const reflectingId = state => state.reflecting.get('id');
 const step1Data = state => state.reflecting.get('step1');
 const step2Data = state => state.reflecting.get('step2');
@@ -17,13 +18,14 @@ export function* postFeedbackReflecting({ journeyId }) {
   // if(!connected) {
   // return;
   // }
-
+  const flow = yield select(state => state.feedback.get('chosenFlow'));
+  const type = yield select(state => state.feedback.get('chosenType'));
   const params = new URLSearchParams();
   params.append('journey_id', journeyId);
 
   const response = yield call(api.postFeedbackReflecting, params);
   if (response.ok) {
-    if (response.data.status == 'ok') {
+    if (response.data.status == STATUS_OK) {
       const reflectingId = response.data.details.id;
       yield put(ReflectingActions.postFeedbackReflectingSuccess(reflectingId));
       yield NavigationService.navigate('FeedbackReflecting');
@@ -43,27 +45,24 @@ export function* updateFeedbackReflecting({ data }) {
   const step2 = yield select(step2Data);
   const step4 = yield select(step4Data);
 
+  var criteriaStr = '[';
+  step2.data.forEach((item, index) => {
+    if (index !== step2.data.length - 1)
+    criteriaStr += `{ "c_id": "${item.id}", "score": "${item.score}"},`;
+    else criteriaStr += `{ "c_id": "${item.id}", "score": "${item.score}"}`;
+  });
+  criteriaStr += ']';
+  
   params.append('reflecting_id', reflectId);
   params.append('feel_int', step1.data);
-  params.append('how_did_you_do_int', step2.data.provideInfo);
-  params.append('calm_int', step2.data.calmFeedback);
-  params.append('listened_int', step2.data.listenToEmployee);
-  params.append('gave_feedback_int', step2.data.gaveFeedbackSoon);
-  params.append('established_rapport_int', step2.data.establishRapport);
-  params.append('clearly_stated_purpose_int', step2.data.clearlyStatePurpose);
-  params.append(
-    'involved_employee_action_plan_int',
-    step2.data.involveEmployee,
-  );
-  params.append('documented_int', step2.data.documentAndSend);
+  params.append('reflection_scores', criteriaStr);
   params.append('dev_plan_stop_doing', step4.data.stopDoing);
   params.append('dev_plan_start_doing', step4.data.startDoing);
-  params.append('dev_plan_stop_doing', step4.data.continueDoing);
-
+  params.append('dev_plan_continue_doing', step4.data.continueDoing);
   const response = yield call(api.updateFeedbackReflecting, params);
-  debugger;
+
   if (response.ok) {
-    if (response.data.status == 'ok') {
+    if (response.data.status == STATUS_OK) {
       yield put(ReflectingActions.updateFeedbackReflectingSuccess());
       yield put(ReflectingActions.closeFeedbackReflecting(reflectId));
     }
@@ -81,20 +80,11 @@ export function* fetchCurrentReflecting({ reflectingId }) {
   params.append('reflecting_id', reflectingId);
 
   const response = yield call(api.getCurrentReflecting, params);
+  
   if (response.ok) {
-    if (response.data.status === 'ok') {
+    if (response.data.status === STATUS_OK) {
       const reflectDetails = response.data.details;
       const { 
-        how_did_you_do: provideInfo,
-        calm: calmFeedback,
-        listened: listenToEmployee,
-        gave_feedback: gaveFeedbackSoon,
-        established_rapport: establishRapport,
-        clearly_stated_purpose: clearlyStatePurpose,
-        involved_employee_action_plan: involveEmployee,
-        // clear_next_steps: ,
-        documented: documentAndSend,
-        // development_plan: ,
         dev_plan_stop_doing: stopDoing,
         dev_plan_start_doing: startDoing,
         dev_plan_continue_doing: continueDoing,
@@ -102,21 +92,13 @@ export function* fetchCurrentReflecting({ reflectingId }) {
       } = reflectDetails;
       yield put(ReflectingActions.setReflectingData('step1', reflectDetails.feel));
       yield put(ReflectingActions.setReflectingData('step2', 
-      {
-        provideInfo,
-        calmFeedback,
-        listenToEmployee,
-        gaveFeedbackSoon,
-        establishRapport,
-        clearlyStatePurpose,
-        involveEmployee,
-        documentAndSend,
-      }))
+      reflectDetails.reflection_scores))
       yield put(ReflectingActions.setReflectingData('step4', {
         stopDoing,
         startDoing,
         continueDoing,
       }))
+      //TODO: to be adjusted for on the spot
       yield put(ReflectingActions.setReflectingData('step5', actionPlans))
       yield put(ReflectingActions.fetchCurrentReflectingSuccess())
     }
@@ -133,9 +115,9 @@ export function* closeFeedbackReflecting({ reflectingId }) {
   const params = new URLSearchParams();
   params.append('reflecting_id', reflectingId);
   const response = yield call(api.postCloseReflecting, params);
-  debugger;
+  
   if (response.ok) {
-    if (response.data.status === 'ok') {
+    if (response.data.status === STATUS_OK) {
       yield put(ReflectingActions.closeFeedbackReflectingSuccess());
       yield NavigationService.navigate('FeedbackConfirmation', {
         type: 'reflecting',
@@ -154,13 +136,36 @@ export function* fetchStaffRatings() {
   const params = new URLSearchParams();
   const response = yield call(api.getStaffRatings);
   if (response.ok) {
-    if (response.data.status === 'ok') {
+    if (response.data.status === STATUS_OK) {
       const ratings = response.data.details.feedback_list;
       yield put(ReflectingActions.fetchStaffRatingsSuccess(ratings));
     }
   } else {
     yield put(ReflectingActions.fetchStaffRatingsFailure(response.data));
   }
+}
+
+export function* fetchReflectingCriteria() {
+  //const connected = yield checkInternetConnection();
+  // if(!connected) {} return;
+  const type = yield select(state => state.feedback.get('chosenType'));
+  const flow = yield select(state => state.feedback.get('chosenFlow'));
+  const params = new URLSearchParams();
+  params.append('feedback_flow', flow.id);
+  params.append('pos_or_cor', type.id);
+
+  const response = yield call(api.getReflectingCriteria, params);
+  if(response.ok) {
+    if (response.data.status === STATUS_OK) {
+      const criteriaList = response.data.details.criteria_list.criteria;
+      yield put(ReflectingActions.fetchReflectingCriteriaSuccess(criteriaList))
+    } else {
+      yield put(ReflectingActions.fetchReflectingCriteriaFailure(response.data));  
+    }
+  } else {
+    yield put(ReflectingActions.fetchReflectingCriteriaFailure());
+  }
+
 }
 
 function* watchReflectingSaga() {
@@ -181,6 +186,7 @@ function* watchReflectingSaga() {
     closeFeedbackReflecting,
   );
   yield takeLatest(ReflectingTypes.FETCH_STAFF_RATINGS, fetchStaffRatings);
+  yield takeLatest(ReflectingTypes.FETCH_REFLECTING_CRITERIA, fetchReflectingCriteria);
 }
 
 export default watchReflectingSaga;

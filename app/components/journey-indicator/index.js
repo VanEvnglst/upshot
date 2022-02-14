@@ -6,7 +6,7 @@ import labels from 'app/locales/en';
 import styles from './styles';
 
 const JourneyIndicator = props => {
-  const { hasProgress, current, disabled, done, style, item, onPress } = props;
+  const { hasProgress, current, disabled, done, style, item, onPress, shouldStart } = props;
   return (
     <View
       style={[
@@ -40,9 +40,7 @@ const JourneyIndicator = props => {
         </Text>
       )}
       {done && (
-        <TouchableOpacity
-          accessibilityRole={'button'}
-          onPress={onPress}>
+        <TouchableOpacity accessibilityRole={'button'} onPress={onPress}>
           <Text
             type="button"
             style={[
@@ -55,18 +53,16 @@ const JourneyIndicator = props => {
         </TouchableOpacity>
       )}
       {hasProgress && (
-        <TouchableOpacity
-          accessibilityRole={'button'}
-          onPress={onPress}>
-          <Text type='button' style={[styles.buttonText, current && styles.currentText]}>
+        <TouchableOpacity accessibilityRole={'button'} onPress={onPress}>
+          <Text
+            type="button"
+            style={[styles.buttonText, current && styles.currentText]}>
             {labels.common.continue}
           </Text>
         </TouchableOpacity>
       )}
-      {current && !hasProgress && (
-        <TouchableOpacity
-          accessibilityRole={'button'}
-          onPress={onPress}>
+      {shouldStart && (
+        <TouchableOpacity accessibilityRole={'button'} onPress={onPress}>
           <Text
             type="button"
             style={[styles.buttonText, current && styles.currentText]}>
@@ -85,6 +81,7 @@ JourneyIndicator.propTypes = {
   current: PropTypes.bool,
   disabled: PropTypes.bool,
   done: PropTypes.bool,
+  shouldStart: PropTypes.bool,
   item: PropTypes.object.isRequired,
 };
 
@@ -93,5 +90,6 @@ JourneyIndicator.defaultProps = {
   current: false,
   disabled: false,
   done: false,
+  shouldStart: false,
   item: {},
 };

@@ -16,7 +16,7 @@ export const INITIAL_STATE = Map({
     whoWillMakeIt: '',
   },
   closed: false,
-  started: true
+  started: false
 });
 
 /* ------------- Types and Action Creators ------------- */

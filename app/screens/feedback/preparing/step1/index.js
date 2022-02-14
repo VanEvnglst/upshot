@@ -18,6 +18,12 @@ const PreparingStep1 = () => {
   const [checkInValue, setCheckInValue] = useState('');
   const [isCompleted, setCompletion] = useState(false);
 
+
+  useEffect(() => {
+    if (stepData.data) handleText(stepData.data);
+  }, [stepData]);
+
+  
   const handleText = text => {
     setCheckInValue(text);
     // setTimeout(() => {
@@ -26,9 +32,7 @@ const PreparingStep1 = () => {
     // }, 300);
   };
 
-  useEffect(() => {
-    if (stepData.data) handleText(stepData.data);
-  }, [stepData]);
+  
 
   const handleNext = () => {
     // if (checkInValue === '') setCompletion(false);

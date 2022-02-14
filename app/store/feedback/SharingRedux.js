@@ -1,12 +1,19 @@
 import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
 
+const defaultState = {
+  data: null
+};
+
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
   fetching: false,
   id: null,
+  error: '',
   activeStep: 1,
   maxStep: 3,
+  step1: { ...defaultState },
+  step2: { ...defaultState },
   closed: false,
   started: false,
 });
@@ -19,6 +26,9 @@ const { Types, Creators } = createActions({
   updateFeedbackSharing: ['data'],
   updateFeedbackSharingSuccess: null,
   updateFeedbackSharingFailure: ['error'],
+  updateSharingReminder: ['data'],
+  updateSharingReminderSuccess: null,
+  updateSharingReminderFailure: ['error'],
   setSharingActiveStep: ['step'],
   setSharingData: ['key', 'data'],
   setSharingStatus: ['key', 'status'],
@@ -59,7 +69,7 @@ const setSharingStatus = (state, { key, status }) => {
 
 const postFeedbackSharing = state => state.merge({
   fetching: true,
-  error,
+  error: '',
 });
 
 const postFeedbackSharingSuccess = (state, { sharingId }) =>
@@ -90,6 +100,20 @@ const updateFeedbackSharingFailure = (state, { error}) =>
     fetching: false,
     error
   });
+
+const updateSharingReminder = state => state.merge({
+  fetching: true,
+  error: ''
+});
+
+const updateSharingReminderSuccess = state => state.merge({
+  fetching: false,
+});
+
+const updateSharingReminderFailure = (state, {error}) => state.merge({
+  fetching: false,
+  error
+})
 
 const fetchCurrentSharing = state =>
   state.merge({
@@ -137,6 +161,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_FEEDBACK_SHARING]: updateFeedbackSharing,
   [Types.UPDATE_FEEDBACK_SHARING_SUCCESS]: updateFeedbackSharingSuccess,
   [Types.UPDATE_FEEDBACK_SHARING_FAILURE]: updateFeedbackSharingFailure,
+  [Types.UPDATE_SHARING_REMINDER]: updateSharingReminder,
+  [Types.UPDATE_SHARING_REMINDER_SUCCESS]: updateSharingReminderSuccess,
+  [Types.UPDATE_SHARING_REMINDER_FAILURE]: updateSharingReminderFailure,
   [Types.FETCH_CURRENT_SHARING]: fetchCurrentSharing,
   [Types.FETCH_CURRENT_SHARING_SUCCESS]: fetchCurrentSharingSuccess,
   [Types.FETCH_CURRENT_SHARING_FAILURE]: fetchCurrentSharingFailure,

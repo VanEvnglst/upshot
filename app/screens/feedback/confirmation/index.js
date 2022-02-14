@@ -4,10 +4,16 @@ import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getDocumentingId, getCurrentJourney } from 'app/store/selectors';
+import {
+  getDocumentingId,
+  getCurrentJourney,
+  getChosenFlow,
+  getChosenType,
+} from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/documentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   Text,
   Wrapper,
@@ -22,9 +28,12 @@ import Colors from 'app/theme/colors';
 
 const FeedbackConfirmation = props => {
   const { navigation, route } = props;
+  const { common, feedbackDocumenting, feedbackPreparing, feedbackDiscussing } = labels;
   const dispatch = useDispatch();
   const docuId = useSelector(getDocumentingId);
   const journeyId = useSelector(getCurrentJourney);
+  const flow = useSelector(getChosenFlow);
+  const type = useSelector(getChosenType);
   const [content, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
@@ -57,22 +66,34 @@ const FeedbackConfirmation = props => {
         return <PreparingCTA />;
       case 'reflecting':
         return <ReflectingCTA />;
+      case 'sharing':
+        return <SharingCTA />;
     }
   };
 
   const DocumentingCTA = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <Button
-          type={'text'}
-          onPress={() => navigation.navigate('PreparingGuide')}>
-          <Text>Keep going</Text>
+        <Button type={'text'} onPress={() => handleDocumentingNav()}>
+          <Text>{common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{common.remindMeLater}</Text>
         </Button>
       </View>
     );
+  };
+
+  const handleDocumentingNav = () => {
+    let screenName = '';
+    if (flow.id === 1) {
+      if (type.id === 1) screenName = 'SharingGuide';
+      else screenName = 'PreparingGuide';
+    } else {
+      screenName = 'ReflectingGuide';
+    }
+
+    navigation.navigate(screenName);
   };
 
   const DiscussingCTA = () => {
@@ -81,10 +102,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>Keep going</Text>
+          <Text>{common.keepGoing}</Text>
         </Button>
         <Button type={'text'} onPress={() => showModal()}>
-          <Text>remind me later</Text>
+          <Text>{common.remindMeLater}</Text>
         </Button>
         {/* <HintIndicator
           showHint={discussingHintVisible}
@@ -93,6 +114,7 @@ const FeedbackConfirmation = props => {
       </View>
     );
   };
+
   const PreparingCTA = () => {
     return (
       <View
@@ -105,7 +127,7 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text>Schedule Discussion</Text>
+          <Text>{feedbackPreparing.schedule}</Text>
         </Button>
         {/* <HintIndicator
           showHint={preparingHintVisible}
@@ -117,20 +139,35 @@ const FeedbackConfirmation = props => {
 
   const ReflectingCTA = () => {
     return (
-      <View style={{
-        marginBottom: 20,
-        flex: 1,
-      }}>
-        <Button
-          mode='contained'
-          onPress={() => closeJourney()}
-        >Got it</Button>
+      <View
+        style={{
+          marginBottom: 20,
+          flex: 1,
+        }}>
+        <Button mode="contained" onPress={() => closeJourney()}>
+          {common.gotIt}
+        </Button>
       </View>
-    )
-  }
+    );
+  };
+
+  const SharingCTA = () => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          type={'text'}
+          onPress={() => navigation.navigate('ReflectingGuide')}>
+          <Text>{common.keepGoing}</Text>
+        </Button>
+        <Button type={'text'} onPress={() => showModal()}>
+          <Text>{common.remindMeLater}</Text>
+        </Button>
+      </View>
+    );
+  };
 
   const closeJourney = () => {
-    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data))
+    dispatch(FeedbackActions.postCloseFeedbackJourney(journeyId.data));
   };
 
   const handleTimeSelection = time => {
@@ -145,14 +182,16 @@ const FeedbackConfirmation = props => {
     if (route.params.type === 'discussing') {
       dispatch(DiscussingActions.updateDiscussingReminder(data));
     }
+    if (route.params.type === 'sharing') {
+      dispatch(SharingActions.updateSharingReminder(data));
+    }
     hideModal();
   };
 
   const handleClose = () => {
-    if(route.params.type === 'reflecting')
-    closeJourney();
-    else navigation.navigate('ActiveFeedbackJourney')
-  }
+    if (route.params.type === 'reflecting') closeJourney();
+    else navigation.navigate('ActiveFeedbackJourney');
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -170,11 +209,19 @@ const FeedbackConfirmation = props => {
           />
         </View>
         <View style={{ flex: 2 }}>
-          <Text type="h4">You did it!</Text>
+          <Text type="h4">{common.youDidIt}</Text>
           <Text
             type="body1"
-            style={{ lineHeight: 24, marginTop: 35, width: '90%' }}>
-            {content}
+            style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
+            {
+              route.params.type === 'documenting'
+                ? flow.id === 1
+                  ? type.id === 1
+                    ? `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`
+                    : content // sched corr content
+                  : content // TODO: change to on the spot content
+                : content // regular content for each phase
+            }
           </Text>
         </View>
         {preparingHintVisible && (
@@ -185,7 +232,7 @@ const FeedbackConfirmation = props => {
               borderRadius: 16,
             }}>
             <Text type="body2" style={{ color: Colors.primary900 }}>
-              {labels.feedbackPreparing.confirmationHint}
+              {feedbackPreparing.confirmationHint}
             </Text>
           </View>
         )}
@@ -197,7 +244,7 @@ const FeedbackConfirmation = props => {
               borderRadius: 16,
             }}>
             <Text type="body2" style={{ color: Colors.primary900 }}>
-              {labels.feedbackDiscussing.confirmationHint}
+              {feedbackDiscussing.confirmationHint}
             </Text>
           </View>
         )}
@@ -224,6 +271,22 @@ const FeedbackConfirmation = props => {
 
 export default FeedbackConfirmation;
 
-FeedbackConfirmation.propTypes = {};
+FeedbackConfirmation.propTypes = {
+  getDocumentingId: PropTypes.number,
+  getCurrentJourney: PropTypes.object,
+  getChosenFlow: PropTypes.object,
+  getChosenType: PropTypes.object,
+  updateDocumentingReminder: PropTypes.func,
+  updateDiscussingReminder: PropTypes.func,
+  postCloseFeedbackJourney: PropTypes.func,
+};
 
-FeedbackConfirmation.defaultProps = {};
+FeedbackConfirmation.defaultProps = {
+  getDocumentingId: 1,
+  getCurrentJourney: {},
+  getChosenType: {},
+  getChosenFlow: {},
+  updateDiscussingReminder: () => {},
+  updateDocumentingReminder: () => {},
+  postCloseFeedbackJourney: () => {},
+};
