@@ -3,6 +3,7 @@ import { Map } from 'immutable';
 
 export const INITIAL_STATE = Map({
   firstName: 'Ivan',
+  role: 3,
 });
 
 const { Types, Creators } = createActions({
