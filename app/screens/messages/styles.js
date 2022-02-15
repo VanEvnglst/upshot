@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import Colors from 'app/theme/colors';
-import Fonts from 'app/theme/fonts';
 
 const SPACING = 20;
 const AVATAR_SIZE = 70;
@@ -36,33 +35,4 @@ export default styles = StyleSheet.create({
   messagesContainer: {
     flex: 2,
   },
-  messageCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 15,
-    paddingLeft: 0,
-    marginBottom: SPACING,
-    backgroundColor: '#fff',
-  },
-  messageHeader: {
-    marginBottom: 5,
-  },
-  textMessage: {
-    opacity: 0.8,
-    color: '#0099cc',
-  },
-  unreadTextMessage: {
-    opacity: 1.0,
-    fontFamily: Fonts.fontFamily.RalewaySemiBold,
-  },
-  content: {
-    marginLeft: 15,
-  },
-  // avatar: {
-  //   width: AVATAR_SIZE,
-  //   height: AVATAR_SIZE,
-  //   borderRadius: AVATAR_SIZE,
-  //   marginRight: SPACING / 2,
-  // },
 });

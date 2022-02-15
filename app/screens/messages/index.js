@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Wrapper, Text } from 'app/components';
+import { Wrapper, Text, MessageItem } from 'app/components';
 import labels from 'app/locales/en';
 
 import styles from './styles';
@@ -31,28 +31,6 @@ const ReminderSection = props => {
   );
 };
 
-const MessageCard = ({ unread }) => {
-  return (
-    <View style={styles.messageCard}>
-      <Icon name={'person-circle-outline'} size={50} color={'#212121'} />
-      <View style={styles.content}>
-        <Text
-          type={unread ? 'subtitle2' : 'body2'}
-          style={styles.messageHeader}>
-          Welcome to Upshot!
-        </Text>
-        <Text
-          type="caption"
-          style={[
-            unread && styles.unreadTextMessage,
-            !unread && styles.textMessage,
-          ]}>
-          this is a system generated message
-        </Text>
-      </View>
-    </View>
-  );
-};
 
 const Messages = props => {
   return (
@@ -65,7 +43,11 @@ const Messages = props => {
         <Text type="overline" style={styles.labelStyle}>
           Messages
         </Text>
-        <MessageCard unread />
+        {/* TODO: should be a Flatlist */}
+        <MessageItem/>
+        <MessageItem/>
+        <MessageItem/>
+        <MessageItem/>
       </View>
     </Wrapper>
   );
