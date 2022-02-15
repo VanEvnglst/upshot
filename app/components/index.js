@@ -13,3 +13,4 @@ export { default as DateTimePicker } from './calendar';
 export { default as Modal } from './modal';
 export { default as Chip } from './chip';
 export { default as Slider } from './slider';
+export { default as MessageItem }  from './message-item';

@@ -5,22 +5,18 @@ import { Messages } from '../screens';
 
 const FrontlinerStack = createStackNavigator();
 
-export default function FrontlinerStackScreen() {
+export default function (Stack) {
   return (
     <>
-      <FrontlinerStack.Navigator
-        headerMode='none'
-        initialRouteName={'Messages'}
-      >
-        <FrontlinerStack.Screen
+        <Stack.Screen
           name={'Messages'}
           component={Messages}
+          options={{ headerShown: false }}
         />
         {/* <FrontlinerStack.Screen
           name={'Message'}
           component={Message}
         /> */}
-      </FrontlinerStack.Navigator>
     </>
   );
 }

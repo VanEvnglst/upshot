@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { navigationRef } from 'app/services/NavigationService';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
+import FrontlinerStack from './FrontlinerStack';
 import { getSignInState } from 'app/store/selectors';
 import { initPushNotif } from '../services/notification-service';
 
@@ -22,8 +23,10 @@ export default function Routes() {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {/* TODO: Add conditions based on the user role  */}
-        {isSignedIn ? MainStack(Stack) : AuthStack(Stack)}
+        {isSignedIn ? FrontlinerStack(Stack) : AuthStack(Stack)}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+// MainStack
