@@ -12,19 +12,19 @@ export default function (Stack) {
   return (
     <>
       <Stack.Navigator>
-        {userRole === 3 ? (
+        {/* {userRole === 3 ? (
           <Stack.Screen
             name={'Frontliner'}
             component={FrontlinerStackScreen}
             options={{ headerShown: false }}
           />
-        ) : (
+        ) : ( */}
           <Stack.Screen
             name={'Main'}
             component={HomeStackScreen}
             options={{ headerShown: false }}
           />
-        )}
+        {/* )} */}
       </Stack.Navigator>
     </>
   );
