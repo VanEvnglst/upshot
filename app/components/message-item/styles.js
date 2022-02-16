@@ -14,6 +14,7 @@ export default styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   image: {
+    alignSelf: 'flex-start',
     height: 50, 
     width: 50, 
     borderRadius: 25
@@ -27,7 +28,7 @@ export default styles = StyleSheet.create({
   },
   messageTitle: {
     color: Colors.mediumBlack,
-    marginBottom: 5,
+    marginBottom: 8,
     flex: 3,
   },
   unreadDateText: {

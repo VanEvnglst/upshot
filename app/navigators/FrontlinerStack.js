@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Messages } from '../screens';
+import { Messages, ResponseScreen } from '../screens';
 
 const FrontlinerStack = createStackNavigator();
 
@@ -9,14 +9,14 @@ export default function (Stack) {
   return (
     <>
         <Stack.Screen
-          name={'Messages'}
-          component={Messages}
+          name={'ResponseScreen'}
+          component={ResponseScreen}
           options={{ headerShown: false }}
         />
-        {/* <FrontlinerStack.Screen
-          name={'Message'}
-          component={Message}
-        /> */}
+        <FrontlinerStack.Screen
+          name={'Messages'}
+          component={Messages }
+        />
     </>
   );
 }
