@@ -6,6 +6,7 @@ import {
   FeedbackGuide,
   FeedbackType,
   FeedbackDocumenting,
+  DocumentingReview,
   ActiveFeedbackJourney,
   FeedbackJourneyList,
   PreparingGuide,
@@ -18,7 +19,7 @@ import {
   FeedbackReflecting,
   ReflectingGuide,
   SharingGuide,
-  FeedbackSharing
+  FeedbackSharing,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -35,15 +36,9 @@ export default function FeedbackStackScreen() {
           activeJourneyLength.length > 0
             ? 'FeedbackJourneyList'
             : 'FeedbackFlow'
-    }>
-        <FeedbackStack.Screen 
-          name={'FeedbackFlow'} 
-          component={FeedbackFlow} 
-        />
-        <FeedbackStack.Screen 
-          name={'FeedbackType'}
-          component={FeedbackType}
-        />
+        }>
+        <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
+        <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
         {/* Only appears when starting a new journey */}
         <FeedbackStack.Screen
           name={'FeedbackGuide'}
@@ -68,6 +63,10 @@ export default function FeedbackStackScreen() {
           component={FeedbackDocumenting}
         />
         <FeedbackStack.Screen
+          name={'DocumentingReview'}
+          component={DocumentingReview}
+        />
+        <FeedbackStack.Screen
           name={'PreparingGuide'}
           component={PreparingGuide}
         />
@@ -78,7 +77,7 @@ export default function FeedbackStackScreen() {
         <FeedbackStack.Screen
           name={'PreparingSchedule'}
           component={PreparingSchedule}
-         />
+        />
         <FeedbackStack.Screen
           name={'DiscussingGuide'}
           component={DiscussingGuide}
@@ -91,7 +90,7 @@ export default function FeedbackStackScreen() {
           name={'FeedbackDiscussing'}
           component={FeedbackDiscussing}
         />
-         <FeedbackStack.Screen
+        <FeedbackStack.Screen
           name={'ReflectingGuide'}
           component={ReflectingGuide}
         />
@@ -99,10 +98,7 @@ export default function FeedbackStackScreen() {
           name={'FeedbackReflecting'}
           component={FeedbackReflecting}
         />
-        <FeedbackStack.Screen
-          name={'SharingGuide'}
-          component={SharingGuide}
-        />
+        <FeedbackStack.Screen name={'SharingGuide'} component={SharingGuide} />
         <FeedbackStack.Screen
           name={'FeedbackSharing'}
           component={FeedbackSharing}
