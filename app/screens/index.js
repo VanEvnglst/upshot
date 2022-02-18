@@ -3,7 +3,7 @@ export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
 
 /* ------------- Home Stack ------------- */
-export { default as Home } from './home';
+export { default as HomeScreen } from './home';
 export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
@@ -17,11 +17,13 @@ export { default as FeedbackConfirmation } from './feedback/confirmation';
 export { default as FeedbackFlow } from './feedback/flow';
 export { default as FeedbackType } from './feedback/type';
 export { default as FeedbackDocumenting } from './feedback/documenting';
+export { default as DocumentingReview } from './feedback/documenting/documenting-review';
 
 /* ------------- Feedback Preparing ------------- */
 export { default as PreparingGuide } from './feedback/preparing/guide';
 export { default as FeedbackPreparing } from './feedback/preparing';
 export { default as PreparingSchedule } from './feedback/preparing/scheduling';
+export { default as PreparingReview } from './feedback/preparing/preparing-review';
 
 /* ------------- Feedback Discussing ------------- */
 export { default as DiscussingGuide } from './feedback/discussing/guide';

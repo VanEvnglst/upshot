@@ -3,8 +3,6 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import DocumentingActions, {
   DocumentingTypes,
 } from 'app/store/feedback/documentingRedux';
-import PreparingActions from 'app/store/feedback/preparingRedux';
-import FeedbackActions from 'app/store/feedback/feedbackRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
@@ -74,7 +72,6 @@ export function* deleteFeedbackDocumenting({ data }) {
 
 export function* fetchCurrentDocumenting({ documentingId }) {
   const params = new URLSearchParams();
-
   params.append('documenting_id', documentingId);
   
   const response = yield call(api.getCurrentDocumenting, params);
@@ -82,7 +79,6 @@ export function* fetchCurrentDocumenting({ documentingId }) {
   if (response.ok) {
     if (response.data.status === 'ok') {
       const docuDetails = response.data.details;
-      yield put(FeedbackActions.setFeedbackType(docuDetails.pos_or_cor));
       yield put(
         DocumentingActions.setDocumentingData('step1', docuDetails.staff),
       );
