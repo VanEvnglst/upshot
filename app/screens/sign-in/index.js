@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   KeyboardAvoidingView,
   Button,
   TouchableOpacity,
-  StatusBar,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -20,9 +20,24 @@ const SignIn = props => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
+    token: '',
   });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    retrieveToken();
+  }, []);
+
+  const retrieveToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('fcmToken');
+      setToken(value);
+    } catch (e) {
+      console.log('retrieve error');
+    }
+  };
 
   const validate = () => {
     const errors = {};
@@ -43,6 +58,7 @@ const SignIn = props => {
       AuthenticationActions.signInUser({
         email,
         password,
+        token,
       }),
     );
   };
@@ -95,11 +111,6 @@ const SignIn = props => {
               />
 
               <Button title="Sign in" onPress={() => handleSubmit()} />
-
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Onboarding')}>
-                <Text>Register here</Text>
-              </TouchableOpacity>
             </View>
           );
         }}
