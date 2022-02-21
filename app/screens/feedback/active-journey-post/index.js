@@ -213,31 +213,28 @@ const ActiveFeedbackJourney = props => {
     navigation.navigate(screenName);
   };
 
-  const handleReviewNavigation = () => {
+  const handleReviewNavigation = index => {
     let screenName = '';
     if (flow.id === 1) {
       if (type.id === 1) {
         switch (index) {
           case 0:
-            screenName = 'FeedbackDocumenting';
+            screenName = 'DocumentingReview';
             break;
           case 1:
-            if (sharing.get('id')) screenName = 'FeedbackSharing';
-            else screenName = 'SharingGuide';
+            screenName = 'SharingReview';
             break;
           case 2:
-            if (reflecting.get('id')) screenName = 'FeedbackReflecting';
-            else screenName = 'ReflectingGuide';
+            screenName = 'ReflectingReview';
             break;
         }
       } else {
         switch (index) {
           case 0:
-            screenName = 'FeedbackDocumenting';
+            screenName = 'DocumentingReview';
             break;
           case 1:
-            if (preparing.get('id')) screenName = 'FeedbackPreparing';
-            else screenName = 'PreparingGuide';
+            screenName = 'PreparingReview';
             break;
           case 2:
             if (discussing.get('id')) screenName = 'DiscussingMeeting';
@@ -250,7 +247,7 @@ const ActiveFeedbackJourney = props => {
         }
       }
     }
-    //navigation.navigate(screenName);
+    navigation.navigate(screenName);
   };
 
   return (

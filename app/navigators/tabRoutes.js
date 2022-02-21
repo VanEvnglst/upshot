@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Home, Messages, Activity, Reminders, Profile } from '../screens';
+import { HomeScreen, Messages, Activity, Reminders, Profile } from '../screens';
 import FeedbackStackScreen from './FeedbackStack';
 
 const BottomTab = createBottomTabNavigator();
@@ -31,7 +31,7 @@ function TabRoutes() {
     <BottomTab.Navigator initialRouteName="Home">
       <BottomTab.Screen
         name={'Home'}
-        component={Home}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
