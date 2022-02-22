@@ -1,10 +1,10 @@
 import { combineReducers, compose } from 'redux';
 import { reducer as network } from 'react-native-offline';
-import { reducer as authentication } from './authenticationRedux';
-import { feedbackReducer as feedback } from './feedback/feedbackRedux';
-import { reducer as feedbackHistory } from './feedback/feedbackHistoryRedux';
-import { reducer as documenting } from './feedback/documentingRedux';
-import { reducer as preparing } from './feedback/preparingRedux';
+import { reducer as authentication } from './AuthenticationRedux';
+import { feedbackReducer as feedback } from './feedback/FeedbackRedux';
+import { reducer as feedbackHistory } from './feedback/FeedbackHistoryRedux';
+import { reducer as documenting } from './feedback/DocumentingRedux';
+import { reducer as preparing } from './feedback/PreparingRedux';
 import { reducer as user } from './UserRedux';
 import { reducer as onboarding } from './OnboardingRedux';
 import { reducer as discussing } from './feedback/DiscussingRedux';
