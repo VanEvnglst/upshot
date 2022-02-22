@@ -2,7 +2,7 @@ import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import DocumentingActions, {
   DocumentingTypes,
-} from 'app/store/feedback/documentingRedux';
+} from 'app/store/feedback/DocumentingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
