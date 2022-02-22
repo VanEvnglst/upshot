@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import AuthenticationActions from 'app/store/authenticationRedux';
+import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { TextInput } from 'app/components';
 import styles from './styles';
 
