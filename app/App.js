@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createStore from './store';
-import Routes from './navigators/routes';
+import Routes from './navigators/Routes';
 import { theme, darkTheme } from './theme';
 import NotifService from './services/notification-service';
 import RemoteNotifController from './services/remote-notification-controller';
