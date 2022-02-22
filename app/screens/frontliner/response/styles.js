@@ -12,12 +12,18 @@ export default styles = StyleSheet.create({
   headerText: {
     color: Colors.black,
   },
-  messageCard: {
+  currentMessageCard: {
     borderWidth: 1,
     borderColor: Colors.outline,
     borderRadius: 8,
     paddingVertical: 30,
     paddingHorizontal: 20,
+  },
+  olderMessageCard: {
+    borderRadius: 9,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    backgroundColor: 'rgba(0,0,0,0.04)'
   },
   nameContainer: {
     flexDirection: 'row',
