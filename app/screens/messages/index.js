@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Wrapper, Text, MessageItem } from 'app/components';
+import MessagesActions from 'app/store/MessagesRedux';
 import labels from 'app/locales/en';
 import styles from './styles';
 
 const Messages = props => {
   const { navigation } = props;
+  const dispatch = useDispatch();
+  const [messages, setMessages] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    (async () => {
+      const { data } = await dispatch(MessagesActions.fetchMessages());
+      setMessages(data);
+    })();
+  }, []);
   const ReminderSection = props => {
     return (
       <View style={styles.reminderContainer}>
@@ -40,15 +50,24 @@ const Messages = props => {
         <Text type="overline" style={styles.labelStyle}>
           Messages
         </Text>
-        {/* TODO: should be a Flatlist */}
-        <MessageItem 
-        onPress={() => navigation.navigate('ResponseScreen')}/>
-        <MessageItem />
-        <MessageItem />
-        <MessageItem />
+        <FlatList
+          data={messages}
+          keyExtractor={item => item.key}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          renderItem={({ item, index}) => {
+            return <MessageItem
+              onPress={() => navigation.navigate('ResponseScreen')}
+            />;
+          }}
+        />
       </View>
     </Wrapper>
   );
 };
 
 export default Messages;
+
+Messages.propTypes = {};
+
+Messages.defaultProps = {};

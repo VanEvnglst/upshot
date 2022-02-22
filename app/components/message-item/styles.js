@@ -12,6 +12,7 @@ export default styles = StyleSheet.create({
     padding: 15,
     marginVertical: SPACING,
     backgroundColor: Colors.white,
+    maxHeight: 80,
   },
   image: {
     alignSelf: 'flex-start',
