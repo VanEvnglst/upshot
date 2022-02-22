@@ -8,14 +8,15 @@ const FrontlinerStack = createStackNavigator();
 export default function (Stack) {
   return (
     <>
-        <Stack.Screen
+        {/* <Stack.Screen
           name={'ResponseScreen'}
           component={ResponseScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <FrontlinerStack.Screen
           name={'Messages'}
-          component={Messages }
+          component={Messages}
+          options={{ headerShown: false }}
         />
     </>
   );
