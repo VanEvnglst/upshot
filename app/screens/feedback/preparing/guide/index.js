@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
 import labels from 'app/locales/en';
 import preparingGuide from 'app/models/PreparingGuide';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep, getPrepStep2Data } from 'app/store/selectors';
 import PropTypes from 'prop-types';
 import { Text, ButtonSelection, TextInput } from 'app/components';

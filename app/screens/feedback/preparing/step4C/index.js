@@ -3,7 +3,7 @@ import { View, ScrollView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep } from 'app/store/selectors';
 import { Text } from 'app/components';
 import Images from 'app/assets/images';

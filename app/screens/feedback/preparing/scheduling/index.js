@@ -13,7 +13,7 @@ import {
   Modal,
   ButtonSelection,
 } from 'app/components';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getStaffName } from 'app/store/selectors';
 
 
