@@ -13,7 +13,7 @@ import {
   getStep3Data,
   getChosenType,
 } from 'app/store/selectors';
-import DocumentingActions from 'app/store/feedback/documentingRedux';
+import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import DocumentingStep3 from './step3';
 import DocumentingStep2 from './step2';
 import DocumentingStep1 from './step1';
