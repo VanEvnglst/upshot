@@ -8,9 +8,8 @@ const STATUS_OK = 'ok';
 export function* fetchMessages({}) {
   // const connected = yield checkInternetConnection();
   // if (!connected ) { return; }
-  console.warn('call api');
+  
   const response = yield call(api.getFrontlinerMessages);
-  debugger;
   if(response.ok) {
     if (response.data.status === STATUS_OK) {
       const messagesList = response.data.inbox;
