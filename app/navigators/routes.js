@@ -23,7 +23,7 @@ export default function Routes() {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {/* TODO: Add conditions based on the user role  */}
-        {isSignedIn ? FrontlinerStack(Stack) : AuthStack(Stack)}
+        {true ? FrontlinerStack(Stack) : AuthStack(Stack)}
       </Stack.Navigator>
     </NavigationContainer>
   );
