@@ -3,7 +3,7 @@ import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep, getPrepStep1Data } from 'app/store/selectors';
 import { Text, TextInput } from 'app/components';
 import labels from 'app/locales/en';

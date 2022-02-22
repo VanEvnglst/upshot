@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import { ButtonSelection, Text, TextInput } from 'app/components';
-import DocumentingActions from 'app/store/feedback/documentingRedux';
+import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import {
   getRelatedTopicsList,
   getDocumentingStep,

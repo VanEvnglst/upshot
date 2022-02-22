@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text, Modal } from 'app/components';
 import { getPreparingStep, getPreparingMaxSteps, getPreparingId } from 'app/store/selectors';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import PreparingStep1 from './step1';
 import PreparingStep2 from './step2';
 import PreparingStep3 from './step3';

@@ -2,7 +2,7 @@ import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import AuthenticationActions, {
   AuthenticationTypes,
-} from 'app/store/authenticationRedux';
+} from 'app/store/AuthenticationRedux';
 import UserActions from 'app/store/UserRedux';
 import api from 'app/services/apiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';

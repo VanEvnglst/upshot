@@ -10,9 +10,9 @@ import {
   getChosenFlow,
   getChosenType,
 } from 'app/store/selectors';
-import DocumentingActions from 'app/store/feedback/documentingRedux';
+import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
-import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   Text,

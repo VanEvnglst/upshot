@@ -10,7 +10,7 @@ import {
   DateTimePicker,
   Text,
 } from 'app/components';
-import DocumentingActions from 'app/store/feedback/documentingRedux';
+import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import { getStep4Data, getStep2Data, getStep3Data, getDocumentingStep, getDocumentingId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';

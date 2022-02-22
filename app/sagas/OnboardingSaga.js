@@ -1,7 +1,7 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import OnboardingActions, { OnboardingTypes } from 'app/store/OnboardingRedux';
-import AuthenticationActions from 'app/store/authenticationRedux';
+import AuthenticationActions from 'app/store/AuthenticationRedux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from 'app/services/apiService';

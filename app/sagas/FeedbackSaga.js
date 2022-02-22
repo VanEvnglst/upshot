@@ -2,9 +2,9 @@ import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import FeedbackActions, {
   FeedbackTypes,
-} from 'app/store/feedback/feedbackRedux';
-import DocumentingActions from 'app/store/feedback/documentingRedux';
-import PreparingActions from 'app/store/feedback/preparingRedux';
+} from 'app/store/feedback/FeedbackRedux';
+import DocumentingActions from 'app/store/feedback/DocumentingRedux';
+import PreparingActions from 'app/store/feedback/PreparingRedux';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import SharingActions from 'app/store/feedback/SharingRedux';
@@ -71,7 +71,7 @@ export function* postFeedbackJourney({ data }) {
   const documentingParams = new URLSearchParams();
   const staff = yield select(staffData);
   const nameArr = staff.name.split(/[ ,]+/);
-  const lastName = nameArr && nameArr[2].charAt(0);
+  const lastName = nameArr && nameArr[1].charAt(0);
   const staffName = {
     firstName: nameArr[0],
     lastName: lastName,

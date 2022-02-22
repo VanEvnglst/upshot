@@ -11,7 +11,7 @@ import {
   Text
 } from 'app/components';
 import { getFeedbackTypeList } from 'app/store/selectors';
-import FeedbackActions from 'app/store/feedback/feedbackRedux';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import labels from 'app/locales/en';
 import styles from './styles';
 

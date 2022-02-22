@@ -2,7 +2,7 @@ import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import FeedbackHistoryActions, {
   FeedbackHistoryTypes,
-} from 'app/store/feedback/feedbackHistoryRedux';
+} from 'app/store/feedback/FeedbackHistoryRedux';
 import api from 'app/services/apiService';
 
 const STATUS_OK = 'ok';
