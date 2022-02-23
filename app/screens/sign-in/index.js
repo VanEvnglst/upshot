@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  Text,
+  Image,
   KeyboardAvoidingView,
-  Button,
-  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
-import { TextInput } from 'app/components';
+import { getAuthLoading } from 'app/store/selectors';
+import { TextInput, Loader } from 'app/components';
+import Images from 'app/assets/images';
 import styles from './styles';
 
 const SignIn = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-    token: '',
-  });
+  const isLoading = useSelector(getAuthLoading);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
@@ -65,9 +62,13 @@ const SignIn = props => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 36 }}>Upshot</Text>
+      <View style={styles.logoContainer}>
+        <Image
+          source={Images.upshotWhite}
+          resizeMode='contain'
+        />
       </View>
+      <View style={styles.formContainer}>
       <Formik
         initialValues={{
           email,
@@ -79,42 +80,32 @@ const SignIn = props => {
         {({ errors, handleSubmit }) => {
           return (
             <View
-              style={{
-                flex: 2,
-                marginTop: 30,
-                alignItems: 'center',
-              }}>
+            style={styles.form}
+              >
               <TextInput
                 label="Email"
                 placeholder="Email"
-                style={{
-                  width: '95%',
-                  height: 60,
-                  margin: 20,
-                  paddingHorizontal: 10,
-                }}
+                style={styles.inputField}
                 value={email}
                 onChangeText={email => setEmail(email)}
               />
               <TextInput
                 label="Password"
                 placeholder="Password"
-                style={{
-                  margin: 20,
-                  width: '95%',
-                  height: 60,
-                  paddingHorizontal: 10,
-                }}
+                style={styles.inputField}
                 secureTextEntry
                 value={password}
                 onChangeText={password => setPassword(password)}
               />
-
-              <Button title="Sign in" onPress={() => handleSubmit()} />
+              <Button mode='contained'
+              style={styles.button}
+              onPress={() => handleSubmit()}>Log in</Button>
             </View>
           );
         }}
       </Formik>
+      </View>
+      {isLoading && <Loader />}
     </KeyboardAvoidingView>
   );
 };
