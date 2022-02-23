@@ -4,8 +4,8 @@ import { Map } from 'immutable';
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
   isSignedIn: false,
-  signInError: '',
-  loading: false,
+  error: '',
+  fetching: false,
 });
 
 const { Types, Creators } = createActions({
@@ -22,16 +22,20 @@ export default Creators;
 /* ------------- Reducers ------------- */
 const signInUser = state =>
   state.merge({
-    loading: true,
-    signInError: '',
+    fetching: true,
+    error: '',
   });
 const signInUserSuccess = state =>
   state.merge({
     ...state.get('isSignedIn'),
-    loading: false,
+    fetching: false,
     isSignedIn: true,
   });
-const signInUserFailure = state => state.merge({});
+
+const signInUserFailure = (state, { error}) => state.merge({
+  fetching: false,
+  error
+});
 const signOutUser = state => state.merge({ ...INITIAL_STATE });
 
 const setUserSignedIn = state =>

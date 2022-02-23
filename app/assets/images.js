@@ -41,4 +41,6 @@ export default {
   sharingStep2: require('./images/sharing-step2.png'),
   sharingStep3: require('./images/sharing-step3.png'),
   avatar: require('./images/temp-avatar.png'),
+  upshotWhite: require('./images/upshot-logo-white.png'),
+  upshotLoader: require('./images/upshot-logo-small-purple.png'),
 };
