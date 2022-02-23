@@ -21,7 +21,6 @@ export function* signInUser({ data }) {
     return;
   }
   const authResponse = yield call(api.signIn, params);
-  debugger;
   if (authResponse.ok) {
     if (authResponse.data.result === RESULT_SUCCESS) {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
@@ -33,8 +32,7 @@ export function* signInUser({ data }) {
       );
     }
   } else {
-    AuthenticationActions.signInUserFailure();
-    console.log('server err');
+    AuthenticationActions.signInUserFailure(response.data);
   }
 }
 
