@@ -3,6 +3,7 @@ export const getUserFirstName = state => state.user.get('firstName');
 
 /* ------------- Auth Selectors ------------- */
 export const getSignInState = state => state.authentication.get('isSignedIn');
+export const getAuthLoading = state => state.authentication.get('fetching');
 
 /* ------------- Feedback Selectors ------------- */
 export const getCurrentJourney = state => state.feedback.get('currentJourney');
