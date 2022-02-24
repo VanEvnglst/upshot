@@ -1,19 +1,19 @@
 import React from 'react';
-import { SignIn, Onboarding } from '../screens';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SignIn } from '../screens';
 
-export default function (Stack) {
+const AuthStack = createStackNavigator();
+export default function AuthNavigator() {
   return (
-    <>
-      <Stack.Screen
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <AuthStack.Screen
         name={'Sign in'}
         component={SignIn}
-        options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name={'Onboarding'}
-        component={Onboarding}
-        options={{ headerShown: false }}
-      />
-    </>
+    </AuthStack.Navigator>
   );
 }
