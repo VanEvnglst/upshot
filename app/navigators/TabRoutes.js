@@ -4,16 +4,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen, Messages, Activity, Reminders, Profile } from '../screens';
-import FeedbackStackScreen from './FeedbackStack';
+import FeedbackNavigator from './FeedbackStack';
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
-const HomeStackScreen = () => {
+const HomeNavigator = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name={'Home'} component={TabRoutes} />
-      <HomeStack.Screen name={'Feedback'} component={FeedbackStackScreen} />
+      <HomeStack.Screen name={'Feedback'} component={FeedbackNavigator} />
       {/* <HomeStack.Screen name={'Reminders'} component={Reminders} /> */}
     </HomeStack.Navigator>
   );
@@ -121,4 +121,4 @@ function TabRoutes() {
   );
 }
 
-export default HomeStackScreen;
+export default HomeNavigator;
