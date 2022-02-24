@@ -1,74 +1,73 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Wrapper, Text } from 'app/components';
+import { View, TouchableOpacity, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Wrapper, Text, MessageItem } from 'app/components';
+import MessagesActions from 'app/store/MessagesRedux';
 import labels from 'app/locales/en';
-
 import styles from './styles';
 
-const ReminderSection = props => {
-  const { navigation } = props;
-  console.log('nav', navigation);
-  return (
-    <View style={styles.reminderContainer}>
-      <View style={styles.contentContainer}>
-        <View style={styles.reminderHeaderContainer}>
-          <Text type="h5" style={styles.reminderTitle}>
-            {labels.reminders.morningCardHeader}
-          </Text>
-          <Text type="body2" style={styles.textSnippet}>
-            Be mindful of moments throughout your day where you can help someone
-            do better...
-          </Text>
-        </View>
-        <View style={styles.readMoreContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Reminders')}>
-            <Text type="button">{labels.common.readMore}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-const MessageCard = ({ unread }) => {
-  return (
-    <View style={styles.messageCard}>
-      <Icon name={'person-circle-outline'} size={50} color={'#212121'} />
-      <View style={styles.content}>
-        <Text
-          type={unread ? 'subtitle2' : 'body2'}
-          style={styles.messageHeader}>
-          Welcome to Upshot!
-        </Text>
-        <Text
-          type="caption"
-          style={[
-            unread && styles.unreadTextMessage,
-            !unread && styles.textMessage,
-          ]}>
-          this is a system generated message
-        </Text>
-      </View>
-    </View>
-  );
-};
-
 const Messages = props => {
+  const { navigation } = props;
+  const dispatch = useDispatch();
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await dispatch(MessagesActions.fetchMessages());
+      setMessages(data);
+    })();
+  }, []);
+  const ReminderSection = props => {
+    return (
+      <View style={styles.reminderContainer}>
+        <View style={styles.contentContainer}>
+          <View style={styles.reminderHeaderContainer}>
+            <Text type="h5" style={styles.reminderTitle}>
+              {labels.reminders.morningCardHeader}
+            </Text>
+            <Text type="body2" style={styles.textSnippet}>
+              Be mindful of moments throughout your day where you can help
+              someone do better...
+            </Text>
+          </View>
+          <View style={styles.readMoreContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('Reminders')}>
+              <Text type="button">{labels.common.readMore}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
   return (
     <Wrapper>
-      <Text type="overline" style={styles.labelStyle}>
+      {/* <Text type="overline" style={styles.labelStyle}>
         Reminders
       </Text>
-      <ReminderSection {...props} />
+      <ReminderSection /> */}
       <View style={styles.messagesContainer}>
         <Text type="overline" style={styles.labelStyle}>
           Messages
         </Text>
-        <MessageCard unread />
+        <FlatList
+          data={messages}
+          keyExtractor={item => item.key}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          renderItem={({ item, index}) => {
+            return <MessageItem
+              onPress={() => navigation.navigate('ResponseScreen')}
+            />;
+          }}
+        />
       </View>
     </Wrapper>
   );
 };
 
 export default Messages;
+
+Messages.propTypes = {};
+
+Messages.defaultProps = {};

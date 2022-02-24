@@ -1,5 +1,6 @@
 /* ------------- User Selectors ------------- */
 export const getUserFirstName = state => state.user.get('firstName');
+export const getUserRole = state => state.user.get('role');
 
 /* ------------- Auth Selectors ------------- */
 export const getSignInState = state => state.authentication.get('isSignedIn');

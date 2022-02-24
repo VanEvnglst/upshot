@@ -43,4 +43,5 @@ export default {
   avatar: require('./images/temp-avatar.png'),
   upshotWhite: require('./images/upshot-logo-white.png'),
   upshotLoader: require('./images/upshot-logo-small-purple.png'),
+  logo: require('./images/upshot-logo.png'),
 };
