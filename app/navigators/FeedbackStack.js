@@ -25,7 +25,7 @@ import { getActiveJourneys } from 'app/store/selectors';
 
 const FeedbackStack = createStackNavigator();
 
-export default function FeedbackStackScreen() {
+export default function FeedbackNavigator() {
   const activeJourneyLength = useSelector(getActiveJourneys);
 
   return (

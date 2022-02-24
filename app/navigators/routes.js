@@ -3,9 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import { navigationRef } from 'app/services/NavigationService';
-import AuthStack from './AuthStack';
-import MainStack from './MainStack';
-import FrontlinerStack from './FrontlinerStack';
+import AuthNavigator from './AuthStack';
+import MainNavigator from './MainStack';
 import { getSignInState } from 'app/store/selectors';
 import { initPushNotif } from '../services/notification-service';
 
@@ -21,12 +20,19 @@ export default function Routes() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator>
-        {/* TODO: Add conditions based on the user role  */}
-        {true ? FrontlinerStack(Stack) : AuthStack(Stack)}
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {isSignedIn ? //isSignedIn
+        <Stack.Screen 
+          name={'Main'}
+          component={MainNavigator}
+        />
+        : 
+        <Stack.Screen
+          name={'Auth'}
+          component={AuthNavigator}
+        />
+        }
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-// MainStack

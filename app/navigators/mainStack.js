@@ -1,31 +1,28 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeStackScreen from './TabRoutes';
-import FrontlinerStackScreen from './FrontlinerStack';
+import HomeNavigator from './TabRoutes';
+import MessagesNavigator from './MessagesStack';
 import { getUserRole } from 'app/store/selectors';
 
-// const MainStack = createStackNavigator();
+const MainStack = createStackNavigator();
 
-export default function (Stack) {
+export default function MainNavigator() {
   const userRole = useSelector(getUserRole);
+
   return (
-    <>
-      <Stack.Navigator>
-        {/* {userRole === 3 ? (
-          <Stack.Screen
-            name={'Frontliner'}
-            component={FrontlinerStackScreen}
-            options={{ headerShown: false }}
-          />
-        ) : ( */}
-          <Stack.Screen
-            name={'Main'}
-            component={HomeStackScreen}
-            options={{ headerShown: false }}
-          />
-        {/* )} */}
-      </Stack.Navigator>
-    </>
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
+      {userRole === 1 ? (
+        <MainStack.Screen
+          name={'Messages'}
+          component={MessagesNavigator}
+        />
+      ) : (
+        <MainStack.Screen
+          name={'Home'}
+          component={HomeNavigator}
+        />
+      )}
+    </MainStack.Navigator>
   );
 }
