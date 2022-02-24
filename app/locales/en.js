@@ -313,6 +313,14 @@ const labels = {
     morningCardHeader: "Today's mindful moment",
     afternoonCardHeader: 'Did you know?',
   },
+  frontliner: {
+    survey: {
+      title: "Survey",
+      descHelp: "Help",
+      descCont: "give better feedback. Your responses are anonymous. Your manager will only see their average scores once 5 or more employees have submitted this survey. You have until",
+      descLast: "to submit your responses."
+    }
+  }
 };
 
 export default labels;
