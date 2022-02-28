@@ -4,6 +4,10 @@ import { ProgressBar, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Header, Text, Modal, Loader } from 'app/components';
+import OverallSatisfaction from './overall-satisfaction';
+import FeelingQuestion from './feeling-question';
+import ManagerEvaluation from './manager-evaluation';
+import FrontlinerEvaluation from './frontliner-evaluation';
 import labels from 'app/locales/en';
 import Colors from 'app/theme/colors';
 import containerStyles from './styles';
@@ -11,7 +15,7 @@ import containerStyles from './styles';
 const FrontlinerSurvey = props => {
   const { width, height } = Dimensions.get('screen');
   const { navigation } = props;
-  const activeStep = 1;
+  const activeStep = 3;
   const maxStep = 3;
   const indexValue = activeStep / maxStep;
   const [isModalVisible, setModalVisible] = useState(false);
@@ -32,11 +36,13 @@ const FrontlinerSurvey = props => {
   const handleStepContent = () => {
     switch(activeStep) {
       case 1:
-        return <HowSatisfiedScreen />;
+        return <OverallSatisfaction />;
       case 2:
-        return <HowDidYouFeelScreen />;
+        return <FeelingQuestion />;
       case 3:
         return <ManagerEvaluation />;
+      case 4:
+        return <FrontlinerEvaluation />;
     }
   }
 
