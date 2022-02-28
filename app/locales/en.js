@@ -318,7 +318,30 @@ const labels = {
       title: "Survey",
       descHelp: "Help",
       descCont: "give better feedback. Your responses are anonymous. Your manager will only see their average scores once 5 or more employees have submitted this survey. You have until",
-      descLast: "to submit your responses."
+      descLast: "to submit your responses.",
+      overallSatisfaction: "Overall, how satisfied are you with the feedback you received?",
+      closeSurvey: "Close the survey for now? You have until to submit your responses.",
+      feeling: "How did you feel after receiving the feedback?",
+      howDidManagerDo: "How did ",
+      howDidManagerDoCont: "do during your discussion?",
+      questionCount: "8 questions",
+      provideInfo: "My manager provided specific information about the event, action and the result:",
+      calmFeedback: "My manager gave feedback in a calm, objective, and non-judgmental manner:",
+      listenedToThoughts: "My manager listened to my thoughts and questions with empathy and curiosity:",
+      gaveFeedbackSoon: "My manager gave their feedback soon after the event occurred:",
+      establishRapport: "My manager established rapport with me:",
+      clearlyStatePurpose: "My manager stated the purpose of the meeting:",
+      involveInPlan: "My manager involved me in developing the action plan:",
+      sentAction: "My manager sent the agreed action plan to me:",
+      selfSurvey: "For your eyes only - How did you do during your discussion?",
+      selfQuestionCount: "5 questions",
+      iProvidedFacts: "I provided facts:",
+      iListenedToFeedback: "I listened to feedback openly:",
+      iAskedQuestions: "I asked questions to clarify:",
+      iGaveSuggestions: "I gave suggestions on how to address the situation:",
+      iWasHonest: "I was honest about my commitment to the action plan: ",
+      confirmation: "Thank you for your responses! Your ratings will help",
+      confirmationCont: " give better feedback in the future.\n\nRest assured, each survey you answer is anonymous and your manager will only see their average scores."
     }
   }
 };
