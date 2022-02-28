@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen, Messages, Activity, Reminders, Profile } from '../screens';
 import FeedbackNavigator from './FeedbackStack';
+import MessagesNavigator from './MessagesStack';
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -53,7 +54,7 @@ function TabRoutes() {
       />
       <BottomTab.Screen
         name={'Messages'}
-        component={Messages}
+        component={MessagesNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
