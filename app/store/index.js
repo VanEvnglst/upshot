@@ -11,6 +11,7 @@ import { reducer as discussing } from './feedback/DiscussingRedux';
 import { reducer as reflecting } from './feedback/ReflectingRedux';
 import { reducer as sharing } from './feedback/SharingRedux';
 import { reducer as messages } from './MessagesRedux';
+import { reducer as survey } from './frontliner/SurveyRedux';
 import rootSaga from '../sagas';
 
 import configureStore from './createStore';
@@ -28,6 +29,7 @@ export const mainReducer = combineReducers({
   sharing,
   user,
   messages,
+  survey,
 });
 
 export default () => {
