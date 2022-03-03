@@ -18,15 +18,15 @@ const Messages = props => {
   useEffect(() => {
     async function retrieveMessages() {
       await dispatch(MessagesActions.fetchMessages());
-      setMessages(messagesList);
     }
     retrieveMessages();
+    setMessages(messagesList);
     // (async () => {
     //   const { data } = await dispatch(MessagesActions.fetchMessages());
     //   debugger;
     //   setMessages(data);
     // })();
-  }, [messagesList]);
+  }, []);
 
   const ReminderSection = props => {
     return (
@@ -71,13 +71,12 @@ const Messages = props => {
                 <MessageItem
                   item={item}
                   onPress={() => navigation.navigate('ResponseScreen', {
-                    id: item.id
+                    message: item
                   })}
                 />
               );
             }}
           />
-          {/* <MessageItem onPress={() => navigation.navigate('ResponseScreen')} /> */}
         </View>
       </Wrapper>
       {isLoading && <Loader />}

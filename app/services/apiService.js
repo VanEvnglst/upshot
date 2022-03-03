@@ -204,5 +204,11 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/get`, params);
-  }
+  },
+
+  getMessage: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/body`, params);
+  },
 };
