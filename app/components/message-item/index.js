@@ -5,43 +5,54 @@ import { Text } from 'app/components';
 import Images from 'app/assets/images';
 import styles from './styles';
 
-
-const MessageItem = ({ title, subtitle, onPress, date, responseRequired }) => {
-
+const MessageItem = ({ item, onPress }) => {
+  console.warn('item', item);
+  const {
+    from,
+    subject,
+    timestamp,
+    response_required: responseRequired,
+  } = item;
   return (
-    <Pressable
-      onPress={onPress}
-    >
+    <Pressable onPress={onPress}>
       <View style={styles.cardContainer}>
-      <Image
-          source={Images.logo}
-          style={styles.image}
-        />
+        <Image source={Images.logo} style={styles.image} />
         <View style={styles.content}>
           <View style={styles.headerContent}>
-          <Text
-          type={responseRequired ? 'subtitle2' : 'body2'}
-          style={styles.messageTitle}
-        >Welcome to Upshot!</Text>
-        <Text style={[styles.dateText,
-        responseRequired && styles.unreadDateText
-        ]}>Feb 2022</Text>
-            </View>
             <Text
-          type='caption'
-          style={[
-            responseRequired && styles.unreadMessageSubtitle,
-            styles.messageSubtitle
-          ]}>This is a system generated message</Text>
-          <View style={styles.responseContainer}>
-            <View style={styles.responseIndicator} />
-            <Text type='overline' style={styles.responseRequiredText}>Response required</Text>
+              type={responseRequired ? 'subtitle2' : 'body2'}
+              style={styles.messageTitle}>
+              {subject}
+            </Text>
+            <Text
+              style={[
+                styles.dateText,
+                responseRequired && styles.unreadDateText,
+              ]}>
+              Feb 2022
+            </Text>
           </View>
+          <Text
+            type="caption"
+            style={[
+              responseRequired && styles.unreadMessageSubtitle,
+              styles.messageSubtitle,
+            ]}>
+            This is a system generated message
+          </Text>
+          {responseRequired && (
+            <View style={styles.responseContainer}>
+              <View style={styles.responseIndicator} />
+              <Text type="overline" style={styles.responseRequiredText}>
+                Response required
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </Pressable>
-  )
-}
+  );
+};
 
 export default MessageItem;
 
