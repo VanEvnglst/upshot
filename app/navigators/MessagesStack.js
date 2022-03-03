@@ -11,7 +11,10 @@ export default function MessagesNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <MessagesStack.Screen name={'Messages'} component={Messages} />
+      <MessagesStack.Screen 
+        name={'Messages'} 
+        component={Messages} 
+      />
       <MessagesStack.Screen
         name={'ResponseScreen'}
         component={ResponseScreen}

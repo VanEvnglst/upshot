@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Wrapper, Text, MessageItem } from 'app/components';
+import { Wrapper, Text, MessageItem, Loader } from 'app/components';
 import MessagesActions from 'app/store/MessagesRedux';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -10,14 +10,24 @@ import styles from './styles';
 const Messages = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
+  const isLoading = false;
+  //useSelector(state => state.messages.get('fetching'));
+  const messagesList = useSelector(state => state.messages.get('messages'));
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const { data } = await dispatch(MessagesActions.fetchMessages());
-      setMessages(data);
-    })();
-  }, []);
+    async function retrieveMessages() {
+      await dispatch(MessagesActions.fetchMessages());
+      setMessages(messagesList);
+    }
+    retrieveMessages();
+    // (async () => {
+    //   const { data } = await dispatch(MessagesActions.fetchMessages());
+    //   debugger;
+    //   setMessages(data);
+    // })();
+  }, [messagesList]);
+
   const ReminderSection = props => {
     return (
       <View style={styles.reminderContainer}>
@@ -41,28 +51,37 @@ const Messages = props => {
     );
   };
   return (
-    <Wrapper>
-      {/* <Text type="overline" style={styles.labelStyle}>
+    <View style={{ flex: 1}}>
+      <Wrapper>
+        {/* <Text type="overline" style={styles.labelStyle}>
         Reminders
       </Text>
       <ReminderSection /> */}
-      <View style={styles.messagesContainer}>
-        <Text type="overline" style={styles.labelStyle}>
-          Messages
-        </Text>
-        <FlatList
-          data={messages}
-          keyExtractor={item => item.key}
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-          renderItem={({ item, index}) => {
-            return <MessageItem
-              onPress={() => navigation.navigate('ResponseScreen')}
-            />;
-          }}
-        />
-      </View>
-    </Wrapper>
+        <View style={styles.messagesContainer}>
+          <Text type="overline" style={styles.labelStyle}>
+            Messages
+          </Text>
+          <FlatList
+            data={messages}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            renderItem={({ item, index }) => {
+              return (
+                <MessageItem
+                  item={item}
+                  onPress={() => navigation.navigate('ResponseScreen', {
+                    id: item.id
+                  })}
+                />
+              );
+            }}
+          />
+          {/* <MessageItem onPress={() => navigation.navigate('ResponseScreen')} /> */}
+        </View>
+      </Wrapper>
+      {isLoading && <Loader />}
+    </View>
   );
 };
 

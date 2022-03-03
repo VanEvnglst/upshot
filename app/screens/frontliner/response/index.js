@@ -120,6 +120,51 @@ const ResponseScreen = props => {
     );
   };
 
+  const MessageCard = ({
+    isCurrentMessage,
+    body,
+    sender,
+    receipient,
+    time,
+  }) => {
+    return (
+      <View
+        style={[
+          isCurrentMessage
+            ? styles.currentMessageCard
+            : styles.olderMessageCard,
+          { marginVertical: 10 },
+        ]}>
+        <View style={styles.nameContainer}>
+          <Image source={Images.avatar} style={styles.avatar} />
+          <View style={styles.nameContent}>
+            <View style={styles.senderContainer}>
+              <Text type="caption" style={styles.senderNameText}>
+                From sender
+              </Text>
+              <Text type="caption" style={styles.dateText}>
+                Time
+              </Text>
+            </View>
+            {isCurrentMessage && (
+              <Text type="caption" style={styles.receipientNameText}>
+                to receipient
+              </Text>
+            )}
+            {!isCurrentMessage && (
+              <Text type="caption" style={styles.receipientNameText}>
+                Body summary
+              </Text>
+            )}
+            {isCurrentMessage &&
+            <View style={{ flex: 1, marginTop: 20, height: 200, backgroundColor: 'red'}}/>
+            }
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <Wrapper>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
@@ -132,8 +177,10 @@ const ResponseScreen = props => {
           Discussion title
         </Text>
         <View style={styles.container}>
-          <OlderMessage/>
-          <CurrentMessage />
+          <MessageCard isCurrentMessage={false} />
+          <MessageCard isCurrentMessage={true} />
+          {/* <OlderMessage />
+          <CurrentMessage /> */}
           <View style={styles.responseContainer}>
             <Text type="h6" style={styles.frontlinerQuestion}>
               Can you make it?
