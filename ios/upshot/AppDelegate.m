@@ -40,6 +40,7 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
+    return YES;
   }
   
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
