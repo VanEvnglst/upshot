@@ -9,23 +9,44 @@ import {
   Header,
   ButtonSelection,
   TextInput,
+  Loader,
 } from 'app/components';
+import MessagesActions from 'app/store/MessagesRedux';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
 
 const ResponseScreen = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { message } = route.params;
+  const dispatch = useDispatch();
+  const messageBody = useSelector(state => state.messages.get('body'));
+  const isLoading = useSelector(state => state.messages.get('fetching'));
   const [response, setResponse] = useState();
   const [responseSent, setResponseSent] = useState(false);
   const [reason, setResponseReason] = useState('');
 
-  useEffect(() => {}, []);
+  const available = "Yes, I'm available";
+  const reschedule = 'No, can we reschedule?';
+
+
+  useEffect(() => {
+    console.log('route', route.params);
+    async function retrieveMessages() {
+      await dispatch(MessagesActions.fetchMessage(message.id));
+    }
+    retrieveMessages();
+    debugger;
+  }, []);
 
   const handleBack = () => {
     navigation.navigate('Messages');
     //TODO: reset message state on API integration
   };
+
+  const handleSelection = item => {
+    setResponse(item);
+  }
 
   const DiscussionMessage = () => {
     return (
@@ -35,7 +56,7 @@ const ResponseScreen = props => {
             What
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            Data
+          {messageBody && messageBody.what}
           </Text>
         </View>
         <View style={styles.content}>
@@ -43,7 +64,7 @@ const ResponseScreen = props => {
             When
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            Data
+          {messageBody && messageBody.when}
           </Text>
         </View>
       </View>
@@ -58,7 +79,7 @@ const ResponseScreen = props => {
             What
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            Data
+            {messageBody && messageBody.what}
           </Text>
         </View>
         <View style={styles.content}>
@@ -66,59 +87,67 @@ const ResponseScreen = props => {
             When
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            Data
+          {messageBody && messageBody.when}
+          </Text>
+        </View>
+        <View style={styles.content}>
+          <Text type="overline" style={styles.contentHeader}>
+            Who
+          </Text>
+          <Text type="body2" style={styles.contentBody}>
+          {messageBody && messageBody.who}
           </Text>
         </View>
       </View>
     );
   };
 
-  const CurrentMessage = () => {
-    return (
-      <View style={styles.currentMessageCard}>
-        <View style={styles.nameContainer}>
-          <Image source={Images.avatar} style={styles.avatar} />
-          <View style={styles.nameContent}>
-            <View style={styles.senderContainer}>
-              <Text type="caption" style={styles.senderNameText}>
-                From EM
-              </Text>
-              <Text type="caption" style={styles.dateText}>
-                10:00 AM
-              </Text>
-            </View>
-            <Text type="caption" style={styles.receipientNameText}>
-              to me
-            </Text>
-          </View>
-        </View>
-        <ActionPlanMessage />
-      </View>
-    );
-  };
+  // const CurrentMessage = () => {
+  //   return (
+  //     <View style={styles.currentMessageCard}>
+  //       <View style={styles.nameContainer}>
+  //         <Image source={Images.avatar} style={styles.avatar} />
+  //         <View style={styles.nameContent}>
+  //           <View style={styles.senderContainer}>
+  //             <Text type="caption" style={styles.senderNameText}>
+  //               From EM
+  //             </Text>
+  //             <Text type="caption" style={styles.dateText}>
+  //               10:00 AM
+  //             </Text>
+  //           </View>
+  //           <Text type="caption" style={styles.receipientNameText}>
+  //             to me
+  //           </Text>
+  //         </View>
+  //       </View>
+  //       <ActionPlanMessage />
+  //     </View>
+  //   );
+  // };
 
-  const OlderMessage = () => {
-    return (
-      <View style={styles.olderMessageCard}>
-        <View style={styles.nameContainer}>
-          <Image source={Images.avatar} style={styles.avatar} />
-          <View style={styles.nameContent}>
-            <View style={styles.senderContainer}>
-              <Text type="caption" style={styles.senderNameText}>
-                From EM
-              </Text>
-              <Text type="caption" style={styles.dateText}>
-                10:00 AM
-              </Text>
-            </View>
-            <Text type="caption" style={styles.receipientNameText}>
-              Message text...
-            </Text>
-          </View>
-        </View>
-      </View>
-    );
-  };
+  // const OlderMessage = () => {
+  //   return (
+  //     <View style={styles.olderMessageCard}>
+  //       <View style={styles.nameContainer}>
+  //         <Image source={Images.avatar} style={styles.avatar} />
+  //         <View style={styles.nameContent}>
+  //           <View style={styles.senderContainer}>
+  //             <Text type="caption" style={styles.senderNameText}>
+  //               From EM
+  //             </Text>
+  //             <Text type="caption" style={styles.dateText}>
+  //               10:00 AM
+  //             </Text>
+  //           </View>
+  //           <Text type="caption" style={styles.receipientNameText}>
+  //             Message text...
+  //           </Text>
+  //         </View>
+  //       </View>
+  //     </View>
+  //   );
+  // };
 
   const MessageCard = ({
     isCurrentMessage,
@@ -140,10 +169,10 @@ const ResponseScreen = props => {
           <View style={styles.nameContent}>
             <View style={styles.senderContainer}>
               <Text type="caption" style={styles.senderNameText}>
-                From sender
+                From {message.from}
               </Text>
               <Text type="caption" style={styles.dateText}>
-                Time
+                {message.timestamp}
               </Text>
             </View>
             {isCurrentMessage && (
@@ -156,9 +185,20 @@ const ResponseScreen = props => {
                 Body summary
               </Text>
             )}
-            {isCurrentMessage &&
-            <View style={{ flex: 1, marginTop: 20, height: 200, backgroundColor: 'red'}}/>
-            }
+            {isCurrentMessage && message.subject === 'FEEDBACK DISCUSSION' ? (
+              <DiscussionMessage />
+            ) : message.subject === 'ACTION PLAN' ? (
+              <ActionPlanMessage />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: 20,
+                  height: 200,
+                  backgroundColor: 'red',
+                }}
+              />
+            )}
           </View>
         </View>
       </View>
@@ -166,34 +206,44 @@ const ResponseScreen = props => {
   };
 
   return (
-    <Wrapper>
-      <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-        <Header
-          headerLeft={{
-            onPress: () => handleBack(),
-          }}
-        />
-        <Text type="h6" style={styles.headerText}>
-          Discussion title
-        </Text>
-        <View style={styles.container}>
-          <MessageCard isCurrentMessage={false} />
-          <MessageCard isCurrentMessage={true} />
-          {/* <OlderMessage />
-          <CurrentMessage /> */}
-          <View style={styles.responseContainer}>
-            <Text type="h6" style={styles.frontlinerQuestion}>
-              Can you make it?
-            </Text>
-            <ButtonSelection title={"Yes, I'm available"} />
-            <ButtonSelection title={'No, can we reschedule?'} />
+    <View style={{ flex: 1 }}>
+      <Wrapper>
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+          <Header
+            headerLeft={{
+              onPress: () => handleBack(),
+            }}
+          />
+          <Text type="h6" style={styles.headerText}>
+            {message.subject}
+          </Text>
+          <View style={styles.container}>
+            <MessageCard isCurrentMessage={true} />
+            <View style={styles.responseContainer}>
+              <Text type="h6" style={styles.frontlinerQuestion}>
+                Can you make it?
+              </Text>
+              <ButtonSelection 
+                onPress={() => handleSelection(available)}
+                title={available}
+                type='Radio'
+                selected={response === available} 
+              />
+              <ButtonSelection 
+                onPress={() => handleSelection(reschedule)}
+                title={reschedule} 
+                type='Radio'
+                selected={response === reschedule}  
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.btnContainer}>
-          <Button mode="contained">Send</Button>
-        </View>
-      </ScrollView>
-    </Wrapper>
+          <View style={styles.btnContainer}>
+            <Button mode="contained">Send</Button>
+          </View>
+        </ScrollView>
+      </Wrapper>
+      {isLoading && <Loader />}
+    </View>
   );
 };
 
