@@ -22,9 +22,30 @@ export function* fetchMessages({}) {
   }
 }
 
+export function* fetchMessage({ messageId}) {
+  //const connected = yield checkInternetConnection();
+  // if (!connected) { return; }
+
+  const params = new URLSearchParams();
+  params.append('message_id', messageId);
+
+  const response = yield call(api.getMessage, params);
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+      debugger;
+      yield put(MessagesActions.fetchMessageSuccess(response.data.body))
+    } else {
+      yield put(MessagesActions.fetchMessagesFailure(response.data));
+    }
+  } else {
+    yield put(MessagesActions.fetchMessagesFailure(response.data))
+  }
+}
+
 
 function* watchMessagesSaga() {
   yield takeLatest(MessagesTypes.FETCH_MESSAGES, fetchMessages);
+  yield takeLatest(MessagesTypes.FETCH_MESSAGE, fetchMessage);
 }
 
 export default watchMessagesSaga;
