@@ -6,7 +6,8 @@ export const INITIAL_STATE = Map({
   fetching: false,
   error: '',
   id: null, 
-  messages: []
+  messages: [],
+  body: {}
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -14,6 +15,9 @@ const { Types, Creators } = createActions({
   fetchMessages: [''],
   fetchMessagesSuccess: ['messagesList'],
   fetchMessagesFailure: ['error'],
+  fetchMessage: ['messageId'],
+  fetchMessageSuccess: ['messageBody'],
+  fetchMessageFailure: ['error']
 });
 
 /* ------------- Reducers ------------- */
@@ -35,9 +39,29 @@ const fetchMessagesFailure = (state, { error }) => state.merge({
   error
 });
 
+
+const fetchMessage = state => state.merge({
+  fetching: true,
+  error: '',
+});
+
+const fetchMessageSuccess = (state, { messageBody }) => state.merge({
+  fetching: false,
+  body: messageBody,
+});
+
+const fetchMessageFailure = (state, { error }) => state.merge({
+  fetching: false,
+  error
+});
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_MESSAGES]: fetchMessages,
   [Types.FETCH_MESSAGES_SUCCESS]: fetchMessagesSuccess,
   [Types.FETCH_MESSAGES_FAILURE]: fetchMessagesFailure,
+  [Types.FETCH_MESSAGE]: fetchMessage,
+  [Types.FETCH_MESSAGE_SUCCESS]: fetchMessageSuccess,
+  [Types.FETCH_MESSAGE_FAILURE]: fetchMessageFailure,
 });
