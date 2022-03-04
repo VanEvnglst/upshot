@@ -211,4 +211,10 @@ export default {
 
     return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/body`, params);
   },
+
+  postMessageResponse: async params => {
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/responsd`, params);
+  }
 };
