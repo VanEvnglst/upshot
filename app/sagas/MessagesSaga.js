@@ -42,10 +42,31 @@ export function* fetchMessage({ messageId}) {
   }
 }
 
+export function* postMessageResponse({ data }) {
+  debugger;
+  const params = new URLSearchParams();
+  params.append('message_id');
+  params.append('accepted');
+  params.append('reason');
+
+  const response = yield call(api.postMessageResponse, params);
+  if (response.ok) {
+    if(response.data.status === STATUS_OK) {
+      debugger;
+      yield put(MessagesActions.postMessageResponseSuccess());
+    } else {
+      yield put(MessagesActions.postMessageResponseFailure(response.data));
+    }
+  } else {
+    yield put(MessagesActions.postMessageResponseFailure(response.data))
+  }
+}
+
 
 function* watchMessagesSaga() {
   yield takeLatest(MessagesTypes.FETCH_MESSAGES, fetchMessages);
   yield takeLatest(MessagesTypes.FETCH_MESSAGE, fetchMessage);
+  yield takeLatest(MessagesTypes.POST_MESSAGE_RESPONSE, postMessageResponse);
 }
 
 export default watchMessagesSaga;

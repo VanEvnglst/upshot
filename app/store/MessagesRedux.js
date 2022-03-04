@@ -17,7 +17,10 @@ const { Types, Creators } = createActions({
   fetchMessagesFailure: ['error'],
   fetchMessage: ['messageId'],
   fetchMessageSuccess: ['messageBody'],
-  fetchMessageFailure: ['error']
+  fetchMessageFailure: ['error'],
+  postMessageResponse: [],
+  postMessageResponseSuccess: null,
+  postMessageResponseFailure: ['error']
 });
 
 /* ------------- Reducers ------------- */
@@ -55,6 +58,20 @@ const fetchMessageFailure = (state, { error }) => state.merge({
   error
 });
 
+const postMessageResponse = state => state.merge({
+  fetching: true,
+  error: ''
+});
+
+const postMessageResponseSuccess = state => state.merge({
+  fetching: false,
+});
+
+const postMessageResponseFailure = (state , { error }) => state.merge({
+  fetching: false,
+  error,
+});
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -64,4 +81,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_MESSAGE]: fetchMessage,
   [Types.FETCH_MESSAGE_SUCCESS]: fetchMessageSuccess,
   [Types.FETCH_MESSAGE_FAILURE]: fetchMessageFailure,
+  [Types.POST_MESSAGE_RESPONSE]: postMessageResponse,
+  [Types.POST_MESSAGE_RESPONSE_SUCCESS]: postMessageResponseSuccess,
+  [Types.POST_MESSAGE_RESPONSE_FAILURE]: postMessageResponseFailure,
 });
