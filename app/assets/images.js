@@ -44,4 +44,5 @@ export default {
   upshotWhite: require('./images/upshot-logo-white.png'),
   upshotLoader: require('./images/upshot-logo-small-purple.png'),
   logo: require('./images/upshot-logo.png'),
+  surveyGuide: require('./images/frontliner-survey.png'),
 };
