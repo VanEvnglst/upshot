@@ -29,7 +29,6 @@ const ResponseScreen = props => {
   const available = "Yes, I'm available";
   const reschedule = 'No, can we reschedule?';
 
-
   useEffect(() => {
     console.log('route', route.params);
     async function retrieveMessages() {
@@ -46,7 +45,7 @@ const ResponseScreen = props => {
 
   const handleSelection = item => {
     setResponse(item);
-  }
+  };
 
   const DiscussionMessage = () => {
     return (
@@ -56,7 +55,7 @@ const ResponseScreen = props => {
             What
           </Text>
           <Text type="body2" style={styles.contentBody}>
-          {messageBody && messageBody.what}
+            {messageBody && messageBody.what}
           </Text>
         </View>
         <View style={styles.content}>
@@ -64,7 +63,7 @@ const ResponseScreen = props => {
             When
           </Text>
           <Text type="body2" style={styles.contentBody}>
-          {messageBody && messageBody.when}
+            {messageBody && messageBody.when}
           </Text>
         </View>
       </View>
@@ -87,7 +86,7 @@ const ResponseScreen = props => {
             When
           </Text>
           <Text type="body2" style={styles.contentBody}>
-          {messageBody && messageBody.when}
+            {messageBody && messageBody.when}
           </Text>
         </View>
         <View style={styles.content}>
@@ -95,7 +94,38 @@ const ResponseScreen = props => {
             Who
           </Text>
           <Text type="body2" style={styles.contentBody}>
-          {messageBody && messageBody.who}
+            {messageBody && messageBody.who}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  const PositiveFeedbackMessage = () => {
+    return (
+      <View style={styles.contentContainer}>
+        <View style={styles.content}>
+          <Text type="overline" style={styles.contentHeader}>
+            What
+          </Text>
+          <Text type="body2" style={styles.contentBody}>
+            {messageBody && messageBody.what}
+          </Text>
+        </View>
+        <View style={styles.content}>
+          <Text type="overline" style={styles.contentHeader}>
+            When
+          </Text>
+          <Text type="body2" style={styles.contentBody}>
+            {messageBody && messageBody.when}
+          </Text>
+        </View>
+        <View style={styles.content}>
+          <Text type="overline" style={styles.contentHeader}>
+            Who
+          </Text>
+          <Text type="body2" style={styles.contentBody}>
+            {messageBody && messageBody.who}
           </Text>
         </View>
       </View>
@@ -185,9 +215,9 @@ const ResponseScreen = props => {
                 Body summary
               </Text>
             )}
-            {isCurrentMessage && message.subject === 'FEEDBACK DISCUSSION' ? (
+            {isCurrentMessage && message.subject === 'Feedback Discussion' ? (
               <DiscussionMessage />
-            ) : message.subject === 'ACTION PLAN' ? (
+            ) : message.subject === 'Action Plan' ? (
               <ActionPlanMessage />
             ) : (
               <View
@@ -219,27 +249,31 @@ const ResponseScreen = props => {
           </Text>
           <View style={styles.container}>
             <MessageCard isCurrentMessage={true} />
-            <View style={styles.responseContainer}>
-              <Text type="h6" style={styles.frontlinerQuestion}>
-                Can you make it?
-              </Text>
-              <ButtonSelection 
-                onPress={() => handleSelection(available)}
-                title={available}
-                type='Radio'
-                selected={response === available} 
-              />
-              <ButtonSelection 
-                onPress={() => handleSelection(reschedule)}
-                title={reschedule} 
-                type='Radio'
-                selected={response === reschedule}  
-              />
+            {!responseSent && (
+              <View style={styles.responseContainer}>
+                <Text type="h6" style={styles.frontlinerQuestion}>
+                  Can you make it?
+                </Text>
+                <ButtonSelection
+                  onPress={() => handleSelection(available)}
+                  title={available}
+                  type="Radio"
+                  selected={response === available}
+                />
+                <ButtonSelection
+                  onPress={() => handleSelection(reschedule)}
+                  title={reschedule}
+                  type="Radio"
+                  selected={response === reschedule}
+                />
+              </View>
+            )}
+          </View>
+          {!responseSent && (
+            <View style={styles.btnContainer}>
+              <Button mode="contained">Send</Button>
             </View>
-          </View>
-          <View style={styles.btnContainer}>
-            <Button mode="contained">Send</Button>
-          </View>
+          )}
         </ScrollView>
       </Wrapper>
       {isLoading && <Loader />}
