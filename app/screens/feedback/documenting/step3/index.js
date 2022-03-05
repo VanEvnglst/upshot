@@ -63,7 +63,7 @@ const DocumentingStep3 = props => {
   // }
 
   const selectDate = (dateLabel, date) => {
-    if (dateLabel === ('Today' || 'Yesterday')) {
+    if (dateLabel === 'Today' || 'Yesterday') {
       setDateSelected({ label: 'On a different date' });
     } else {
       setDateSelected(prevState => ({
