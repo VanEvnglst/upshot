@@ -11,64 +11,94 @@ import {
   Text,
 } from 'app/components';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
-import { getStep4Data, getStep2Data, getStep3Data, getDocumentingStep, getDocumentingId } from 'app/store/selectors';
+import {
+  getStep4Data,
+  getStep2Data,
+  getStep3Data,
+  getDocumentingStep,
+  getDocumentingId,
+  getStaffName,
+} from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 import containerStyles from '../styles';
 
 const DocumentingStep4 = props => {
+  const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
   const stepData = useSelector(getStep4Data);
   const step2 = useSelector(getStep2Data);
   const step3 = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
+  const staff = useSelector(getStaffName);
   const activeStep = useSelector(getDocumentingStep);
-  
- 
+  const [value, setValue] = useState('');
   const [isCompleted, setCompletion] = useState(false);
-  
 
-  useEffect(() => {
-    if (stepData.data) setDate({ value: stepData.data });
-    console.log('yest', yesterday);
-    console.log('tod', dateToday);
-  }, [stepData]);
+  const firstTimeFeedback = `${feedbackDocumenting.firstTime} ${staff.firstName} ${feedbackDocumenting.firstTimeCont}`;
+  const followUpFeedback = `${feedbackDocumenting.followUp}${staff.firstName}`;
 
-
-
-
-
-
-
+  // useEffect(() => {
+  //   if (stepData.data) setDate({ value: stepData.data });
+  //   console.log('yest', yesterday);
+  //   console.log('tod', dateToday);
+  // }, [stepData]);
 
   const handleBack = () => {
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
 
-  const submitDocumenting = () => {
-    const payload = {
-      docuId,
-      step2,
-      step3,
-      dateSelected
-    }
-    dispatch(
-      DocumentingActions.setDocumentingData('step4', {
-       
-      }),
-    );
-    
+  const handleSelection = value => {
+    setValue(value);
+    setCompletion(true);
   };
+
+  const handleNext = () => {
+    dispatch(DocumentingActions.setDocumentingData('step4', value));
+    if (value === followUpFeedback) {
+      dispatch(DocumentingActions.setDocumentingStatus('maxStep', 5));
+      setTimeout(() => {
+        dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+      }, 200);
+    } else {
+      console.warn('submit documenting');
+    }
+  };
+  // const submitDocumenting = () => {
+  //   const payload = {
+  //     docuId,
+  //     step2,
+  //     step3,
+  //     dateSelected
+  //   }
+  //   dispatch(
+  //     DocumentingActions.setDocumentingData('step4', {
+
+  //     }),
+  //   );
+
+  // };
 
   return (
     <View style={styles.container}>
-      <Text type="h6" style={containerStyles.stepTitleText}>
-        
+      <Text
+        type="h6"
+        style={containerStyles.stepTitleText}
+        testID={'txt-documentingStep4-label'}>
+        {feedbackDocumenting.firstOrFollowUpTitle}
       </Text>
-      
-      
-     
-      
+      <ButtonSelection
+        type={'Radio'}
+        title={firstTimeFeedback}
+        onPress={() => handleSelection(firstTimeFeedback)}
+        selected={value === firstTimeFeedback}
+      />
+      <ButtonSelection
+        type={'Radio'}
+        title={followUpFeedback}
+        onPress={() => handleSelection(followUpFeedback)}
+        selected={value === followUpFeedback}
+      />
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
@@ -79,7 +109,7 @@ const DocumentingStep4 = props => {
         <Button
           testID={'btn-documentingStep4-next'}
           disabled={!isCompleted}
-          onPress={() => submitDocumenting()}
+          onPress={() => handleNext()}
           mode="contained">
           {labels.common.next}
         </Button>

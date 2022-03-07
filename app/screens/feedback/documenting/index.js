@@ -12,11 +12,14 @@ import {
   getStep2Data,
   getStep3Data,
   getChosenType,
+  getChosenFlow,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import DocumentingStep3 from './step3';
 import DocumentingStep2 from './step2';
 import DocumentingStep1 from './step1';
+import DocumentingStep4 from './step4';
+import DocumentingStep5 from './step5';
 import Colors from 'app/theme/colors';
 import styles from './styles';
 
@@ -28,6 +31,7 @@ const FeedbackDocumenting = props => {
   const indexValue = activeStep / maxStep;
   const documentingId = useSelector(getDocumentingId);
   const typeId = useSelector(getChosenType);
+  const flow = useSelector(getChosenFlow);
   const step1Data = useSelector(getStep1Data);
   const step2Data = useSelector(getStep2Data);
   const step3Data = useSelector(getStep3Data);
@@ -44,6 +48,11 @@ const FeedbackDocumenting = props => {
       });
   }, []);
 
+  useEffect(() => {
+    if(flow.id === 1 && typeId.id === 1)
+      dispatch(DocumentingActions.setDocumentingStatus('maxStep', 4));
+  }, [])
+
   const handleStepContent = () => {
     switch (activeStep) {
       case 1:
@@ -52,6 +61,11 @@ const FeedbackDocumenting = props => {
         return <DocumentingStep2 />;
       case 3:
         return <DocumentingStep3 />;
+      case 4:
+        return <DocumentingStep4 />;
+
+      case 5: 
+        return <DocumentingStep5 />;
     }
   };
 
@@ -59,14 +73,20 @@ const FeedbackDocumenting = props => {
   const hideModal = () => setModalVisible(false);
 
   const handleCloseBtn = () => {
-    const payload = {
-      docuId: documentingId,
-      typeId,
-      step1: step1Data,
-      step2: step2Data,
-      dateSelected: step3Data,
-    };
-    navigation.goBack();
+    if(activeStep === 1 && documentingId === null)
+      navigation.goBack();
+    else
+      showModal();
+      // saveAndClose();
+      // console.warn('save data and call api');
+    // const payload = {
+    //   docuId: documentingId,
+    //   typeId,
+    //   step1: step1Data,
+    //   step2: step2Data,
+    //   dateSelected: step3Data,
+    // };
+    // navigation.goBack();
     // pag step 1 and no documentingId,
     // navigate,
     // else dispatch update action & reset
@@ -79,12 +99,16 @@ const FeedbackDocumenting = props => {
     // }
   };
 
+  const saveAndClose = () => {
+
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
         <Header
           headerRight={{
-            onPress: () => showModal(),
+            onPress: () => handleCloseBtn(),
           }}
         />
         <Text type="overline">Documenting</Text>
@@ -118,7 +142,7 @@ const FeedbackDocumenting = props => {
           <Button mode="text" onPress={() => hideModal()}>
             <Text>Cancel</Text>
           </Button>
-          <Button mode="text" onPress={() => handleCloseBtn()}>
+          <Button mode="text" onPress={() => saveAndClose()}>
             <Text>Save & Close</Text>
           </Button>
         </View>

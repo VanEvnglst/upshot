@@ -13,6 +13,8 @@ export const INITIAL_STATE = Map({
   step1: { ...defaultState },
   step2: { ...defaultState },
   step3: { ...defaultState },
+  step4: { ...defaultState },
+  step5: { ...defaultState },
   reminderTime: null,
   otherTopic: '',
   closed: false,

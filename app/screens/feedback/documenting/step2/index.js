@@ -22,7 +22,7 @@ const DocumentingStep2 = props => {
   const activeStep = useSelector(getDocumentingStep);
   const [isCompleted, setCompletion] = useState(false);
   const [feedbackTopic, setFeedbackTopic] = useState([]);
-  const [otherTopic, setOtherTopic] = useState();
+  const [otherTopic, setOtherTopic] = useState('');
 
   // useEffect for handling data if coming from review route to change button container
 
@@ -30,16 +30,18 @@ const DocumentingStep2 = props => {
   //   if (stepData.data) {
   //     let existingTopics = [];
   //     stepData.data.forEach(item =>
-  //       existingTopics = [...existingTopics, item]  
+  //       existingTopics = [...existingTopics, item]
   //     );
   //     setFeedbackTopic(existingTopics);
   //   }
   // }, [stepData]);
 
   const handleBack = () => {
+    dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
   const handleNext = () => {
+    // TODO: change handling, text value should add 
     dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
     if (otherTopic && otherTopic.length !== 0)
       dispatch(DocumentingActions.setDocumentingData('otherTopic', otherTopic));
@@ -53,12 +55,12 @@ const DocumentingStep2 = props => {
   const handleFeedbackTopic = item => {
     let newTopicList = feedbackTopic;
     // if (stepData.data) {
-    //   stepData.data.forEach(val => 
-    //     newTopicList = [...newTopicList, val],  
+    //   stepData.data.forEach(val =>
+    //     newTopicList = [...newTopicList, val],
     //   )
     //   return setFeedbackTopic(newTopicList);
     // }
-    
+
     if (checkSelectedTopic(item))
       newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
     else newTopicList = [...newTopicList, item];
@@ -66,10 +68,21 @@ const DocumentingStep2 = props => {
 
     if (newTopicList.length !== 0) setCompletion(true);
     else setCompletion(false);
+    
+    validate();
   };
 
   const handleOtherTopic = item => {
     setOtherTopic(item);
+    setTimeout(() => {
+      validate();
+    }, 200);
+  };
+
+  const validate = () => {
+    if (feedbackTopic.length !== 0 || otherTopic.length !== 0)
+      setCompletion(true);
+    else setCompletion(false);
   };
 
   return (
@@ -94,9 +107,9 @@ const DocumentingStep2 = props => {
         <TextInput
           label="Something else"
           placeholder="Something else"
-          // style={{}}
           value={otherTopic}
           onChangeText={otherTopic => handleOtherTopic(otherTopic)}
+          onEndEditing={() => validate()}
         />
         <View style={containerStyles.btnContainer}>
           <Button

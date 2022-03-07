@@ -13,6 +13,7 @@ import {
 import {
   getDocumentingId,
   getChosenType,
+  getChosenFlow,
   getStep1Data,
   getStep2Data,
   getStep3Data,
@@ -32,6 +33,7 @@ const DocumentingStep3 = props => {
   const stepData = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
   const typeId = useSelector(getChosenType);
+  const flow = useSelector(getChosenFlow);
   const activeStep = useSelector(getDocumentingStep);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [dateSelected, setDateSelected] = useState({
@@ -52,6 +54,10 @@ const DocumentingStep3 = props => {
     }
   }, [stepData]);
 
+  // useEffect(() => {
+  //   handleContent()
+  // }, []);
+
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
 
@@ -63,7 +69,7 @@ const DocumentingStep3 = props => {
   // }
 
   const selectDate = (dateLabel, date) => {
-    if (dateLabel === ('Today' || 'Yesterday')) {
+    if (dateLabel === 'Today' || 'Yesterday') {
       setDateSelected({ label: 'On a different date' });
     } else {
       setDateSelected(prevState => ({
@@ -91,44 +97,153 @@ const DocumentingStep3 = props => {
   };
 
   const handleNext = () => {
-    const step2 = step2Data.data.map(obj => obj.id);
-    var topicListStr = '[';
-    step2.forEach((item, index) => {
-      if (index !== step2.length - 1) topicListStr += `${item},`;
-      else topicListStr += `${item}`;
-    });
-    topicListStr += ']';
-    const dateSel = moment(dateSelected.value).format('MMM DD, YYYY');
-    const params = new URLSearchParams();
-    params.append('documenting_id', docuId);
-    params.append('staff_id', step1Data.data.id);
-    params.append('topics', topicListStr);
-    params.append('incident_date', dateSel);
-    params.append('pos_or_cor', typeId.id);
-    dispatch(DocumentingActions.updateFeedbackDocumenting(params));
+    dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+    // const step2 = step2Data.data.map(obj => obj.id);
+    // var topicListStr = '[';
+    // step2.forEach((item, index) => {
+    //   if (index !== step2.length - 1) topicListStr += `${item},`;
+    //   else topicListStr += `${item}`;
+    // });
+    // topicListStr += ']';
+    // const dateSel = moment(dateSelected.value).format('MMM DD, YYYY');
+    // const params = new URLSearchParams();
+    // params.append('documenting_id', docuId);
+    // params.append('staff_id', step1Data.data.id);
+    // params.append('topics', topicListStr);
+    // params.append('incident_date', dateSel);
+    // params.append('pos_or_cor', typeId.id);
+    // dispatch(DocumentingActions.updateFeedbackDocumenting(params));
+  };
+
+  const handleContent = () => {
+    if (flow.id === 1) return <ScheduledContent />;
+    else return <OnTheSpotContent />;
+  };
+
+  const ScheduledContent = () => {
+    return (
+      <View style={containerStyles.container}>
+        <Text
+          type="h6"
+          style={containerStyles.stepTitleText}
+          testID={'txt-documentingStep3-label'}>
+          {feedbackDocumenting.dateToGiveFeedback}
+        </Text>
+        <ButtonSelection
+          title={labels.common.today}
+          type={'Radio'}
+          onPress={() => selectDate(labels.common.today, dateToday)}
+          selected={dateSelected.value === dateToday}
+        />
+        <ButtonSelection
+          title={labels.common.yesterday}
+          type={'Radio'}
+          onPress={() => selectDate(labels.common.yesterday, yesterday)}
+          selected={dateSelected.value === yesterday}
+        />
+        <CalendarPicker
+          onPress={() => showDatePicker()}
+          text={dateSelected.label}
+          icon={Images.calendar}
+        />
+        <DateTimePicker
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleDatePicked}
+          onCancel={hideDatePicker}
+        />
+        <View style={containerStyles.btnContainer}>
+          <Button
+            mode="text"
+            onPress={() => handleBack()}
+            testID={'btn-documentingStep3-back'}>
+            {labels.common.back}
+          </Button>
+          <Button
+            mode="contained"
+            disabled={!isCompleted}
+            onPress={() => handleNext()}
+            testID={'btn-documentingStep3-next'}>
+            {labels.common.next}
+          </Button>
+        </View>
+      </View>
+    );
+  };
+
+  const OnTheSpotContent = () => {
+    return (
+      <View style={containerStyles.container}>
+        <Text
+          type="h6"
+          style={containerStyles.stepTitleText}
+          testID={'txt-documentingStep3-label'}>
+          {feedbackDocumenting.dateToGiveFeedback}
+        </Text>
+        <ButtonSelection
+          title={labels.common.today}
+          type={'Radio'}
+          onPress={() => selectDate(labels.common.today, dateToday)}
+          selected={dateSelected.value === dateToday}
+        />
+        <ButtonSelection
+          title={labels.common.yesterday}
+          type={'Radio'}
+          onPress={() => selectDate(labels.common.yesterday, yesterday)}
+          selected={dateSelected.value === yesterday}
+        />
+        <CalendarPicker
+          onPress={() => showDatePicker()}
+          text={dateSelected.label}
+          icon={Images.calendar}
+        />
+        <DateTimePicker
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleDatePicked}
+          onCancel={hideDatePicker}
+        />
+        <View style={containerStyles.btnContainer}>
+          <Button
+            mode="text"
+            onPress={() => handleBack()}
+            testID={'btn-documentingStep3-back'}>
+            {labels.common.back}
+          </Button>
+          <Button
+            mode="contained"
+            disabled={!isCompleted}
+            onPress={() => handleNext()}
+            testID={'btn-documentingStep3-next'}>
+            {labels.common.next}
+          </Button>
+        </View>
+      </View>
+    );
   };
 
   return (
     <View style={containerStyles.container}>
-      <Text
+      {/* <Text
         type="h6"
         style={containerStyles.stepTitleText}
         testID={'txt-documentingStep3-label'}>
         {feedbackDocumenting.dateToGiveFeedback}
-      </Text>
-      <ButtonSelection
+      </Text> */}
+      {handleContent()}
+      {/* <ButtonSelection
         title={labels.common.today}
         type={'Radio'}
         onPress={() => selectDate(labels.common.today, dateToday)}
         selected={dateSelected.value === dateToday}
-      />
-      <ButtonSelection
+      /> */}
+      {/* <ButtonSelection
         title={labels.common.yesterday}
         type={'Radio'}
         onPress={() => selectDate(labels.common.yesterday, yesterday)}
         selected={dateSelected.value === yesterday}
-      />
-      <CalendarPicker
+      /> */}
+      {/* <CalendarPicker
         onPress={() => showDatePicker()}
         text={dateSelected.label}
         icon={Images.calendar}
@@ -138,7 +253,7 @@ const DocumentingStep3 = props => {
         mode="date"
         onConfirm={handleDatePicked}
         onCancel={hideDatePicker}
-      />
+      /> */}
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
