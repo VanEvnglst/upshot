@@ -69,7 +69,9 @@ const DocumentingStep4 = props => {
         dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     } else {
       dispatch(DocumentingActions.setDocumentingStatus('maxStep', 4));
-      dispatch(DocumentingActions.updateFeedbackDocumenting());
+      dispatch(DocumentingActions.updateFeedbackDocumenting({
+        shouldClose: true
+      }));
     }
   };
 
