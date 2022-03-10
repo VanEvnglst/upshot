@@ -35,16 +35,25 @@ const DocumentingStep4 = props => {
   const [value, setValue] = useState('');
   const [isCompleted, setCompletion] = useState(false);
 
-  const firstTimeFeedback = `${feedbackDocumenting.firstTime} ${staff.firstName} ${feedbackDocumenting.firstTimeCont}`;
-  const followUpFeedback = `${feedbackDocumenting.followUp}${staff.firstName}`;
+  const firstTimeFeedback = {
+    id: 1,
+    display: `${feedbackDocumenting.firstTime} ${staff.firstName} ${feedbackDocumenting.firstTimeCont}`
+  };
+  const followUpFeedback = {
+    id: 2,
+    display: `${feedbackDocumenting.followUp}${staff.firstName}`
+  }
 
-  // useEffect(() => {
-  //   if (stepData.data) setDate({ value: stepData.data });
-  //   console.log('yest', yesterday);
-  //   console.log('tod', dateToday);
-  // }, [stepData]);
+  useEffect(() => {
+    if(stepData.data){
+      //TODO: handle data if continuing current documenting
+      setValue(stepData.data)
+      setCompletion(true)
+    }
+  },[stepData]);
 
   const handleBack = () => {
+    dispatch(DocumentingActions.setDocumentingData('step4', value));
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
 
@@ -55,29 +64,14 @@ const DocumentingStep4 = props => {
 
   const handleNext = () => {
     dispatch(DocumentingActions.setDocumentingData('step4', value));
-    if (value === followUpFeedback) {
+    if (value.id === followUpFeedback.id) {
       dispatch(DocumentingActions.setDocumentingStatus('maxStep', 5));
-      setTimeout(() => {
         dispatch(DocumentingActions.setActiveStep(activeStep + 1));
-      }, 200);
     } else {
-      console.warn('submit documenting');
+      dispatch(DocumentingActions.setDocumentingStatus('maxStep', 4));
+      dispatch(DocumentingActions.updateFeedbackDocumenting());
     }
   };
-  // const submitDocumenting = () => {
-  //   const payload = {
-  //     docuId,
-  //     step2,
-  //     step3,
-  //     dateSelected
-  //   }
-  //   dispatch(
-  //     DocumentingActions.setDocumentingData('step4', {
-
-  //     }),
-  //   );
-
-  // };
 
   return (
     <View style={styles.container}>
@@ -89,15 +83,15 @@ const DocumentingStep4 = props => {
       </Text>
       <ButtonSelection
         type={'Radio'}
-        title={firstTimeFeedback}
+        title={firstTimeFeedback.display}
         onPress={() => handleSelection(firstTimeFeedback)}
-        selected={value === firstTimeFeedback}
+        selected={value.id === firstTimeFeedback.id}
       />
       <ButtonSelection
         type={'Radio'}
-        title={followUpFeedback}
+        title={followUpFeedback.display}
         onPress={() => handleSelection(followUpFeedback)}
-        selected={value === followUpFeedback}
+        selected={value.id === followUpFeedback.id}
       />
       <View style={containerStyles.btnContainer}>
         <Button
