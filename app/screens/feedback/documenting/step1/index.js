@@ -89,7 +89,7 @@ const DocumentingStep1 = props => {
           type="h6"
           style={containerStyles.stepTitleText}
           testID={'txt-documentingStep1-label'}>
-          {`${feedbackDocumenting.giveFeedbackTo} ${feedbackType.display_name} ${feedbackDocumenting.giveFeedbackToCont}`}
+          {`${feedbackDocumenting.giveFeedbackTo} ${feedbackType.type_name} ${feedbackDocumenting.giveFeedbackToCont}`}
         </Text>
 
         <View style={styles.namesContainer}>
