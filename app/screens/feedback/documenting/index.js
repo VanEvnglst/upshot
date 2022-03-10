@@ -8,9 +8,6 @@ import {
   getDocumentingStep,
   getDocumentingMaxSteps,
   getDocumentingId,
-  getStep1Data,
-  getStep2Data,
-  getStep3Data,
   getChosenType,
   getChosenFlow,
 } from 'app/store/selectors';
@@ -32,9 +29,6 @@ const FeedbackDocumenting = props => {
   const documentingId = useSelector(getDocumentingId);
   const typeId = useSelector(getChosenType);
   const flow = useSelector(getChosenFlow);
-  const step1Data = useSelector(getStep1Data);
-  const step2Data = useSelector(getStep2Data);
-  const step3Data = useSelector(getStep3Data);
   const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -49,7 +43,7 @@ const FeedbackDocumenting = props => {
   }, []);
 
   useEffect(() => {
-    if(flow.id === 1 && typeId.id === 1)
+    if(flow.id === 1 && typeId.id === 2)
       dispatch(DocumentingActions.setDocumentingStatus('maxStep', 4));
   }, [])
 
@@ -63,7 +57,6 @@ const FeedbackDocumenting = props => {
         return <DocumentingStep3 />;
       case 4:
         return <DocumentingStep4 />;
-
       case 5: 
         return <DocumentingStep5 />;
     }
@@ -77,34 +70,16 @@ const FeedbackDocumenting = props => {
       navigation.goBack();
     else
       showModal();
-      // saveAndClose();
-      // console.warn('save data and call api');
-    // const payload = {
-    //   docuId: documentingId,
-    //   typeId,
-    //   step1: step1Data,
-    //   step2: step2Data,
-    //   dateSelected: step3Data,
-    // };
-    // navigation.goBack();
-    // pag step 1 and no documentingId,
-    // navigate,
-    // else dispatch update action & reset
-    // TODO: double check flow
-    
-    // if (activeStep === 1 && !documentingId) navigation.goBack();
-    // else {
-    //   dispatch(DocumentingActions.updateFeedbackDocumenting(payload));
-    //   dispatch(DocumentingActions.resetDocumentingState());
-    // }
   };
 
   const saveAndClose = () => {
-
+    dispatch(DocumentingActions.updateFeedbackDocumenting({
+      shouldClose: false
+    }));
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={containerStyles.container}>
       <Wrapper>
         <Header
           headerRight={{
@@ -122,28 +97,26 @@ const FeedbackDocumenting = props => {
       <Modal
         isVisible={isModalVisible}
         onDismiss={hideModal}
-        style={{
-          padding: 20,
-          width: 300,
-          height: 140,
-        }}>
-        <View style={{ flex: 1 }}>
-          <Text type="body2" style={{ marginTop: 10 }}>
+        style={containerStyles.modal}>
+        <View style={containerStyles.container}>
+          <Text 
+            type="body2" 
+            style={containerStyles.modalText}
+          >
             Close your feedback for now?
           </Text>
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-            alignItems: 'flex-end',
-            marginTop: 20,
-          }}>
-          <Button mode="text" onPress={() => hideModal()}>
-            <Text>Cancel</Text>
+          style={containerStyles.modalBtnContainer}>
+          <Button 
+            mode="text" 
+            onPress={() => hideModal()}>
+            <Text type='button'>Cancel</Text>
           </Button>
-          <Button mode="text" onPress={() => saveAndClose()}>
-            <Text>Save & Close</Text>
+          <Button 
+            mode="text" 
+            onPress={() => saveAndClose()}>
+            <Text type='button'>Save & Close</Text>
           </Button>
         </View>
       </Modal>
