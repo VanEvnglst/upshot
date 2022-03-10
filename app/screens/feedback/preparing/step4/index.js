@@ -86,6 +86,7 @@ const PreparingStep4 = () => {
           testID={'input-preparingStep4-additional'}
           onChangeText={text => handleAdditionalPlanText(text)}
           value={additionalPlan}
+          description={labels.common.ownQuestionDesc}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
