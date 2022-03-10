@@ -26,15 +26,12 @@ const DocumentingStep2 = props => {
 
   // useEffect for handling data if coming from review route to change button container
 
-  // useEffect(() => {
-  //   if (stepData.data) {
-  //     let existingTopics = [];
-  //     stepData.data.forEach(item =>
-  //       existingTopics = [...existingTopics, item]
-  //     );
-  //     setFeedbackTopic(existingTopics);
-  //   }
-  // }, [stepData]);
+  useEffect(() => {
+    if (stepData.data.length > 0) {
+      setFeedbackTopic(stepData.data);
+      setCompletion(true);
+    }
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
@@ -54,12 +51,6 @@ const DocumentingStep2 = props => {
 
   const handleFeedbackTopic = item => {
     let newTopicList = feedbackTopic;
-    // if (stepData.data) {
-    //   stepData.data.forEach(val =>
-    //     newTopicList = [...newTopicList, val],
-    //   )
-    //   return setFeedbackTopic(newTopicList);
-    // }
 
     if (checkSelectedTopic(item))
       newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
@@ -68,8 +59,6 @@ const DocumentingStep2 = props => {
 
     if (newTopicList.length !== 0) setCompletion(true);
     else setCompletion(false);
-    
-    validate();
   };
 
   const handleOtherTopic = item => {
