@@ -92,12 +92,12 @@ const FeedbackJourneyList = props => {
   const InProgressCard = ({ activeJourney }) => {
     const {
       percent_complete: percent,
-      last_modified: lastModified,
+      // last_modified: lastModified,
       member,
       id,
     } = activeJourney;
     const nameArr = member.split(/[ ,]+/);
-    const dateArr = lastModified.split(/[ ,]+/);
+    // const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr && nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
     const staff = {
@@ -105,7 +105,7 @@ const FeedbackJourneyList = props => {
       lastName: lastName,
     };
     const progressValue = percent / 100;
-    const lastWorkedOn = `${moment(lastModified).fromNow()}`;
+    // const lastWorkedOn = `${moment(lastModified).fromNow()}`;
 
     return (
       <TouchableOpacity
@@ -119,7 +119,7 @@ const FeedbackJourneyList = props => {
               Feedback for {memberName ? memberName : ''}
             </Text>
             <Text type="body2" style={styles.feedbackForDateText}>
-              Last worked on {lastWorkedOn}
+              Last worked on
             </Text>
           </View>
           <View style={styles.btnContainer}>
