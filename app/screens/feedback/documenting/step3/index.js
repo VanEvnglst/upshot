@@ -14,8 +14,6 @@ import {
   getDocumentingId,
   getChosenType,
   getChosenFlow,
-  getStep1Data,
-  getStep2Data,
   getStep3Data,
   getDocumentingStep,
 } from 'app/store/selectors';
@@ -28,8 +26,6 @@ const DocumentingStep3 = props => {
   const { route } = props;
   const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
-  const step1Data = useSelector(getStep1Data);
-  const step2Data = useSelector(getStep2Data);
   const stepData = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
   const typeId = useSelector(getChosenType);
@@ -46,10 +42,13 @@ const DocumentingStep3 = props => {
 
   useEffect(() => {
     if (stepData.data) {
-      const modDate = moment(stepData.data).format('llll');
+      const modDate = moment(stepData.data.value).format('ll');
       const dateArr = modDate.split(/[ ,]+/);
-      const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-      selectDate(dateLabel, stepData.data);
+      var dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
+      if(modDate === dateToday || modDate === yesterday) {
+        dateLabel = 'On a different date'
+      }
+      selectDate(dateLabel, modDate);
       setCompletion(true);
     }
   }, [stepData]);
@@ -61,15 +60,8 @@ const DocumentingStep3 = props => {
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
 
-  // const handleExistingDate = date => {
-  //   console.log('exist', date);
-  //   if(date === moment(new Date().format('ll')))
-  //     setDateSelected({ label: 'Today', value: dateToday });
-  //   if(date !== )
-  // }
-
   const selectDate = (dateLabel, date) => {
-    if (dateLabel === 'Today' || 'Yesterday') {
+    if (dateLabel === 'Today' || dateLabel === 'Yesterday') {
       setDateSelected({ label: 'On a different date' });
     } else {
       setDateSelected(prevState => ({
@@ -88,15 +80,17 @@ const DocumentingStep3 = props => {
     const modDate = moment(date).format('llll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
-    selectDate(dateLabel, date);
+    selectDate(dateLabel, modDate);
     hideDatePicker();
   };
 
   const handleBack = () => {
+    dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
+    dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
     dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     // const step2 = step2Data.data.map(obj => obj.id);
     // var topicListStr = '[';
@@ -224,36 +218,7 @@ const DocumentingStep3 = props => {
 
   return (
     <View style={containerStyles.container}>
-      {/* <Text
-        type="h6"
-        style={containerStyles.stepTitleText}
-        testID={'txt-documentingStep3-label'}>
-        {feedbackDocumenting.dateToGiveFeedback}
-      </Text> */}
       {handleContent()}
-      {/* <ButtonSelection
-        title={labels.common.today}
-        type={'Radio'}
-        onPress={() => selectDate(labels.common.today, dateToday)}
-        selected={dateSelected.value === dateToday}
-      /> */}
-      {/* <ButtonSelection
-        title={labels.common.yesterday}
-        type={'Radio'}
-        onPress={() => selectDate(labels.common.yesterday, yesterday)}
-        selected={dateSelected.value === yesterday}
-      /> */}
-      {/* <CalendarPicker
-        onPress={() => showDatePicker()}
-        text={dateSelected.label}
-        icon={Images.calendar}
-      />
-      <DateTimePicker
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleDatePicked}
-        onCancel={hideDatePicker}
-      /> */}
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
