@@ -35,6 +35,7 @@ export const getStep1Data = state => state.documenting.get('step1');
 export const getStep2Data = state => state.documenting.get('step2');
 export const getStep3Data = state => state.documenting.get('step3');
 export const getStep4Data = state => state.documenting.get('step4');
+export const getStep5Data = state => state.documenting.get('step5');
 export const getReminderDate = state => state.documenting.get('reminderTime');
 
 /* ------------- Feedback Preparing Selectors ------------- */
