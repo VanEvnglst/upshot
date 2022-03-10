@@ -1,5 +1,6 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
+import moment from 'moment';
 import DocumentingActions, {
   DocumentingTypes,
 } from 'app/store/feedback/DocumentingRedux';
@@ -8,6 +9,13 @@ import api from 'app/services/apiService';
 
 const activeStep = state => state.documenting.get('activeStep');
 const documentingId = state => state.documenting.get('id');
+const type = state => state.feedback.get('chosenType').id;
+const flow = state => state.feedback.get('chosenFlow').id;
+const step1Data = state => state.documenting.get('step1').data;
+const step2Data = state => state.documenting.get('step2').data;
+const step3Data = state => state.documenting.get('step3').data;
+const step4Data = state => state.documenting.get('step4').data;
+const step5Data = state => state.documenting.get('step5').data;
 
 export function* postFeedbackDocumenting({ data }) {
   // const connected = yield checkInternetConnection();
@@ -29,13 +37,47 @@ export function* postFeedbackDocumenting({ data }) {
   }
 }
 
-export function* updateFeedbackDocumenting({ data }) {
-  const response = yield call(api.updateDocumenting, data);
+export function* updateFeedbackDocumenting({ }) {
+
+  const step1 = yield select(step1Data);
+  const step2 = yield select(step2Data);
+  const step3 = yield select(step3Data);
+  const step4 = yield select(step4Data);
+  const step5 = yield select(step5Data);
+  const docuId = yield select(documentingId);
+  const typeId = yield select(type);
+  const flowId = yield select(flow);
+
+  const otsParams = new URLSearchParams();
+  const params = new URLSearchParams();
+  const schedPostParams = new URLSearchParams();
+  
+  const step2List = step2.map(obj => obj.id);
+  var topicListStr = '[';
+  step2List.forEach((item, index) => {
+    if (index !== step2List.length - 1)
+    topicListStr += `${item},`;
+    else topicListStr += `${item}`;
+  });
+  topicListStr += ']';
+  const dateSel = moment(step3).format('MMM DD, YYYY');
+  const step4Value = step4 && step4.id === 1 ? true : false;
+
+  params.append('documenting_id', docuId);
+  params.append('staff_id', step1.id);
+  params.append('topics', topicListStr);
+  params.append('pos_or_cor', typeId);
+  params.append('incident_date', dateSel);
+  params.append('is_first_time_bool', step4Value);
+  params.append('follow_up_count_int', step5.value);
+
+  const response = yield call(api.updateDocumenting, params);
+  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
-      yield put(DocumentingActions.closeFeedbackDocumenting());
+      // yield put(DocumentingActions.closeFeedbackDocumenting());
       yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
-      yield put(DocumentingActions.setDocumentingStatus('closed', true));
+      // yield put(DocumentingActions.setDocumentingStatus('closed', true));
       yield NavigationService.navigate('FeedbackConfirmation', {
         type: 'documenting',
       });
