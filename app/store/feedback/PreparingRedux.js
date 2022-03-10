@@ -10,7 +10,7 @@ export const INITIAL_STATE = Map({
   fetching: false,
   id: null,
   activeStep: 1,
-  maxStep: 11,
+  maxStep: 10,
   step1: { ...defaultState },
   step2: { ...defaultState },
   step3: { ...defaultState },
