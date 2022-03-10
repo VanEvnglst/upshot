@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import { ButtonSelection, Text } from 'app/components';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
-import { getDocumentingStep, getStaffName, getStep5Data } from 'app/store/selectors';
+import {
+  getDocumentingStep,
+  getStaffName,
+  getStep5Data,
+} from 'app/store/selectors';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
-
-
 
 const DocumentingStep5 = props => {
   const { feedbackDocumenting } = labels;
@@ -22,19 +24,19 @@ const DocumentingStep5 = props => {
 
   const firstFollowUp = {
     value: 1,
-    display: `${feedbackDocumenting.firstFollowUp} ${staff.firstName} ${feedbackDocumenting.aboutObservation}`
+    display: `${feedbackDocumenting.firstFollowUp} ${staff.firstName} ${feedbackDocumenting.aboutObservation}`,
   };
   const secondFollowUp = {
     value: 2,
-    display: `${feedbackDocumenting.secondFollowUp} ${staff.firstName} ${feedbackDocumenting.aboutObservation}`
+    display: `${feedbackDocumenting.secondFollowUp} ${staff.firstName} ${feedbackDocumenting.aboutObservation}`,
   };
   const thirdFollowUp = {
     value: 3,
-    display: `${feedbackDocumenting.thirdFollowUp} ${staff.firstName} ${feedbackDocumenting.aboutObservation}`
+    display: `${feedbackDocumenting.thirdFollowUp} ${staff.firstName} ${feedbackDocumenting.aboutObservation}`,
   };
 
   useEffect(() => {
-    if(stepData.data) {
+    if (stepData.data) {
       //TODO: handle data if continuing current documenting
       setFollowUpValue(stepData.data);
       setCompletion(true);
@@ -42,28 +44,33 @@ const DocumentingStep5 = props => {
   }, [stepData]);
 
   const handleBack = () => {
-    dispatch(DocumentingActions.setDocumentingData('step5', followUpValue))
+    dispatch(DocumentingActions.setDocumentingData('step5', followUpValue));
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
-  }
+  };
 
   const handleSelection = value => {
     setFollowUpValue(value);
     setCompletion(true);
-  }
+  };
 
   const handleNext = () => {
     dispatch(DocumentingActions.setDocumentingData('step5', followUpValue));
-    dispatch(DocumentingActions.updateFeedbackDocumenting());
-  }
+    dispatch(
+      DocumentingActions.updateFeedbackDocumenting({
+        shouldClose: true,
+      }),
+    );
+  };
 
   return (
     <View style={containerStyles.container}>
       <Text
-      type='h6'
-      style={containerStyles.stepTitleText}
-      testID={'txt-documentingStep5-label'}
-      >{feedbackDocumenting.followUpTitle}</Text>
-       <ButtonSelection
+        type="h6"
+        style={containerStyles.stepTitleText}
+        testID={'txt-documentingStep5-label'}>
+        {feedbackDocumenting.followUpTitle}
+      </Text>
+      <ButtonSelection
         type={'Radio'}
         title={firstFollowUp.display}
         onPress={() => handleSelection(firstFollowUp)}
@@ -81,7 +88,7 @@ const DocumentingStep5 = props => {
         onPress={() => handleSelection(thirdFollowUp)}
         selected={followUpValue.display === thirdFollowUp.display}
       />
-       <View style={containerStyles.btnContainer}>
+      <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
           onPress={() => handleBack()}
@@ -97,13 +104,11 @@ const DocumentingStep5 = props => {
         </Button>
       </View>
     </View>
-  )
-}
+  );
+};
 
 export default DocumentingStep5;
 
-DocumentingStep5.propTypes = {
-
-};
+DocumentingStep5.propTypes = {};
 
 DocumentingStep5.defaultProps = {};
