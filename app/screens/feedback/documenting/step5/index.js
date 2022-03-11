@@ -38,7 +38,14 @@ const DocumentingStep5 = props => {
   useEffect(() => {
     if (stepData.data) {
       //TODO: handle data if continuing current documenting
-      setFollowUpValue(stepData.data);
+      switch(stepData.data.value) {
+        case 1:
+          setFollowUpValue(firstFollowUp)
+        case 2:
+          setFollowUpValue(secondFollowUp)
+        case 3:
+          setFollowUpValue(thirdFollowUp);
+      }
       setCompletion(true);
     }
   }, [stepData]);
