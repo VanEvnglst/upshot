@@ -22,11 +22,12 @@ const labels = {
     gotIt: 'Got it',
     keepGoing: 'Keep Going',
     remindMeLater: 'Remind me later',
-    youDidIt: 'You did it!'
+    youDidIt: 'You did it!',
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',
-    feedbackDesc: 'Feedback Coaching Module enables managers to adopt effective leadership practices and habits in providing timely and objective performance feedback to their employees resulting in high-performing and engaged team members',
+    feedbackDesc:
+      'Feedback Coaching Module enables managers to adopt effective leadership practices and habits in providing timely and objective performance feedback to their employees resulting in high-performing and engaged team members',
     comingSoon: 'Coming Soon',
   },
   bottomNavigation: {
@@ -78,19 +79,19 @@ const labels = {
     giveFeedbackToCont: 'feedback to',
     feedbackRelation: 'My feedback is related to',
     dateOfFeedback: "I'm giving feedback about something that happened",
-    firstOrFollowUpTitle: "This is",
+    firstOrFollowUpTitle: 'This is',
     firstTime: "The first time I'm giving feedback to",
-    firstTimeCont: "about this observation",
+    firstTimeCont: 'about this observation',
     followUp: 'A follow up with ',
-    followUpTitle: "This is my",
-    firstFollowUp: "First follow up with ",
-    secondFollowUp: "Second follow up with ",
-    thirdFollowUp: "This follow up with ",
-    aboutObservation: "about this observation",
+    followUpTitle: 'This is my',
+    firstFollowUp: 'First follow up with ',
+    secondFollowUp: 'Second follow up with ',
+    thirdFollowUp: 'This follow up with ',
+    aboutObservation: 'about this observation',
     confirmation: {
       content1: `You've finished "Documenting" - the first step of our feedback coaching journey.`,
       content2: `Would you like to continue on to the second step, "Preparing?" - this step takes 15 minutes.`,
-      schedPosContent: `Would you like to continue on to the next part, "Sharing?" - this usually takes around 15 minutes.`
+      schedPosContent: `Would you like to continue on to the next part, "Sharing?" - this usually takes around 15 minutes.`,
     },
     dateToGiveFeedback: `I'm giving feedback about something that happened`,
   },
@@ -217,23 +218,24 @@ const labels = {
     discussingFootNote: `We strongly recommend you record every discussion. Why? Research shows that people forget an average of 50% of new information within just one hour. After 24 hours, it's 70%. And one week later? 90% of that information has been lost.`,
     cueCards: {
       checkIn: 'Check in',
-      checkInContent: `"How has your day been?\n\nHow are your kids?"`,
+      checkInContent: `Set a positive tone.\n\nEstablish a safe environment to openly discuss issues.\n\nTalk about a topic that's personal to the employee.\n\nTalk about events both of you have experienced.`,
       statePurpose: 'State the purpose of this meeting',
-      statePurposeContent: "I would like to discuss an observation with you.\n\nMy intention is to have a two-way conversation on what happened and what we can do to address it.",
+      statePurposeContent:
+        'Let them know what your intention is for this meeting.\n\nLet them know you want this to be a two-way conversation.',
       observation: 'Describe your observations',
-      observationContent: '',
+      observationContent: `1.) Describe the event. Be specific about the details surrounding the event. Mention the date, place, and circumstances.\n\n2.) Describe their actions.Provide specific, actionable, and relevant observations about your employee's behavior. Avoid words that are subjective, judgmental, and derogatory.\n\n3.) Describe the impact of your employee’s actions on themselves, others, or your organization or department. `,
       listenDeeply: 'Listen deeply',
-      listenDeeplyContent: `"May I know your thoughts about what I shared?"\n\n"Were my observations aligned with what you experienced?"`,
+      listenDeeplyContent: `Ask for their thoughts about your observations.\n\nListen to understand where they're coming from.\n\nDon't just tell them what happened and what must be done.`,
       brainstorm: 'Brainstorm an action plan together',
-      brainstormContent: `"What are the options we can explore to solve the problem?"`,
+      brainstormContent: `This step must be a collaborative effort between you and your employee.\n\nGet their ideas on what they think can be done to address the situation.\n\nYou can also provide your own suggestions.`,
       evaluateIdeas: 'Evaluate ideas together',
-      evaluateIdeasContent: `"What are the pros and cons of each option?"\n\n"Which option do you like best? Why?"`,
-      nextSteps: "Agree on your next steps",
-      nextStepsContent: `"What specific actions are we going to take?"\n\n"When will this happen? Is it recurring?"\n\n"Who will make it happen?"`,
-      checkOut: "Check-out",
-      checkOutContent: `"How do you feel about this conversation?"\n\n"If there is anything that could have made this conversation better? What would that be?"`,
-      thankAndSupport: "Thank and support them",
-      thankAndSupportContent:`"Thank you for your input, and for having this discussion with me.\n\nLet me know if you think of other ways I can support you to be successful."`,
+      evaluateIdeasContent: `Together, evaluate which of their actions would be most effective.`,
+      nextSteps: 'Agree on your next steps',
+      nextStepsContent: `Define the next steps by answering the following questions: `,
+      checkOut: 'Check-out',
+      checkOutContent: `End the conversation on a positive note.\n\nAsk how they feel about your conversation.\n\nSeek their input for anything that could have made the conversation better.`,
+      thankAndSupport: 'Thank and support them',
+      thankAndSupportContent: `Acknowledge them for their input.\n\nOffer any support they might need from you.`,
     },
     discussingActionPlan: {
       title: 'Send the action plan to your employee',
@@ -257,8 +259,8 @@ const labels = {
     confirmation: `You've finished "Discussing." You can review your notes and audio recording any time.\n\nWould you like to continue on to the next part, "Reflecting?" - this usually takes around 10 minutes.`,
     confirmationHint: `People forget an average of 70% of what was discussed after 24 hours.\n\nThe sooner you start your reflection, the easier it will be for you to remember what you were thinking and how you were feeling during your feedback discussion.`,
     review: {
-      actionPlan: "Review your action plan",
-    }
+      actionPlan: 'Review your action plan',
+    },
   },
   feedbackReflecting: {
     guideContent: `Self-reflection is the key to self-awareness. It allows you to look neutrally at your thoughts, feelings, emotions, and actions. It enables you to identify areas where you are strong, but also areas where you can improve.`,
@@ -266,34 +268,43 @@ const labels = {
     listenToRecordingDesc: `It looks like you recorded your feedback discussion! You can listen to it while you're answering the next questions. Pause, play, and rewind at any time.`,
     howDidYouFeel: 'How did you feel after giving feedback?',
     howDidyouDo: 'How did you do during your discussion?',
-    provideInfo: 'I provided specific information about the event, the action, and the result',
-    calmFeedback: 'I gave feedback in a calm, objective, and non-judgmental manner',
+    provideInfo:
+      'I provided specific information about the event, the action, and the result',
+    calmFeedback:
+      'I gave feedback in a calm, objective, and non-judgmental manner',
     listenToEmployee: `I listened to my employee's thoughts and questions with empathy and curiosity`,
     gaveFeedbackSoon: 'I gave my feedback soon after the event occurred',
     establishRapport: 'I established rapport with my employee',
     clearlyStatePurpose: 'I clearly stated the purpose of the meeting',
     involveEmployee: 'I involved my employee in developing an action plan',
-    documentAndSend: 'I documented and sent the agreed action plan to my employee',
+    documentAndSend:
+      'I documented and sent the agreed action plan to my employee',
     feedbackFromTeam: 'Looking at feedback from your team',
     feedbackFromTeamDesc: `Getting feedback from your team members is another way to increase self-awareness. Being willing to look at yourself through others' eyes will help you gain invaluable insight into how you can become a more effective leader.\n\nEvery time you give feedback, we ask your employees for their input. When we receive at least 5 responses, we share the results with you.`,
     notEnoughResponses: `Hmm... It looks like you don't have enough employee responses right now`,
     allFeedback: 'All Feedback',
     preparedFeedback: 'Prepared Feedback',
-    youProvideInfo: 'You provided specific information about the event, the action, and the result',
-    youCalmFeedback: 'You gave feedback in a calm, objective, and non-judgmental manner',
+    youProvideInfo:
+      'You provided specific information about the event, the action, and the result',
+    youCalmFeedback:
+      'You gave feedback in a calm, objective, and non-judgmental manner',
     youListenToEmployee: `You listened to your employee's thoughts and questions with empathy and curiosity`,
     youGaveFeedbackSoon: 'You gave your feedback soon after the event occurred',
     youEstablishRapport: 'You established rapport with your employee',
     youClearlyStatePurpose: 'You clearly stated the purpose of the meeting',
-    youInvolveEmployee: 'You involved your employee in developing an action plan',
-    youDocumentAndSend: 'You documented and sent the agreed action plan to your employee',
+    youInvolveEmployee:
+      'You involved your employee in developing an action plan',
+    youDocumentAndSend:
+      'You documented and sent the agreed action plan to your employee',
     developmentPlan: 'Your development plan',
-    developmentPlanDesc: 'Based on your self-reflection and feedback from your team members, what do you commit to...',
+    developmentPlanDesc:
+      'Based on your self-reflection and feedback from your team members, what do you commit to...',
     stopDoing: 'Stop doing',
     startDoing: 'Start doing',
     continueDoing: 'Continue doing',
     reviewActionPlan: 'Review your action plan',
-    reviewActionPlanDesc: 'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
+    reviewActionPlanDesc:
+      'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
     confirmation: `You've finished "Reflecting". Based on your answers, we've recommended a reading list we think you'll find helpful:`,
   },
   feedbackSharing: {
@@ -324,35 +335,43 @@ const labels = {
   },
   frontliner: {
     survey: {
-      title: "Survey",
-      descHelp: "Help",
-      descCont: "give better feedback. Your responses are anonymous. Your manager will only see their average scores once 5 or more employees have submitted this survey. You have until",
-      descLast: "to submit your responses.",
-      overallSatisfaction: "Overall, how satisfied are you with the feedback you received?",
-      closeSurvey: "Close the survey for now? You have until to submit your responses.",
-      feeling: "How did you feel after receiving the feedback?",
-      howDidManagerDo: "How did ",
-      howDidManagerDoCont: "do during your discussion?",
-      questionCount: "8 questions",
-      provideInfo: "My manager provided specific information about the event, action and the result:",
-      calmFeedback: "My manager gave feedback in a calm, objective, and non-judgmental manner:",
-      listenedToThoughts: "My manager listened to my thoughts and questions with empathy and curiosity:",
-      gaveFeedbackSoon: "My manager gave their feedback soon after the event occurred:",
-      establishRapport: "My manager established rapport with me:",
-      clearlyStatePurpose: "My manager stated the purpose of the meeting:",
-      involveInPlan: "My manager involved me in developing the action plan:",
-      sentAction: "My manager sent the agreed action plan to me:",
-      selfSurvey: "For your eyes only - How did you do during your discussion?",
-      selfQuestionCount: "5 questions",
-      iProvidedFacts: "I provided facts:",
-      iListenedToFeedback: "I listened to feedback openly:",
-      iAskedQuestions: "I asked questions to clarify:",
-      iGaveSuggestions: "I gave suggestions on how to address the situation:",
-      iWasHonest: "I was honest about my commitment to the action plan: ",
-      confirmation: "Thank you for your responses! Your ratings will help",
-      confirmationCont: " give better feedback in the future.\n\nRest assured, each survey you answer is anonymous and your manager will only see their average scores."
-    }
-  }
+      title: 'Survey',
+      descHelp: 'Help',
+      descCont:
+        'give better feedback. Your responses are anonymous. Your manager will only see their average scores once 5 or more employees have submitted this survey. You have until',
+      descLast: 'to submit your responses.',
+      overallSatisfaction:
+        'Overall, how satisfied are you with the feedback you received?',
+      closeSurvey:
+        'Close the survey for now? You have until to submit your responses.',
+      feeling: 'How did you feel after receiving the feedback?',
+      howDidManagerDo: 'How did ',
+      howDidManagerDoCont: 'do during your discussion?',
+      questionCount: '8 questions',
+      provideInfo:
+        'My manager provided specific information about the event, action and the result:',
+      calmFeedback:
+        'My manager gave feedback in a calm, objective, and non-judgmental manner:',
+      listenedToThoughts:
+        'My manager listened to my thoughts and questions with empathy and curiosity:',
+      gaveFeedbackSoon:
+        'My manager gave their feedback soon after the event occurred:',
+      establishRapport: 'My manager established rapport with me:',
+      clearlyStatePurpose: 'My manager stated the purpose of the meeting:',
+      involveInPlan: 'My manager involved me in developing the action plan:',
+      sentAction: 'My manager sent the agreed action plan to me:',
+      selfSurvey: 'For your eyes only - How did you do during your discussion?',
+      selfQuestionCount: '5 questions',
+      iProvidedFacts: 'I provided facts:',
+      iListenedToFeedback: 'I listened to feedback openly:',
+      iAskedQuestions: 'I asked questions to clarify:',
+      iGaveSuggestions: 'I gave suggestions on how to address the situation:',
+      iWasHonest: 'I was honest about my commitment to the action plan: ',
+      confirmation: 'Thank you for your responses! Your ratings will help',
+      confirmationCont:
+        ' give better feedback in the future.\n\nRest assured, each survey you answer is anonymous and your manager will only see their average scores.',
+    },
+  },
 };
 
 export default labels;
