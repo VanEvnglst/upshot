@@ -25,12 +25,11 @@ export default styles = StyleSheet.create({
   },
   inputField: {
     margin: 20,
-    width: '95%',
     height: 60,
     paddingHorizontal: 10,
   },
   button: {
-    width: '95%',
+    width: '90%',
     marginTop: 30,
     height: 50,
     justifyContent: 'center',
