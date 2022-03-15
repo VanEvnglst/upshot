@@ -8,6 +8,7 @@ import { getDiscussingId } from 'app/store/selectors';
 import { Header, Text, Wrapper } from 'app/components';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
+import Colors from 'app/theme/colors';
 import styles from './styles';
 
 const { width } = Dimensions.get('screen');
@@ -205,18 +206,26 @@ const DiscussingMeeting = props => {
                 End Meeting
               </Text>
             </Button> */}
-        <FloatingAction
-          style={{
-            width: 200,
-            alignSelf: 'center',
-            marginBottom: 30,
-            backgroundColor: 'white',
-          }}
-          label={'End Meeting'}
+        {/* <FloatingAction.Group
+          style={styles.floatingAction}
+          labelTextColor={Colors.primaryDark}
+          // label={'End Meeting'}
           uppercase
-          //icon={stop}
+          // icon={'stop'}
+          actions={[
+            { 
+              icon: 'stop',
+              
+            }
+          ]}
+        /> */}
+        <Button
+          mode='contained'
+          style={styles.floatingAction}
           onPress={() => handleNext()}
-        />
+        >
+          <Text type='button' style={styles.floatingLabel}>End Meeting</Text>
+        </Button>
         {/* <View
          
           

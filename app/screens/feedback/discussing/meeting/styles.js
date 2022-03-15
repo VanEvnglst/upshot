@@ -93,7 +93,15 @@ export default styles = StyleSheet.create({
     width: 200,
     alignSelf: 'center',
     marginBottom: 30,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  floatingLabel: {
+    color: Colors.primaryDark
   },
   addedGuideTitle: {
     color: Colors.secondaryDark,
