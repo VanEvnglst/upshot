@@ -16,7 +16,6 @@ import PreparingStep4B from './step4B';
 import PreparingStep4C from './step4C';
 import PreparingStep5 from './step5';
 import PreparingStep5B from './step5B';
-import PreparingStep5C from './step5C';
 import labels from 'app/locales/en';
 import Colors from 'app/theme/colors';
 import containerStyles from './styles';
@@ -83,8 +82,6 @@ const FeedbackPreparing = props => {
         return <PreparingStep5 />;
       case 10:
         return <PreparingStep5B />;
-      case 11:
-        return <PreparingStep5C />;
     }
   };
 
@@ -134,10 +131,10 @@ const FeedbackPreparing = props => {
             marginTop: 20,
           }}>
           <Button mode="text" onPress={() => hideModal()}>
-            Cancel
+            {labels.common.cancel}
           </Button>
           <Button mode="text" onPress={() => handleCloseBtn()}>
-            Save & Close
+            {labels.common.saveClose}
           </Button>
         </View>
       </Modal>
@@ -158,7 +155,7 @@ FeedbackPreparing.propTypes = {
 FeedbackPreparing.defaultProps = {
   resetPreparingState: () => {},
   getPreparingStep: 1,
-  getPreparingMaxSteps: 11,
+  getPreparingMaxSteps: 10,
   getPreparingId: 1,
   fetchCurrentPreparing: () => {}
 };

@@ -74,6 +74,7 @@ const PreparingStep2 = props => {
           value={additionalPurpose}
           onChangeText={text => handleAdditionalPurpose(text)}
           style={{ marginTop: 10 }}
+          description={statePurpose.statementHint}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
