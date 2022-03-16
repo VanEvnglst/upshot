@@ -63,14 +63,13 @@ export function* updateFeedbackDocumenting({ data }) {
   });
   topicListStr += ']';
   const dateSel = moment(step3).format('MMM DD, YYYY');
-  const step4Value = step4 && step4.id === 1 ? true : false;
   const step5Value = step5 && step5.value !== null ? step5.value : 0;
   params.append('documenting_id', docuId);
   params.append('staff_id', step1.id);
   params.append('topics', topicListStr);
   params.append('pos_or_cor', typeId);
   params.append('incident_date', dateSel);
-  params.append('is_first_time_bool', step4Value);
+  params.append('is_first_time_bool', step4.value);
   params.append('follow_up_count_int', step5Value);
 
   const response = yield call(api.updateDocumenting, params);
@@ -130,6 +129,9 @@ export function* fetchCurrentDocumenting({ documentingId }) {
     if (response.data.status === STATUS_OK) {
       debugger;
       const docuDetails = response.data.details;
+      const firstTimeFeedback = docuDetails.is_first_time ? {id: 1} : { id: 2};
+      const followUpFeedback = 
+      { value: docuDetails.follow_up_count }
       yield put(
         DocumentingActions.setDocumentingData('step1', docuDetails.staff),
       );
@@ -142,8 +144,8 @@ export function* fetchCurrentDocumenting({ documentingId }) {
           docuDetails.incident_date,
         ),
       );
-      // yield put(DocumentingActions.setDocumentingData('step4', docuDetails));
-      // yield put(DocumentingActions.setDocumentingData('step5', docuDetails));
+      yield put(DocumentingActions.setDocumentingData('step4', firstTimeFeedback));
+      yield put(DocumentingActions.setDocumentingData('step5', followUpFeedback));
       yield put(DocumentingActions.fetchCurrentDocumentingSuccess());
     }
   }

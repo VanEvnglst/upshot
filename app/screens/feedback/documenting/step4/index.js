@@ -37,20 +37,23 @@ const DocumentingStep4 = props => {
 
   const firstTimeFeedback = {
     id: 1,
-    display: `${feedbackDocumenting.firstTime} ${staff.firstName} ${feedbackDocumenting.firstTimeCont}`
+    display: `${feedbackDocumenting.firstTime} ${staff.firstName} ${feedbackDocumenting.firstTimeCont}`,
+    value: true,
   };
   const followUpFeedback = {
     id: 2,
-    display: `${feedbackDocumenting.followUp}${staff.firstName}`
-  }
+    display: `${feedbackDocumenting.followUp}${staff.firstName}`,
+    value: false,
+  };
 
   useEffect(() => {
-    if(stepData.data){
-      //TODO: handle data if continuing current documenting
-      setValue(stepData.data)
-      setCompletion(true)
+    if (stepData.data) {
+      console.warn('data', stepData.data);
+      if (stepData.data.id === 1) setValue(firstTimeFeedback);
+      else setValue(followUpFeedback);
+      setCompletion(true);
     }
-  },[stepData]);
+  }, [stepData]);
 
   const handleBack = () => {
     dispatch(DocumentingActions.setDocumentingData('step4', value));
@@ -66,12 +69,14 @@ const DocumentingStep4 = props => {
     dispatch(DocumentingActions.setDocumentingData('step4', value));
     if (value.id === followUpFeedback.id) {
       dispatch(DocumentingActions.setDocumentingStatus('maxStep', 5));
-        dispatch(DocumentingActions.setActiveStep(activeStep + 1));
+      dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     } else {
       dispatch(DocumentingActions.setDocumentingStatus('maxStep', 4));
-      dispatch(DocumentingActions.updateFeedbackDocumenting({
-        shouldClose: true
-      }));
+      dispatch(
+        DocumentingActions.updateFeedbackDocumenting({
+          shouldClose: true,
+        }),
+      );
     }
   };
 
