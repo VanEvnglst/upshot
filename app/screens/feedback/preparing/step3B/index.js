@@ -98,6 +98,7 @@ const PreparingStep3B = () => {
               testID={'input-preparingStep3B-additional'}
               onChangeText={text => handleObservationText(text)}
               value={additionalObservation}
+              description={labels.common.ownQuestionDesc}
             />
           </View>
         </KeyboardAvoidingView>

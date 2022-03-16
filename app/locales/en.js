@@ -7,6 +7,7 @@ const labels = {
     start: 'Start',
     inputHint: 'Something else',
     inputDesc: 'Write your own description',
+    ownQuestionDesc: "Write your own question",
     today: 'Today',
     yesterday: 'Yesterday',
     dateHint: 'On a different date',
@@ -113,6 +114,7 @@ const labels = {
         "It's important for your employee to know the intention of the meeting, and that it's going to be a two-way conversation between both of you. \n\nChoose below what you might say:",
       statePurposeBtn:
         'I would like to discuss an observation and my intention is to have a two-way conversation on what happened and what we can do to address it',
+      statementHint: "Write your own statement",
     },
     describeDiscuss: {
       step: 'Step 3',
@@ -148,11 +150,11 @@ const labels = {
         'What do you think can be done to address the situation?',
       brainstormOption2:
         'What are the options we can explore to solve the problem?',
-      getSuggestions: `After getting your employee's suggestions, you can also provide your own. After exhausting possible options, you may want to evaluate which of the actions would be most effective.`,
+      getSuggestions: `After getting your employee's suggestions, you can also provide your own. After exhausting possible options, you may want to evaluate which of the actions would be most effective.\n\nWhat questions do you want to ask to evaluate your options?`,
       suggestionOption1: 'What are the pros and cons of each option?',
       suggestionOption2:
         'Which option will generate high impact with least effort?',
-      suggestionOption3: 'Which option you like best? Why?',
+      suggestionOption3: 'Which option do you like best? Why?',
       defineNextSteps:
         'Lastly, you and your employee will need to define the next steps by answering the following questions:',
       defineWhat: 'What',
@@ -167,9 +169,9 @@ const labels = {
     },
     checkOut: {
       step: 'Step 5',
-      title: 'Check-out and agree on a follow-up date',
+      title: 'Check-out',
       content:
-        "Just like in Step 1 (Check-in), it's important to end the conversation on a positive note and schedule a follow-up meeting to sustain improved performanct. \n\n What questions do you want to ask at the end of your discussion?",
+        "Just like in Step 1 (Check-in), it's important to end the conversation on a positive note and schedule a follow-up meeting to sustain improved performance. \n\n What questions do you want to ask at the end of your discussion?",
       checkoutFeelings: 'How do you feel about this conversation?',
       checkoutComfortable:
         'How comfortable are you with what we have agreeed on?',
@@ -179,11 +181,11 @@ const labels = {
         'Acknowledge the employee for their inputs and offer any support they might need from you. What could you say to thank them, and let you know they have your full support?',
       checkoutInput:
         'Thank you for your input, and for having this discussion with me. Let me know if you think of other ways I can support you to be successful.',
-      checkoutDate: 'Agree on a the follow-up date for next discussion.',
-      checkoutTouchbase:
-        'When can we touch base again to check how we are progressing and how I can help you further?',
+      // checkoutDate: 'Agree on a the follow-up date for next discussion.',
+      // checkoutTouchbase:
+        // 'When can we touch base again to check how we are progressing and how I can help you further?',
     },
-    confirmation: `You've finished "Preparing". We've created a discussion guide for you to review and use during your feedback session. \n\nNow that you're prepared, it's time to schedule your face-to-face discussion.`,
+    confirmation: `You've finished "Preparing". Using your answers, we created a discussion guide for you to review and use during your feedback session. \n\nNow that you're set up, it's time to schedule your meeting with `,
     confirmationHint:
       'The best time to give feedback is shortly after the moment has occurred, and no later than a week from the incident. The longer you wait, the longer the incident affects the way you think - and the way the other person acts.',
     schedule: 'Schedule discussion',

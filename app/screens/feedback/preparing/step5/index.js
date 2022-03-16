@@ -11,7 +11,7 @@ import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
 const PreparingStep5 = () => {
-  const { checkOut } = labels.feedbackPreparing;
+  const { checkOut, statePurpose } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep5Data);
@@ -84,6 +84,7 @@ const PreparingStep5 = () => {
           testID={'input-preparingStep5-somethingElse'}
           onChangeText={text => handleAddtionalCheckout(text)}
           value={additionalCheckout}
+          description={statePurpose.statementHint}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>

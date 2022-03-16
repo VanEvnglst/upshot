@@ -92,7 +92,9 @@ const FeedbackJourneyList = props => {
   const InProgressCard = ({ activeJourney }) => {
     const {
       percent_complete: percent,
-      // last_modified: lastModified,
+      flow_type: flowType,
+      created_at_date: dateCreated,
+      topics,
       member,
       id,
     } = activeJourney;
@@ -105,6 +107,7 @@ const FeedbackJourneyList = props => {
       lastName: lastName,
     };
     const progressValue = percent / 100;
+    const topicList = topics.length > 1 ? `(${topics[0]}, etc.)` : topics[0];
     // const lastWorkedOn = `${moment(lastModified).fromNow()}`;
 
     return (
@@ -118,8 +121,14 @@ const FeedbackJourneyList = props => {
             <Text type="h6" style={styles.feedbackForText}>
               Feedback for {memberName ? memberName : ''}
             </Text>
+            <View style={{ flexDirection: 'row'}}>
+              <Text 
+                type='body2'
+                style={styles.feedbackForDateText}
+              >{flowType} {topicList}</Text>
+            </View>
             <Text type="body2" style={styles.feedbackForDateText}>
-              Last worked on
+              Created {dateCreated}
             </Text>
           </View>
           <View style={styles.btnContainer}>
