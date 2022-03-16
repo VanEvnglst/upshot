@@ -52,6 +52,9 @@ export default styles = StyleSheet.create({
   cardTitle: {
     color: Colors.primaryDark,
   },
+  skippedCardTitle: {
+    color: Colors.secondaryDark
+  },
   cardContentContainer: {
     marginTop: 20,
     flex: 1,
@@ -68,19 +71,50 @@ export default styles = StyleSheet.create({
     marginTop: 20,
     color: Colors.lightBlack
   },
-  singleBtnContainer: {
-    marginVertical: 20,
-    marginHorizontal: 10,
-  },
-  endMeetingBtn: {
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.white,
-    borderWidth: 0.5,
-  },
   endMeetingBtnText: {
     color: Colors.primaryDark,
   },
-  btnContainer: {},
+  headerContainer: {
+    flexDirection: 'row', marginBottom: 10, alignItems: 'center'
+  },
+  headerLine: {
+    height: 3,
+    marginLeft: 5,
+    borderRadius: 3,
+    flex:1,
+  },
+  filledHeaderLine: {
+    backgroundColor: Colors.primaryDark
+  },
+  skippedHeaderLine: {
+    backgroundColor: Colors.secondaryDark
+  },
+  floatingAction: {
+    width: 200,
+    alignSelf: 'center',
+    marginBottom: 30,
+    backgroundColor: Colors.white,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  floatingLabel: {
+    color: Colors.primaryDark
+  },
+  addedGuideTitle: {
+    color: Colors.secondaryDark,
+  },
+  addedGuideText: {
+    marginTop: 8,
+    color: Colors.lightBlack,
+    lineHeight: 20,
+  },
+  guideContainer: {
+    marginTop: 30
+  },
+  guideContent: {
+    marginTop: 25,
+  }
 });

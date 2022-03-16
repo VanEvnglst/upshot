@@ -32,7 +32,7 @@ export function* signInUser({ data }) {
       );
     }
   } else {
-    AuthenticationActions.signInUserFailure(response.data);
+    AuthenticationActions.signInUserFailure(authResponse.data);
   }
 }
 

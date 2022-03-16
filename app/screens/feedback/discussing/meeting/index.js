@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Animated, Dimensions, Image, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, FAB as FloatingAction } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
@@ -8,6 +8,7 @@ import { getDiscussingId } from 'app/store/selectors';
 import { Header, Text, Wrapper } from 'app/components';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
+import Colors from 'app/theme/colors';
 import styles from './styles';
 
 const { width } = Dimensions.get('screen');
@@ -19,6 +20,7 @@ const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 3;
 const DiscussingMeeting = props => {
   const { navigation, route } = props;
   const { cueCards } = labels.feedbackDiscussing;
+  const { createActionPlan } = labels.feedbackPreparing;
   const scrollX = useRef(new Animated.Value(0)).current;
   const dispatch = useDispatch();
   const activeDiscussing = useSelector(getDiscussingId);
@@ -79,6 +81,12 @@ const DiscussingMeeting = props => {
     content: item.content,
   }));
 
+  // TODO: implement current discussing when data is final
+  // useEffect(() => {
+  //   if(activeDiscussing)
+  //   dispatch(DiscussingActions.fetchCurrentDiscussing(activeDiscussing));
+  // }, []);
+
   const DiscussionCard = ({ title, content }) => {
     return (
       <View
@@ -97,11 +105,34 @@ const DiscussingMeeting = props => {
     );
   };
 
-  // TODO: implement current discussing when data is final
-  // useEffect(() => {
-  //   if(activeDiscussing)
-  //   dispatch(DiscussingActions.fetchCurrentDiscussing(activeDiscussing));
-  // }, []);
+  const NextStepsGuide = () => {
+    return (
+      <View style={styles.guideContainer}>
+        <Text type="overline" style={styles.addedGuideTitle}>
+          {createActionPlan.defineWhat}
+        </Text>
+        <Text type="body2" style={styles.addedGuideText}>
+          {createActionPlan.defineWhatContent}
+        </Text>
+        <View style={styles.guideContent}>
+          <Text type="overline" style={styles.addedGuideTitle}>
+            {createActionPlan.defineWhen}
+          </Text>
+          <Text type="body2" style={styles.addedGuideText}>
+            {createActionPlan.defineWhenContent}
+          </Text>
+        </View>
+        <View style={styles.guideContent}>
+          <Text type="overline" style={styles.addedGuideTitle}>
+            {createActionPlan.defineWho}
+          </Text>
+          <Text type="body2" style={styles.addedGuideText}>
+            {createActionPlan.defineWhoContent}
+          </Text>
+        </View>
+      </View>
+    );
+  };
 
   const handleNext = () => {
     navigation.navigate('FeedbackDiscussing');
@@ -139,27 +170,29 @@ const DiscussingMeeting = props => {
               index * ITEM_SIZE,
             ];
             return (
-              <View
-                style={styles.cardContainer}>
-                <View
-                  style={styles.card}>
+              <View style={styles.cardContainer}>
+                <View style={styles.card}>
+                  <View style={styles.headerContainer}>
+                    {/* <Image
+                        source={Images.lightbulb}
+                        resizeMode='contain'
+                      /> */}
+                    <Image source={Images.quote} resizeMode="contain" />
+                    <View
+                      style={[styles.headerLine, styles.filledHeaderLine]}
+                    />
+                  </View>
                   <Text type="h5" style={styles.cardTitle}>
                     {item.title}
                   </Text>
                   <View style={styles.cardContentContainer}>
-                    <Text type="body1" style={styles.cardContent}>{item.content}</Text>
-                  </View>
-                  {index === 1 && (
-                    <View style={styles.cardGuideContainer}>
-                      <Image
-                        source={Images.cardSwipeGuide}
-                        resizeMode="contain"
-                      />
-                      <Text type="overline" style={styles.guideText}>
-                        Swipe to see next card
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                      <Text type="body1" style={styles.cardContent}>
+                        {item.content}
                       </Text>
-                    </View>
-                  )}
+                      {item.title === cueCards.nextSteps && <NextStepsGuide />}
+                    </ScrollView>
+                  </View>
                 </View>
               </View>
             );
@@ -168,17 +201,31 @@ const DiscussingMeeting = props => {
         {/* {route.params.type === 'actionPlan' ? (
           <View style={styles.btnContainer}></View>
         ) : ( */}
-          <View style={styles.singleBtnContainer}>
-            <Button
-              mode="contained"
-              onPress={() => handleNext()}
-              style={styles.endMeetingBtn}>
-              <Text type="button" style={styles.endMeetingBtnText}>
+
+        {/*  <Text type="button" style={styles.endMeetingBtnText}>
                 End Meeting
               </Text>
-            </Button>
-          </View>
-        {/* )} */}
+            </Button> */}
+        {/* <FloatingAction.Group
+          style={styles.floatingAction}
+          labelTextColor={Colors.primaryDark}
+          // label={'End Meeting'}
+          uppercase
+          // icon={'stop'}
+          actions={[
+            { 
+              icon: 'stop',
+              
+            }
+          ]}
+        /> */}
+        <Button
+          mode='contained'
+          style={styles.floatingAction}
+          onPress={() => handleNext()}
+        >
+          <Text type='button' style={styles.floatingLabel}>End Meeting</Text>
+        </Button>
         {/* <View
          
           

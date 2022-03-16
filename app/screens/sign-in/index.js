@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Image,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Image, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,13 +35,13 @@ const SignIn = props => {
   const validate = () => {
     const errors = {};
     if (email.length === 0) {
-      errors.emailError = 'Email is required';
+      errors.emailError = 'Please enter a valid email address';
     }
 
     if (password.length === 0) {
       errors.passwordError = 'Password is required';
     }
-
+    
     //Object.keys(errors).length !== 0 && this.s
     return errors;
   };
@@ -63,47 +59,47 @@ const SignIn = props => {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image
-          source={Images.upshotWhite}
-          resizeMode='contain'
-        />
+        <Image source={Images.upshotWhite} resizeMode="contain" />
       </View>
       <View style={styles.formContainer}>
-      <Formik
-        initialValues={{
-          email,
-          password,
-        }}
-        validate={() => validate()}
-        validateOnChange={false}
-        onSubmit={() => signInUser()}>
-        {({ errors, handleSubmit }) => {
-          return (
-            <View
-            style={styles.form}
-              >
-              <TextInput
-                label="Email"
-                placeholder="Email"
-                style={styles.inputField}
-                value={email}
-                onChangeText={email => setEmail(email)}
-              />
-              <TextInput
-                label="Password"
-                placeholder="Password"
-                style={styles.inputField}
-                secureTextEntry
-                value={password}
-                onChangeText={password => setPassword(password)}
-              />
-              <Button mode='contained'
-              style={styles.button}
-              onPress={() => handleSubmit()}>Log in</Button>
-            </View>
-          );
-        }}
-      </Formik>
+        <Formik
+          initialValues={{
+            email,
+            password,
+          }}
+          validate={() => validate()}
+          validateOnChange={true}
+          onSubmit={() => signInUser()}>
+          {({ errors, handleSubmit }) => {
+            return (
+              <View style={styles.form}>
+                <TextInput
+                  label={'Email'}
+                  placeholder={'Email'}
+                  style={styles.inputField}
+                  value={email}
+                  onChangeText={email => setEmail(email)}
+                  error={errors.emailError}
+                />
+                <TextInput
+                  label={'Password'}
+                  placeholder={'Password'}
+                  style={styles.inputField}
+                  secureTextEntry
+                  value={password}
+                  onChangeText={password => setPassword(password)}
+                  error={errors.passwordError}
+                />
+                <Button
+                  mode="contained"
+                  style={styles.button}
+                  onPress={() => handleSubmit()}>
+                  Log in
+                </Button>
+              </View>
+            );
+          }}
+        </Formik>
       </View>
       {isLoading && <Loader />}
     </KeyboardAvoidingView>
