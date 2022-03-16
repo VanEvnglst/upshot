@@ -17,6 +17,9 @@ export default styles = StyleSheet.create({
   floatingActionText: {
     color: Colors.white,
   },
+  labelContainer: {
+    marginTop: 40
+  },
   overlineText: {
     paddingLeft: 8,
     color: Colors.mediumBlack,
@@ -33,7 +36,7 @@ export default styles = StyleSheet.create({
   },
   inProgressContent: {
     padding: 16,
-    height: 160,
+    height: 190,
   },
   inProgressText: {
     flex: 1,
@@ -50,8 +53,14 @@ export default styles = StyleSheet.create({
     marginBottom: 6,
     color: Colors.mediumBlack,
   },
-  feedbackForDateText: {
+  feedbackDetailsContainer: {
+    flexDirection: 'row'
+  },
+  feedbackDetailsText: {
     color: Colors.lightBlack,
+  },
+  feedbackDetailsTextSpacer: {
+    marginBottom: 7,
   },
   historyCard: {
     borderRadius: 4,
@@ -71,5 +80,8 @@ export default styles = StyleSheet.create({
   },
   historyDateText: {
     color: Colors.lightBlack
-  }
+  },
+  historyContainer: {
+    marginBottom: 20
+  },
 });

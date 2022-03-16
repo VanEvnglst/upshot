@@ -108,7 +108,7 @@ const FeedbackJourneyList = props => {
     };
     const progressValue = percent / 100;
     const topicList = topics.length > 1 ? `(${topics[0]}, etc.)` : topics[0];
-    // const lastWorkedOn = `${moment(lastModified).fromNow()}`;
+    const creationDate = `${moment(dateCreated).format('LLL')}`;
 
     return (
       <TouchableOpacity
@@ -121,14 +121,14 @@ const FeedbackJourneyList = props => {
             <Text type="h6" style={styles.feedbackForText}>
               Feedback for {memberName ? memberName : ''}
             </Text>
-            <View style={{ flexDirection: 'row'}}>
+            <View style={styles.feedbackDetailsContainer}>
               <Text 
                 type='body2'
-                style={styles.feedbackForDateText}
+                style={[styles.feedbackDetailsText, styles.feedbackDetailsTextSpacer]}
               >{flowType} {topicList}</Text>
             </View>
-            <Text type="body2" style={styles.feedbackForDateText}>
-              Created {dateCreated}
+            <Text type="body2" style={styles.feedbackDetailsText}>
+              Created {creationDate}
             </Text>
           </View>
           <View style={styles.btnContainer}>
@@ -156,7 +156,7 @@ const FeedbackJourneyList = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Wrapper>
         <ScrollView>
           <Header
@@ -167,7 +167,7 @@ const FeedbackJourneyList = props => {
           <Text type="h3" style={styles.screenTitle}>
             {labels.feedbackIntro.feedbackCoaching}
           </Text>
-          <View style={{ marginTop: 40 }}>
+          <View style={styles.labelContainer}>
             <Text type="overline" style={styles.overlineText}>
               {labels.common.inProgress}
             </Text>
@@ -183,7 +183,7 @@ const FeedbackJourneyList = props => {
             />
           )}
           {hasRecentJourneys && (
-            <View style={{ marginBottom: 20 }}>
+            <View style={styles.historyContainer}>
               <Text
                 type="overline"
                 style={[styles.overlineText, styles.addedMargin]}>
