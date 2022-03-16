@@ -9,6 +9,7 @@ import {
   getRelatedTopicsList,
   getDocumentingStep,
   getStep2Data,
+  getOtherTopic,
 } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
@@ -18,17 +19,19 @@ const DocumentingStep2 = props => {
   const { feedbackDocumenting } = labels;
   const dispatch = useDispatch();
   const stepData = useSelector(getStep2Data);
+  const stepOtherData = useSelector(getOtherTopic);
   const feedbackList = useSelector(getRelatedTopicsList);
   const activeStep = useSelector(getDocumentingStep);
   const [isCompleted, setCompletion] = useState(false);
   const [feedbackTopic, setFeedbackTopic] = useState([]);
   const [otherTopic, setOtherTopic] = useState('');
 
-  // useEffect for handling data if coming from review route to change button container
+  // TODO: useEffect for handling data if coming from review route to change button container
 
   useEffect(() => {
     if (stepData.data.length > 0) {
       setFeedbackTopic(stepData.data);
+      setOtherTopic(stepOtherData.data);
       setCompletion(true);
     }
   }, [stepData]);
@@ -38,10 +41,9 @@ const DocumentingStep2 = props => {
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
   const handleNext = () => {
-    // TODO: change handling, text value should add 
+    // TODO: change handling, text value should add
     dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
-    if (otherTopic && otherTopic.length !== 0)
-      dispatch(DocumentingActions.setDocumentingData('otherTopic', otherTopic));
+    dispatch(DocumentingActions.setDocumentingData('otherTopic', otherTopic));
     dispatch(DocumentingActions.setActiveStep(activeStep + 1));
   };
 
@@ -94,8 +96,9 @@ const DocumentingStep2 = props => {
           />
         ))}
         <TextInput
-          label="Something else"
-          placeholder="Something else"
+          style={{ marginTop: 10 }}
+          label={labels.common.inputHint}
+          placeholder={labels.common.inputHint}
           value={otherTopic}
           onChangeText={otherTopic => handleOtherTopic(otherTopic)}
           onEndEditing={() => validate()}
