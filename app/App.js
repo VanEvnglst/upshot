@@ -59,48 +59,6 @@ export default class App extends Component {
         </PersistGate>
       </Provider>
     );
-  } // <ThemeContext.Provider>
-  // </ThemeContext.Provider>
+  } 
+  
 }
-//const App = () => {
-//TODO: move this to profile section once built
-//const [darkMode, setDarkmode] = useState(false);
-
-// useEffect(() => {
-//   SplashScreen.hide();
-// requestUserPermission();
-// const unsubscribe = messaging().onMessage(async remoteMessage => {
-//   Alert.alert('FCM message', JSON.stringify(remoteMessage));
-// });
-// return unsubscribe;
-// initPushNotif();
-//}, []);
-
-// requestUserPermission = async () => {
-//   const authStatus = await messaging().requestPermission();
-//   const enabled =
-//     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-//     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-//   if (enabled) {
-//     getFcmToken();
-//     console.log('Authorization status', authStatus);
-//   }
-// }
-
-// getFcmToken = async () => {
-//   const fcmToken = await messaging().getToken();
-//   if (fcmToken) {
-//     console.log('your firebase token', fcmToken);
-//     storeToken(fcmToken);
-//   } else {
-//     console.log('failed. no token received');
-//   }
-// };
-
-// return (
-
-// );
-//};
-
-// export default App;
