@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,33 +16,21 @@ const PreparingStep1 = () => {
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep1Data);
   const [checkInValue, setCheckInValue] = useState('');
-  const [isCompleted, setCompletion] = useState(false);
-
 
   useEffect(() => {
     if (stepData.data) handleText(stepData.data);
   }, [stepData]);
 
-  
   const handleText = text => {
     setCheckInValue(text);
-    // setTimeout(() => {
-    //   if (checkInValue !== '') setCompletion(true);
-    //   else setCompletion(false);
-    // }, 300);
   };
 
-  
-
   const handleNext = () => {
-    // if (checkInValue === '') setCompletion(false);
     dispatch(PreparingActions.setPreparingData('step1', checkInValue));
-    // else 
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   return (
-    // 
     <View>
       <ScrollView 
     showsVerticalScrollIndicator={false}>
@@ -60,7 +48,7 @@ const PreparingStep1 = () => {
               {checkIn.content}
             </Text>
           </View>
-          <View style={{ marginBottom: 30}}>
+          <View style={containerStyles.multilineTextInput}>
             <TextInput
               label={checkIn.checkInHint}
               placeholder={checkIn.checkInHint}
@@ -72,15 +60,9 @@ const PreparingStep1 = () => {
               testID={'input-preparingStep1-checkIn'}
             />
           </View>
-        {/* <KeyboardAvoidingView>
-          
-         
-        </KeyboardAvoidingView> */}
-
         <View style={styles.btnContainer}>
           <Button
             style={styles.button}
-            // disabled={!isCompleted}
             onPress={() => handleNext()}
             mode={'contained'}
             testID={'btn-preparingStep1-next'}>
