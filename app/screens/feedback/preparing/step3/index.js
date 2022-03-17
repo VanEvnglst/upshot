@@ -36,12 +36,17 @@ const PreparingStep3 = props => {
     }));
   };
 
+  const handleData = () => {
+    dispatch(PreparingActions.setPreparingData('step3', details));
+  }
+  
   const handleBack = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(PreparingActions.setPreparingData('step3', details));
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -61,7 +66,7 @@ const PreparingStep3 = props => {
             testID={'txt-preparingStep3-describeEvent'}>
             {describeDiscuss.describeEvent}
           </Text>
-        </View>
+          </View>
         <TextInput
           testID={'input-preparingStep3-eventDesc'}
           type="flat"
@@ -111,7 +116,6 @@ const PreparingStep3 = props => {
           {labels.common.back}
         </Button>
         <Button
-          // disabled={!isCompleted}
           onPress={() => handleNext()}
           mode={'contained'}
           testID={'btn-preparingStep3-next'}>

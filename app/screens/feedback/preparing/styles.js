@@ -38,4 +38,13 @@ export default containerStyles = StyleSheet.create({
     marginTop: 20,
     color: Colors.mediumBlack,
   },
+  buttonSelection: {
+    height: 120,
+  },
+  textInput: {
+    marginTop: 10
+  },
+  multilineTextInput: {
+    marginBottom: 30 
+  },
 });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PreparingActions from 'app/store/feedback/PreparingRedux';
@@ -15,38 +15,46 @@ const PreparingStep2 = props => {
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep2Data);
   const [discussionPurpose, setDiscussionPurpose] = useState();
-  const [isCompleted, setCompletion] = useState(false);
   const [additionalPurpose, setAdditionalPurpose] = useState('');
 
   useEffect(() => {
-    if (stepData.data) handleDiscussionPurpose(stepData.data);
+    if (stepData.data)
+    if(stepData.data === statePurpose.statePurposeBtn)
+      setDiscussionPurpose(stepData.data);
+    else
+      setAdditionalPurpose(stepData.data);
   }, [stepData]);
 
   const handleDiscussionPurpose = text => {
-    setDiscussionPurpose(text);
-    setCompletion(true);
+    if (discussionPurpose) setDiscussionPurpose();
+    else setDiscussionPurpose(text);
   };
 
   const handleAdditionalPurpose = text => {
     setAdditionalPurpose(text);
-    // if(additionalPurpose !== '') setCompletion(true)
   };
 
-  const handleBack = () => {
-    dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
-  };
-
-  const handleNext = () => {
+  const handleData = () => {
     if (additionalPurpose !== '')
       dispatch(PreparingActions.setPreparingData('step2', additionalPurpose));
     else
       dispatch(PreparingActions.setPreparingData('step2', discussionPurpose));
+  }
+
+  const handleBack = () => {
+    handleData();
+    dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
+  };
+
+  const handleNext = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   return (
     <View style={containerStyles.container}>
-      <KeyboardAvoidingView>
+      <ScrollView 
+    showsVerticalScrollIndicator={false}>
         <View style={containerStyles.descriptionContainer}>
           <Text
             type="h6"
@@ -66,17 +74,16 @@ const PreparingStep2 = props => {
           title={statePurpose.statePurposeBtn}
           onPress={() => handleDiscussionPurpose(statePurpose.statePurposeBtn)}
           selected={discussionPurpose === statePurpose.statePurposeBtn}
-          style={{ height: 120 }}
+          style={containerStyles.buttonSelection}
         />
         <TextInput
           label={labels.common.inputHint}
           placeholder={labels.common.inputHint}
           value={additionalPurpose}
           onChangeText={text => handleAdditionalPurpose(text)}
-          style={{ marginTop: 10 }}
+          style={containerStyles.textInput}
           description={statePurpose.statementHint}
         />
-      </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
@@ -85,13 +92,13 @@ const PreparingStep2 = props => {
           {labels.common.back}
         </Button>
         <Button
-          // disabled={!isCompleted}
           onPress={() => handleNext()}
           mode={'contained'}
           testID={'btn-preparingStep2-next'}>
           {labels.common.next}
         </Button>
       </View>
+      </ScrollView>
     </View>
   );
 };

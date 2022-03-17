@@ -17,35 +17,42 @@ const PreparingStep4 = () => {
   const stepData = useSelector(getPrepStep4Data);
   const [actionPlanList, setActionPlanList] = useState([]);
   const [additionalPlan, setAdditionalPlan] = useState('');
-  // const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    if (stepData.data) handleSelectedActionPlan(stepData.data);
-    // TODO: fix data handling
+    if (stepData.data)
+    setActionPlanList(stepData.data.actionPlanList);
+    setAdditionalPlan(stepData.data.additionalPlan);
   }, [stepData]);
 
+  const handleData = () => {
+    dispatch(
+      PreparingActions.setPreparingData('step4', {
+        actionPlanList,
+        additionalPlan,
+      }),
+    );
+  };
   const handleBack = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(PreparingActions.setPreparingData('step4', { actionPlanList, additionalPlan}));
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   const handleAdditionalPlanText = text => {
     setAdditionalPlan(text);
-  }
+  };
 
   const handleSelectedActionPlan = item => {
     let newList = actionPlanList;
     if (checkSelectedActionPlan(item))
-      newList = newList.filter(newAction => newAction.id !== item.id);
+      newList = newList.filter(newAction =>
+        newAction !== item.title);
     else newList = [...newList, item.title];
     setActionPlanList(newList);
-
-    // if (newList.length !== 0) setCompletion(true);
-    // else setCompletion(false);
   };
 
   const checkSelectedActionPlan = item => {
