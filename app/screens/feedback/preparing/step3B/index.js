@@ -19,29 +19,28 @@ const PreparingStep3B = () => {
   const [additionalObservation, setAdditionalObservation] = useState('');
 
   useEffect(() => {
-    if(stepData.data) {
-    const dataArr = stepData.data.split(',');
-    const dataList = [];
-    dataArr.forEach((item, i) => 
-      dataList.push({
-        id: i + 1,
-        title: item,
-      })),
-      setObservations(dataList)
-    }    
+    if (stepData.data) {
+      const { observationList: stepObservation, additionalObservation: stepAdditional} = stepData.data;
+      setObservations(stepObservation);
+      setAdditionalObservation(stepAdditional);
+    }
   }, [stepData]);
 
-  const handleBack = () => {
-    dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
-  };
-
-  const handleNext = () => {
+  const handleData = () => {
     dispatch(
       PreparingActions.setPreparingData('step3B', {
         observationList,
         additionalObservation,
       }),
     );
+  };
+  const handleBack = () => {
+    handleData();
+    dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
+  };
+
+  const handleNext = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -52,9 +51,9 @@ const PreparingStep3B = () => {
   const handleSelectedObservation = item => {
     let newList = observationList;
     if (checkSelectedObservation(item))
-      newList = newList.filter(newObservation => newObservation.id !== item.id);
-    else 
-      newList  = [...newList, item.title]
+      newList = newList.filter(newObservation =>
+        newObservation !== item.title);
+    else newList = [...newList, item.title];
     setObservations(newList);
   };
 
