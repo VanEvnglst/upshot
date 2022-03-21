@@ -15,42 +15,53 @@ const PreparingStep4B = () => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep4BData);
-  const [suggestionList, setSuggestionList] = useState([]);
-  const [additionalSuggestion, setAdditionalSuggestion] = useState('');
-  const [isCompleted, setCompletion] = useState(false);
+  const [evaluateOptions, setEvaluateOptions] = useState([]);
+  const [additionalOptions, setAdditionalOptions] = useState('');
 
   useEffect(() => {
-    TODO: if (stepData.data) handleSelectedSuggestion(stepData.data);
+    if (stepData.data)
+    if (typeof stepData.data.evaluateOptions === 'string') {
+      const dataArr = stepData.data.evaluateOptions.split(" ");
+      setEvaluateOptions(dataArr);
+    } else {
+      setEvaluateOptions(stepData.data.evaluateOptions);
+    }
+    setAdditionalOptions(stepData.data.additionalOptions);
   }, [stepData]);
 
+  const handleData = () => {
+    dispatch(
+      PreparingActions.setPreparingData('step4B', {
+        evaluateOptions,
+        additionalOptions,
+      }),
+    );
+  }
+
   const handleBack = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(
-      PreparingActions.setPreparingData('step4B', {
-        suggestionList,
-        additionalSuggestion,
-      }),
-    );
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   const handleAdditionalSuggestionText = text => {
-    setAdditionalSuggestion(text);
+    setAdditionalOptions(text);
   };
 
   const checkSelectedSuggestion = item => {
-    return suggestionList.some(suggestion => suggestion === item.title);
+    return evaluateOptions.some(suggestion => suggestion === item.title);
   };
 
   const handleSelectedSuggestion = item => {
-    let newList = suggestionList;
+    let newList = evaluateOptions;
     if (checkSelectedSuggestion(item))
-      newList = newList.filter(newSuggestion => newSuggestion.id !== item.id);
+      newList = newList.filter(newSuggestion => newSuggestion !== item.title);
     else newList = [...newList, item.title];
-    setSuggestionList(newList);
+    setEvaluateOptions(newList);
   };
 
   return (
@@ -86,7 +97,8 @@ const PreparingStep4B = () => {
           style={{ marginTop: 15 }}
           testID={'input-preparingStep4B-additional'}
           onChangeText={text => handleAdditionalSuggestionText(text)}
-          value={additionalSuggestion}
+          value={additionalOptions}
+          description={labels.common.ownQuestionDesc}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
