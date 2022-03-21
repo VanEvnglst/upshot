@@ -10,38 +10,48 @@ import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
 const PreparingStep5B = () => {
-  const { checkOut } = labels.feedbackPreparing;
+  const { checkOut, statePurpose } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep5BData);
-  const [acknowledgeDetails, setAcknowledgeDetails] = useState([]);
+  const [checkoutAcknowledge, setAcknowledgeDetails] = useState([]);
   const [additionalAcknowledge, setAdditionalAcknowledge] = useState('');
-  const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    // if(stepData.data)
+    if(stepData.data)
+    if (typeof stepData.data.checkoutAcknowledge === 'string') {
+      const dataArr = stepData.data.checkoutAcknowledge.split(" ");
+      setAcknowledgeDetails(dataArr);
+    } else {
+    setAcknowledgeDetails(stepData.data.checkoutAcknowledge);
+    }
+    setAdditionalAcknowledge(stepData.data.additionalAcknowledge);
   }, [stepData]);
 
+  const handleData = () => {
+    dispatch(PreparingActions.setPreparingData('step5B', {
+      checkoutAcknowledge,
+      additionalAcknowledge
+    }));
+  }
   const handleBack = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(PreparingActions.setPreparingData('step5B', {
-      acknowledgeDetails,
-      additionalAcknowledge
-    }))
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   const handleAcknowledgeText = text => setAdditionalAcknowledge(text)
 
   const checkSelectedValue = item => {
-    return acknowledgeDetails.some(detail => detail == item);
+    return checkoutAcknowledge.some(detail => detail == item);
   };
 
   const handleSelectedValue = item => {
-    let newList = acknowledgeDetails;
+    let newList = checkoutAcknowledge;
     if (checkSelectedValue(item))
       newList = newList.filter(newDetail => newDetail !== item);
     else newList = [...newList, item];
@@ -80,6 +90,8 @@ const PreparingStep5B = () => {
           testID={'input-preparingStep5B-somethingElse'}
           onChangeText={text => handleAcknowledgeText(text)}
           value={additionalAcknowledge}
+          
+          description={statePurpose.statementHint}
         />
         </View>
       </KeyboardAvoidingView>
