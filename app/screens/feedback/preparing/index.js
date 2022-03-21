@@ -52,13 +52,17 @@ const FeedbackPreparing = props => {
   const hideModal = () => setModalVisible(false);
 
   const handleCloseBtn = () => {
-    // if (activeStep === 1 && !preparingId)
+    if (activeStep === 1 && !preparingId)
     navigation.goBack();
-    // else {
-    //   dispatch(PreparingActions.updateFeedbackPreparing());
-    //   dispatch(PreparingActions.resetPreparingState());
-    // }
+    else
+      showModal();
   };
+
+  const saveAndClose = () => {
+    dispatch(PreparingActions.updateFeedbackPreparing({
+      shouldClose: false
+    }));
+  }
 
   const handleStepContent = () => {
     switch (activeStep) {
@@ -133,7 +137,7 @@ const FeedbackPreparing = props => {
           <Button mode="text" onPress={() => hideModal()}>
             {labels.common.cancel}
           </Button>
-          <Button mode="text" onPress={() => handleCloseBtn()}>
+          <Button mode="text" onPress={() => saveAndClose()}>
             {labels.common.saveClose}
           </Button>
         </View>
