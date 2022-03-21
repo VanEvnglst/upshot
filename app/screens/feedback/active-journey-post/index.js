@@ -9,6 +9,7 @@ import {
   Header,
   SignPostIndicator,
   JourneyIndicator,
+  Loader,
 } from 'app/components';
 import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
@@ -58,11 +59,14 @@ const ActiveFeedbackJourney = props => {
     }
     fetchFeedback();
     handlePhases();
-  }, [journey.data]);
-
-  // useEffect(() => {
-  //   handlePhases();
-  // }, [journey.data]);
+  }, [
+    journey.data,
+    documenting.get('id'),
+    preparing.get('id'),
+    discussing.get('id'),
+    reflecting.get('id'),
+    sharing.get('id'),
+  ]);
 
   const handlePhases = async () => {
     let content = [];
@@ -252,18 +256,7 @@ const ActiveFeedbackJourney = props => {
 
   return (
     <View style={{ flex: 1 }}>
-      {isLoading && (
-        <View
-          style={{
-            width: width,
-            opacity: 0.4,
-            height: height,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
-      )}
+      {isLoading && <Loader />}
       <Wrapper>
         <ScrollView>
           <Header

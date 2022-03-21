@@ -73,7 +73,6 @@ export function* updateFeedbackDocumenting({ data }) {
   params.append('follow_up_count_int', step5Value);
 
   const response = yield call(api.updateDocumenting, params);
-  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
