@@ -11,49 +11,57 @@ import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
 const PreparingStep5 = () => {
-  const { checkOut, statePurpose } = labels.feedbackPreparing;
+  const { checkOut } = labels.feedbackPreparing;
   const dispatch = useDispatch();
   const activeStep = useSelector(getPreparingStep);
   const stepData = useSelector(getPrepStep5Data);
-  const [checkoutDetails, setCheckoutDetails] = useState([]);
+  const [checkoutQuestions, setCheckoutDetails] = useState([]);
   const [additionalCheckout, setAdditionalCheckout] = useState('');
-  const [isCompleted, setCompletion] = useState(false);
 
   useEffect(() => {
-    // if(stepData.data)
+    if(stepData.data)
+    if(typeof stepData.data.checkoutQuestions === 'string') {
+      const dataArr = stepData.data.checkoutQuestions.split(" ");
+      setCheckoutDetails(dataArr);
+    } else {
+      setCheckoutDetails(stepData.data.checkoutQuestions);
+    }
   }, [stepData]);
 
+
+  const handleData = () => {
+    dispatch(
+      PreparingActions.setPreparingData('step5', {
+        checkoutQuestions,
+        additionalCheckout,
+      }),
+    );
+  }
+
   const handleBack = () => {
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(
-      PreparingActions.setPreparingData('step5', {
-        checkoutDetails,
-        additionalCheckout,
-      }),
-    );
+    handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
   const handleAddtionalCheckout = text => setAdditionalCheckout(text);
 
   const checkSelectedValue = item => {
-    return checkoutDetails.some(value => value === item.title);
+    return checkoutQuestions.some(value => value === item.title);
   };
 
   const handleSelectedValue = item => {
-    let newDetailsList = checkoutDetails;
+    let newDetailsList = checkoutQuestions;
     if (checkSelectedValue(item))
       newDetailsList = newDetailsList.filter(
-        newDetail => newDetail.id !== item.id,
+        newDetail => newDetail !== item.title,
       );
     else newDetailsList = [...newDetailsList, item.title];
     setCheckoutDetails(newDetailsList);
-
-    if (newDetailsList.length !== 0) setCompletion(true);
-    else setCompletion(false);
   };
 
   return (
@@ -84,7 +92,7 @@ const PreparingStep5 = () => {
           testID={'input-preparingStep5-somethingElse'}
           onChangeText={text => handleAddtionalCheckout(text)}
           value={additionalCheckout}
-          description={statePurpose.statementHint}
+          description={labels.common.ownQuestionDesc}
         />
       </KeyboardAvoidingView>
       <View style={containerStyles.btnContainer}>
