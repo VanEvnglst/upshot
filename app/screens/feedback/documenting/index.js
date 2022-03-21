@@ -111,12 +111,12 @@ const FeedbackDocumenting = props => {
           <Button 
             mode="text" 
             onPress={() => hideModal()}>
-            <Text type='button'>Cancel</Text>
+            <Text type='button'>{labels.common.cancel}</Text>
           </Button>
           <Button 
             mode="text" 
             onPress={() => saveAndClose()}>
-            <Text type='button'>Save & Close</Text>
+            <Text type='button'>{labels.common.saveClose}</Text>
           </Button>
         </View>
       </Modal>
