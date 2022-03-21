@@ -19,8 +19,13 @@ const PreparingStep4 = () => {
   const [additionalPlan, setAdditionalPlan] = useState('');
 
   useEffect(() => {
-    if (stepData.data)
-    setActionPlanList(stepData.data.actionPlanList);
+    if (stepData.data) 
+    if (typeof stepData.data.actionPlanList === 'string') {
+      const dataArr = stepData.data.actionPlanList.split(' ');
+      setActionPlanList(dataArr);
+    } else {
+      setActionPlanList(stepData.data.actionPlanList);
+    }
     setAdditionalPlan(stepData.data.additionalPlan);
   }, [stepData]);
 
@@ -49,8 +54,7 @@ const PreparingStep4 = () => {
   const handleSelectedActionPlan = item => {
     let newList = actionPlanList;
     if (checkSelectedActionPlan(item))
-      newList = newList.filter(newAction =>
-        newAction !== item.title);
+      newList = newList.filter(newAction => newAction !== item.title);
     else newList = [...newList, item.title];
     setActionPlanList(newList);
   };
