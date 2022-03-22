@@ -21,7 +21,7 @@ const PreparingStep4 = () => {
   useEffect(() => {
     if (stepData.data) 
     if (typeof stepData.data.actionPlanList === 'string') {
-      const dataArr = stepData.data.actionPlanList.split(' ');
+      const dataArr = stepData.data.actionPlanList.split(',');
       setActionPlanList(dataArr);
     } else {
       setActionPlanList(stepData.data.actionPlanList);
