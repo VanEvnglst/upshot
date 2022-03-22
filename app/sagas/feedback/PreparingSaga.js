@@ -63,31 +63,31 @@ export function* updateFeedbackPreparing({ data }) {
   params.append('observation_questions', step3B.data.observationList);
   params.append('action_plan_questions', step4.data.actionPlanList);
   params.append('additional_action_plan_questions', step4.data.additionalPlan);
-  params.append('action_plan_evaluate_options', step4B.data.suggestionList);
+  params.append('action_plan_evaluate_options', step4B.data.evaluateOptions);
   params.append(
     'additional_action_plan_evaluate_options',
-    step4.data.additionalSuggestion,
+    step4B.data.additionalOptions,
   );
-  params.append('checkout_question', step5.data.checkoutDetails);
+  params.append('checkout_question', step5.data.checkoutQuestions);
   params.append('additional_checkout_question', step5.data.additionalCheckout);
-  params.append('checkout_acknowledge', step5B.data.acknowledgeDetails);
+  params.append('checkout_acknowledge', step5B.data.checkoutAcknowledge);
   params.append(
     'additional_checkout_acknowledge',
     step5B.data.additionalAcknowledge,
-  );
-  params.append('checkout_followup_date_question', data.touchbaseDetails);
-  params.append(
-    'additional_checkout_followup_date_question',
-    data.additionalTouchbase,
   );
 
   const response = yield call(api.updateFeedbackPreparing, params);
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.updateFeedbackPreparingSuccess());
-      yield NavigationService.navigate('FeedbackConfirmation', {
-        type: 'preparing',
-      });
+      if (data.shouldClose) {
+        yield NavigationService.navigate('FeedbackConfirmation', {
+          type: 'preparing',
+        });
+      } else {
+        yield put(PreparingActions.resetPreparingState());
+        yield NavigationService.navigate('ActiveFeedbackJourney')
+      }
     }
   } else {
     yield put(PreparingActions.updateFeedbackPreparingFailure());
@@ -126,7 +126,7 @@ export function* fetchCurrentPreparing({ preparingId }) {
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingDetails = response.data.details;
-      const { event, actions: action, result, observation_questions: observationQuestions, action_plan_questions: actionPlan, additional_action_plan_questions: additionalActionPlan, action_plan_evaluate_options: evaluateOptions,
+      const { event, actions: action, result, observation_questions: observationList, action_plan_questions: actionPlanList, additional_action_plan_questions: additionalPlan, action_plan_evaluate_options: evaluateOptions,
       additional_action_plan_evaluate_options: additionalOptions,
       checkout_question: checkoutQuestions,
       additional_checkout_question: additionalCheckout,
@@ -150,13 +150,13 @@ export function* fetchCurrentPreparing({ preparingId }) {
       yield put(
         PreparingActions.setPreparingData(
           'step3B',
-          observationQuestions,
+          {observationList},
         ),
       );
       yield put(
         PreparingActions.setPreparingData(
           'step4',
-          { actionPlan, additionalActionPlan }
+          { actionPlanList, additionalPlan }
         ),
       );
       yield put(
