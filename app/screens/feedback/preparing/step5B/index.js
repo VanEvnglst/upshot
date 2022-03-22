@@ -20,7 +20,7 @@ const PreparingStep5B = () => {
   useEffect(() => {
     if(stepData.data)
     if (typeof stepData.data.checkoutAcknowledge === 'string') {
-      const dataArr = stepData.data.checkoutAcknowledge.split(" ");
+      const dataArr = stepData.data.checkoutAcknowledge.split(",");
       setAcknowledgeDetails(dataArr);
     } else {
     setAcknowledgeDetails(stepData.data.checkoutAcknowledge);
@@ -41,7 +41,9 @@ const PreparingStep5B = () => {
 
   const handleNext = () => {
     handleData();
-    dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
+    dispatch(PreparingActions.updateFeedbackPreparing({
+      shouldClose: true
+    }));
   };
 
   const handleAcknowledgeText = text => setAdditionalAcknowledge(text)
