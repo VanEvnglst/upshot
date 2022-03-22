@@ -185,7 +185,7 @@ const labels = {
       // checkoutTouchbase:
         // 'When can we touch base again to check how we are progressing and how I can help you further?',
     },
-    confirmation: `You've finished "Preparing". Using your answers, we created a discussion guide for you to review and use during your feedback session. \n\nNow that you're set up, it's time to schedule your meeting with `,
+    confirmation: `You've finished "Preparing". Using your answers, we created a discussion guide for you to review and use during your feedback session. \n\nNow that you're set up, it's time to schedule your meeting`,
     confirmationHint:
       'The best time to give feedback is shortly after the moment has occurred, and no later than a week from the incident. The longer you wait, the longer the incident affects the way you think - and the way the other person acts.',
     schedule: 'Schedule discussion',
