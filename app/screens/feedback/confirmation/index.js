@@ -46,9 +46,6 @@ const FeedbackConfirmation = props => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
   const [preparingHintVisible, setPrepHintVisible] = useState(true);
-  const preparingHintWidth = new Animated.Value(0);
-  const preparingHintHeight = new Animated.Value(0);
-
   const [discussingHintVisible, setDiscussHintVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
@@ -56,7 +53,6 @@ const FeedbackConfirmation = props => {
 
   useEffect(() => {
     handleContent();
-    // handleCallToAction();
   }, []);
 
   const handleContent = () => {
@@ -129,46 +125,27 @@ const FeedbackConfirmation = props => {
   const PreparingCTA = () => {
     return (
       <View
-        style={{
-          marginBottom: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flex: 1,
-          paddingRight: 10,
-        }}>
+        style={styles.preparingBtnContainer}>
         <TouchableOpacity
-          // mode={'text'}
+          accessibilityRole='button'
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text type="button" style={styles.scheduleButtonText}>
+          <Text 
+            type="button" 
+            style={styles.scheduleButtonText}
+            testID={'txt-preparingConfirmation-schedule'}  
+          >
             {feedbackPreparing.schedule}
           </Text>
         </TouchableOpacity>
         <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingBottom: 10,
-          }}>
+          style={styles.hintIndicatorContainer}>
           <HintIndicator
             showHint={preparingHintVisible}
-            onPress={() => showPreparingHint()}
+            onPress={() => setPrepHintVisible(!preparingHintVisible)}
           />
         </View>
       </View>
     );
-  };
-
-  const showPreparingHint = () => {
-    setPrepHintVisible(!preparingHintVisible);
-    // Animated.timing(preparingHintWidth, {
-    //   toValue: 200,
-    //   duration: 500,
-    // }).start();
-    // Animated.timing(preparingHintHeight, {
-    //   toValue: 400,
-    //   duration: 500,
-    // }).start();
   };
 
   const ReflectingCTA = () => {
@@ -228,7 +205,7 @@ const FeedbackConfirmation = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Wrapper>
         <ScrollView>
           <Header
@@ -240,14 +217,13 @@ const FeedbackConfirmation = props => {
             <Image
               source={Images.confirmation}
               resizeMode="cover"
-              // style={{ height: '90%' }}
             />
           </View>
-          <View style={{ marginTop: 30 }}>
+          <View style={styles.contentContainer}>
             <Text type="h4">{common.youDidIt}</Text>
             <Text
               type="body1"
-              style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
+              style={styles.contentText}>
               {
                 route.params.type === 'documenting'
                   ? flow.id === 1
@@ -261,43 +237,26 @@ const FeedbackConfirmation = props => {
           </View>
           {preparingHintVisible && (
             <View
-              style={{
-                backgroundColor: 'rgba(0,0,0,0.04)',
-                borderRadius: 16,
-                alignItems: 'center',
-                paddingVertical: 15,
-                marginTop: 20,
-              }}>
+              style={styles.hintCard}>
               <Image
                 source={Images.preparingConfirmHint}
                 resizeMode="contain"
               />
-              <Text type="body2" style={{ color: Colors.primary900, padding: 20,lineHeight: 24,fontWeight: '700' }}>
+              <Text type="body2" style={styles.hintCardText}>
                 {feedbackPreparing.confirmationHint}
               </Text>
             </View>
           )}
           {discussingHintVisible && (
             <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.opaqueBlack,
-                borderRadius: 16,
-              }}>
-              <Text type="body2" style={{ color: Colors.primary900 }}>
+              style={styles.hintCard}>
+              <Text type="body2" style={styles.hintCardText}>
                 {feedbackDiscussing.confirmationHint}
               </Text>
             </View>
           )}
           <View
-            style={{
-              flex: 1,
-              marginTop: 30,
-              marginBottom: 20,
-              alignItems: 'flex-end',
-              flexDirection: 'row',
-              alignSelf: 'flex-end',
-            }}>
+            style={styles.btnContainer}>
             {handleCallToAction()}
           </View>
         </ScrollView>
