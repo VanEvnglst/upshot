@@ -181,14 +181,14 @@ const labels = {
         'Acknowledge the employee for their inputs and offer any support they might need from you. What could you say to thank them, and let you know they have your full support?',
       checkoutInput:
         'Thank you for your input, and for having this discussion with me. Let me know if you think of other ways I can support you to be successful.',
-      // checkoutDate: 'Agree on a the follow-up date for next discussion.',
-      // checkoutTouchbase:
-        // 'When can we touch base again to check how we are progressing and how I can help you further?',
     },
     confirmation: `You've finished "Preparing". Using your answers, we created a discussion guide for you to review and use during your feedback session. \n\nNow that you're set up, it's time to schedule your meeting`,
     confirmationHint:
       'The best time to give feedback is shortly after the moment has occurred, and no later than a week from the incident. The longer you wait, the longer the incident affects the way you think - and the way the other person acts.',
     schedule: 'Schedule discussion',
+    scheduleTitle: 'Schedule your feedback discussion with',
+    schedulingHint: `Already had your discussion?\n\nPick the date and time you did it in the past. We won't send an invite.`,
+    setAlert: 'Set alert'
   },
   schedulingDiscussion: {
     schedFaceToFace: 'Schedule your face-to-face discussion with',
