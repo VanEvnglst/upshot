@@ -21,7 +21,7 @@ const PreparingStep5 = () => {
   useEffect(() => {
     if(stepData.data)
     if(typeof stepData.data.checkoutQuestions === 'string') {
-      const dataArr = stepData.data.checkoutQuestions.split(" ");
+      const dataArr = stepData.data.checkoutQuestions.split(",");
       setCheckoutDetails(dataArr);
     } else {
       setCheckoutDetails(stepData.data.checkoutQuestions);

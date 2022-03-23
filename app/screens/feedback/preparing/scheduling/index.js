@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -10,21 +10,24 @@ import {
   Text,
   CalendarPicker,
   DateTimePicker,
+  HintIndicator,
   Modal,
   ButtonSelection,
 } from 'app/components';
 import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getStaffName } from 'app/store/selectors';
-
+import labels from 'app/locales/en';
+import Images from 'app/assets/images';
+import styles from './styles';
 
 const PreparingSchedule = props => {
   const { navigation } = props;
+  const { feedbackPreparing } = labels;
   const dispatch = useDispatch();
   const staffName = useSelector(getStaffName);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [isAlertTimeVisbile, setAlertTimeVisibility] = useState(false);
-
   const [dateSelected, setDateSelected] = useState({
     label: '',
     value: '',
@@ -35,6 +38,10 @@ const PreparingSchedule = props => {
   });
   const [alertTime, setAlertTime] = useState([]);
   const [alertLabel, setAlertLabel] = useState('Set an alert');
+  const [isCompleted, setCompletion] = useState(false);
+  const [showAlerts, setShowAlerts] = useState(true);
+  const [hintVisible, setHintVisible] = useState(false);
+  const dateToday = new Date();
 
   const alertTimesList = [
     {
@@ -67,13 +74,18 @@ const PreparingSchedule = props => {
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
     setDateSelected({ label: dateLabel, value: date });
+    if (date < dateToday) setShowAlerts(false);
+    else setShowAlerts(true);
     hideDatePicker();
+    validate();
   };
 
   const handleTimePicked = time => {
     const timeLabel = moment(time).format('hh:mm a');
     const timePicked = moment(time).format('HH:mm');
     setTimeSelected({ label: timeLabel, value: timePicked });
+    hideTimePicker();
+    validate();
   };
 
   const checkSelectedValue = alert => {
@@ -83,7 +95,7 @@ const PreparingSchedule = props => {
   const handleAlertTimes = alert => {
     let newAlerts = alertTime;
     if (checkSelectedValue(alert))
-      newAlerts = newAlerts.filter(newAlert => newAlert.id !== alert.id);
+      newAlerts = newAlerts.filter(newAlert => newAlert !== alert.title);
     else newAlerts = [...newAlerts, alert.title];
     setAlertTime(newAlerts);
   };
@@ -92,6 +104,17 @@ const PreparingSchedule = props => {
     if (alertTime.length > 1) setAlertLabel(`${alertTime.length} alerts set`);
     if (alertTime.length === 1) setAlertLabel(alertTime[0]);
     hideAlertTime();
+    validate();
+  };
+
+  const validate = () => {
+    if (
+      alertTime.length !== 0 &&
+      dateSelected.value !== '' &&
+      timeSelected.value !== ''
+    )
+      setCompletion(true);
+    else setCompletion(false);
   };
 
   const sendInvite = () => {
@@ -107,19 +130,24 @@ const PreparingSchedule = props => {
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
-        <Header headerRight={{
-          onPress: () => navigation.goBack()
-        }} />
+        <ScrollView>
+        <Header
+          headerRight={{
+            onPress: () => navigation.goBack(),
+          }}
+        />
         <Text type="h6">
-          Schedule your feedback discussion with {staffName.firstName} {staffName.lastName}
+          {feedbackPreparing.scheduleTitle} {staffName.firstName}{' '}
+          {staffName.lastName}
         </Text>
-        <View style={{ flex: 3, marginTop: 30 }}>
+        <View style={{ flex: 1, marginTop: 30 }}>
           <CalendarPicker
             onPress={() => showDatePicker()}
             style={{ marginBottom: 10 }}
             text={
               dateSelected.label === '' ? 'Choose a date' : dateSelected.label
             }
+            icon={Images.calendar}
           />
           <CalendarPicker
             onPress={() => showTimePicker()}
@@ -127,12 +155,16 @@ const PreparingSchedule = props => {
             text={
               timeSelected.label === '' ? 'Choose a time' : timeSelected.label
             }
+            icon={Images.timeIcon}
           />
-          <CalendarPicker
-            onPress={() => showAlertTime()}
-            style={{ marginBottom: 10 }}
-            text={alertLabel}
-          />
+          {showAlerts && (
+            <CalendarPicker
+              onPress={() => showAlertTime()}
+              style={{ marginBottom: 10 }}
+              text={alertLabel}
+              icon={Images.alertIcon}
+            />
+          )}
           <DateTimePicker
             isVisible={isDatePickerVisible}
             mode="date"
@@ -145,12 +177,31 @@ const PreparingSchedule = props => {
             onConfirm={handleTimePicked}
             onCancel={hideTimePicker}
           />
+          <HintIndicator
+            showHint={hintVisible}
+            onPress={() => setHintVisible(!hintVisible)}
+          />
+          {hintVisible && (
+            <View style={styles.hintCard}>
+              <Image
+                source={Images.schedulingHint}
+                resizeMode='contain'  
+              />
+              <Text type='body2'
+                style={styles.hintCardText}
+              >{feedbackPreparing.schedulingHint}</Text>
+            </View>
+  )}
         </View>
-        <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-          <Button mode="contained" onPress={() => sendInvite()}>
+        <View style={{ flex: 1, justifyContent: 'flex-end',marginBottom: 20, }}>
+          <Button
+            mode="contained"
+            disabled={!isCompleted}
+            onPress={() => sendInvite()}>
             <Text type="button">Send invite</Text>
           </Button>
         </View>
+        </ScrollView>
       </Wrapper>
       <Modal
         isVisible={isAlertTimeVisbile}
@@ -161,7 +212,7 @@ const PreparingSchedule = props => {
           height: 550,
         }}>
         <View>
-          <Text type="overline">Set alert</Text>
+          <Text type="overline">{feedbackPreparing.setAlert}</Text>
           {alertTimesList.map((item, i) => (
             <ButtonSelection
               title={item.title}

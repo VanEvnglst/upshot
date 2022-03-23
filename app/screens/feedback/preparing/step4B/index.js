@@ -21,7 +21,7 @@ const PreparingStep4B = () => {
   useEffect(() => {
     if (stepData.data)
     if (typeof stepData.data.evaluateOptions === 'string') {
-      const dataArr = stepData.data.evaluateOptions.split(" ");
+      const dataArr = stepData.data.evaluateOptions.split(",");
       setEvaluateOptions(dataArr);
     } else {
       setEvaluateOptions(stepData.data.evaluateOptions);

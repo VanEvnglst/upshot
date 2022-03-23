@@ -256,7 +256,6 @@ const ActiveFeedbackJourney = props => {
 
   return (
     <View style={{ flex: 1 }}>
-      {isLoading && <Loader />}
       <Wrapper>
         <ScrollView>
           <Header
@@ -276,6 +275,7 @@ const ActiveFeedbackJourney = props => {
           </View>
         </ScrollView>
       </Wrapper>
+      {isLoading && <Loader />}
     </View>
   );
 };

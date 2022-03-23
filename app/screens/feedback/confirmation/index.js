@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Animated,
+  ScrollView,
+} from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -25,10 +31,12 @@ import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import confirmationModel from 'app/models/ConfirmationModel';
 import Colors from 'app/theme/colors';
+import styles from './styles';
 
 const FeedbackConfirmation = props => {
   const { navigation, route } = props;
-  const { common, feedbackDocumenting, feedbackPreparing, feedbackDiscussing } = labels;
+  const { common, feedbackDocumenting, feedbackPreparing, feedbackDiscussing } =
+    labels;
   const dispatch = useDispatch();
   const docuId = useSelector(getDocumentingId);
   const journeyId = useSelector(getCurrentJourney);
@@ -37,7 +45,7 @@ const FeedbackConfirmation = props => {
   const [content, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
-  const [preparingHintVisible, setPrepHintVisible] = useState(false);
+  const [preparingHintVisible, setPrepHintVisible] = useState(true);
   const [discussingHintVisible, setDiscussHintVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
@@ -45,7 +53,6 @@ const FeedbackConfirmation = props => {
 
   useEffect(() => {
     handleContent();
-    // handleCallToAction();
   }, []);
 
   const handleContent = () => {
@@ -100,11 +107,11 @@ const FeedbackConfirmation = props => {
     return (
       <View style={{ flexDirection: 'row' }}>
         <Button
-          type={'text'}
+          mode={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
           <Text>{common.keepGoing}</Text>
         </Button>
-        <Button type={'text'} onPress={() => showModal()}>
+        <Button mode={'text'} onPress={() => showModal()}>
           <Text>{common.remindMeLater}</Text>
         </Button>
         {/* <HintIndicator
@@ -118,21 +125,25 @@ const FeedbackConfirmation = props => {
   const PreparingCTA = () => {
     return (
       <View
-        style={{
-          marginBottom: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Button
-          type={'text'}
+        style={styles.preparingBtnContainer}>
+        <TouchableOpacity
+          accessibilityRole='button'
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text>{feedbackPreparing.schedule}</Text>
-        </Button>
-        {/* <HintIndicator
-          showHint={preparingHintVisible}
-          onPress={() => setPrepHintVisible(!preparingHintVisible)}
-        /> */}
+          <Text 
+            type="button" 
+            style={styles.scheduleButtonText}
+            testID={'txt-preparingConfirmation-schedule'}  
+          >
+            {feedbackPreparing.schedule}
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={styles.hintIndicatorContainer}>
+          <HintIndicator
+            showHint={preparingHintVisible}
+            onPress={() => setPrepHintVisible(!preparingHintVisible)}
+          />
+        </View>
       </View>
     );
   };
@@ -194,69 +205,61 @@ const FeedbackConfirmation = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Wrapper>
-        <Header
-          headerRight={{
-            onPress: () => handleClose(),
-          }}
-        />
-        <View style={{ flex: 2 }}>
-          <Image
-            source={Images.confirmation}
-            resizeMode="cover"
-            style={{ height: '90%' }}
+        <ScrollView>
+          <Header
+            headerRight={{
+              onPress: () => handleClose(),
+            }}
           />
-        </View>
-        <View style={{ flex: 2 }}>
-          <Text type="h4">{common.youDidIt}</Text>
-          <Text
-            type="body1"
-            style={{ lineHeight: 28, marginTop: 35, width: '90%' }}>
-            {
-              route.params.type === 'documenting'
-                ? flow.id === 1
-                  ? type.id === 1
-                    ? `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`
-                    : content // sched corr content
-                  : content // TODO: change to on the spot content
-                : content // regular content for each phase
-            }
-          </Text>
-        </View>
-        {preparingHintVisible && (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Colors.opaqueBlack,
-              borderRadius: 16,
-            }}>
-            <Text type="body2" style={{ color: Colors.primary900 }}>
-              {feedbackPreparing.confirmationHint}
+          <View>
+            <Image
+              source={Images.confirmation}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={styles.contentContainer}>
+            <Text type="h4">{common.youDidIt}</Text>
+            <Text
+              type="body1"
+              style={styles.contentText}>
+              {
+                route.params.type === 'documenting'
+                  ? flow.id === 1
+                    ? type.id === 1
+                      ? `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`
+                      : content // sched corr content
+                    : content // TODO: change to on the spot content
+                  : content // regular content for each phase
+              }
             </Text>
           </View>
-        )}
-        {discussingHintVisible && (
+          {preparingHintVisible && (
+            <View
+              style={styles.hintCard}>
+              <Image
+                source={Images.preparingConfirmHint}
+                resizeMode="contain"
+              />
+              <Text type="body2" style={styles.hintCardText}>
+                {feedbackPreparing.confirmationHint}
+              </Text>
+            </View>
+          )}
+          {discussingHintVisible && (
+            <View
+              style={styles.hintCard}>
+              <Text type="body2" style={styles.hintCardText}>
+                {feedbackDiscussing.confirmationHint}
+              </Text>
+            </View>
+          )}
           <View
-            style={{
-              flex: 1,
-              backgroundColor: Colors.opaqueBlack,
-              borderRadius: 16,
-            }}>
-            <Text type="body2" style={{ color: Colors.primary900 }}>
-              {feedbackDiscussing.confirmationHint}
-            </Text>
+            style={styles.btnContainer}>
+            {handleCallToAction()}
           </View>
-        )}
-        <View
-          style={{
-            flex: 1,
-            marginBottom: 20,
-            alignItems: 'flex-end',
-            flexDirection: 'row',
-          }}>
-          {handleCallToAction()}
-        </View>
+        </ScrollView>
       </Wrapper>
       <DateTimePicker
         mode="time"

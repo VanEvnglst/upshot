@@ -20,9 +20,19 @@ const PreparingStep3B = () => {
 
   useEffect(() => {
     if (stepData.data) {
-      const { observationList: stepObservation, additionalObservation: stepAdditional} = stepData.data;
-      setObservations(stepObservation);
-      setAdditionalObservation(stepAdditional);
+      debugger;
+      if (typeof stepData.data.observationList === 'string') {
+        const dataArr = stepData.data.observationList.split(',');
+        setObservations(dataArr);
+      } else {
+        setObservations(stepData.data.observationList);
+      }
+      setAdditionalObservation(
+        stepData.data.additionalObservation
+          ? stepData.data.additionalObservation
+          : '',
+      );
+      //TODO: change when additional data is returned
     }
   }, [stepData]);
 
@@ -51,8 +61,7 @@ const PreparingStep3B = () => {
   const handleSelectedObservation = item => {
     let newList = observationList;
     if (checkSelectedObservation(item))
-      newList = newList.filter(newObservation =>
-        newObservation !== item.title);
+      newList = newList.filter(newObservation => newObservation !== item.title);
     else newList = [...newList, item.title];
     setObservations(newList);
   };

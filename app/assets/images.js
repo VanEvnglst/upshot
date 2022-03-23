@@ -47,4 +47,7 @@ export default {
   surveyGuide: require('./images/frontliner-survey.png'),
   lightbulb: require('./images/lightbulb.png'),
   quote: require('./images/quote.png'),
+  timeIcon: require('./images/time_schedule.png'),
+  alertIcon: require('./images/alert_schedule.png'),
+  schedulingHint: require('./images/scheduling-hint.png'),
 };
