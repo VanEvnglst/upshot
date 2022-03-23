@@ -6,6 +6,7 @@ import DocumentingActions, {
 } from 'app/store/feedback/DocumentingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
+import { parseAsync } from '@babel/core';
 
 const STATUS_OK = 'ok';
 const activeStep = state => state.documenting.get('activeStep');
@@ -99,8 +100,20 @@ export function* updateFeedbackDocumenting({ data }) {
 export function* updateDocumentingReminder({ data }) {
   const params = new URLSearchParams();
   const { reminderDate, docuId } = data;
+  const step2 = yield select(step2Data);
+  const otherTopic = yield select(otherTopicData);
+
+  const step2List = step2.map(obj => obj.id);
+  var topicListStr = '[';
+  step2List.forEach((item, index) => {
+    if (index !== step2List.length - 1) topicListStr += `${item},`;
+    else topicListStr += `${item}`;
+  });
+  topicListStr += ']';
   params.append('documenting_id', docuId);
   params.append('reminder_date', reminderDate);
+  params.append('topics', topicListStr);
+  params.append('optional_topic', otherTopic);
 
   const response = yield call(api.updateDocumentingReminder, params);
   if (response.ok) {
