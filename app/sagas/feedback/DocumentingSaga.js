@@ -17,6 +17,7 @@ const step2Data = state => state.documenting.get('step2').data;
 const step3Data = state => state.documenting.get('step3').data;
 const step4Data = state => state.documenting.get('step4').data;
 const step5Data = state => state.documenting.get('step5').data;
+const otherTopicData = state => state.documenting.get('otherTopic').data;
 
 export function* postFeedbackDocumenting({ data }) {
   // const connected = yield checkInternetConnection();
@@ -39,13 +40,13 @@ export function* postFeedbackDocumenting({ data }) {
 }
 
 export function* updateFeedbackDocumenting({ data }) {
-  debugger;
   // Select data from the store to be passed into API
   const step1 = yield select(step1Data);
   const step2 = yield select(step2Data);
   const step3 = yield select(step3Data);
   const step4 = yield select(step4Data);
   const step5 = yield select(step5Data);
+  const otherTopic = yield select(otherTopicData);
   const docuId = yield select(documentingId);
   const typeId = yield select(type);
   const flowId = yield select(flow);
@@ -71,6 +72,7 @@ export function* updateFeedbackDocumenting({ data }) {
   params.append('incident_date', dateSel);
   params.append('is_first_time_bool', step4.value);
   params.append('follow_up_count_int', step5Value);
+  params.append('optional_topic', otherTopic);
 
   const response = yield call(api.updateDocumenting, params);
   if (response.ok) {
@@ -104,6 +106,7 @@ export function* updateDocumentingReminder({ data }) {
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
+      yield put(DocumentingActions.closeFeedbackDocumenting());
       yield put(DocumentingActions.setDocumentingStatus('closed', true));
       yield NavigationService.navigate('ActiveFeedbackJourney');
     }
