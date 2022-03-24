@@ -36,8 +36,22 @@ export function* signInUser({ data }) {
   }
 }
 
+export function* fetchServer({ data }) {
+  debugger;
+
+  const response = yield call(api.getDirectory);
+  debugger;
+  if(response.ok) {
+    const serverObj = response.data.result;
+    // yield AsyncStorage.setItem('baseURL', );
+    // yield put(AuthenticationActions.signInUser(data));
+  }
+}
+
+
 function* watchAuthenticationSaga() {
   yield takeLatest(AuthenticationTypes.SIGN_IN_USER, signInUser);
+  yield takeLatest(AuthenticationTypes.FETCH_SERVER, fetchServer);
 }
 
 export default watchAuthenticationSaga;
