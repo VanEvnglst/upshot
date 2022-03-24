@@ -1,8 +1,12 @@
 import Config from 'react-native-config';
-import { upshotAPI } from '../config/ApiConfig';
+import { upshotAPI, upshotDirectory } from '../config/ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default {
+
+  getDirectory: async () => {
+    return upshotDirectory.get('/directory/');
+  },
   signIn: async params => {
     return upshotAPI.post('/login', params);
   },
