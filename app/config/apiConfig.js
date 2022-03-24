@@ -7,3 +7,11 @@ export const upshotAPI = create({
     'Content-Type': 'application/x-www-form-urlencoded',
   },
 });
+
+export const upshotDirectory = create({
+  baseURL: 'http://52.76.215.10/api',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+});
+
