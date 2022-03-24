@@ -48,7 +48,7 @@ const SignIn = props => {
 
   const signInUser = () => {
     dispatch(
-      AuthenticationActions.signInUser({
+      AuthenticationActions.fetchServer({
         email,
         password,
         token,
