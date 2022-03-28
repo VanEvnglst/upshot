@@ -36,8 +36,26 @@ export function* signInUser({ data }) {
   }
 }
 
+export function* fetchServer({ data }) {
+
+  const emailArr = data.email.split('@');
+
+  const response = yield call(api.getDirectory);
+  if(response.ok) {
+    const responseArr = response.data.result;
+    const baseArr = responseArr.filter(server => server.key === emailArr[1]);
+    const baseURL = baseArr[0].server;
+    debugger;
+    yield AsyncStorage.setItem('baseURL', baseURL);
+    yield put(AuthenticationActions.fetchServerSuccess());
+    yield put(AuthenticationActions.signInUser(data));
+  }
+}
+
+
 function* watchAuthenticationSaga() {
   yield takeLatest(AuthenticationTypes.SIGN_IN_USER, signInUser);
+  yield takeLatest(AuthenticationTypes.FETCH_SERVER, fetchServer);
 }
 
 export default watchAuthenticationSaga;
