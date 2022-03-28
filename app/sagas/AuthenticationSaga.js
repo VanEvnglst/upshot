@@ -37,14 +37,18 @@ export function* signInUser({ data }) {
 }
 
 export function* fetchServer({ data }) {
-  debugger;
+
+  const emailArr = data.email.split('@');
 
   const response = yield call(api.getDirectory);
-  debugger;
   if(response.ok) {
-    const serverObj = response.data.result;
-    // yield AsyncStorage.setItem('baseURL', );
-    // yield put(AuthenticationActions.signInUser(data));
+    const responseArr = response.data.result;
+    const baseArr = responseArr.filter(server => server.key === emailArr[1]);
+    const baseURL = baseArr[0].server;
+    debugger;
+    yield AsyncStorage.setItem('baseURL', baseURL);
+    yield put(AuthenticationActions.fetchServerSuccess());
+    yield put(AuthenticationActions.signInUser(data));
   }
 }
 
