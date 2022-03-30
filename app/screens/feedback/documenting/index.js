@@ -18,6 +18,7 @@ import DocumentingStep1 from './step1';
 import DocumentingStep4 from './step4';
 import DocumentingStep5 from './step5';
 import Colors from 'app/theme/colors';
+import labels from 'app/locales/en';
 import styles from './styles';
 
 const FeedbackDocumenting = props => {
