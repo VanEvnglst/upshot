@@ -45,7 +45,7 @@ const FeedbackConfirmation = props => {
   const [content, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
-  const [preparingHintVisible, setPrepHintVisible] = useState(true);
+  const [preparingHintVisible, setPrepHintVisible] = useState(false);
   const [discussingHintVisible, setDiscussHintVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
