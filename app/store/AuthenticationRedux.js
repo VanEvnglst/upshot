@@ -12,7 +12,7 @@ export const INITIAL_STATE = Map({
 const { Types, Creators } = createActions({
   signInUser: ['data'],
   signInUserSuccess: null,
-  signInUserFailure: ['signInUserError'],
+  signInUserFailure: ['error'],
   signOutUser: [''],
   setUserSignedIn: [''],
   fetchServer: ['data'],
@@ -35,12 +35,14 @@ const signInUserSuccess = state =>
     ...state.get('isSignedIn'),
     fetching: false,
     isSignedIn: true,
+    error: '',
   });
 
-const signInUserFailure = (state, { error}) => state.merge({
-  fetching: false,
-  error
-});
+const signInUserFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
 const signOutUser = state => state.merge({ ...INITIAL_STATE });
 
 const setUserSignedIn = state =>
@@ -59,10 +61,10 @@ const fetchServerSuccess = state =>
     fetching: false,
   });
 
-const fetchServerFailure = (state, error) =>
+const fetchServerFailure = (state, { error }) =>
   state.merge({
     fetching: false,
-    error
+    error,
   });
 
 /* ------------- Hookup Reducers To Types ------------- */
