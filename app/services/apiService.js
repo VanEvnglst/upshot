@@ -1,20 +1,19 @@
 import Config from 'react-native-config';
 import { create } from 'apisauce';
-import { upshotDirectory } from '../config/ApiConfig';
+import { upshotDirectory } from 'app/config/ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const setAPI = (url) => {
+const setAPI = url => {
   const api = create({
     baseURL: `http://${url}/api`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-    }
+    },
   });
   return api;
-}
+};
 
 export default {
-
   getDirectory: async () => {
     return upshotDirectory.get('/directory/');
   },
@@ -62,6 +61,8 @@ export default {
     return upshotAPI.get('/trivias');
   },
   postNewJourney: async params => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/journey`, params);
@@ -84,6 +85,8 @@ export default {
   },
 
   updateDocumenting: async params => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
@@ -93,7 +96,7 @@ export default {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    
+
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/edit`, params);
   },
 
@@ -117,7 +120,7 @@ export default {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    
+
     return upshotAPI.get(`/${uniqueId}/feedback/journeys/list-closed`);
   },
 
@@ -188,6 +191,8 @@ export default {
   },
 
   updateFeedbackDiscussing: async params => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/discussing/edit`, params);
@@ -238,7 +243,10 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get_staff_feedback`,params);
+    return upshotAPI.post(
+      `/${uniqueId}/feedback/reflecting/get_staff_feedback`,
+      params,
+    );
   },
 
   getReflectingCriteria: async params => {
@@ -246,7 +254,10 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/getcriteria`, params);
+    return upshotAPI.post(
+      `/${uniqueId}/feedback/reflecting/getcriteria`,
+      params,
+    );
   },
 
   postFeedbackSharing: async params => {
@@ -264,7 +275,7 @@ export default {
 
     return upshotAPI.post(`/${uniqueId}/feedback/sharing/get`, params);
   },
-  
+
   updateFeedbackSharing: async params => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
@@ -286,7 +297,10 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/get`, params);
+    return upshotAPI.post(
+      `/${uniqueId}/feedback/frontliner/messages/get`,
+      params,
+    );
   },
 
   getMessage: async params => {
@@ -294,7 +308,10 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/body`, params);
+    return upshotAPI.post(
+      `/${uniqueId}/feedback/frontliner/messages/body`,
+      params,
+    );
   },
 
   postMessageResponse: async params => {
@@ -302,6 +319,9 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/messages/responsd`, params);
-  }
+    return upshotAPI.post(
+      `/${uniqueId}/feedback/frontliner/messages/responsd`,
+      params,
+    );
+  },
 };

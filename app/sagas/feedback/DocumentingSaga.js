@@ -142,7 +142,6 @@ export function* fetchCurrentDocumenting({ documentingId }) {
 
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
-      debugger;
       const docuDetails = response.data.details;
       const firstTimeFeedback = docuDetails.is_first_time ? {id: 1} : { id: 2};
       const followUpFeedback = 

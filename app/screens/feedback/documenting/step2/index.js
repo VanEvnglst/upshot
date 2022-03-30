@@ -29,11 +29,12 @@ const DocumentingStep2 = props => {
   // TODO: useEffect for handling data if coming from review route to change button container
 
   useEffect(() => {
-    if (stepData.data.length > 0) {
-      setFeedbackTopic(stepData.data);
-      setOtherTopic(stepOtherData.data);
-      setCompletion(true);
-    }
+    if (stepData.data)
+      if (stepData.data.length > 0) {
+        setFeedbackTopic(stepData.data);
+        setOtherTopic(stepOtherData.data);
+        setCompletion(true);
+      }
   }, [stepData]);
 
   const handleBack = () => {
@@ -102,6 +103,7 @@ const DocumentingStep2 = props => {
           value={otherTopic}
           onChangeText={otherTopic => handleOtherTopic(otherTopic)}
           onEndEditing={() => validate()}
+          description={labels.common.inputDesc}
         />
         <View style={containerStyles.btnContainer}>
           <Button

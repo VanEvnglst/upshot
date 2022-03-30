@@ -48,7 +48,6 @@ const DocumentingStep4 = props => {
 
   useEffect(() => {
     if (stepData.data) {
-      console.warn('data', stepData.data);
       if (stepData.data.id === 1) setValue(firstTimeFeedback);
       else setValue(followUpFeedback);
       setCompletion(true);
