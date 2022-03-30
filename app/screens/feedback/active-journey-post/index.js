@@ -159,8 +159,9 @@ const ActiveFeedbackJourney = props => {
           shouldStart={item.shouldStart && !item.started && !item.closed}
           hasProgress={item.started && !item.closed}
           item={item}
-          onPress={() =>
-            item.closed ? handleReviewNavigation(i) : handleNavigation(i)
+          onPress={
+            () => (item.closed ? console.log('review to') : handleNavigation(i))
+            // handleReviewNavigation(i)
           }
         />
       </View>
