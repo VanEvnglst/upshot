@@ -4,6 +4,7 @@ const labels = {
     next: 'Next',
     back: 'Back',
     cancel: 'Cancel',
+    ok: 'Ok',
     start: 'Start',
     inputHint: 'Something else',
     inputDesc: 'Write your own description',
