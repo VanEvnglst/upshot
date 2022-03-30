@@ -5,6 +5,7 @@ export const getUserRole = state => state.user.get('role');
 /* ------------- Auth Selectors ------------- */
 export const getSignInState = state => state.authentication.get('isSignedIn');
 export const getAuthLoading = state => state.authentication.get('fetching');
+export const getSignInError = state => state.authentication.get('error');
 
 /* ------------- Feedback Selectors ------------- */
 export const getCurrentJourney = state => state.feedback.get('currentJourney');

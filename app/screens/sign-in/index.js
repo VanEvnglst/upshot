@@ -3,11 +3,11 @@ import { View, Image, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
-import { getAuthLoading } from 'app/store/selectors';
-import { TextInput, Loader } from 'app/components';
+import { getAuthLoading, getSignInError } from 'app/store/selectors';
+import { TextInput, Loader, Text } from 'app/components';
 import Images from 'app/assets/images';
 import styles from './styles';
 
@@ -15,13 +15,19 @@ const SignIn = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const isLoading = useSelector(getAuthLoading);
+  const signInError = useSelector(getSignInError);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
+  const [errorVisible, setErrorVisible] = useState(false);
 
   useEffect(() => {
     retrieveToken();
   }, []);
+
+  useEffect(() => {
+    if (signInError !== '') setErrorVisible(true);
+  }, [signInError]);
 
   const retrieveToken = async () => {
     try {
@@ -32,6 +38,8 @@ const SignIn = props => {
     }
   };
 
+  const dismissSnackbar = () => setErrorVisible(false);
+
   const validate = () => {
     const errors = {};
     if (email.length === 0) {
@@ -41,7 +49,7 @@ const SignIn = props => {
     if (password.length === 0) {
       errors.passwordError = 'Password is required';
     }
-    
+
     //Object.keys(errors).length !== 0 && this.s
     return errors;
   };
@@ -101,6 +109,9 @@ const SignIn = props => {
           }}
         </Formik>
       </View>
+      <Snackbar visible={errorVisible} onDismiss={dismissSnackbar}>
+        <Text>{signInError}</Text>
+      </Snackbar>
       {isLoading && <Loader />}
     </KeyboardAvoidingView>
   );
