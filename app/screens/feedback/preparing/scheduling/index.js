@@ -62,6 +62,10 @@ const PreparingSchedule = props => {
     },
   ];
 
+  useEffect(() => {
+    validate();
+  }, [dateSelected, timeSelected, alertTime]);
+
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
   const showTimePicker = () => setTimePickerVisibility(true);
@@ -77,7 +81,6 @@ const PreparingSchedule = props => {
     if (date < dateToday) setShowAlerts(false);
     else setShowAlerts(true);
     hideDatePicker();
-    validate();
   };
 
   const handleTimePicked = time => {
@@ -85,7 +88,6 @@ const PreparingSchedule = props => {
     const timePicked = moment(time).format('HH:mm');
     setTimeSelected({ label: timeLabel, value: timePicked });
     hideTimePicker();
-    validate();
   };
 
   const checkSelectedValue = alert => {
@@ -104,17 +106,22 @@ const PreparingSchedule = props => {
     if (alertTime.length > 1) setAlertLabel(`${alertTime.length} alerts set`);
     if (alertTime.length === 1) setAlertLabel(alertTime[0]);
     hideAlertTime();
-    validate();
   };
 
   const validate = () => {
-    if (
-      alertTime.length !== 0 &&
-      dateSelected.value !== '' &&
-      timeSelected.value !== ''
-    )
-      setCompletion(true);
-    else setCompletion(false);
+    if (dateSelected.value < dateToday) {
+      if (dateSelected.value !== '' && timeSelected.value !== '')
+        setCompletion(true);
+      else setCompletion(false);
+    } else {
+      if (
+        dateSelected.value !== '' &&
+        timeSelected.value !== '' &&
+        alertTime.length !== 0
+      )
+        setCompletion(true);
+      else setCompletion(false);
+    }
   };
 
   const sendInvite = () => {
@@ -128,89 +135,86 @@ const PreparingSchedule = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Wrapper>
-        <ScrollView>
         <Header
-          headerRight={{
-            onPress: () => navigation.goBack(),
-          }}
-        />
-        <Text type="h6">
-          {feedbackPreparing.scheduleTitle} {staffName.firstName}{' '}
-          {staffName.lastName}
-        </Text>
-        <View style={{ flex: 1, marginTop: 30 }}>
-          <CalendarPicker
-            onPress={() => showDatePicker()}
-            style={{ marginBottom: 10 }}
-            text={
-              dateSelected.label === '' ? 'Choose a date' : dateSelected.label
-            }
-            icon={Images.calendar}
+            headerRight={{
+              onPress: () => navigation.goBack(),
+            }}
           />
-          <CalendarPicker
-            onPress={() => showTimePicker()}
-            style={{ marginBottom: 10 }}
-            text={
-              timeSelected.label === '' ? 'Choose a time' : timeSelected.label
-            }
-            icon={Images.timeIcon}
-          />
-          {showAlerts && (
-            <CalendarPicker
-              onPress={() => showAlertTime()}
-              style={{ marginBottom: 10 }}
-              text={alertLabel}
-              icon={Images.alertIcon}
+          <Text type="h6">
+             {feedbackPreparing.scheduleTitle} {staffName.firstName}{' '}
+             {staffName.lastName}
+           </Text>
+           <View style={styles.contentContainer}>
+        <ScrollView>
+        <View style={styles.selectionContainer}>
+        <CalendarPicker
+              onPress={() => showDatePicker()}
+              style={styles.spacer}
+              text={
+                dateSelected.label === '' ? 'Choose a date' : dateSelected.label
+              }
+              icon={Images.calendar}
             />
-          )}
-          <DateTimePicker
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleDatePicked}
-            onCancel={hideDatePicker}
-          />
-          <DateTimePicker
-            isVisible={isTimePickerVisible}
-            mode="time"
-            onConfirm={handleTimePicked}
-            onCancel={hideTimePicker}
-          />
-          <HintIndicator
-            showHint={hintVisible}
-            onPress={() => setHintVisible(!hintVisible)}
-          />
-          {hintVisible && (
-            <View style={styles.hintCard}>
-              <Image
-                source={Images.schedulingHint}
-                resizeMode='contain'  
+            <CalendarPicker
+              onPress={() => showTimePicker()}
+              style={styles.spacer}
+              text={
+                timeSelected.label === '' ? 'Choose a time' : timeSelected.label
+              }
+              icon={Images.timeIcon}
+            />
+            {showAlerts && (
+              <CalendarPicker
+                onPress={() => showAlertTime()}
+                style={styles.spacer}
+                text={alertLabel}
+                icon={Images.alertIcon}
               />
-              <Text type='body2'
-                style={styles.hintCardText}
-              >{feedbackPreparing.schedulingHint}</Text>
-            </View>
-  )}
-        </View>
-        <View style={{ flex: 1, justifyContent: 'flex-end',marginBottom: 20, }}>
-          <Button
-            mode="contained"
-            disabled={!isCompleted}
-            onPress={() => sendInvite()}>
-            <Text type="button">Send invite</Text>
-          </Button>
+            )}
+            <DateTimePicker
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleDatePicked}
+              onCancel={hideDatePicker}
+            />
+            <DateTimePicker
+              isVisible={isTimePickerVisible}
+              mode="time"
+              onConfirm={handleTimePicked}
+              onCancel={hideTimePicker}
+            />
+            <HintIndicator
+              showHint={hintVisible}
+              onPress={() => setHintVisible(!hintVisible)}
+            />
+             {hintVisible && (
+                <View style={styles.hintCard}>
+                  <Image source={Images.schedulingHint} resizeMode="contain" />
+                  <Text type="body2" style={styles.hintCardText}>
+                    {feedbackPreparing.schedulingHint}
+                  </Text>
+                </View>
+              )}
         </View>
         </ScrollView>
+        </View>
+        <View style={styles.btnContainer}>
+        <Button
+            mode="contained"
+            disabled={!isCompleted}
+            style={styles.inviteBtn}
+            onPress={() => sendInvite()}>
+            <Text type="button">{labels.schedulingDiscussion.sendInvite}</Text>
+          </Button>
+        </View>
+       
       </Wrapper>
       <Modal
         isVisible={isAlertTimeVisbile}
         onDismiss={hideAlertTime}
-        style={{
-          padding: 20,
-          width: 350,
-          height: 550,
-        }}>
+        style={styles.modalContainer}>
         <View>
           <Text type="overline">{feedbackPreparing.setAlert}</Text>
           {alertTimesList.map((item, i) => (
@@ -223,18 +227,12 @@ const PreparingSchedule = props => {
             />
           ))}
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-            alignItems: 'flex-end',
-            marginTop: 20,
-          }}>
+        <View style={styles.alertConfirmationContainer}>
           <Button mode="text" onPress={() => hideAlertTime()}>
-            <Text type="button">Cancel</Text>
+            <Text type="button">{labels.common.cancel}</Text>
           </Button>
           <Button mode="text" onPress={() => handleAlertLabel()}>
-            <Text type="button">Ok</Text>
+            <Text type="button">{labels.common.ok}</Text>
           </Button>
         </View>
       </Modal>
