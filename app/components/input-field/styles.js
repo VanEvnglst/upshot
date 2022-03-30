@@ -8,8 +8,8 @@ export default styles = StyleSheet.create({
   descriptionText: { 
     paddingLeft: 10,
     color: Colors.lightBlack,
-    marginLeft: 20,
-    marginTop: -10,
+    // marginLeft: 20,
+    // marginTop: -10,
    },
    focusedDescription: {
      color: Colors.primary,

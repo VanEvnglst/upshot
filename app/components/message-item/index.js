@@ -6,7 +6,6 @@ import Images from 'app/assets/images';
 import styles from './styles';
 
 const MessageItem = ({ item, onPress }) => {
-  console.warn('item', item);
   const {
     from,
     subject,
