@@ -41,7 +41,6 @@ const FeedbackGuide = props => {
         content = scheduledCorrectiveSteps;
         setSignPostHeader({
           title: feedbackSignPost.scheduledCorr,
-          description: feedbackSignPost.scheduledCorrDesc,
         })
       }
     } else {
