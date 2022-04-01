@@ -46,7 +46,20 @@ const FeedbackDocumenting = props => {
   useEffect(() => {
     if(flow.id === 1 && typeId.id === 2)
       dispatch(DocumentingActions.setDocumentingStatus('maxStep', 4));
-  }, [])
+    if(flow.id === 1 && typeId.id === 1)
+      dispatch(DocumentingActions.setDocumentingStatus('maxStep', 3));
+  }, []);
+
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchTeamMembers());
+    async function retrieveData() {
+      if (activeDocumenting)
+        await dispatch(
+          DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
+        );
+    }
+    retrieveData();
+  }, []);
 
   const handleStepContent = () => {
     switch (activeStep) {
