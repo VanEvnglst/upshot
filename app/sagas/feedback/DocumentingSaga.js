@@ -65,13 +65,14 @@ export function* updateFeedbackDocumenting({ data }) {
   });
   topicListStr += ']';
   const dateSel = moment(step3).format('MMM DD, YYYY');
+  const step4Value = step4 && step4.value !== null ? step4.value : true;
   const step5Value = step5 && step5.value !== null ? step5.value : 0;
   params.append('documenting_id', docuId);
   params.append('staff_id', step1.id);
   params.append('topics', topicListStr);
   params.append('pos_or_cor', typeId);
   params.append('incident_date', dateSel);
-  params.append('is_first_time_bool', step4.value);
+  params.append('is_first_time_bool', step4Value);
   params.append('follow_up_count_int', step5Value);
   params.append('optional_topic', otherTopic);
 
