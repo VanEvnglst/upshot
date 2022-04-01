@@ -14,6 +14,7 @@ import api from 'app/services/apiService';
 const STATUS_OK = 'ok';
 
 const staffData = state => state.documenting.get('step1').data;
+const typeData = state => state.feedback.get('chosenType');
 export function* fetchFeedbackType() {
   // const connected = yield checkInternetConnection();
   // if (!connected) {
@@ -72,6 +73,7 @@ export function* postFeedbackJourney({ data }) {
   const staff = yield select(staffData);
   const nameArr = staff.name.split(/[ ,]+/);
   const lastName = nameArr && nameArr[1].charAt(0);
+  const type = yield select(typeData);
   const staffName = {
     firstName: nameArr[0],
     lastName: lastName,
@@ -85,7 +87,7 @@ export function* postFeedbackJourney({ data }) {
       yield put(FeedbackActions.setTeamMember(staffName))
       documentingParams.append('journey_id', journeyId);
       documentingParams.append('staff_id', staff.id);
-
+      documentingParams.append('pos_or_cor',type.id)
       yield put(DocumentingActions.postFeedbackDocumenting(documentingParams));
     }
     // save journey id to state using success action call
