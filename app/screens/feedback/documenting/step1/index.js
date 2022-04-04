@@ -42,17 +42,9 @@ const DocumentingStep1 = props => {
   //     dispatch(DocumentingActions.fetchCurrentDocumenting(activeDocumenting));
   // }, []);
 
-  // useEffect(() => {
-  //   dispatch(FeedbackActions.fetchTeamMembers());
-  //   async function retrieveData() {
-  //     if (activeDocumenting)
-  //       await dispatch(
-  //         DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
-  //       );
-  //   }
-  //   retrieveData();
-  //   // TODO: handle value so that step 2 data is retained
-  // }, []);
+  useEffect(() => {
+    dispatch(FeedbackActions.fetchTeamMembers());
+  }, []);
 
   useEffect(() => {
     if (stepData.data) chooseTeamMember(stepData.data);

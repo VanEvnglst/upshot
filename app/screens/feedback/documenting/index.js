@@ -51,7 +51,6 @@ const FeedbackDocumenting = props => {
   }, []);
 
   useEffect(() => {
-    dispatch(FeedbackActions.fetchTeamMembers());
     async function retrieveData() {
       if (activeDocumenting)
         await dispatch(
