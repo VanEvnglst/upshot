@@ -88,7 +88,7 @@ const labels = {
     followUpTitle: 'This is my',
     firstFollowUp: 'First follow up with ',
     secondFollowUp: 'Second follow up with ',
-    thirdFollowUp: 'This follow up with ',
+    thirdFollowUp: 'Third follow up with ',
     aboutObservation: 'about this observation',
     confirmation: {
       content1: `You've finished "Documenting" - the first step of our feedback coaching journey.`,
