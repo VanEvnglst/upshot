@@ -23,6 +23,8 @@ const SharingStep3 = () => {
   const activeStep = useSelector(getSharingStep);
   const step1Data = useSelector(getSharingStep1Data);
   const step2Data = useSelector(getSharingStep2Data);
+  const userFirstName = useSelector(state => state.user.get('firstName'));
+  const userLastName = useSelector(state => state.user.get('lastName'))
   const staffName = useSelector(getStaffName);
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
@@ -96,7 +98,7 @@ const SharingStep3 = () => {
             <Image source={Images.avatar} style={styles.avatar} />
             <View style={styles.nameContent}>
               <Text type="caption" style={styles.managerNameText}>
-                Ivan Evangelista
+                {userFirstName} {userLastName}
               </Text>
               <Text type="caption" style={styles.staffNameText}>
                 To: {staffName.firstName}
@@ -107,7 +109,7 @@ const SharingStep3 = () => {
             <Text type="body2" style={styles.bodyText}>
               {message}
             </Text>
-            <EditButton step={2} />
+            <EditButton step={1} />
           </View>
           <View style={styles.earContainer}>
             <View style={styles.earContent}>
@@ -135,7 +137,7 @@ const SharingStep3 = () => {
               </Text>
             </View>
           </View>
-          <EditButton step={1} />
+          <EditButton step={2} />
         </View>
       </View>
       <View style={containerStyles.btnContainer}>
