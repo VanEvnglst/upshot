@@ -114,7 +114,7 @@ const labels = {
       content:
         "It's important for your employee to know the intention of the meeting, and that it's going to be a two-way conversation between both of you. \n\nChoose below what you might say:",
       statePurposeBtn:
-        'I would like to discuss an observation and my intention is to have a two-way conversation on what happened and what we can do to address it',
+        'I would like to discuss an observation with you. My intention is to have a two-way conversation on what happened and what we can do to address it.',
       statementHint: "Write your own statement",
     },
     describeDiscuss: {
@@ -183,7 +183,7 @@ const labels = {
       checkoutInput:
         'Thank you for your input, and for having this discussion with me. Let me know if you think of other ways I can support you to be successful.',
     },
-    confirmation: `You've finished "Preparing". Using your answers, we created a discussion guide for you to review and use during your feedback session. \n\nNow that you're set up, it's time to schedule your meeting`,
+    confirmation: `You've finished "Preparing." Using your answers, we created a discussion guide that you can review at any time. \n\nNow that you're set up, it's time to schedule your meeting with `,
     confirmationHint:
       'The best time to give feedback is shortly after the moment has occurred, and no later than a week from the incident. The longer you wait, the longer the incident affects the way you think - and the way the other person acts.',
     schedule: 'Schedule discussion',

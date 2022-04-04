@@ -242,6 +242,12 @@ const PreparingSchedule = props => {
 
 export default PreparingSchedule;
 
-PreparingSchedule.propTypes = {};
+PreparingSchedule.propTypes = {
+  getStaffName: PropTypes.object,
+  updatePreparingSchedule: PropTypes.func,
+};
 
-PreparingSchedule.defaultProps = {};
+PreparingSchedule.defaultProps = {
+  getStaffName: {},
+  updatePreparingSchedule: () => {},
+};

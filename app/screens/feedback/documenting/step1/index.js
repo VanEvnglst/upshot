@@ -44,13 +44,6 @@ const DocumentingStep1 = props => {
 
   useEffect(() => {
     dispatch(FeedbackActions.fetchTeamMembers());
-    async function retrieveData() {
-      if (activeDocumenting)
-        await dispatch(
-          DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
-        );
-    }
-    retrieveData();
   }, []);
 
   useEffect(() => {

@@ -14,10 +14,10 @@ export function* fetchActiveJourneys() {
       const journeyList = response.data.details;
       yield put(FeedbackHistoryActions.fetchActiveJourneysSuccess(journeyList));
     } else {
-      yield put(FeedbackHistoryActions.fetchActiveJourneysFailure());
+      yield put(FeedbackHistoryActions.fetchActiveJourneysFailure(response.data));
     }
   } else {
-    yield put(FeedbackHistoryActions.fetchActiveJourneysFailure());
+    yield put(FeedbackHistoryActions.fetchActiveJourneysFailure(response.data));
   }
 }
 

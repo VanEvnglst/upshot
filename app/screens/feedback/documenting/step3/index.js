@@ -28,7 +28,7 @@ const DocumentingStep3 = props => {
   const dispatch = useDispatch();
   const stepData = useSelector(getStep3Data);
   const docuId = useSelector(getDocumentingId);
-  const typeId = useSelector(getChosenType);
+  const type = useSelector(getChosenType);
   const flow = useSelector(getChosenFlow);
   const activeStep = useSelector(getDocumentingStep);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -91,6 +91,12 @@ const DocumentingStep3 = props => {
 
   const handleNext = () => {
     dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
+    if (type.id === 1 && flow.id === 1)
+    
+      dispatch(DocumentingActions.updateFeedbackDocumenting({
+        shouldClose: true,
+      }));
+    else
     dispatch(DocumentingActions.setActiveStep(activeStep + 1));
     // const step2 = step2Data.data.map(obj => obj.id);
     // var topicListStr = '[';
