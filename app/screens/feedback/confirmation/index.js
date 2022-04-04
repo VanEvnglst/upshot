@@ -42,7 +42,7 @@ const FeedbackConfirmation = props => {
   const journeyId = useSelector(getCurrentJourney);
   const flow = useSelector(getChosenFlow);
   const type = useSelector(getChosenType);
-  const [content, setContent] = useState();
+  const [confirmationContent, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
   const [preparingHintVisible, setPrepHintVisible] = useState(false);
@@ -55,12 +55,6 @@ const FeedbackConfirmation = props => {
     handleContent();
   }, []);
 
-  const handleContent = () => {
-    const confirmationContent = confirmationModel.find(
-      x => x.type === route.params.type,
-    );
-    setContent(confirmationContent.content);
-  };
 
   const handleCallToAction = () => {
     const { type } = route.params;
@@ -76,6 +70,26 @@ const FeedbackConfirmation = props => {
       case 'sharing':
         return <SharingCTA />;
     }
+  };
+
+  const handleContent = () => {
+    var finalContent = '';
+    const confirmationContent = confirmationModel.find(
+      x => x.type === route.params.type,
+    );
+    if (route.params.type === 'documenting') {
+      if (flow.id === 1) {
+        if (type.id === 1)
+          finalContent =
+            `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`;
+        else finalContent = confirmationContent;
+      } else {
+        finalContent = confirmationContent; //TODO: Change for on the spot content
+      }
+    } else {
+      finalContent = confirmationContent;
+    }
+    setContent(finalContent)
   };
 
   const DocumentingCTA = () => {
@@ -124,21 +138,18 @@ const FeedbackConfirmation = props => {
 
   const PreparingCTA = () => {
     return (
-      <View
-        style={styles.preparingBtnContainer}>
+      <View style={styles.preparingBtnContainer}>
         <TouchableOpacity
-          accessibilityRole='button'
+          accessibilityRole="button"
           onPress={() => navigation.navigate('PreparingSchedule')}>
-          <Text 
-            type="button" 
+          <Text
+            type="button"
             style={styles.scheduleButtonText}
-            testID={'txt-preparingConfirmation-schedule'}  
-          >
+            testID={'txt-preparingConfirmation-schedule'}>
             {feedbackPreparing.schedule}
           </Text>
         </TouchableOpacity>
-        <View
-          style={styles.hintIndicatorContainer}>
+        <View style={styles.hintIndicatorContainer}>
           <HintIndicator
             showHint={preparingHintVisible}
             onPress={() => setPrepHintVisible(!preparingHintVisible)}
@@ -214,30 +225,16 @@ const FeedbackConfirmation = props => {
             }}
           />
           <View>
-            <Image
-              source={Images.confirmation}
-              resizeMode="cover"
-            />
+            <Image source={Images.confirmation} resizeMode="cover" />
           </View>
           <View style={styles.contentContainer}>
             <Text type="h4">{common.youDidIt}</Text>
-            <Text
-              type="body1"
-              style={styles.contentText}>
-              {
-                route.params.type === 'documenting'
-                  ? flow.id === 1
-                    ? type.id === 1
-                      ? `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`
-                      : content // sched corr content
-                    : content // TODO: change to on the spot content
-                  : content // regular content for each phase
-              }
+            <Text type="body1" style={styles.contentText}>
+              {confirmationContent}
             </Text>
           </View>
           {preparingHintVisible && (
-            <View
-              style={styles.hintCard}>
+            <View style={styles.hintCard}>
               <Image
                 source={Images.preparingConfirmHint}
                 resizeMode="contain"
@@ -248,17 +245,13 @@ const FeedbackConfirmation = props => {
             </View>
           )}
           {discussingHintVisible && (
-            <View
-              style={styles.hintCard}>
+            <View style={styles.hintCard}>
               <Text type="body2" style={styles.hintCardText}>
                 {feedbackDiscussing.confirmationHint}
               </Text>
             </View>
           )}
-          <View
-            style={styles.btnContainer}>
-            {handleCallToAction()}
-          </View>
+          <View style={styles.btnContainer}>{handleCallToAction()}</View>
         </ScrollView>
       </Wrapper>
       <DateTimePicker

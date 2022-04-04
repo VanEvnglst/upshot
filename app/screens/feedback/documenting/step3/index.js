@@ -42,10 +42,13 @@ const DocumentingStep3 = props => {
 
   useEffect(() => {
     if (stepData.data) {
-      const modDate = moment(stepData.data.value).format('ll');
+      const modDate = stepData.data.value !== '' ? moment(stepData.data.value).format('ll') : '';
       const dateArr = modDate.split(/[ ,]+/);
       var dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
       if(modDate === dateToday || modDate === yesterday) {
+        dateLabel = 'On a different date'
+      }
+      if(modDate === '') {
         dateLabel = 'On a different date'
       }
       selectDate(dateLabel, modDate);
@@ -92,7 +95,7 @@ const DocumentingStep3 = props => {
   const handleNext = () => {
     dispatch(DocumentingActions.setDocumentingData('step3', dateSelected));
     if (type.id === 1 && flow.id === 1)
-    
+
       dispatch(DocumentingActions.updateFeedbackDocumenting({
         shouldClose: true,
       }));
