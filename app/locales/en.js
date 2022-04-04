@@ -308,7 +308,7 @@ const labels = {
     reviewActionPlan: 'Review your action plan',
     reviewActionPlanDesc:
       'Based on your reflection, is there anything you would like to add in the action plans you developed with your employee?',
-    confirmation: `You've finished "Reflecting". Based on your answers, we've recommended a reading list we think you'll find helpful:`,
+    confirmation: `You've finished "Reflecting". Reflecting will help you to develop your feedback skills and review their effectiveness. It allows you to question, in a positive way, what you do and why you do it and then deciding whether there is a better, or more efficient, way of doing it in the future.`,
   },
   feedbackSharing: {
     description: `Preparing your commments can make the feedback discussion a positive experience. Describe the observations made to support your feedback.\n\nOnce done, you can choose to share your positive feedback with everyone.`,
