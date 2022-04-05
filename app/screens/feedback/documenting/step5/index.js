@@ -41,10 +41,13 @@ const DocumentingStep5 = props => {
       switch(stepData.data.value) {
         case 1:
           setFollowUpValue(firstFollowUp)
+          break;
         case 2:
           setFollowUpValue(secondFollowUp)
+          break;
         case 3:
           setFollowUpValue(thirdFollowUp);
+          break;
       }
       setCompletion(true);
     }
