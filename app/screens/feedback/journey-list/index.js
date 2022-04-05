@@ -99,7 +99,6 @@ const FeedbackJourneyList = props => {
       id,
     } = activeJourney;
     const nameArr = member.split(/[ ,]+/);
-    // const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr && nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
     const staff = {
@@ -107,7 +106,12 @@ const FeedbackJourneyList = props => {
       lastName: lastName,
     };
     const progressValue = percent / 100;
-    const topicList = topics.length > 1 ? `(${topics[0]}, etc.)` : topics[0];
+    const topicList =
+      topics.length === 0
+        ? ''
+        : topics.length > 1
+        ? `(${topics[0]}, etc.)`
+        : `(${topics[0]})`;
     const creationDate = `${moment(dateCreated).format('LLL')}`;
 
     return (
@@ -119,16 +123,20 @@ const FeedbackJourneyList = props => {
           <ProgressBar progress={progressValue} />
           <View style={styles.inProgressText}>
             <Text type="h6" style={styles.feedbackForText}>
-              Feedback for {memberName ? memberName : ''}
+              {labels.feedbackIntro.feedbackFor} {memberName ? memberName : ''}
             </Text>
             <View style={styles.feedbackDetailsContainer}>
-              <Text 
-                type='body2'
-                style={[styles.feedbackDetailsText, styles.feedbackDetailsTextSpacer]}
-              >{flowType} {topicList}</Text>
+              <Text
+                type="body2"
+                style={[
+                  styles.feedbackDetailsText,
+                  styles.feedbackDetailsTextSpacer,
+                ]}>
+                {flowType} {topicList}
+              </Text>
             </View>
             <Text type="body2" style={styles.feedbackDetailsText}>
-              Created {creationDate}
+              {labels.feedbackIntro.created} {creationDate}
             </Text>
           </View>
           <View style={styles.btnContainer}>
@@ -227,7 +235,7 @@ const FeedbackJourneyList = props => {
             {labels.feedbackIntro.journeyEndContent}
           </Text>
           <View style={{ alignItems: 'flex-end', marginTop: 20 }}>
-            <Button onPress={() => hideModal()}>Got it</Button>
+            <Button onPress={() => hideModal()}>{labels.common.gotIt}</Button>
           </View>
         </View>
       </Modal>
