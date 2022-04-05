@@ -38,15 +38,18 @@ const DocumentingStep2 = props => {
   }, [stepData]);
 
   const handleBack = () => {
-    dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
+    setData();
     dispatch(DocumentingActions.setActiveStep(activeStep - 1));
   };
   const handleNext = () => {
-    // TODO: change handling, text value should add
-    dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
-    dispatch(DocumentingActions.setDocumentingData('otherTopic', otherTopic));
+    setData();
     dispatch(DocumentingActions.setActiveStep(activeStep + 1));
   };
+
+  const setData = () => {
+    dispatch(DocumentingActions.setDocumentingData('step2', feedbackTopic));
+    dispatch(DocumentingActions.setDocumentingStatus('otherTopic', otherTopic));
+  }
 
   const checkSelectedTopic = item => {
     return feedbackTopic.some(topic => topic.id === item.id);

@@ -82,12 +82,12 @@ const FeedbackConfirmation = props => {
         if (type.id === 1)
           finalContent =
             `${feedbackDocumenting.confirmation.content1}\n\n${feedbackDocumenting.confirmation.schedPosContent}`;
-        else finalContent = confirmationContent;
+        else finalContent = confirmationContent.content;
       } else {
-        finalContent = confirmationContent; //TODO: Change for on the spot content
+        finalContent = confirmationContent.content; //TODO: Change for on the spot content
       }
     } else {
-      finalContent = confirmationContent;
+      finalContent = confirmationContent.content;
     }
     setContent(finalContent)
   };

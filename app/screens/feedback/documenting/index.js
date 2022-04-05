@@ -52,9 +52,9 @@ const FeedbackDocumenting = props => {
 
   useEffect(() => {
     async function retrieveData() {
-      if (activeDocumenting)
+      if (documentingId)
         await dispatch(
-          DocumentingActions.fetchCurrentDocumenting(activeDocumenting),
+          DocumentingActions.fetchCurrentDocumenting(documentingId),
         );
     }
     retrieveData();

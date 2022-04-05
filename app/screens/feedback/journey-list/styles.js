@@ -32,11 +32,11 @@ export default styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: Colors.outline,
+    padding: 16,
     marginTop: 15,
   },
   inProgressContent: {
-    padding: 16,
-    height: 190,
+    minHeight: 190,
   },
   inProgressText: {
     flex: 1,
@@ -65,7 +65,7 @@ export default styles = StyleSheet.create({
   historyCard: {
     borderRadius: 4,
     backgroundColor: Colors.primary50,
-    height: 80,
+    minHeight: 80,
     width: 120,
     marginRight: 15,
   },
