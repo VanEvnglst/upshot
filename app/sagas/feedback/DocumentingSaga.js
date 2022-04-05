@@ -18,7 +18,7 @@ const step2Data = state => state.documenting.get('step2').data;
 const step3Data = state => state.documenting.get('step3').data;
 const step4Data = state => state.documenting.get('step4').data;
 const step5Data = state => state.documenting.get('step5').data;
-const otherTopicData = state => state.documenting.get('otherTopic').data;
+const otherTopicData = state => state.documenting.get('otherTopic');
 
 export function* postFeedbackDocumenting({ data }) {
   // const connected = yield checkInternetConnection();
@@ -64,7 +64,7 @@ export function* updateFeedbackDocumenting({ data }) {
     else topicListStr += `${item}`;
   });
   topicListStr += ']';
-  const dateSel = moment(step3).format('MMM DD, YYYY');
+  const dateSel = step3 && step3 !== null ? moment(step3).format('MMM DD, YYYY') : '';
   const step4Value = step4 && step4.value !== null ? step4.value : true;
   const step5Value = step5 && step5.value !== null ? step5.value : 0;
   params.append('documenting_id', docuId);
