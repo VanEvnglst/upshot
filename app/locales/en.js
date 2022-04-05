@@ -47,6 +47,7 @@ const labels = {
       'When you gave feedback right after observing an event',
     feedbackCoaching: 'Feedback Coaching',
     feedbackFor: 'Feedback for',
+    created: 'Created',
     history: 'History',
     feedbackToGive: 'The feedback I want to give is',
     positive: 'Positive',
