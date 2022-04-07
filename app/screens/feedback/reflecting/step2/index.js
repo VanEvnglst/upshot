@@ -140,7 +140,7 @@ const ReflectingStep2 = props => {
                   leftImage={Images.thumbsDownEmoji}
                   rightImage={Images.thumbsUpEmoji}
                   minValue={1}
-                  maxValue={5}
+                  maxValue={10}
                   step={1}
                   value={item.score}
                   onSlidingComplete={value => handleSliderValue(item, value)}
