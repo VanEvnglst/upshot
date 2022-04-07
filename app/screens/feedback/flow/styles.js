@@ -16,6 +16,11 @@ export default styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   button: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  enabledBtn: {
     backgroundColor: Colors.primaryDark,
   },
   disabledBtn: {

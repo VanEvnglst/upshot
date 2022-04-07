@@ -71,7 +71,7 @@ const FeedbackType = props => {
       </View>
       <View style={styles.btnContainer}>
         <Button
-          style={!isCompleted ? styles.disabledBtn : styles.button}
+          style={[styles.button, !isCompleted ? styles.disabledBtn : styles.enabledBtn]}
           onPress={() => proceedToNext()}
           mode='contained'
           disabled={!isCompleted}
