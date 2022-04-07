@@ -59,7 +59,7 @@ const ReflectingStep1 = props => {
           leftImage={Images.sadEmoji}
           rightImage={Images.happyEmoji}
           minValue={1}
-          maxValue={5}
+          maxValue={10}
           step={1}
           value={feelingValue}
           onSlidingStart={value => handleSliderValue(value)}
