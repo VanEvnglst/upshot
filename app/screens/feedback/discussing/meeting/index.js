@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Animated, Dimensions, Image, ScrollView } from 'react-native';
+import { View, Animated, Dimensions, Image, ScrollView, Platform } from 'react-native';
 import { Button, FAB as FloatingAction } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -139,7 +139,7 @@ const DiscussingMeeting = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1}}>
       <Wrapper>
         <Header
           headerRight={{
@@ -171,7 +171,7 @@ const DiscussingMeeting = props => {
             ];
             return (
               <View style={styles.cardContainer}>
-                <View style={styles.card}>
+                <View style={[styles.card, Platform.OS === 'android' && styles.androidCard]}>
                   <View style={styles.headerContainer}>
                     {/* <Image
                         source={Images.lightbulb}

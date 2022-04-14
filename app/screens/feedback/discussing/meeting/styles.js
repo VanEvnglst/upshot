@@ -19,6 +19,7 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardContainer: {
+    marginTop: 20,
     width: ITEM_SIZE,
   },
   card: {
@@ -27,24 +28,17 @@ export default styles = StyleSheet.create({
     marginHorizontal: SPACING,
     padding: SPACING * 2,
     borderRadius: 10,
+    shadowOpacity: Platform.OS === 'ios' ? 0.2 : 0.5,
+  },
+  androidCard: {
     shadowColor: '#000',
     shadowRadius: 30,
-    shadowOpacity: 0.5,
+    
     shadowOffset: {
       width: 0,
       height: 0,
     },
     elevation: 4,
-    // borderRadius: 18,
-    // shadowColor: '#000',
-    // shadowRadius: 30,
-    // shadowOpacity: 0.5,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 0,
-    // },
-    // padding: 12,
-    //backgroundColor: Colors.width,
   },
   cardSpacer: {
     width: EMPTY_ITEM_SIZE,
