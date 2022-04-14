@@ -3,6 +3,6 @@ import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
+    backgroundColor: 'white',
   },
 });
