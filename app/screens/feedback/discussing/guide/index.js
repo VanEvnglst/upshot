@@ -38,7 +38,8 @@ const DiscussingGuide = props => {
 
   return (
     <Wrapper>
-      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}
+      >
         <Header
           headerLeft={{
             onPress: () => navigation.goBack(),
@@ -57,11 +58,11 @@ const DiscussingGuide = props => {
             return <GuidePost key={i} item={item} />;
           })}
         </View>
-        <View style={styles.footNoteContainer}>
+        {/* <View style={styles.footNoteContainer}>
           <Text type="body1" style={styles.descStyle}>
             {feedbackDiscussing.discussingFootNote}
           </Text>
-        </View>
+        </View> */}
         <View style={styles.btnContainer}>
           <Button
             style={styles.button}
