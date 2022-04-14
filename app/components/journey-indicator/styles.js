@@ -1,14 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
     marginLeft: 20,
     padding: 16,
-    borderWidth: 0.12,
+    borderWidth: Platform.OS === 'android' ? 0.12 : 0.18,
     borderRadius: 2,
     marginBottom: 15,
-    borderColor: Colors.black,
+    borderColor: Platform.OS === 'android' ? Colors.black : 'rgba(0,0,0,0.4)',
   },
   disabledCard: {
     height: 60,
