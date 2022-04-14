@@ -12,12 +12,12 @@ const discussingGuide = [
   {
     image: Images.voiceRecording,
     title: feedbackDiscussing.voiceRecordingTitle,
-    content: feedbackDiscussing.voiceRecordingDesc,
+    content: feedbackDiscussing.comingSoon,
   },
   {
     image: Images.meetingNotes,
     title: feedbackDiscussing.meetingNotesTitle,
-    content: feedbackDiscussing.meetingNotesDesc,
+    content: feedbackDiscussing.comingSoon,
   },
 ];
 
