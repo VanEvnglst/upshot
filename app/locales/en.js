@@ -212,6 +212,7 @@ const labels = {
     issueResolved: 'The issue was resolved without my feedback',
   },
   feedbackDiscussing: {
+    comingSoon: 'Coming soon!',
     discussingDesc: `We've created a few tools for you to use during your discussion. These are optional. Feel free to use whatever feels comfortable and natural to you.`,
     cueCardsTitle: 'cue cards',
     cueCardsDesc: `We've turned the discussion points you prepared into cue cards. Swipe through them during your meeting, or refer to them at the end to make sure you haven't missed anything important.`,
