@@ -60,7 +60,7 @@ export const getPrepStep5CData = state => state.preparing.get('step5C');
 /* ------------- Feedback Discussing Selectors ------------- */
 export const getDiscussing = state => state.discussing;
 export const getDiscussingId = state => state.discussing.get('id');
-
+export const getDiscussingData = state => state.discussing.get('data');
 
 /* ------------- Feedback Reflecting Selectors ------------- */
 export const getReflecting = state => state.reflecting;

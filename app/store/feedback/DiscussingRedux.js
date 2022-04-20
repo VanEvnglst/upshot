@@ -15,6 +15,7 @@ export const INITIAL_STATE = Map({
     dateToHappen: '',
     whoWillMakeIt: '',
   },
+  data: [],
   closed: false,
   started: false
 });

@@ -19,6 +19,7 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardContainer: {
+    marginTop: 20,
     width: ITEM_SIZE,
   },
   card: {
@@ -27,24 +28,17 @@ export default styles = StyleSheet.create({
     marginHorizontal: SPACING,
     padding: SPACING * 2,
     borderRadius: 10,
+    shadowOpacity: Platform.OS === 'ios' ? 0.2 : 0.5,
+  },
+  androidCard: {
     shadowColor: '#000',
     shadowRadius: 30,
-    shadowOpacity: 0.5,
+
     shadowOffset: {
       width: 0,
       height: 0,
     },
     elevation: 4,
-    // borderRadius: 18,
-    // shadowColor: '#000',
-    // shadowRadius: 30,
-    // shadowOpacity: 0.5,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 0,
-    // },
-    // padding: 12,
-    //backgroundColor: Colors.width,
   },
   cardSpacer: {
     width: EMPTY_ITEM_SIZE,
@@ -53,7 +47,7 @@ export default styles = StyleSheet.create({
     color: Colors.primaryDark,
   },
   skippedCardTitle: {
-    color: Colors.secondaryDark
+    color: Colors.secondaryDark,
   },
   cardContentContainer: {
     marginTop: 20,
@@ -64,30 +58,33 @@ export default styles = StyleSheet.create({
     lineHeight: 24,
   },
   cardGuideContainer: {
-    alignItems: 'center', 
-    alignSelf: 'center' 
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   guideText: {
     marginTop: 20,
-    color: Colors.lightBlack
+    color: Colors.lightBlack,
   },
   endMeetingBtnText: {
     color: Colors.primaryDark,
   },
   headerContainer: {
-    flexDirection: 'row', marginBottom: 10, alignItems: 'center'
+    flexDirection: 'row',
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   headerLine: {
     height: 3,
     marginLeft: 5,
     borderRadius: 3,
-    flex:1,
+    flex: 1,
   },
   filledHeaderLine: {
-    backgroundColor: Colors.primaryDark
+    backgroundColor: Colors.primaryDark,
   },
   skippedHeaderLine: {
-    backgroundColor: Colors.secondaryDark
+    backgroundColor: Colors.secondaryDark,
   },
   floatingAction: {
     width: 200,
@@ -98,10 +95,14 @@ export default styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   floatingLabel: {
-    color: Colors.primaryDark
+    // marginBottom: 7,
+    color: Colors.primaryDark,
+  },
+  icon: {
+    // marginRight: 100,
   },
   addedGuideTitle: {
     color: Colors.secondaryDark,
@@ -112,9 +113,9 @@ export default styles = StyleSheet.create({
     lineHeight: 20,
   },
   guideContainer: {
-    marginTop: 30
+    marginTop: 30,
   },
   guideContent: {
     marginTop: 25,
-  }
+  },
 });
