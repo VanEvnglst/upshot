@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Animated, Dimensions, Image, ScrollView, Platform } from 'react-native';
+import {
+  View,
+  Animated,
+  Dimensions,
+  Image,
+  ScrollView,
+  Platform,
+} from 'react-native';
 import { Button, FAB as FloatingAction } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
-import { getDiscussingId } from 'app/store/selectors';
+import { getDiscussingId, getDiscussingData } from 'app/store/selectors';
 import { Header, Text, Wrapper } from 'app/components';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
@@ -24,6 +31,8 @@ const DiscussingMeeting = props => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const dispatch = useDispatch();
   const activeDiscussing = useSelector(getDiscussingId);
+  const discussData = useSelector(getDiscussingData);
+  const [cardData, setCardData] = useState([]);
 
   const contentValues = [
     { key: 'empty-left' },
@@ -75,32 +84,62 @@ const DiscussingMeeting = props => {
     { key: 'empty-right' },
   ];
 
-  const data = contentValues.map((item, index) => ({
-    key: String(index),
-    title: item.title,
-    content: item.content,
-  }));
+  useEffect(() => {
+    async function fetchDiscussing() {
+      if (activeDiscussing)
+        dispatch(DiscussingActions.fetchCurrentDiscussing(activeDiscussing));
+    }
+    fetchDiscussing();
+  }, []);
+  
 
-  // TODO: implement current discussing when data is final
-  // useEffect(() => {
-  //   if(activeDiscussing)
-  //   dispatch(DiscussingActions.fetchCurrentDiscussing(activeDiscussing));
-  // }, []);
+  useEffect(() => {
+    handleData();
+  }, [discussData]);
 
-  const DiscussionCard = ({ title, content }) => {
+  const handleData = async () => {
+    const dataArr = discussData.map((item, index) => ({
+      key: String(index),
+      title: item.title,
+      content: item.content,
+      skipped: item.skipped
+    }));
+    setCardData(dataArr);
+  }
+
+  const DiscussionCard = ({ item }) => {
+    const { title, content, skipped } = item;
     return (
-      <View
-        style={{
-          borderRadius: 10,
-          flex: 2,
-          backgroundColor: '#F5F5F5aaaa',
-          marginHorizontal: 12,
-          padding: 20,
-        }}>
-        <Text type="h5" style={{ color: '#3700B3' }}>
-          {title}
-        </Text>
-        <Text>{content}</Text>
+      <View style={styles.cardContainer}>
+        <View
+          style={[
+            styles.card,
+            Platform.OS === 'android' && styles.androidCard,
+          ]}>
+          <View style={[styles.headerContainer, skipped && { marginTop: 10}]}>
+            <Image 
+              source={skipped ? Images.lightbulb : Images.quote} 
+              resizeMode="contain"
+            />
+            <View style={[styles.headerLine, skipped ? styles.skippedHeaderLine : styles.filledHeaderLine]} />
+          </View>
+          <Text type="h5" style={skipped ? styles.skippedCardTitle : styles.cardTitle}>
+            {title}
+          </Text>
+          <View style={styles.cardContentContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text 
+                type="body1" 
+                style={[styles.cardContent, {
+                  fontStyle: !skipped ? 'italic' : 'normal'
+                }]}
+              >
+                {content}
+              </Text>
+              {title === cueCards.nextSteps && <NextStepsGuide />}
+            </ScrollView>
+          </View>
+        </View>
       </View>
     );
   };
@@ -139,7 +178,7 @@ const DiscussingMeeting = props => {
   };
 
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Wrapper>
         <Header
           headerRight={{
@@ -155,7 +194,7 @@ const DiscussingMeeting = props => {
           snapToAlignment="start"
           decelerationRate={0}
           bounces={false}
-          data={data}
+          data={cardData}
           keyExtractor={item => item.key}
           pagingEnabled
           horizontal
@@ -170,31 +209,9 @@ const DiscussingMeeting = props => {
               index * ITEM_SIZE,
             ];
             return (
-              <View style={styles.cardContainer}>
-                <View style={[styles.card, Platform.OS === 'android' && styles.androidCard]}>
-                  <View style={styles.headerContainer}>
-                    {/* <Image
-                        source={Images.lightbulb}
-                        resizeMode='contain'
-                      /> */}
-                    <Image source={Images.quote} resizeMode="contain" />
-                    <View
-                      style={[styles.headerLine, styles.filledHeaderLine]}
-                    />
-                  </View>
-                  <Text type="h5" style={styles.cardTitle}>
-                    {item.title}
-                  </Text>
-                  <View style={styles.cardContentContainer}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                      <Text type="body1" style={styles.cardContent}>
-                        {item.content}
-                      </Text>
-                      {item.title === cueCards.nextSteps && <NextStepsGuide />}
-                    </ScrollView>
-                  </View>
-                </View>
-              </View>
+              <DiscussionCard 
+                item={item}
+              />
             );
           }}
         />
@@ -220,11 +237,12 @@ const DiscussingMeeting = props => {
           ]}
         /> */}
         <Button
-          mode='contained'
+          mode="contained"
           style={styles.floatingAction}
-          onPress={() => handleNext()}
-        >
-          <Text type='button' style={styles.floatingLabel}>End Meeting</Text>
+          onPress={() => handleNext()}>
+          <Text type="button" style={styles.floatingLabel}>
+            End Meeting
+          </Text>
         </Button>
         {/* <View
          
@@ -246,5 +264,13 @@ const DiscussingMeeting = props => {
 
 export default DiscussingMeeting;
 
-DiscussingMeeting.propTypes = {};
-DiscussingMeeting.defaultProps = {};
+DiscussingMeeting.propTypes = {
+  activeDiscussing: PropTypes.number,
+  discussData: PropTypes.array,
+  fetchCurrentDiscussing: PropTypes.func,
+};
+DiscussingMeeting.defaultProps = {
+  activeDiscussing: 1,
+  discussData: [],
+  fetchCurrentDiscussing: () => {},
+};
