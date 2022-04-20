@@ -98,7 +98,11 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
   },
   floatingLabel: {
+    // marginBottom: 7,
     color: Colors.primaryDark,
+  },
+  icon: {
+    // marginRight: 100,
   },
   addedGuideTitle: {
     color: Colors.secondaryDark,

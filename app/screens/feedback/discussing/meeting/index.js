@@ -8,6 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Button, FAB as FloatingAction } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
@@ -215,31 +216,17 @@ const DiscussingMeeting = props => {
             );
           }}
         />
-        {/* {route.params.type === 'actionPlan' ? (
-          <View style={styles.btnContainer}></View>
-        ) : ( */}
-
-        {/*  <Text type="button" style={styles.endMeetingBtnText}>
-                End Meeting
-              </Text>
-            </Button> */}
-        {/* <FloatingAction.Group
-          style={styles.floatingAction}
-          labelTextColor={Colors.primaryDark}
-          // label={'End Meeting'}
-          uppercase
-          // icon={'stop'}
-          actions={[
-            { 
-              icon: 'stop',
-              
-            }
-          ]}
-        /> */}
         <Button
           mode="contained"
           style={styles.floatingAction}
-          onPress={() => handleNext()}>
+          onPress={() => handleNext()}
+        >
+          <Icon
+            size={20}
+            name='stop'
+            color={Colors.primaryDark}
+            iconStyle={styles.icon}
+          />
           <Text type="button" style={styles.floatingLabel}>
             End Meeting
           </Text>
