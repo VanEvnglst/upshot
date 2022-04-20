@@ -17,8 +17,9 @@ const FeedbackDiscussing = props => {
     whenWillItHappen: '',
     whoWillMakeIt: '',
   });
-  const [actionPlanList, setActionPlanList] = useState([actionPlan]);
+  const [actionPlanList, setActionPlanList] = useState([]);
 
+  // console.warn('woop', actionPlanList);
   const handleBack = () => {
     navigation.navigate('DiscussingMeeting', {
       type: 'actionPlan',
@@ -28,6 +29,10 @@ const FeedbackDiscussing = props => {
   const handleNext = () => {
     dispatch(DiscussingActions.updateFeedbackDiscussing(actionPlan));
   };
+
+  const handleClose = () => {
+    // dispatch(DiscusssingActions.update());
+  }
 
   const handleTextChange = (key, text, index) => {
     setActionPlan(prevState => ({
@@ -58,6 +63,7 @@ const FeedbackDiscussing = props => {
   };
 
   const addAnotherItem = () => {
+    // setActionPlan(...actionPlanList, actionPlan);
     // const newList = [...actionPlanList, actionPlan];
     // setActionPlanList(newList);
   };
@@ -112,7 +118,7 @@ const FeedbackDiscussing = props => {
       <Wrapper>
         <Header
           headerRight={{
-            onPress: () => console.log(),
+            onPress: () => handleClose(),
           }}
         />
         <ScrollView
@@ -124,7 +130,7 @@ const FeedbackDiscussing = props => {
               <Text type="h6" style={styles.titleText}>{discussingActionPlan.title}</Text>
               <Text type="body1">{discussingActionPlan.description}</Text>
             </View>
-            {/* <View style={{ marginTop: 30 }}>
+            <View style={{ marginTop: 30 }}>
         <TextInput
           label={discussingActionPlan.specificAction}
           placeholder={discussingActionPlan.specificAction}
@@ -146,7 +152,7 @@ const FeedbackDiscussing = props => {
           onChangeText={text => handleTextChange('whoWillMakeIt', text)}
           style={{ marginBottom: 20 }}
         />
-      </View> */}
+      </View>
             {/* <FlatList
           bounces={false}
           data={actionPlanList}
@@ -163,8 +169,8 @@ const FeedbackDiscussing = props => {
             {/* {actionPlanList.map((item, i) => (
               <ActionPlan item={item} index={i} />
             ))} */}
-            {renderPlanList()}
-            <View>
+            {/* {renderPlanList()} */}
+            {/* <View>
               <Button
                 mode="contained"
                 style={styles.addItemButton}
@@ -173,7 +179,7 @@ const FeedbackDiscussing = props => {
                   Add another item
                 </Text>
               </Button>
-            </View>
+            </View> */}
           </KeyboardAvoidingView>
         </ScrollView>
         <View
