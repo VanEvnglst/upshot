@@ -5,7 +5,7 @@ import DiscussingActions, {
 } from 'app/store/feedback/DiscussingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
-
+import labels from 'app/locales/en';
 const discussingId = state => state.discussing.get('id');
 
 export function* postFeedbackDiscussing({ journeyId }) {
@@ -31,15 +31,15 @@ export function* postFeedbackDiscussing({ journeyId }) {
 export function* updateFeedbackDiscussing({ data }) {
   const params = new URLSearchParams();
   const discussId = yield select(discussingId);
- 
+
   var plansList = '[{';
-    plansList += `"what": ${data.specificAction}`;
-    plansList += `"when": ${data.whenWillItHappen}`;
-    plansList += `"who": ${data.whoWillMakeIt}`;
-    plansList += '}]';
+  plansList += `"what": ${data.specificAction}`;
+  plansList += `"when": ${data.whenWillItHappen}`;
+  plansList += `"who": ${data.whoWillMakeIt}`;
+  plansList += '}]';
   params.append('discussing_id', discussId);
   params.append('plans', plansList);
-  
+
   const response = yield call(api.updateFeedbackDiscussing, params);
   if (response.ok) {
     if (response.data.status === 'ok') {
@@ -63,7 +63,7 @@ export function* updateDiscussingReminder({ data }) {
   const response = yield call(api.updateFeedbackDiscussing, params);
   if (response.ok) {
     if (response.data.status === 'ok') {
-      yield put(DiscussingActions.updateFeedbackDiscussingSuccess())
+      yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
       yield NavigationService.navigate('ActiveFeedbackJourney');
     }
   } else {
@@ -72,15 +72,118 @@ export function* updateDiscussingReminder({ data }) {
 }
 
 export function* fetchCurrentDiscussing({ discussingId }) {
+  const { cueCards } = labels.feedbackDiscussing;
   const params = new URLSearchParams();
   params.append('discussing_id', discussingId);
 
   const response = yield call(api.getCurrentDiscussing, params);
+
   if (response.ok) {
     if (response.data.status === 'ok') {
-      // const discussingDetails = response.data.details;
-      // yield put(DiscussingActions.fetchCurrentDiscussingSuccess())
-      
+      const prepDetails = response.data.details.preparing_phase;
+      const {
+        check_in: checkIn,
+        purpose,
+        additional_purpose: addedPurpose,
+        observation_questions: observation,
+        event,
+        actions: action,
+        result,
+        action_plan_questions: plans,
+        additional_action_plan_questions: addedActionPlanQuestions,
+        action_plan_steps: actionPlanSteps,
+        action_plan_evaluate_options: actionPlanOptions,
+        additional_action_plan_evaluate_options: addedActionPlanOptions,
+        checkout_question: checkout,
+        checkout_acknowledge: checkoutAcknowledge,
+        additional_checkout_acknowledge: addedCheckoutAcknowledge,
+      } = prepDetails;
+      yield put(
+        DiscussingActions.setDiscussingStatus('data', [
+          { key: 'empty-left' },
+          {
+            id: 1,
+            title: cueCards.checkIn,
+            content: checkIn === '' ? cueCards.checkInContent : checkIn,
+            skipped: checkIn === '' ? true : false,
+          },
+          {
+            id: 2,
+            title: cueCards.statePurpose,
+            content:
+              purpose === '' && addedPurpose === ''
+                ? cueCards.statePurposeContent
+                : `${purpose}\n\n${addedPurpose}`,
+            skipped: (purpose === '' && addedPurpose === '') ? true : false,
+          },
+          {
+            id: 3,
+            title: cueCards.observation,
+            content:
+              event && action && result === ''
+                ? cueCards.observationContent
+                : `${event}\n\n${action}\n\n${result}`,
+            skipped: (event === '' && action === '' && result === '') ? true : false,
+          },
+          {
+            id: 4,
+            title: cueCards.listenDeeply,
+            content:
+              observation === '' ? cueCards.listenDeeplyContent : observation,
+            skipped: observation === '' ? true : false,
+          },
+          {
+            id: 5,
+            title: cueCards.brainstorm,
+            content:
+              plans === '' || addedActionPlanQuestions === ''
+                ? cueCards.brainstormContent
+                : `${plans}\n\n${addedActionPlanQuestions}`,
+            skipped:
+              plans === '' && addedActionPlanQuestions === '' ? true : false,
+          },
+          {
+            id: 6,
+            title: cueCards.evaluateIdeas,
+            content:
+              actionPlanOptions || addedActionPlanOptions === ''
+                ? cueCards.evaluateIdeasContent
+                : `${actionPlanOptions}\n\n${addedActionPlanOptions}`,
+            skipped:
+              actionPlanOptions === '' && addedActionPlanOptions === ''
+                ? true
+                : false,
+          },
+          {
+            id: 7,
+            title: cueCards.nextSteps,
+            content: cueCards.nextStepsContent,
+            skipped: true,
+          },
+          {
+            id: 8,
+            title: cueCards.checkOut,
+            content: checkout === '' ? cueCards.checkOutContent : checkout,
+            skipped: checkout === '' ? true : false,
+          },
+          {
+            id: 9,
+            title: cueCards.thankAndSupport,
+            content:
+              checkoutAcknowledge ||  addedCheckoutAcknowledge === ''
+                ? cueCards.thankAndSupportContent
+                : `${checkoutAcknowledge}\n\n${addedCheckoutAcknowledge}`,
+            skipped:
+              checkoutAcknowledge === '' && addedCheckoutAcknowledge === ''
+                ? true
+                : false,
+          },
+          {
+            key: 'empty-right',
+          },
+        ]),
+      );
+      yield put(DiscussingActions.fetchCurrentDiscussingSuccess());
     }
   } else {
     yield put(DiscussingActions.fetchCurrentDiscussingFailure(response.data));
