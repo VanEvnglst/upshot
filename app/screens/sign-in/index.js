@@ -65,7 +65,10 @@ const SignIn = props => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior='padding'
+    >
       <View style={styles.logoContainer}>
         <Image source={Images.upshotWhite} resizeMode="contain" />
       </View>
