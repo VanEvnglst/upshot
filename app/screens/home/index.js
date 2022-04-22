@@ -70,7 +70,10 @@ const HomeScreen = props => {
 
   return (
     <Wrapper>
-      <ScrollView bounces={false} contentContainerStyle={styles.container}>
+      <ScrollView 
+        bounces={false} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}>
         {/* <View style={{ width: '95%', marginBottom: 20 }}>
           <Text style={{ paddingLeft: 25, marginBottom: 10 }}>Alerts</Text>
           {/* map data for alerts */}
@@ -125,7 +128,10 @@ const HomeScreen = props => {
             testID={'txt-home-comingSoon'}>
             {homeScreen.comingSoon}
           </Text>
-          <ScrollView horizontal>
+          <ScrollView 
+            showsHorizontalScrollIndicator={false}
+            horizontal
+          >
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
               image={Images.feedbackCoaching}
