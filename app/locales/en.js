@@ -244,9 +244,9 @@ const labels = {
     },
     discussingActionPlan: {
       title: 'Send the action plan to your employee',
-      description: 'While you may have already agreed on an action plan',
-      descDuring: 'during',
-      descCont: `your meeting, it's good practice to write it down and send it to your employee. This way, you can check that you have a shared understanding of what's going to happen next.`,
+      description: `While you may have already agreed on an action plan during your meeting, it's good practice to write it down and send it to your employee. This way, you can check that you have a shared understanding of what's going to happen next.`,
+      descDuring: '',
+      descCont: ``,
       specificAction: 'What is the specific action?',
       whenWillThisHappen: 'When will this happen?',
       whoWillMakeIt: 'Who will make it happen?',

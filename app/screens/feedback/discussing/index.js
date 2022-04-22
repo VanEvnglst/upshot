@@ -122,9 +122,12 @@ const FeedbackDiscussing = props => {
           }}
         />
         <ScrollView
+          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag">
-          <KeyboardAvoidingView>
+          <KeyboardAvoidingView
+            behavior='padding'
+          >
             <Text type="overline" style={styles.overlineText}>{labels.feedbackSignPost.discussing}</Text>
             <View>
               <Text type="h6" style={styles.titleText}>{discussingActionPlan.title}</Text>
@@ -188,7 +191,7 @@ const FeedbackDiscussing = props => {
             <Text type="button">{labels.common.back}</Text>
           </Button>
           <Button mode="contained" onPress={() => handleNext()}>
-            <Text type="button">{labels.common.next}</Text>
+            <Text type="button">Send</Text>
           </Button>
         </View>
       </Wrapper>
