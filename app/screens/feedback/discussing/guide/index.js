@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ScrollView, Image, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper, Header, Text } from 'app/components';
@@ -58,11 +59,6 @@ const DiscussingGuide = props => {
             return <GuidePost key={i} item={item} />;
           })}
         </View>
-        {/* <View style={styles.footNoteContainer}>
-          <Text type="body1" style={styles.descStyle}>
-            {feedbackDiscussing.discussingFootNote}
-          </Text>
-        </View> */}
         <View style={styles.btnContainer}>
           <Button
             style={styles.button}
@@ -80,6 +76,12 @@ const DiscussingGuide = props => {
 
 export default DiscussingGuide;
 
-DiscussingGuide.propTypes = {};
+DiscussingGuide.propTypes = {
+  journeyId: PropTypes.number,
+  postFeedbackDiscussing: PropTypes.func,
+};
 
-DiscussingGuide.defaultProps = {};
+DiscussingGuide.defaultProps = {
+  journeyId: 1,
+  postFeedbackDiscussing: () => {}
+};
