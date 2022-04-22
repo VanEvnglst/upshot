@@ -35,7 +35,6 @@ const FeedbackGuide = props => {
         content = scheduledPositiveSteps;
         setSignPostHeader({
           title: feedbackSignPost.scheduledPos,
-          description: feedbackSignPost.scheduledPosDesc,
         });
       } else {
         content = scheduledCorrectiveSteps;
@@ -69,11 +68,11 @@ const FeedbackGuide = props => {
           <Text type="h4" style={[styles.textTitle, styles.mediumTextStyle]}>
             {signPostHeader.title}
           </Text>
-          <Text
+          {/* <Text
             type="body1"
             style={[styles.contentDescription, styles.mediumTextStyle]}>
             {signPostHeader.description}
-          </Text>
+          </Text> */}
         </View>
         <View style={styles.signPostContainer}>
           {signPost.map((item, i) => {
