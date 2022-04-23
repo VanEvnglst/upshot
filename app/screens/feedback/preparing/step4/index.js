@@ -65,7 +65,9 @@ const PreparingStep4 = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior='padding'
+      >
         <View style={containerStyles.descriptionContainer}>
           <Text
             type="h6"
