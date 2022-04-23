@@ -7,7 +7,8 @@ import styles from './styles';
 
 const CalendarPicker = ({ onPress, text, icon, style }) => {
   return (
-    <TouchableOpacity         accessibilityRole="button" 
+    <TouchableOpacity
+      accessibilityRole="button" 
       onPress={onPress}
       style={style}
     >

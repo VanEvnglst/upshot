@@ -15,6 +15,7 @@ import {
   getCurrentJourney,
   getChosenFlow,
   getChosenType,
+  getStaffName,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
@@ -42,6 +43,7 @@ const FeedbackConfirmation = props => {
   const journeyId = useSelector(getCurrentJourney);
   const flow = useSelector(getChosenFlow);
   const type = useSelector(getChosenType);
+  const staffName = useSelector(getStaffName);
   const [confirmationContent, setContent] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
@@ -73,7 +75,7 @@ const FeedbackConfirmation = props => {
   };
 
   const handleContent = () => {
-    var finalContent = '';
+    let finalContent = '';
     const confirmationContent = confirmationModel.find(
       x => x.type === route.params.type,
     );
@@ -88,6 +90,9 @@ const FeedbackConfirmation = props => {
       }
     } else {
       finalContent = confirmationContent.content;
+    }
+    if (route.params.type === 'preparing') {
+      finalContent = `${confirmationContent.content} ${staffName.firstName}.`
     }
     setContent(finalContent)
   };
@@ -218,7 +223,9 @@ const FeedbackConfirmation = props => {
   return (
     <View style={styles.container}>
       <Wrapper>
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           <Header
             headerRight={{
               onPress: () => handleClose(),

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,7 +65,10 @@ const SignIn = props => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+    >
       <View style={styles.logoContainer}>
         <Image source={Images.upshotWhite} resizeMode="contain" />
       </View>
@@ -121,10 +124,14 @@ export default SignIn;
 
 SignIn.propTypes = {
   signInUser: PropTypes.func,
-  authLoading: PropTypes.bool,
+  fetchServer: PropTypes.func,
+  isLoading: PropTypes.bool,
+  signInError: PropTypes.string,
 };
 
 SignIn.defaultProps = {
   signInUser: () => {},
-  authLoading: false,
+  fetchServer: () => {},
+  isLoading: false,
+  signInError: ''
 };

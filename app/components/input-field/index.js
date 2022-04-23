@@ -32,13 +32,10 @@ const TextInput = props => {
           {description}
         </Text>
       )}
-      {error && error.length !== 0 && (
+      {error && error.length !== 0 && !description && (
         <Text
           type='caption'
-          style={[
-            styles.descriptionText,
-            styles.errorText
-          ]}
+          style={styles.errorText}
         >{error}</Text>
       )}
     </View>

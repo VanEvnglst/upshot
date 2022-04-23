@@ -10,6 +10,8 @@ const DateTimePicker = ({ isVisible, mode, onCancel, onConfirm }) => {
       onConfirm={onConfirm}
       onCancel={onCancel}
       style={styles.container}
+      themeVariant='light'
+      isDarkModeEnabled={false}
     />
   );
 };

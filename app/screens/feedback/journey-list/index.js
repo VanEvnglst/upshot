@@ -166,7 +166,9 @@ const FeedbackJourneyList = props => {
   return (
     <View style={styles.container}>
       <Wrapper>
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           <Header
             headerLeft={{
               onPress: () => navigation.goBack(),
