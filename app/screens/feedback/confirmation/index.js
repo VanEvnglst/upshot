@@ -124,7 +124,7 @@ const FeedbackConfirmation = props => {
 
   const DiscussingCTA = () => {
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.discussingBtnContainer}>
         <Button
           mode={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
@@ -133,10 +133,11 @@ const FeedbackConfirmation = props => {
         <Button mode={'text'} onPress={() => showModal()}>
           <Text>{common.remindMeLater}</Text>
         </Button>
-        {/* <HintIndicator
+        <HintIndicator
           showHint={discussingHintVisible}
           onPress={() => setDiscussHintVisible(!discussingHintVisible)}
-        /> */}
+          style={styles.discussingAddedPadding}
+        />
       </View>
     );
   };
@@ -253,6 +254,10 @@ const FeedbackConfirmation = props => {
           )}
           {discussingHintVisible && (
             <View style={styles.hintCard}>
+              <Image
+                source={Images.discussingConfirmHint}
+                resizeMode='contain'
+              />
               <Text type="body2" style={styles.hintCardText}>
                 {feedbackDiscussing.confirmationHint}
               </Text>

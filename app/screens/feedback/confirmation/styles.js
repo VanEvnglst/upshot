@@ -40,10 +40,21 @@ export default styles = StyleSheet.create({
   preparingBtnContainer: {
     marginBottom: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flex: 1,
     paddingRight: 10,
+  },
+  discussingBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flex: 1,
+    paddingRight: 10,
+    marginBottom: 20,
+  },
+  discussingAddedPadding: {
+    marginBottom: 10,
   },
   hintIndicatorContainer: {
     justifyContent: 'center',
