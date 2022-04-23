@@ -258,7 +258,9 @@ const ActiveFeedbackJourney = props => {
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           <Header
             headerLeft={{
               onPress: () => handleBackNavigation(),
