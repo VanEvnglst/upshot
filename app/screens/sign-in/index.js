@@ -124,10 +124,14 @@ export default SignIn;
 
 SignIn.propTypes = {
   signInUser: PropTypes.func,
-  authLoading: PropTypes.bool,
+  fetchServer: PropTypes.func,
+  isLoading: PropTypes.bool,
+  signInError: PropTypes.string,
 };
 
 SignIn.defaultProps = {
   signInUser: () => {},
-  authLoading: false,
+  fetchServer: () => {},
+  isLoading: false,
+  signInError: ''
 };
