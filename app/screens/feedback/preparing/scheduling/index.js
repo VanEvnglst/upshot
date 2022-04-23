@@ -163,7 +163,7 @@ const PreparingSchedule = props => {
           {staffName.lastName}
         </Text>
         <View style={styles.contentContainer}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.selectionContainer}>
               <CalendarPicker
                 onPress={() => showDatePicker()}
