@@ -217,6 +217,16 @@ const FeedbackConfirmation = props => {
   };
 
   const handleClose = () => {
+    if (route.params.type === 'discussing') {
+      const reminder = new Date();
+      reminder.setHours( reminder.getHours() + 2 );
+      const discussingTime = moment(reminder).format('MMM DD, YYYY HH:mm');
+      const data = {
+        reminderDate: discussingTime
+      }
+      dispatch(DiscussingActions.updateDiscussingReminder(data));
+      console.warn('update reminder time');
+    }
     if (route.params.type === 'reflecting') closeJourney();
     else navigation.navigate('ActiveFeedbackJourney');
   };
