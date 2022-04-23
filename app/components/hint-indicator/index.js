@@ -5,12 +5,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 
 const HintIndicator = props => {
-  const { onPress, showHint } = props;
+  const { onPress, showHint, style } = props;
   return (
     <TouchableOpacity
       accessibilityRole="button"
       onPress={onPress}
-      style={[styles.container, showHint && styles.showHintContainer]}>
+      style={[style, styles.container, showHint && styles.showHintContainer]}>
       <Icon
         name={'help-outline'}
         size={18}
@@ -25,9 +25,11 @@ export default HintIndicator;
 HintIndicator.propTypes = {
   showHint: PropTypes.bool.isRequired,
   onPress: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 HintIndicator.defaultProps = {
   showHint: false,
   onPress: () => {},
+  style: {},
 };

@@ -124,7 +124,7 @@ const FeedbackConfirmation = props => {
 
   const DiscussingCTA = () => {
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.discussingBtnContainer}>
         <Button
           mode={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
@@ -133,10 +133,11 @@ const FeedbackConfirmation = props => {
         <Button mode={'text'} onPress={() => showModal()}>
           <Text>{common.remindMeLater}</Text>
         </Button>
-        {/* <HintIndicator
+        <HintIndicator
           showHint={discussingHintVisible}
           onPress={() => setDiscussHintVisible(!discussingHintVisible)}
-        /> */}
+          style={styles.discussingAddedPadding}
+        />
       </View>
     );
   };
@@ -216,6 +217,16 @@ const FeedbackConfirmation = props => {
   };
 
   const handleClose = () => {
+    if (route.params.type === 'discussing') {
+      const reminder = new Date();
+      reminder.setHours( reminder.getHours() + 2 );
+      const discussingTime = moment(reminder).format('MMM DD, YYYY HH:mm');
+      const data = {
+        reminderDate: discussingTime
+      }
+      dispatch(DiscussingActions.updateDiscussingReminder(data));
+      console.warn('update reminder time');
+    }
     if (route.params.type === 'reflecting') closeJourney();
     else navigation.navigate('ActiveFeedbackJourney');
   };
@@ -253,6 +264,10 @@ const FeedbackConfirmation = props => {
           )}
           {discussingHintVisible && (
             <View style={styles.hintCard}>
+              <Image
+                source={Images.discussingConfirmHint}
+                resizeMode='contain'
+              />
               <Text type="body2" style={styles.hintCardText}>
                 {feedbackDiscussing.confirmationHint}
               </Text>

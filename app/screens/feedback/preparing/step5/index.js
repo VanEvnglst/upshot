@@ -66,7 +66,9 @@ const PreparingStep5 = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior='padding'
+      >
         <View style={containerStyles.descriptionContainer}>
           <Text type="h6" style={containerStyles.stepTitleText}>
             {checkOut.step}: {checkOut.title}

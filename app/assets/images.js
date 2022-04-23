@@ -50,4 +50,5 @@ export default {
   timeIcon: require('./images/time_schedule.png'),
   alertIcon: require('./images/alert_schedule.png'),
   schedulingHint: require('./images/scheduling-hint.png'),
+  discussingConfirmHint: require('./images/discussing-confirm-hint.png'),
 };

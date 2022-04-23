@@ -40,8 +40,8 @@ const SharingStep2 = () => {
   };
 
   return (
-    <KeyboardAvoidingView>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <KeyboardAvoidingView behavior="padding">
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={[containerStyles.descriptionContainer]}>
           <Text
             type="h6"
