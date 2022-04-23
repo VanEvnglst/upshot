@@ -71,9 +71,9 @@ const PreparingStep3B = () => {
   };
 
   return (
-    <View style={containerStyles.container}>
-      <ScrollView>
-        <KeyboardAvoidingView>
+    <KeyboardAvoidingView behavior="padding">
+      <View style={containerStyles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={containerStyles.descriptionContainer}>
             <Text
               type="h6"
@@ -109,23 +109,24 @@ const PreparingStep3B = () => {
               description={labels.common.ownQuestionDesc}
             />
           </View>
-        </KeyboardAvoidingView>
-        <View style={containerStyles.btnContainer}>
-          <Button
-            mode="text"
-            onPress={() => handleBack()}
-            testID={'btn-preparingStep3B-back'}>
-            {labels.common.back}
-          </Button>
-          <Button
-            onPress={() => handleNext()}
-            mode={'contained'}
-            testID={'btn-preparingStep3B-next'}>
-            {labels.common.next}
-          </Button>
-        </View>
-      </ScrollView>
-    </View>
+
+          <View style={containerStyles.btnContainer}>
+            <Button
+              mode="text"
+              onPress={() => handleBack()}
+              testID={'btn-preparingStep3B-back'}>
+              {labels.common.back}
+            </Button>
+            <Button
+              onPress={() => handleNext()}
+              mode={'contained'}
+              testID={'btn-preparingStep3B-next'}>
+              {labels.common.next}
+            </Button>
+          </View>
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
