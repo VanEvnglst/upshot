@@ -159,6 +159,12 @@ const ActiveFeedbackJourney = props => {
           shouldStart={item.shouldStart && !item.started && !item.closed}
           hasProgress={item.started && !item.closed}
           item={item}
+          isPreparing={
+            !item.closed &&
+            item.title === 'Preparing' &&
+            route.params &&
+            route.params.type === 'preparing'
+          }
           onPress={
             () => (item.closed ? console.log('review to') : handleNavigation(i))
             // handleReviewNavigation(i)
@@ -203,6 +209,9 @@ const ActiveFeedbackJourney = props => {
           case 1:
             if (preparing.get('id')) screenName = 'FeedbackPreparing';
             else screenName = 'PreparingGuide';
+            if (route.params && route.params.type === 'preparing') {
+              screenName = 'PreparingSchedule';
+            }
             break;
           case 2:
             if (discussing.get('id')) screenName = 'DiscussingMeeting';
@@ -258,9 +267,7 @@ const ActiveFeedbackJourney = props => {
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Header
             headerLeft={{
               onPress: () => handleBackNavigation(),

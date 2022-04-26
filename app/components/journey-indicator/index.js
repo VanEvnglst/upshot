@@ -6,7 +6,7 @@ import labels from 'app/locales/en';
 import styles from './styles';
 
 const JourneyIndicator = props => {
-  const { hasProgress, current, disabled, done, style, item, onPress, shouldStart } = props;
+  const { hasProgress, current, disabled, done, style, item, onPress, shouldStart, subtitle, isPreparing } = props;
   return (
     <View
       style={[
@@ -29,7 +29,7 @@ const JourneyIndicator = props => {
         <Text
           type="overline"
           style={[current && styles.currentText, styles.descriptionText]}>
-          15 minutes
+          {subtitle}
         </Text>
       )}
       {current && (
@@ -52,7 +52,7 @@ const JourneyIndicator = props => {
           </Text>
         </TouchableOpacity>
       )}
-      {hasProgress && (
+      {(hasProgress || isPreparing) && (
         <TouchableOpacity accessibilityRole={'button'} onPress={onPress}>
           <Text
             type="button"
@@ -70,6 +70,15 @@ const JourneyIndicator = props => {
           </Text>
         </TouchableOpacity>
       )}
+      {/* {isPreparing && (
+        <TouchableOpacity accessibilityRole={'button'} onPress={onPress}>
+          <Text
+            type="button"
+            style={[styles.buttonText, current && styles.currentText]}>
+            {labels.common.continue}
+          </Text>
+        </TouchableOpacity>
+      )} */}
     </View>
   );
 };

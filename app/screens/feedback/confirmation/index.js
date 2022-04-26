@@ -27,6 +27,7 @@ import {
   Header,
   DateTimePicker,
   HintIndicator,
+  Modal
 } from 'app/components';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
@@ -45,11 +46,15 @@ const FeedbackConfirmation = props => {
   const type = useSelector(getChosenType);
   const staffName = useSelector(getStaffName);
   const [confirmationContent, setContent] = useState();
+  const [isDateModalVisible, setDateModalVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [reminderTime, setReminderTime] = useState();
   const [preparingHintVisible, setPrepHintVisible] = useState(false);
   const [discussingHintVisible, setDiscussHintVisible] = useState(false);
+  
 
+  const showDateModal = () => setDateModalVisible(true);
+  const hideDateModal = () => setDateModalVisible(false);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
 
@@ -103,7 +108,7 @@ const FeedbackConfirmation = props => {
         <Button type={'text'} onPress={() => handleDocumentingNav()}>
           <Text>{common.keepGoing}</Text>
         </Button>
-        <Button type={'text'} onPress={() => showModal()}>
+        <Button type={'text'} onPress={() => showDateModal()}>
           <Text>{common.remindMeLater}</Text>
         </Button>
       </View>
@@ -130,7 +135,7 @@ const FeedbackConfirmation = props => {
           onPress={() => navigation.navigate('ReflectingGuide')}>
           <Text>{common.keepGoing}</Text>
         </Button>
-        <Button mode={'text'} onPress={() => showModal()}>
+        <Button mode={'text'} onPress={() => showDateModal()}>
           <Text>{common.remindMeLater}</Text>
         </Button>
         <HintIndicator
@@ -187,7 +192,7 @@ const FeedbackConfirmation = props => {
           onPress={() => navigation.navigate('ReflectingGuide')}>
           <Text>{common.keepGoing}</Text>
         </Button>
-        <Button type={'text'} onPress={() => showModal()}>
+        <Button type={'text'} onPress={() => showDateModal()}>
           <Text>{common.remindMeLater}</Text>
         </Button>
       </View>
@@ -213,22 +218,35 @@ const FeedbackConfirmation = props => {
     if (route.params.type === 'sharing') {
       dispatch(SharingActions.updateSharingReminder(data));
     }
-    hideModal();
+    hideDateModal();
   };
 
   const handleClose = () => {
-    if (route.params.type === 'discussing') {
-      const reminder = new Date();
-      reminder.setHours( reminder.getHours() + 2 );
-      const discussingTime = moment(reminder).format('MMM DD, YYYY HH:mm');
-      const data = {
-        reminderDate: discussingTime
-      }
-      dispatch(DiscussingActions.updateDiscussingReminder(data));
-      console.warn('update reminder time');
+    const { type } = route.params;
+    const reminder = new Date();
+    reminder.setHours( reminder.getHours() + 2 );
+    const discussingTime = moment(reminder).format('MMM DD, YYYY HH:mm');
+    const data = {
+      reminderDate: discussingTime
     }
-    if (route.params.type === 'reflecting') closeJourney();
-    else navigation.navigate('ActiveFeedbackJourney');
+    switch(type) {
+      case 'documenting':
+        console.log('here');
+        break;
+      case 'preparing':
+        navigation.navigate('ActiveFeedbackJourney', {
+          type: 'preparing',
+        });
+        break;
+      case 'discussing':
+        dispatch(DiscussingActions.updateDiscussingReminder(data));
+        break;
+      case 'reflecting':
+        closeJourney();
+        break;
+      case 'sharing':
+        navigation.navigate('ActiveFeedbackJourney');
+    }
   };
 
   return (
@@ -239,7 +257,7 @@ const FeedbackConfirmation = props => {
         >
           <Header
             headerRight={{
-              onPress: () => handleClose(),
+              onPress: () => showModal(),
             }}
           />
           <View>
@@ -278,11 +296,41 @@ const FeedbackConfirmation = props => {
       </Wrapper>
       <DateTimePicker
         mode="time"
-        isVisible={isModalVisible}
+        isVisible={isDateModalVisible}
         value={reminderTime}
-        onCancel={() => hideModal()}
+        onCancel={() => hideDateModal()}
         onConfirm={time => handleTimeSelection(time)}
       />
+      <Modal
+        isVisible={isModalVisible}
+        onDismiss={hideModal}
+        style={styles.modal}
+      >
+        <View style={styles.modalContainer}>
+          <Text
+            type='body2'
+            style={styles.modalText}
+          >
+            {labels.common.closeFeedback}
+          </Text>
+        </View>
+        <View
+          style={styles.modalBtnContainer}
+        >
+          <Button
+            mode='text'
+            onPress={() => hideModal()}
+          >
+            <Text type='button'>{labels.common.cancel}</Text>
+          </Button>
+          <Button
+            mode='text'
+            onPress={() => handleClose()}
+          >
+            <Text type='button'>{labels.common.saveClose}</Text>
+          </Button>
+        </View>
+      </Modal>
     </View>
   );
 };

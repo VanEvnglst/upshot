@@ -40,7 +40,7 @@ export default styles = StyleSheet.create({
   preparingBtnContainer: {
     marginBottom: 20,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     flex: 1,
     paddingRight: 10,
@@ -60,5 +60,25 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 10,
+  },
+  modalContainer: {
+    flex: 1,
+  },
+  modal: {
+    padding: 20,
+    minWidth: 300,
+    minHeight: 140,
+  },
+  modalTextContainer: {
+    flex: 1,
+  },
+  modalText: {
+    marginTop: 10,
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+    marginTop: 20,
   }
 });
