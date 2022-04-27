@@ -78,7 +78,7 @@ export function* postFeedbackJourney({ data }) {
     firstName: nameArr[0],
     lastName: lastName,
   };
-
+  
   const response = yield call(api.postNewJourney, data);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
@@ -89,9 +89,11 @@ export function* postFeedbackJourney({ data }) {
       documentingParams.append('staff_id', staff.id);
       documentingParams.append('pos_or_cor',type.id)
       yield put(DocumentingActions.postFeedbackDocumenting(documentingParams));
+    } else {
+      yield put(FeedbackActions.postFeedbackJourneyFailure(response.data));
     }
-    // save journey id to state using success action call
-    // call create documenting with journey id and team member passed in
+  } else {
+    yield put(FeedbackActions.postFeedbackJourneyFailure(response.data));
   }
 }
 
