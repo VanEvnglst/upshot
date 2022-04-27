@@ -35,7 +35,7 @@ const PreparingStep1 = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : null}
     >
       <ScrollView
-        style={{marginBottom:  Platform.OS === 'ios' ? 130 : 30 }}
+        style={{marginBottom:  Platform.OS === 'ios' ? 120 : 30 }}
         showsVerticalScrollIndicator={false}>
       <View style={containerStyles.descriptionContainer}>
             <Text

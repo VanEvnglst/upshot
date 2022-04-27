@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -71,9 +71,13 @@ const PreparingStep3B = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding">
-      <View style={containerStyles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? "padding" : null}
+      style={containerStyles.container}>
+      <View >
+        <ScrollView 
+          contentContainerStyle={{ paddingBottom: 30 }}
+          showsVerticalScrollIndicator={false}>
           <View style={containerStyles.descriptionContainer}>
             <Text
               type="h6"

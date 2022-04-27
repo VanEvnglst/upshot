@@ -44,6 +44,7 @@ const PreparingSchedule = props => {
   const [isCompleted, setCompletion] = useState(false);
   const [showAlerts, setShowAlerts] = useState(true);
   const [hintVisible, setHintVisible] = useState(false);
+  const [saveModalVisible, setSaveModalVisible] = useState(false);
   const dateToday = new Date();
 
   const alertTimesList = [
@@ -75,10 +76,19 @@ const PreparingSchedule = props => {
   const hideTimePicker = () => setTimePickerVisibility(false);
   const showAlertTime = () => setAlertTimeVisibility(true);
   const hideAlertTime = () => setAlertTimeVisibility(false);
+  const showSaveModal = () => setSaveModalVisible(true);
+  const hideSaveModal = () => setSaveModalVisible(false);
+
+
+  const saveAndClose = () => {
+    navigation.navigate('ActiveFeedbackJourney', {
+      type: 'preparing'
+    });
+  }
 
   const handleDatePicked = date => {
     const modDate = moment(date).format('ll');
-    const modDateToday = moment(dateToday).format('ll');
+    const modDateToday = moment(dateToday, 'MM DD YYYY').format('ll');
     const dateArr = modDate.split(/[ ,]+/);
     const dateLabel = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`;
     setDateSelected({ label: dateLabel, value: date });
@@ -155,7 +165,7 @@ const PreparingSchedule = props => {
       <Wrapper>
         <Header
           headerRight={{
-            onPress: () => navigation.goBack(),
+            onPress: () => showSaveModal(),
           }}
         />
         <Text type="h6">
@@ -252,6 +262,31 @@ const PreparingSchedule = props => {
           </Button>
           <Button mode="text" onPress={() => handleAlertLabel()}>
             <Text type="button">{labels.common.ok}</Text>
+          </Button>
+        </View>
+      </Modal>
+      <Modal
+        isVisible={saveModalVisible}
+        onDismiss={hideSaveModal}
+        style={styles.saveModal}
+      >
+        <View style={styles.saveModalTextContainer}>
+          <Text
+            type='body2'
+            style={styles.saveModalText}
+          >{labels.common.closeFeedback}</Text>
+        </View>
+        <View style={styles.saveModalBtnContainer}>
+          <Button
+            mode='text'
+            onPress={() => hideSaveModal()}
+          >
+            <Text type='button'>{labels.common.cancel}</Text>
+          </Button>
+          <Button
+            mode='text'
+            onPress={() => saveAndClose()}>
+              <Text type='button'>{labels.common.saveClose}</Text>
           </Button>
         </View>
       </Modal>

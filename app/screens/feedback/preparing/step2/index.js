@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PreparingActions from 'app/store/feedback/PreparingRedux';
@@ -52,9 +52,12 @@ const PreparingStep2 = props => {
   };
 
   return (
-    <View style={containerStyles.container}>
-      <ScrollView 
-    showsVerticalScrollIndicator={false}>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      style={containerStyles.container}>
+      <ScrollView
+          contentContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? 130 : 30}}
+          showsVerticalScrollIndicator={false}>
         <View style={containerStyles.descriptionContainer}>
           <Text
             type="h6"
@@ -99,7 +102,7 @@ const PreparingStep2 = props => {
         </Button>
       </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

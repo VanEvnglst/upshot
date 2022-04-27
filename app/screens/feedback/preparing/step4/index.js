@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -64,10 +64,12 @@ const PreparingStep4 = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <KeyboardAvoidingView
-        behavior='padding'
-      >
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : null}
+  >
+    <ScrollView 
+      contentContainerStyle={{ paddingBottom: 70}}
+      showsVerticalScrollIndicator={false}>
         <View style={containerStyles.descriptionContainer}>
           <Text
             type="h6"
@@ -101,7 +103,7 @@ const PreparingStep4 = () => {
           value={additionalPlan}
           description={labels.common.ownQuestionDesc}
         />
-      </KeyboardAvoidingView>
+      
       <View style={containerStyles.btnContainer}>
         <Button
           mode="text"
@@ -117,6 +119,7 @@ const PreparingStep4 = () => {
         </Button>
       </View>
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
