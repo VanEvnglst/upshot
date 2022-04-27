@@ -51,4 +51,21 @@ export default styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 20,
   },
+  saveModal: {
+    padding: 20,
+    width: 300,
+    height: 140,
+  },
+  saveModalTextContainer: {
+    flex: 1,
+  },
+  saveModalText: {
+    marginTop: 10,
+  },
+  saveModalBtnContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    alignSelf: 'flex-end',
+    marginTop: 20,
+  }
 });
