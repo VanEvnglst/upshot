@@ -65,15 +65,15 @@ const FeedbackJourneyList = props => {
   }, []);
 
   const HistoryCard = ({ item }) => {
-    const { last_modified: lastModified, member } = item;
+    const { last_modified: lastModified, member, id } = item;
     const nameArr = member.split(/[ ,]+/);
     const dateArr = lastModified.split(/[ ,]+/);
     const lastName = nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
-    const lastWorkedOn = moment(lastModified).fromNow();
 
     return (
       <TouchableOpacity
+        key={id}
         accessibilityRole={'button'}
         style={styles.historyCard}
         onPress={() => console.log('sadsadd')}>
@@ -81,9 +81,9 @@ const FeedbackJourneyList = props => {
           <Text type="subtitle1" style={styles.historyTeammateText}>
             {memberName}
           </Text>
-          <Text type="body2" style={styles.historyDateText}>
+          {/* <Text type="body2" style={styles.historyDateText}>
             {lastWorkedOn}
-          </Text>
+          </Text> */}
         </View>
       </TouchableOpacity>
     );
@@ -112,10 +112,11 @@ const FeedbackJourneyList = props => {
         : topics.length > 1
         ? `(${topics[0]}, etc.)`
         : `(${topics[0]})`;
-    const creationDate = `${moment(dateCreated).format('LLL')}`;
+    const creationDate = `${moment(dateCreated, 'MM-DD-YYYY').format('LLL')}`;
 
     return (
       <TouchableOpacity
+        key={id}
         accessibilityRole={'button'}
         style={styles.inProgressCard}
         onPress={() => handleNavigation('ActiveFeedbackJourney', id, staff)}>
@@ -166,9 +167,7 @@ const FeedbackJourneyList = props => {
   return (
     <View style={styles.container}>
       <Wrapper>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Header
             headerLeft={{
               onPress: () => navigation.goBack(),
@@ -199,7 +198,14 @@ const FeedbackJourneyList = props => {
                 style={[styles.overlineText, styles.addedMargin]}>
                 {labels.feedbackIntro.history}
               </Text>
+              {/* {recentJourneys.map((item, i) => (
+                <HistoryCard
+                  key={item.id}
+                  item={item}
+                />
+              ))} */}
               <FlatList
+              scrollEnabled={false}
                 data={recentJourneys}
                 keyExtractor={item => item.key}
                 horizontal
