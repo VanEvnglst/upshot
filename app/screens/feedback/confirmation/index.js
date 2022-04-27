@@ -207,7 +207,6 @@ const FeedbackConfirmation = props => {
     const reminderDate = moment(time).format('MMM DD, YYYY HH:mm');
     const data = {
       reminderDate,
-      docuId,
     };
     if (route.params.type === 'documenting') {
       dispatch(DocumentingActions.updateDocumentingReminder(data));
@@ -231,7 +230,7 @@ const FeedbackConfirmation = props => {
     }
     switch(type) {
       case 'documenting':
-        console.log('here');
+        dispatch(DocumentingActions.updateDocumentingReminder(data));
         break;
       case 'preparing':
         navigation.navigate('ActiveFeedbackJourney', {

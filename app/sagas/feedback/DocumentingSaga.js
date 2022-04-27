@@ -100,10 +100,10 @@ export function* updateFeedbackDocumenting({ data }) {
 
 export function* updateDocumentingReminder({ data }) {
   const params = new URLSearchParams();
-  const { reminderDate, docuId } = data;
+  const { reminderDate } = data;
   const step2 = yield select(step2Data);
   const otherTopic = yield select(otherTopicData);
-
+  const docuId = yield select(documentingId);
   const step2List = step2.map(obj => obj.id);
   var topicListStr = '[';
   step2List.forEach((item, index) => {
