@@ -21,7 +21,7 @@ export default function Routes() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isSignedIn ? //isSignedIn
+        {isSignedIn ?
         <Stack.Screen 
           name={'Main'}
           component={MainNavigator}
