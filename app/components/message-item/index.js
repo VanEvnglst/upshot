@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Pressable, Image } from 'react-native';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import Images from 'app/assets/images';
@@ -12,6 +13,12 @@ const MessageItem = ({ item, onPress }) => {
     timestamp,
     response_required: responseRequired,
   } = item;
+
+  const dateToday = new Date();
+  const formattedTime = moment(dateToday, 'MM DD YYYY').format('LT');
+  const dateArr = moment(timestamp).format('LLLL').split(' ');
+  const formattedInvite = `${dateArr[0]} ${dateArr[1]} ${dateArr[2]} @ ${dateArr[4]} ${dateArr[5]}`;
+  console.log(timestamp, formattedInvite);
   return (
     <Pressable onPress={onPress}>
       <View style={styles.cardContainer}>
@@ -28,7 +35,7 @@ const MessageItem = ({ item, onPress }) => {
                 styles.dateText,
                 responseRequired && styles.unreadDateText,
               ]}>
-              Feb 2022
+              {formattedTime}
             </Text>
           </View>
           <Text
@@ -37,16 +44,16 @@ const MessageItem = ({ item, onPress }) => {
               responseRequired && styles.unreadMessageSubtitle,
               styles.messageSubtitle,
             ]}>
-            This is a system generated message
+            {formattedInvite}
           </Text>
-          {responseRequired && (
+          {/* {responseRequired && (
             <View style={styles.responseContainer}>
               <View style={styles.responseIndicator} />
               <Text type="overline" style={styles.responseRequiredText}>
                 Response required
               </Text>
             </View>
-          )}
+          )} */}
         </View>
       </View>
     </Pressable>
