@@ -18,9 +18,9 @@ const Messages = props => {
   useEffect(() => {
     async function retrieveMessages() {
       await dispatch(MessagesActions.fetchMessages());
+      setMessages(messagesList);
     }
     retrieveMessages();
-    setMessages(messagesList);
     // (async () => {
     //   const { data } = await dispatch(MessagesActions.fetchMessages());
     //   debugger;
