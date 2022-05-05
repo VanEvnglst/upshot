@@ -22,6 +22,7 @@ const ResponseScreen = props => {
   const dispatch = useDispatch();
   const messageBody = useSelector(state => state.messages.get('body'));
   const isLoading = useSelector(state => state.messages.get('fetching'));
+  const user = useSelector(state => state.user.get('firstName'));
   const [response, setResponse] = useState();
   const [responseSent, setResponseSent] = useState(false);
   const [reason, setResponseReason] = useState('');
@@ -35,7 +36,6 @@ const ResponseScreen = props => {
       await dispatch(MessagesActions.fetchMessage(message.id));
     }
     retrieveMessages();
-    debugger;
   }, []);
 
   const handleBack = () => {
@@ -207,7 +207,7 @@ const ResponseScreen = props => {
             </View>
             {isCurrentMessage && (
               <Text type="caption" style={styles.receipientNameText}>
-                to receipient
+                {message.from !== user ? 'to me' : ''}
               </Text>
             )}
             {!isCurrentMessage && (
@@ -238,7 +238,8 @@ const ResponseScreen = props => {
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
-        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+        <ScrollView 
+          showsVerticalScrollIndicator={false} bounces={false}>
           <Header
             headerLeft={{
               onPress: () => handleBack(),
@@ -249,7 +250,7 @@ const ResponseScreen = props => {
           </Text>
           <View style={styles.container}>
             <MessageCard isCurrentMessage={true} />
-            {!responseSent && (
+            {/* {!responseSent && (
               <View style={styles.responseContainer}>
                 <Text type="h6" style={styles.frontlinerQuestion}>
                   Can you make it?
@@ -267,13 +268,13 @@ const ResponseScreen = props => {
                   selected={response === reschedule}
                 />
               </View>
-            )}
+            )} */}
           </View>
-          {!responseSent && (
+          {/* {!responseSent && (
             <View style={styles.btnContainer}>
               <Button mode="contained">Send</Button>
             </View>
-          )}
+          )} */}
         </ScrollView>
       </Wrapper>
       {isLoading && <Loader />}

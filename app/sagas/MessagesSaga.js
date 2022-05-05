@@ -1,5 +1,6 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
+import moment from 'moment';
 import MessagesActions, { MessagesTypes } from 'app/store/MessagesRedux';
 import api from 'app/services/apiService';
 
@@ -32,8 +33,16 @@ export function* fetchMessage({ messageId}) {
   const response = yield call(api.getMessage, params);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
+      const responseData = response.data.body;
+      const dateArr = moment(responseData.when).format('LLLL').split(' ');
+      const formattedDate = `${dateArr[0]} ${dateArr[1]} ${dateArr[2]} ${dateArr[3]} at ${dateArr[4]} ${dateArr[5]}`;
+      
+      const messageBody = {
+        what: responseData.what,
+        when: formattedDate
+      }
       debugger;
-      yield put(MessagesActions.fetchMessageSuccess(response.data.body))
+      yield put(MessagesActions.fetchMessageSuccess(messageBody))
     } else {
       yield put(MessagesActions.fetchMessagesFailure(response.data));
     }
