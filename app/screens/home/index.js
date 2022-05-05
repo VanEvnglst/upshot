@@ -135,7 +135,7 @@ const HomeScreen = props => {
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
               image={Images.feedbackCoaching}
-              headline={'Stress & Resilience Management'}
+              headline={'Prioritizing and Delegating'}
               smallCard
               disabled
               testID={'card-home-comingSoon'}
@@ -143,7 +143,7 @@ const HomeScreen = props => {
             <LearningCard
               onPress={() => navigation.navigate('Feedback')}
               image={Images.feedbackCoaching}
-              headline={'Handling Conflicts Positively'}
+              headline={'Coaching Frontline Managers'}
               smallCard
               disabled
             />
