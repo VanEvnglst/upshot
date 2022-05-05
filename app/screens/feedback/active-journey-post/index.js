@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from 'react-native-paper';
+import { Snackbar } from 'react-native-paper';
 import {
   Wrapper,
   Text,
@@ -30,6 +30,7 @@ import {
   getDiscussing,
   getReflecting,
   getSharing,
+  getActiveJourneyError
 } from 'app/store/selectors';
 import styles from './styles';
 
@@ -47,7 +48,9 @@ const ActiveFeedbackJourney = props => {
   const discussing = useSelector(getDiscussing);
   const reflecting = useSelector(getReflecting);
   const sharing = useSelector(getSharing);
+  const journeyError = useSelector(getActiveJourneyError);
   const [phaseList, setPhaseList] = useState([]);
+  const [errorVisible, setErrorVisible] = useState(false);
 
   useEffect(() => {
     async function fetchFeedback() {
@@ -67,6 +70,12 @@ const ActiveFeedbackJourney = props => {
     reflecting.get('id'),
     sharing.get('id'),
   ]);
+
+  useEffect(() => {
+    if (journeyError !== '') setErrorVisible(true);
+  }, [journeyError])
+
+  const dismissSnackbar = () => setErrorVisible(false);
 
   const handlePhases = async () => {
     let content = [];
@@ -285,6 +294,12 @@ const ActiveFeedbackJourney = props => {
           </View>
         </ScrollView>
       </Wrapper>
+      <Snackbar
+        visible={errorVisible}
+        onDismiss={dismissSnackbar}
+      >
+        <Text>{journeyError}</Text>
+      </Snackbar>
       {isLoading && <Loader />}
     </View>
   );

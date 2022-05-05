@@ -25,6 +25,12 @@ const labels = {
     keepGoing: 'Keep Going',
     remindMeLater: 'Remind me later',
     youDidIt: 'You did it!',
+    logIn: 'Log in',
+  },
+  errors: {
+    emailRequired: "Email is required",
+    passwordRequired: 'Password is required',
+    validEmail: 'Please enter a valid email address',
   },
   homeScreen: {
     guidedJourney: 'Guided Journeys',

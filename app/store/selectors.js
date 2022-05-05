@@ -19,16 +19,20 @@ export const getChosenFlow = state => state.feedback.get('chosenFlow');
 export const getChosenType = state => state.feedback.get('chosenType');
 export const getStaffList = state => state.feedback.get('teamMembers').data;
 export const getStaffName = state => state.feedback.get('chosenTeamMember');
+export const getActiveJourneyError = state =>
+  state.feedback.get('currentJourney').error;
 
 /* ------------- Feedback History Selectors ------------- */
 export const getActiveJourneys = state =>
   state.feedbackHistory.get('activeJourneyList');
 export const getRecentJourneys = state =>
   state.feedbackHistory.get('recentJourneyList');
+export const getJourneyError = state => state.feedbackHistory.get('error');
 
 /* ------------- Feedback Documenting Selectors ------------- */
 export const getDocumenting = state => state.documenting;
-export const getDocumentingFetching = state => state.documenting.get('fetching');
+export const getDocumentingFetching = state =>
+  state.documenting.get('fetching');
 export const getDocumentingId = state => state.documenting.get('id');
 export const getDocumentingStep = state => state.documenting.get('activeStep');
 export const getDocumentingMaxSteps = state => state.documenting.get('maxStep');
@@ -38,7 +42,7 @@ export const getStep3Data = state => state.documenting.get('step3');
 export const getStep4Data = state => state.documenting.get('step4');
 export const getStep5Data = state => state.documenting.get('step5');
 export const getReminderDate = state => state.documenting.get('reminderTime');
-export const getOtherTopic = state => state.documenting.get('otherTopic')
+export const getOtherTopic = state => state.documenting.get('otherTopic');
 
 /* ------------- Feedback Preparing Selectors ------------- */
 export const getPreparing = state => state.preparing;
@@ -56,7 +60,6 @@ export const getPrepStep5Data = state => state.preparing.get('step5');
 export const getPrepStep5BData = state => state.preparing.get('step5B');
 export const getPrepStep5CData = state => state.preparing.get('step5C');
 
-
 /* ------------- Feedback Discussing Selectors ------------- */
 export const getDiscussing = state => state.discussing;
 export const getDiscussingId = state => state.discussing.get('id');
@@ -71,8 +74,7 @@ export const getReflectStep1Data = state => state.reflecting.get('step1');
 export const getReflectStep2Data = state => state.reflecting.get('step2');
 export const getReflectStep4Data = state => state.reflecting.get('step4');
 export const getReflectingCriteria = state =>
-state.reflecting.get('reflectingCriteria');
-
+  state.reflecting.get('reflectingCriteria');
 
 /* ------------- Feedback Sharing Selectors ------------- */
 export const getSharing = state => state.sharing;

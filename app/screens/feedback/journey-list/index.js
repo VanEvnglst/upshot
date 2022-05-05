@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FAB as FloatingAction, ProgressBar, Button } from 'react-native-paper';
+import { FAB as FloatingAction, ProgressBar, Button, Snackbar } from 'react-native-paper';
 import { Wrapper, Text, Header, Modal } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
@@ -23,6 +23,7 @@ import {
   getRecentJourneys,
   getActiveJourneys,
   getCurrentJourney,
+  getJourneyError
 } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
@@ -34,9 +35,10 @@ const FeedbackJourneyList = props => {
   const recentJourneys = useSelector(getRecentJourneys);
   const activeJourneys = useSelector(getActiveJourneys);
   const journeyId = useSelector(getCurrentJourney);
+  const journeyError = useSelector(getJourneyError);
   const hasRecentJourneys = recentJourneys && recentJourneys.length !== 0;
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const [errorVisible, setErrorVisible] = useState(false);
   const hideModal = () => setModalVisible(false);
 
   useEffect(() => {
@@ -63,6 +65,12 @@ const FeedbackJourneyList = props => {
     dispatch(ReflectingActions.resetReflectingState());
     dispatch(SharingActions.resetSharingState());
   }, []);
+
+  useEffect(() => {
+    if (journeyError !== '') setErrorVisible(true)
+  }, [journeyError]);
+
+  const dismissSnackbar = () => setErrorVisible(false);
 
   const HistoryCard = ({ item }) => {
     const { last_modified: lastModified, member, id } = item;
@@ -184,7 +192,7 @@ const FeedbackJourneyList = props => {
           {activeJourneys && (
             <FlatList
               data={activeJourneys}
-              keyExtractor={item => item.key}
+              keyExtractor={item => item.id}
               pagingEnabled
               renderItem={({ item, index }) => {
                 return <InProgressCard key={item.id} activeJourney={item} />;
@@ -225,6 +233,18 @@ const FeedbackJourneyList = props => {
           uppercase
           onPress={() => handleNavigation('FeedbackFlow')}
         />
+        <Snackbar
+          visible={errorVisible}
+          onDismiss={dismissSnackbar}
+          action={{
+            label: 'Ok',
+            onPress: () => {
+
+            }
+          }}
+        >
+          <Text>{journeyError}</Text>
+        </Snackbar>
       </Wrapper>
       <Modal
         isVisible={isModalVisible}
