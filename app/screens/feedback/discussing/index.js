@@ -5,6 +5,7 @@ import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import { Text, Wrapper, Header, TextInput } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -114,7 +115,9 @@ const FeedbackDiscussing = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+    behavior={DeviceUtil.isIos ? 'padding' : null}
+    style={styles.container}>
       <Wrapper>
         <Header
           headerRight={{
@@ -124,10 +127,8 @@ const FeedbackDiscussing = props => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag">
-          <KeyboardAvoidingView
-            behavior='padding'
-          >
+        >
+          
             <Text type="overline" style={styles.overlineText}>{labels.feedbackSignPost.discussing}</Text>
             <View>
               <Text type="h6" style={styles.titleText}>{discussingActionPlan.title}</Text>
@@ -183,7 +184,6 @@ const FeedbackDiscussing = props => {
                 </Text>
               </Button>
             </View> */}
-          </KeyboardAvoidingView>
         </ScrollView>
         <View
           style={styles.btnContainer}>
@@ -195,7 +195,7 @@ const FeedbackDiscussing = props => {
           </Button>
         </View>
       </Wrapper>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

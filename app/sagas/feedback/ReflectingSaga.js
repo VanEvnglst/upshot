@@ -22,7 +22,7 @@ export function* postFeedbackReflecting({ journeyId }) {
   const type = yield select(state => state.feedback.get('chosenType'));
   const params = new URLSearchParams();
   params.append('journey_id', journeyId);
-
+  
   const response = yield call(api.postFeedbackReflecting, params);
   if (response.ok) {
     if (response.data.status == STATUS_OK) {
@@ -30,8 +30,10 @@ export function* postFeedbackReflecting({ journeyId }) {
       yield put(ReflectingActions.postFeedbackReflectingSuccess(reflectingId));
       yield NavigationService.navigate('FeedbackReflecting');
     }
+  } else if (response.status === 500) {
+    yield put(ReflectingActions.postFeedbackReflectingFailure("Server error"));
   } else {
-    yield put(ReflectingActions.postFeedbackReflectingFailure(response.data));
+    yield put(ReflectingActions.postFeedbackReflectingFailure(response.data))
   }
 }
 

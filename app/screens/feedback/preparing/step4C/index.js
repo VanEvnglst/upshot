@@ -49,6 +49,9 @@ const PreparingStep4C = () => {
   };
 
   return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+    >
     <View style={containerStyles.container}>
       <Text
         type="h6"
@@ -93,6 +96,7 @@ const PreparingStep4C = () => {
         </Button>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
