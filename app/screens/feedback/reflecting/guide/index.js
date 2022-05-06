@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Header, Text } from 'app/components';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
+import { getReflectingError } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import styles from './styles';
@@ -17,8 +18,16 @@ const ReflectingGuide = props => {
     state => state.feedback.get('currentJourney').data,
   );
   const reflectingId = useSelector(state => state.reflecting.get('id'));
+  const reflectingError = useSelector(getReflectingError);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-  
+  useEffect(() => {
+    if (reflectingError !== '')
+      setSnackbarVisible(true)
+  }, [reflectingError]);
+
+  const dismissSnackbar = () => setSnackbarVisible(false);
+
   const handleNavigation = () => {
     if (reflectingId)
      navigation.navigate('FeedbackReflecting');
@@ -52,6 +61,12 @@ const ReflectingGuide = props => {
           <Text type="button">{labels.common.start}</Text>
         </Button>
       </View>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={dismissSnackbar}
+      >
+        <Text>{reflectingError}</Text>
+      </Snackbar>
     </Wrapper>
   );
 };
