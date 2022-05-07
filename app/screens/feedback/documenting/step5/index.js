@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import { ButtonSelection, Text } from 'app/components';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import {
@@ -21,6 +21,7 @@ const DocumentingStep5 = props => {
   const staff = useSelector(getStaffName);
   const [followUpValue, setFollowUpValue] = useState('');
   const [isCompleted, setCompletion] = useState(false);
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
 
   const firstFollowUp = {
     value: 1,
@@ -52,6 +53,14 @@ const DocumentingStep5 = props => {
       setCompletion(true);
     }
   }, [stepData]);
+
+
+  // useEffect(() => {
+  //   if(reflectingError !== '') 
+  //     setSnackbarVisible(true)
+  // }, [reflectingError]);
+
+  const dismissSnackbar = () => setSnackbarVisible(false);
 
   const handleBack = () => {
     dispatch(DocumentingActions.setDocumentingData('step5', followUpValue));
@@ -113,6 +122,12 @@ const DocumentingStep5 = props => {
           {labels.common.next}
         </Button>
       </View>
+      {/* <Snackbar
+        visible={isSnackbarVisible}
+        onDismiss={dismissSnackbar}
+      >
+        <Text>{reflectingError}</Text>
+      </Snackbar> */}
     </View>
   );
 };
