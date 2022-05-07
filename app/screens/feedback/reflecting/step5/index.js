@@ -1,57 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text } from 'app/components';
-import { getReflectingStep } from 'app/store/selectors';
+import { getReflectingStep, getReflectingError } from 'app/store/selectors';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
+import styles from './styles';
 
 
 const ReflectingStep5 = () => {
   const { feedbackReflecting } = labels;
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
+  const reflectingError = useSelector(getReflectingError);
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+
+  useEffect(() => {
+    if(reflectingError !== '') 
+      setSnackbarVisible(true)
+  }, [reflectingError]);
+  
+  const dismissSnackbar = () => setSnackbarVisible(false);
 
   const handleBack = () => {
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(ReflectingActions.updateFeedbackReflecting());
+    dispatch(ReflectingActions.updateFeedbackReflecting({ shouldClose: true }));
   };
 
   // TODO: Fix data handling for action plan
   const ActionPlanItem = () => {
     return (
-    <View style={{ flexDirection: 'row', marginTop: 30 }}>
-      <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-        <View style={{ alignItems: 'center', marginLeft: 5}}>
-        <View style={{ width: 24, height: 24, borderRadius: 12, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={styles.itemContainer}>
+      <View style={styles.count}>
+        <View style={styles.countBadge}>
+          {/* TODO: Should be item count */}
           <Text type='overline'>1</Text>
         </View>
         <View
-          style={{
-            width: 2,
-            backgroundColor: '#f5f5f5',
-            height: 75
-          }} 
+          style={styles.countLine} 
         />
-        </View>
       </View>
-      <View style={{ flex: 3}}>
+      <View style={styles.planContainer}>
         <Text type='body1'>Attend additional training</Text>
-        <Text type='body1' style={{ marginTop: 20}}>Next Tuesday @ Head Office</Text>
-        <Text type='body1' style={{ marginTop: 20}}>Request with HR</Text>
+        <Text type='body1' style={[styles.planSpacer]}>Next Tuesday @ Head Office</Text>
+        <Text type='body1' style={[styles.planSpacer]}>Request with HR</Text>
       </View>
     </View>
     )
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={containerStyles.container}>
       <View>
         <Text type="h6" style={containerStyles.stepTitleText}>
           {feedbackReflecting.reviewActionPlan}
@@ -61,23 +66,40 @@ const ReflectingStep5 = () => {
         </Text>
       </View>
       <View
-        style={{ marginVertical: 20, flex: 1 }}>
+        style={styles.contentContainer}>
           <Text type='overline'>action plan</Text>
+          {/* TODO: Map action plan items */}
           <ActionPlanItem/>
         </View>
       <View style={containerStyles.btnContainer}>
         <Button mode="text" onPress={() => handleBack()}>
-          Back
+          {labels.common.back}
         </Button>
         <Button mode='contained' onPress={() => handleNext()}>
-          Next
+          {labels.common.next}
         </Button>
       </View>
+      <Snackbar
+        visible={isSnackbarVisible}
+        onDismiss={dismissSnackbar}
+      >
+        <Text>{reflectingError}</Text>
+      </Snackbar>
     </View>
   );
 };
 
 export default ReflectingStep5;
 
-ReflectingStep5.propTypes = {};
-ReflectingStep5.defaultProps = {};
+ReflectingStep5.propTypes = {
+  activeStep: PropTypes.number,
+  reflectingError: PropTypes.string,
+  setReflectingActiveStep: PropTypes.func,
+  updateFeedbackReflecting: PropTypes.func,
+};
+ReflectingStep5.defaultProps = {
+  activeStep: 1,
+  reflectingError: '',
+  setReflectingActiveStep: () => {},
+  updateFeedbackReflecting: () => {},
+};
