@@ -215,7 +215,7 @@ const FeedbackJourneyList = props => {
               <FlatList
               scrollEnabled={false}
                 data={recentJourneys}
-                keyExtractor={item => item.key}
+                keyExtractor={item => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 bounces={false}
