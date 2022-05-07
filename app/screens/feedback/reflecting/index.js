@@ -68,7 +68,9 @@ const FeedbackReflecting = props => {
   const hideModal = () => setModalVisible(false);
 
   const handleCloseBtn = () => {
-
+    dispatch(ReflectingActions.updateFeedbackReflecting({
+      shouldClose: false
+    }));
   }
 
   return (
@@ -118,6 +120,7 @@ const FeedbackReflecting = props => {
             </Button>
           </View>
         </Modal>
+        {/* TODO: Change loading component */}
       {isLoading && 
         <View style={{
         flex: 1,
