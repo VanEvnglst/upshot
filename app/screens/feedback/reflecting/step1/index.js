@@ -31,6 +31,7 @@ const ReflectingStep1 = props => {
     setFeelingValue(value);
     setDidSliderMove(true);
   };
+  
   const handleNext = () => {
     if (didSliderMove)
       dispatch(ReflectingActions.setReflectingData('step1', feelingValue));

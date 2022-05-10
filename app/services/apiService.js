@@ -7,7 +7,7 @@ const setAPI = url => {
   const api = create({
     baseURL: `http://${url}/api`,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
   });
   return api;
@@ -18,10 +18,11 @@ export default {
     return upshotDirectory.get('/directory/');
   },
 
-  signIn: async params => {
+  signIn: async payload => {
+
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
-    return upshotAPI.post('/login', params);
+    return upshotAPI.post('/login', payload);
   },
 
   signUp: async params => {

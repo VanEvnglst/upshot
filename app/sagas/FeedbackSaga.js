@@ -162,7 +162,7 @@ function* retrievePreparingData(preparingData) {
 function* retrieveReflectingData(reflectingData) {
   yield put(ReflectingActions.setReflectingStatus('id', reflectingData.id));
   yield put(
-    ReflectingActions.setReflectingStatus('close', reflectingData.closed),
+    ReflectingActions.setReflectingStatus('closed', reflectingData.closed),
   );
   yield put(
     ReflectingActions.setReflectingStatus('started', !reflectingData.closed),

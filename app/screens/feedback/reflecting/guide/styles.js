@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import PropTypes from 'prop-types';
-import { Wrapper,Text } from 'app/components';
+import { StyleSheet } from 'react-native';
+import Colors from 'app/theme/colors';
 
-const FeedbackReflecting = props => {
-
-};
-
-export default FeedbackReflecting;
-
-
-FeedbackReflecting.propTypes ={};
-
-FeedbackReflecting.defaultProps = {};
+export default styles = StyleSheet.create({
+  container: {
+    flex: 1, // 2
+  },
+  headerText: {
+    color: Colors.mediumBlack,
+  },
+  guideContainer: {
+    flex: 1,
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  guideText: {
+    lineHeight: 30,
+  },
+  imageContainer: {
+    flex: 1,
+    marginBottom: 20 
+  },
+  btnContainer: {
+    marginBottom: 30
+  },
+  button: {
+    height: 50, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  }
+});

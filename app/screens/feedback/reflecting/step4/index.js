@@ -46,8 +46,7 @@ const ReflectingStep4 = props => {
     if (flow.id === 1 && type.id === 2)
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep + 1));
     else 
-    dispatch(ReflectingActions.updateFeedbackReflecting())
-    
+    dispatch(ReflectingActions.updateFeedbackReflecting({ shouldClose: true }))
   }
 
   const handleDevelopmentText = (key, text) => {

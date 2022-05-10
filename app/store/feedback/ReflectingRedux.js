@@ -21,6 +21,7 @@ export const INITIAL_STATE = Map({
   closed: false,
   started: false,
   error: '',
+  actionPlan: null,
 });
 
 const { Types, Creators } = createActions({

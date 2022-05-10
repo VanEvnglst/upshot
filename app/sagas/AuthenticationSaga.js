@@ -10,17 +10,17 @@ const RESULT_SUCCESS = 'success';
 const RESULT_ERROR = 'error';
 
 export function* signInUser({ data }) {
-  const params = new URLSearchParams();
-  params.append('email', data.email);
-  params.append('passwd', data.password);
-  params.append('reg_token', data.token);
-
+  const auth = { 
+    email: data.email,
+    passwd: data.password,
+    reg_token: data.token,
+  }
   const connected = yield checkInternetConnection();
   if (!connected) {
     //   //yield showNetworkError();
     return;
   }
-  const authResponse = yield call(api.signIn, params);
+  const authResponse = yield call(api.signIn, auth);
   if (authResponse.ok) {
     if (authResponse.data.result === RESULT_SUCCESS) {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);

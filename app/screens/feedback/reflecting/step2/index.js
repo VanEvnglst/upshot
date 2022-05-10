@@ -47,6 +47,19 @@ const ReflectingStep2 = props => {
 
   // Ties data from store to have proper display name and initial value
   useEffect(() => {
+    handleContent();
+  }, []);
+
+  useEffect(() => {
+    if (stepData.data && stepData.data.length !== 0) {
+      const existingDataArr = stepData.data;
+      setReflectingCriteria(existingDataArr);
+    }
+    debugger;
+  }, [stepData]);
+
+
+  const handleContent = () => {
     let criteriaStr = 'I ';
     let newList = [];
     criteria.forEach(item => {
@@ -58,22 +71,7 @@ const ReflectingStep2 = props => {
       criteriaStr = 'I ';
     });
     setReflectingCriteria(newList);
-  }, []);
-
-  // TODO: handle step data
-  // useEffect(() => {
-  //   if (stepData.data) {
-  //     const existingDataArr = Object.keys(stepData.data);
-  //     const valueArr = Object.values(stepData.data);
-  //     for (i = 0; i < existingDataArr.length; i++ ) {
-  //       setSliderValue(existingDataArr[i],valueArr[i]);
-  //     }
-  //     // dataArr.forEach(item => setSliderValue(item[key], item[value]))
-  //     // stepData.data.split(',');
-  //   }
-  //   //setSliderValue(stepData.data)
-  // }, [stepData]);
-
+  }
   const handleBack = () => {
     dispatch(ReflectingActions.setReflectingData('step2', criteriaScore));
     dispatch(ReflectingActions.setReflectingActiveStep(activeStep - 1));
@@ -102,8 +100,8 @@ const ReflectingStep2 = props => {
     let scores = criteriaScore;
     if (checkSliderValue(item)) {
       scores = scores.filter(newValue => newValue.id !== item.id);
-      scores = [...scores, { id: item.id, score: value }];
-    } else scores = [...scores, { id: item.id, score: value }];
+      scores = [...scores, { id: item.id, displayName: item.displayName, score: value }];
+    } else scores = [...scores, { id: item.id, displayName: item.displayName, score: value }];
 
     setCriteriaScore(scores);
     // setSliderValue(key, value);

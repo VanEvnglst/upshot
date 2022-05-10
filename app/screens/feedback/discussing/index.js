@@ -116,7 +116,7 @@ const FeedbackDiscussing = props => {
 
   return (
     <KeyboardAvoidingView
-    behavior={DeviceUtil.isIos ? 'padding' : null}
+    behavior={DeviceUtil.isIos() ? 'padding' : null}
     style={styles.container}>
       <Wrapper>
         <Header
