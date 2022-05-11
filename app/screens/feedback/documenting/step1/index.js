@@ -70,9 +70,10 @@ const DocumentingStep1 = props => {
   };
 
   const postNewJourney = () => {
-    const params = new URLSearchParams();
-    params.append('flow_type', feedbackFlow.id);
-    dispatch(FeedbackActions.postFeedbackJourney(params));
+    const journeyData = {
+      flow_type: feedbackFlow.id
+    };
+    dispatch(FeedbackActions.postFeedbackJourney(journeyData));
   };
 
   return (
