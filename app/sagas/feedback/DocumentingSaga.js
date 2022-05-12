@@ -50,7 +50,6 @@ export function* updateFeedbackDocumenting({ data }) {
   const lastStep = yield select(lastActiveStep);
   const docuId = yield select(documentingId);
   const typeId = yield select(type);
-  const flowId = yield select(flow);
 
   const step2List = step2.map(obj => obj.id);
   const dateSelected = step3 && step3 !== null ? moment(step3).format('MMM DD, YYYY') : '';
@@ -100,18 +99,15 @@ export function* updateDocumentingReminder({ data }) {
   const otherTopic = yield select(otherTopicData);
   const docuId = yield select(documentingId);
   const step2List = step2.map(obj => obj.id);
-  var topicListStr = '[';
-  step2List.forEach((item, index) => {
-    if (index !== step2List.length - 1) topicListStr += `${item},`;
-    else topicListStr += `${item}`;
-  });
-  topicListStr += ']';
-  params.append('documenting_id', docuId);
-  params.append('reminder_date', reminderDate);
-  params.append('topics', topicListStr);
-  params.append('optional_topic', otherTopic);
 
-  const response = yield call(api.updateDocumentingReminder, params);
+  const documentingData = {
+    documenting_id: docuId,
+    topics: step2List,
+    reminder_date: reminderDate,
+    optional_topic: otherTopic,
+  }
+
+  const response = yield call(api.updateDocumentingReminder, documentingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
@@ -169,11 +165,12 @@ export function* fetchCurrentDocumenting({ documentingId }) {
 }
 
 export function* closeFeedbackDocumenting() {
-  const params = new URLSearchParams();
   const docuId = yield select(documentingId);
-  params.append('documenting_id', docuId);
+  const documentingData = {
+    documenting_id: docuId
+  }
 
-  const response = yield call(api.postCloseDocumenting, params);
+  const response = yield call(api.postCloseDocumenting, documentingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.closeFeedbackDocumentingSuccess());
