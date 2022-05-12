@@ -21,7 +21,7 @@ const otherTopicData = state => state.documenting.get('otherTopic');
 const lastActiveStep = state => state.documenting.get('activeStep');
 
 export function* postFeedbackDocumenting({ data }) {
-  // const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if (!connected) {
   //  return;
   //}
@@ -106,8 +106,9 @@ export function* updateDocumentingReminder({ data }) {
     reminder_date: reminderDate,
     optional_topic: otherTopic,
   }
-
+  
   const response = yield call(api.updateDocumentingReminder, documentingData);
+  
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
