@@ -144,28 +144,28 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/documenting/get`, payload);
   },
 
-  postFeedbackPreparing: async params => {
+  postFeedbackPreparing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing`, payload);
   },
 
-  getCurrentPreparing: async params => {
+  getCurrentPreparing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing/get`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing/get`, payload);
   },
 
-  updateFeedbackPreparing: async data => {
+  updateFeedbackPreparing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing/edit`, data);
+    return upshotAPI.post(`/${uniqueId}/feedback/preparing/edit`, payload);
   },
 
   postClosePreparing: async params => {
@@ -176,44 +176,44 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/preparing/close`, params);
   },
 
-  postFeedbackDiscussing: async params => {
+  postFeedbackDiscussing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/discussing/`, payload);
   },
 
-  getCurrentDiscussing: async params => {
+  getCurrentDiscussing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/get`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/discussing/get`, payload);
   },
 
-  updateFeedbackDiscussing: async params => {
+  updateFeedbackDiscussing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/edit`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/discussing/edit`, payload);
   },
 
-  postCloseDiscussing: async params => {
+  postCloseDiscussing: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/close`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/discussing/close`, payload);
   },
 
-  postFeedbackReflecting: async params => {
+  postFeedbackReflecting: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/`, params);
+    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/`, payload);
   },
 
   getCurrentReflecting: async params => {
