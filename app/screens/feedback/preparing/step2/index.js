@@ -6,6 +6,7 @@ import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep, getPrepStep2Data } from 'app/store/selectors';
 import PropTypes from 'prop-types';
 import { Text, ButtonSelection, TextInput } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -53,10 +54,10 @@ const PreparingStep2 = props => {
 
   return (
     <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      behavior={DeviceUtil.isIos() ? 'padding' : null}
       style={containerStyles.container}>
       <ScrollView
-          contentContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? 130 : 30}}
+          contentContainerStyle={{ paddingBottom: DeviceUtil.isIos() ? 130 : 30}}
           showsVerticalScrollIndicator={false}>
         <View style={containerStyles.descriptionContainer}>
           <Text
