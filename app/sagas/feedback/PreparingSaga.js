@@ -67,13 +67,14 @@ export function* updateFeedbackPreparing({ data }) {
     additional_action_plan_questions: step4.data.additionalPlan,
     action_plan_evaluate_optins: step4B.data.additionalOptions,
     additional_action_plan_evaluate_options: step4B.data.evaluateOptions,
-    checkout_question: step4.data.checkoutQuestions,
+    checkout_question: step5.data.checkoutQuestions,
     additional_checkout_question: step5.data.additionalCheckout,
     checkout_acknowledge: step5B.data.checkoutAcknowledge,
     additional_checkout_acknowledge: step5B.data.additionalAcknowledge,
     last_step: lastStep,
   }
 
+  debugger;
   const response = yield call(api.updateFeedbackPreparing, preparingData);
   
   if (response.ok) {
@@ -129,12 +130,15 @@ export function* fetchCurrentPreparing({ preparingId }) {
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingDetails = response.data.details;
-      const { event, actions: action, result, observation_questions: observationList, action_plan_questions: actionPlanList, additional_action_plan_questions: additionalPlan, action_plan_evaluate_options: evaluateOptions,
+      const { event, actions: action, result, observation_questions: observationList, 
+      // additional_observation_questions: additionalObservation, 
+        action_plan_questions: actionPlanList, additional_action_plan_questions: additionalPlan, action_plan_evaluate_options: evaluateOptions,
       additional_action_plan_evaluate_options: additionalOptions,
       checkout_question: checkoutQuestions,
       additional_checkout_question: additionalCheckout,
       checkout_acknowledge: checkoutAcknowledge,
       additional_checkout_acknowledge: additionalAcknowledge,
+      last_step: lastStep,
        } = preparingDetails
       yield put(
         PreparingActions.setPreparingData('step1', preparingDetails.check_in),
@@ -154,6 +158,8 @@ export function* fetchCurrentPreparing({ preparingId }) {
         PreparingActions.setPreparingData(
           'step3B',
           {observationList},
+          // additionalObservation
+          // TODO: double check values
         ),
       );
       yield put(
@@ -180,7 +186,7 @@ export function* fetchCurrentPreparing({ preparingId }) {
           { checkoutAcknowledge, additionalAcknowledge }
         ),
       );
-      yield put(PreparingActions.setPreparingStatus('activeStep', preparingDetails.last_step))
+      yield put(PreparingActions.setPreparingStatus('activeStep', lastStep === null ? 1 : lastStep))
       yield put(PreparingActions.fetchCurrentPreparingSuccess());
     }
   } else {
