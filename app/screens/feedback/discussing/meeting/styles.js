@@ -1,11 +1,12 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { DeviceUtil } from 'app/utils';
 import Colors from 'app/theme/colors';
 
 const { width } = Dimensions.get('screen');
 const SPACING = 10;
-const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.8;
+const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.72 : width * 0.82;
 const ITEM_HEIGHT = ITEM_SIZE * 1.6;
-const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 3;
+const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -28,12 +29,11 @@ export default styles = StyleSheet.create({
     marginHorizontal: SPACING,
     padding: SPACING * 2,
     borderRadius: 10,
-    shadowOpacity: Platform.OS === 'ios' ? 0.2 : 0.5,
+    shadowOpacity: DeviceUtil.isIos() ? 0.2 : 0.5,
   },
   androidCard: {
     shadowColor: '#000',
     shadowRadius: 30,
-
     shadowOffset: {
       width: 0,
       height: 0,
@@ -118,4 +118,8 @@ export default styles = StyleSheet.create({
   guideContent: {
     marginTop: 25,
   },
+  wrapper: {
+    flex: 1,
+    backgroundColor: 'white',
+  }
 });
