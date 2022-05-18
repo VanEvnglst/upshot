@@ -28,7 +28,6 @@ export function* postFeedbackPreparing({ journeyId }) {
   }
 
   const response = yield call(api.postFeedbackPreparing, preparingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingId = response.data.details.id;
@@ -63,10 +62,11 @@ export function* updateFeedbackPreparing({ data }) {
     actions: step3.data.action,
     result: step3.data.result,
     observation_questions: step3B.data.observationList,
+    additional_observation_questions: step3B.data.additionalObservation,
     action_plan_questions: step4.data.actionPlanList,
     additional_action_plan_questions: step4.data.additionalPlan,
-    action_plan_evaluate_optins: step4B.data.additionalOptions,
-    additional_action_plan_evaluate_options: step4B.data.evaluateOptions,
+    action_plan_evaluate_options: step4B.data.evaluateOptions,
+    additional_action_plan_evaluate_options: step4B.data.additionalOptions,
     checkout_question: step5.data.checkoutQuestions,
     additional_checkout_question: step5.data.additionalCheckout,
     checkout_acknowledge: step5B.data.checkoutAcknowledge,
@@ -74,7 +74,6 @@ export function* updateFeedbackPreparing({ data }) {
     last_step: lastStep,
   }
 
-  debugger;
   const response = yield call(api.updateFeedbackPreparing, preparingData);
   
   if (response.ok) {
@@ -108,7 +107,6 @@ export function* updatePreparingSchedule({ data }) {
   };
 
   const response = yield call(api.updateFeedbackPreparing, preparingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.updatePreparingScheduleSuccess());
@@ -124,14 +122,13 @@ export function* fetchCurrentPreparing({ preparingId }) {
   const preparingData = {
     preparing_id: preparingId,
   }
-  debugger;
   const response = yield call(api.getCurrentPreparing, preparingData);
-  debugger;
+  
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingDetails = response.data.details;
       const { event, actions: action, result, observation_questions: observationList, 
-      // additional_observation_questions: additionalObservation, 
+      additional_observation_questions: additionalObservation, 
         action_plan_questions: actionPlanList, additional_action_plan_questions: additionalPlan, action_plan_evaluate_options: evaluateOptions,
       additional_action_plan_evaluate_options: additionalOptions,
       checkout_question: checkoutQuestions,
@@ -157,9 +154,10 @@ export function* fetchCurrentPreparing({ preparingId }) {
       yield put(
         PreparingActions.setPreparingData(
           'step3B',
-          {observationList},
-          // additionalObservation
-          // TODO: double check values
+          {
+            observationList,
+            additionalObservation
+          },
         ),
       );
       yield put(
@@ -200,7 +198,6 @@ export function* closeFeedbackPreparing({ preparingId }) {
   }
   
   const response = yield call(api.postClosePreparing, preparingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.closeFeedbackPreparingSuccess());
