@@ -98,10 +98,11 @@ export function* postFeedbackJourney({ data }) {
 }
 
 export function* postCloseFeedbackJourney({ journeyId }) {
-  const params = new URLSearchParams();
-  params.append('journey_id', journeyId);
+  const closeJourneyData = {
+    journey_id: journeyId
+  }
 
-  const response = yield call(api.postCloseJourney, params);
+  const response = yield call(api.postCloseJourney, closeJourneyData);
   if (response.ok) {
     if (response.data.status == 'ok') {
       yield put(FeedbackActions.postCloseFeedbackJourneySuccess());
