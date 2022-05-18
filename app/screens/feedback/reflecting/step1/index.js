@@ -19,7 +19,7 @@ const ReflectingStep1 = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
   const stepData = useSelector(getReflectStep1Data);
-  const [feelingValue, setFeelingValue] = useState(3);
+  const [feelingValue, setFeelingValue] = useState(5);
   const [didSliderMove, setDidSliderMove] = useState(false);
 
   useEffect(() => {
