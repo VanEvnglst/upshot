@@ -46,7 +46,9 @@ const FeedbackSharing = props => {
   const hideModal = () => setModalVisible(false);
 
   const handleCloseBtn = () => {
-    navigation.goBack();
+    dispatch(SharingActions.updateFeedbackSharing({
+      shouldClose: false,
+    }));
   };
 
 
