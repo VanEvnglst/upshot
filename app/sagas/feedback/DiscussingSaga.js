@@ -9,14 +9,16 @@ import labels from 'app/locales/en';
 const discussingId = state => state.discussing.get('id');
 
 export function* postFeedbackDiscussing({ journeyId }) {
-  // const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if (!connected) {
   // return;
   // }
-  const params = new URLSearchParams();
-  params.append('journey_id', journeyId);
 
-  const response = yield call(api.postFeedbackDiscussing, params);
+  const discussingData = {
+    journey_id: journeyId
+  }
+
+  const response = yield call(api.postFeedbackDiscussing, discussingData);
   if (response.ok) {
     if (response.data.status === 'ok') {
       const discussingId = response.data.details.id;
@@ -29,18 +31,16 @@ export function* postFeedbackDiscussing({ journeyId }) {
 }
 
 export function* updateFeedbackDiscussing({ data }) {
-  const params = new URLSearchParams();
-  const discussId = yield select(discussingId);
+  let plansList = [];
+  plansList.push(data);
 
-  var plansList = '[{';
-  plansList += `"what": ${data.specificAction}`;
-  plansList += `"when": ${data.whenWillItHappen}`;
-  plansList += `"who": ${data.whoWillMakeIt}`;
-  plansList += '}]';
-  params.append('discussing_id', discussId);
-  params.append('plans', plansList);
-
-  const response = yield call(api.updateFeedbackDiscussing, params);
+  const discussingData = {
+    discussing_id: discussId,
+    plans: plansList
+  }
+  
+  const response = yield call(api.updateFeedbackDiscussing, discussingData);
+  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
@@ -49,22 +49,29 @@ export function* updateFeedbackDiscussing({ data }) {
       yield NavigationService.navigate('FeedbackConfirmation', {
         type: 'discussing',
       });
+    } else {
+      yield put(DiscussingActions.updateFeedbackDiscussingFailure(response.data))
     }
   } else {
-    yield put(DiscussingActions.postFeedbackDiscussingFailure(response.data));
+    yield put(DiscussingActions.updateFeedbackDiscussingFailure(response.data));
   }
 }
 
 export function* updateDiscussingReminder({ data }) {
-  const params = new URLSearchParams();
-  const discussId = yield select(discussingId);
-  params.append('discussing_id', discussId);
-  params.append('reminder_date', data.reminderDate);
-  const response = yield call(api.updateFeedbackDiscussing, params);
+
+  const discussingData = {
+    discussing_id: discussId,
+    reminder_date: data.reminderDate
+  };
+  
+  const response = yield call(api.updateFeedbackDiscussing, discussingData);
+  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
       yield NavigationService.navigate('ActiveFeedbackJourney');
+    } else {
+      yield put(DiscussingActions.updateFeedbackDiscussingFailure(response.data));
     }
   } else {
     yield put(DiscussingActions.updateFeedbackDiscussingFailure(response.data));
@@ -73,11 +80,12 @@ export function* updateDiscussingReminder({ data }) {
 
 export function* fetchCurrentDiscussing({ discussingId }) {
   const { cueCards } = labels.feedbackDiscussing;
-  const params = new URLSearchParams();
-  params.append('discussing_id', discussingId);
 
-  const response = yield call(api.getCurrentDiscussing, params);
-
+  const discussingData = {
+    discussing_id: discussingId
+  };
+  const response = yield call(api.getCurrentDiscussing, discussingData);
+  
   if (response.ok) {
     if (response.data.status === 'ok') {
       const prepDetails = response.data.details.preparing_phase;
@@ -129,7 +137,10 @@ export function* fetchCurrentDiscussing({ discussingId }) {
             id: 4,
             title: cueCards.listenDeeply,
             content:
-              observation === '' ? cueCards.listenDeeplyContent : observation,
+              observation === '' ? cueCards.listenDeeplyContent : 
+              observation.map((item, index) => (
+                `${observation[index]}\n\n`
+              )),
             skipped: observation === '' ? true : false,
           },
           {
@@ -138,7 +149,7 @@ export function* fetchCurrentDiscussing({ discussingId }) {
             content:
               plans === '' || addedActionPlanQuestions === ''
                 ? cueCards.brainstormContent
-                : `${plans}\n\n${addedActionPlanQuestions}`,
+                : handleMultipleContent(plans, addedActionPlanQuestions),
             skipped:
               plans === '' && addedActionPlanQuestions === '' ? true : false,
           },
@@ -163,7 +174,11 @@ export function* fetchCurrentDiscussing({ discussingId }) {
           {
             id: 8,
             title: cueCards.checkOut,
-            content: checkout === '' ? cueCards.checkOutContent : checkout,
+            content: checkout === '' ? cueCards.checkOutContent :
+            checkout.map((item, index) => (
+              `${checkout[index]}\n\n`
+              // add additional data here
+            )),
             skipped: checkout === '' ? true : false,
           },
           {
@@ -191,16 +206,30 @@ export function* fetchCurrentDiscussing({ discussingId }) {
 }
 
 export function* closeFeedbackDiscussing({ discussingId }) {
-  const params = new URLSearchParams();
-  params.append('discussing_id', discussingId);
-  const response = yield call(api.postCloseDiscussing, params);
+  const discussingData = {
+    discussing_id: discussingId,
+  };
+  
+  const response = yield call(api.postCloseDiscussing, discussingData);
+  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.closeFeedbackDiscussingSuccess());
+    } else {
+      yield put(DiscussingActions.closeFeedbackDiscussingFailure(response.data));
     }
   } else {
     yield put(DiscussingActions.closeFeedbackDiscussingFailure(response.data));
   }
+}
+
+function handleMultipleContent(contents, inputContent) {
+  let contentStr = '';
+  contentStr = contents.map((item, index) => (
+    `${contents[index]}\n\n`
+  ));
+  contentStr += `${inputContent}`;
+  return contentStr;
 }
 
 function* watchDiscussingSaga() {
