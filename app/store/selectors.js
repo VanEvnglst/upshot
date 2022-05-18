@@ -77,6 +77,7 @@ export const getReflectingCriteria = state =>
   state.reflecting.get('reflectingCriteria');
 export const getReflectingError = state =>
   state.reflecting.get('error');
+export const getActionPlan = state => state.reflecting.get('actionPlan');
 
 /* ------------- Feedback Sharing Selectors ------------- */
 export const getSharing = state => state.sharing;
