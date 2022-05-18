@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import { getDiscussingId, getDiscussingData } from 'app/store/selectors';
 import { Header, Text, Wrapper } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import Colors from 'app/theme/colors';
@@ -21,7 +22,7 @@ import styles from './styles';
 
 const { width } = Dimensions.get('screen');
 const SPACING = 10;
-const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.8;
+const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.72 : width * 0.82;
 const ITEM_HEIGHT = ITEM_SIZE * 1.6;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 3;
 
@@ -115,7 +116,7 @@ const DiscussingMeeting = props => {
         <View
           style={[
             styles.card,
-            Platform.OS === 'android' && styles.androidCard,
+            DeviceUtil.isAndroid() && styles.androidCard,
           ]}>
           <View style={[styles.headerContainer, skipped && { marginTop: 10}]}>
             <Image 
@@ -180,7 +181,7 @@ const DiscussingMeeting = props => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Wrapper>
+      <View style={styles.wrapper}>
         <Header
           headerRight={{
             onPress: () => navigation.goBack(),
@@ -244,7 +245,7 @@ const DiscussingMeeting = props => {
           backgroundColor: 'blue',
         }}
       /> */}
-      </Wrapper>
+      </View>
     </View>
   );
 };
