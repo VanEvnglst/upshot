@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep, getPrepStep5BData } from 'app/store/selectors';
 import { Text, ButtonSelection, TextInput } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -19,12 +20,7 @@ const PreparingStep5B = () => {
 
   useEffect(() => {
     if(stepData.data)
-    if (typeof stepData.data.checkoutAcknowledge === 'string') {
-      const dataArr = stepData.data.checkoutAcknowledge.split(",");
-      setAcknowledgeDetails(dataArr);
-    } else {
     setAcknowledgeDetails(stepData.data.checkoutAcknowledge);
-    }
     setAdditionalAcknowledge(stepData.data.additionalAcknowledge);
   }, [stepData]);
 
@@ -62,7 +58,7 @@ const PreparingStep5B = () => {
 
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : null}
+    behavior={DeviceUtil.isIos() ? 'padding' : null}
   >
     <ScrollView 
       contentContainerStyle={{ paddingBottom: 50}}
