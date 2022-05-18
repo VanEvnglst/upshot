@@ -66,7 +66,7 @@ const ReflectingStep2 = props => {
       newList.push({
         ...item,
         displayName: (criteriaStr += item.criteria),
-        score: 3,
+        score: 5,
       });
       criteriaStr = 'I ';
     });
