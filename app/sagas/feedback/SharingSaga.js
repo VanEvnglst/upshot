@@ -8,13 +8,13 @@ const STATUS_OK = 'ok';
 const sharing = state => state.sharing.get('id');
 
 export function* postFeedbackSharing({ journeyId }) {
-  // const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if(!connected ) { return }
-  const params = new URLSearchParams();
-  params.append('journey_id', journeyId);
+  const sharingData = { 
+    journey_id: journeyId,
+  }
 
-  const response = yield call(api.postFeedbackSharing, params);
-  
+  const response = yield call(api.postFeedbackSharing, sharingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const sharingId = response.data.details.id;
@@ -27,39 +27,42 @@ export function* postFeedbackSharing({ journeyId }) {
 }
 
 export function* updateFeedbackSharing({ data }) {
-  //const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if(!connected) { return };
   const { message, details } = data;
-  
-  const params = new URLSearchParams();
-  const sharingId = yield select(sharing);
-  params.append('sharing_id', sharingId);
-  params.append('event_str', details.event);
-  params.append('action_str', details.action);
-  params.append('result_str', details.result);
-  params.append('message_str', message);
 
-  const response = yield call(api.updateFeedbackSharing, params);
+  const sharingId = yield select(sharing);
+  const sharingData = { 
+    sharing_id: sharingId,
+    event_str: details.event,
+    action_str: details.action,
+    result_str: details.result,
+    message_str: message
+  }
+
+  const response = yield call(api.updateFeedbackSharing, sharingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(SharingActions.updateFeedbackSharingSuccess());
-      yield put(SharingActions.closeFeedbackSharing(sharingId));
-      yield NavigationService.navigate('FeedbackConfirmation', {
-        type: 'sharing',
-      });
+      if (data.shouldClose) {
+        yield put(SharingActions.closeFeedbackSharing(sharingId))
+      } else {
+        yield NavigationService.navigate('ActiveFeedbackJourney');
+        yield put(SharingActions.resetSharingState());
+      }
     }
   } else {
     yield put(SharingActions.updateFeedbackSharingFailure(response.data));
   }
 }
 
-export function* updateSharingReminder({ data }) {
-  const params = new URLSearchParams();
+export function* updateSharingReminder({ data }) {  
   const sharingId = yield select(sharing);
-  params.append('sharing_id', sharingId);
-  params.append('reminder_datetime', data.reminderDate)
-  
-  const response = yield call(api.updateFeedbackSharing, params);
+  const sharingData = {
+    sharing_id: sharingId,
+    reminder: data.reminderDate
+  }
+  const response = yield call(api.updateFeedbackSharing, sharingData);
   if(response.ok) {
     if(response.data.status === STATUS_OK) {
       yield put(SharingActions.updateFeedbackSharingSuccess())
@@ -71,20 +74,24 @@ export function* updateSharingReminder({ data }) {
 }
 
 export function* fetchCurrentSharing({ sharingId }) {
-  // const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if (!connected) { return };
-  const params = new URLSearchParams();
-  params.append('sharing_id', sharingId);
 
-  const response = yield call(api.getCurrentSharing, params);
+  const sharingData = {
+    sharing_id: sharingId,
+  }
+  const response = yield call(api.getCurrentSharing, sharingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const sharingDetails = response.data.details;
-      const { event, action, result, message } = sharingDetails;
       yield put(SharingActions.setSharingData('step1', {
-        event, action, result
+        event: handleData(sharingDetails.event), 
+        action: handleData(sharingDetails.action),
+        result: handleData(sharingDetails.result)
       }));
-      yield put(SharingActions.setSharingData('step2', message));
+      yield put(SharingActions.setSharingData('step2', 
+        handleData(sharingDetails.message)
+      ));
       yield put(SharingActions.fetchCurrentSharingSuccess())
     }
   } else {
@@ -94,18 +101,21 @@ export function* fetchCurrentSharing({ sharingId }) {
 
 
 export function* closeFeedbackSharing({ sharingId }) {
-  //const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if (!connected) { return };
 
-  const params = new URLSearchParams();
-  // const sharingId = yield select(sharing);
-  params.append('sharing_id', sharingId);
+  const sharingData = {
+    sharing_id: sharingId,
+  }
 
-  const response = yield call(api.postCloseSharing, params);
+  const response = yield call(api.postCloseSharing, sharingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(SharingActions.closeFeedbackSharingSuccess())
       yield put(SharingActions.setSharingStatus('closed', true));
+      yield NavigationService.navigate('FeedbackConfirmation', {
+        type: 'sharing',
+      });
     }
   } else {
     yield put(SharingActions.closeFeedbackSharingFailure(response.data))
@@ -113,7 +123,11 @@ export function* closeFeedbackSharing({ sharingId }) {
 }
 
 
+function handleData(content) {
+  const dataValue = content === null ? '' : content
 
+  return dataValue;
+}
 
 function* watchSharingSaga() {
   yield takeLatest(SharingTypes.POST_FEEDBACK_SHARING, postFeedbackSharing);
