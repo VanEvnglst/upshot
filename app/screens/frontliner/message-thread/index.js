@@ -16,11 +16,13 @@ import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
 
-const ResponseScreen = props => {
+const MessageThreadScreen = props => {
   const { navigation, route } = props;
   const { message } = route.params;
   const dispatch = useDispatch();
-  const messageBody = useSelector(state => state.messages.get('body'));
+  const currentMessage = useSelector(state =>
+    state.messages.get('currentMessage'),
+  );
   const isLoading = useSelector(state => state.messages.get('fetching'));
   const user = useSelector(state => state.user.get('firstName'));
   const [response, setResponse] = useState();
@@ -39,8 +41,8 @@ const ResponseScreen = props => {
   }, []);
 
   const handleBack = () => {
+    dispatch(MessagesActions.resetMessageState());
     navigation.navigate('Messages');
-    //TODO: reset message state on API integration
   };
 
   const handleSelection = item => {
@@ -55,7 +57,7 @@ const ResponseScreen = props => {
             What
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.what}
+            {currentMessage && currentMessage.body.what}
           </Text>
         </View>
         <View style={styles.content}>
@@ -63,7 +65,7 @@ const ResponseScreen = props => {
             When
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.when}
+            {currentMessage && currentMessage.body.when}
           </Text>
         </View>
       </View>
@@ -78,7 +80,7 @@ const ResponseScreen = props => {
             What
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.what}
+            {currentMessage && currentMessage.body.what}
           </Text>
         </View>
         <View style={styles.content}>
@@ -86,7 +88,7 @@ const ResponseScreen = props => {
             When
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.when}
+            {currentMessage && currentMessage.body.when}
           </Text>
         </View>
         <View style={styles.content}>
@@ -94,7 +96,7 @@ const ResponseScreen = props => {
             Who
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.who}
+            {currentMessage && currentMessage.body.who}
           </Text>
         </View>
       </View>
@@ -130,6 +132,17 @@ const ResponseScreen = props => {
         </View>
       </View>
     );
+  };
+
+  const handleInitialMessage = () => {
+    switch (currentMessage.type) {
+      case 'Feedback Discussion':
+        return <DiscussionMessage />;
+      case 'Action Plan':
+        return <ActionPlanMessage />;
+      default:
+        return <View style={{ flex: 1, width: 200, height: 300, borderWidth: 0.3}} />
+    }
   };
 
   // const CurrentMessage = () => {
@@ -215,7 +228,8 @@ const ResponseScreen = props => {
                 Body summary
               </Text>
             )}
-            {isCurrentMessage && message.subject === 'Feedback Discussion' ? (
+            {/* {handleInitialMessage()} */}
+            {/* {isCurrentMessage && message.subject === 'Feedback Discussion' ? (
               <DiscussionMessage />
             ) : message.subject === 'Action Plan' ? (
               <ActionPlanMessage />
@@ -228,7 +242,7 @@ const ResponseScreen = props => {
                   backgroundColor: 'red',
                 }}
               />
-            )}
+            )} */}
           </View>
         </View>
       </View>
@@ -238,8 +252,7 @@ const ResponseScreen = props => {
   return (
     <View style={{ flex: 1 }}>
       <Wrapper>
-        <ScrollView 
-          showsVerticalScrollIndicator={false} bounces={false}>
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
           <Header
             headerLeft={{
               onPress: () => handleBack(),
@@ -282,8 +295,8 @@ const ResponseScreen = props => {
   );
 };
 
-export default ResponseScreen;
+export default MessageThreadScreen;
 
-ResponseScreen.propTypes = {};
+MessageThreadScreen.propTypes = {};
 
-ResponseScreen.defaultProps = {};
+MessageThreadScreen.defaultProps = {};

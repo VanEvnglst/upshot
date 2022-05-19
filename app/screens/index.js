@@ -41,7 +41,7 @@ export { default as FeedbackSharing } from './feedback/sharing';
 
 
 /* ------------- Frontliner Stack ------------- */
-export { default as ResponseScreen } from './frontliner/response';
+export { default as MessageThreadScreen } from './frontliner/message-thread';
 export { default as SurveyDiscussion } from './frontliner/survey/discussion';
 export { default as SurveyGuide } from './frontliner/survey/guide';
 export { default as FrontlinerSurvey } from './frontliner/survey';
