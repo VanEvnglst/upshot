@@ -7,47 +7,54 @@ import api from 'app/services/apiService';
 const STATUS_OK = 'ok';
 
 export function* fetchMessages({}) {
-  // const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if (!connected ) { return; }
-  
+
   const response = yield call(api.getFrontlinerMessages);
-  if(response.ok) {
+  if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const messagesList = response.data.inbox;
-      yield put(MessagesActions.fetchMessagesSuccess(messagesList))
+      yield put(MessagesActions.fetchMessagesSuccess(messagesList));
     } else {
-      yield put(MessagesActions.fetchMessagesFailure())
+      yield put(MessagesActions.fetchMessagesFailure());
     }
   } else {
-    yield put(MessagesActions.fetchMessagesFailure(response.data))
+    yield put(MessagesActions.fetchMessagesFailure(response.data));
   }
 }
 
-export function* fetchMessage({ messageId}) {
-  //const connected = yield checkInternetConnection();
+export function* fetchMessage({ messageId }) {
+  const connected = yield checkInternetConnection();
   // if (!connected) { return; }
 
-  const params = new URLSearchParams();
-  params.append('message_id', messageId);
+  const messageData = {
+    message_id: messageId,
+  };
 
-  const response = yield call(api.getMessage, params);
+  const response = yield call(api.getMessage, messageData);
+  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
-      const responseData = response.data.body;
-      const dateArr = moment(responseData.when).format('LLLL').split(' ');
-      const formattedDate = `${dateArr[0]} ${dateArr[1]} ${dateArr[2]} ${dateArr[3]} at ${dateArr[4]} ${dateArr[5]}`;
-      
-      const messageBody = {
-        what: responseData.what,
-        when: formattedDate
+      const responseData = response.data;
+      // const dateArr = moment(responseData.when).format('LLLL').split(' ');
+      // const formattedDate = `${dateArr[0]} ${dateArr[1]} ${dateArr[2]} ${dateArr[3]} at ${dateArr[4]} ${dateArr[5]}`;
+
+      const message = {
+        id: messageId,
+        type: responseData.type,
+        body: responseData.body
       }
+      // const messageBody = {
+      //   what: responseData.what,
+      //   when: formattedDate,
+      // };
       debugger;
-      yield put(MessagesActions.fetchMessageSuccess(messageBody))
+      yield put(MessagesActions.fetchMessageSuccess(message));
     } else {
       yield put(MessagesActions.fetchMessagesFailure(response.data));
     }
   } else {
-    yield put(MessagesActions.fetchMessagesFailure(response.data))
+    yield put(MessagesActions.fetchMessagesFailure(response.data));
   }
 }
 
@@ -58,19 +65,24 @@ export function* postMessageResponse({ data }) {
   params.append('accepted');
   params.append('reason');
 
+  const messageData = {
+    message_id: '',
+    accepted: '',
+    reason: '',
+  };
+
   const response = yield call(api.postMessageResponse, params);
   if (response.ok) {
-    if(response.data.status === STATUS_OK) {
+    if (response.data.status === STATUS_OK) {
       debugger;
       yield put(MessagesActions.postMessageResponseSuccess());
     } else {
       yield put(MessagesActions.postMessageResponseFailure(response.data));
     }
   } else {
-    yield put(MessagesActions.postMessageResponseFailure(response.data))
+    yield put(MessagesActions.postMessageResponseFailure(response.data));
   }
 }
-
 
 function* watchMessagesSaga() {
   yield takeLatest(MessagesTypes.FETCH_MESSAGES, fetchMessages);
