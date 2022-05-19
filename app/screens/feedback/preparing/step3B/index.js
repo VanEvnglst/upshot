@@ -20,21 +20,21 @@ const PreparingStep3B = () => {
 
   useEffect(() => {
     if (stepData.data) {
-      debugger;
-      if (typeof stepData.data.observationList === 'string') {
-        const dataArr = stepData.data.observationList.split(',');
-        setObservations(dataArr);
-      } else {
-        setObservations(stepData.data.observationList);
-      }
+      setObservations(stepData.data.observationList);
       setAdditionalObservation(
         stepData.data.additionalObservation
           ? stepData.data.additionalObservation
           : '',
       );
-      //TODO: change when additional data is returned
     }
   }, [stepData]);
+
+  //TODO: Test experiment
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('add data');
+    }, 2000);
+  }, [observationList]);
 
   const handleData = () => {
     dispatch(
@@ -44,6 +44,7 @@ const PreparingStep3B = () => {
       }),
     );
   };
+
   const handleBack = () => {
     handleData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
@@ -71,11 +72,11 @@ const PreparingStep3B = () => {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? "padding" : null}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
       style={containerStyles.container}>
-      <View >
-        <ScrollView 
+      <View>
+        <ScrollView
           contentContainerStyle={{ paddingBottom: 30 }}
           showsVerticalScrollIndicator={false}>
           <View style={containerStyles.descriptionContainer}>

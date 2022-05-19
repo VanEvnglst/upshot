@@ -6,7 +6,6 @@ import DocumentingActions, {
 } from 'app/store/feedback/DocumentingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
-import { parseAsync } from '@babel/core';
 
 const STATUS_OK = 'ok';
 const activeStep = state => state.documenting.get('activeStep');
@@ -19,9 +18,10 @@ const step3Data = state => state.documenting.get('step3').data;
 const step4Data = state => state.documenting.get('step4').data;
 const step5Data = state => state.documenting.get('step5').data;
 const otherTopicData = state => state.documenting.get('otherTopic');
+const lastActiveStep = state => state.documenting.get('activeStep');
 
 export function* postFeedbackDocumenting({ data }) {
-  // const connected = yield checkInternetConnection();
+  const connected = yield checkInternetConnection();
   // if (!connected) {
   //  return;
   //}
@@ -41,42 +41,36 @@ export function* postFeedbackDocumenting({ data }) {
 }
 
 export function* updateFeedbackDocumenting({ data }) {
-  // Select data from the store to be passed into API
   const step1 = yield select(step1Data);
   const step2 = yield select(step2Data);
   const step3 = yield select(step3Data);
   const step4 = yield select(step4Data);
   const step5 = yield select(step5Data);
   const otherTopic = yield select(otherTopicData);
+  const lastStep = yield select(lastActiveStep);
   const docuId = yield select(documentingId);
   const typeId = yield select(type);
-  const flowId = yield select(flow);
 
-  const otsParams = new URLSearchParams();
-  const params = new URLSearchParams();
-  const schedPostParams = new URLSearchParams();
-
-  // This handles the topic ids and concats them into one string;
   const step2List = step2.map(obj => obj.id);
-  var topicListStr = '[';
-  step2List.forEach((item, index) => {
-    if (index !== step2List.length - 1) topicListStr += `${item},`;
-    else topicListStr += `${item}`;
-  });
-  topicListStr += ']';
-  const dateSel = step3 && step3 !== null ? moment(step3).format('MMM DD, YYYY') : '';
+  const dateSelected = step3 && step3 !== null ? moment(step3).format('MMM DD, YYYY') : '';
   const step4Value = step4 && step4.value !== null ? step4.value : true;
   const step5Value = step5 && step5.value !== null ? step5.value : 0;
-  params.append('documenting_id', docuId);
-  params.append('staff_id', step1.id);
-  params.append('topics', topicListStr);
-  params.append('pos_or_cor', typeId);
-  params.append('incident_date', dateSel);
-  params.append('is_first_time_bool', step4Value);
-  params.append('follow_up_count_int', step5Value);
-  params.append('optional_topic', otherTopic);
 
-  const response = yield call(api.updateDocumenting, params);
+  const documentingData = {
+    documenting_id: docuId,
+    staff_id: step1.id,
+    topics: step2List,
+    pos_or_cor: typeId,
+    incident_date: dateSelected,
+    is_first_time_bool: step4Value,
+    follow_up_count_int: step5Value,
+    optional_topic: otherTopic,
+    last_step: lastStep,
+  }
+  
+  const response = yield call(api.updateDocumenting, documentingData);
+  debugger;
+
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.updateFeedbackDocumentingSuccess());
@@ -105,18 +99,16 @@ export function* updateDocumentingReminder({ data }) {
   const otherTopic = yield select(otherTopicData);
   const docuId = yield select(documentingId);
   const step2List = step2.map(obj => obj.id);
-  var topicListStr = '[';
-  step2List.forEach((item, index) => {
-    if (index !== step2List.length - 1) topicListStr += `${item},`;
-    else topicListStr += `${item}`;
-  });
-  topicListStr += ']';
-  params.append('documenting_id', docuId);
-  params.append('reminder_date', reminderDate);
-  params.append('topics', topicListStr);
-  params.append('optional_topic', otherTopic);
 
-  const response = yield call(api.updateDocumentingReminder, params);
+  const documentingData = {
+    documenting_id: docuId,
+    topics: step2List,
+    reminder_date: reminderDate,
+    optional_topic: otherTopic,
+  }
+  
+  const response = yield call(api.updateDocumentingReminder, documentingData);
+  
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.updateDocumentingReminderSuccess());
@@ -136,17 +128,19 @@ export function* deleteFeedbackDocumenting({ data }) {
 }
 
 export function* fetchCurrentDocumenting({ documentingId }) {
-  const params = new URLSearchParams();
-  params.append('documenting_id', documentingId);
+  const documentingData = {
+    documenting_id: documentingId
+  }
 
-  const response = yield call(api.getCurrentDocumenting, params);
-
+  const response = yield call(api.getCurrentDocumenting, documentingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const docuDetails = response.data.details;
-      const firstTimeFeedback = docuDetails.is_first_time ? {id: 1} : { id: 2};
+      const firstTimeFeedback = docuDetails.is_first_time === null ?
+      null : docuDetails.is_first_time ? {id: 1} : { id: 2};
       const followUpFeedback = 
       { value: docuDetails.follow_up_count }
+      const lastStep = docuDetails.last_step === null ? 1 : docuDetails.last_step;
       yield put(
         DocumentingActions.setDocumentingData('step1', docuDetails.staff),
       );
@@ -161,17 +155,23 @@ export function* fetchCurrentDocumenting({ documentingId }) {
       );
       yield put(DocumentingActions.setDocumentingData('step4', firstTimeFeedback));
       yield put(DocumentingActions.setDocumentingData('step5', followUpFeedback));
+      yield put(DocumentingActions.setDocumentingStatus('activeStep', lastStep))
       yield put(DocumentingActions.fetchCurrentDocumentingSuccess());
+    } else {
+      yield put(DocumentingActions.fetchCurrentDocumentingFailure(response.data))
     }
+  } else {
+    yield put(DocumentingActions.fetchCurrentDocumentingFailure(response.data));
   }
 }
 
 export function* closeFeedbackDocumenting() {
-  const params = new URLSearchParams();
   const docuId = yield select(documentingId);
-  params.append('documenting_id', docuId);
+  const documentingData = {
+    documenting_id: docuId
+  }
 
-  const response = yield call(api.postCloseDocumenting, params);
+  const response = yield call(api.postCloseDocumenting, documentingData);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(DocumentingActions.closeFeedbackDocumentingSuccess());

@@ -20,7 +20,6 @@ const FeedbackDiscussing = props => {
   });
   const [actionPlanList, setActionPlanList] = useState([]);
 
-  // console.warn('woop', actionPlanList);
   const handleBack = () => {
     navigation.navigate('DiscussingMeeting', {
       type: 'actionPlan',
@@ -28,11 +27,13 @@ const FeedbackDiscussing = props => {
   };
 
   const handleNext = () => {
+    //TODO: Double check data here
     dispatch(DiscussingActions.updateFeedbackDiscussing(actionPlan));
   };
 
   const handleClose = () => {
-    // dispatch(DiscusssingActions.update());
+    dispatch(DiscussingActions.setDiscussingStatus('data',actionPlan))
+    dispatch(DiscussingActions.updateFeedbackDiscussing(actionPlan));
   }
 
   const handleTextChange = (key, text, index) => {

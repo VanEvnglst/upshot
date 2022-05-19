@@ -7,6 +7,7 @@ import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep, getPrepStep5Data } from 'app/store/selectors';
 import { preparingCheckout } from 'app/models/PreparingModel';
 import { Text, ButtonSelection, TextInput } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -20,16 +21,15 @@ const PreparingStep5 = () => {
 
   useEffect(() => {
     if(stepData.data)
-    if(typeof stepData.data.checkoutQuestions === 'string') {
-      const dataArr = stepData.data.checkoutQuestions.split(",");
-      setCheckoutDetails(dataArr);
-    } else {
+    if (stepData.data.checkoutQuestions === null)
+    setCheckoutDetails([]);
+    else
       setCheckoutDetails(stepData.data.checkoutQuestions);
-    }
+      setAdditionalCheckout(stepData.data.additionalCheckout);
   }, [stepData]);
 
 
-  const handleData = () => {
+  const setData = () => {
     dispatch(
       PreparingActions.setPreparingData('step5', {
         checkoutQuestions,
@@ -39,12 +39,12 @@ const PreparingStep5 = () => {
   }
 
   const handleBack = () => {
-    handleData();
+    setData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    handleData();
+    setData();
     dispatch(PreparingActions.setPrepActiveStep(activeStep + 1));
   };
 
@@ -66,7 +66,7 @@ const PreparingStep5 = () => {
 
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : null}
+    behavior={DeviceUtil.isIos() ? 'padding' : null}
   >
     <ScrollView 
       contentContainerStyle={{ paddingBottom: 70}}

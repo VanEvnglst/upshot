@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text } from 'app/components';
-import { getReflectingStep, getReflectingError } from 'app/store/selectors';
+import { getReflectingStep, getReflectingError, getActionPlan } from 'app/store/selectors';
 import ReflectingActions from 'app/store/feedback/ReflectingRedux';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
@@ -16,13 +16,14 @@ const ReflectingStep5 = () => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getReflectingStep);
   const reflectingError = useSelector(getReflectingError);
+  const actionPlanList = useSelector(getActionPlan);
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
 
   useEffect(() => {
     if(reflectingError !== '') 
       setSnackbarVisible(true)
   }, [reflectingError]);
-  
+
   const dismissSnackbar = () => setSnackbarVisible(false);
 
   const handleBack = () => {
@@ -33,23 +34,21 @@ const ReflectingStep5 = () => {
     dispatch(ReflectingActions.updateFeedbackReflecting({ shouldClose: true }));
   };
 
-  // TODO: Fix data handling for action plan
-  const ActionPlanItem = () => {
+  const ActionPlanItem = ({ item, index }) => {
     return (
     <View style={styles.itemContainer}>
       <View style={styles.count}>
         <View style={styles.countBadge}>
-          {/* TODO: Should be item count */}
-          <Text type='overline'>1</Text>
+          <Text type='overline'>{index + 1}</Text>
         </View>
         <View
           style={styles.countLine} 
         />
       </View>
       <View style={styles.planContainer}>
-        <Text type='body1'>Attend additional training</Text>
-        <Text type='body1' style={[styles.planSpacer]}>Next Tuesday @ Head Office</Text>
-        <Text type='body1' style={[styles.planSpacer]}>Request with HR</Text>
+        <Text type='body1'>{item.specificAction}</Text>
+        <Text type='body1' style={[styles.planSpacer]}>{item.whenWillItHappen}</Text>
+        <Text type='body1' style={[styles.planSpacer]}>{item.whoWillMakeIt}</Text>
       </View>
     </View>
     )
@@ -68,8 +67,13 @@ const ReflectingStep5 = () => {
       <View
         style={styles.contentContainer}>
           <Text type='overline'>action plan</Text>
-          {/* TODO: Map action plan items */}
-          <ActionPlanItem/>
+          {actionPlanList.map((item, index) => (
+            <ActionPlanItem 
+              item={item}
+              key={index}
+              index={index}
+            />
+          ))}
         </View>
       <View style={containerStyles.btnContainer}>
         <Button mode="text" onPress={() => handleBack()}>

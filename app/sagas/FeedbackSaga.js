@@ -68,8 +68,6 @@ export function* postFeedbackJourney({ data }) {
   // if (!connected) {
   //   return;
   // }
-
-  const documentingParams = new URLSearchParams();
   const staff = yield select(staffData);
   const nameArr = staff.name.split(/[ ,]+/);
   const lastName = nameArr && nameArr[1].charAt(0);
@@ -78,17 +76,19 @@ export function* postFeedbackJourney({ data }) {
     firstName: nameArr[0],
     lastName: lastName,
   };
-  
+
   const response = yield call(api.postNewJourney, data);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const journeyId = response.data.details.journey_id;
       yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
       yield put(FeedbackActions.setTeamMember(staffName))
-      documentingParams.append('journey_id', journeyId);
-      documentingParams.append('staff_id', staff.id);
-      documentingParams.append('pos_or_cor',type.id)
-      yield put(DocumentingActions.postFeedbackDocumenting(documentingParams));
+      const documentingData = {
+        journey_id: journeyId,
+        staff_id: staff.id,
+        pos_or_cor: type.id
+      };
+      yield put(DocumentingActions.postFeedbackDocumenting(documentingData));
     } else {
       yield put(FeedbackActions.postFeedbackJourneyFailure(response.data));
     }
@@ -98,10 +98,11 @@ export function* postFeedbackJourney({ data }) {
 }
 
 export function* postCloseFeedbackJourney({ journeyId }) {
-  const params = new URLSearchParams();
-  params.append('journey_id', journeyId);
+  const closeJourneyData = {
+    journey_id: journeyId
+  }
 
-  const response = yield call(api.postCloseJourney, params);
+  const response = yield call(api.postCloseJourney, closeJourneyData);
   if (response.ok) {
     if (response.data.status == 'ok') {
       yield put(FeedbackActions.postCloseFeedbackJourneySuccess());

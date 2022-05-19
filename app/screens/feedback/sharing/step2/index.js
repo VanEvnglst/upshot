@@ -10,6 +10,7 @@ import {
 } from 'app/store/selectors';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text, TextInput } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 
@@ -40,7 +41,8 @@ const SharingStep2 = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding">
+    <KeyboardAvoidingView 
+      behavior={DeviceUtil.isIos() ? "padding" : null}>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={[containerStyles.descriptionContainer]}>
           <Text

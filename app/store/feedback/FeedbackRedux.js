@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 const defaultState = {
   fetching: false,
   data: null,
-  error: null,
+  error: '',
 };
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({

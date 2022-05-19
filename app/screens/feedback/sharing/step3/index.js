@@ -52,6 +52,7 @@ const SharingStep3 = () => {
     const data = {
       message,
       details,
+      shouldClose: true
     };
     dispatch(SharingActions.updateFeedbackSharing(data));
   };

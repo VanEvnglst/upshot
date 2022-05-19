@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import PreparingActions from 'app/store/feedback/PreparingRedux';
 import { getPreparingStep, getPrepStep1Data } from 'app/store/selectors';
 import { Text, TextInput } from 'app/components';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 import styles from './styles';
@@ -21,6 +22,13 @@ const PreparingStep1 = () => {
     if (stepData.data) handleText(stepData.data);
   }, [stepData]);
 
+  //TODO: Test experiment
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(PreparingActions.setPreparingData('step1', checkInValue));
+    }, 2000);
+  }, [checkInValue]);
+
   const handleText = text => {
     setCheckInValue(text);
   };
@@ -32,10 +40,10 @@ const PreparingStep1 = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      behavior={DeviceUtil.isIos() ? 'padding' : null}
     >
       <ScrollView
-        style={{marginBottom:  Platform.OS === 'ios' ? 120 : 30 }}
+        style={{marginBottom:  DeviceUtil.isIos() ? 120 : 30 }}
         showsVerticalScrollIndicator={false}>
       <View style={containerStyles.descriptionContainer}>
             <Text

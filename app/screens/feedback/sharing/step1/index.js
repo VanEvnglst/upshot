@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import { Text, TextInput } from 'app/components';
 import { getSharingStep, getSharingStep1Data } from 'app/store/selectors';
+import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
 import styles from './styles';
@@ -47,7 +48,7 @@ const SharingStep1 = props => {
       bounces={false}
     showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView
-        behavior='padding'
+        behavior={DeviceUtil.isIos() ? 'padding' : null}
       >
         <View style={containerStyles.descriptionContainer}>
           <Text

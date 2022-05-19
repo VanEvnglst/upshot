@@ -18,9 +18,10 @@ export function* signInUser({ data }) {
   const connected = yield checkInternetConnection();
   if (!connected) {
     //   //yield showNetworkError();
-    return;
+   // return;
   }
   const authResponse = yield call(api.signIn, auth);
+  
   if (authResponse.ok) {
     if (authResponse.data.result === RESULT_SUCCESS) {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);

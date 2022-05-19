@@ -120,7 +120,7 @@ const FeedbackJourneyList = props => {
         : topics.length > 1
         ? `(${topics[0]}, etc.)`
         : `(${topics[0]})`;
-    const creationDate = `${moment(dateCreated, 'MM-DD-YYYY').format('LLL')}`;
+    const creationDate = `${moment(dateCreated, 'MM-DD-YYYY HH:mm a').format('LLL')}`;
 
     return (
       <TouchableOpacity
