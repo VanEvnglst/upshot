@@ -51,7 +51,7 @@ export function* updateFeedbackDocumenting({ data }) {
   const docuId = yield select(documentingId);
   const typeId = yield select(type);
 
-  const step2List = step2.map(obj => obj.id);
+  const step2List = step2 && step2.map(obj => obj.id);
   const dateSelected = step3 && step3 !== null ? moment(step3).format('MMM DD, YYYY') : '';
   const step4Value = step4 && step4.value !== null ? step4.value : true;
   const step5Value = step5 && step5.value !== null ? step5.value : 0;
