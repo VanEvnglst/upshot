@@ -43,6 +43,10 @@ export default styles = StyleSheet.create({
     marginLeft: 20,
     paddingTop: 10,
   },
+  guidePostContainer: {
+    marginTop: 30,
+    flexDirection: 'row'
+  },
   guideTitle: {
     color: Colors.primaryDark,
   },

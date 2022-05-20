@@ -23,7 +23,7 @@ const DiscussingGuide = props => {
 
   const GuidePost = ({ item }) => {
     return (
-      <View style={{ marginTop: 30, flexDirection: 'row' }}>
+      <View style={styles.guidePostContainer}>
         <Image source={item.image} resizeMode="contain" />
         <View style={styles.contentStyle}>
           <Text type="overline" style={styles.guideTitle}>
@@ -64,9 +64,7 @@ const DiscussingGuide = props => {
             style={styles.button}
             onPress={() => handleNavigation()}
             mode="contained">
-            <Text type="button" style={styles.btnText}>
               {labels.common.start}
-            </Text>
           </Button>
         </View>
       </ScrollView>
