@@ -88,7 +88,7 @@ export function* postFeedbackJourney({ data }) {
       };
       yield put(DocumentingActions.postFeedbackDocumenting(documentingData));
       yield put(FeedbackActions.setTeamMember(staffName))
-      yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
+      // yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
     } else {
       yield put(FeedbackActions.postFeedbackJourneyFailure(response.data));
     }
