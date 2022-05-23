@@ -115,8 +115,6 @@ const DocumentingReview = props => {
           <PressableData title={state.date} />
           <PressableData title={`\n\n${state.followUpCount}`} />
         </View>
-
-        {/*    <PressableData title={state.date} /> */}
       </Wrapper>
       {isLoading && <Loader />}
     </View>
@@ -125,6 +123,24 @@ const DocumentingReview = props => {
 
 export default DocumentingReview;
 
-DocumentingReview.propTypes = {};
+DocumentingReview.propTypes = {
+  step1Data: PropTypes.object,
+  step2Data: PropTypes.object,
+  step3Data: PropTypes.object,
+  step5Data: PropTypes.object,
+  isLoading: PropTypes.bool,
+  documentingId: PropTypes.number,
+  type: PropTypes.object,
+  fetchCurrentDocumenting: PropTypes.func,
+};
 
-DocumentingReview.defaultProps = {};
+DocumentingReview.defaultProps = {
+  step1Data: {},
+  step2Data: {},
+  step3Data: {},
+  step5Data: {},
+  isLoading: false,
+  documentingId: 1,
+  type: {},
+  fetchCurrentDocumenting: () => {},
+};

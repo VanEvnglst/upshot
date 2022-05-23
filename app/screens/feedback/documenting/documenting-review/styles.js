@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
     lineHeight: 48,
   },
   bodyText: {
-
+    color: Colors.mediumBlack,
   },
   pressable: {
     marginHorizontal: 7,
