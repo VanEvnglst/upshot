@@ -81,14 +81,14 @@ export function* postFeedbackJourney({ data }) {
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const journeyId = response.data.details.journey_id;
-      yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
-      yield put(FeedbackActions.setTeamMember(staffName))
       const documentingData = {
         journey_id: journeyId,
         staff_id: staff.id,
         pos_or_cor: type.id
       };
       yield put(DocumentingActions.postFeedbackDocumenting(documentingData));
+      yield put(FeedbackActions.setTeamMember(staffName))
+      // yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
     } else {
       yield put(FeedbackActions.postFeedbackJourneyFailure(response.data));
     }

@@ -32,7 +32,7 @@ const DocumentingStep2 = props => {
     if (stepData.data)
       if (stepData.data.length > 0) {
         setFeedbackTopic(stepData.data);
-        setOtherTopic(stepOtherData.data);
+        setOtherTopic(stepOtherData);
         setCompletion(true);
       }
   }, [stepData]);

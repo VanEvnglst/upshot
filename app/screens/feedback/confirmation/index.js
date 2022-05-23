@@ -106,10 +106,10 @@ const FeedbackConfirmation = props => {
     return (
       <View style={{ flexDirection: 'row' }}>
         <Button type={'text'} onPress={() => handleDocumentingNav()}>
-          <Text>{common.keepGoing}</Text>
+          {common.keepGoing}
         </Button>
         <Button type={'text'} onPress={() => showDateModal()}>
-          <Text>{common.remindMeLater}</Text>
+          {common.remindMeLater}
         </Button>
       </View>
     );
@@ -133,10 +133,10 @@ const FeedbackConfirmation = props => {
         <Button
           mode={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>{common.keepGoing}</Text>
+          {common.keepGoing}
         </Button>
         <Button mode={'text'} onPress={() => showDateModal()}>
-          <Text>{common.remindMeLater}</Text>
+          {common.remindMeLater}
         </Button>
         <HintIndicator
           showHint={discussingHintVisible}
@@ -190,10 +190,10 @@ const FeedbackConfirmation = props => {
         <Button
           type={'text'}
           onPress={() => navigation.navigate('ReflectingGuide')}>
-          <Text>{common.keepGoing}</Text>
+          {common.keepGoing}
         </Button>
         <Button type={'text'} onPress={() => showDateModal()}>
-          <Text>{common.remindMeLater}</Text>
+          {common.remindMeLater}
         </Button>
       </View>
     );
@@ -320,13 +320,13 @@ const FeedbackConfirmation = props => {
             mode='text'
             onPress={() => hideModal()}
           >
-            <Text type='button'>{labels.common.cancel}</Text>
+            {labels.common.cancel}
           </Button>
           <Button
             mode='text'
             onPress={() => handleClose()}
           >
-            <Text type='button'>{labels.common.saveClose}</Text>
+            {labels.common.saveClose}
           </Button>
         </View>
       </Modal>

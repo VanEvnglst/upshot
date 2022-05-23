@@ -61,7 +61,7 @@ const DocumentingReview = props => {
   };
   return (
     <View style={{ flex: 1 }}>
-      {isLoading && (
+      {/* {isLoading && (
         <View
           style={{
             opacity: 0.4,
@@ -71,7 +71,7 @@ const DocumentingReview = props => {
           }}>
           <ActivityIndicator size="large" color="#000000" />
         </View>
-      )}
+      )} */}
       <Wrapper>
         <Header
           headerLeft={{

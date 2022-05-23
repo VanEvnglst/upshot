@@ -175,8 +175,7 @@ const ActiveFeedbackJourney = props => {
             route.params.type === 'preparing'
           }
           onPress={
-            () => (item.closed ? console.log('review to') : handleNavigation(i))
-            // handleReviewNavigation(i)
+            () => (item.closed ? handleReviewNavigation(i) : handleNavigation(i))
           }
         />
       </View>

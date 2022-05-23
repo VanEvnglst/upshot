@@ -214,6 +214,7 @@ const postCloseFeedbackJourney = state =>
 const postCloseFeedbackJourneySuccess = state =>
   state.merge({
     currentJourney: {
+      ...state.get('currentJourney'),
       fetching: false,
     },
   });

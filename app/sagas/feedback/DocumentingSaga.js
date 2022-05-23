@@ -4,6 +4,7 @@ import moment from 'moment';
 import DocumentingActions, {
   DocumentingTypes,
 } from 'app/store/feedback/DocumentingRedux';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
@@ -29,10 +30,12 @@ export function* postFeedbackDocumenting({ data }) {
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const step = yield select(activeStep);
-      const documentingId = response.data.details.id;
+      const documentingDetails = response.data.details;
+      const { id: documentingId, journey_id: journeyId } = documentingDetails;
       yield put(
         DocumentingActions.postFeedbackDocumentingSuccess(documentingId),
       );
+      yield put(FeedbackActions.postFeedbackJourneySuccess(journeyId));
       yield put(DocumentingActions.setActiveStep(step + 1));
     }
   } else {
@@ -51,7 +54,7 @@ export function* updateFeedbackDocumenting({ data }) {
   const docuId = yield select(documentingId);
   const typeId = yield select(type);
 
-  const step2List = step2.map(obj => obj.id);
+  const step2List = step2 && step2.map(obj => obj.id);
   const dateSelected = step3 && step3 !== null ? moment(step3).format('MMM DD, YYYY') : '';
   const step4Value = step4 && step4.value !== null ? step4.value : true;
   const step5Value = step5 && step5.value !== null ? step5.value : 0;

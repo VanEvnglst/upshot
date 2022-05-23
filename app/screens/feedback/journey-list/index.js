@@ -107,7 +107,7 @@ const FeedbackJourneyList = props => {
       id,
     } = activeJourney;
     const nameArr = member.split(/[ ,]+/);
-    const lastName = nameArr && nameArr[1].charAt(0);
+    const lastName = nameArr && nameArr.length < 2 ? '' : nameArr[1].charAt(0);
     const memberName = `${nameArr[0]} ${lastName}.`;
     const staff = {
       firstName: nameArr[0],
