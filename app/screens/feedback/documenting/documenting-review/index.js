@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Wrapper, Header, Text } from 'app/components';
+import { Wrapper, Header, Text, Loader } from 'app/components';
 import {
   getDocumentingId,
   getChosenType,
   getStep1Data,
   getStep2Data,
   getStep3Data,
+  getStep5Data,
   getDocumentingFetching,
 } from 'app/store/selectors';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
@@ -23,6 +25,7 @@ const DocumentingReview = props => {
   const step1Data = useSelector(getStep1Data);
   const step2Data = useSelector(getStep2Data);
   const step3Data = useSelector(getStep3Data);
+  const step5Data = useSelector(getStep5Data);
   const [state, setState] = useState({});
 
   useEffect(() => {
@@ -30,18 +33,38 @@ const DocumentingReview = props => {
       await dispatch(DocumentingActions.fetchCurrentDocumenting(documentingId));
     }
     retrieveData();
-    if(step1Data.data)
-    handleData();
-  }, [step1Data]);
+  }, []);
 
-  // useEffect(() => {
-  //   handleData();
-  // },[step1Data]);
+  useEffect(() => {
+    if (step1Data.data) handleData();
+  }, [step1Data, step2Data, step3Data, step5Data]);
 
-  const handleData = () => {
+  const handleData = async () => {
+    const staffName = step1Data.data && step1Data.data.name;
+    let followUp = '';
+    let topicList = '';
+    step2Data.data.map(item => {
+      topicList = `${item.name}, `;
+    });
+    switch (step5Data.data && step5Data.data.value) {
+      case 0:
+        followUp = `This is the first time I'm giving feedback about this observation`;
+        break;
+      case 1:
+        followUp = `1 value`;
+        break;
+      case 2:
+        followUp = `2 value`;
+        break;
+      case 3:
+        followUp = `3 value`;
+        break;
+    }
     setState({
-      name: step1Data.data.name,
+      name: staffName,
+      topics: topicList,
       date: step3Data.data,
+      followUpCount: followUp,
     });
   };
 
@@ -54,24 +77,17 @@ const DocumentingReview = props => {
       <TouchableOpacity
         accessibilityRole="button"
         onPress={() => console.log('edit')}
-        style={{ marginHorizontal: 7 }}>
-        <Text type="body1" style={{ textDecorationLine: 'underline'}}>{title}</Text>
+        style={styles.pressable}>
+        <Text type="body1" style={[styles.pressableText, styles.textHeight]}>
+          {title}
+        </Text>
       </TouchableOpacity>
     );
   };
+
+  console.log('render screen', state);
   return (
-    <View style={{ flex: 1 }}>
-      {/* {isLoading && (
-        <View
-          style={{
-            opacity: 0.4,
-            justifyContent: 'center',
-            alignItems: 'center',
-            flex: 1,
-          }}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
-      )} */}
+    <View style={styles.container}>
       <Wrapper>
         <Header
           headerLeft={{
@@ -80,23 +96,29 @@ const DocumentingReview = props => {
         />
         <Text type="overline">Review</Text>
         <Text type="h6">Part 1 - Documenting</Text>
-        <View
-          style={{
-            marginTop: 30,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-          }}>
-          <Text type="body1" style={{ lineHeight: 48 }}>
+        <View style={styles.contentContainer}>
+          <Text type="body1" style={[styles.textHeight, styles.bodyText]}>
             I want to give
           </Text>
           <PressableData title={`${type.type_name} feedback`} />
-          <Text type="body1">to</Text>
+          <Text type="body1" style={[styles.textHeight, styles.bodyText]}>
+            to
+          </Text>
           <PressableData title={state.name} />
+          <Text type="body1" style={[styles.textHeight, styles.bodyText]}>
+            related to their
+          </Text>
+          <PressableData title={state.topics} />
+          <Text type="body1" style={[styles.textHeight, styles.bodyText]}>
+            for something that happened
+          </Text>
           <PressableData title={state.date} />
-          
+          <PressableData title={`\n\n${state.followUpCount}`} />
         </View>
+
+        {/*    <PressableData title={state.date} /> */}
       </Wrapper>
+      {isLoading && <Loader />}
     </View>
   );
 };
