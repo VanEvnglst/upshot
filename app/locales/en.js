@@ -26,6 +26,7 @@ const labels = {
     remindMeLater: 'Remind me later',
     youDidIt: 'You did it!',
     logIn: 'Log in',
+    review: 'Review'
   },
   errors: {
     emailRequired: "Email is required",
@@ -335,6 +336,9 @@ const labels = {
     result: 'Result',
     skippedStep: 'You skipped this step',
     confirmation: `You've finished "Sharing" You can review your feedback any time.\n\nWould you like to continue on to the next part, "Reflecting?" - this usually takes around 10 minutes.`,
+    reviewDesc: `You've shared your positive feedback with`,
+    reviewDescCont: `in your message below. Your feedback will also appear in the weekly newsletter.`,
+    reviewTitle: 'Part 2 - Sharing'
   },
   reminders: {
     morningReminder: 'Today is a new day, ',

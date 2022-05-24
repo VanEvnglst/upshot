@@ -87,3 +87,5 @@ export const getSharingMaxSteps = state => state.sharing.get('maxStep');
 export const getSharingStep1Data = state => state.sharing.get('step1');
 export const getSharingStep2Data = state => state.sharing.get('step2');
 export const getSharingStep3Data = state => state.sharing.get('step3');
+export const getSharingFetching = state =>
+  state.sharing.get('fetching');
