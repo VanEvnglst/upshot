@@ -34,11 +34,10 @@ export { default as FeedbackDiscussing } from './feedback/discussing';
 export { default as ReflectingGuide } from './feedback/reflecting/guide';
 export { default as FeedbackReflecting } from './feedback/reflecting';
 
-
 /* ------------- Feedback Sharing ------------- */
 export { default as SharingGuide } from './feedback/sharing/guide';
 export { default as FeedbackSharing } from './feedback/sharing';
-
+export { default as SharingReview } from './feedback/sharing/sharing-review';
 
 /* ------------- Frontliner Stack ------------- */
 export { default as ResponseScreen } from './frontliner/response';

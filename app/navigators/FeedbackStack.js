@@ -20,6 +20,7 @@ import {
   ReflectingGuide,
   SharingGuide,
   FeedbackSharing,
+  SharingReview,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -102,6 +103,10 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'FeedbackSharing'}
           component={FeedbackSharing}
+        />
+        <FeedbackStack.Screen
+          name={'SharingReview'}
+          component={SharingReview}
         />
       </FeedbackStack.Navigator>
     </>
