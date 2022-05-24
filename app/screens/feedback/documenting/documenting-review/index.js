@@ -85,7 +85,6 @@ const DocumentingReview = props => {
     );
   };
 
-  console.log('render screen', state);
   return (
     <View style={styles.container}>
       <Wrapper>
