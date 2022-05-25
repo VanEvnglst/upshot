@@ -20,6 +20,7 @@ export const INITIAL_STATE = Map({
   step5: { ...defaultState },
   step5B: { ...defaultState },
   step5C: { ...defaultState },
+  discussionSchedule: '',
   closed: false,
   started: false,
 });

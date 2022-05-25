@@ -23,11 +23,11 @@ const PreparingStep1 = () => {
   }, [stepData]);
 
   //TODO: Test experiment
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(PreparingActions.setPreparingData('step1', checkInValue));
-    }, 2000);
-  }, [checkInValue]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     dispatch(PreparingActions.setPreparingData('step1', checkInValue));
+  //   }, 2000);
+  // }, [checkInValue]);
 
   const handleText = text => {
     setCheckInValue(text);
