@@ -23,9 +23,9 @@ export function* postFeedbackPreparing({ journeyId }) {
   // if (!connected) {
   // return;
   // }
-  const preparingData = { 
-    journey_id: journeyId
-  }
+  const preparingData = {
+    journey_id: journeyId,
+  };
 
   const response = yield call(api.postFeedbackPreparing, preparingData);
   if (response.ok) {
@@ -72,10 +72,10 @@ export function* updateFeedbackPreparing({ data }) {
     checkout_acknowledge: step5B.data.checkoutAcknowledge,
     additional_checkout_acknowledge: step5B.data.additionalAcknowledge,
     last_step: lastStep,
-  }
+  };
 
   const response = yield call(api.updateFeedbackPreparing, preparingData);
-  
+
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(PreparingActions.updateFeedbackPreparingSuccess());
@@ -85,7 +85,7 @@ export function* updateFeedbackPreparing({ data }) {
         });
       } else {
         yield put(PreparingActions.resetPreparingState());
-        yield NavigationService.navigate('ActiveFeedbackJourney')
+        yield NavigationService.navigate('ActiveFeedbackJourney');
       }
     }
   } else {
@@ -121,22 +121,34 @@ export function* updatePreparingSchedule({ data }) {
 export function* fetchCurrentPreparing({ preparingId }) {
   const preparingData = {
     preparing_id: preparingId,
-  }
+  };
   const response = yield call(api.getCurrentPreparing, preparingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       const preparingDetails = response.data.details;
-      const { event, actions: action, result, observation_questions: observationList, 
-      additional_observation_questions: additionalObservation, 
-        action_plan_questions: actionPlanList, additional_action_plan_questions: additionalPlan, action_plan_evaluate_options: evaluateOptions,
-      additional_action_plan_evaluate_options: additionalOptions,
-      checkout_question: checkoutQuestions,
-      additional_checkout_question: additionalCheckout,
-      checkout_acknowledge: checkoutAcknowledge,
-      additional_checkout_acknowledge: additionalAcknowledge,
-      last_step: lastStep,
-       } = preparingDetails
+      const {
+        event,
+        actions: action,
+        result,
+        observation_questions: observationList,
+        additional_observation_questions: additionalObservation,
+        action_plan_questions: actionPlanList,
+        additional_action_plan_questions: additionalPlan,
+        action_plan_evaluate_options: evaluateOptions,
+        additional_action_plan_evaluate_options: additionalOptions,
+        checkout_question: checkoutQuestions,
+        additional_checkout_question: additionalCheckout,
+        checkout_acknowledge: checkoutAcknowledge,
+        additional_checkout_acknowledge: additionalAcknowledge,
+        last_step: lastStep,
+        schedule_of_face2face: discussionSched,
+      } = preparingDetails;
+      yield put(
+        PreparingActions.setPreparingStatus(
+          'discussionSchedule',
+          discussionSched,
+        ),
+      );
       yield put(
         PreparingActions.setPreparingData('step1', preparingDetails.check_in),
       );
@@ -144,47 +156,45 @@ export function* fetchCurrentPreparing({ preparingId }) {
         PreparingActions.setPreparingData('step2', preparingDetails.purpose),
       );
       yield put(
-        PreparingActions.setPreparingData(
-          'step3',
-          {event,
-          action,
-          result}
-        ),
+        PreparingActions.setPreparingData('step3', { event, action, result }),
       );
       yield put(
-        PreparingActions.setPreparingData(
-          'step3B',
-          {
-            observationList,
-            additionalObservation
-          },
-        ),
+        PreparingActions.setPreparingData('step3B', {
+          observationList,
+          additionalObservation,
+        }),
       );
       yield put(
-        PreparingActions.setPreparingData(
-          'step4',
-          { actionPlanList, additionalPlan }
-        ),
+        PreparingActions.setPreparingData('step4', {
+          actionPlanList,
+          additionalPlan,
+        }),
       );
       yield put(
-        PreparingActions.setPreparingData(
-          'step4B',
-          { evaluateOptions, additionalOptions }
-        ),
+        PreparingActions.setPreparingData('step4B', {
+          evaluateOptions,
+          additionalOptions,
+        }),
       );
       yield put(
-        PreparingActions.setPreparingData(
-          'step5',
-          { checkoutQuestions,  additionalCheckout}
-        ),
+        PreparingActions.setPreparingData('step5', {
+          checkoutQuestions,
+          additionalCheckout,
+        }),
       );
       yield put(
-        PreparingActions.setPreparingData(
-          'step5B',
-          { checkoutAcknowledge, additionalAcknowledge }
+        PreparingActions.setPreparingData('step5B', {
+          checkoutAcknowledge,
+          additionalAcknowledge,
+        }),
+      );
+
+      yield put(
+        PreparingActions.setPreparingStatus(
+          'activeStep',
+          lastStep === null ? 1 : lastStep,
         ),
       );
-      yield put(PreparingActions.setPreparingStatus('activeStep', lastStep === null ? 1 : lastStep))
       yield put(PreparingActions.fetchCurrentPreparingSuccess());
     }
   } else {
@@ -194,9 +204,9 @@ export function* fetchCurrentPreparing({ preparingId }) {
 
 export function* closeFeedbackPreparing({ preparingId }) {
   const preparingData = {
-    preparing_id: preparingId
-  }
-  
+    preparing_id: preparingId,
+  };
+
   const response = yield call(api.postClosePreparing, preparingData);
   if (response.ok) {
     if (response.data.status === 'ok') {
