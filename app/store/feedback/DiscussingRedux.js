@@ -10,11 +10,7 @@ export const INITIAL_STATE = Map({
   fetching: false,
   id: null,
   error: '',
-  actionPlan: {
-    action: '',
-    dateToHappen: '',
-    whoWillMakeIt: '',
-  },
+  actionPlan: [],
   data: [],
   closed: false,
   started: false
