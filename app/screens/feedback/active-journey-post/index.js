@@ -259,8 +259,7 @@ const ActiveFeedbackJourney = props => {
             screenName = 'PreparingReview';
             break;
           case 2:
-            if (discussing.get('id')) screenName = 'DiscussingMeeting';
-            else screenName = 'DiscussingGuide';
+            screenName = 'DiscussingReview';
             break;
           case 3:
             if (reflecting.get('id')) screenName = 'FeedbackReflecting';

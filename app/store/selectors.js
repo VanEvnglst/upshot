@@ -65,6 +65,8 @@ export const getPreparingSched = state => state.preparing.get('discussionSchedul
 export const getDiscussing = state => state.discussing;
 export const getDiscussingId = state => state.discussing.get('id');
 export const getDiscussingData = state => state.discussing.get('data');
+export const getDiscussingFetching = state => state.discussing.get('fetching');
+export const getDiscussingPlans = state => state.discussing.get('actionPlan');
 
 /* ------------- Feedback Reflecting Selectors ------------- */
 export const getReflecting = state => state.reflecting;

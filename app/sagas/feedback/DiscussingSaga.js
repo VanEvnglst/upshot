@@ -33,6 +33,7 @@ export function* postFeedbackDiscussing({ journeyId }) {
 export function* updateFeedbackDiscussing({ data }) {
   let plansList = [];
   plansList.push(data);
+  const discussId = yield select(discussingId);
 
   const discussingData = {
     discussing_id: discussId,
@@ -40,7 +41,6 @@ export function* updateFeedbackDiscussing({ data }) {
   }
   
   const response = yield call(api.updateFeedbackDiscussing, discussingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
@@ -58,14 +58,13 @@ export function* updateFeedbackDiscussing({ data }) {
 }
 
 export function* updateDiscussingReminder({ data }) {
-
+  const discussId = yield select(discussingId);
   const discussingData = {
     discussing_id: discussId,
     reminder_date: data.reminderDate
   };
   
   const response = yield call(api.updateFeedbackDiscussing, discussingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
@@ -85,7 +84,6 @@ export function* fetchCurrentDiscussing({ discussingId }) {
     discussing_id: discussingId
   };
   const response = yield call(api.getCurrentDiscussing, discussingData);
-  
   if (response.ok) {
     if (response.data.status === 'ok') {
       const prepDetails = response.data.details.preparing_phase;
@@ -198,6 +196,7 @@ export function* fetchCurrentDiscussing({ discussingId }) {
           },
         ]),
       );
+      yield put(DiscussingActions.setDiscussingStatus('actionPlan',response.data.details.plans));
       yield put(DiscussingActions.fetchCurrentDiscussingSuccess());
     }
   } else {
