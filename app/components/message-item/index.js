@@ -10,15 +10,12 @@ const MessageItem = ({ item, onPress }) => {
   const {
     from,
     subject,
+    subtitle,
     timestamp,
     response_required: responseRequired,
   } = item;
 
-  const dateToday = new Date();
-  const formattedTime = moment(dateToday, 'MM DD YYYY').format('LT');
-  const dateArr = moment(timestamp).format('LLLL').split(' ');
-  const formattedInvite = `${dateArr[0]} ${dateArr[1]} ${dateArr[2]} @ ${dateArr[4]} ${dateArr[5]}`;
-  console.log(timestamp, formattedInvite);
+  console.log('item', item);
   return (
     <Pressable onPress={onPress}>
       <View style={styles.cardContainer}>
@@ -35,7 +32,7 @@ const MessageItem = ({ item, onPress }) => {
                 styles.dateText,
                 responseRequired && styles.unreadDateText,
               ]}>
-              {formattedTime}
+              {timestamp}
             </Text>
           </View>
           <Text
@@ -44,7 +41,7 @@ const MessageItem = ({ item, onPress }) => {
               responseRequired && styles.unreadMessageSubtitle,
               styles.messageSubtitle,
             ]}>
-            {formattedInvite}
+            {subtitle}
           </Text>
           {/* {responseRequired && (
             <View style={styles.responseContainer}>
