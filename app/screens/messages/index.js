@@ -18,15 +18,13 @@ const Messages = props => {
   useEffect(() => {
     async function retrieveMessages() {
       await dispatch(MessagesActions.fetchMessages());
-      setMessages(messagesList);
     }
     retrieveMessages();
-    // (async () => {
-    //   const { data } = await dispatch(MessagesActions.fetchMessages());
-    //   debugger;
-    //   setMessages(data);
-    // })();
   }, []);
+
+  useEffect(() => { 
+    setMessages(messagesList);
+  }, [messagesList]);
 
   const ReminderSection = props => {
     return (
