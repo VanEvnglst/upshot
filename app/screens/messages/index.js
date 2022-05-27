@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Text, MessageItem, Loader } from 'app/components';
 import MessagesActions from 'app/store/MessagesRedux';
+import { getMessagesFetching } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 
 const Messages = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const isLoading = false;
-  //useSelector(state => state.messages.get('fetching'));
+  const isLoading = useSelector(getMessagesFetching);
   const messagesList = useSelector(state => state.messages.get('messages'));
   const [messages, setMessages] = useState([]);
 
@@ -70,7 +70,7 @@ const Messages = props => {
               return (
                 <MessageItem
                   item={item}
-                  onPress={() => navigation.navigate('ResponseScreen', {
+                  onPress={() => navigation.navigate('MessageThreadScreen', {
                     message: item
                   })}
                 />
