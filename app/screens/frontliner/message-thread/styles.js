@@ -52,14 +52,21 @@ export default styles = StyleSheet.create({
     marginTop: 6,
   },
   contentContainer: {
-    paddingLeft: 5,
+    flex: 1
   },
   content: {
     marginTop: 30,
+    width: '92%'
+  },
+  textHeight: {
+    lineHeight: 28,
   },
   contentHeader: {
     color: Colors.secondaryDark,
     marginBottom: 10,
+  },
+  contentTitle: {
+    marginBottom: 15,
   },
   contentBody: {
     color: Colors.mediumBlack,

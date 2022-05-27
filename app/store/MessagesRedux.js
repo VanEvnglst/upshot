@@ -5,9 +5,12 @@ import { Map } from 'immutable';
 export const INITIAL_STATE = Map({
   fetching: false,
   error: '',
-  id: null, 
   messages: [],
-  body: {}
+  currentMessage: {
+    id: null,
+    type: "",
+    body: {},
+  }
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -16,11 +19,12 @@ const { Types, Creators } = createActions({
   fetchMessagesSuccess: ['messagesList'],
   fetchMessagesFailure: ['error'],
   fetchMessage: ['messageId'],
-  fetchMessageSuccess: ['messageBody'],
+  fetchMessageSuccess: ['message'],
   fetchMessageFailure: ['error'],
   postMessageResponse: [],
   postMessageResponseSuccess: null,
-  postMessageResponseFailure: ['error']
+  postMessageResponseFailure: ['error'],
+  resetMessageState: null
 });
 
 /* ------------- Reducers ------------- */
@@ -48,9 +52,14 @@ const fetchMessage = state => state.merge({
   error: '',
 });
 
-const fetchMessageSuccess = (state, { messageBody }) => state.merge({
+const fetchMessageSuccess = (state, { message }) => state.merge({
   fetching: false,
-  body: messageBody,
+  currentMessage: {
+    ...state.get('currentMessage'),
+    type: message.type,
+    id: message.id,
+    body: message.body,
+  }
 });
 
 const fetchMessageFailure = (state, { error }) => state.merge({
@@ -72,6 +81,15 @@ const postMessageResponseFailure = (state , { error }) => state.merge({
   error,
 });
 
+const resetMessageState = state => 
+  state.merge({
+    currentMessage: {
+      id: null,
+      type: '',
+      body: {}
+    }
+  });
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -84,4 +102,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_MESSAGE_RESPONSE]: postMessageResponse,
   [Types.POST_MESSAGE_RESPONSE_SUCCESS]: postMessageResponseSuccess,
   [Types.POST_MESSAGE_RESPONSE_FAILURE]: postMessageResponseFailure,
+  [Types.RESET_MESSAGE_STATE]: resetMessageState,
 });

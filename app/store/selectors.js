@@ -92,3 +92,8 @@ export const getSharingStep2Data = state => state.sharing.get('step2');
 export const getSharingStep3Data = state => state.sharing.get('step3');
 export const getSharingFetching = state =>
   state.sharing.get('fetching');
+
+
+/* ------------- Messages  Selectors ------------- */
+export const getMessagesFetching = state => state.messages.get('fetching');
+export const getCurrentMessage = state => state.messages.get('currentMessage');

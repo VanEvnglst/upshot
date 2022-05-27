@@ -26,6 +26,7 @@ export default styles = StyleSheet.create({
   },
   headerContent: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
   messageTitle: {
     color: Colors.mediumBlack,
