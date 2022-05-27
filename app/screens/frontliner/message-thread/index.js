@@ -12,6 +12,7 @@ import {
   Loader,
 } from 'app/components';
 import MessagesActions from 'app/store/MessagesRedux';
+import { getMessagesFetching, getCurrentMessage } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -20,10 +21,8 @@ const MessageThreadScreen = props => {
   const { navigation, route } = props;
   const { message } = route.params;
   const dispatch = useDispatch();
-  const currentMessage = useSelector(state =>
-    state.messages.get('currentMessage'),
-  );
-  const isLoading = useSelector(state => state.messages.get('fetching'));
+  const currentMessage = useSelector(getCurrentMessage);
+  const isLoading = useSelector(getMessagesFetching);
   const user = useSelector(state => state.user.get('firstName'));
   const [response, setResponse] = useState();
   const [responseSent, setResponseSent] = useState(false);
@@ -39,6 +38,7 @@ const MessageThreadScreen = props => {
     }
     retrieveMessages();
   }, []);
+  
 
   const handleBack = () => {
     dispatch(MessagesActions.resetMessageState());
@@ -77,26 +77,26 @@ const MessageThreadScreen = props => {
       <View style={styles.contentContainer}>
         <View style={styles.content}>
           <Text type="overline" style={styles.contentHeader}>
-            What
+            What is the specific action?
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {currentMessage && currentMessage.body.what}
+            {currentMessage.body.what}
           </Text>
         </View>
         <View style={styles.content}>
           <Text type="overline" style={styles.contentHeader}>
-            When
+            When will this happen?
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {currentMessage && currentMessage.body.when}
+            {currentMessage.body.when}
           </Text>
         </View>
         <View style={styles.content}>
           <Text type="overline" style={styles.contentHeader}>
-            Who
+            Who will make it happen?
           </Text>
           <Text type="body2" style={styles.contentBody}>
-            {currentMessage && currentMessage.body.who}
+            {currentMessage.body.who}
           </Text>
         </View>
       </View>
@@ -107,41 +107,66 @@ const MessageThreadScreen = props => {
     return (
       <View style={styles.contentContainer}>
         <View style={styles.content}>
+          <Text type='body2' style={[styles.textHeight, styles.contentBody, styles.contentTitle]}>{currentMessage.body.message}</Text>
           <Text type="overline" style={styles.contentHeader}>
-            What
+            Event
           </Text>
-          <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.what}
+          <Text type="body2" style={[styles.contentBody, styles.textHeight]}>
+            {currentMessage.body.event}
           </Text>
         </View>
         <View style={styles.content}>
           <Text type="overline" style={styles.contentHeader}>
-            When
+            Action
           </Text>
-          <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.when}
+          <Text type="body2" style={[styles.contentBody, styles.textHeight]}>
+          {currentMessage.body.action}
           </Text>
         </View>
         <View style={styles.content}>
           <Text type="overline" style={styles.contentHeader}>
-            Who
+            Result
           </Text>
-          <Text type="body2" style={styles.contentBody}>
-            {messageBody && messageBody.who}
+          <Text type="body2" style={[styles.contentBody, styles.textHeight]}>
+          {currentMessage.body.result}
           </Text>
         </View>
       </View>
     );
   };
 
+  const SystemMessage = () => {
+    return (
+      <View style={styles.contentContainer}>
+        <View style={styles.content}>
+          <Text type="body2" style={styles.contentTitle}>
+            {currentMessage.body.title}
+          </Text>
+          {currentMessage.body.lines.map((item, index) => {
+            const content = `${currentMessage.body.lines[index]}\n`;
+            return (
+              <Text
+                type="body2"
+                style={[styles.contentBody, styles.textHeight]}>
+                {content}
+              </Text>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
   const handleInitialMessage = () => {
+    console.log('initial', currentMessage);
     switch (currentMessage.type) {
       case 'Feedback Discussion':
         return <DiscussionMessage />;
       case 'Action Plan':
         return <ActionPlanMessage />;
-      default:
-        return <View style={{ flex: 1, width: 200, height: 300, borderWidth: 0.3}} />
+      case 'Positive Feedback':
+        return <PositiveFeedbackMessage />;
+      case 'System':
+        return <SystemMessage />;
     }
   };
 
@@ -228,7 +253,7 @@ const MessageThreadScreen = props => {
                 Body summary
               </Text>
             )}
-            {/* {handleInitialMessage()} */}
+            {handleInitialMessage()}
             {/* {isCurrentMessage && message.subject === 'Feedback Discussion' ? (
               <DiscussionMessage />
             ) : message.subject === 'Action Plan' ? (
