@@ -97,3 +97,9 @@ export const getSharingFetching = state =>
 /* ------------- Messages  Selectors ------------- */
 export const getMessagesFetching = state => state.messages.get('fetching');
 export const getCurrentMessage = state => state.messages.get('currentMessage');
+
+
+
+/* ------------- Direct Report Survey Selectors ------------- */
+export const getSurveyStep = state => state.survey.get('activeStep');
+export const getSurvey = state => state.survey.get('fetching');
