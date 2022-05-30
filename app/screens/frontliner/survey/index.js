@@ -8,6 +8,7 @@ import OverallSatisfaction from './overall-satisfaction';
 import FeelingQuestion from './feeling-question';
 import ManagerEvaluation from './manager-evaluation';
 import FrontlinerEvaluation from './frontliner-evaluation';
+import { getSurveyStep, getSurveyId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Colors from 'app/theme/colors';
 import containerStyles from './styles';
@@ -15,7 +16,8 @@ import containerStyles from './styles';
 const FrontlinerSurvey = props => {
   const { width, height } = Dimensions.get('screen');
   const { navigation } = props;
-  const activeStep = 3;
+  // const surveyId = useSelector(getSurveyId);
+  const activeStep = useSelector(getSurveyStep);
   const maxStep = 3;
   const indexValue = activeStep / maxStep;
   const [isModalVisible, setModalVisible] = useState(false);

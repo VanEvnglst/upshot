@@ -50,4 +50,11 @@ export default containerStyles = StyleSheet.create({
     width: '90%',
     color: Colors.mediumBlack
   },
+  soloBtnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginBottom: 20
+  },
 });
