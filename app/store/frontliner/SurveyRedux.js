@@ -17,14 +17,14 @@ export const INITIAL_STATE = Map({
 
 
 const { Types, Creators } = createActions({
-setActiveStep: ['step'],
+setSurveyActiveStep: ['step'],
 });
 
 
 export const SurveyTypes = Types;
 export default Creators;
 
-const setActiveStep = (state, { step }) => {
+const setSurveyActiveStep = (state, { step }) => {
   if (state.get('activeStep' >= state.get('maxStep'))) {
     return;
   }
@@ -32,5 +32,5 @@ const setActiveStep = (state, { step }) => {
 }
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.SET_ACTIVE_STEP]: setActiveStep,
+  [Types.SET_SURVEY_ACTIVE_STEP]: setSurveyActiveStep,
 });
