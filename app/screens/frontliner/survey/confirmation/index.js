@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@ import styles from './styles';
 
 
 const SurveyConfirmation = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
 
   const handleClose = () => {
 
@@ -19,19 +19,23 @@ const SurveyConfirmation = props => {
 
   const handleContent = () => {
     //TODO: handle if confirmation or no survey
+    const image = route.params && route.params.type === 'no event' ? Images.noRatings : Images.confirmation;
+    const content = route.params && route.params.type === 'no event' ? 'No event' : 'Confirmation screen';
+
     return (
       <>
         <View>
           <Image
-            source={Images.noRating}
+            source={image}
           />
           <View style={styles.contentContainer}>
-
+            <Text>{content}</Text>
           </View>
         </View>
       </>
     )
   }
+
   return (
     <View style={styles.container}>
       <Wrapper>
