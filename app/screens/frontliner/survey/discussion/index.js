@@ -34,8 +34,12 @@ const SurveyDiscussion = props => {
   }
 
   const proceedToNextStep = () => {
-    // if no navigate to error screen
-    navigation.navigate('FrontlinerSurvey');
+    if (response.id === 2)
+      navigation.navigate('SurveyConfirmation', {
+        type: 'no event'
+      });
+    else
+      navigation.navigate('FrontlinerSurvey');
   }
 
   return (
