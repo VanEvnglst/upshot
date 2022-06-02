@@ -8,72 +8,65 @@ import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
 
-
-
 const SurveyConfirmation = props => {
   const { navigation, route } = props;
+  const { survey } = labels.frontliner;
 
-  const handleClose = () => {
-
-  }
+  const handleClose = () => {};
 
   const handleContent = () => {
-    //TODO: handle if confirmation or no survey
-    const image = route.params && route.params.type === 'no event' ? Images.noRatings : Images.confirmation;
-    const content = route.params && route.params.type === 'no event' ? 'No event' : 'Confirmation screen';
+    const didNotHappen = route.params && route.params.type === 'no event';
+    const eventHappened = {
+      image: Images.confirmation,
+      title: labels.common.youDidIt,
+      content: `${survey.confirmation} Manager${survey.confirmationCont}`,
+    };
 
+    const eventDidNotHappen = {
+      image: Images.noRatings,
+      title: labels.common.oops,
+      content: survey.noDiscussion,
+    };
+    const contentValue = didNotHappen ? eventDidNotHappen : eventHappened;
+    
     return (
       <>
-        <View>
-          <Image
-            source={image}
-          />
-          <View style={styles.contentContainer}>
-            <Text>{content}</Text>
-          </View>
+        <View style={styles.imageContainer}>
+          <Image source={contentValue.image}
+          style={styles.image}
+          resizeMode='cover' />
+        </View>
+        <View style={styles.contentContainer}>
+          <Text type="h4">{contentValue.title}</Text>
+          <Text type="body2" style={styles.contentText}>
+            {contentValue.content}
+          </Text>
         </View>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles.container}>
       <Wrapper>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          <Header
-            headerRight={{
-              onPress: () => {}
-            }}
-          />
-          {handleContent()}
-          <View style={styles.btnContainer}>
-            <View
-              style={{
-                marginBottom: 20,
-                flex: 1
-              }}>
-                <Button
-                  mode='contained'
-                  onPress={() => console.log('close')}
-                  >Close</Button>
-              </View>
-          </View>
-          {/* <View>
-            <Image
-              source={Images.confirmation}
-              resizeMode='cover'
-            />
-          </View>
-          <View style={styles.contentContainer}>
-          </View> */}
-        </ScrollView>
+        <Header
+          headerRight={{
+            onPress: () => {},
+          }}
+        />
+        <View>{handleContent()}</View>
+        <View style={styles.btnContainer}>
+            <Button 
+              mode="contained" 
+              style={styles.button}
+              onPress={() => console.log('close')}>
+              Close
+            </Button>
+        </View>
       </Wrapper>
     </View>
-  )
-}
-
+  );
+};
 
 export default SurveyConfirmation;
 
