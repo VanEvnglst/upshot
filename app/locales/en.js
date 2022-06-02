@@ -25,6 +25,7 @@ const labels = {
     keepGoing: 'Keep Going',
     remindMeLater: 'Remind me later',
     youDidIt: 'You did it!',
+    oops: 'Oops!',
     logIn: 'Log in',
     review: 'Review'
   },
@@ -385,6 +386,7 @@ const labels = {
       confirmation: 'Thank you for your responses! Your ratings will help',
       confirmationCont:
         ' give better feedback in the future.\n\nRest assured, each survey you answer is anonymous and your manager will only see their average scores.',
+      noDiscussion: `Thanks for letting us know your discussion hasn't happened yet.\n\nWe'll ask your manager to reschedule, and we'll send you a new survey when the time comes!`,
     },
   },
 };
