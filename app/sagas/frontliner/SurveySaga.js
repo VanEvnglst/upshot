@@ -10,19 +10,46 @@ const STATUS_OK = 'ok';
 export function* postDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
-  // const response = yield call()
+  // const response = yield call(api.postDRSurvey,)
+  // if (response.ok) {
+  //   if (response.data.status === STATUS_OK) {
+  //     yield put (SurveyActions.postDRSurveySuccess())
+  //   } else {
+  //     yield put(SurveyActions.postDRSurveyFailure(response.data))
+  //   }
+  // } else {
+  //   yield put(SurveyActions.postDRSurveyFailure(response.data))
+  // }
 }
 
 export function* updateDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
-  // const response = yield call()
+  // const response = yield call(api.updateDRSurvey, payload);
+  // if (response.ok) {
+  //   if (response.data.status === STATUS_OK) {
+  //     yield put (SurveyActions.updateDRSurveySuccess())
+  //   } else {
+  //     yield put(SurveyActions.updateDRSurveyFailure(response.data))
+  //   }
+  // } else {
+  //   yield put(SurveyActions.updateDRSurveyFailure(response.data))
+  // }
 }
 
 export function* fetchCurrentDRSurvey({ surveyId }) {
   const connected = yield checkInternetConnection();
 
-  //const response = yield call()
+  //const response = yield call(api.getCurrentDRSurvey, payload);
+  // if (response.ok) {
+  //   if (response.data.status === STATUS_OK) {
+  //     yield put (SurveyActions.fetchCurrentDRSurveySuccess())
+  //   } else {
+  //     yield put(SurveyActions.fetchCurrentDRSurveyFailure(response.data))
+  //   }
+  // } else {
+  //   yield put(SurveyActions.fetchCurrentDRSurveyFailure(response.data))
+  // }
 }
 
 function* watchSurveySaga() {
