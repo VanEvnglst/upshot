@@ -14,6 +14,7 @@ export const INITIAL_STATE = Map({
   overallSatisfaction: { ...defaultState },
   howDidYouFeel: { ...defaultState },
   managerEvaluation: { ...defaultState },
+  selfEvalCriteria: [],
   selfEvaluation: { ...defaultState },
 });
 
@@ -29,11 +30,14 @@ fetchCurrentDRSurvey: ['surveyId'],
 fetchCurrentDRSurveySuccess: ['data'],
 fetchCurrentDRSurveyFailure: ['error'],
 closeDRSurvey: ['surveyId'],
-closeDRSurveySuceess: null,
+closeDRSurveySuccess: null,
 closeDRSurveyFailure: ['error'],
 resetDRSurveyState: null,
 setDRSurveyData: ['key', 'data'],
 setSurveyActiveStep: ['step'],
+fetchDRCriteria: [],
+fetchDRCriteriaSuccess: [],
+fetchDRCriteriaFailure: ['error'],
 });
 
 /* ------------- Reducers ------------- */
@@ -124,6 +128,24 @@ const closeDRSurveyFailure = (state, { error }) => {
   });
 };
 
+const fetchDRCriteria = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchDRCriteriaSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const fetchDRCriteriaFailure = (state, { error }) => {
+  return state.merge({
+    fetching: false,
+    error
+  });
+};
+
 
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -141,5 +163,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.CLOSE_DR_SURVEY]: closeDRSurvey,
   [Types.CLOSE_DR_SURVEY_SUCCESS]: closeDRSurveySuccess,
   [Types.CLOSE_DR_SURVEY_FAILURE]: closeDRSurveyFailure,
-  [Types.RESET_DR_SURVEY_STATE]: resetDRSurveyState
+  [Types.RESET_DR_SURVEY_STATE]: resetDRSurveyState,
+  [Types.FETCH_DR_CRITERIA]: fetchDRCriteria,
+  [Types.FETCH_DR_CRITERIA_SUCCESS]: fetchDRCriteriaSuccess,
+  [Types.FETCH_DR_CRITERIA_FAILURE]: fetchDRCriteriaFailure
 });

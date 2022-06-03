@@ -326,4 +326,36 @@ export default {
       params,
     );
   },
+
+  postDRSurvey: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/`, payload);
+  },
+
+  updateDRSurvey: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshoAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/`, payload);
+  },
+
+  getCurrentDRSurvey: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/`, payload);
+  },
+
+  getDRCriteria: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/`, payload);
+  }
 };
