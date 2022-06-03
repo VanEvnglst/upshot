@@ -35,8 +35,8 @@ closeDRSurveyFailure: ['error'],
 resetDRSurveyState: null,
 setDRSurveyData: ['key', 'data'],
 setSurveyActiveStep: ['step'],
-fetchDRCriteria: [],
-fetchDRCriteriaSuccess: [],
+fetchDRCriteria: [''],
+fetchDRCriteriaSuccess: ['criteriaList'],
 fetchDRCriteriaFailure: ['error'],
 });
 
@@ -134,9 +134,10 @@ const fetchDRCriteria = state =>
     error: '',
   });
 
-const fetchDRCriteriaSuccess = state =>
+const fetchDRCriteriaSuccess = (state, { criteriaList }) =>
   state.merge({
     fetching: false,
+    selfEvalCriteria: criteriaList,
   });
 
 const fetchDRCriteriaFailure = (state, { error }) => {
