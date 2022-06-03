@@ -102,4 +102,6 @@ export const getCurrentMessage = state => state.messages.get('currentMessage');
 
 /* ------------- Direct Report Survey Selectors ------------- */
 export const getSurveyStep = state => state.survey.get('activeStep');
-export const getSurvey = state => state.survey.get('fetching');
+export const getSurveyMaxStep = state => state.survey.get('maxStep');
+export const getSurveyFetching = state => state.survey.get('fetching');
+export const getSurveyId = state => state.survey.get('id');

@@ -52,10 +52,44 @@ export function* fetchCurrentDRSurvey({ surveyId }) {
   // }
 }
 
+export function* fetchDRCriteria() {
+  const connected = yield checkInternetConnection();
+
+  //const respose = yield call(api.getDRCriteria, surveyData);
+  // if (response.ok) {
+  //   if(response.data.status === STAUS_OK) {
+  //     const criteriaList ;
+  //     yield put(SurveyActions.fetchDRCriteraSuccess(criteriaList));
+  //   } else {
+  //     yield put(SurveyActions.fetchDRCriteriaFailure(response.data))
+  //   }
+  // } else {
+  //   yield put(SurveyActions.fetchDRCriteriaFailure(response.data));
+  // }
+}
+
+export function* closeDRSurvey({ data }) {
+  const connected = yield checkInternetConnection();
+
+//   //const response = yield call(api.closeDRSurvey, payload);
+//   // if (response.ok) {
+//   //   if (response.data.status === STATUS_OK) {
+//   // yield put(SurveyActions.closeDRSurveySuccess(criteriaList))
+//   // } else {
+//   // yield put(SurveyActions.closeDRSurveyFailure(response.data))
+//   //}
+//   //} else {
+//   //  yield put(SurveyActions.closeDRSurveyFailure(response.data))
+//   //}
+}
+
 function* watchSurveySaga() {
   yield takeLatest(SurveyTypes.POST_DR_SURVEY, postDRSurvey);
   yield takeLatest(SurveyTypes.UPDATE_DR_SURVEY, updateDRSurvey);
   yield takeLatest(SurveyTypes.FETCH_CURRENT_DR_SURVEY, fetchCurrentDRSurvey);
+  yield takeLatest(SurveyTypes.FETCH_DR_CRITERIA, fetchDRCriteria);
+  yield takeLatest(SurveyTypes.CLOSE_DR_SURVEY, closeDRSurvey);
+
 }
 
 export default watchSurveySaga;
