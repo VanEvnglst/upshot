@@ -57,4 +57,21 @@ export default containerStyles = StyleSheet.create({
     alignItems: 'flex-end',
     marginBottom: 20
   },
+  modal: {
+    padding: 20,
+    width: 300,
+    height: 140,
+  },
+  modalTextContainer: {
+    flex: 1,
+  },
+  modalText: {
+    marginTop: 10,
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+    marginTop: 20,
+  },
 });
