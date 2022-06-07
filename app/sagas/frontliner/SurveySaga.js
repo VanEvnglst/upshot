@@ -55,17 +55,17 @@ export function* fetchCurrentDRSurvey({ surveyId }) {
 export function* fetchDRCriteria() {
   const connected = yield checkInternetConnection();
 
-  //const respose = yield call(api.getDRCriteria, surveyData);
-  // if (response.ok) {
-  //   if(response.data.status === STAUS_OK) {
-  //     const criteriaList ;
-  //     yield put(SurveyActions.fetchDRCriteraSuccess(criteriaList));
-  //   } else {
-  //     yield put(SurveyActions.fetchDRCriteriaFailure(response.data))
-  //   }
-  // } else {
-  //   yield put(SurveyActions.fetchDRCriteriaFailure(response.data));
-  // }
+  const response = yield call(api.getDRCriteria);
+  if (response.ok) {
+    if(response.data.status === 'Ok') {
+      const criteriaList = response.data.criteria;
+      yield put(SurveyActions.fetchDRCriteriaSuccess(criteriaList));
+    } else {
+      yield put(SurveyActions.fetchDRCriteriaFailure(response.data))
+    }
+  } else {
+    yield put(SurveyActions.fetchDRCriteriaFailure(response.data));
+  }
 }
 
 export function* closeDRSurvey({ data }) {
