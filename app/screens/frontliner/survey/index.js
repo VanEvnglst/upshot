@@ -44,9 +44,9 @@ const FrontlinerSurvey = props => {
   //   retrieveData();
   // }, []);
 
-  // useEffect(() => {
-  //   dispatch(SurveyActions.fetchDRCriteria());
-  // }, []);
+  useEffect(() => {
+    dispatch(SurveyActions.fetchDRCriteria());
+  }, []);
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);

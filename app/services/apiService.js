@@ -356,7 +356,7 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/`, payload);
+    return upshotAPI.get(`/${uniqueId}/feedback/frontliner/feedback/survey/criteria/get`, payload);
   },
 
   // closeDRSurvey: async payload => {
