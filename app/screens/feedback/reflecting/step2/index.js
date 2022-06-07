@@ -55,7 +55,6 @@ const ReflectingStep2 = props => {
       const existingDataArr = stepData.data;
       setReflectingCriteria(existingDataArr);
     }
-    debugger;
   }, [stepData]);
 
 
