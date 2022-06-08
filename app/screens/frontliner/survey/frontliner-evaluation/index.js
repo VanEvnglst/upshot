@@ -4,13 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Slider } from 'app/components';
-import Images from 'app/assets/images';
-import { frontlinerEval } from 'app/models/FrontlinerEvalModel';
 import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import { getSurveyStep, getDRCriteria, getSelfEval } from 'app/store/selectors';
+import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
-import styles from './styles';
 
 
 const FrontlinerEvaluation = props => {
@@ -32,7 +30,7 @@ const FrontlinerEvaluation = props => {
       const existingDataArr = stepData.data;
       setDRCriteria(existingDataArr);
     }
-  })
+  }, []);
 
   const handleContent = () => {
     let newList = [];
@@ -70,27 +68,27 @@ const FrontlinerEvaluation = props => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={containerStyles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-      <View style={{ marginTop: 30 }}>
+      <View style={containerStyles.headerContainer}>
         <Text
           type='h6'
           style={containerStyles.stepTitleText}
           testID={'txt-frontlinerSurvey-frontlinerEval'}
         >{survey.selfSurvey}</Text>
       </View>
-      <View style={styles.contentContainer}>
+      <View style={containerStyles.content}>
         {drCriteria.map((item, i) => (
           <View key={item.id}>
-            <View style={styles.questionContainer}>
-              <Text type='body1' style={styles.questionText}>
+            <View style={containerStyles.questionContainer}>
+              <Text type='body1' style={containerStyles.questionText}>
                 {item.criteria}
               </Text>
             </View>
-            <View style={styles.sliderContainer}>
+            <View style={containerStyles.sliderContainer}>
               <Slider
                 leftImage={Images.thumbsDownEmoji}
                 rightImage={Images.thumbsUpEmoji}
@@ -101,7 +99,7 @@ const FrontlinerEvaluation = props => {
                 onSlidingComplete={value => handleSliderValue(item, value)}
               />
             </View>
-            <View style={styles.spacer} />
+            <View style={containerStyles.spacer} />
           </View>
         ))}
       </View>

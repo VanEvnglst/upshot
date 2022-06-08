@@ -7,6 +7,7 @@ import { Text, Slider } from 'app/components';
 import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import {
   getSurveyStep,
+  getSatisfactionData,
   getSurveyId,
 } from 'app/store/selectors';
 import Images from 'app/assets/images';
@@ -17,20 +18,30 @@ const OverallSatisfaction = props => {
   const { survey } = labels.frontliner;
   const dispatch = useDispatch();
   const activeStep = useSelector(getSurveyStep);
-  const [satisfactionValue, setSatisfactionValue] = useState(0);
-
+  const stepData = useSelector(getSatisfactionData);
+  const [satisfactionValue, setSatisfactionValue] = useState(1);
+  const [didSliderMove, setDidSliderMove] = useState(false);
   // useEffect(() => {
   // if(stepData.data)
   // TODO: load data from store
-  //})
+  //}, [stepData]);
+
+  const handleSliderValue = () => {
+    setSatisfactionValue(value);
+    setDidSliderMove(true);
+  };
 
   const handleNext = () => {
+    if (didSliderMove)
+      dispatch(SurveyActions.setDRSurveyData('overallSatisfaction', satisfactionValue));
+    else
+      dispatch(SurveyActions.setDRSurveyData('overallSatisfaction', 0));
     dispatch(SurveyActions.setSurveyActiveStep(activeStep + 1))
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ marginTop: 30 }}>
+    <View style={containerStyles.container}>
+      <View style={containerStyles.headerContainer}>
         <Text
           type="h6"
           style={containerStyles.stepTitleText}
@@ -71,12 +82,14 @@ export default OverallSatisfaction;
 
 OverallSatisfaction.propTypes = {
   getSurveyStep: PropTypes.number,
+  getSatisfactionData: PropTypes.object,
   setSurveyActiveStep: PropTypes.func,
-  // setSurveyData: PropTypes.func,
+  setDRSurveyData: PropTypes.func,
 };
 
 OverallSatisfaction.defaultProps = {
   getSurveyStep: 1,
+  getSatisfactionData: {},
   setSurveyActiveStep: () => {},
-  //setSurveyData: () => {},
+  setDRSurveyData: () => {},
 };

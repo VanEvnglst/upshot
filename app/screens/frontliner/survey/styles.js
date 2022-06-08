@@ -5,6 +5,9 @@ export default containerStyles = StyleSheet.create({
   container: {
     flex: 1
   },
+  headerContainer: { 
+    marginTop: 30 
+  },
   contentContainer: {
     flex: 3
   },
@@ -73,5 +76,28 @@ export default containerStyles = StyleSheet.create({
     alignSelf: 'flex-end',
     alignItems: 'flex-end',
     marginTop: 20,
+  },
+  questionContainer: {
+    marginBottom: 30,
+    alignItems: 'center',
+    width: '80%',
+    alignSelf: 'center',
+  },
+  questionText: {
+    color: Colors.mediumBlack,
+    lineHeight: 24,
+  },
+  sliderContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    width: '85%'
+  },
+  spacer: {
+    marginVertical: 30,
+    height: 2,
+    backgroundColor: Colors.gray
+  },
+  content: {
+    marginVertical: 30,
   },
 });

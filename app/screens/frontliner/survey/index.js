@@ -46,6 +46,7 @@ const FrontlinerSurvey = props => {
 
   useEffect(() => {
     dispatch(SurveyActions.fetchDRCriteria());
+    dispatch(SurveyActions.fetchManagerCriteria());
   }, []);
 
   const showModal = () => setModalVisible(true);
