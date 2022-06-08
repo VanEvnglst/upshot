@@ -66,7 +66,6 @@ const ManagerEvaluation = props => {
       scores = scores.filter(newValue => newValue.id !== item.id);
       scores = [...scores, { id: item.id, displayName: item.displayName, score: value }];
     } else scores = [...scores, { id: item.id, displayName: item.displayName, score: value }];
-
     setManagerEvalScore(scores);
   }
 
@@ -130,7 +129,7 @@ ManagerEvaluation.propTypes = {
   getManagerCriteria: PropTypes.array,
   getManagerEval: PropTypes.object,
   setSurveyActiveStep: PropTypes.func,
-  setSurveyData: PropTypes.func,
+  setDRSurveyData: PropTypes.func,
 };
 
 ManagerEvaluation.defaultProps = {
@@ -138,5 +137,5 @@ ManagerEvaluation.defaultProps = {
   getManagerCriteria: [],
   getManagerEval: {},
   setSurveyActiveStep: () => {},
-  setSurveyData: () => {},
+  setDRSurveyData: () => {},
 };

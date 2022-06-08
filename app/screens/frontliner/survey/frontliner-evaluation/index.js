@@ -123,12 +123,16 @@ export default FrontlinerEvaluation;
 
 FrontlinerEvaluation.propTypes = {
   getSurveyStep: PropTypes.number,
+  getDRCriteria: PropTypes.array,
+  getSelfEval: PropTypes.object,
   setSurveyActiveStep: PropTypes.func,
-  setSurveyData: PropTypes.func,
+  setDRSurveyData: PropTypes.func,
 };
 
 FrontlinerEvaluation.defaultProps = {
   getSurveyStep: 1,
+  getDRCriteria: [],
+  getSelfEval: {},
   setSurveyActiveStep: () => {},
-  setSurveyData: () => {},
+  setDRSurveyData: () => {},
 };
