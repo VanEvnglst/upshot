@@ -68,6 +68,29 @@ export function* fetchDRCriteria() {
   }
 }
 
+
+export function* fetchManagerCriteria() {
+  const connected = yield checkInternetConnection();
+
+  const criteriaData = {
+    feedback_flow: 1,
+    pos_or_cor: 2
+  };
+
+  const response = yield call(api.getReflectingCriteria, criteriaData);
+  debugger;
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+     const criteriaList = response.data.details.criteria_list.criteria;
+     yield put(SurveyActions.fetchManagerCriteriaSuccess(criteriaList)); 
+    } else {
+      yield put(SurveyActions.fetchManagerCriteriaFailure(response.data));
+    }
+  } else {
+    yield put(SurveyActions.fetchManagerCriteriaFailure(response.data));
+  }
+}
+
 export function* closeDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
@@ -88,6 +111,7 @@ function* watchSurveySaga() {
   yield takeLatest(SurveyTypes.UPDATE_DR_SURVEY, updateDRSurvey);
   yield takeLatest(SurveyTypes.FETCH_CURRENT_DR_SURVEY, fetchCurrentDRSurvey);
   yield takeLatest(SurveyTypes.FETCH_DR_CRITERIA, fetchDRCriteria);
+  yield takeLatest(SurveyTypes.FETCH_MANAGER_CRITERIA, fetchManagerCriteria);
   yield takeLatest(SurveyTypes.CLOSE_DR_SURVEY, closeDRSurvey);
 
 }
