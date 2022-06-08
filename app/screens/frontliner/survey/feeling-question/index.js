@@ -18,9 +18,10 @@ const FeelingQuestion = props => {
   const [feelingValue, setFeelingValue] = useState(1);
   const [didSliderMove, setDidSliderMove] = useState(false);
 
-  // useEffect(() => {
-
-  // }, [stepData]);
+  useEffect(() => {
+    if(stepData.data)
+    setFeelingValue(stepData.data)
+  }, [stepData]);
   
   const handleSliderValue = value => {
     setFeelingValue(value);
@@ -47,16 +48,16 @@ const FeelingQuestion = props => {
   return (
     <View style={containerStyles.container}>
       <View style={containerStyles.headerContainer}>
-        <Text type="h6" testID={'txt-feelingQuestion-label'}>
+        <Text 
+          type="h6" 
+          style={containerStyles.stepTitleText}
+          testID={'txt-feelingQuestion-label'}
+        >
           {survey.feeling}
         </Text>
       </View>
       <View
-        style={{
-          flex: 3,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={containerStyles.centeredContainer}
       >
         <Slider
           leftImage={Images.thumbsDownEmoji}
