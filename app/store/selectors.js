@@ -107,3 +107,5 @@ export const getSurveyFetching = state => state.survey.get('fetching');
 export const getSurveyId = state => state.survey.get('id');
 export const getDRCriteria = state => state.survey.get('selfEvalCriteria');
 export const getSelfEval = state => state.survey.get('selfEvaluation');
+export const getManagerCriteria = state => state.survey.get('managerCriteria');
+export const getManagerEval = state => state.survey.get('managerEvaluation');
