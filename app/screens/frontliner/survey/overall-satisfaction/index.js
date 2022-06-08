@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -8,7 +8,6 @@ import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import {
   getSurveyStep,
   getSatisfactionData,
-  getSurveyId,
 } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
@@ -21,10 +20,11 @@ const OverallSatisfaction = props => {
   const stepData = useSelector(getSatisfactionData);
   const [satisfactionValue, setSatisfactionValue] = useState(1);
   const [didSliderMove, setDidSliderMove] = useState(false);
-  // useEffect(() => {
-  // if(stepData.data)
-  // TODO: load data from store
-  //}, [stepData]);
+
+  useEffect(() => {
+  if(stepData.data)
+    setSatisfactionValue(stepData.data);
+  }, [stepData]);
 
   const handleSliderValue = () => {
     setSatisfactionValue(value);
@@ -49,11 +49,7 @@ const OverallSatisfaction = props => {
           {survey.overallSatisfaction}
         </Text>
       </View>
-      <View style={{
-        flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
+      <View style={containerStyles.centeredContainer}
       >
         <Slider
           leftImage={Images.thumbsDownEmoji}
