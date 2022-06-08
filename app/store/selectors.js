@@ -109,3 +109,5 @@ export const getDRCriteria = state => state.survey.get('selfEvalCriteria');
 export const getSelfEval = state => state.survey.get('selfEvaluation');
 export const getManagerCriteria = state => state.survey.get('managerCriteria');
 export const getManagerEval = state => state.survey.get('managerEvaluation');
+export const getSatisfactionData = state => state.survey.get('overallSatisfaction');
+export const getFeelingData = state => state.survey.get('howDidYouFeel');
