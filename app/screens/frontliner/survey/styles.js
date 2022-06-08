@@ -98,6 +98,12 @@ export default containerStyles = StyleSheet.create({
     backgroundColor: Colors.gray
   },
   content: {
-    marginVertical: 30,
+    marginTop: 40,
+    marginBottom: 30,
   },
+  centeredContainer: {
+    flex: 3,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
