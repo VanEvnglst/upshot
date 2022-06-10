@@ -31,24 +31,20 @@ export function* postFeedbackDiscussing({ journeyId }) {
 }
 
 export function* updateFeedbackDiscussing({ data }) {
-  let plansList = [];
-  plansList.push(data);
-  const discussId = yield select(discussingId);
-
-  const discussingData = {
-    discussing_id: discussId,
-    plans: plansList
-  }
+  const connected = yield checkInternetConnection();
   
-  const response = yield call(api.updateFeedbackDiscussing, discussingData);
+  const response = yield call(api.updateFeedbackDiscussing, data);
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
-      yield put(DiscussingActions.closeFeedbackDiscussing(discussId));
+      
+      if(data.shouldClose) {
+      yield put(DiscussingActions.closeFeedbackDiscussing(data.discussing_id));
       yield put(DiscussingActions.setDiscussingStatus('closed', true));
       yield NavigationService.navigate('FeedbackConfirmation', {
         type: 'discussing',
       });
+    }
     } else {
       yield put(DiscussingActions.updateFeedbackDiscussingFailure(response.data))
     }
@@ -65,6 +61,7 @@ export function* updateDiscussingReminder({ data }) {
   };
   
   const response = yield call(api.updateFeedbackDiscussing, discussingData);
+  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(DiscussingActions.updateFeedbackDiscussingSuccess());
