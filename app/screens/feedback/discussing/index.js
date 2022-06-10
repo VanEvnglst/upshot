@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
+import { getDiscussingId } from 'app/store/selectors';
 import { Text, Wrapper, Header, TextInput } from 'app/components';
 import { DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
@@ -13,6 +14,7 @@ const FeedbackDiscussing = props => {
   const { discussingActionPlan } = labels.feedbackDiscussing;
   const { navigation } = props;
   const dispatch = useDispatch();
+  const activeDiscussing = useSelector(getDiscussingId);
   const [actionPlan, setActionPlan] = useState({
     specificAction: '',
     whenWillItHappen: '',
@@ -27,13 +29,27 @@ const FeedbackDiscussing = props => {
   };
 
   const handleNext = () => {
-    //TODO: Double check data here
-    dispatch(DiscussingActions.updateFeedbackDiscussing(actionPlan));
+    let planList = [];
+    planList.push(actionPlan);
+    const discussingData = {
+      discussing_id: activeDiscussing,
+      plans: planList,
+      shouldClose: true
+    }
+    dispatch(DiscussingActions.updateFeedbackDiscussing(discussingData));
   };
 
   const handleClose = () => {
+    let planList = [];
+    planList.push(actionPlan);
+
+    const discussingData = {
+      discussing_id: activeDiscussing,
+      plans: planList,
+      shouldClose: false
+    }
     dispatch(DiscussingActions.setDiscussingStatus('data',actionPlan))
-    dispatch(DiscussingActions.updateFeedbackDiscussing(actionPlan));
+    dispatch(DiscussingActions.updateFeedbackDiscussing(discussingData));
   }
 
   const handleTextChange = (key, text, index) => {
