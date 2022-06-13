@@ -97,6 +97,7 @@ export const getSharingFetching = state =>
 /* ------------- Messages  Selectors ------------- */
 export const getMessagesFetching = state => state.messages.get('fetching');
 export const getCurrentMessage = state => state.messages.get('currentMessage');
+export const getMessages = state => state.messages.get('messages');
 
 
 
