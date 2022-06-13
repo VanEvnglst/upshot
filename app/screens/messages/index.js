@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Text, MessageItem, Loader } from 'app/components';
 import MessagesActions from 'app/store/MessagesRedux';
-import { getMessagesFetching } from 'app/store/selectors';
+import { getMessagesFetching, getMessages } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -12,7 +12,7 @@ const Messages = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const isLoading = useSelector(getMessagesFetching);
-  const messagesList = useSelector(state => state.messages.get('messages'));
+  const messagesList = useSelector(getMessages);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -22,9 +22,21 @@ const Messages = props => {
     retrieveMessages();
   }, []);
 
-  useEffect(() => { 
+  useEffect(() => {
     setMessages(messagesList);
   }, [messagesList]);
+
+  const handleNavigation = item => {
+    messagesList.forEach((element, index) => {
+      if (element.id === item.id)
+        messagesList[index] = { ...item, isMessageRead: true };
+    });
+    navigation.navigate('MessageThreadScreen', {
+      message: item,
+    });
+
+    // navigation.navigate('SurveyDiscussion');
+  };
 
   const ReminderSection = props => {
     return (
@@ -48,8 +60,9 @@ const Messages = props => {
       </View>
     );
   };
+
   return (
-    <View style={{ flex: 1}}>
+    <View style={styles.container}>
       <Wrapper>
         {/* <Text type="overline" style={styles.labelStyle}>
         Reminders
@@ -68,9 +81,7 @@ const Messages = props => {
               return (
                 <MessageItem
                   item={item}
-                  onPress={() => navigation.navigate('MessageThreadScreen', {
-                    message: item
-                  })}
+                  onPress={() => handleNavigation(item)}
                 />
               );
             }}
@@ -84,6 +95,14 @@ const Messages = props => {
 
 export default Messages;
 
-Messages.propTypes = {};
+Messages.propTypes = {
+  getMessagesFetching: PropTypes.bool,
+  getMessages: PropTypes.array,
+  fetchMessages: PropTypes.func
+};
 
-Messages.defaultProps = {};
+Messages.defaultProps = {
+  getMessagesFetching: false,
+  getMessages: [],
+  fetchMessages: () => {},
+};

@@ -12,10 +12,9 @@ const MessageItem = ({ item, onPress }) => {
     subject,
     subtitle,
     timestamp,
-    response_required: responseRequired,
+    isMessageRead,
   } = item;
 
-  console.log('item', item);
   return (
     <Pressable onPress={onPress}>
       <View style={styles.cardContainer}>
@@ -23,14 +22,14 @@ const MessageItem = ({ item, onPress }) => {
         <View style={styles.content}>
           <View style={styles.headerContent}>
             <Text
-              type={responseRequired ? 'subtitle2' : 'body2'}
+              type={isMessageRead ? 'body2' : 'subtitle2'}
               style={styles.messageTitle}>
               {subject}
             </Text>
             <Text
               style={[
                 styles.dateText,
-                responseRequired && styles.unreadDateText,
+                !isMessageRead && styles.unreadDateText,
               ]}>
               {timestamp}
             </Text>
@@ -38,7 +37,7 @@ const MessageItem = ({ item, onPress }) => {
           <Text
             type="caption"
             style={[
-              responseRequired && styles.unreadMessageSubtitle,
+              !isMessageRead && styles.unreadMessageSubtitle,
               styles.messageSubtitle,
             ]}>
             {subtitle}
