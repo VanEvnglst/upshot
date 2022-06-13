@@ -13,7 +13,14 @@ export function* fetchMessages({}) {
   const response = yield call(api.getFrontlinerMessages);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
-      const messagesList = response.data.inbox;
+      const messagesList = [];
+      const messageArr = response.data.inbox;
+      for(let i = 0; i < messageArr.length; i++) {
+        messagesList.push({
+          ...messageArr[i],
+          isMessageRead: messageArr[i].from === 'Upshot' ? false : !messageArr[i].response_required,
+        })
+      }
       yield put(MessagesActions.fetchMessagesSuccess(messagesList));
     } else {
       yield put(MessagesActions.fetchMessagesFailure());
