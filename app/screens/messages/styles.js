@@ -4,6 +4,9 @@ import Colors from 'app/theme/colors';
 const SPACING = 20;
 const AVATAR_SIZE = 70;
 export default styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   labelStyle: {
     marginTop: 15,
     marginLeft: 15,
