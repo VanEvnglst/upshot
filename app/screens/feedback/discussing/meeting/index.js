@@ -10,6 +10,7 @@ import {
 import { Button, FAB as FloatingAction } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import { getDiscussingId, getDiscussingData } from 'app/store/selectors';
@@ -35,6 +36,7 @@ const DiscussingMeeting = props => {
   const activeDiscussing = useSelector(getDiscussingId);
   const discussData = useSelector(getDiscussingData);
   const [cardData, setCardData] = useState([]);
+  const dateToday = new Date();
 
   const contentValues = [
     { key: 'empty-left' },
@@ -93,7 +95,6 @@ const DiscussingMeeting = props => {
     }
     fetchDiscussing();
   }, []);
-  
 
   useEffect(() => {
     handleData();
@@ -104,38 +105,44 @@ const DiscussingMeeting = props => {
       key: String(index),
       title: item.title,
       content: item.content,
-      skipped: item.skipped
+      skipped: item.skipped,
     }));
     setCardData(dataArr);
-  }
+  };
 
   const DiscussionCard = ({ item }) => {
     const { title, content, skipped } = item;
     return (
       <View style={styles.cardContainer}>
         <View
-          style={[
-            styles.card,
-            DeviceUtil.isAndroid() && styles.androidCard,
-          ]}>
-          <View style={[styles.headerContainer, skipped && { marginTop: 10}]}>
-            <Image 
-              source={skipped ? Images.lightbulb : Images.quote} 
+          style={[styles.card, DeviceUtil.isAndroid() && styles.androidCard]}>
+          <View style={[styles.headerContainer, skipped && { marginTop: 10 }]}>
+            <Image
+              source={skipped ? Images.lightbulb : Images.quote}
               resizeMode="contain"
             />
-            <View style={[styles.headerLine, skipped ? styles.skippedHeaderLine : styles.filledHeaderLine]} />
+            <View
+              style={[
+                styles.headerLine,
+                skipped ? styles.skippedHeaderLine : styles.filledHeaderLine,
+              ]}
+            />
           </View>
-          <Text type="h5" style={skipped ? styles.skippedCardTitle : styles.cardTitle}>
+          <Text
+            type="h5"
+            style={skipped ? styles.skippedCardTitle : styles.cardTitle}>
             {title}
           </Text>
           <View style={styles.cardContentContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Text 
-                type="body1" 
-                style={[styles.cardContent, {
-                  fontStyle: !skipped ? 'italic' : 'normal'
-                }]}
-              >
+              <Text
+                type="body1"
+                style={[
+                  styles.cardContent,
+                  {
+                    fontStyle: !skipped ? 'italic' : 'normal',
+                  },
+                ]}>
                 {content}
               </Text>
               {title === cueCards.nextSteps && <NextStepsGuide />}
@@ -176,6 +183,22 @@ const DiscussingMeeting = props => {
   };
 
   const handleNext = () => {
+    const formattedDate = moment(dateToday, 'MM-DD-YYYY HH:mm a').format(
+      'MMM DD, YYYY HH:mm',
+    );
+    
+
+    if (!(route.params && route.params.type === 'actionPlan')) {
+      const discussingData = {
+        discussing_id: activeDiscussing,
+        plans: [],
+        face2face_end_datetime: formattedDate,
+        shouldClose: false,
+      };
+
+      dispatch(DiscussingActions.updateFeedbackDiscussing(discussingData));
+    }
+    debugger;
     navigation.navigate('FeedbackDiscussing');
   };
 
@@ -210,21 +233,16 @@ const DiscussingMeeting = props => {
               (index - 1) * ITEM_SIZE,
               index * ITEM_SIZE,
             ];
-            return (
-              <DiscussionCard 
-                item={item}
-              />
-            );
+            return <DiscussionCard item={item} />;
           }}
         />
         <Button
           mode="contained"
           style={styles.floatingAction}
-          onPress={() => handleNext()}
-        >
+          onPress={() => handleNext()}>
           <Icon
             size={20}
-            name='stop'
+            name="stop"
             color={Colors.primaryDark}
             iconStyle={styles.icon}
           />
