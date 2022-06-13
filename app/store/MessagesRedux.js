@@ -24,7 +24,8 @@ const { Types, Creators } = createActions({
   postMessageResponse: [],
   postMessageResponseSuccess: null,
   postMessageResponseFailure: ['error'],
-  resetMessageState: null
+  resetMessageState: null,
+  setMessageStatus: ['key', 'data'],
 });
 
 /* ------------- Reducers ------------- */
@@ -90,6 +91,11 @@ const resetMessageState = state =>
     }
   });
 
+const setMessageStatus = (state, { key, status }) => {
+  return state.merge({
+    [key]: status
+  });
+}
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -103,4 +109,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_MESSAGE_RESPONSE_SUCCESS]: postMessageResponseSuccess,
   [Types.POST_MESSAGE_RESPONSE_FAILURE]: postMessageResponseFailure,
   [Types.RESET_MESSAGE_STATE]: resetMessageState,
+  [Types.SET_MESSAGE_STATUS]: setMessageStatus,
 });
