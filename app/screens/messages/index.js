@@ -37,8 +37,6 @@ const Messages = props => {
       navigation.navigate('MessageThreadScreen', {
         message: item,
       });
-
-    // navigation.navigate('SurveyDiscussion');
   };
 
   const ReminderSection = props => {
