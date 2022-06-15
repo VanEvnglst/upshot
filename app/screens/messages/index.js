@@ -31,9 +31,12 @@ const Messages = props => {
       if (element.id === item.id)
         messagesList[index] = { ...item, isMessageRead: true };
     });
-    navigation.navigate('MessageThreadScreen', {
-      message: item,
-    });
+    if (item.type === 'survey')
+      navigation.navigate('SurveyDiscussion');
+    else
+      navigation.navigate('MessageThreadScreen', {
+        message: item,
+      });
 
     // navigation.navigate('SurveyDiscussion');
   };
