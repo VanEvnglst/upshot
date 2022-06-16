@@ -66,9 +66,13 @@ const FrontlinerSurvey = props => {
   }
 
   const handleCloseBtn = () => {
-    //dispatch(SurveyActions.updateDRSurvey({
-    //  shouldClose: false,
-    //}))
+    dispatch(SurveyActions.updateDRSurvey({
+      shouldClose: false,
+     }))
+  }
+
+  const saveAndClose = () => {
+
   }
 
 
