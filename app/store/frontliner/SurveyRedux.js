@@ -8,6 +8,7 @@ const defaultState = {
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
   fetching: false,
+  journeyId: null,
   id: null,
   activeStep: 1,
   maxStep: 4,
@@ -17,6 +18,8 @@ export const INITIAL_STATE = Map({
   managerCriteria: [],
   selfEvalCriteria: [],
   selfEvaluation: { ...defaultState },
+  feedbackType: {},
+  feedbackFlow: {},
 });
 
 const { Types, Creators } = createActions({
