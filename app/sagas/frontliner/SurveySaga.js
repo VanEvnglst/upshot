@@ -10,31 +10,47 @@ const STATUS_OK = 'ok';
 export function* postDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
-  // const response = yield call(api.postDRSurvey,)
-  // if (response.ok) {
-  //   if (response.data.status === STATUS_OK) {
-  //     yield put (SurveyActions.postDRSurveySuccess())
-  //   } else {
-  //     yield put(SurveyActions.postDRSurveyFailure(response.data))
-  //   }
-  // } else {
-  //   yield put(SurveyActions.postDRSurveyFailure(response.data))
-  // }
+  const surveyData = {
+    journey_id: data
+  };
+  
+  const response = yield call(api.postDRSurvey, surveyData)
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+      const details = response.data.response;
+      yield put (SurveyActions.setDRSurveyStatus('feedbackFlow',details.feedback_flow));
+      yield put (SurveyActions.setDRSurveyStatus('feedbackType',details.feedback_type));
+      yield put (SurveyActions.postDRSurveySuccess(details.id));
+      yield NavigationService.navigate('FrontlinerSurvey');
+    } else {
+   yield put(SurveyActions.postDRSurveyFailure(response.data))
+    }
+  } else {
+    yield put(SurveyActions.postDRSurveyFailure(response.data))
+  }
 }
 
 export function* updateDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
-  // const response = yield call(api.updateDRSurvey, payload);
-  // if (response.ok) {
-  //   if (response.data.status === STATUS_OK) {
-  //     yield put (SurveyActions.updateDRSurveySuccess())
-  //   } else {
-  //     yield put(SurveyActions.updateDRSurveyFailure(response.data))
-  //   }
-  // } else {
-  //   yield put(SurveyActions.updateDRSurveyFailure(response.data))
-  // }
+  const surveyData = {
+    fl_survey_feedback_id: '',
+    feel_int: '',
+    satisfied_int: '',
+    feedback_criteria_scores: '',
+    fl_survey_scores: '',
+  };
+  
+  const response = yield call(api.updateDRSurvey);
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+      yield put (SurveyActions.updateDRSurveySuccess())
+    } else {
+      yield put(SurveyActions.updateDRSurveyFailure(response.data))
+    }
+  } else {
+    yield put(SurveyActions.updateDRSurveyFailure(response.data))
+  }
 }
 
 export function* fetchCurrentDRSurvey({ surveyId }) {
