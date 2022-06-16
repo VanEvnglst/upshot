@@ -51,4 +51,5 @@ export default {
   alertIcon: require('./images/alert_schedule.png'),
   schedulingHint: require('./images/scheduling-hint.png'),
   discussingConfirmHint: require('./images/discussing-confirm-hint.png'),
+  surveyHint: require('./images/survey-hint.png'),
 };
