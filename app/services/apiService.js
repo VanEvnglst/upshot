@@ -359,6 +359,14 @@ export default {
     return upshotAPI.get(`/${uniqueId}/feedback/frontliner/feedback/survey/criteria/get`, payload);
   },
 
+  postSurveyInvalid: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/feedback/survey/not_happened_yet`, payload);
+  },
+
   // closeDRSurvey: async payload => {
   //   const url = await AsyncStorage.getItem('baseURL');
   //   const upshotAPI = await setAPI(url);
