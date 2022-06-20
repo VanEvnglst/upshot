@@ -45,6 +45,9 @@ const { Types, Creators } = createActions({
   fetchManagerCriteria: [''],
   fetchManagerCriteriaSuccess: ['managerCriteria'],
   fetchManagerCriteriaFailure: ['error'],
+  postSurveyInvalid: ['data'],
+  postSurveyInvalidSuccess: [],
+  postSurveyInvalidFailure: ['error'],
 });
 
 /* ------------- Reducers ------------- */
@@ -183,6 +186,24 @@ const fetchManagerCriteriaFailure = (state, { error }) =>
     error,
   });
 
+const postSurveyInvalid = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const postSurveyInvalidSuccess = state =>
+  state.merge({
+    fetching: false,
+  });
+
+const postSurveyInvalidFailure = (state, { error }) => {
+  return state.merge({
+    fetching: false,
+    error
+  })
+}
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_SURVEY_ACTIVE_STEP]: setSurveyActiveStep,
   [Types.SET_DR_SURVEY_DATA]: setDRSurveyData,
@@ -206,4 +227,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_MANAGER_CRITERIA]: fetchManagerCriteria,
   [Types.FETCH_MANAGER_CRITERIA_SUCCESS]: fetchManagerCriteriaSuccess,
   [Types.FETCH_MANAGER_CRITERIA_FAILURE]: fetchManagerCriteriaFailure,
+  [Types.POST_SURVEY_INVALID]: postSurveyInvalid,
+  [Types.POST_SURVEY_INVALID_SUCCESS]: postSurveyInvalidSuccess,
+  [Types.POST_SURVEY_INVALID_FAILURE]: postSurveyInvalidFailure,
 });
