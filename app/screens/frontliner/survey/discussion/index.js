@@ -28,6 +28,16 @@ const SurveyDiscussion = props => {
       title: "No, it hasn't happened yet",
     },
   ];
+  const schedPosOptions = [
+    {
+      id: 1,
+      title: "Yes, I read the feedback",
+    },
+    {
+      id: 2,
+      title: "No, I haven't seen the message yet",
+    }
+  ]
   const [response, setResponse] = useState({
     id: null,
     title: '',
@@ -42,31 +52,32 @@ const SurveyDiscussion = props => {
     // TODO: get survey details here
   }, []);
 
+  const handleContent = async () => {
+    //TODO: handle data being shown based on feedback flow 
+    return <ScheduledCorrectiveContent />;
+  }
   const handleSelection = item => {
     setResponse(item);
     setCompleted(true);
   };
 
   const proceedToNextStep = () => {
-    if (response.id === 2)
+    if (response.id === 2) {
+      // if scheduled corrective
+      // dispatch(SurveyActions.postSurveyInvalid(route.params.message.journey_id));
       navigation.navigate('SurveyConfirmation', {
         type: 'no event',
       });
-    else navigation.navigate('SurveyGuide', {
-      id: route.params.message.journey_id
-    });
+    }
+    else navigation.navigate('SurveyGuide');
   };
 
 
-  return (
-    <Wrapper>
-      <Header
-        headerLeft={{
-          onPress: () => navigation.goBack(),
-        }}
-      />
+  const ScheduledCorrectiveContent = () => {
+    return (
+      <>
       <View style={styles.contentContainer}>
-        <Text type="h6" style={styles.labelPadding}>
+      <Text type="h6" style={styles.labelPadding}>
           Did you have your discussion with {senderName}?
         </Text>
         <ButtonSelection
@@ -89,6 +100,50 @@ const SurveyDiscussion = props => {
           <Text type="body2" style={styles.hintCardText}>This discussion was scheduled for </Text>
         </View>
       )}
+      </>
+    );
+  }
+
+  const ScheduledPositiveContent = () => {
+    return (
+      <>
+       <View style={styles.contentContainer}>
+      <Text type="h6" style={styles.labelPadding}>
+         Have you read your positive feedback from {senderName}?
+        </Text>
+        <ButtonSelection
+          title={schedPosOptions[0].title}
+          type={'Radio'}
+          onPress={() => handleSelection(schedPosOptions[0])}
+          selected={response.id === schedPosOptions[0].id}
+        />
+        <ButtonSelection
+          title={schedPosOptions[1].title}
+          type={'Radio'}
+          onPress={() => handleSelection(schedPosOptions[1])}
+          selected={response.id === schedPosOptions[1].id}
+        />
+        <HintIndicator showHint={hint} onPress={() => showHint(!hint)} />
+      </View>
+      {hint && (
+        <View style={styles.hintCard}>
+          <Image source={Images.surveyHint} resizeMode="contain" />
+          <Text type="body2" style={styles.hintCardText}>Positive feedback was sent to your inbox on  </Text>
+        </View>
+      )}
+      </>
+
+    );
+  }
+
+  return (
+    <Wrapper>
+      <Header
+        headerLeft={{
+          onPress: () => navigation.goBack(),
+        }}
+      />
+      {handleContent()}
       <View style={styles.btnContainer}>
         <Button
           style={[
