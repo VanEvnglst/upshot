@@ -18,10 +18,10 @@ const SurveyGuide = props => {
   const { survey } = labels.frontliner;
 
   const handleNavigation = () => {
-    if(surveyId)
+    // if(surveyId)
       navigation.navigate('FrontlinerSurvey');
-    else
-      dispatch(SurveyActions.postDRSurvey(journeyId));
+    // else
+    //   dispatch(SurveyActions.postDRSurvey(journeyId));
   }
   
   return (
