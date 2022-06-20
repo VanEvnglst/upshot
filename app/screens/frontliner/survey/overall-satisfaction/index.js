@@ -26,7 +26,7 @@ const OverallSatisfaction = props => {
     setSatisfactionValue(stepData.data);
   }, [stepData]);
 
-  const handleSliderValue = () => {
+  const handleSliderValue = value => {
     setSatisfactionValue(value);
     setDidSliderMove(true);
   };

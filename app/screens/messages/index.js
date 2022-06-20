@@ -27,16 +27,26 @@ const Messages = props => {
   }, [messagesList]);
 
   const handleNavigation = item => {
-    messagesList.forEach((element, index) => {
-      if (element.id === item.id)
-        messagesList[index] = { ...item, isMessageRead: true };
-    });
-    navigation.navigate('MessageThreadScreen', {
+    // messagesList.forEach((element, index) => {
+    //   if (element.id === item.id)
+    //     messagesList[index] = { ...item, isMessageRead: true };
+    // });
+    if (item.type === 'survey')
+      navigateSurvey(item);
+    else
+      navigation.navigate('MessageThreadScreen', {
+        message: item,
+      });
+  };
+
+  const navigateSurvey = item => {
+//TODO: Check if valid, if yes
+    //  check if survey id not null, if true
+    //navigation.navigate('SurveyGuide');
+    navigation.navigate('SurveyDiscussion', {
       message: item,
     });
-
-    // navigation.navigate('SurveyDiscussion');
-  };
+  }
 
   const ReminderSection = props => {
     return (

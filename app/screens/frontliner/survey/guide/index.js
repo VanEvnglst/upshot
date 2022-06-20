@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Header, Wrapper } from 'app/components';
+import SurveyActions from 'app/store/frontliner/SurveyRedux';
+import { getSurveyId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import styles from './styles';
 
 const SurveyGuide = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const dispatch = useDispatch();
+  const journeyId = useSelector(state => state.survey.get('journeyId'));
+  const surveyId = useSelector(getSurveyId);
   const { survey } = labels.frontliner;
 
   const handleNavigation = () => {
-    navigation.navigate('FrontlinerSurvey');
+    // if(surveyId)
+      navigation.navigate('FrontlinerSurvey');
+    // else
+    //   dispatch(SurveyActions.postDRSurvey(journeyId));
   }
   
   return (
@@ -23,24 +32,24 @@ const SurveyGuide = props => {
         }}
       />
       <Text type="h4">{survey.title}</Text>
-      <View style={{ flex: 2 }}>
-        <View style={{ flex: 1, marginTop: 30, marginBottom: 20 }}>
-          <Text type="body1" style={{ lineHeight: 30 }}>
+      <View style={styles.contentContainer}>
+        <View style={styles.descriptionContainer}>
+          <Text type="body1" style={styles.descriptionText}>
             {survey.descHelp} {survey.descCont} {survey.descLast}
           </Text>
         </View>
-        <View style={{ flex: 1, marginBottom: 20}}>
+        <View style={styles.imageContainer}>
           <Image
             source={Images.surveyGuide}
             resizeMode='contain'
           />
         </View>
-        <View style={{ marginBottom: 30}}>
+        <View style={styles.btnContainer}>
           <Button
-            style={{ height: 50, justifyContent: 'center', alignItems: 'center'}}
+            style={styles.button}
             onPress={() => handleNavigation()}
             mode='contained'
-          ><Text type='button'>{labels.common.start}</Text>
+          >{labels.common.start}
           </Button>
         </View>
       </View>
@@ -50,6 +59,12 @@ const SurveyGuide = props => {
 
 export default SurveyGuide;
 
-SurveyGuide.propTypes = {};
+SurveyGuide.propTypes = {
+  getSurveyId: PropTypes.number,
+  postDRSurvey: PropTypes.func,
+};
 
-SurveyGuide.defaultProps = {};
+SurveyGuide.defaultProps = {
+  getSurveyId: 1,
+  postDRSurvey: () => {},
+};

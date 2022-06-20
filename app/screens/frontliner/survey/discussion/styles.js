@@ -32,4 +32,17 @@ export default styles = StyleSheet.create({
   btnText: {
     color: Colors.white,
   },
+  hintCard: {
+    backgroundColor: 'rgba(0,0,0,0.04)',
+    borderRadius: 16,
+    alignItems: 'center',
+    paddingVertical: 15,
+    marginTop: 20,    
+  },
+  hintCardText: {
+    color: Colors.primary900,
+    padding: 20,
+    lineHeight: 24,
+    fontWeight: '700'
+  },
 });
