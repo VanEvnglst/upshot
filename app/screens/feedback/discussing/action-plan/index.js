@@ -160,6 +160,14 @@ const ActionPlanScreen = props => {
 
 export default ActionPlanScreen;
 
-ActionPlanScreen.propTypes = {};
+ActionPlanScreen.propTypes = {
+  getDiscussingId: PropTypes.number,
+  setDiscussingStatus: PropTypes.func,
+  updateFeedbackDiscussing: PropTypes.func,
+};
 
-ActionPlanScreen.defaultProps = {};
+ActionPlanScreen.defaultProps = {
+  getDiscussingId: 1,
+  setDiscussingStatus: () => {},
+  updateFeedbackDiscussing: () => {},
+};
