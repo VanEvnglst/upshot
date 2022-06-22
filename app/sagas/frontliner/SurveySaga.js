@@ -122,7 +122,6 @@ export function* fetchManagerCriteria() {
   };
 
   const response = yield call(api.getReflectingCriteria, criteriaData);
-  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
      const criteriaList = response.data.details.criteria_list.criteria;
@@ -140,11 +139,12 @@ export function* postSurveyInvalid ({ data }) {
 
   debugger;
   const response = yield call(api.postSurveyInvalid);
+  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
-      // yield put (SurveyActions.postSurveyInvalidSuccess())
+      yield put(SurveyActions.postSurveyInvalidSuccess())
     } else {
-      yield put (SurveyActions.postSurveyInvalidFailure(response.data))
+      yield put(SurveyActions.postSurveyInvalidFailure(response.data))
     }
   } else {
     yield put(SurveyActions.postSurveyInvalidFailure(response.data))

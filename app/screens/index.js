@@ -29,6 +29,7 @@ export { default as PreparingReview } from './feedback/preparing/preparing-revie
 export { default as DiscussingGuide } from './feedback/discussing/guide';
 export { default as DiscussingMeeting } from './feedback/discussing/meeting';
 export { default as FeedbackDiscussing } from './feedback/discussing';
+export { default as ActionPlanScreen } from './feedback/discussing/action-plan';
 export  { default as DiscussingReview } from './feedback/discussing/discussing-review';
 
 /* ------------- Feedback Reflecting ------------- */
