@@ -11,7 +11,7 @@ const RESULT_ERROR = 'error';
 
 export function* signInUser({ data }) {
   const auth = { 
-    email: data.email,
+    email: data.username,
     passwd: data.password,
     reg_token: data.token,
   }
@@ -38,7 +38,7 @@ export function* signInUser({ data }) {
 }
 
 export function* fetchServer({ data }) {
-  const emailArr = data.email.split('@');
+  const emailArr = data.username.split('@');
 
   const response = yield call(api.getDirectory);
   if (response.ok) {
