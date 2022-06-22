@@ -19,7 +19,7 @@ const SignIn = props => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getAuthLoading);
   const signInError = useSelector(getSignInError);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [errorVisible, setErrorVisible] = useState(false);
@@ -45,16 +45,16 @@ const SignIn = props => {
 
   const validate = () => {
     const errors = {};
-    if (email.length === 0) {
-      errors.emailError = labels.errors.emailRequired;
+    if (username.length === 0) {
+      errors.usernameError = labels.errors.emailRequired;
     }
 
     if (password.length === 0) {
       errors.passwordError = labels.errors.passwordRequired;
     }
 
-    if (email && email.length !== 0 && !InputUtil.validateEmail(email)) {
-      errors.emailError = labels.errors.validEmail;
+    if (username && username.length !== 0 && !InputUtil.validateEmail(username)) {
+      errors.usernameError = labels.errors.validEmail;
     }
 
     return errors;
@@ -63,7 +63,7 @@ const SignIn = props => {
   const signInUser = () => {
     dispatch(
       AuthenticationActions.fetchServer({
-        email,
+        username,
         password,
         token,
       }),
@@ -80,7 +80,7 @@ const SignIn = props => {
         <View style={styles.formContainer}>
           <Formik
             initialValues={{
-              email,
+              username,
               password,
             }}
             validate={() => validate()}
@@ -90,12 +90,12 @@ const SignIn = props => {
               return (
                 <View style={styles.form}>
                   <TextInput
-                    label={'Email'}
-                    placeholder={'Email'}
+                    label={'Username'}
+                    placeholder={'Username'}
                     style={styles.inputField}
-                    value={email}
-                    onChangeText={email => setEmail(email)}
-                    error={errors.emailError}
+                    value={username}
+                    onChangeText={username => setUsername(username)}
+                    error={errors.usernameError}
                   />
                   <TextInput
                     label={'Password'}
