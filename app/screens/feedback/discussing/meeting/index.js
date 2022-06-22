@@ -199,7 +199,7 @@ const DiscussingMeeting = props => {
       dispatch(DiscussingActions.updateFeedbackDiscussing(discussingData));
     }
     debugger;
-    navigation.navigate('FeedbackDiscussing');
+    navigation.navigate('ActionPlanScreen');
   };
 
   return (
