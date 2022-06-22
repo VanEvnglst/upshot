@@ -43,9 +43,14 @@ const Messages = props => {
 //TODO: Check if valid, if yes
     //  check if survey id not null, if true
     //navigation.navigate('SurveyGuide');
+    if(item.is_survey_valid)
     navigation.navigate('SurveyDiscussion', {
       message: item,
     });
+    else
+      navigation.navigate('SurveyConfirmation', {
+        type: 'survey invalid',
+      });
   }
 
   const ReminderSection = props => {
