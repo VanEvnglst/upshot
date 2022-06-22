@@ -16,6 +16,7 @@ import {
   PreparingReview,
   DiscussingGuide,
   DiscussingMeeting,
+  ActionPlanScreen,
   DiscussingReview,
   FeedbackDiscussing,
   FeedbackReflecting,
@@ -96,6 +97,10 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'FeedbackDiscussing'}
           component={FeedbackDiscussing}
+        />
+        <FeedbackStack.Screen
+          name={'ActionPlanScreen'}
+          component={ActionPlanScreen}
         />
         <FeedbackStack.Screen
           name={'DiscussingReview'}
