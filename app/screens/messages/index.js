@@ -40,13 +40,15 @@ const Messages = props => {
   };
 
   const navigateSurvey = item => {
-//TODO: Check if valid, if yes
-    //  check if survey id not null, if true
-    //navigation.navigate('SurveyGuide');
     if(item.is_survey_valid)
-    navigation.navigate('SurveyDiscussion', {
-      message: item,
-    });
+      if(item.survey_id === null)
+        navigation.navigate('SurveyDiscussion', {
+          message: item,
+        });
+      else {
+        dispatch(SurveyActions.setDRSurveyStatus('id', item.survey_id))
+        navigation.navigate('SurveyGuide');
+      }
     else
       navigation.navigate('SurveyConfirmation', {
         type: 'survey invalid',
