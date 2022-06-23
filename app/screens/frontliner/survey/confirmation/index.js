@@ -11,15 +11,23 @@ import styles from './styles';
 const SurveyConfirmation = props => {
   const { navigation, route } = props;
   const { survey } = labels.frontliner;
+  const [isSurveyValid, setSurveyValid] = useState(true);
 
-  const handleClose = () => {};
+  useEffect(() => {
+    if(route.params && route.params.type === 'survey invalid')
+      setSurveyValid(false);
+  }, []);
+
+  const handleClose = () => {
+    navigation.navigate('Messages');
+  };
 
   const handleContent = () => {
-    const didNotHappen = route.params && route.params.type === 'no event';
+    const didNotHappen = route.params && (route.params.type === 'no event' || route.params.type === 'survey invalid');
     const eventHappened = {
       image: Images.confirmation,
       title: labels.common.youDidIt,
-      content: `${survey.confirmation} Manager${survey.confirmationCont}`,
+      content: `${survey.confirmation} ${route.params.managerName} ${survey.confirmationCont}`,
     };
 
     const eventDidNotHappen = {
@@ -51,18 +59,19 @@ const SurveyConfirmation = props => {
       <Wrapper>
         <Header
           headerRight={{
-            onPress: () => {},
+            onPress: () => handleClose(),
           }}
         />
         <View>{handleContent()}</View>
+        {isSurveyValid &&
         <View style={styles.btnContainer}>
             <Button 
               mode="contained" 
               style={styles.button}
-              onPress={() => console.log('close')}>
+              onPress={() => handleClose()}>
               Close
             </Button>
-        </View>
+        </View>}
       </Wrapper>
     </View>
   );
