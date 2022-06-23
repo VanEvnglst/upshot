@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Animated, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import {
   Wrapper,
@@ -17,6 +18,7 @@ import styles from './styles';
 
 const SurveyDiscussion = props => {
   const { navigation, route } = props;
+  const { message } = route.params;
   const dispatch = useDispatch();
   const options = [
     {
@@ -44,17 +46,20 @@ const SurveyDiscussion = props => {
   });
   const [completed, setCompleted] = useState(false);
   const [hint, showHint] = useState(false);
-  const senderArr = route.params && route.params.message.subject.split(' ');
+  const senderArr = route.params && message.subject.split(' ');
   const senderName = senderArr[2];
+  const formatDate = moment(message.incident_date).format('LLLL');
+  const dateArr = formatDate.split(',');
 
   useEffect(() => {
-    dispatch(SurveyActions.setDRSurveyStatus('journeyId', route.params.message.journey_id));
-    // TODO: get survey details here
+    dispatch(SurveyActions.setDRSurveyStatus('journeyId', message.journey_id));
   }, []);
 
-  const handleContent = async () => {
-    //TODO: handle data being shown based on feedback flow 
-    return <ScheduledCorrectiveContent />;
+  const handleContent = () => {
+    if (message.pos_or_cor.id === 1)
+      return <ScheduledPositiveContent />;
+    else
+      return <ScheduledCorrectiveContent />;
   }
   const handleSelection = item => {
     setResponse(item);
@@ -74,7 +79,7 @@ const SurveyDiscussion = props => {
 
 
   const ScheduledCorrectiveContent = () => {
-    return (
+    return(
       <>
       <View style={styles.contentContainer}>
       <Text type="h6" style={styles.labelPadding}>
@@ -97,11 +102,14 @@ const SurveyDiscussion = props => {
       {hint && (
         <View style={styles.hintCard}>
           <Image source={Images.surveyHint} resizeMode="contain" />
-          <Text type="body2" style={styles.hintCardText}>This discussion was scheduled for </Text>
+          <Text type="body2" style={styles.hintCardText}>This discussion was scheduled for {dateArr[0]}, {dateArr[1]}.</Text>
+          <Text type='body2' style={styles.hintCardText}>
+            It was about {message.feedback_topics[0]}
+          </Text>
         </View>
       )}
       </>
-    );
+    )
   }
 
   const ScheduledPositiveContent = () => {
@@ -135,7 +143,7 @@ const SurveyDiscussion = props => {
 
     );
   }
-
+  
   return (
     <Wrapper>
       <Header
