@@ -337,7 +337,7 @@ export default {
 
   updateDRSurvey: async payload => {
     const url = await AsyncStorage.getItem('baseURL');
-    const upshoAPI = await setAPI(url);
+    const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/feedback/frontliner/feedback/survey/edit`, payload);
@@ -348,7 +348,7 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/`, payload);
+    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/feedback/survey/get`, payload);
   },
 
   getDRCriteria: async payload => {
@@ -367,11 +367,11 @@ export default {
     return upshotAPI.post(`/${uniqueId}/feedback/frontliner/feedback/survey/not_happened_yet`, payload);
   },
 
-  // closeDRSurvey: async payload => {
-  //   const url = await AsyncStorage.getItem('baseURL');
-  //   const upshotAPI = await setAPI(url);
-  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
+  closeDRSurvey: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-  //   return upshotAPI.post(`/${uniqueId}`, payload);
-  // }
+    return upshotAPI.post(`/${uniqueId}/feedback/frontliner/feedback/survey/close`, payload);
+  }
 };
