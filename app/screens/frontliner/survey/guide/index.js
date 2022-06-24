@@ -18,10 +18,11 @@ const SurveyGuide = props => {
   const { survey } = labels.frontliner;
 
   const handleNavigation = () => {
-    // if(surveyId)
-      navigation.navigate('FrontlinerSurvey');
-    // else
-    //   dispatch(SurveyActions.postDRSurvey(journeyId));
+    if(surveyId)
+    navigation.navigate('FrontlinerSurvey');
+    else
+      dispatch(SurveyActions.postDRSurvey(journeyId));
+      
   }
   
   return (
@@ -49,7 +50,7 @@ const SurveyGuide = props => {
             style={styles.button}
             onPress={() => handleNavigation()}
             mode='contained'
-          >{labels.common.start}
+          >{surveyId !== null ? `Continue` : labels.common.start}
           </Button>
         </View>
       </View>
