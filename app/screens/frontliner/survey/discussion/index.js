@@ -66,13 +66,16 @@ const SurveyDiscussion = props => {
     setCompleted(true);
   };
 
+  console.log(message);
   const proceedToNextStep = () => {
     if (response.id === 2) {
-      // if scheduled corrective
-      // dispatch(SurveyActions.postSurveyInvalid(route.params.message.journey_id));
-      navigation.navigate('SurveyConfirmation', {
-        type: 'no event',
-      });
+      if(message.pos_or_cor.id === 2) { 
+        const payload = {
+          id: message.journey_id,
+          managerName: senderName,
+        }
+        dispatch(SurveyActions.postSurveyInvalid(payload));
+      }
     }
     else navigation.navigate('SurveyGuide');
   };

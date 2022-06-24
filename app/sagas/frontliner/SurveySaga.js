@@ -136,12 +136,18 @@ export function* fetchManagerCriteria() {
 
 export function* postSurveyInvalid ({ data }) {
   const connected = yield checkInternetConnection();
+  
+  const payload = {
+    journey_id: data.id
+  }
 
-  debugger;
-  const response = yield call(api.postSurveyInvalid);
-  debugger;
+  const response = yield call(api.postSurveyInvalid, payload);
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
+      yield NavigationService.navigate('SurveyConfirmation', {
+        type: 'no event',
+        managerName: data.managerName,
+      });
       yield put(SurveyActions.postSurveyInvalidSuccess())
     } else {
       yield put(SurveyActions.postSurveyInvalidFailure(response.data))
