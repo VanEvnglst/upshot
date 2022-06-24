@@ -33,7 +33,7 @@ const ManagerEvaluation = props => {
 
 
   const handleContent = () => {
-    let criteriaStr = "I ", newList = [];
+    let criteriaStr = "My manager ", newList = [];
     criteria.forEach(item => {
       newList.push({
         ...item,
