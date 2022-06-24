@@ -36,13 +36,13 @@ const FrontlinerSurvey = props => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   async function retrieveData() {
-  //     if (activeSurvey)
-  //     await dispatch(SurveyActions.fetchCurrentDRSurvey(surveyId));
-  //   }
-  //   retrieveData();
-  // }, []);
+  useEffect(() => {
+    async function retrieveData() {
+      if (surveyId)
+      await dispatch(SurveyActions.fetchCurrentDRSurvey(surveyId));
+    }
+    retrieveData();
+  }, []);
 
   useEffect(() => {
     dispatch(SurveyActions.fetchDRCriteria());
@@ -67,6 +67,7 @@ const FrontlinerSurvey = props => {
 
   const handleCloseBtn = () => {
     dispatch(SurveyActions.updateDRSurvey({
+      surveyId,
       shouldClose: false,
      }))
   }
@@ -107,14 +108,14 @@ const FrontlinerSurvey = props => {
         <Text type='body2'
           style={containerStyles.modalText}
         >
-          {labels.common.closeFeedback}
+          Close the survey for now? You have 6 days to submit your responses.
         </Text>
       </View>
       <View style={styles.modalBtnContainer}>
         <Button
           mode='text'
           onPress={() => hideModal()}
-        >{labels.common.canel}</Button>
+        >{labels.common.cancel}</Button>
         <Button
           mode='text'
           onPress={() => handleCloseBtn()}

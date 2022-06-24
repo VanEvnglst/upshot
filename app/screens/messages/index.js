@@ -47,7 +47,7 @@ const Messages = props => {
         });
       else {
         dispatch(SurveyActions.setDRSurveyStatus('id', item.survey_id))
-        navigation.navigate('SurveyGuide');
+        navigation.navigate('FrontlinerSurvey');
       }
     else
       navigation.navigate('SurveyConfirmation', {

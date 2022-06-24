@@ -6,11 +6,11 @@ import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
 const STATUS_OK = 'ok';
-// const feeling = state => state.survey.get('howDidYouFeel')
-// const satisfaction = state => state.survey.get('overallSatisfaction')
-// const manager = state => state.survey.get('managerEvaluation')
-// const drEval = state => state.survey.get('selfEvaluation')
-// const lastActiveStep = state => state.survey.get('activeStep')
+const feeling = state => state.survey.get('howDidYouFeel')
+const satisfaction = state => state.survey.get('overallSatisfaction')
+const manager = state => state.survey.get('managerEvaluation')
+const drEval = state => state.survey.get('selfEvaluation')
+const lastActiveStep = state => state.survey.get('activeStep')
 
 export function* postDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
@@ -38,41 +38,49 @@ export function* postDRSurvey({ data }) {
 export function* updateDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
-
-  // const feelingValue = yield select(feeling)
-  // const satisfactionValue = yield select(satisfaction)
-  // const managerEval = yield select(manager)
-  // const selfEval = yield select(drEval)
-  // const activeStep = yield select(lastActiveStep)
+  const feelingValue = yield select(feeling)
+  const satisfactionValue = yield select(satisfaction)
+  const managerEval = yield select(manager)
+  const selfEval = yield select(drEval)
+  const activeStep = yield select(lastActiveStep)
 
   let managerScore = [];
   let drScore = [];
-  // managerEval.data.forEach((item, index) => {
-  //   managerScore.push({ 
-  //     c_id: item.id,
-  //     score: item.score
-  //   });
-  // })
+  managerEval.data.forEach((item, index) => {
+    managerScore.push({ 
+      c_id: item.id,
+      score: item.score
+    });
+  })
 
-  // selfEval.data.forEach((item, index) => {
-  //   drScore.push({
-  //     id: item.id,
-  //     score: item.score,
-  //   })
-  // })
+  selfEval.data.forEach((item, index) => {
+    drScore.push({
+      id: item.id,
+      score: item.score,
+    })
+  })
+
+  
   const surveyData = {
-    fl_survey_feedback_id: '',
-    feel_int: '',
-    satisfied_int: '',
+    fl_survey_feedback_id: data.surveyId,
+    feel_int: feelingValue.data,
+    satisfied_int: satisfactionValue.data,
     feedback_criteria_scores: managerScore,
     fl_survey_scores: drScore,
     // last_step: act
   };
-
-  const response = yield call(api.updateDRSurvey);
+  debugger;
+  const response = yield call(api.updateDRSurvey, surveyData);
+  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
-      yield put (SurveyActions.updateDRSurveySuccess())
+      if (data.shouldClose)
+        yield put(SurveyActions.closeDrSurvey(data.surveyId))
+      else {
+        yield put(SurveyActions.updateDRSurveySuccess())
+        // yield put(SurveyActions.resetDRSurveyState());
+        yield NavigationService.navigate('Messages')
+    }
     } else {
       yield put(SurveyActions.updateDRSurveyFailure(response.data))
     }
@@ -84,16 +92,24 @@ export function* updateDRSurvey({ data }) {
 export function* fetchCurrentDRSurvey({ surveyId }) {
   const connected = yield checkInternetConnection();
 
-  //const response = yield call(api.getCurrentDRSurvey, payload);
-  // if (response.ok) {
-  //   if (response.data.status === STATUS_OK) {
-  //     yield put (SurveyActions.fetchCurrentDRSurveySuccess())
-  //   } else {
-  //     yield put(SurveyActions.fetchCurrentDRSurveyFailure(response.data))
-  //   }
-  // } else {
-  //   yield put(SurveyActions.fetchCurrentDRSurveyFailure(response.data))
-  // }
+  const payload = {
+    fl_survey_feedback_id: surveyId
+  }
+  const response = yield call(api.getCurrentDRSurvey, payload);
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+      const data = response.data.response;
+      yield put(SurveyActions.setDRSurveyData('howDidYouFeel', data.feel_int));
+      yield put(SurveyActions.setDRSurveyData('overallSatisfaction', data.satisfied_int));
+      yield put(SurveyActions.setDRSurveyData('managerEvaluation', data.survey));
+      yield put(SurveyActions.setDRSurveyData('selfEvaluation', data.reflection));
+      yield put (SurveyActions.fetchCurrentDRSurveySuccess())
+    } else {
+      yield put(SurveyActions.fetchCurrentDRSurveyFailure(response.data))
+    }
+  } else {
+    yield put(SurveyActions.fetchCurrentDRSurveyFailure(response.data))
+  }
 }
 
 export function* fetchDRCriteria() {
@@ -160,16 +176,22 @@ export function* postSurveyInvalid ({ data }) {
 export function* closeDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
 
-//   //const response = yield call(api.closeDRSurvey, payload);
-//   // if (response.ok) {
-//   //   if (response.data.status === STATUS_OK) {
-//   // yield put(SurveyActions.closeDRSurveySuccess(criteriaList))
-//   // } else {
-//   // yield put(SurveyActions.closeDRSurveyFailure(response.data))
-//   //}
-//   //} else {
-//   //  yield put(SurveyActions.closeDRSurveyFailure(response.data))
-//   //}
+  const payload = {
+    fl_survey_feedback_id: data.id
+  }
+  const response = yield call(api.closeDRSurvey, payload);
+  if (response.ok) {
+    if (response.data.status === STATUS_OK) {
+      yield put(SurveyActions.closeDRSurveySuccess())
+      yield NavigationService.navigate('SurveyConfirmation', {
+        type: 'success',
+      });
+    } else {
+      yield put(SurveyActions.closeDRSurveyFailure(response.data))
+    }
+  } else {
+   yield put(SurveyActions.closeDRSurveyFailure(response.data))
+  }
 }
 
 function* watchSurveySaga() {
