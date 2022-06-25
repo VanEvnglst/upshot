@@ -112,3 +112,4 @@ export const getManagerCriteria = state => state.survey.get('managerCriteria');
 export const getManagerEval = state => state.survey.get('managerEvaluation');
 export const getSatisfactionData = state => state.survey.get('overallSatisfaction');
 export const getFeelingData = state => state.survey.get('howDidYouFeel');
+export const getManagerName = state => state.survey.get('manager');
