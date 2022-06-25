@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Text, MessageItem, Loader } from 'app/components';
 import MessagesActions from 'app/store/MessagesRedux';
+import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import { getMessagesFetching, getMessages } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -27,10 +28,6 @@ const Messages = props => {
   }, [messagesList]);
 
   const handleNavigation = item => {
-    // messagesList.forEach((element, index) => {
-    //   if (element.id === item.id)
-    //     messagesList[index] = { ...item, isMessageRead: true };
-    // });
     if (item.type === 'survey')
       navigateSurvey(item);
     else
@@ -40,6 +37,10 @@ const Messages = props => {
   };
 
   const navigateSurvey = item => {
+    const senderArr = item.subject.split(' ');
+    const senderName = senderArr[2];
+    dispatch(SurveyActions.setDRSurveyStatus('manager', senderName));
+
     if(item.is_survey_valid)
       if(item.survey_id === null)
         navigation.navigate('SurveyDiscussion', {
