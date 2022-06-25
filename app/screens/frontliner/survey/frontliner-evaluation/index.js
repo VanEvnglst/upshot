@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Slider } from 'app/components';
 import SurveyActions from 'app/store/frontliner/SurveyRedux';
-import { getSurveyStep, getDRCriteria, getSelfEval } from 'app/store/selectors';
+import { getSurveyStep, getDRCriteria, getSelfEval, getSurveyId } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
@@ -18,6 +18,7 @@ const FrontlinerEvaluation = props => {
   const activeStep = useSelector(getSurveyStep);
   const criteriaList = useSelector(getDRCriteria);
   const stepData = useSelector(getSelfEval);
+  const surveyId = useSelector(getSurveyId);
   const [drCriteria, setDRCriteria] = useState([]);
   const [drCriteriaScore, setDRCriteriaScore] = useState([]);
 
@@ -49,6 +50,11 @@ const FrontlinerEvaluation = props => {
   }
 
   const handleNext = () => {
+    dispatch(SurveyActions.setDRSurveyData('selfEvaluation', drCriteriaScore));
+    dispatch(SurveyActions.updateDRSurvey({
+      getSurveyId,
+      shouldClose: true,
+    }));
     dispatch(SurveyActions.setSurveyActiveStep(activeStep + 1));
   }
 
