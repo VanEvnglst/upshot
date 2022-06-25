@@ -10,7 +10,9 @@ const feeling = state => state.survey.get('howDidYouFeel')
 const satisfaction = state => state.survey.get('overallSatisfaction')
 const manager = state => state.survey.get('managerEvaluation')
 const drEval = state => state.survey.get('selfEvaluation')
-const lastActiveStep = state => state.survey.get('activeStep')
+const lastActiveStep = state => state.survey.get('activeStep');
+const feedbackFlow = state => state.survey.get('feedbackType');
+const feedbackType = state => state.survey.get('feedbackFlow');
 
 export function* postDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
@@ -99,6 +101,8 @@ export function* fetchCurrentDRSurvey({ surveyId }) {
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const data = response.data.response;
+      yield put (SurveyActions.setDRSurveyStatus('feedbackFlow',data.feedback_flow));
+      yield put (SurveyActions.setDRSurveyStatus('feedbackType',data.feedback_type));
       yield put(SurveyActions.setDRSurveyData('howDidYouFeel', data.feel_int));
       yield put(SurveyActions.setDRSurveyData('overallSatisfaction', data.satisfied_int));
       yield put(SurveyActions.setDRSurveyData('managerEvaluation', data.survey));
@@ -132,9 +136,11 @@ export function* fetchDRCriteria() {
 export function* fetchManagerCriteria() {
   const connected = yield checkInternetConnection();
 
+  const flow = yield select(feedbackFlow);
+  const type = yield select(feedbackType);
   const criteriaData = {
-    feedback_flow: 1,
-    pos_or_cor: 2
+    feedback_flow: flow.id,
+    pos_or_cor: type.id,
   };
 
   const response = yield call(api.getReflectingCriteria, criteriaData);

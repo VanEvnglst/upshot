@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Wrapper, Header } from 'app/components';
+import { getManagerName } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -11,6 +12,7 @@ import styles from './styles';
 const SurveyConfirmation = props => {
   const { navigation, route } = props;
   const { survey } = labels.frontliner;
+  const managerName = useSelector(getManagerName);
   const [isSurveyValid, setSurveyValid] = useState(true);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const SurveyConfirmation = props => {
     const eventHappened = {
       image: Images.confirmation,
       title: labels.common.youDidIt,
-      content: `${survey.confirmation} ${route.params.managerName} ${survey.confirmationCont}`,
+      content: `${survey.confirmation} ${managerName} ${survey.confirmationCont}`,
     };
 
     const eventDidNotHappen = {

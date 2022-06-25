@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Slider } from 'app/components';
 import SurveyActions from 'app/store/frontliner/SurveyRedux';
-import { getSurveyStep, getManagerCriteria, getManagerEval } from 'app/store/selectors';
+import { getSurveyStep, getManagerCriteria, getManagerEval, getManagerName } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
@@ -17,6 +17,7 @@ const ManagerEvaluation = props => {
   const activeStep = useSelector(getSurveyStep);
   const criteria = useSelector(getManagerCriteria);
   const stepData = useSelector(getManagerEval);
+  const managerName = useSelector(getManagerName);
   const [managerEval, setManagerEval] = useState([]);
   const [managerEvalScore, setManagerEvalScore] = useState([]);
 
@@ -80,7 +81,7 @@ const ManagerEvaluation = props => {
           type='h6'
           style={containerStyles.stepTitleText}
           testID={'txt-frontlinerSurvey-managerEval'}
-        >{survey.howDidManagerDo} {survey.howDidManagerDoCont}</Text>
+        >{survey.howDidManagerDo} {managerName} {survey.howDidManagerDoCont}</Text>
       </View>
       <View style={containerStyles.content}>
         {managerEval.map((item, i) => (
@@ -128,6 +129,7 @@ ManagerEvaluation.propTypes = {
   getSurveyStep: PropTypes.number,
   getManagerCriteria: PropTypes.array,
   getManagerEval: PropTypes.object,
+  getManagerName: PropTypes.string,
   setSurveyActiveStep: PropTypes.func,
   setDRSurveyData: PropTypes.func,
 };
@@ -136,6 +138,7 @@ ManagerEvaluation.defaultProps = {
   getSurveyStep: 1,
   getManagerCriteria: [],
   getManagerEval: {},
+  getManagerName : '',
   setSurveyActiveStep: () => {},
   setDRSurveyData: () => {},
 };

@@ -12,6 +12,7 @@ import {
   HintIndicator,
 } from 'app/components';
 import SurveyActions from 'app/store/frontliner/SurveyRedux';
+import { getManagerName } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import styles from './styles';
@@ -20,6 +21,7 @@ const SurveyDiscussion = props => {
   const { navigation, route } = props;
   const { message } = route.params;
   const dispatch = useDispatch();
+  const managerName = useSelector(getManagerName);
   const options = [
     {
       id: 1,
@@ -46,8 +48,6 @@ const SurveyDiscussion = props => {
   });
   const [completed, setCompleted] = useState(false);
   const [hint, showHint] = useState(false);
-  const senderArr = route.params && message.subject.split(' ');
-  const senderName = senderArr[2];
   const formatDate = moment(message.incident_date).format('LLLL');
   const dateArr = formatDate.split(',');
 
@@ -72,7 +72,6 @@ const SurveyDiscussion = props => {
       if(message.pos_or_cor.id === 2) { 
         const payload = {
           id: message.journey_id,
-          managerName: senderName,
         }
         dispatch(SurveyActions.postSurveyInvalid(payload));
       }
@@ -86,7 +85,7 @@ const SurveyDiscussion = props => {
       <>
       <View style={styles.contentContainer}>
       <Text type="h6" style={styles.labelPadding}>
-          Did you have your discussion with {senderName}?
+          Did you have your discussion with {managerName}?
         </Text>
         <ButtonSelection
           title={options[0].title}
@@ -120,7 +119,7 @@ const SurveyDiscussion = props => {
       <>
        <View style={styles.contentContainer}>
       <Text type="h6" style={styles.labelPadding}>
-         Have you read your positive feedback from {senderName}?
+         Have you read your positive feedback from {managerName}?
         </Text>
         <ButtonSelection
           title={schedPosOptions[0].title}
