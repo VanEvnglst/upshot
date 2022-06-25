@@ -20,6 +20,7 @@ export const INITIAL_STATE = Map({
   selfEvaluation: { ...defaultState },
   feedbackType: {},
   feedbackFlow: {},
+  manager: '',
 });
 
 const { Types, Creators } = createActions({
