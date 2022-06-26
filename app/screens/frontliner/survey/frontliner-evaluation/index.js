@@ -52,7 +52,7 @@ const FrontlinerEvaluation = props => {
   const handleNext = () => {
     dispatch(SurveyActions.setDRSurveyData('selfEvaluation', drCriteriaScore));
     dispatch(SurveyActions.updateDRSurvey({
-      getSurveyId,
+      surveyId,
       shouldClose: true,
     }));
     dispatch(SurveyActions.setSurveyActiveStep(activeStep + 1));
