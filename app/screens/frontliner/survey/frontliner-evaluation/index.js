@@ -55,7 +55,6 @@ const FrontlinerEvaluation = props => {
       surveyId,
       shouldClose: true,
     }));
-    dispatch(SurveyActions.setSurveyActiveStep(activeStep + 1));
   }
 
   const checkSliderValue = item => {

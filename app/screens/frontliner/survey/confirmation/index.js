@@ -21,7 +21,7 @@ const SurveyConfirmation = props => {
   }, []);
 
   const handleClose = () => {
-    navigation.navigate('Messages');
+    navigation.replace('Messages');
   };
 
   const handleContent = () => {

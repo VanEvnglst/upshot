@@ -18,8 +18,8 @@ export const INITIAL_STATE = Map({
   managerCriteria: [],
   selfEvalCriteria: [],
   selfEvaluation: { ...defaultState },
-  feedbackType: {},
-  feedbackFlow: {},
+  feedbackType: { ...defaultState, },
+  feedbackFlow: { ...defaultState },
   manager: '',
 });
 
