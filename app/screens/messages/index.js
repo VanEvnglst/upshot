@@ -37,10 +37,14 @@ const Messages = props => {
   };
 
   const navigateSurvey = item => {
+    // split subject value to get sender name
     const senderArr = item.subject.split(' ');
     const senderName = senderArr[2];
     dispatch(SurveyActions.setDRSurveyStatus('manager', senderName));
 
+    // Check if survey is valid
+    // If if exists navigate to survey
+    // if not, go to discussion screen
     if(item.is_survey_valid)
       if(item.survey_id === null)
         navigation.navigate('SurveyDiscussion', {
