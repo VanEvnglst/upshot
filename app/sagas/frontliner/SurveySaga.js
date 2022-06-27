@@ -11,8 +11,8 @@ const satisfaction = state => state.survey.get('overallSatisfaction')
 const manager = state => state.survey.get('managerEvaluation')
 const drEval = state => state.survey.get('selfEvaluation')
 const lastActiveStep = state => state.survey.get('activeStep');
-const feedbackFlow = state => state.survey.get('feedbackType');
-const feedbackType = state => state.survey.get('feedbackFlow');
+const feedbackFlow = state => state.survey.get('feedbackFlow');
+const feedbackType = state => state.survey.get('feedbackType');
 
 export function* postDRSurvey({ data }) {
   const connected = yield checkInternetConnection();
@@ -22,11 +22,12 @@ export function* postDRSurvey({ data }) {
   };
   
   const response = yield call(api.postDRSurvey, surveyData)
+  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const details = response.data.response;
-      yield put (SurveyActions.setDRSurveyStatus('feedbackFlow',details.feedback_flow));
-      yield put (SurveyActions.setDRSurveyStatus('feedbackType',details.feedback_type));
+      yield put (SurveyActions.setDRSurveyData('feedbackFlow',details.feedback_flow));
+      yield put (SurveyActions.setDRSurveyData('feedbackType',details.feedback_type));
       yield put (SurveyActions.postDRSurveySuccess(details.id));
       yield NavigationService.navigate('FrontlinerSurvey');
     } else {
@@ -71,7 +72,7 @@ export function* updateDRSurvey({ data }) {
     fl_survey_scores: drScore,
     // last_step: act
   };
-  debugger;
+  
   const response = yield call(api.updateDRSurvey, surveyData);
   debugger;
   if (response.ok) {
@@ -80,7 +81,7 @@ export function* updateDRSurvey({ data }) {
         yield put(SurveyActions.closeDrSurvey(data.surveyId))
       else {
         yield put(SurveyActions.updateDRSurveySuccess())
-        // yield put(SurveyActions.resetDRSurveyState());
+        yield put(SurveyActions.resetDRSurveyState());
         yield NavigationService.navigate('Messages')
     }
     } else {
@@ -98,11 +99,12 @@ export function* fetchCurrentDRSurvey({ surveyId }) {
     fl_survey_feedback_id: surveyId
   }
   const response = yield call(api.getCurrentDRSurvey, payload);
+  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       const data = response.data.response;
-      yield put (SurveyActions.setDRSurveyStatus('feedbackFlow',data.feedback_flow));
-      yield put (SurveyActions.setDRSurveyStatus('feedbackType',data.feedback_type));
+      yield put (SurveyActions.setDRSurveyData('feedbackFlow',data.feedback_flow));
+      yield put (SurveyActions.setDRSurvey('feedbackType',data.feedback_type));
       yield put(SurveyActions.setDRSurveyData('howDidYouFeel', data.feel_int));
       yield put(SurveyActions.setDRSurveyData('overallSatisfaction', data.satisfied_int));
       yield put(SurveyActions.setDRSurveyData('managerEvaluation', data.survey));
@@ -138,9 +140,10 @@ export function* fetchManagerCriteria() {
 
   const flow = yield select(feedbackFlow);
   const type = yield select(feedbackType);
+  debugger;
   const criteriaData = {
-    feedback_flow: flow.id,
-    pos_or_cor: type.id,
+    feedback_flow: flow.data.id,
+    pos_or_cor: type.data.id,
   };
 
   const response = yield call(api.getReflectingCriteria, criteriaData);
@@ -185,7 +188,9 @@ export function* closeDRSurvey({ data }) {
   const payload = {
     fl_survey_feedback_id: data.id
   }
+  debugger;
   const response = yield call(api.closeDRSurvey, payload);
+  debugger;
   if (response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(SurveyActions.closeDRSurveySuccess())
