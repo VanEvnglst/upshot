@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HomeScreen, Messages, Activity, Reminders, Profile } from '../screens';
+import { HomeScreen, Messages, Activity, Reminders, Profile, InsightsPanel } from '../screens';
 import FeedbackNavigator from './FeedbackStack';
 import MessagesNavigator from './MessagesStack';
 
@@ -74,9 +74,9 @@ function TabRoutes() {
           },
         }}
       />
-      {/* <BottomTab.Screen
+      <BottomTab.Screen
         name={'Activity'}
-        component={Reminders}
+        component={InsightsPanel}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -96,7 +96,7 @@ function TabRoutes() {
           },
         }}
       />
-      <BottomTab.Screen
+     {/*  <BottomTab.Screen
         name={'Profile'}
         component={Profile}
         options={{
