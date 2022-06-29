@@ -47,3 +47,6 @@ export { default as SurveyDiscussion } from './frontliner/survey/discussion';
 export { default as SurveyGuide } from './frontliner/survey/guide';
 export { default as FrontlinerSurvey } from './frontliner/survey';
 export { default as SurveyConfirmation } from './frontliner/survey/confirmation';
+
+/* ------------- Insights Panel Stack ------------- */
+export { default as InsightsPanel } from './insights';
