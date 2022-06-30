@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import LinearGradient from 'react-native-linear-gradient';
 
 const GradientBackground = props => {
@@ -26,4 +27,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start'
   }
-})
+});
+
+
+GradientBackground.propTypes = {
+  children: PropTypes.any,
+};
+
+
+GradientBackground.defaultProps = {
+  children: {}
+}
