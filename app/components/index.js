@@ -16,3 +16,4 @@ export { default as Slider } from './slider';
 export { default as Loader } from './loader';
 export { default as MessageItem }  from './message-item';
 export { default as ContentSkeleton } from './content-skeleton';
+export { default as GradientBackground } from './gradient-background';
