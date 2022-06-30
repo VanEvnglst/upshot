@@ -1,22 +1,35 @@
 import React from 'react';
 import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
+import PropTypes from 'prop-types';
 import styles from './styles';
 
 const ContentSkeleton = props => {
-  const { children } = props;
+  const { children, width, height } = props;
   return (
     <ContentLoader
       speed={2}
       backgroundColor='#f4f5f6'
       foregroundColor='#ecebeb'
-      width={300}
-      height={200}
-      style={{ borderWidth: 1}}
+      width={width}
+      height={height}
+      {...props}
     >
-       <Rect ry={'3'} width={'100'} height={'6'} />
-       {/* make this customizable */}
+      {children}
     </ContentLoader>
   )
 }
 
 export default ContentSkeleton;
+
+ContentSkeleton.propTypes = {
+  children: PropTypes.any,
+  width: PropTypes.number,
+  height: PropTypes.number
+};
+
+
+ContentSkeleton.defaultProps = {
+  children: {},
+  width: 300,
+  height: 200,
+};
