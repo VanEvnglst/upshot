@@ -1,6 +1,7 @@
 /* ------------- Auth Stack ------------- */
 export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
+export { default as StartingLineScreen } from './starting-line';
 
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
