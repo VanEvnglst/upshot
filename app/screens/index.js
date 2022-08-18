@@ -1,12 +1,18 @@
 /* ------------- Auth Stack ------------- */
 export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
+export { default as StartingLineScreen } from './starting-line';
 
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
 export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
+
+/* ------------- Leadership Assessment Test ------------- */
+export { default as LeadershipAssessment } from './leadership-assessment';
+export { default as LsaTest } from './leadership-assessment/lsa-test-overall';
+export { default as LsaTestSign1} from './leadership-assessment/lsa-test-signpost1';
 
 /* ------------- Feedback Stack ------------- */
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
