@@ -15,7 +15,7 @@ const LsaTestSign1 = props => {
                     name='chevron-back-outline' 
                     size={24}
                     font-size='6px'
-                    onPress={()=> navigation.navigate('')}></Icon>
+                    onPress={()=> {/*navigation.navigate*/('')}}></Icon>
             </TouchableOpacity>
             
             <ProgressBar 

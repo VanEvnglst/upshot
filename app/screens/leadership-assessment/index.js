@@ -4,8 +4,6 @@ import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-na
 import { Button, ProgressBar } from "react-native-paper";
 import { color } from "react-native-reanimated";
 import Icon from 'react-native-vector-icons/Ionicons'
-import { LsaTestSign1 } from '../leadership-assessment/lsa-test-signpost1'
-
 
 
 const LeadershipAssessment = props => {
@@ -22,7 +20,7 @@ const LeadershipAssessment = props => {
                     name='chevron-back-outline' 
                     size={24} 
                     font-size='6px'
-                    onPress={()=> navigation.navigate('')}></Icon>
+                    onPress={()=> /*navigation.navigate*/('')}></Icon>
             </TouchableOpacity>
             
             <ProgressBar 
@@ -31,9 +29,6 @@ const LeadershipAssessment = props => {
             style ={{marginLeft: 3, paddingRight: 19, marginTop: 8}}>
             </ProgressBar>
 
-          
-          
-           
            </SafeAreaView>
            <ScrollView>
            <View style={{flex: 1, backgroundColor:'red', marginTop: 52, marginHorizontal: 4, width: 306, height: 168}}>
@@ -55,7 +50,7 @@ const LeadershipAssessment = props => {
 
           <View>
             <Button 
-                onPress={() => navigation.navigate('Leadership Assessment Signpost 1')}
+                onPress={() => navigation.navigate('Leadership Assessment Test')}
                 mode='contained' 
                 style={{marginTop: 12, backgroundColor:'#667080', width: 322}}> 
                 <Text style={{fontSize: 16, fontWeight: '700', color: '#FFFFFF', justifyContent: 'center', alignContent: 'center', paddingVertical: 13}}>Start Now</Text>
