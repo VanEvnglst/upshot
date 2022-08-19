@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,15 +14,17 @@ import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
 import containerStyles from 'app/screens/leadership-assessment/styles';
 
 const OverviewStep2 = () => {
-    const dispatch = useDispatch();
-    const questionTitle = useSelector(state => state.lsaOverview.get('overviewQuestions')[1]);
-    const activeStep = useSelector(getOverviewStep);
-    const maxStep = useSelector(getOverviewMaxStep);
-    const [optionSelection, setOptionSelection] = useState({
-        key: 0,
-        title: '',
-        value: 0,
-    });
+  const dispatch = useDispatch();
+  const questionTitle = useSelector(
+    state => state.lsaOverview.get('overviewQuestions')[1],
+  );
+  const activeStep = useSelector(getOverviewStep);
+  const maxStep = useSelector(getOverviewMaxStep);
+  const [optionSelection, setOptionSelection] = useState({
+    key: 0,
+    title: '',
+    value: 0,
+  });
 
   const questionOption = [
     {
@@ -54,70 +56,57 @@ const OverviewStep2 = () => {
 
   const handleSelection = option => {
     setOptionSelection(option);
-    dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1))
-  }
+
+    const data = {
+      option,
+      question: questionTitle,
+    };
+
+    dispatch(LSAOverviewActions.setAssessmentData('step1', data));
+    dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1));
+  };
 
   return (
-    <View style={{ flex: 1, }}>
-        <View style={{ flex: 5, backgroundColor: 'red'}}>
-        <Text
-        style={{
-          width: 332,
-          height: 60,
-          marginTop: 24,
-          fontWeight: '700',
-          fontSize: 24,
-          lineHeight: 30,
-          color: '#667080',
-        }}>
-        {questionTitle.question}
-      </Text>
-      {questionOption.map(element => {
-          return (
-            <Button
-              mode="outlined"
-              onPress={() => handleSelection(element)}
-              key={element.key}
-              style={{
-                marginTop: 24,
-                borderRadius: 24,
-                height: 40,
-                width: 321,
-                borderWidth:  element.key === optionSelection.key ? 2 : 1,
-                backgroundColor:'#EEF1F4',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Text style={{ fontSize: 14, fontWeight: element.key === optionSelection.key ? '700' : '400', color:'#667080' }}>
-                {element.title}
-              </Text>
-            </Button>
-          );
-        })}
-      <Text
-          style={{
-            marginTop: 63,
-            fontWeight: '400',
-            fontSize: 16,
-            lineHeight: 22,
-            textAlign: 'center',
-            color: '#667080',
-          }}>
-          Questions
+    <View>
+      <View style={containerStyles.questionContainer}>
+        <Text style={containerStyles.questionText}>
+          {questionTitle.question}
         </Text>
-        <Text
-          style={{
-            marginTop: 4,
-            marginLeft: 142.5,
-            width: 47,
-            height: 30,
-            fontSize: 24,
-            fontWeight: '700',
-            lineHeight: 30,
-          }}>
-          1/15
-        </Text> 
+      </View>
+      {questionOption.map(element => {
+        return (
+          <Button
+            mode="outlined"
+            onPress={() => handleSelection(element)}
+            key={element.key}
+            style={[
+              containerStyles.optionsButton,
+              {
+                borderWidth: element.key === optionSelection.key ? 2 : 1,
+              },
+            ]}>
+            <Text
+              style={[
+                containerStyles.optionsText,
+                {
+                  fontWeight:
+                    element.key === optionSelection.key ? '700' : '400',
+                },
+              ]}>
+              {element.title}
+            </Text>
+          </Button>
+        );
+      })}
+      <View style={containerStyles.counterContainer}>
+        <Text style={containerStyles.counterGuideText}>Questions</Text>
+        <View style={containerStyles.questionCounterContainer}>
+          <Text style={containerStyles.questionCounterText}>{activeStep}</Text>
+          <Text style={containerStyles.maxQuestionCounterText}>
+            {`/${maxStep}`}
+          </Text>
         </View>
+      </View>
     </View>
   );
 };
