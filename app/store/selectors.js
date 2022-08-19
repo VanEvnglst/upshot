@@ -4,6 +4,7 @@ export const getUserRole = state => state.user.get('role');
 
 /* ------------- Auth Selectors ------------- */
 export const getSignInState = state => state.authentication.get('isSignedIn');
+export const getSignUpState = state => state.authentication.get('newSignUp');
 export const getAuthLoading = state => state.authentication.get('fetching');
 export const getSignInError = state => state.authentication.get('error');
 
