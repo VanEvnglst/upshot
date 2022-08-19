@@ -12,7 +12,7 @@ const RESULT_ERROR = 'error';
 export function* signInUser({ data }) {
   const auth = { 
     email: data.email,
-    passwd: data.password,
+    password: data.password,
     // reg_token: data.token,
   }
   const connected = yield checkInternetConnection();
@@ -23,9 +23,9 @@ export function* signInUser({ data }) {
   const authResponse = yield call(api.signIn, auth);
   debugger;
   if (authResponse.ok) {
-    if (authResponse.data.result === RESULT_SUCCESS) {
+    if (authResponse.data.status === 'ok') {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
-      yield put(UserActions.setUser(authResponse.data.user));
+      // yield put(UserActions.setUser(authResponse.data.user));
       yield put(AuthenticationActions.signInUserSuccess());
     } else {
       yield put(
@@ -77,9 +77,8 @@ export function* signUpUser({ data }) {
    // return;
   }
   const authResponse = yield call(api.signUp, auth);
-  
   if (authResponse.ok) {
-    if (authResponse.data.result === RESULT_SUCCESS) {
+    if (authResponse.data.status === 'ok') {
       // yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
       // yield put(UserActions.setUser(authResponse.data.user));
       yield put(AuthenticationActions.signUpUserSuccess());
