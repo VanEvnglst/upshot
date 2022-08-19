@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import {
   View,
@@ -11,7 +10,6 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
-import { color } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LSAOverviewActions from 'app/store/LSAOverviewRedux';
 import OverviewStep1 from './overview/overviewStep1';
@@ -29,14 +27,14 @@ import OverviewStep12 from './overview/overviewStep12';
 import OverviewStep13 from './overview/overviewStep13';
 import OverviewStep14 from './overview/overviewStep14';
 import OverviewStep15 from './overview/overviewStep15';
-//import OverviewOverall from './overview';
+import OverviewConfirmation from './overview/overview-confirmation';
+import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
 
 const LeadershipAssessment = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const overviewQuestions = useSelector(state => state.lsaOverview.get('overviewQuestions'));
-  const activeStep = useSelector(state => state.lsaOverview.get('activeStep'));
-  const maxStep = 16;
+  const activeStep = useSelector(getOverviewStep);
+  const maxStep = useSelector(getOverviewMaxStep);
   const indexValue = activeStep / maxStep;
 
   useEffect(() => {
@@ -50,82 +48,77 @@ const LeadershipAssessment = props => {
       });
   }, []);
 
-  useEffect(() => {
-    async function retrieveData() {
-      await dispatch(LSAOverviewActions.fetchOverviewAssessment());
-    }
-    retrieveData();
-  }, []);
+  // useEffect(() => {
+  //   async function retrieveData() {
+  //     await dispatch(LSAOverviewActions.fetchOverviewAssessment());
+  //   }
+  //   retrieveData();
+  // }, []);
 
   const handleGoBack = () => {
-    if (activeStep === 1)
-    navigation.goBack()
-    else
-    dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep - 1));
-}
+    if (activeStep === 1) navigation.goBack();
+    else dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep - 1));
+  };
 
   const handleStepContent = () => {
     switch (activeStep) {
       case 1:
-            return <OverviewStep1 />;
-        case 2:
-            return <OverviewStep2 />;
-        case 3:
-            return <OverviewStep3 />;
-        case 4:
-            return <OverviewStep4 />;
-        case 5:
-            return <OverviewStep5 />;
-        case 6:
-            return <OverviewStep6 />;
-        case 7:
-            return <OverviewStep7 />;
-        case 8:
-            return <OverviewStep8 />;
-        case 9:
-            return <OverviewStep9 />;
-        case 10:
-            return <OverviewStep10 />;
-        case 11:
-            return <OverviewStep11 />;
-        case 12:
-            return <OverviewStep12 />;
-        case 13:
-            return <OverviewStep13 />;
-        case 14:
-            return <OverviewStep14 />;
-        case 15:
-            return <OverviewStep15 />;
-        case 16:
-            return <OverviewOverall />;
-      // Add all steps here pati overall confirmation
+        return <OverviewStep1 />;
+      case 2:
+        return <OverviewStep2 />;
+      case 3:
+        return <OverviewStep3 />;
+      case 4:
+        return <OverviewStep4 />;
+      case 5:
+        return <OverviewStep5 />;
+      case 6:
+        return <OverviewStep6 />;
+      case 7:
+        return <OverviewStep7 />;
+      case 8:
+        return <OverviewStep8 />;
+      case 9:
+        return <OverviewStep9 />;
+      case 10:
+        return <OverviewStep10 />;
+      case 11:
+        return <OverviewStep11 />;
+      case 12:
+        return <OverviewStep12 />;
+      case 13:
+        return <OverviewStep13 />;
+      case 14:
+        return <OverviewStep14 />;
+      case 15:
+        return <OverviewStep15 />;
     }
-  }
+  };
 
   return (
-    <SafeAreaView>
+    <View style={containerStyles.container}>
       <View style={{ paddingHorizontal: 24 }}>
-        <TouchableOpacity
-          accessibilityRole="button"
-          style={{ paddingLeft: 13 }}>
-          <Icon
-            name="chevron-back-outline"
-            size={24}
-            font-size="6px"
-            onPress={() => handleGoBack()}></Icon>
-        </TouchableOpacity>
-        <ProgressBar
-          progress={indexValue}
-          color={'#667080'}
-          style={styles.progressBar}></ProgressBar>
-        <View style={{ marginTop: 46 }}>
-          <Text>Which option sounds more like you?</Text>
-        </View>
-        <View style={{ marginTop: 24 }}>
-          {handleStepContent()}
-        </View>
+        <SafeAreaView>
+          <TouchableOpacity
+            accessibilityRole="button"
+            onPress={() => handleGoBack()}>
+            <Icon name="chevron-back-outline" size={24} font-size="6px" />
+          </TouchableOpacity>
+          <ProgressBar
+            progress={indexValue}
+            color={'#667080'}
+            style={styles.progressBar}></ProgressBar>
+          <View style={containerStyles.questionHeader}>
+            <Text style={containerStyles.guideQuestionText}>
+              Which option sounds more like you? 🤔
+            </Text>
+          </View>
+          <View style={containerStyles.contentContainer}>
+            {handleStepContent()}
+          </View>
+        </SafeAreaView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
