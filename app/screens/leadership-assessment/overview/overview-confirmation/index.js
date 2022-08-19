@@ -4,7 +4,7 @@ import { Button, ProgressBar } from "react-native-paper";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-const OverallConfirmation = props => {
+const OverviewConfirmation = props => {
 
   return (
       <View style={{flex: 1, paddingHorizontal: 19}}>
