@@ -10,16 +10,30 @@ const defaultState ={
 export const INITIAL_STATE = Map({
   fetching: false,
   error: '',
-  data: null,
   activeStep: 1,
   overviewQuestions: null,
-  maxStep: 15
+  maxStep: 15,
+  step1: { ...defaultState },
+  step2: { ...defaultState },
+  step3: { ...defaultState },
+  step4: { ...defaultState },
+  step5: { ...defaultState },
+  step6: { ...defaultState },
+  step7: { ...defaultState },
+  step8: { ...defaultState },
+  step9: { ...defaultState },
+  step10: { ...defaultState },
+  step11: { ...defaultState },
+  step12: { ...defaultState },
+  step13: { ...defaultState },
+  step14: { ...defaultState },
+  step15: { ...defaultState },
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
-  setAssessmentData: ['data'],
+  setAssessmentData: ['key','data'],
   fetchOverviewAssessment: [],
   fetchOverviewAssessmentSuccess: ['overviewQuestions'],
   fetchOverviewAssessmentFailure: ['error'],
@@ -39,9 +53,9 @@ const setAssessmentActiveStep = (state, { step }) => {
   });
 };
 
-const setAssessmentData = (state, { data }) => 
+const setAssessmentData = (state, { key, data }) => 
   state.merge({
-    data
+   [key]: { data },
   })
 
 const fetchOverviewAssessment = state =>
