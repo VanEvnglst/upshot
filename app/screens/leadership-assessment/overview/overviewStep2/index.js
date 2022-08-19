@@ -10,13 +10,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LSAOverviewActions from 'app/store/LSAOverviewRedux';
+import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
+import containerStyles from 'app/screens/leadership-assessment/styles';
 
 const OverviewStep2 = () => {
     const dispatch = useDispatch();
     const questionTitle = useSelector(state => state.lsaOverview.get('overviewQuestions')[1]);
-    const activeStep = useSelector(state => state.lsaOverview.get('activeStep'));
+    const activeStep = useSelector(getOverviewStep);
+    const maxStep = useSelector(getOverviewMaxStep);
     const [optionSelection, setOptionSelection] = useState({
-        key: null,
+        key: 0,
         title: '',
         value: 0,
     });
@@ -53,27 +56,6 @@ const OverviewStep2 = () => {
     setOptionSelection(option);
     dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1))
   }
-
-//   const optionList = () => {
-//     return questionOption.map(element => {
-//       return (
-//         <Button
-//           mode="contained"
-//           key={element.key}
-//           style={{
-//             marginTop: 24,
-//             borderRadius: 24,
-//             height: 40,
-//             width: 321,
-//             color: '#EEF1F4',
-//           }}>
-//           <Text style={{ fontSize: 14, fontWeight: '700' }}>
-//             {element.optn}
-//           </Text>
-//         </Button>
-//       );
-//     });
-//   };
 
   return (
     <View style={{ flex: 1, }}>
