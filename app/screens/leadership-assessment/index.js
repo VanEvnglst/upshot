@@ -1,71 +1,99 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { Button, ProgressBar } from "react-native-paper";
-import { color } from "react-native-reanimated";
-import Icon from 'react-native-vector-icons/Ionicons'
-
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import {
+  View,
+  BackHandler,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, ProgressBar } from 'react-native-paper';
+import { color } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/Ionicons';
+import LSAOverviewActions from 'app/store/LSAOverviewRedux';
+import OverallStep1 from './overall/overallStep1';
+import { LsaTestSign1 } from '../leadership-assessment/lsa-test-signpost1';
 
 const LeadershipAssessment = props => {
-    const {navigation} = props;
-    
+  const { navigation } = props;
+  const dispatch = useDispatch();
+  const overviewQuestions = useSelector(state => state.lsaOverview.get('overviewQuestions'));
+  const activeStep = useSelector(state => state.lsaOverview.get('activeStep'));
+  const maxStep = 16;
+  const indexValue = activeStep / maxStep;
 
-    return (
-        <View style={{flex: 1, paddingHorizontal: 24}}>
-           <SafeAreaView>
-            <TouchableOpacity 
-                accessibilityRole='button' 
-                style={{paddingLeft: 13}}>
-                <Icon 
-                    name='chevron-back-outline' 
-                    size={24} 
-                    font-size='6px'
-                    onPress={()=> /*navigation.navigate*/('')}></Icon>
-            </TouchableOpacity>
-            
-            <ProgressBar 
-            progress={82/328}
-            color={'#667080'}
-            style ={{marginLeft: 3, paddingRight: 19, marginTop: 8}}>
-            </ProgressBar>
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
 
-           </SafeAreaView>
-           <ScrollView>
-           <View style={{flex: 1, backgroundColor:'red', marginTop: 52, marginHorizontal: 4, width: 306, height: 168}}>
-            
-          </View>
-          <View style={{flex: 1, marginTop: 72}}>
-          <Text style={{fontSize: 32, fontWeight: '700', maxWidth: 278, lineHeight: 36, justifyContent:'center', alignItems:'center'}}>{'Ready to start\nyour journey?'}
-           </Text>
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        return true;
+      });
+  }, []);
 
-           <Text style={{marginTop: 27, maxWidth: 322, fontSize: 16, maxHeight: 129, fontWeight: '400', paddingLeft: 4}}>
-            {'Be yourself and answer honestly to find out your strengths in 5 leadership skill areas. Doing this will help us build your personalized leadership profile.\n\nIt will take 2 minutes or less.'}
-           </Text>
+  useEffect(() => {
+    async function retrieveData() {
+      await dispatch(LSAOverviewActions.fetchOverviewAssessment());
+    }
+    retrieveData();
+  }, []);
 
-           <Text style={{marginTop: 61, fontSize: 12, fontWeight: '400', marginLeft: 34, justifyContent: 'center', alignItems: 'center'}}>
-            {"This is based on Daniel Goleman's <source>"}
-           </Text>
+  const handleGoBack = () => {
+    if (activeStep === 1)
+    navigation.goBack()
+    else
+    dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep - 1));
+}
 
-          </View>
+  const handleStepContent = () => {
+    switch (activeStep) {
+      case 1:
+        return <OverallStep1 />;
+      // Add all steps here pati overall confirmation
+    }
+  }
 
-          <View>
-            <Button 
-                onPress={() => navigation.navigate('Leadership Assessment Test')}
-                mode='contained' 
-                style={{marginTop: 12, backgroundColor:'#667080', width: 322}}> 
-                <Text style={{fontSize: 16, fontWeight: '700', color: '#FFFFFF', justifyContent: 'center', alignContent: 'center', paddingVertical: 13}}>Start Now</Text>
-            </Button>
-          </View>
-          </ScrollView>
+  return (
+    <SafeAreaView>
+      <View style={{ paddingHorizontal: 24 }}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={{ paddingLeft: 13 }}>
+          <Icon
+            name="chevron-back-outline"
+            size={24}
+            font-size="6px"
+            onPress={() => handleGoBack()}></Icon>
+        </TouchableOpacity>
+        <ProgressBar
+          progress={indexValue}
+          color={'#667080'}
+          style={styles.progressBar}></ProgressBar>
+        <View style={{ marginTop: 46 }}>
+          <Text>Which option sounds more like you?</Text>
         </View>
-
-        
-    )
-    
+        <View style={{ marginTop: 24 }}>
+          {handleStepContent()}
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 };
-
-
-
 
 export default LeadershipAssessment;
 
+const styles = StyleSheet.create({
+  progressBar: {
+    marginVertical: 10,
+    borderRadius: 4,
+    height: 4,
+    marginLeft: 3,
+    paddingRight: 19,
+    marginTop: 8,
+  },
+});

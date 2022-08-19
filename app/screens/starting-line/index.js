@@ -18,6 +18,7 @@ import labels from 'app/locales/en';
 import styles from './styles';
 
 const StartingLineScreen = props => {
+  const { navigation } = props;
   const bottomSheetRef = useRef(null);
   const dispatch = useDispatch();
   const { height } = Dimensions.get('window');
@@ -54,7 +55,8 @@ const StartingLineScreen = props => {
   };
 
   const signUpUser = () => {
-    console.warn('call sign up')
+    console.warn('call sign up');
+    navigation.replace('Leadership Assessment Guide')
   }
 
   const openSheet = type => {
@@ -98,7 +100,7 @@ const StartingLineScreen = props => {
               email,
               password,
             }}
-            validate={() => validate()}
+            // validate={() => validate()}
             onSubmit={() => signInUser()}>
             {({ errors, handleSubmit }) => {
               return (
@@ -113,7 +115,9 @@ const StartingLineScreen = props => {
                       paddingRight: 12,
                       borderBottomWidth: 1,
                     }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={() => navigation.navigate('Leadership Assessment Guide')}
+                    >
                       <Text>X</Text>
                     </TouchableOpacity>
                     <Text
@@ -175,7 +179,7 @@ const StartingLineScreen = props => {
               password,
               name,
             }}
-            validate={() => validate()}
+            // validate={() => validate()}
             onSubmit={() => signUpUser()}>
             {({ errors, handleSubmit }) => {
               return (
@@ -285,6 +289,7 @@ const StartingLineScreen = props => {
         }}>
         <Button
           mode="contained"
+          onPress={() =>  navigation.replace('Leadership Assessment Guide')}
           style={{
             height: 55,
             justifyContent: 'center',
@@ -315,7 +320,7 @@ const StartingLineScreen = props => {
         </TouchableOpacity>
       </View>
       <View style={{ height: 100 }} />
-      <BottomSheet
+      {/* <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
@@ -325,7 +330,7 @@ const StartingLineScreen = props => {
           {sheetType === 'sign in' && <SignInContainer />}
           {sheetType === 'sign up' && <SignUpContainer />}
         </KeyboardAvoidingView>
-      </BottomSheet>
+      </BottomSheet> */}
     </View>
   );
 };

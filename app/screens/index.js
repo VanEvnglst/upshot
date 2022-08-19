@@ -3,22 +3,23 @@ export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
 export { default as StartingLineScreen } from './starting-line';
 
+/* ------------- Leadership Assessment Stack ------------- */
+export { default as LeadershipAssessment } from './leadership-assessment';
+export { default as LeadershipAssessmentGuide } from './leadership-assessment/leadership-assessment-guide';
+
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
 export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
 
-/* ------------- Leadership Assessment Test ------------- */
-export { default as LeadershipAssessment } from './leadership-assessment';
-export { default as LsaTest } from './leadership-assessment/lsa-test-overall';
-export { default as LsaTestSign1} from './leadership-assessment/lsa-test-signpost1';
 
 /* ------------- Feedback Stack ------------- */
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
 export { default as FeedbackGuide } from './feedback/guide';
 export { default as FeedbackJourneyList } from './feedback/journey-list';
 export { default as FeedbackConfirmation } from './feedback/confirmation';
+
 /* ------------- Feedback Documenting ------------- */
 export { default as FeedbackFlow } from './feedback/flow';
 export { default as FeedbackType } from './feedback/type';
