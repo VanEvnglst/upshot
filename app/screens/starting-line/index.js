@@ -299,7 +299,7 @@ const StartingLineScreen = props => {
         </Button>
         <Button
           mode="contained"
-          onPress={() => openSheet('sign up')}
+          onPress={() => navigation.navigate('Sign up')}
           style={{
             marginTop: 8,
             borderWidth: 1,
@@ -313,7 +313,7 @@ const StartingLineScreen = props => {
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <Text>Already have an account?</Text>
-        <TouchableOpacity onPress={() => openSheet('sign in')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Sign in')}>
           <Text style={{ textDecorationLine: 'underline', marginLeft: 4 }}>
             Log in
           </Text>

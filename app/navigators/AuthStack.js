@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LeadershipAssessment, LeadershipAssessmentGuide,LsaTestSign1, LsaTest,  SignIn, StartingLineScreen } from '../screens';
+import { SignIn, SignUp, LeadershipAssessment, LeadershipAssessmentGuide, StartingLineScreen } from '../screens';
 
 const AuthStack = createStackNavigator();
 export default function AuthNavigator() {
@@ -22,10 +22,14 @@ export default function AuthNavigator() {
         name={'Leadership Assessment Guide'}
         component={LeadershipAssessmentGuide}
       />
-      {/* <AuthStack.Screen
+      <AuthStack.Screen
         name={'Sign in'}
         component={SignIn}
-      /> */}
+      />
+      <AuthStack.Screen
+        name={'Sign up'}
+        component={SignUp}
+      />
     </AuthStack.Navigator>
   );
 }

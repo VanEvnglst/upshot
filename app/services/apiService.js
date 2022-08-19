@@ -28,7 +28,7 @@ export default {
   signUp: async params => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
-    return upshotAPI.post('/signup', params);
+    return upshotAPI.post('/signin', params);
   },
 
   getFeedbackType: async () => {

@@ -4,7 +4,17 @@ import Colors from 'app/theme/colors';
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary,
+  },
+  headerContainer: {
+    marginTop: 20,
+    borderBottomWidth: 0.5, 
+    paddingBottom: 15
+  },
+  headerOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24
   },
   logoContainer: {
     flex: 2,
@@ -12,11 +22,21 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary,
   },
+  headerText: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '700',
+    paddingLeft: 30,
+  },
+  buttonRightText: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '500'
+  },
   formContainer: {
-    flex: 2,
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    backgroundColor: Colors.white,
+    marginTop: 50, 
+    paddingHorizontal: 24
+    // backgroundColor: Colors.white,
   },
   form: {
     marginTop: 30,
@@ -24,12 +44,20 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputField: {
-    margin: 20,
-    height: 60,
+    height: 48,
     paddingHorizontal: 10,
+    width: '100%',
+    marginBottom: 24,
+  },
+  labelText: {
+    marginBottom: 4,
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#667080'
   },
   button: {
-    width: '90%',
+    width: '100%',
     marginTop: 30,
     height: 50,
     justifyContent: 'center',

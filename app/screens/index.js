@@ -2,6 +2,7 @@
 export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
 export { default as StartingLineScreen } from './starting-line';
+export { default as SignUp } from './sign-up';
 
 /* ------------- Leadership Assessment Stack ------------- */
 export { default as LeadershipAssessment } from './leadership-assessment';
