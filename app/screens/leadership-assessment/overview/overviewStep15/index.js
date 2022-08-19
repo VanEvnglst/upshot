@@ -11,9 +11,9 @@ import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LSAOverviewActions from 'app/store/LSAOverviewRedux';
 
-const OverallStep1 = () => {
+const OverviewStep15 = () => {
     const dispatch = useDispatch();
-    const questionTitle = useSelector(state => state.lsaOverview.get('overviewQuestions')[0]);
+    const questionTitle = useSelector(state => state.lsaOverview.get('overviewQuestions')[14]);
     const activeStep = useSelector(state => state.lsaOverview.get('activeStep'));
     const [optionSelection, setOptionSelection] = useState({
         key: null,
@@ -140,4 +140,4 @@ const OverallStep1 = () => {
   );
 };
 
-export default OverallStep1;
+export default OverviewStep15;
