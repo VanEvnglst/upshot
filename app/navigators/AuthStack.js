@@ -14,14 +14,7 @@ export default function AuthNavigator() {
         name={'Starting line'}
         component={StartingLineScreen}
       />
-      <AuthStack.Screen
-        name={'Leadership Assessment'}
-        component={LeadershipAssessment}
-      />
-      <AuthStack.Screen
-        name={'Leadership Assessment Guide'}
-        component={LeadershipAssessmentGuide}
-      />
+      
       <AuthStack.Screen
         name={'Sign in'}
         component={SignIn}
