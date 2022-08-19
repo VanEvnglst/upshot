@@ -18,6 +18,7 @@ import labels from 'app/locales/en';
 import styles from './styles';
 
 const StartingLineScreen = props => {
+  const { navigation } = props;
   const bottomSheetRef = useRef(null);
   const dispatch = useDispatch();
   const { height } = Dimensions.get('window');
@@ -294,7 +295,7 @@ const StartingLineScreen = props => {
         </Button>
         <Button
           mode="contained"
-          onPress={() => openSheet('sign up')}
+          onPress={() => navigation.navigate('Sign up')}
           style={{
             marginTop: 8,
             borderWidth: 1,
@@ -308,14 +309,14 @@ const StartingLineScreen = props => {
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <Text>Already have an account?</Text>
-        <TouchableOpacity onPress={() => openSheet('sign in')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Sign in')}>
           <Text style={{ textDecorationLine: 'underline', marginLeft: 4 }}>
             Log in
           </Text>
         </TouchableOpacity>
       </View>
       <View style={{ height: 100 }} />
-      <BottomSheet
+      {/* <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
@@ -325,7 +326,7 @@ const StartingLineScreen = props => {
           {sheetType === 'sign in' && <SignInContainer />}
           {sheetType === 'sign up' && <SignUpContainer />}
         </KeyboardAvoidingView>
-      </BottomSheet>
+      </BottomSheet> */}
     </View>
   );
 };
