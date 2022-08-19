@@ -1,55 +1,105 @@
-import React from "react";
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { Button, ProgressBar } from "react-native-paper";
+import { CardStyleInterpolators } from '@react-navigation/stack';
+import React from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
-const OverviewConfirmation = props => {
-
+const AssessmentEndLine = props => {
   return (
-      <View style={{flex: 1, paddingHorizontal: 19}}>
+    <View style={styles.container}>
       <SafeAreaView>
-          <TouchableOpacity 
-              accessibilityRole='button' 
-              style={{paddingLeft: 18}}>
-              <Icon 
-                  name='chevron-back-outline' 
-                  size={24}
-                  font-size='6px'
-                  onPress={()=> navigation.goBack()}></Icon>
-          </TouchableOpacity>
-          
-          <ProgressBar 
-          progress={328/328}
+        <ProgressBar
+          progress={1}
           color={'#667080'}
-          style ={{marginLeft: 9, paddingRight: 19, marginTop: 18}}>
-          </ProgressBar>
-          
-          </SafeAreaView>
-          
-          <View style={{flex: 1, marginTop: 84, backgroundColor: 'red'}}>
-              <Text>Sheesh</Text>
-          </View>
+          style={styles.progressBar}></ProgressBar>
+      </SafeAreaView>
 
-          <View style={{flex: 1, marginTop: 84, height: 114}}>
-              <Text style={{fontSize: 32, fontWeight: '700', lineHeight: 36, color: '#667080', width: 338, height: 36, justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}>Off to a good start!</Text>
+      <View style={styles.imageContainer}></View>
 
-              <Text style={{fontSize: 14, fontWeight: '400', lineHeight: 22, marginTop: 12, height: 66, color: '#667080', maxWidth: 307, textAlign: 'center', justifyContent: 'center', alignItems: 'center', marginLeft: 15.5}}>
-                  Good job on finishing your initial assessment! Next, you can see how you're doing in different leadership skill areas. ☺️</Text>
-          </View>
+      <View style={styles.contentContainer}>
+        <Text style={styles.titleText}>Off to a good start!</Text>
 
-          <View style={{flex: 1, marginTop: 120}}>
-          <Button 
-              onPress={() => navigation.navigate('')}
-              mode='contained' 
-              style={{marginLeft: 5, backgroundColor:'#667080', width: 322, height: 48, justifyContent: 'center'}}> 
-              <Text style={{fontSize: 16, fontWeight: '700', color: '#FFFFFF', justifyContent: 'center', alignContent: 'center', paddingVertical: 13}}>Continue</Text>
-          </Button>
-          </View>
+        <Text style={styles.descriptionText}>
+          Good job on finishing your initial assessment! Next, you can see how
+          you're doing in different leadership skill areas. ☺️
+        </Text>
+      </View>
 
-
-       </View>
-  )
+      <View style={styles.btnContainer}>
+        <Button
+          onPress={() => navigation.navigate('')}
+          mode="contained"
+          style={styles.button}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </Button>
+      </View>
+      <View style={styles.spacer} />
+    </View>
+  );
 };
 
-export default OverviewConfirmation;
+export default AssessmentEndLine;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 24,
+  },
+  progressBar: {
+    height: 4,
+    borderRadius: 4,
+    marginTop: 20,
+  },
+  imageContainer: {
+    flex: 1,
+    marginTop: 84,
+  },
+  contentContainer: {
+    flex: 1,
+    marginTop: 84,
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 32,
+    fontWeight: '700',
+    lineHeight: 36,
+    color: '#667080',
+  },
+  descriptionText: {
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 22,
+    marginTop: 12,
+    color: '#667080',
+    maxWidth: '90%',
+    textAlign: 'center',
+  },
+  btnContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginLeft: 5,
+    backgroundColor: '#667080',
+    width: '100%',
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  spacer: {
+    height: 100,
+  },
+});
