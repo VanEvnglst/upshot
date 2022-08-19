@@ -5,13 +5,15 @@ import { useSelector } from 'react-redux';
 import { navigationRef } from 'app/services/NavigationService';
 import AuthNavigator from './AuthStack';
 import MainNavigator from './MainStack';
-import { getSignInState } from 'app/store/selectors';
+import AssessmentNavigator from './/AssessmentStack';
+import { getSignInState, getSignUpState } from 'app/store/selectors';
 import { initPushNotif } from '../services/notification-service';
 
 const Stack = createStackNavigator();
 
 export default function Routes() {
   const isSignedIn = useSelector(getSignInState);
+  const newSignUp = useSelector(getSignUpState);
 
   // useEffect(() => {
   //   console.log('call routes');
@@ -21,7 +23,13 @@ export default function Routes() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isSignedIn ?
+        {newSignUp ?
+          <Stack.Screen
+            name={'Assessment'}
+            component={AssessmentNavigator}
+          />
+        :
+        isSignedIn ?
         <Stack.Screen 
           name={'Main'}
           component={MainNavigator}
