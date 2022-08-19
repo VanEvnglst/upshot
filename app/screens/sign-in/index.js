@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
-import { ErrorBoundary } from 'react-error-boundary';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { getAuthLoading, getSignInError } from 'app/store/selectors';
 import { TextInput, Loader, Text } from 'app/components';
@@ -19,7 +18,7 @@ const SignIn = props => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getAuthLoading);
   const signInError = useSelector(getSignInError);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [errorVisible, setErrorVisible] = useState(false);
@@ -28,9 +27,9 @@ const SignIn = props => {
     retrieveToken();
   }, []);
 
-  useEffect(() => {
-    if (signInError !== '') setErrorVisible(true);
-  }, [signInError]);
+  // useEffect(() => {
+  //   if (signInError !== '') setErrorVisible(true);
+  // }, [signInError]);
 
   const retrieveToken = async () => {
     try {
@@ -45,16 +44,16 @@ const SignIn = props => {
 
   const validate = () => {
     const errors = {};
-    if (username.length === 0) {
-      errors.usernameError = labels.errors.emailRequired;
+    if (email.length === 0) {
+      errors.emailError = labels.errors.emailRequired;
     }
 
     if (password.length === 0) {
       errors.passwordError = labels.errors.passwordRequired;
     }
 
-    if (username && username.length !== 0 && !InputUtil.validateEmail(username)) {
-      errors.usernameError = labels.errors.validEmail;
+    if (email && email.length !== 0 && !InputUtil.validateEmail(email)) {
+      errors.emailError = labels.errors.validEmail;
     }
 
     return errors;
@@ -63,9 +62,10 @@ const SignIn = props => {
   const signInUser = () => {
     dispatch(
       AuthenticationActions.fetchServer({
-        username,
+        email,
         password,
         token,
+        type: 'sign in'
       }),
     );
   };
@@ -74,13 +74,28 @@ const SignIn = props => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={DeviceUtil.isIos() ? 'padding' : null}>
-        <View style={styles.logoContainer}>
-          <Image source={Images.upshotWhite} resizeMode="contain" />
+ <SafeAreaView>
+      <View style={styles.headerContainer}>
+        <View style={styles.headerOptions}>
+          <TouchableOpacity
+          onPress={() => {}}
+          >
+        <Text>X</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Log in</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Sign up')}
+        >
+        <Text style={styles.buttonRightText}>Sign up</Text>
+        </TouchableOpacity>
         </View>
-        <View style={styles.formContainer}>
+
+      </View>
+      </SafeAreaView>
+        <View>
           <Formik
             initialValues={{
-              username,
+              email,
               password,
             }}
             validate={() => validate()}
@@ -88,17 +103,17 @@ const SignIn = props => {
             onSubmit={() => signInUser()}>
             {({ errors, handleSubmit }) => {
               return (
-                <View style={styles.form}>
+                <View style={styles.formContainer}>
+                  <Text style={styles.labelText}>Email</Text>
                   <TextInput
-                    label={'Username'}
-                    placeholder={'Username'}
+                    placeholder={'name@work-email.com'}
                     style={styles.inputField}
-                    value={username}
-                    onChangeText={username => setUsername(username)}
-                    error={errors.usernameError}
+                    value={email}
+                    onChangeText={email => setEmail(email)}
+                    error={errors.emailError}
                   />
+                  <Text style={styles.labelText}>Password</Text>
                   <TextInput
-                    label={'Password'}
                     placeholder={'Password'}
                     style={styles.inputField}
                     secureTextEntry
@@ -129,7 +144,7 @@ const SignIn = props => {
         >
         <Text>{signInError}</Text>
       </Snackbar>
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
     </KeyboardAvoidingView>
   );
 };
