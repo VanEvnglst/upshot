@@ -4,6 +4,7 @@ import { Map } from 'immutable';
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
   isSignedIn: false,
+  newSignUp: false,
   error: '',
   fetching: false,
 });
@@ -77,9 +78,9 @@ const fetchServerFailure = (state, { error }) =>
 
 const signUpUserSuccess = state =>
   state.merge({
-    ...state.get('isSignedIn'),
+    ...state.get('newSignUp'),
     fetching: false,
-    isSignedIn: true,
+    newSignUp: true,
     error: '',
   });
 
