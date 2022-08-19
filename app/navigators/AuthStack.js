@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SignIn, StartingLineScreen } from '../screens';
+import { SignIn, SignUp,  StartingLineScreen } from '../screens';
 
 const AuthStack = createStackNavigator();
 export default function AuthNavigator() {
@@ -17,6 +17,10 @@ export default function AuthNavigator() {
       <AuthStack.Screen
         name={'Sign in'}
         component={SignIn}
+      />
+       <AuthStack.Screen
+        name={'Sign up'}
+        component={SignUp}
       />
     </AuthStack.Navigator>
   );
