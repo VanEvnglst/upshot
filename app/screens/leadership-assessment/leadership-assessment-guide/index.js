@@ -4,27 +4,35 @@ import PropTypes from 'prop-types';
 import { Button, ProgressBar } from "react-native-paper";
 import { useDispatch , useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons'
+import LSAOverviewActions from 'app/store/LSAOverviewRedux';
+
 
 const LeadershipAssessmentGuide = props => {
     const {navigation} = props;
     const dispatch = useDispatch();
 
+    const retrieveData = () => {
+        dispatch(LSAOverviewActions.fetchOverviewAssessment());
+        navigation.navigate('Leadership Assessment')
+    }
+
     return (
         <View style={{flex: 1, paddingHorizontal: 24}}>
            <SafeAreaView>
             <TouchableOpacity 
-                accessibilityRole='button' 
-                style={{paddingLeft: 13}}>
+                accessibilityRole='button'
+                onPress={()=> navigation.goBack()}
+            >
                 <Icon 
                     name='chevron-back-outline' 
                     size={24} 
                     font-size='6px'
-                    onPress={()=> navigation.goBack()}></Icon>
+                />
             </TouchableOpacity>
             <ProgressBar 
-            progress={82/328}
+            progress={1/15}
             color={'#667080'}
-            style ={{marginLeft: 3, paddingRight: 19, marginTop: 8}}>
+            style ={{marginLeft: 3, borderRadius: 4,paddingRight: 19, marginTop: 8}}>
             </ProgressBar>
            </SafeAreaView>
            <ScrollView>
@@ -47,7 +55,7 @@ const LeadershipAssessmentGuide = props => {
 
           <View>
             <Button 
-                onPress={() => navigation.navigate('Leadership Assessment')}
+                onPress={() => retrieveData()}
                 mode='contained' 
                 style={{marginTop: 12, backgroundColor:'#667080', width: 322}}> 
                 <Text style={{fontSize: 16, fontWeight: '700', color: '#FFFFFF', justifyContent: 'center', alignContent: 'center', paddingVertical: 13}}>Start Now</Text>
