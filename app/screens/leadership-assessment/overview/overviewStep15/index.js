@@ -12,8 +12,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LSAOverviewActions from 'app/store/LSAOverviewRedux';
 import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
 import containerStyles from 'app/screens/leadership-assessment/styles';
+import * as NavigationService from 'app/services/NavigationService';
 
-const OverviewStep15 = () => {
+
+const OverviewStep15 = props => {
+  const { navigation } = props;
   const dispatch = useDispatch();
   const questionTitle = useSelector(
     state => state.lsaOverview.get('overviewQuestions')[14],
@@ -63,7 +66,8 @@ const OverviewStep15 = () => {
     };
 
     dispatch(LSAOverviewActions.setAssessmentData('step1', data));
-    dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1));
+    NavigationService.navigate('Assessment End Line');
+    // dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1));
   };
 
   return (
