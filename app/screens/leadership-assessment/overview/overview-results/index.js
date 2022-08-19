@@ -55,17 +55,21 @@ const LeadershipOverviewResults = props => {
         <Text style={[styles.labelText, styles.improvementLabel]}>Areas for Improvement:</Text>
         <View style={styles.content}>
           <View style={styles.skillAreaContainer}>
-            <Text style={styles.labelText}>Empathy</Text>
+            <Text style={styles.labelText}>💓 Empathy</Text>
           </View>
-          <View style={styles.skillAreaContainer}/>
-          <View style={styles.skillAreaContainer}/>
+          <View style={styles.skillAreaContainer}>
+          <Text style={styles.labelText}> 🤝 Trust Building</Text>
+          </View>
+          <View style={styles.skillAreaContainer}><Text style={styles.labelText}>👐 Authenticity</Text></View>
         </View>
       </View>
       <View style={styles.satisfactoryContainer}>
       <Text style={[styles.labelText, styles.satisfactoryLabel]}>Satisfactory:</Text>
+      <View style={styles.skillAreaContainer}><Text style={styles.labelText}>🧠 Curiosity</Text></View>
       </View>
       <View style={styles.promisingContainer}>
       <Text style={[styles.labelText, styles.promisingLabel]}>Promising Areas:</Text>
+      <View style={styles.skillAreaContainer}><Text style={styles.labelText}>🏅 Achievement Orientation</Text></View>
       </View>
     </View>
     <View style={styles.btnContainer}>
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
   improvementContainer: {
     marginBottom: 12,
     backgroundColor: '#FFF1F6',
-    minHeight: 220,
+    minHeight: 150,
     borderRadius: 12,
     alignItems: 'center',
     paddingVertical: 24,
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
   satisfactoryContainer: {
     marginBottom: 12,
     backgroundColor: '#FFF2E7',
-    minHeight: 220,
+    minHeight: 150,
     borderRadius: 12,
     alignItems: 'center',
     paddingVertical: 24,
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
   promisingContainer: {
     marginBottom: 12,
     backgroundColor: '#D6FFDB',
-    minHeight: 220,
+    minHeight: 150,
     borderRadius: 12,
     alignItems: 'center',
     paddingVertical: 24,
@@ -160,7 +164,9 @@ const styles = StyleSheet.create({
     minWidth: 128,
     minHeight: 56,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 16,
+    marginTop: 10
   },
   labelText: {
     fontSize: 16,

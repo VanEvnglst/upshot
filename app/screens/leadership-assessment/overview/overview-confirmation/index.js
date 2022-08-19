@@ -12,6 +12,7 @@ import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const AssessmentEndLine = props => {
+    const { navigation } = props;
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -34,7 +35,7 @@ const AssessmentEndLine = props => {
 
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('')}
+          onPress={() => navigation.navigate('Leadership Assessment Results')}
           mode="contained"
           style={styles.button}>
           <Text style={styles.buttonText}>Continue</Text>
