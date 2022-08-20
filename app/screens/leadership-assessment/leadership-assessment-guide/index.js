@@ -39,11 +39,11 @@ const LeadershipAssessmentGuide = props => {
   return (
     <View style={{ flex: 1, paddingHorizontal: 24 }}>
       <SafeAreaView>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           accessibilityRole="button"
           onPress={() => navigation.goBack()}>
           <Icon name="chevron-back-outline" size={24} font-size="6px" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <ProgressBar
           progress={1 / 15}
           color={'#667080'}
@@ -51,7 +51,7 @@ const LeadershipAssessmentGuide = props => {
             marginLeft: 3,
             borderRadius: 4,
             paddingRight: 19,
-            marginTop: 8,
+            marginTop: 12,
           }}></ProgressBar>
       </SafeAreaView>
       <ScrollView>
