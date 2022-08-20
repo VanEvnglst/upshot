@@ -7,9 +7,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Images from 'app/assets/images';
 
 const AssessmentEndLine = props => {
     const { navigation } = props;
@@ -22,7 +24,13 @@ const AssessmentEndLine = props => {
           style={styles.progressBar}></ProgressBar>
       </SafeAreaView>
 
-      <View style={styles.imageContainer}></View>
+      <View style={styles.imageContainer}>
+            <Image
+                source={Images.checkmarkEmoji}
+                resizeMode='contain'
+                style={styles.image}
+            />
+      </View>
 
       <View style={styles.contentContainer}>
         <Text style={styles.titleText}>Off to a good start!</Text>
@@ -59,8 +67,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   imageContainer: {
-    flex: 1,
     marginTop: 84,
+    alignSelf: 'center',
+    width: 200, 
+    height: 200, 
+    backgroundColor: '#DAFFE9', 
+    borderRadius: 100, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  image: {
+    width: 115,
+    height: 115
   },
   contentContainer: {
     flex: 1,

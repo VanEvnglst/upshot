@@ -7,11 +7,13 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-reduex';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Images from 'app/assets/images';
 
 const LeadershipOverviewResults = props => {
   const { navigation } = props;
@@ -41,7 +43,13 @@ const LeadershipOverviewResults = props => {
           </TouchableOpacity>
     </SafeAreaView>
     <View style={styles.userContainer}>
-      <View style={styles.userIcon}/>
+      <View style={styles.userIcon}>
+        <Image
+          source={Images.smileyAvatar}
+          resizeMode='contain'
+          style={styles.avatarIcon}
+        />
+      </View>
       <View stlye={styles.userDetailsContainer}>
         <Text style={styles.userNameText}>Jaykey del Mar</Text>
         <Text style={styles.userLevelText}>Level 1</Text>
@@ -105,7 +113,13 @@ const styles = StyleSheet.create({
     height: 58,
     borderRadius: 58/2,
     backgroundColor: '#FFF3D4',
-    marginRight: 12
+    marginRight: 12,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatarIcon: {
+    width: 38,
+    height: 38
   },
   userDetailsContainer: {
     flex: 1,
