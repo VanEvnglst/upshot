@@ -73,7 +73,7 @@ const LeadershipAssessmentGuide = props => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {'Ready to start\nyour journey?'}
+            {'Ready to start\nyour journey? 🚀' }
           </Text>
 
           <Text
