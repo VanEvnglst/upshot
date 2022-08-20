@@ -5,6 +5,7 @@ import {
   LeadershipAssessmentGuide,
   AssessmentEndLine,
   LeadershipOverviewResults,
+  CaptureFeedbackMoment,
 } from '../screens';
 
 const AssessmentStack = createStackNavigator();
@@ -14,6 +15,10 @@ export default function AssessmentNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
+      <AssessmentStack.Screen
+        name={'Capture Feedback Moment'}
+        component={CaptureFeedbackMoment}
+      />
       <AssessmentStack.Screen
         name={'Leadership Assessment Guide'}
         component={LeadershipAssessmentGuide}
