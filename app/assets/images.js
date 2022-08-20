@@ -66,4 +66,5 @@ export default {
   coolEmoji: require('./images/smiley-shades.png'),
   stockEmoji: require('./images/stocks.png'),
   toolsEmoji: require('./images/tools.png'),
+  penEmoji: require('./images/pen-emoji.png'),
 };
