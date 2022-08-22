@@ -2,20 +2,30 @@ import React from 'react';
 import { Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen, Messages, Activity, Reminders, Profile, InsightsPanel } from '../screens';
 import FeedbackNavigator from './FeedbackStack';
 import MessagesNavigator from './MessagesStack';
+import AssessmentNavigator from './AssessmentStack';
+import { getSignUpState } from 'app/store/selectors';
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
 const HomeNavigator = () => {
+  const newSignUp = useSelector(getSignUpState);
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}
+      initialRouteName={newSignUp ? 'Assessment' : 'Home'}
+    >
       <HomeStack.Screen name={'Home'} component={TabRoutes} />
       <HomeStack.Screen name={'Feedback'} component={FeedbackNavigator} />
       {/* <HomeStack.Screen name={'Reminders'} component={Reminders} /> */}
+      <HomeStack.Screen
+            name={'Assessment'}
+            component={AssessmentNavigator}
+          />
     </HomeStack.Navigator>
   );
 };

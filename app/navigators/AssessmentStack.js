@@ -15,10 +15,7 @@ export default function AssessmentNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <AssessmentStack.Screen
-        name={'Capture Feedback Moment'}
-        component={CaptureFeedbackMoment}
-      />
+      
       <AssessmentStack.Screen
         name={'Leadership Assessment Guide'}
         component={LeadershipAssessmentGuide}
@@ -34,6 +31,10 @@ export default function AssessmentNavigator() {
       <AssessmentStack.Screen
         name={'Leadership Assessment Results'}
         component={LeadershipOverviewResults}
+      />
+      <AssessmentStack.Screen
+        name={'Capture Feedback Moment'}
+        component={CaptureFeedbackMoment}
       />
     </AssessmentStack.Navigator>
   );
