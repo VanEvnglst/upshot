@@ -18,10 +18,13 @@ const LeadershipAssessmentGuide = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
-  const retrieveData = () => {
-    handleData();
-    // dispatch(LSAOverviewActions.fetchOverviewAssessment());
-    navigation.navigate('Leadership Assessment');
+  const retrieveData = async () => {
+    console.log('handleData')
+    // await handleData();
+    await dispatch(LSAOverviewActions.fetchOverviewAssessment());
+    setTimeout(() => {
+        navigation.navigate('Leadership Assessment');
+    }, 300);
   };
 
   handleData = () => {
@@ -35,6 +38,7 @@ const LeadershipAssessmentGuide = props => {
         lsaOverview[currentIndex],
       ];
     }
+    console.log('done');
   };
   return (
     <View style={{ flex: 1, paddingHorizontal: 24 }}>
