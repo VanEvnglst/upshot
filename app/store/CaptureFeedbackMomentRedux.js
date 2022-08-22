@@ -12,6 +12,8 @@ export const INITIAL_STATE = Map({
   maxStep: 4,
   step1: { ...defaultState},
   step2: { ...defaultState},
+  layerOneTopics: [],
+  layerTwoTopics: [],
   error: '',
 });
 
@@ -22,6 +24,12 @@ const { Types, Creators } = createActions({
   postCaptureMoment: ['data'],
   postCaptureMomentSuccess: [],
   postCaptureMomentFailure: ['error'],
+  fetchLayerOneTopics: [''],
+  fetchLayerOneTopicsSuccess: ['layerOneList'],
+  fetchLayerOneTopicsFailure: ['error'],
+  fetchLayerTwoTopics: [''],
+  fetchLayerTwoTopicsSuccess: ['layerTwoList'],
+  fetchLayerTwoTopicsFailure: ['error'],
 });
 
 
@@ -42,10 +50,52 @@ const setCaptureData = (state, { key, data }) => {
   })
 }
 
+const fetchLayerOneTopics = state => 
+  state.merge({
+    fetching: true,
+    error: ''
+  });
+
+  const fetchLayerOneTopicsSuccess = (state, { layerOneList }) => 
+  state.merge({
+    fetching: false,
+    layerOneTopics: layerOneList
+  })
+
+  const fetchLayerOneTopicsFailure = (state, { error }) => 
+  state.merge({
+    fetching: false,
+    error: error
+  });
+
+  const fetchLayerTwoTopics = state => 
+  state.merge({
+    fetching: true,
+    error: '',
+  })
+
+  const fetchLayerTwoTopicsSuccess = (state, { layerTwoList} ) => 
+  state.merge({
+    fetching: false,
+    layerTwoTopics: layerTwoList
+  })
+
+  const fetchLayerTwoTopicsFailure = (state, { error }) => 
+  state.merge({
+    fetching: false,
+    error: error
+  })
+
 
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CAPTURE_ACTIVE_STEP]: setCaptureActiveStep,
   [Types.SET_CAPTURE_DATA]: setCaptureData,
+  [Types.FETCH_LAYER_ONE_TOPICS]: fetchLayerOneTopics,
+  [Types.FETCH_LAYER_ONE_TOPICS_SUCCESS]: fetchLayerOneTopicsSuccess,
+  [Types.FETCH_LAYER_ONE_TOPICS_FAILURE]: fetchLayerOneTopicsFailure, 
+  [Types.FETCH_LAYER_TWO_TOPICS]: fetchLayerTwoTopics,
+  [Types.FETCH_LAYER_TWO_TOPICS_SUCCESS]: fetchLayerTwoTopicsSuccess,
+  [Types.FETCH_LAYER_TWO_TOPICS_FAILURE]: fetchLayerTwoTopicsFailure,
 });
