@@ -9,14 +9,16 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-reduex';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 
 const LeadershipOverviewResults = props => {
   const { navigation } = props;
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -29,6 +31,11 @@ const LeadershipOverviewResults = props => {
         return true;
       });
   }, []);
+
+  const handleNavigation = () => {
+    dispatch(AuthenticationActions.signInUserSuccess());
+    navigation.navigate('Home')
+  }
 
   return (
   <View style={styles.container}>
@@ -87,7 +94,7 @@ const LeadershipOverviewResults = props => {
       >Build my Profile</Button>
       <TouchableOpacity
         style={styles.skippable}
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => handleNavigation()}
       >
         <Text style={styles.descriptionText}>Skip Test</Text>
       </TouchableOpacity>

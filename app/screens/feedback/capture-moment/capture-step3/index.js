@@ -13,6 +13,7 @@ import { Button } from 'react-native-paper';
 import BottomSheet from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import styles from '../styles';
 
 
@@ -21,6 +22,10 @@ const CaptureMomentStep3 = () => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => [ '25%','50%'], []);
   const feedbackType = useSelector(state => state.captureMoment.get('step2').data);
+
+  useEffect(() => {
+    dispatch(CaptureMomentActions.fetchLayerOneTopics());
+  }, []);
 
 
   const openSheet = () => {
@@ -59,12 +64,12 @@ const CaptureMomentStep3 = () => {
         >Continue</Button>
       </View>
       <View style={styles.spacer} />
-      <BottomSheet
+      {/* <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         enablePanDownToClose
-      ><View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}><Text>Hello world</Text></View></BottomSheet>
+      ><View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}><Text>Hello world</Text></View></BottomSheet> */}
     </View>
   )
 }
