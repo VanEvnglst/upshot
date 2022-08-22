@@ -13,7 +13,8 @@ import { reducer as sharing } from './feedback/SharingRedux';
 import { reducer as messages } from './MessagesRedux';
 import { reducer as survey } from './frontliner/SurveyRedux';
 import { reducer as lsaOverview } from './LSAOverviewRedux';
-import rootSaga from '../sagas';
+import { reducer as captureMoment } from './CaptureFeedbackMomentRedux';
+import rootSaga from '../sagas'; 
 
 import configureStore from './createStore';
 
@@ -32,6 +33,7 @@ export const mainReducer = combineReducers({
   messages,
   survey,
   lsaOverview,
+  captureMoment,
 });
 
 export default () => {
