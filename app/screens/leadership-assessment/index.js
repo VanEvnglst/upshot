@@ -29,6 +29,7 @@ import OverviewStep14 from './overview/overviewStep14';
 import OverviewStep15 from './overview/overviewStep15';
 import OverviewConfirmation from './overview/overview-confirmation';
 import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
+import containerStyles from './styles';
 
 const LeadershipAssessment = props => {
   const { navigation } = props;
