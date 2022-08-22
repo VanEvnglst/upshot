@@ -45,9 +45,11 @@ const CaptureFeedbackMoment = props => {
 
   const setStaffSelection = async (item) => {
     console.log(item);
-   await dispatch(CaptureMomentActions.setCaptureData('step1', item))
+    setSelectedStaff(staffName)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setCaptureData('step1', item))
+    }, 200);
     console.log(staffName);
-    setSelectedStaff(staffName)    
     console.warn('select',staffName)
     setTimeout(() => {
       dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
