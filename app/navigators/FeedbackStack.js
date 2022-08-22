@@ -24,6 +24,7 @@ import {
   SharingGuide,
   FeedbackSharing,
   SharingReview,
+  CaptureFeedbackMoment,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -36,11 +37,16 @@ export default function FeedbackNavigator() {
     <>
       <FeedbackStack.Navigator
         headerMode="none"
-        initialRouteName={
-          activeJourneyLength.length > 0
-            ? 'FeedbackJourneyList'
-            : 'FeedbackFlow'
-        }>
+        // initialRouteName={
+        //   activeJourneyLength.length > 0
+        //     ? 'FeedbackJourneyList'
+        //     : 'FeedbackFlow'
+        // }
+        >
+          <FeedbackStack.Screen
+        name={'Capture Feedback Moment'}
+        component={CaptureFeedbackMoment}
+      />
         <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
         <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
         {/* Only appears when starting a new journey */}
