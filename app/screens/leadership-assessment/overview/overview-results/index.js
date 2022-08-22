@@ -87,6 +87,7 @@ const LeadershipOverviewResults = props => {
       >Build my Profile</Button>
       <TouchableOpacity
         style={styles.skippable}
+        onPress={() => navigation.navigate('Home')}
       >
         <Text style={styles.descriptionText}>Skip Test</Text>
       </TouchableOpacity>
