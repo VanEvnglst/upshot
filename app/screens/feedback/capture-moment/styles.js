@@ -92,7 +92,6 @@ export default styles = StyleSheet.create({
     marginRight: 12,
     opacity: 0.6,
   },
-  staffNameContainer: {},
   staffNameText: {
     fontSize: 16,
     lineHeight: 22,
@@ -106,7 +105,6 @@ export default styles = StyleSheet.create({
     fontWeight: '400',
     color: '#667080',
   },
-  selectedNameContainer: {},
   mainQuestionHeader: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -167,6 +165,20 @@ export default styles = StyleSheet.create({
     position: 'absolute',
     top: -35,
   },
+  hintContainer: {
+    marginTop: 36,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    alignSelf: 'center',
+    maxWidth: '60%'
+  },
+  hintText: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '400',
+    color: '#667080',
+    textAlign: 'center'
+  },
   btnContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -220,5 +232,28 @@ export default styles = StyleSheet.create({
     fontWeight: '400',
     color: '#667080',
     flex: 10,
-  }
+  },
+  selectedNameContainer: {
+    flexDirection: 'row',
+    borderWidth: 0.3,
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    height: 32,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  selectedAvatar: {
+    width: 24,
+    height: 24,
+    borderRadius: 21,
+    backgroundColor: '#667080',
+    marginRight: 4,
+    opacity: 0.6,
+  },
+  selectedName: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '400',
+    color: '#667080',
+  },
 });
