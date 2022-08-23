@@ -79,7 +79,7 @@ export function* signUpUser({ data }) {
   const authResponse = yield call(api.signUp, auth);
   if (authResponse.ok) {
     if (authResponse.data.status === 'ok') {
-      // yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
+      yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
       // yield put(UserActions.setUser(authResponse.data.user));
       yield put(AuthenticationActions.signUpUserSuccess());
     } else {
