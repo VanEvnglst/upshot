@@ -44,7 +44,7 @@ const CaptureMomentStep2 = () => {
 
 
   const selectFeedbackType = () => {
-    dispatch(CaptureMomentActions.setCaptureData('step2', ))
+    dispatch(CaptureMomentActions.setCaptureData('step2', typeSelection))
     setTimeout(() => {
       dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1))
     }, 200);
