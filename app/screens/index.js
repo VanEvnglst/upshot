@@ -17,6 +17,7 @@ export { default as HomeScreen } from './home';
 export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
+export { default as ExploreScreen } from './explore'; 
 
 
 /* ------------- Feedback Stack ------------- */
