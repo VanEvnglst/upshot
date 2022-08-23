@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LSAOverviewActions from 'app/store/LSAOverviewRedux';
+import leadershipSkillAreaActions from 'app/store/LSARedux';
 import OverviewStep1 from './overview/overviewStep1';
 import OverviewStep2 from './overview/overviewStep2';
 import OverviewStep3 from './overview/overviewStep3';
@@ -58,7 +58,7 @@ const LeadershipAssessment = props => {
 
   const handleGoBack = () => {
     if (activeStep === 1) navigation.goBack();
-    else dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep - 1));
+    else dispatch(leadershipSkillAreaActions.setAssessmentActiveStep(activeStep - 1));
   };
 
   const handleStepContent = () => {
