@@ -142,7 +142,7 @@ const BaselineScore = () => {
         }
         xAxis= {
           $set={
-            valueFormatter: [skillList[0].score, "HR", "RR", "O2", "E.A."],
+            valueFormatter: [skillList[0].score, skillList[1].score, skillList[2].score, skillList[3].score, skillList[4].score],
           }
         }
         yAxis= {
