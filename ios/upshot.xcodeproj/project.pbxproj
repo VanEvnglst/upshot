@@ -16,13 +16,13 @@
 		802C3423FD8C4D29A4EBE590 /* Raleway-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0D24BD046D40CFAD596967 /* Raleway-Black.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8713D43B27CF72F500332E01 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8713D43A27CF72F500332E01 /* libswiftWebKit.tbd */; };
-		8713D43D27CF80BC00332E01 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8713D43C27CF80BC00332E01 /* GoogleService-Info.plist */; };
 		8D5F8687856C494DB417BD30 /* Shrikhand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44A913D7EC9E43A7BFDAB5CB /* Shrikhand-Regular.ttf */; };
 		9C0241BCF00646EAACDAC2C6 /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2401A06B20D84E50AD0D1B1C /* Raleway-Thin.ttf */; };
 		C1D007670AF14ADFB000A719 /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB3DF6AA419A4EC198D26900 /* Raleway-SemiBold.ttf */; };
 		C68BDB937AF3E97AAA515609 /* libPods-upshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CDE5DD9A7157988718D835 /* libPods-upshot.a */; };
 		CEC04E34BCD243CD8A16F0B9 /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E052D8B63F984E97A32AB37D /* Raleway-Medium.ttf */; };
 		E09D35E5010B587D97AB9E05 /* libPods-upshot-upshotTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E505F76A6311D5BC36D1E83 /* libPods-upshot-upshotTests.a */; };
+		F8499A3A28B3976700460B6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8499A3928B3976700460B6E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +62,6 @@
 		8081940FCAC94A1A86A147A9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = upshot/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8713D43A27CF72F500332E01 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
-		8713D43C27CF80BC00332E01 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87F5E62A26B4018900D22546 /* upshot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = upshot.entitlements; path = upshot/upshot.entitlements; sourceTree = "<group>"; };
 		8E505F76A6311D5BC36D1E83 /* libPods-upshot-upshotTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-upshot-upshotTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B44E5E4979D4070A1BA4F20 /* Pods-upshot-upshotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-upshot-upshotTests.release.xcconfig"; path = "Target Support Files/Pods-upshot-upshotTests/Pods-upshot-upshotTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 		D9D4D0FFC90243FD8E2C98B7 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		E052D8B63F984E97A32AB37D /* Raleway-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Raleway-Medium.ttf"; path = "../app/assets/fonts/Raleway-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F8499A3928B3976700460B6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9DB5895D1EB4A75A4AD5A17 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		FDCB8FF2D5014CDE8F55D371 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,11 +122,11 @@
 		13B07FAE1A68108700A75B9A /* upshot */ = {
 			isa = PBXGroup;
 			children = (
+				F8499A3928B3976700460B6E /* GoogleService-Info.plist */,
 				87F5E62A26B4018900D22546 /* upshot.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				8713D43C27CF80BC00332E01 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -292,7 +292,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				8713D43E27CF837100332E01 /* RemoteSwiftPackageReference */,
+				8713D43E27CF837100332E01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -323,7 +323,7 @@
 				CEC04E34BCD243CD8A16F0B9 /* Raleway-Medium.ttf in Resources */,
 				487C25C40F56420796CC1392 /* Raleway-Regular.ttf in Resources */,
 				9C0241BCF00646EAACDAC2C6 /* Raleway-Thin.ttf in Resources */,
-				8713D43D27CF80BC00332E01 /* GoogleService-Info.plist in Resources */,
+				F8499A3A28B3976700460B6E /* GoogleService-Info.plist in Resources */,
 				C1D007670AF14ADFB000A719 /* Raleway-SemiBold.ttf in Resources */,
 				8D5F8687856C494DB417BD30 /* Shrikhand-Regular.ttf in Resources */,
 			);
@@ -792,7 +792,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8713D43E27CF837100332E01 /* RemoteSwiftPackageReference */ = {
+		8713D43E27CF837100332E01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {

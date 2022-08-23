@@ -9,6 +9,7 @@ export { default as LeadershipAssessment } from './leadership-assessment';
 export { default as LeadershipAssessmentGuide } from './leadership-assessment/leadership-assessment-guide';
 export { default as AssessmentEndLine } from './leadership-assessment/overview/overview-confirmation';
 export { default as LeadershipOverviewResults } from './leadership-assessment/overview/overview-results';
+export { default as BaselineScore } from './leadership-assessment/lsa-baseline-scores';
 
 
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';
