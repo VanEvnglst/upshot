@@ -397,5 +397,19 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/capture_fb_moment`, payload);
-  }
+  },
+
+  getLSAOverviewQuestion: async () => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+  
+    return upshotAPI.get(`/lsa_overview_questions`);
+  },
+
+  getLSAExtendedQuestions: async () => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+  
+    return upshotAPI.get(`/lsa_extended_questions`);
+  },
 };
