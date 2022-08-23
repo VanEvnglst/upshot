@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LSAOverviewActions from 'app/store/LSAOverviewRedux';
+import leadershipSkillAreaActions from 'app/store/LSARedux';
 import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
 import containerStyles from 'app/screens/leadership-assessment/styles';
 
@@ -62,8 +62,8 @@ const OverviewStep8 = () => {
       question: questionTitle,
     };
 
-    dispatch(LSAOverviewActions.setAssessmentData('step1', data));
-    dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1));
+    dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
+    dispatch(leadershipSkillAreaActions.setAssessmentActiveStep(activeStep + 1));
   };
 
   return (
