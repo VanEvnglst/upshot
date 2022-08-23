@@ -13,6 +13,7 @@ import watchUserSaga from './UserSaga';
 import watchMessagesSaga from './MessagesSaga';
 import watchSurveySaga from './frontliner/SurveySaga';
 import watchLSAOverviewSaga from './LSAOverviewSaga';
+import watchCaptureMomentSaga from './CaptueMomentSaga';
 
 function* watchNetwork() {
   try {
@@ -35,6 +36,7 @@ export default function* root() {
     fork(watchMessagesSaga),
     fork(watchSurveySaga),
     fork(watchLSAOverviewSaga),
+    fork(watchCaptureMomentSaga),
     watchNetwork,
   ]);
 }
