@@ -11,8 +11,15 @@ export const INITIAL_STATE = Map({
   fetching: false,
   error: '',
   activeStep: 1,
-  overviewQuestions: null,
   maxStep: 15,
+  overviewQuestions: null,
+  extendedQuestions: {
+    empathyList: [],
+    curiosityList: [],
+    authenticityList: [],
+    trustBuildingList: [],
+    achievementList: [],
+  },
   step1: { ...defaultState },
   step2: { ...defaultState },
   step3: { ...defaultState },
@@ -34,14 +41,17 @@ export const INITIAL_STATE = Map({
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
   setAssessmentData: ['key','data'],
-  fetchOverviewAssessment: [],
-  fetchOverviewAssessmentSuccess: ['overviewQuestions'],
-  fetchOverviewAssessmentFailure: ['error'],
+  fetchOverviewQuestions: [],
+  fetchOverviewQuestionsSuccess: ['overviewQuestions'],
+  fetchOverviewQuestionsFailure: ['error'],
+  fetchExtendedQuestions: [],
+  fetchExtendedQuestionsSuccess: ['extendedQuestions'],
+  fetchExtendedQuestionsFailure: ['error'],
 });
 
 
 /* ------------- Reducers ------------- */
-export const LSAOverviewTypes = Types;
+export const leadershipSkillAreaTypes = Types;
 export default Creators;
 
 const setAssessmentActiveStep = (state, { step }) => {
@@ -58,19 +68,37 @@ const setAssessmentData = (state, { key, data }) =>
    [key]: { data },
   })
 
-const fetchOverviewAssessment = state =>
+const fetchOverviewQuestions = state =>
   state.merge({
     fetching: true,
     error: '',
   });
 
-const fetchOverviewAssessmentSuccess = (state, {overviewQuestions}) =>
+const fetchOverviewQuestionsSuccess = (state, { overviewQuestions }) =>
   state.merge({
     fetching: false,
     overviewQuestions,
   });
 
-const fetchOverviewAssessmentFailure = (state, { error }) =>
+const fetchOverviewQuestionsFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
+
+  const fetchExtendedQuestions = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchExtendedQuestionsSuccess = (state, { extendedQuestions }) =>
+  state.merge({
+    fetching: false,
+    extendedQuestions,
+  });
+
+const fetchExtendedQuestionsFailure = (state, { error }) =>
   state.merge({
     fetching: false,
     error,
@@ -80,7 +108,10 @@ const fetchOverviewAssessmentFailure = (state, { error }) =>
 export const reducer = createReducer(INITIAL_STATE, {
 [Types.SET_ASSESSMENT_ACTIVE_STEP]: setAssessmentActiveStep,
 [Types.SET_ASSESSMENT_DATA]: setAssessmentData,
-[Types.FETCH_OVERVIEW_ASSESSMENT]: fetchOverviewAssessment,
-[Types.FETCH_OVERVIEW_ASSESSMENT_SUCCESS]: fetchOverviewAssessmentSuccess,
-[Types.FETCH_OVERVIEW_ASSESSMENT_FAILURE]: fetchOverviewAssessmentFailure,
+[Types.FETCH_OVERVIEW_QUESTIONS]: fetchOverviewQuestions,
+[Types.FETCH_OVERVIEW_QUESTIONS_SUCCESS]: fetchOverviewQuestionsSuccess,
+[Types.FETCH_OVERVIEW_QUESTIONS_FAILURE]: fetchOverviewQuestionsFailure,
+[Types.FETCH_EXTENDED_QUESTIONS]: fetchExtendedQuestions,
+[Types.FETCH_EXTENDED_QUESTIONS_SUCCESS]: fetchExtendedQuestionsSuccess,
+[Types.FETCH_EXTENDED_QUESTIONS_FAILURE]: fetchExtendedQuestionsFailure,
 });
