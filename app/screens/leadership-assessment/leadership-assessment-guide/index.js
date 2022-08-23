@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Button, ProgressBar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LSAOverviewActions from 'app/store/LSAOverviewRedux';
+import leadershipSkillAreaActions from 'app/store/LSARedux';
 import lsaOverview from 'app/models/LSAOverviewModel';
 
 const LeadershipAssessmentGuide = props => {
@@ -19,27 +19,12 @@ const LeadershipAssessmentGuide = props => {
   const dispatch = useDispatch();
 
   const retrieveData = async () => {
-    console.log('handleData')
-    // await handleData();
-    await dispatch(LSAOverviewActions.fetchOverviewAssessment());
+    await dispatch(leadershipSkillAreaActions.fetchOverviewQuestions());
     setTimeout(() => {
         navigation.navigate('Leadership Assessment');
     }, 300);
   };
 
-  handleData = () => {
-    let currentIndex = lsaOverview.length,
-      randomIndex;
-    while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [lsaOverview[currentIndex], lsaOverview[randomIndex]] = [
-        lsaOverview[randomIndex],
-        lsaOverview[currentIndex],
-      ];
-    }
-    console.log('done');
-  };
   return (
     <View style={{ flex: 1, paddingHorizontal: 24 }}>
       <SafeAreaView>
