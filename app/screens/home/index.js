@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, SafeAreaView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { ProgressBar, FAB } from 'react-native-paper';
 import { LearningCard, Wrapper, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
@@ -68,90 +69,132 @@ const HomeScreen = props => {
     navigation.navigate('Feedback');
   };
 
+
   return (
-    <Wrapper>
-      <ScrollView 
-        bounces={false} 
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}>
-        {/* <View style={{ width: '95%', marginBottom: 20 }}>
-          <Text style={{ paddingLeft: 25, marginBottom: 10 }}>Alerts</Text>
-          {/* map data for alerts */}
-        {/*  <AlertCard />
-          <AlertCard />
-        </View> */}
-        <View>
-          <Text
-            type="overline"
-            style={styles.overlineText}
-            testID={'txt-home-journey'}>
-            {homeScreen.guidedJourney}
-          </Text>
-          <LearningCard
-            onPress={() => handleNavigation()}
-            image={Images.feedbackCoaching}
-            headline={'Feedback Coaching'}
-            subtitle={
-              activeJourneyLength.length > 0
-                ? activeJourneyLength.length > 1
-                  ? `${activeJourneyLength.length} feedback journeys in progress`
-                  : `${activeJourneyLength.length} feedback journey in progress`
-                : labels.homeScreen.feedbackDesc
-            }
-            hasInProgress={activeJourneyLength.length > 0}
-            mainCard
-            testID={'card-home-feedback'}
-          />
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
-            />
-          )}
-          {/* <LearningCard
-            onPress={() => console.log('Next time')}
-            image={Images.feedbackCoaching}
-            headline={'Employee Engagement'}
-            subtitle={labels.homeScreen.feedbackDesc}
-            mainCard
-            style={{ marginTop: 15 }}
-          /> */}
+    <View style={{ flex: 1 }}>
+      <SafeAreaView>
+        <View style={{ paddingHorizontal: 16}}>
+          <Text style={{ fontSize: 32, lineHeight: 36, fontWeight: '700', color: '#667080', marginBottom: 8}}>Feedback Coaching</Text>
+          <Text style={{ color: '#667080', fontSize: 14, lineHeight: 20, fontWeight: '400'}}>{`Advocating for your employees' growth and optimal performance with feedback`}</Text>
         </View>
-        <View style={styles.horizontalCardContainer}>
-          <Text
-            type="overline"
-            style={styles.overlineText}
-            testID={'txt-home-comingSoon'}>
-            {homeScreen.comingSoon}
-          </Text>
-          <ScrollView 
-            showsHorizontalScrollIndicator={false}
-            horizontal
-          >
-            <LearningCard
-              onPress={() => navigation.navigate('Feedback')}
-              image={Images.feedbackCoaching}
-              headline={'Prioritizing and Delegating'}
-              smallCard
-              disabled
-              testID={'card-home-comingSoon'}
+        <View style={{ marginTop: 24, borderBottomWidth: 0.3, paddingHorizontal: 16, paddingBottom: 16, }}>
+          <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+          <Text style={{ fontSize: 14, lineHeight: 20, fontWeight: '700', color: '#667080'}}>{`Next Level (Level 2)`}</Text>
+          <Text style={{ fontSize: 14, lineHeight: 20, fontWeight: '400', color: '#667080'}}>190 / 500 pts.</Text>
+          </View>
+          <View style={{ marginTop: 5, alignItems: 'center', flexDirection: 'row'}}>
+            <Image
+              source={Images.lightningEmoji}
+              style={{ width: 12, height: 12 }}
+              resizeMode='contain'
             />
-            <LearningCard
-              onPress={() => navigation.navigate('Feedback')}
-              image={Images.feedbackCoaching}
-              headline={'Coaching Frontline Managers'}
-              smallCard
-              disabled
+            <ProgressBar
+               progress={190/500}
+               color={'#F99D46'}
+              style={{
+                width: 340,
+                height: 6,
+                marginLeft: 3,
+                borderRadius: 4,
+                paddingRight: 19,
+              }}
             />
-          </ScrollView>
+          </View>
         </View>
-      </ScrollView>
-    </Wrapper>
+      </SafeAreaView>
+      <FAB
+        icon='plus'
+        onPress={() => handleNavigation()}
+        style={{ position: 'absolute',
+      bottom: 20, right: 28, backgroundColor: '#DBE3FF', borderWidth: 1,borderColor: '#A0B3F3', width: 50, height: 50, borderRadius: 12, justifyContent: 'center', alignItems: 'center'}}
+      />
+    </View>
   );
+
+//   return (
+//     <Wrapper>
+//       <ScrollView 
+//         bounces={false} 
+//         showsVerticalScrollIndicator={false}
+//         contentContainerStyle={styles.container}>
+//         {/* <View style={{ width: '95%', marginBottom: 20 }}>
+//           <Text style={{ paddingLeft: 25, marginBottom: 10 }}>Alerts</Text>
+//           {/* map data for alerts */}
+//         {/*  <AlertCard />
+//           <AlertCard />
+//         </View> */}
+//         <View>
+//           <Text
+//             type="overline"
+//             style={styles.overlineText}
+//             testID={'txt-home-journey'}>
+//             {homeScreen.guidedJourney}
+//           </Text>
+//           <LearningCard
+//             onPress={() => handleNavigation()}
+//             image={Images.feedbackCoaching}
+//             headline={'Feedback Coaching'}
+//             subtitle={
+//               activeJourneyLength.length > 0
+//                 ? activeJourneyLength.length > 1
+//                   ? `${activeJourneyLength.length} feedback journeys in progress`
+//                   : `${activeJourneyLength.length} feedback journey in progress`
+//                 : labels.homeScreen.feedbackDesc
+//             }
+//             hasInProgress={activeJourneyLength.length > 0}
+//             mainCard
+//             testID={'card-home-feedback'}
+//           />
+//           {show && (
+//             <DateTimePicker
+//               testID="dateTimePicker"
+//               value={date}
+//               mode={mode}
+//               is24Hour={true}
+//               display="default"
+//               onChange={onChange}
+//             />
+//           )}
+//           {/* <LearningCard
+//             onPress={() => console.log('Next time')}
+//             image={Images.feedbackCoaching}
+//             headline={'Employee Engagement'}
+//             subtitle={labels.homeScreen.feedbackDesc}
+//             mainCard
+//             style={{ marginTop: 15 }}
+//           /> */}
+//         </View>
+//         <View style={styles.horizontalCardContainer}>
+//           <Text
+//             type="overline"
+//             style={styles.overlineText}
+//             testID={'txt-home-comingSoon'}>
+//             {homeScreen.comingSoon}
+//           </Text>
+//           <ScrollView 
+//             showsHorizontalScrollIndicator={false}
+//             horizontal
+//           >
+//             <LearningCard
+//               onPress={() => navigation.navigate('Feedback')}
+//               image={Images.feedbackCoaching}
+//               headline={'Prioritizing and Delegating'}
+//               smallCard
+//               disabled
+//               testID={'card-home-comingSoon'}
+//             />
+//             <LearningCard
+//               onPress={() => navigation.navigate('Feedback')}
+//               image={Images.feedbackCoaching}
+//               headline={'Coaching Frontline Managers'}
+//               smallCard
+//               disabled
+//             />
+//           </ScrollView>
+//         </View>
+//       </ScrollView>
+//     </Wrapper>
+//   );
 };
 
 export default HomeScreen;
