@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ProgressBar, FAB } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { LearningCard, Wrapper, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
@@ -11,7 +12,7 @@ import { getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import styles from './styles';
-
+import leadershipSkillAreaActions from 'app/store/LSARedux';
 const HomeScreen = props => {
   const { homeScreen } = labels;
   const { navigation } = props;
@@ -19,11 +20,12 @@ const HomeScreen = props => {
   const activeJourneyLength = useSelector(getActiveJourneys);
 
   useEffect(() => {
-    dispatch(FeedbackActions.fetchFeedbackFlow());
-    dispatch(FeedbackActions.fetchFeedbackType());
-    dispatch(FeedbackActions.fetchFeedbackTopics());
-    dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-    dispatch(FeedbackActions.resetFeedbackState());
+    // dispatch(FeedbackActions.fetchFeedbackFlow());
+    // dispatch(FeedbackActions.fetchFeedbackType());
+    // dispatch(FeedbackActions.fetchFeedbackTopics());
+    // dispatch(FeedbackHistoryActions.fetchActiveJourneys());
+    // dispatch(FeedbackActions.resetFeedbackState());
+  dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
   }, []);
 
   const [date, setDate] = useState(new Date(1598051730000));
@@ -69,6 +71,21 @@ const HomeScreen = props => {
     navigation.navigate('Feedback');
   };
 
+  const JourneyCard = ({ item }) => {
+
+    return (
+      <View style={{ marginHorizontal: 24, marginTop: 20, minHeight: 172, borderWidth: 1, borderRadius: 6, borderColor: '#BAC0CA',paddingHorizontal: 16, paddingTop: 12, paddingBottom: 24}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+        <View style={{ justifyContent: 'center', alignItems: 'center', padding: 4,
+      }}></View>
+        <Icon
+          name='chevron-forward-outline'
+          size={20}
+        />
+      </View>
+      </View>
+    )
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -102,6 +119,9 @@ const HomeScreen = props => {
           </View>
         </View>
       </SafeAreaView>
+      {/* <View>
+      <JourneyCard/>
+      </View> */}
       <FAB
         icon='plus'
         onPress={() => handleNavigation()}

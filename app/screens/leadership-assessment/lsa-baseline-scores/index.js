@@ -57,7 +57,7 @@ const BaselineScore = () => {
 
   const [shouldExpand, setShouldExpand] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState({
-    id: 0,
+    id: 1,
     title: '',
     score: '',
   });
@@ -72,14 +72,9 @@ const BaselineScore = () => {
     <ScrollView
       showsVerticalScrollIndicator={false}
     >
-    <SafeAreaView>
-    {/* <TouchableOpacity
-            accessibilityRole="button"
-            onPress={() => handleGoBack()}>
-            <Icon name="chevron-back-outline" size={24} font-size="6px" />
-          </TouchableOpacity> */}
-        </SafeAreaView>
-        <View style={{alignItems: 'center'}}>
+      <View style={{ borderBottomWidth: 2, borderColor: '#FFCAAA',backgroundColor: '#FFFCF5', height: '10%'}}>
+    </View>
+    <View style={{alignItems: 'center', marginTop: -60, marginBottom: 30 }}>
           <View style={styles.userContainer}>
       <View style={styles.userIcon}>
         <Image
@@ -105,8 +100,8 @@ const BaselineScore = () => {
             webLineWidth={1}
             webLineWidthInner={2}
             webAlpha={255}
-            webColor={"#FFFFFF"}
-            webColorInner={processColor("#FFFFFF")}
+            webColor={processColor("white")}
+            webColorInner={processColor("white")}
             skipWebLineCount={5}
               
             //onChange={event => console.log(event.nativeEvent)}
@@ -126,11 +121,11 @@ const BaselineScore = () => {
                 ],
                 custom: {labels: ""},
                 config: {
-                  color: processColor("#000000"),
+                  color: processColor("#667080"),
                   drawFilled: true,
                   fillColor: processColor("#D9C5C5"),
                   fillAlpha: 100,
-                  lineWidth: 5,
+                  lineWidth: 2,
                   drawValues: false
                 }
               },
@@ -164,7 +159,7 @@ const BaselineScore = () => {
         <View style={{ flex: 1,  alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{fontWeight: '700', fontSize: 16, lineHeight: 30, color: "#667080", marginVertical: 12}}>Points Breakdown</Text>
         </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, paddingHorizontal: 16, }}>
             {skillList.map((item, i) => (
               <TouchableOpacity
                 accessibilityRole='button'
@@ -213,6 +208,7 @@ const BaselineScore = () => {
             ))}
            
           </View>
+          <View style={{ height: 200}}/>
         </ScrollView>
         </View>
     );
@@ -222,10 +218,7 @@ export default BaselineScore;
 
 const styles = StyleSheet.create({
    container: {
-    flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: 'center',
-    
+    flex:1 
   },
   userContainer: {
     marginTop: 30,
@@ -267,9 +260,8 @@ const styles = StyleSheet.create({
     minWidth: 255,
     minHeight: 255,
     borderRadius:  128,
-    backgroundColor: 'green',
+    backgroundColor: '#EEF1F4',
     justifyContent: 'center',
-   //alignItems: 'center'
   },
   chart: {
     flex: 1

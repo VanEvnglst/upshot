@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HomeScreen, Messages, Activity, Reminders, ExploreScreen, Profile, InsightsPanel } from '../screens';
+import { HomeScreen, Messages, Activity, Reminders, ExploreScreen, Profile, InsightsPanel, BaselineScore } from '../screens';
 import FeedbackNavigator from './FeedbackStack';
 import MessagesNavigator from './MessagesStack';
 import AssessmentNavigator from './AssessmentStack';
@@ -110,7 +110,7 @@ function TabRoutes() {
       />
       <BottomTab.Screen
         name={'Profile'}
-        component={Profile}
+        component={BaselineScore}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

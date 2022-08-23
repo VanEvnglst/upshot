@@ -12,7 +12,7 @@ import { reducer as reflecting } from './feedback/ReflectingRedux';
 import { reducer as sharing } from './feedback/SharingRedux';
 import { reducer as messages } from './MessagesRedux';
 import { reducer as survey } from './frontliner/SurveyRedux';
-import { reducer as lsaOverview } from './LSAOverviewRedux';
+import { reducer as leadershipSkillArea } from './LSARedux';
 import { reducer as captureMoment } from './CaptureFeedbackMomentRedux';
 import rootSaga from '../sagas'; 
 
@@ -32,7 +32,7 @@ export const mainReducer = combineReducers({
   user,
   messages,
   survey,
-  lsaOverview,
+  leadershipSkillArea,
   captureMoment,
 });
 
