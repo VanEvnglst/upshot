@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
@@ -17,10 +18,11 @@ import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import styles from '../styles';
 
 
-const CaptureMomentStep3 = () => {
+const CaptureMomentStep3 = ({ onPress }) => {
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => [ '25%','50%'], []);
+  const { height } = Dimensions.get('window');
   const feedbackType = useSelector(state => state.captureMoment.get('step2').data);
 
   useEffect(() => {
@@ -31,12 +33,13 @@ const CaptureMomentStep3 = () => {
   const openSheet = () => {
     bottomSheetRef.current?.snapToIndex(0);
   }
+
   return (
     <View style={styles.content}>
       <View style={styles.mainQuestionHeader}>
       <Text style={styles.mainQuestionText}>Add topic details to your</Text>
       <View style={styles.typeContainer}>
-        <Text style={styles.typeText}>corrective</Text>
+        <Text style={styles.typeText}>{feedbackType.title}</Text>
       </View>
       <Text style={styles.mainQuestionText}>feedback</Text>
       </View>
@@ -45,14 +48,16 @@ const CaptureMomentStep3 = () => {
       </View>
       <View style={styles.topicContainer}>
         <Text style={[styles.toText, { marginBottom: 4, }]}>Topic</Text>
-        <View style={styles.topicPicker}>
+        <TouchableOpacity 
+          onPress={() => onPress()}
+        style={styles.topicPicker}>
           <Text style={styles.topicLabel}>{`*Others (Please specify)`}</Text>
           <Icon
             name='chevron-down-outline'
             style={{flex: 1, color: '#667080'}}
             size={24}
           />
-        </View>
+        </TouchableOpacity>
         <View style={[styles.topicPicker, { marginTop: 12}]}>
           <Text style={styles.topicLabel}>{`Write your own details*`}</Text>
         </View>
