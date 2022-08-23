@@ -27,7 +27,7 @@ const { Types, Creators } = createActions({
   fetchLayerOneTopics: [''],
   fetchLayerOneTopicsSuccess: ['layerOneList'],
   fetchLayerOneTopicsFailure: ['error'],
-  fetchLayerTwoTopics: [''],
+  fetchLayerTwoTopics: ['data'],
   fetchLayerTwoTopicsSuccess: ['layerTwoList'],
   fetchLayerTwoTopicsFailure: ['error'],
 });
