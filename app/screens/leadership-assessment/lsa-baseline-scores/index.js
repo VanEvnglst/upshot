@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,13 +9,27 @@ import {
   Image,
   BackHandler,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import {RadarChart} from 'react-native-charts-wrapper';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
+import leadershipSkillAreaActions from 'app/store/LSARedux';
 
-const BaselineScore = () => {
+const BaselineScore = props => {
+  
+  const { navigation } = props;
+  const dispatch = useDispatch();
+
+  const retrieveDataExtended = async () => {
+    await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+      debugger;
+      setTimeout(() => {
+        navigation.navigate('Leadership Assessment Extended');
+    }, 300);
+  };
+  
   const skillList = [
     {
       id: 1,
@@ -62,11 +75,14 @@ const BaselineScore = () => {
     score: '',
   });
 
+
+    
   const handleSkillSelection = ( item ) => {
     setSelectedSkill(item);
     
   }
 
+  
     return (
       <View style={styles.container}>
     <ScrollView
@@ -208,13 +224,34 @@ const BaselineScore = () => {
             ))}
            
           </View>
-          <View style={{ height: 200}}/>
+          <View style={{ height: 200 , marginVertical: 100, backgroundColor: 'white'}} >
+          
+          <Button
+            style={{
+              height: 48,
+              backgroundColor: '#667080',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+            mode="outlined"
+            onPress={() => retrieveDataExtended()}>
+            <Text style={{
+            color: "white",
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '400',
+    textAlign: 'center'
+          }}>Build your profile</Text>  
+            </Button>
+            </View>
         </ScrollView>
         </View>
     );
 }
 
 export default BaselineScore;
+
+
 
 const styles = StyleSheet.create({
    container: {
