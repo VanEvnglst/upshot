@@ -68,4 +68,5 @@ export default {
   toolsEmoji: require('./images/tools.png'),
   penEmoji: require('./images/pen-emoji.png'),
   partyEmoji: require('./images/party-emoji.png'),
+  targetEmoji: require('./images/target-emoji.png'),
 };
