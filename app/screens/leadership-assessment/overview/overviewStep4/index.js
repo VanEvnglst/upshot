@@ -16,7 +16,7 @@ import containerStyles from 'app/screens/leadership-assessment/styles';
 const OverviewStep4 = () => {
   const dispatch = useDispatch();
   const questionTitle = useSelector(
-    state => state.lsaOverview.get('overviewQuestions')[3],
+    state => state.leadershipSkillArea.get('overviewQuestions')[3],
   );
   const activeStep = useSelector(getOverviewStep);
   const maxStep = useSelector(getOverviewMaxStep);
