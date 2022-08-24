@@ -6,12 +6,12 @@ export default styles = StyleSheet.create({
     backgroundColor: Colors.white,
     justifyContent: 'flex-start',
   },
-  overlineText: {
-    alignSelf: 'flex-start',
-    paddingLeft: 5,
-    marginBottom: 10,
-  },
-  horizontalCardContainer: {
-    marginTop: 20,
-  }
+  // overlineText: {
+  //   alignSelf: 'flex-start',
+  //   paddingLeft: 5,
+  //   marginBottom: 10,
+  // },
+  // horizontalCardContainer: {
+  //   marginTop: 20,
+  // }
 });
