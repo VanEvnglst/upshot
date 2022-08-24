@@ -12,6 +12,37 @@ export const INITIAL_STATE = Map({
   error: '',
   activeStep: 1,
   maxStep: 15,
+  categoryActiveStep: 1,
+  categoryMaxStep: 5,
+  extendedActiveStep: 1,
+  extendedMaxStep: 7,
+  categorySelection: [
+    {
+      id: 1,
+      title: 'empathyList',
+      value: "💓 Empathy"
+    },
+    {
+      id: 2,
+      title: 'trustBuildingList',
+      value: "🤝 Trust Building"
+    },
+    {
+      id: 3,
+      title: 'authenticityList',
+      value: "👐 Authenticity"
+    },
+    {
+      id: 4,
+      title: 'achievementList',
+      value: "🏅 Achievement-Orientation"
+    },
+    // {
+    //   id: 5,
+    //   title: 'curiosityList',
+    //   value: "🧠 Curiosity"
+    // },
+  ],
   overviewQuestions: null,
   extendedQuestions: {
     empathyList: [],
@@ -40,6 +71,7 @@ export const INITIAL_STATE = Map({
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
+  setAssessmentExtendedActiveStep: ['extendedStep'],
   setAssessmentData: ['key','data'],
   fetchOverviewQuestions: [],
   fetchOverviewQuestionsSuccess: ['overviewQuestions'],
@@ -60,6 +92,15 @@ const setAssessmentActiveStep = (state, { step }) => {
   }
   return state.merge({
     activeStep: step,
+  });
+};
+
+const setAssessmentExtendedActiveStep = (state, { extendedStep }) => {
+  if (state.get('extendedActiveStep') > state.get('extendedMaxStep')) {
+    return state.get('extendedActiveStep');
+  }
+  return state.merge({
+    extendedActiveStep: extendedStep,
   });
 };
 
@@ -107,6 +148,7 @@ const fetchExtendedQuestionsFailure = (state, { error }) =>
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
 [Types.SET_ASSESSMENT_ACTIVE_STEP]: setAssessmentActiveStep,
+[Types.SET_ASSESSMENT_EXTENDED_ACTIVE_STEP]: setAssessmentExtendedActiveStep,
 [Types.SET_ASSESSMENT_DATA]: setAssessmentData,
 [Types.FETCH_OVERVIEW_QUESTIONS]: fetchOverviewQuestions,
 [Types.FETCH_OVERVIEW_QUESTIONS_SUCCESS]: fetchOverviewQuestionsSuccess,
