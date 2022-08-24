@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, SafeAreaView, Image } from 'react-native';
+import { View, ScrollView, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -32,6 +32,8 @@ const HomeScreen = props => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
+  const [isInProgress, setIsInProgress] = useState(true);
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -51,46 +53,155 @@ const HomeScreen = props => {
     showMode('time');
   };
 
-  // const AlertCard = () => {
-  //   return (
-  //     <View
-  //       style={{
-  //         height: 60,
-  //         borderWidth: 0.6,
-  //         borderRadius: 8,
-  //         marginBottom: 12,
-  //         justifyContent: 'center',
-  //         paddingHorizontal: 20,
-  //       }}>
-  //       <Text>You have one upcoming event</Text>
-  //     </View>
-  //   );
-  // };
+
 
   const handleNavigation = () => {
     navigation.navigate('Feedback');
   };
 
+  const sampleStaffData = [
+    {
+      id: 1,
+      name: 'Tommy Shelby',
+      date: 'Mon. Aug 23, 2022 at 3:30 pm',
+      status: 'in progress',
+      feedbackType:'Corrective Feedback',
+      nextStep: `Add Feedback Details (2/6)`,
+    },
+    {
+      id: 2,
+      name: 'Alfred Solomons',
+      date: 'Sat. Aug 21, 2022 at 3:30 pm',
+      status: 'completed',
+      feedbackType:'Positive Feedback',
+      nextStep: 'Completed',
+    },
+    {
+      id: 3,
+      name: 'Michael Jordan',
+      date: 'Mon. July 23, 2022 at 3:30 pm',
+      status: 'feedback sent',
+      feedbackType:'Corrective Feedback',
+      nextStep: 'Add Feedback Details (4/6)',
+    },
+    {
+      id: 4,
+      name: 'Tommy Shelby',
+      date: 'Mon. Aug 23, 2022 at 3:30 pm',
+      status: 'feedback sent',
+      feedbackType:'Positive Feedback',
+      nextStep: 'Discussion',
+    }
+  ]
+
   const JourneyCard = ({ item }) => {
+    console.warn(item);
+
+    let CARD_MAIN_COLOR = '';
+    let CARD_SUB_COLOR = '';
+    let STATUS_BORDER_COLOR = '';
+    switch(item.status) {
+      case 'in progress':
+        CARD_MAIN_COLOR = '#F99D46';
+        CARD_SUB_COLOR = '#FFF2E7';
+        STATUS_BORDER_COLOR = '#FDC591';
+        break;
+      case 'feedback sent':
+        CARD_MAIN_COLOR = '#4990FB';
+        CARD_SUB_COLOR = '#DDEBFF';
+        STATUS_BORDER_COLOR = '#8EBBFF';
+        break;
+      case 'completed':
+        CARD_MAIN_COLOR = '#3AB549';
+        CARD_SUB_COLOR = '#ECF5ED';
+        STATUS_BORDER_COLOR = '#97DEA0';
+        break;
+      default:
+        CARD_MAIN_COLOR = '#BAC0CA'
+    }
 
     return (
-      <View style={{ marginHorizontal: 24, marginTop: 20, minHeight: 172, borderWidth: 1, borderRadius: 6, borderColor: '#BAC0CA',paddingHorizontal: 16, paddingTop: 12, paddingBottom: 24}}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-        <View style={{ justifyContent: 'center', alignItems: 'center', padding: 4,
-      }}></View>
+      <TouchableOpacity style={{ 
+        marginHorizontal: 24, 
+        marginTop: 20, 
+        minHeight: 172, 
+        borderWidth: 1, 
+        borderRadius: 6, 
+        borderColor: '#BAC0CA',
+        paddingHorizontal: 16, 
+        paddingTop: 12, 
+        paddingBottom: 24,
+        borderTopWidth: 5,
+        borderTopColor: CARD_MAIN_COLOR
+      }}>
+      <View 
+        style={{ 
+          flexDirection: 'row', 
+          alignItems: 'center', 
+          justifyContent: 'space-between'
+        }}>
+        <View 
+          style={{ 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            padding: 4, 
+            backgroundColor: CARD_SUB_COLOR, 
+            borderWidth: 1, 
+            borderRadius: 4, 
+            borderColor: STATUS_BORDER_COLOR,
+          }}>
+            <Text 
+              style={{ 
+                fontSize: 10, 
+                lineHeight: 10, 
+                fontWeight: '600', 
+                color: CARD_MAIN_COLOR,  
+                textTransform: 'uppercase',
+              }}>{item.status}</Text>
+        </View>
         <Icon
           name='chevron-forward-outline'
           size={20}
+          style={{ color: '#667080'}}
         />
       </View>
+      <View style={{ flexDirection: 'row', marginTop: 12, borderBottomWidth: 0.3, paddingBottom: 12}}>
+        <View style={{ width: 24, height: 24, borderColor: '#667080', borderWidth: 1, borderRadius: 12, marginRight: 12}}/>
+        <View>
+          <Text style={{ color: '#667080', fontWeight: '700', fontSize: 16, lineHeight: 14, paddingTop: 3, }}>{item.name}</Text>
+          <Text style={{ color: '#667080', marginTop: 8, fontWeight: '400', fontSize: 14, lineHeight: 14, }}>{item.date}</Text>
+        </View>
       </View>
+      <View style={{ paddingTop: 12, }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+          <Image
+            source={item.feedbackType === 'Corrective Feedback' ?Images.penEmoji : Images.redHeartEmoji}
+            style={{ width: 16, height: 16, marginRight: 12 }}
+            resizeMode='contain'
+          />
+          <Text style={{ fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}>{item.feedbackType}</Text>
+        </View>
+        <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center'}}>
+          <Image
+            source={Images.targetEmoji}
+            style={{ width: 16, height: 16, marginRight: 12 }}
+            resizeMode='contain'
+          />
+          <Text style={{ fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}>Next step: <Text style={{ opacity: 0.5}}>{item.nextStep}</Text></Text>
+        </View>
+      </View>
+      </TouchableOpacity>
     )
   }
 
   return (
     <View style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
       <SafeAreaView>
-        <View style={{ paddingHorizontal: 16}}>
+        <View style={{ paddingHorizontal: 16, marginTop: 30}}>
           <Text style={{ fontSize: 32, lineHeight: 36, fontWeight: '700', color: '#667080', marginBottom: 8}}>Feedback Coaching</Text>
           <Text style={{ color: '#667080', fontSize: 14, lineHeight: 20, fontWeight: '400'}}>{`Advocating for your employees' growth and optimal performance with feedback`}</Text>
         </View>
@@ -119,9 +230,15 @@ const HomeScreen = props => {
           </View>
         </View>
       </SafeAreaView>
-      {/* <View>
-      <JourneyCard/>
-      </View> */}
+      <View>
+        {sampleStaffData.map((item, i) => (
+          <JourneyCard
+            item={item}
+          />    
+        ))}
+      </View>
+      <View style={{ height: 100}}/>
+      </ScrollView>
       <FAB
         icon='plus'
         onPress={() => handleNavigation()}
