@@ -1,6 +1,5 @@
 import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
-import { min } from 'moment';
 
 const defaultState ={
   data: null,
@@ -46,7 +45,7 @@ export const INITIAL_STATE = Map({
   overviewQuestions: null,
   extendedQuestions: {
     empathyList: [],
-    curiosityList: [],
+    opennessToLearnList: [],
     authenticityList: [],
     trustBuildingList: [],
     achievementList: [],
@@ -73,6 +72,9 @@ export const INITIAL_STATE = Map({
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
   setAssessmentData: ['key','data'],
+  setAssessmentExtendedActiveStep: ['extendedStep'],
+  setAssessmentCategoryActiveStep: ['categoryStep'],
+  resetStep: ['key', 'data'],
   fetchOverviewQuestions: [],
   fetchOverviewQuestionsSuccess: ['overviewQuestions'],
   fetchOverviewQuestionsFailure: ['error'],
