@@ -24,12 +24,15 @@ const BaselineScore = props => {
 
   const retrieveDataExtended = async () => {
     await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
-      debugger;
-      setTimeout(() => {
-        navigation.navigate('Leadership Assessment Extended');
-    }, 300);
   };
 
+
+  const handleNavigation = () => {
+    setTimeout(() => {
+      navigation.navigate('Assessment', {
+        screen: 'Leadership Assessment Extended'}); 
+  }, 300);
+  }
   
   
   const skillList = [
