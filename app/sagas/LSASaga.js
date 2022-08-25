@@ -27,6 +27,7 @@ export function* fetchOverviewQuestions() {
   // return
   // }
   const response = yield call(api.getLSAOverviewQuestion);
+  
   if (response.ok) {
     let questions = [];
     questions.push(
@@ -34,7 +35,7 @@ export function* fetchOverviewQuestions() {
       ...response.data['trust-building'],
       ...response.data.authenticity,
       ...response.data.achievement,
-      ...response.data.curiousity, // IYAQ
+      ...response.data['openness to learn'],
     );
 
     const arr = randomizeQuestions(questions);
@@ -60,14 +61,14 @@ export function* fetchExtendedQuestions() {
     const trustQs = randomizeQuestions(response.data["trust-building"]);
     const authenticityQs = randomizeQuestions(response.data.authenticity);
     const achievementQs = randomizeQuestions(response.data.achievement);
-    // const curiosityQs = randomizeQuestions(response.data.curiosity)
+    const opennessToLearnQs = randomizeQuestions(response.data['openness to learn'])
 
     const questions = {
       empathyList: empathyQs,
       authenticityList: authenticityQs,
       trustBuildingList: trustQs,
       achievementList: achievementQs,
-      //curiosityList: curiosityQs
+      opennessToLearnList: opennessToLearnQs
     }
 
     yield put(leadershipSkillAreaActions.fetchExtendedQuestionsSuccess(questions))
