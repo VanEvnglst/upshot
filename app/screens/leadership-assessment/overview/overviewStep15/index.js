@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import leadershipSkillAreaActions from 'app/store/LSARedux';
-import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
+import { getOverviewStep, getOverviewMaxStep, getOverviewQuestions } from 'app/store/selectors';
 import containerStyles from 'app/screens/leadership-assessment/styles';
 import * as NavigationService from 'app/services/NavigationService';
 
@@ -18,9 +18,7 @@ import * as NavigationService from 'app/services/NavigationService';
 const OverviewStep15 = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const questionTitle = useSelector(
-    state => state.lsaOverview.get('overviewQuestions')[14],
-  );
+  const questionTitle = useSelector(state => state.leadershipSkillArea.get('overviewQuestions')[14]);
   const activeStep = useSelector(getOverviewStep);
   const maxStep = useSelector(getOverviewMaxStep);
   const [optionSelection, setOptionSelection] = useState({
@@ -65,7 +63,7 @@ const OverviewStep15 = props => {
       question: questionTitle,
     };
 
-    dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
+    dispatch(leadershipSkillAreaActions.setAssessmentData('step15', data));
     NavigationService.navigate('Assessment End Line');
     // dispatch(LSAOverviewActions.setAssessmentActiveStep(activeStep + 1));
   };
