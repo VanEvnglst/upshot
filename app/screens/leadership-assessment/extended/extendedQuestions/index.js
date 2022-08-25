@@ -18,8 +18,6 @@ import * as NavigationService from 'app/services/NavigationService';
 const ExtendedStep = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  //const activeStep = useSelector(getOverviewStep);
-  //const maxStep = useSelector(getOverviewMaxStep);
   const extendedActiveStep = useSelector(getExtendedStep);
   const extendedMaxStep = useSelector(getExtendedMaxStep);
   const categoryActiveStep = useSelector(getCategoryStep);
@@ -30,9 +28,6 @@ const ExtendedStep = props => {
   const questionTitle = useSelector(
     state => state.leadershipSkillArea.get('extendedQuestions')[categorySelection.title][extendedActiveStep - 1],
   );
-  // const questionTitle = useSelector(
-  //   state => state.leadershipSkillArea.get('empathyList')[0],
-  // );
  
   const [optionSelection, setOptionSelection] = useState({
     key: 0,
