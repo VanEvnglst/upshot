@@ -1,26 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { Wrapper, InputField } from 'app/components';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import PushNotification from 'react-native-push-notification';
+import { Button } from 'react-native-paper';
+import PropTypes from 'prop-types';
+import { Wrapper, InputField } from 'app/components';
+import { BaselineScore, ExtendedLeadershipAssessment } from 'app/screens';
 import { SampleLocalNotif } from 'app/services/notification-service';
 
-const Profile = () => {
+const Profile = props => {
+  const { navigation } = props;
   const [value, setValue] = useState('');
 
   const handleButtonPress = () => {
     SampleLocalNotif();
   };
 
+  const handleNavigation = () => {
+    navigation.navigate("Assessment", { screen: 'Leadership Assessment Extended'});
+    // NavigationService.navigate('Home', { screen: 'Home' }
+  }
+
   return (
-    <Wrapper>
-      <Text>Profile</Text>
-      <View
-        style={{ marginBottom: 30, flexWrap: 'wrap', flexDirection: 'row' }}>
-        <InputField value={value} onChangeText={text => setValue(text)} />
-      </View>
-      <Button title={'Local push notif'} onPress={() => handleButtonPress()} />
-    </Wrapper>
+    <View
+      style={{ flex: 1 }}
+    >
+
+    <View style={{ flex: 1}}>
+    <BaselineScore {...props}/>
+    </View>
+    
+           
+            </View>
   );
 };
 
 export default Profile;
+
+Profile.propTypes = {};
+
+Profile.defaultProps = {};
