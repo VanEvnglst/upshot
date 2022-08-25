@@ -23,7 +23,6 @@ const HomeNavigator = () => {
     >
       <HomeStack.Screen name={'Home'} component={TabRoutes} />
       <HomeStack.Screen name={'Feedback'} component={FeedbackNavigator} />
-      {/* <HomeStack.Screen name={'Reminders'} component={Reminders} /> */}
       <HomeStack.Screen
             name={'Assessment'}
             component={AssessmentNavigator}
@@ -110,8 +109,7 @@ function TabRoutes() {
       />
       <BottomTab.Screen
         name={'Profile'}
-        //component={BaselineScore}
-        component={ExtendedLeadershipAssessment}
+        component={Profile}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
