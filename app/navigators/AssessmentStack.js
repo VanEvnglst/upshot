@@ -5,9 +5,16 @@ import {
   LeadershipAssessmentGuide,
   AssessmentEndLine,
   LeadershipOverviewResults,
+  MilestoneSignpost1,
+  MilestoneSignpost2,
+  MilestoneSignpost3,
+  MilestoneSignpost4,
+  MilestoneSignpost5,
+  BaselineScore,
 
 } from '../screens';
 import ExtendedLeadershipAssessment from '../screens/leadership-assessment/extended';
+//import MilestoneSignpost1 from '../screens/leadership-assessment/lsa-milestone-signpost/milestone-signpost1';
 
 const AssessmentStack = createStackNavigator();
 export default function AssessmentNavigator() {
@@ -36,6 +43,30 @@ export default function AssessmentNavigator() {
        <AssessmentStack.Screen
         name={'Leadership Assessment Extended'}
         component={ExtendedLeadershipAssessment}
+      />
+       <AssessmentStack.Screen
+        name={'Baseline Score'}
+        component={BaselineScore}
+      />
+       <AssessmentStack.Screen
+        name={'Milestone Signpost1'}
+        component={MilestoneSignpost1}
+      />
+      <AssessmentStack.Screen
+        name={'Milestone Signpost2'}
+        component={MilestoneSignpost2}
+      />
+      <AssessmentStack.Screen
+        name={'Milestone Signpost3'}
+        component={MilestoneSignpost3}
+      />
+      <AssessmentStack.Screen
+        name={'Milestone Signpost4'}
+        component={MilestoneSignpost4}
+      />
+      <AssessmentStack.Screen
+        name={'Milestone Signpost5'}
+        component={MilestoneSignpost5}
       />
     </AssessmentStack.Navigator>
   );

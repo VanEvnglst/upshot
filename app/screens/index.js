@@ -11,6 +11,11 @@ export { default as AssessmentEndLine } from './leadership-assessment/overview/o
 export { default as LeadershipOverviewResults } from './leadership-assessment/overview/overview-results';
 export { default as BaselineScore } from './leadership-assessment/lsa-baseline-scores';
 export { default as ExtendedLeadershipAssessment } from './leadership-assessment/extended';
+export { default as MilestoneSignpost1 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost1';
+export { default as MilestoneSignpost2 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost2';
+export { default as MilestoneSignpost3 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost3';
+export { default as MilestoneSignpost4 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost4';
+export { default as MilestoneSignpost5 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost5';
 
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';
 /* ------------- Home Stack ------------- */

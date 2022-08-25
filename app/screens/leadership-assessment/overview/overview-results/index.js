@@ -21,13 +21,13 @@ const LeadershipOverviewResults = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
-    const retrieveDataExtended = async () => {
-    await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
-      debugger;
-      setTimeout(() => {
-        navigation.navigate('Leadership Assessment Extended');
-    }, 300);
-  };
+  //   const retrieveDataExtended = async () => {
+  //   await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+  //     debugger;
+  //     setTimeout(() => {
+  //       navigation.navigate('Leadership Assessment Extended');
+  //   }, 300);
+  // };
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -101,7 +101,8 @@ const LeadershipOverviewResults = props => {
       <Button
             mode='contained'
             style={styles.button}
-            onPress={() => retrieveDataExtended()}
+            // onPress={() => retrieveDataExtended()}
+            onPress={() => navigation.navigate('Leadership Assessment Extended')}
       >Build my Profile</Button>
       <TouchableOpacity
         style={styles.skippable}

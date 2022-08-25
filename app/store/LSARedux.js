@@ -13,7 +13,7 @@ export const INITIAL_STATE = Map({
   activeStep: 1,
   maxStep: 15,
   categoryActiveStep: 1,
-  categoryMaxStep: 5,
+  categoryMaxStep: 4,
   extendedActiveStep: 1,
   extendedMaxStep: 7,
   categorySelection: [
@@ -72,6 +72,8 @@ export const INITIAL_STATE = Map({
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
   setAssessmentExtendedActiveStep: ['extendedStep'],
+  setAssessmentCategoryActiveStep: ['categoryStep'],
+  resetStep: ['key', 'data'],
   setAssessmentData: ['key','data'],
   fetchOverviewQuestions: [],
   fetchOverviewQuestionsSuccess: ['overviewQuestions'],
@@ -103,6 +105,21 @@ const setAssessmentExtendedActiveStep = (state, { extendedStep }) => {
     extendedActiveStep: extendedStep,
   });
 };
+
+const resetStep = (state, { key, data }) =>
+  state.merge({ [key]: data });
+
+const setAssessmentCategoryActiveStep = (state, { categoryStep }) => {
+  if (state.get('categoryActiveStep') > state.get('categoryMaxStep')) {
+    return state.get('categoryActiveStep');
+  }
+  return state.merge({
+    categoryActiveStep: categoryStep,
+  });
+};
+
+// const resetCategoryActiveStep = (state, { key, categoryStep }) =>
+//   state.merge({ [key]: categoryStep });
 
 const setAssessmentData = (state, { key, data }) => 
   state.merge({
@@ -149,6 +166,8 @@ const fetchExtendedQuestionsFailure = (state, { error }) =>
 export const reducer = createReducer(INITIAL_STATE, {
 [Types.SET_ASSESSMENT_ACTIVE_STEP]: setAssessmentActiveStep,
 [Types.SET_ASSESSMENT_EXTENDED_ACTIVE_STEP]: setAssessmentExtendedActiveStep,
+[Types.RESET_STEP]: resetStep,
+[Types.SET_ASSESSMENT_CATEGORY_ACTIVE_STEP]: setAssessmentCategoryActiveStep,
 [Types.SET_ASSESSMENT_DATA]: setAssessmentData,
 [Types.FETCH_OVERVIEW_QUESTIONS]: fetchOverviewQuestions,
 [Types.FETCH_OVERVIEW_QUESTIONS_SUCCESS]: fetchOverviewQuestionsSuccess,
