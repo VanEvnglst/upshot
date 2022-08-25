@@ -7,6 +7,7 @@ import {
   LeadershipOverviewResults,
 
 } from '../screens';
+import ExtendedLeadershipAssessment from '../screens/leadership-assessment/extended';
 
 const AssessmentStack = createStackNavigator();
 export default function AssessmentNavigator() {
@@ -31,6 +32,10 @@ export default function AssessmentNavigator() {
       <AssessmentStack.Screen
         name={'Leadership Assessment Results'}
         component={LeadershipOverviewResults}
+      />
+       <AssessmentStack.Screen
+        name={'Leadership Assessment Extended'}
+        component={ExtendedLeadershipAssessment}
       />
     </AssessmentStack.Navigator>
   );

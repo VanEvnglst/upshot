@@ -10,16 +10,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import leadershipSkillAreaActions from 'app/store/LSARedux';
-import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
+import { getOverviewStep, getOverviewMaxStep, getExtendedStep, getExtendedMaxStep } from 'app/store/selectors';
 import containerStyles from 'app/screens/leadership-assessment/styles';
 
-const OverviewStep13 = () => {
+const ExtendedStep = () => {
   const dispatch = useDispatch();
+  //const activeStep = useSelector(getOverviewStep);
+  //const maxStep = useSelector(getOverviewMaxStep);
+  const extendedActiveStep = useSelector(getExtendedStep);
+  const extendedMaxStep = useSelector(getExtendedMaxStep);
   const questionTitle = useSelector(
-    state => state.leadershipSkillArea.get('overviewQuestions')[12],
+    state => state.leadershipSkillArea.get('extendedQuestions')['empathyList'][extendedActiveStep - 1],
   );
-  const activeStep = useSelector(getOverviewStep);
-  const maxStep = useSelector(getOverviewMaxStep);
+  // const questionTitle = useSelector(
+  //   state => state.leadershipSkillArea.get('empathyList')[0],
+  // );
+ 
+ 
   const [optionSelection, setOptionSelection] = useState({
     key: 0,
     title: '',
@@ -63,7 +70,10 @@ const OverviewStep13 = () => {
     };
 
     dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
-    dispatch(leadershipSkillAreaActions.setAssessmentActiveStep(activeStep + 1));
+    if (extendedActiveStep < extendedMaxStep)
+      dispatch(leadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep + 1));
+    else
+          NavigationService.navigate('Assessment End Line');
   };
 
   return (
@@ -99,11 +109,11 @@ const OverviewStep13 = () => {
         );
       })}
       <View style={containerStyles.counterContainer}>
-        <Text style={containerStyles.counterGuideText}>Questions</Text>
+        <Text style={containerStyles.counterGuideText}>💓 Empathy</Text>
         <View style={containerStyles.questionCounterContainer}>
-          <Text style={containerStyles.questionCounterText}>{activeStep}</Text>
+          <Text style={containerStyles.questionCounterText}>{extendedActiveStep}</Text>
           <Text style={containerStyles.maxQuestionCounterText}>
-            {`/${maxStep}`}
+            {`/${extendedMaxStep}`}
           </Text>
         </View>
       </View>
@@ -111,4 +121,4 @@ const OverviewStep13 = () => {
   );
 };
 
-export default OverviewStep13;
+export default ExtendedStep;

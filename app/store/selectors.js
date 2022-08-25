@@ -116,5 +116,9 @@ export const getFeelingData = state => state.survey.get('howDidYouFeel');
 export const getManagerName = state => state.survey.get('manager');
 
 /* ------------- Leadership Assessment Selectors ------------- */
-export const getOverviewStep = state => state.lsaOverview.get('activeStep');
-export const getOverviewMaxStep = state => state.lsaOverview.get('maxStep');
+export const getOverviewStep = state => state.leadershipSkillArea.get('activeStep');
+export const getOverviewMaxStep = state => state.leadershipSkillArea.get('maxStep');
+export const getExtendedStep = state => state.leadershipSkillArea.get('extendedActiveStep');
+export const getExtendedMaxStep = state => state.leadershipSkillArea.get('extendedMaxStep');
+export const getCategoryStep = state => state.leadershipSkillArea.get('categoryActiveStep');
+export const getCategoryMaxStep = state => state.leadershipSkillArea.get('categoryMaxStep');

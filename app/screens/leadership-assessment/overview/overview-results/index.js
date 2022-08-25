@@ -15,11 +15,19 @@ import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
+import leadershipSkillAreaActions from 'app/store/LSARedux';
 
 const LeadershipOverviewResults = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
+    const retrieveDataExtended = async () => {
+    await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+      debugger;
+      setTimeout(() => {
+        navigation.navigate('Leadership Assessment Extended');
+    }, 300);
+  };
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -36,6 +44,8 @@ const LeadershipOverviewResults = props => {
     dispatch(AuthenticationActions.signInUserSuccess());
     navigation.navigate('Home')
   }
+
+
 
   return (
   <View style={styles.container}>
@@ -89,8 +99,9 @@ const LeadershipOverviewResults = props => {
     </View>
     <View style={styles.btnContainer}>
       <Button
-        mode='contained'
-        style={styles.button}
+            mode='contained'
+            style={styles.button}
+            onPress={() => retrieveDataExtended()}
       >Build my Profile</Button>
       <TouchableOpacity
         style={styles.skippable}
