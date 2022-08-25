@@ -19,7 +19,7 @@ const OverviewStep15 = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const questionTitle = useSelector(
-    state => state.lsaOverview.get('overviewQuestions')[14],
+    state => state.leadershipSkillArea.get('overviewQuestions')[14],
   );
   const activeStep = useSelector(getOverviewStep);
   const maxStep = useSelector(getOverviewMaxStep);
