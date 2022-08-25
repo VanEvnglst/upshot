@@ -16,6 +16,7 @@ import Images from 'app/assets/images';
 import {RadarChart} from 'react-native-charts-wrapper';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 import leadershipSkillAreaActions from 'app/store/LSARedux';
+import * as NavigationService from 'app/services/NavigationService';
 
 const BaselineScore = props => {
   
@@ -224,7 +225,7 @@ const BaselineScore = props => {
             ))}
            
           </View>
-          <View style={{ height: 200 , marginVertical: 100, backgroundColor: 'white'}} >
+          <View style={{ height: 200, marginVertical: 50, marginHorizontal: 16}} >
           
           <Button
             style={{
@@ -234,14 +235,14 @@ const BaselineScore = props => {
               alignItems: 'center'
             }}
             mode="outlined"
-            onPress={() => retrieveDataExtended()}>
+            onPress={() => NavigationService.navigate('Home', { screen: 'Home' })}>
             <Text style={{
             color: "white",
     fontSize: 16,
     lineHeight: 22,
     fontWeight: '400',
     textAlign: 'center'
-          }}>Build your profile</Text>  
+          }}>Complete Assessment</Text>  
             </Button>
             </View>
         </ScrollView>

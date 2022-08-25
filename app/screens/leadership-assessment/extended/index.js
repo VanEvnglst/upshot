@@ -15,7 +15,7 @@ import leadershipSkillAreaActions from 'app/store/LSARedux';
 import ExtendedStep from './extendedQuestions';
 
 
-import { getOverviewStep, getOverviewMaxStep, getExtendedStep, getExtendedMaxStep } from 'app/store/selectors';
+import { getOverviewStep, getOverviewMaxStep, getExtendedStep, getExtendedMaxStep, getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
 import containerStyles from './styles';
 
 const ExtendedLeadershipAssessment = props => {
@@ -25,8 +25,8 @@ const ExtendedLeadershipAssessment = props => {
   //const maxStep = useSelector(getOverviewMaxStep);
   const extendedActiveStep = useSelector(getExtendedStep);
   const extendedMaxStep = useSelector(getExtendedMaxStep);
-  //const categoryActiveStep = useSelector(getCategoryStep);
-  //const categoryMaxStep = useSelector(getCategoryMaxStep);
+  const categoryActiveStep = useSelector(getCategoryStep);
+  const categoryMaxStep = useSelector(getCategoryMaxStep);
   const indexValue = extendedActiveStep / extendedMaxStep;
 
   useEffect(() => {
@@ -53,11 +53,14 @@ const ExtendedLeadershipAssessment = props => {
   };
 
   const handleStepContent = () => {
-    //if (categoryActiveStep <= categoryMaxStep)
-    if (extendedActiveStep <= extendedMaxStep)
-      return <ExtendedStep />
+    if (categoryActiveStep <= categoryMaxStep) {
+      if (extendedActiveStep <= extendedMaxStep)
+        return <ExtendedStep />
+      else
+        console.warn('Error-activeStep', extendedActiveStep);
+    }
     else
-      console.warn('Error-activeStep', extendedActiveStep);
+      console.warn('Error-categoryStep', categoryActiveStep);
     
     // switch (activeStep) {
     //   case 1:
@@ -73,13 +76,20 @@ const ExtendedLeadershipAssessment = props => {
 
   return (
     <View style={containerStyles.container}>
-      <View style={{ paddingHorizontal: 24 }}>
+      <View style={{ paddingHorizontal: 24}}>
         <SafeAreaView>
+          <View style={{ justifyContent: 'space-between', flexDirection: 'row'}}>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={() => handleGoBack()}>
             <Icon name="chevron-back-outline" size={24} font-size="6px" />
-          </TouchableOpacity>
+            </TouchableOpacity>
+            <Text style={{fontWeight: '700', fontSize: 16, lineHeight: 22, color: "#667080", minWidth: 172, textAlign: 'center'}}>Leadership Profile</Text>
+            <TouchableOpacity
+            accessibilityRole='button'>
+              <Text style={{fontWeight: '500', fontSize: 16, lineHeight: 22, color: "#667080"}}>Cancel</Text>
+              </TouchableOpacity>
+          </View>
           <ProgressBar
             progress={indexValue}
             color={'#667080'}
