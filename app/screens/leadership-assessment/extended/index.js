@@ -15,14 +15,12 @@ import leadershipSkillAreaActions from 'app/store/LSARedux';
 import ExtendedStep from './extendedQuestions';
 
 
-import { getOverviewStep, getOverviewMaxStep, getExtendedStep, getExtendedMaxStep, getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
+import { getExtendedStep, getExtendedMaxStep, getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
 import containerStyles from './styles';
 
 const ExtendedLeadershipAssessment = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  //const activeStep = useSelector(getOverviewStep);
-  //const maxStep = useSelector(getOverviewMaxStep);
   const extendedActiveStep = useSelector(getExtendedStep);
   const extendedMaxStep = useSelector(getExtendedMaxStep);
   const categoryActiveStep = useSelector(getCategoryStep);
@@ -40,13 +38,6 @@ const ExtendedLeadershipAssessment = props => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   async function retrieveData() {
-  //     await dispatch(LSAOverviewActions.fetchOverviewAssessment());
-  //   }
-  //   retrieveData();
-  // }, []);
-
   const handleGoBack = () => {
     if (extendedActiveStep === 1) navigation.goBack();
     else dispatch(leadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep - 1));
@@ -61,24 +52,13 @@ const ExtendedLeadershipAssessment = props => {
     }
     else
       console.warn('Error-categoryStep', categoryActiveStep);
-    
-    // switch (activeStep) {
-    //   case 1:
-    //     return <ExtendedStep />;
-    //    case 2:
-    //     return <ExtendedStep />;
-    //    case 3:
-    //     return <ExtendedStep />;
-    //    case 4:
-    //     return <ExtendedStep />;
-    // }
   };
 
   return (
     <View style={containerStyles.container}>
-      <View style={{ paddingHorizontal: 24}}>
+      <View style={{ paddingHorizontal: 24, marginTop: 30}}>
         <SafeAreaView>
-          <View style={{ justifyContent: 'space-between', flexDirection: 'row'}}>
+          <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row'}}>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={() => handleGoBack()}>
