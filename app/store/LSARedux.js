@@ -66,14 +66,12 @@ export const INITIAL_STATE = Map({
   step13: { ...defaultState },
   step14: { ...defaultState },
   step15: { ...defaultState },
+  overviewTestResults: null,
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
-  setAssessmentExtendedActiveStep: ['extendedStep'],
-  setAssessmentCategoryActiveStep: ['categoryStep'],
-  resetStep: ['key', 'data'],
   setAssessmentData: ['key','data'],
   fetchOverviewQuestions: [],
   fetchOverviewQuestionsSuccess: ['overviewQuestions'],
@@ -81,6 +79,10 @@ const { Types, Creators } = createActions({
   fetchExtendedQuestions: [],
   fetchExtendedQuestionsSuccess: ['extendedQuestions'],
   fetchExtendedQuestionsFailure: ['error'],
+  postOverviewTest: ['data'],
+  postOverviewTestSuccess: ['results'],
+  postOverviewTestFailure: ['error'],
+
 });
 
 

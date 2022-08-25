@@ -62,8 +62,10 @@ const OverviewStep3 = () => {
       question: questionTitle,
     };
 
-    dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
-    dispatch(leadershipSkillAreaActions.setAssessmentActiveStep(activeStep + 1));
+    dispatch(leadershipSkillAreaActions.setAssessmentData('step3', data));
+    setTimeout(() => {
+      dispatch(leadershipSkillAreaActions.setAssessmentActiveStep(activeStep + 1)); 
+    }, 300);
   };
 
   return (

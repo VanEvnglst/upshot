@@ -17,6 +17,7 @@ export default containerStyles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     fontWeight: '400',
+    color: '#667080'
   },
   questionContainer: {
     minHeight: 120,
