@@ -82,10 +82,10 @@ const LeadershipAssessment = props => {
         return <OverviewStep12 />;
       case 13:
         return <OverviewStep13 />;
-      // case 14:
-      //   return <OverviewStep14 />;
-      // case 15:
-      //   return <OverviewStep15 />;
+      case 14:
+        return <OverviewStep14 />;
+      case 15:
+        return <OverviewStep15 />;
     }
   };
 
