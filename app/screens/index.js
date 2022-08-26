@@ -1,3 +1,5 @@
+import { forModalPresentationIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
+
 /* ------------- Auth Stack ------------- */
 export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
@@ -19,6 +21,9 @@ export { default as MilestoneSignpost4 } from './leadership-assessment/lsa-miles
 export { default as MilestoneSignpost5 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost5';
 
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';
+export { default as RecordFeedbackEntry } from './feedback/record-entry';
+export { default as ReviewFeedbackEntry } from './feedback/record-entry/review-entry';
+export { default as EntryConfirmation } from './feedback/record-entry/entry-confirmation';
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
 export { default as Messages } from './messages';
