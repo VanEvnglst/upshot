@@ -32,10 +32,10 @@ export function* fetchOverviewQuestions() {
     let questions = [];
     questions.push(
       ...response.data.empathy,
-      ...response.data['trust-building'],
+      ...response.data.trust_building,
       ...response.data.authenticity,
       ...response.data.achievement,
-      ...response.data['openness to learn'],
+      ...response.data.openness_to_learn,
     );
 
     const arr = randomizeQuestions(questions);
@@ -58,10 +58,10 @@ export function* fetchExtendedQuestions() {
   const response = yield call(api.getLSAExtendedQuestions);
   if (response.ok) {
     const empathyQs = randomizeQuestions(response.data.empathy);
-    const trustQs = randomizeQuestions(response.data["trust-building"]);
+    const trustQs = randomizeQuestions(response.data.trust_building);
     const authenticityQs = randomizeQuestions(response.data.authenticity);
     const achievementQs = randomizeQuestions(response.data.achievement);
-    const opennessToLearnQs = randomizeQuestions(response.data['openness to learn'])
+    const opennessToLearnQs = randomizeQuestions(response.data.openness_to_learn)
 
     const questions = {
       empathyList: empathyQs,
