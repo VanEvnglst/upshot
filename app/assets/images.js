@@ -69,4 +69,8 @@ export default {
   penEmoji: require('./images/pen-emoji.png'),
   partyEmoji: require('./images/party-emoji.png'),
   targetEmoji: require('./images/target-emoji.png'),
+  deliveredEmoji: require('./images/delivered.png'),
+  calendarOutline: require('./images/calendar-outline.png'),
+  usersOutline: require('./images/users-outline.png'),
+  paperclip: require('./images/paperclip.png'),
 };
