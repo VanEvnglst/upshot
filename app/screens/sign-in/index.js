@@ -78,7 +78,7 @@ const SignIn = props => {
       <View style={styles.headerContainer}>
         <View style={styles.headerOptions}>
           <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => navigation.navigate('Starting line')}
           >
         <Text>X</Text>
         </TouchableOpacity>
