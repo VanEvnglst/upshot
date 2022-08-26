@@ -289,7 +289,7 @@ const StartingLineScreen = props => {
         }}>
         <Button
           mode="contained"
-          onPress={() => {}}
+          onPress={() => navigation.navigate('Starting guide')}
           style={{
             height: 55,
             justifyContent: 'center',
