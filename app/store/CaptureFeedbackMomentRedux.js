@@ -10,8 +10,7 @@ export const INITIAL_STATE = Map({
   fetching: false,
   activeStep: 1,
   maxStep: 4,
-  step1: { ...defaultState},
-  step2: { ...defaultState},
+  data: null,
   layerOneTopics: [],
   layerTwoTopics: [],
   error: '',
@@ -45,9 +44,13 @@ const setCaptureActiveStep = (state, { step }) => {
 }
 
 const setCaptureData = (state, { key, data }) => {
+  console.log('here', key, data);
   return state.merge({
-    [key]: { data },
-  })
+    data: {
+      ...state.get('data'),
+      [key]: data,
+    }
+  });
 }
 
 const fetchLayerOneTopics = state => 
