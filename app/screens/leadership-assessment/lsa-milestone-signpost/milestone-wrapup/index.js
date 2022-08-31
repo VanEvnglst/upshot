@@ -13,38 +13,10 @@ import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import leadershipSkillAreaActions from 'app/store/LSARedux';
-import { useDispatch, useSelector } from 'react-redux';
 //import { getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
 
-const MilestoneSignpost1 = props => {
+const MilestoneWrapUp = props => {
   const { navigation } = props;
-  const dispatch = useDispatch();
-
-  const extendedTestAns = useSelector(
-    state => state.leadershipSkillArea.get('extendedData'));
-  const testing = Object.keys(extendedTestAns);
-  const value = testing.length;
-  const testing1 = Object.values(extendedTestAns);
-  const extendedAns = Object.values(testing1)['data'];
-  //const trial = Object.values(extendedAns);
-    //qid: extendedTestAns.map((data) => { return data.testing.questions.qid })
-  for (let i = 0; i < value; i++) { 
-    const extendedAns1 = Object.values(testing1)[i]['data'];
-    const trys = Object.values(extendedAns1);
-    const wew = { q_id: trys[1]['qid'] , ans: trys[0]['value'] 
-};
-  }
-  
-
-  // const extendedAns [] = map(extendedTestAns.)
-  debugger;
-  const handleDataAndNext = () => {
-    //dispatch(leadershipSkillAreaActions.postExtendedTest(extendedTestAns.data.question.id));
-    debugger;
-    setTimeout(() => {
-      navigation.navigate('Leadership Assessment Extended');
-    }, 200);
-  }
   //const categoryActiveStep = useSelector(getCategoryStep);
   //const categoryMaxStep = useSelector(getCategoryMaxStep);
 
@@ -69,26 +41,26 @@ const MilestoneSignpost1 = props => {
 
       <View style={styles.imageContainer}>
             <Image
-                source={Images.coolEmoji}
+                source={Images.lightningEmoji}
                 resizeMode='contain'
                 style={styles.image}
             />
       </View>
 
       <View style={styles.contentContainer}>
-        <Text style={styles.titleText}>You're doing well!</Text>
+        <Text style={styles.titleText}>That was lightning fast! 🎉</Text>
 
         <Text style={styles.descriptionText}>
-          {"Each of these questions is based on behavioral research <placeholder> and will help us guide you through leadership practices."}
+          {"Welcome to Upshot! Congratulations on finishing your onboarding!"}
         </Text>
       </View>
 
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => handleDataAndNext()}
+          onPress={() => navigation.navigate('Leadership Assessment Extended')}
           mode="contained"
           style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>Let's wrap up!</Text>
         </Button>
       </View>
       <View style={styles.spacer} />
@@ -96,7 +68,7 @@ const MilestoneSignpost1 = props => {
   );
 };
 
-export default MilestoneSignpost1;
+export default MilestoneWrapUp;
 
 const styles = StyleSheet.create({
   container: {

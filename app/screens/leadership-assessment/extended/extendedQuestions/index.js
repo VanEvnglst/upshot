@@ -28,7 +28,7 @@ const ExtendedStep = props => {
   const questionTitle = useSelector(
     state => state.leadershipSkillArea.get('extendedQuestions')[categorySelection.title][extendedActiveStep - 1],
   );
- 
+
   const [optionSelection, setOptionSelection] = useState({
     key: 0,
     title: '',
@@ -70,9 +70,10 @@ const ExtendedStep = props => {
       option,
       question: questionTitle,
     };
-
-    dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
-  
+    
+    //dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
+    dispatch(leadershipSkillAreaActions.setExtendedAssessmentData(`${categorySelection.dataValue}Answer${extendedActiveStep}`, data));
+    //console.log("extended", extendedAnswer);
     if (extendedActiveStep < extendedMaxStep) {
       dispatch(leadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep + 1));
   
@@ -105,6 +106,7 @@ const ExtendedStep = props => {
       
       
     }
+
   };
 
   return (
