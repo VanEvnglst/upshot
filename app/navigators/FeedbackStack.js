@@ -27,7 +27,7 @@ import {
   CaptureFeedbackMoment,
   RecordFeedbackEntry,
   EntryConfirmation,
-  ReviewFeedbackEntry
+  ReviewFeedbackEntry,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -45,24 +45,25 @@ export default function FeedbackNavigator() {
         //     ? 'FeedbackJourneyList'
         //     : 'FeedbackFlow'
         // }
-        >
-          <FeedbackStack.Screen
-        name={'Record Feedback Entry'}
-        component={RecordFeedbackEntry}
-      />
-          <FeedbackStack.Screen
-        name={'Capture Feedback Moment'}
-        component={CaptureFeedbackMoment}
-      />
-      <FeedbackStack.Screen
-        name={'Feedback Entry Confirmation'}
-        component={EntryConfirmation}
-      />
-      <FeedbackStack.Screen
-        name={'Review Entry'}
-        component={ReviewFeedbackEntry}
-      />
-      
+      >
+        <FeedbackStack.Screen
+          name={'Capture Feedback Moment'}
+          component={CaptureFeedbackMoment}
+        />
+        <FeedbackStack.Screen
+          name={'Record Feedback Entry'}
+          component={RecordFeedbackEntry}
+        />
+
+        <FeedbackStack.Screen
+          name={'Feedback Entry Confirmation'}
+          component={EntryConfirmation}
+        />
+        <FeedbackStack.Screen
+          name={'Review Entry'}
+          component={ReviewFeedbackEntry}
+        />
+
         {/* <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
         <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
         {/* Only appears when starting a new journey */}
