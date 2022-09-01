@@ -11,9 +11,14 @@ export const INITIAL_STATE = Map({
   activeStep: 1,
   maxStep: 4,
   data: null,
+  staffMembers: [],
   layerOneTopics: [],
   layerTwoTopics: [],
   error: '',
+  entryMaxStep: 5,
+  entryActiveStep: 1,
+  feedbackEntryData: null,
+  journeyId: null,
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -21,7 +26,7 @@ const { Types, Creators } = createActions({
   setCaptureActiveStep: ['step'],
   setCaptureData: ['key', 'data'],
   postCaptureMoment: ['data'],
-  postCaptureMomentSuccess: [],
+  postCaptureMomentSuccess: ['journeyId'],
   postCaptureMomentFailure: ['error'],
   fetchLayerOneTopics: [''],
   fetchLayerOneTopicsSuccess: ['layerOneList'],
@@ -29,6 +34,11 @@ const { Types, Creators } = createActions({
   fetchLayerTwoTopics: ['data'],
   fetchLayerTwoTopicsSuccess: ['layerTwoList'],
   fetchLayerTwoTopicsFailure: ['error'],
+  fetchStaffMembers: [],
+  fetchStaffMembersSuccess: ['staffList'],
+  fetchStaffMembersFailure: ['error'],
+  setEntryActiveStep: ['step'],
+  resetCaptureStep: null,
 });
 
 
@@ -36,6 +46,12 @@ export const CaptureMomentTypes = Types;
 export default Creators;
 
 /* ------------- Reducers ------------- */
+
+const resetCaptureStep = state =>
+  state.merge({
+    activeStep: 1,
+  });
+
 const setCaptureActiveStep = (state, { step }) => {
   if (state.get('activeStep') > state.get('maxStep')) {
     return state.get('activeStep');
@@ -44,7 +60,7 @@ const setCaptureActiveStep = (state, { step }) => {
 }
 
 const setCaptureData = (state, { key, data }) => {
-  console.log('here', key, data);
+  console.warn('here', key, data);
   return state.merge({
     data: {
       ...state.get('data'),
@@ -87,12 +103,56 @@ const fetchLayerOneTopics = state =>
   state.merge({
     fetching: false,
     error: error
-  })
+  });
+
+  const fetchStaffMembers = state =>
+    state.merge({
+      fetching: true,
+      error: '',
+    });
+
+  const fetchStaffMembersSuccess = (state, { staffList }) =>
+    state.merge({
+      fetching: false,
+      staffMembers: staffList
+    });
+
+  const fetchStaffMembersFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error
+    });
+
+  const postCaptureMoment = state => 
+    state.merge({
+      fetching: true,
+      error: '',
+    })
+
+  const postCaptureMomentSuccess = (state, { journeyId }) => 
+    state.merge({
+      fetching: false,
+      journeyId,
+    });
+
+  const postCaptureMomentFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error
+    });
+
+  const setEntryActiveStep = (state, { step }) => {
+      if (state.get('entryActiveStep') > state.get('entryMaxStep')) {
+        return state.get('entryActiveStep');
+      }
+      return state.merge({ entryActiveStep: step });
+  }
 
 
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
+  [Types.RESET_CAPTURE_STEP]: resetCaptureStep,
   [Types.SET_CAPTURE_ACTIVE_STEP]: setCaptureActiveStep,
   [Types.SET_CAPTURE_DATA]: setCaptureData,
   [Types.FETCH_LAYER_ONE_TOPICS]: fetchLayerOneTopics,
@@ -101,4 +161,11 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_LAYER_TWO_TOPICS]: fetchLayerTwoTopics,
   [Types.FETCH_LAYER_TWO_TOPICS_SUCCESS]: fetchLayerTwoTopicsSuccess,
   [Types.FETCH_LAYER_TWO_TOPICS_FAILURE]: fetchLayerTwoTopicsFailure,
+  [Types.FETCH_STAFF_MEMBERS]: fetchStaffMembers,
+  [Types.FETCH_STAFF_MEMBERS_SUCCESS]: fetchStaffMembersSuccess,
+  [Types.FETCH_STAFF_MEMBERS_FAILURE]: fetchStaffMembersFailure,
+  [Types.POST_CAPTURE_MOMENT]: postCaptureMoment,
+  [Types.POST_CAPTURE_MOMENT_SUCCESS]: postCaptureMomentSuccess,
+  [Types.POST_CAPTURE_MOMENT_FAILURE]: postCaptureMomentFailure,
+  [Types.SET_ENTRY_ACTIVE_STEP]: setEntryActiveStep
 });
