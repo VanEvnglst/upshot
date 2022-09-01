@@ -53,7 +53,7 @@ export default {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
-    return upshotAPI.get(`/${uniqueId}/get_staff`);
+    return upshotAPI.post(`/${uniqueId}/get_staff`);
   },
 
   getTrivias: async () => {
@@ -411,5 +411,5 @@ export default {
     const upshotAPI = await setAPI(url);
   
     return upshotAPI.get(`/lsa_extended_questions`);
-  },
+  },  
 };
