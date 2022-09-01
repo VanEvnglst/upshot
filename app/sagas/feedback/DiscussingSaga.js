@@ -21,6 +21,7 @@ export function* postFeedbackDiscussing({ journeyId }) {
   const response = yield call(api.postFeedbackDiscussing, discussingData);
   if (response.ok) {
     if (response.data.status === 'ok') {
+      debugger;
       const discussingId = response.data.details.id;
       yield put(DiscussingActions.postFeedbackDiscussingSuccess(discussingId));
       yield NavigationService.navigate('DiscussingMeeting');
