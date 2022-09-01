@@ -39,7 +39,7 @@ const CaptureMomentStep3 = ({ onPress }) => {
       <View style={styles.mainQuestionHeader}>
       <Text style={styles.mainQuestionText}>Add topic details to your</Text>
       <View style={styles.typeContainer}>
-        <Text style={styles.typeText}>{feedbackType.title}</Text>
+        <Text style={styles.typeText}>abcde</Text>
       </View>
       <Text style={styles.mainQuestionText}>feedback</Text>
       </View>

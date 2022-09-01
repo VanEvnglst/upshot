@@ -20,16 +20,21 @@ import styles from '../styles';
 import * as NavigationService from 'app/services/NavigationService';
 
 
-const CaptureMomentStep4 = ({ onPress }) => {
+const CaptureMomentStep4 = ({props, onPress}) => {
+  const { navigation } = props;
+  console.warn('prop', props);
   const dispatch = useDispatch();
-  const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => [ '25%','50%'], []);
   const { height } = Dimensions.get('window');
-  const feedbackType = useSelector(state => state.captureMoment.get('step2').data);
+  const [reminderHours, setReminderHours] = useState({
+    value: 0,
+    currentIndex: 3
+  })
 
-  useEffect(() => {
-    dispatch(CaptureMomentActions.fetchLayerOneTopics());
-  }, []);
+  const handleContinueFeedback = () => {
+    dispatch(CaptureMomentActions.setCaptureData('step4', reminderHours));
+    dispatch(CaptureMomentActions.postCaptureMoment('continueFB'));
+  }
 
   return (
     <View style={styles.content}>
@@ -52,16 +57,11 @@ const CaptureMomentStep4 = ({ onPress }) => {
         >Set Reminder</Button>
          <Button
           mode='contained'
-          style={[styles.button]}
+          style={styles.button}
+          onPress={() => handleContinueFeedback()}
         >Continue with Feedback</Button>
       </View>
       <View style={styles.spacer} />
-      {/* <BottomSheet
-        index={-1}
-        ref={bottomSheetRef}
-        snapPoints={snapPoints}
-        enablePanDownToClose
-      ><View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}><Text>Hello world</Text></View></BottomSheet> */}
     </View>
   )
 }
