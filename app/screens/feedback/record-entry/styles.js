@@ -70,6 +70,7 @@ export default styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     maxWidth: '40%',
+    marginBottom: 8,
   },
   selectedAvatar: {
     width: 24,
