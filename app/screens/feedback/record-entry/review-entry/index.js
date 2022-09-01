@@ -21,8 +21,8 @@ import Images from 'app/assets/images';
 const ReviewFeedbackEntry = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const activeStep = 1;
-  const maxStep = 6;
+  const activeStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
+  const maxStep = useSelector(state => state.captureMoment.get('entryMaxStep'));;
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -35,9 +35,6 @@ const ReviewFeedbackEntry = props => {
       });
   }, []);
 
-  const EntryQuestion2 = () => {
-
-  }
   const handleContinue = () => {
     activeStep = activeStep + 1;
   }
@@ -45,7 +42,7 @@ const ReviewFeedbackEntry = props => {
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView>
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <TouchableOpacity
           accessibilityRole="button"
           onPress={() => navigation.goBack()}
@@ -68,8 +65,8 @@ const ReviewFeedbackEntry = props => {
             }
           />
         ))}
-      </View>
-      <View style={{ paddingHorizontal: 24 }}>
+      </View> */}
+      <View>
         <Text style={{ fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080', marginTop: 20}}>Are these feedback details correct?</Text>
         <View style={{ marginTop: 30, marginBottom: 12, flexDirection: 'row', alignItems: 'center'}}>
           <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#667080', opacity: 0.5, marginRight: 12 }}/>
