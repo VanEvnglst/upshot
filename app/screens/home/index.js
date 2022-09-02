@@ -23,9 +23,8 @@ const HomeScreen = props => {
     // dispatch(FeedbackActions.fetchFeedbackFlow());
     // dispatch(FeedbackActions.fetchFeedbackType());
     // dispatch(FeedbackActions.fetchFeedbackTopics());
-    // dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-    // dispatch(FeedbackActions.resetFeedbackState());
-  dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+    dispatch(FeedbackHistoryActions.fetchActiveJourneys());
+  // dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
   }, []);
 
   const [date, setDate] = useState(new Date(1598051730000));
@@ -59,40 +58,40 @@ const HomeScreen = props => {
     navigation.navigate('Feedback');
   };
 
-  const sampleStaffData = [
-    {
-      id: 1,
-      name: 'Tommy Shelby',
-      date: 'Mon. Aug 23, 2022 at 3:30 pm',
-      status: 'in progress',
-      feedbackType:'Corrective Feedback',
-      nextStep: `Add Feedback Details (2/6)`,
-    },
-    {
-      id: 2,
-      name: 'Alfred Solomons',
-      date: 'Sat. Aug 21, 2022 at 3:30 pm',
-      status: 'completed',
-      feedbackType:'Positive Feedback',
-      nextStep: 'Completed',
-    },
-    {
-      id: 3,
-      name: 'Michael Jordan',
-      date: 'Mon. July 23, 2022 at 3:30 pm',
-      status: 'feedback sent',
-      feedbackType:'Corrective Feedback',
-      nextStep: 'Add Feedback Details (4/6)',
-    },
-    {
-      id: 4,
-      name: 'Tommy Shelby',
-      date: 'Mon. Aug 23, 2022 at 3:30 pm',
-      status: 'feedback sent',
-      feedbackType:'Positive Feedback',
-      nextStep: 'Discussion',
-    }
-  ]
+  // const sampleStaffData = [
+  //   {
+  //     id: 1,
+  //     name: 'Tommy Shelby',
+  //     date: 'Mon. Aug 23, 2022 at 3:30 pm',
+  //     status: 'in progress',
+  //     feedbackType:'Corrective Feedback',
+  //     nextStep: `Add Feedback Details (2/6)`,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Alfred Solomons',
+  //     date: 'Sat. Aug 21, 2022 at 3:30 pm',
+  //     status: 'completed',
+  //     feedbackType:'Positive Feedback',
+  //     nextStep: 'Completed',
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Michael Jordan',
+  //     date: 'Mon. July 23, 2022 at 3:30 pm',
+  //     status: 'feedback sent',
+  //     feedbackType:'Corrective Feedback',
+  //     nextStep: 'Add Feedback Details (4/6)',
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Tommy Shelby',
+  //     date: 'Mon. Aug 23, 2022 at 3:30 pm',
+  //     status: 'feedback sent',
+  //     feedbackType:'Positive Feedback',
+  //     nextStep: 'Discussion',
+  //   }
+  // ]
 
   const JourneyCard = ({ item }) => {
     console.warn(item);
@@ -168,7 +167,7 @@ const HomeScreen = props => {
       <View style={{ flexDirection: 'row', marginTop: 12, borderBottomWidth: 0.3, paddingBottom: 12}}>
         <View style={{ width: 24, height: 24, borderColor: '#667080', borderWidth: 1, borderRadius: 12, marginRight: 12}}/>
         <View>
-          <Text style={{ color: '#667080', fontWeight: '700', fontSize: 16, lineHeight: 14, paddingTop: 3, }}>{item.name}</Text>
+          <Text style={{ color: '#667080', fontWeight: '700', fontSize: 16, lineHeight: 14, paddingTop: 3, }}>{item['direct report']}</Text>
           <Text style={{ color: '#667080', marginTop: 8, fontWeight: '400', fontSize: 14, lineHeight: 14, }}>{item.date}</Text>
         </View>
       </View>
@@ -231,7 +230,7 @@ const HomeScreen = props => {
         </View>
       </SafeAreaView>
       <View>
-        {sampleStaffData.map((item, i) => (
+        {activeJourneyLength.map((item, i) => (
           <JourneyCard
             item={item}
           />    
