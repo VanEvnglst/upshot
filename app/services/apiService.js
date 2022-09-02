@@ -411,5 +411,12 @@ export default {
     const upshotAPI = await setAPI(url);
   
     return upshotAPI.get(`/lsa_extended_questions`);
-  },  
+  },
+  getFeedbackPortfolio: async () => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/get_fb_portfolio`);
+  }
 };
