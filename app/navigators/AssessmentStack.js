@@ -12,11 +12,10 @@ import {
   MilestoneSignpost5,
   MilestoneWrapUp,
   BaselineScore,
+  AssessmentBreakDown
 
 } from '../screens';
 import ExtendedLeadershipAssessment from '../screens/leadership-assessment/extended';
-//import MilestoneSignpost1 from '../screens/leadership-assessment/lsa-milestone-signpost/milestone-signpost1';
-
 const AssessmentStack = createStackNavigator();
 export default function AssessmentNavigator() {
   return (
@@ -72,6 +71,10 @@ export default function AssessmentNavigator() {
       <AssessmentStack.Screen
         name={'Milestone Wrap Up'}
         component={MilestoneWrapUp}
+      />
+      <AssessmentStack.Screen
+        name={'Assessment break down'}
+        component={AssessmentBreakDown}
       />
     </AssessmentStack.Navigator>
   );
