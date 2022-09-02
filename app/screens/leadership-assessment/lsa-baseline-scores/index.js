@@ -14,7 +14,6 @@ import { Button, Card, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import {RadarChart} from 'react-native-charts-wrapper';
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 import leadershipSkillAreaActions from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
 
@@ -237,7 +236,7 @@ const BaselineScore = props => {
               alignItems: 'center'
             }}
             mode="outlined"
-            onPress={() => NavigationService.navigate('Assessment', { screen: 'Leadership Assessment Extended' })}>
+            onPress={() => navigation.navigate('Assessment', { screen: 'Assessment break down' })}>
             <Text style={{
             color: "white",
     fontSize: 16,
