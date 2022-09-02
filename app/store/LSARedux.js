@@ -12,35 +12,40 @@ export const INITIAL_STATE = Map({
   activeStep: 1,
   maxStep: 15,
   categoryActiveStep: 1,
-  categoryMaxStep: 4,
+  categoryMaxStep: 5,
   extendedActiveStep: 1,
   extendedMaxStep: 7,
   categorySelection: [
     {
       id: 1,
       title: 'empathyList',
-      value: "💓 Empathy"
+      value: "💓 Empathy",
+      dataValue: 'empathy'
     },
     {
       id: 2,
       title: 'trustBuildingList',
-      value: "🤝 Trust Building"
+      value: "🤝 Trust Building",
+      dataValue: 'trustBuilding'
     },
     {
       id: 3,
       title: 'authenticityList',
-      value: "👐 Authenticity"
+      value: "👐 Authenticity",
+      dataValue: 'authenticity'
     },
     {
       id: 4,
       title: 'achievementList',
-      value: "🏅 Achievement-Orientation"
+      value: "🏅 Achievement-Orientation",
+      dataValue: 'achievement'
     },
-    // {
-    //   id: 5,
-    //   title: 'curiosityList',
-    //   value: "🧠 Curiosity"
-    // },
+    {
+      id: 5,
+      title: 'opennessToLearnList',
+      value: "🧠 Openness to Learn",
+      dataValue: 'opennessToLearn'
+    },
   ],
   overviewQuestions: null,
   extendedQuestions: {
@@ -66,12 +71,15 @@ export const INITIAL_STATE = Map({
   step14: { ...defaultState },
   step15: { ...defaultState },
   overviewTestResults: null,
+  overviewData: null,
+  extendedData: null,
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['step'],
-  setAssessmentData: ['key','data'],
+  setAssessmentData: ['key', 'data'],
+  setExtendedAssessmentData: ['key','data'],
   setAssessmentExtendedActiveStep: ['extendedStep'],
   setAssessmentCategoryActiveStep: ['categoryStep'],
   resetStep: ['key', 'data'],
@@ -84,7 +92,9 @@ const { Types, Creators } = createActions({
   postOverviewTest: ['data'],
   postOverviewTestSuccess: ['results'],
   postOverviewTestFailure: ['error'],
-
+  postExtendedTest: ['data'],
+  postExtendedTestSuccess: ['data'],
+  postExtendedTestFailure: ['error'],
 });
 
 
@@ -130,6 +140,16 @@ const setAssessmentData = (state, { key, data }) =>
    [key]: { data },
   })
 
+const setExtendedAssessmentData = (state, { key, data }) => {
+  return state.merge({
+    extendedData: {
+      ...state.get('extendedData'),
+      [key]: { data },
+    }
+  
+  });
+}
+
 const fetchOverviewQuestions = state =>
   state.merge({
     fetching: true,
@@ -166,6 +186,23 @@ const fetchExtendedQuestionsFailure = (state, { error }) =>
     error,
   });
 
+
+const postExtendedTest = state => state.merge({
+  fetching: true,
+  error: '',
+});
+
+const postExtendedTestSuccess = (state, { data }) => state.merge({
+  id: data,
+  fetching: false,
+});
+
+const postExtendedTestFailure = (state, { error }) => state.merge({
+  fetching: false,
+  error
+}); 
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
 [Types.SET_ASSESSMENT_ACTIVE_STEP]: setAssessmentActiveStep,
@@ -173,10 +210,14 @@ export const reducer = createReducer(INITIAL_STATE, {
 [Types.RESET_STEP]: resetStep,
 [Types.SET_ASSESSMENT_CATEGORY_ACTIVE_STEP]: setAssessmentCategoryActiveStep,
 [Types.SET_ASSESSMENT_DATA]: setAssessmentData,
+[Types.SET_EXTENDED_ASSESSMENT_DATA]: setExtendedAssessmentData,
 [Types.FETCH_OVERVIEW_QUESTIONS]: fetchOverviewQuestions,
 [Types.FETCH_OVERVIEW_QUESTIONS_SUCCESS]: fetchOverviewQuestionsSuccess,
 [Types.FETCH_OVERVIEW_QUESTIONS_FAILURE]: fetchOverviewQuestionsFailure,
 [Types.FETCH_EXTENDED_QUESTIONS]: fetchExtendedQuestions,
 [Types.FETCH_EXTENDED_QUESTIONS_SUCCESS]: fetchExtendedQuestionsSuccess,
 [Types.FETCH_EXTENDED_QUESTIONS_FAILURE]: fetchExtendedQuestionsFailure,
+[Types.POST_EXTENDED_TEST]: postExtendedTest,
+[Types.POST_EXTENDED_TEST_SUCCESS]: postExtendedTestSuccess,
+[Types.POST_EXTENDED_TEST_FAILURE]: postExtendedTestFailure,
 });

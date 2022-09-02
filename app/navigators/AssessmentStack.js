@@ -10,6 +10,7 @@ import {
   MilestoneSignpost3,
   MilestoneSignpost4,
   MilestoneSignpost5,
+  MilestoneWrapUp,
   BaselineScore,
 
 } from '../screens';
@@ -67,6 +68,10 @@ export default function AssessmentNavigator() {
       <AssessmentStack.Screen
         name={'Milestone Signpost5'}
         component={MilestoneSignpost5}
+      />
+      <AssessmentStack.Screen
+        name={'Milestone Wrap Up'}
+        component={MilestoneWrapUp}
       />
     </AssessmentStack.Navigator>
   );

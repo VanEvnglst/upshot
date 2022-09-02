@@ -412,6 +412,14 @@ export default {
   
     return upshotAPI.get(`/lsa_extended_questions`);
   },
+
+  postLSAExtendedAnswers: async payload => { 
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/lsa_extended_questions`);
+  },
   getFeedbackPortfolio: async () => {
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = await setAPI(url);

@@ -19,21 +19,17 @@ import leadershipSkillAreaActions from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
 
 const BaselineScore = props => {
+  
   const { navigation } = props;
   const dispatch = useDispatch();
 
   const retrieveDataExtended = async () => {
     await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+      debugger;
+      setTimeout(() => {
+        navigation.navigate('Leadership Assessment Extended');
+    }, 300);
   };
-
-
-  const handleNavigation = () => {
-    setTimeout(() => {
-      navigation.navigate('Assessment', {
-        screen: 'Leadership Assessment Extended'}); 
-  }, 300);
-  }
-  
   
   const skillList = [
     {
@@ -90,7 +86,7 @@ const BaselineScore = props => {
   
     return (
       <View style={styles.container}>
-          <ScrollView
+    <ScrollView
       showsVerticalScrollIndicator={false}
     >
       <View style={{ borderBottomWidth: 2, borderColor: '#FFCAAA',backgroundColor: '#FFFCF5', height: '10%'}}>
@@ -116,8 +112,9 @@ const BaselineScore = props => {
           <RadarChart style={styles.chart}
             //xAxis={valueFormatterPattern ["PRV", "HR", "RR", "O2", "E.A.", "ASI", "PAI"] }
             //chartDescription={{ text: "Sample Chart" }}
-              marker={{ enabled: true, digits: 2 , markerColor: 10, textSize: 12}}
-            drawWeb={false}
+              marker={{ enabled: true, digits: 2 , markerColor: processColor('#F0C0FF8C'), textColor: processColor('red'),textSize: 12, textAlign: 'center'}}
+            legend={{enabled: false}}
+                drawWeb={false}
             webLineWidth={1}
             webLineWidthInner={2}
             webAlpha={255}
@@ -133,14 +130,14 @@ const BaselineScore = props => {
             dataSets: [
               {
                 values: [
-                  { value: .20 , marker: '20'},
-                  { value: .23 , marker: '23'},
-                  { value: .10 },
-                  { value: .42 },
-                  { value: .38 },
+                  { value: .50 , marker: 50},
+                  { value: .50 , marker: 50},
+                  { value: .40 , marker: 40},
+                  { value: .20 , marker: 20},
+                  { value: .30 , marker: 30},
                   
                 ],
-                custom: {labels: ""},
+                
                 config: {
                   color: processColor("#667080"),
                   drawFilled: true,
@@ -165,6 +162,7 @@ const BaselineScore = props => {
           $set={
             axisMinimum: 0,
             axisMaximum: .5,
+            centerAxisLabels: true,
             enabled: false,
           }
         }
@@ -227,8 +225,9 @@ const BaselineScore = props => {
               </TouchableOpacity>
               
             ))}
+           
           </View>
-          <View style={{ marginVertical: 50, justifyContent: 'flex-end', paddingHorizontal: 16}} >
+          <View style={{ height: 200, marginVertical: 50, marginHorizontal: 16}} >
           
           <Button
             style={{
@@ -238,7 +237,7 @@ const BaselineScore = props => {
               alignItems: 'center'
             }}
             mode="outlined"
-            onPress={() => handleNavigation()}>
+            onPress={() => NavigationService.navigate('Assessment', { screen: 'Leadership Assessment Extended' })}>
             <Text style={{
             color: "white",
     fontSize: 16,
@@ -248,8 +247,7 @@ const BaselineScore = props => {
           }}>Complete Assessment</Text>  
             </Button>
             </View>
-            <View style={{ height: 150}}/>
-            </ScrollView>
+        </ScrollView>
         </View>
     );
 }

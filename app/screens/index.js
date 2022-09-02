@@ -19,6 +19,7 @@ export { default as MilestoneSignpost2 } from './leadership-assessment/lsa-miles
 export { default as MilestoneSignpost3 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost3';
 export { default as MilestoneSignpost4 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost4';
 export { default as MilestoneSignpost5 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost5';
+export { default as MilestoneWrapUp } from './leadership-assessment/lsa-milestone-signpost/milestone-wrapup';
 
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';
 export { default as RecordFeedbackEntry } from './feedback/record-entry';

@@ -79,6 +79,24 @@ export function* fetchExtendedQuestions() {
   }
 }
 
+export function* postExtendedTest({ data }) { 
+  const connected = yield checkInternetConnection();
+
+  const extendedData = {
+    q_id: data
+  }
+
+  const response = yield call(api.postLSAExtendedAnswers, extendedData);
+  debugger;
+  if (response.ok) {
+    debugger;
+    yield put(leadershipSkillAreaActions.postExtendedTestSuccess(extendedData));
+  }
+  else { 
+    yield put(leadershipSkillAreaActions.postExtendedTestFailure(response.data));
+  }
+}
+
 function* watchLSAOverviewSaga() {
   yield takeLatest(
     leadershipSkillAreaTypes.FETCH_OVERVIEW_QUESTIONS,
@@ -87,6 +105,10 @@ function* watchLSAOverviewSaga() {
   yield takeLatest(
     leadershipSkillAreaTypes.FETCH_EXTENDED_QUESTIONS,
     fetchExtendedQuestions,
+  );
+  yield takeLatest(
+    leadershipSkillAreaTypes.POST_EXTENDED_TEST,
+    postExtendedTest,
   );
 }
 
