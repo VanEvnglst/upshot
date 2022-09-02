@@ -1,5 +1,5 @@
 import { CardStyleInterpolators } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -28,16 +28,24 @@ const MilestoneSignpost1 = props => {
   const extendedAns = Object.values(testing1)['data'];
   //const trial = Object.values(extendedAns);
     //qid: extendedTestAns.map((data) => { return data.testing.questions.qid })
-  for (let i = 0; i < value; i++) { 
-    const extendedAns1 = Object.values(testing1)[i]['data'];
-    const trys = Object.values(extendedAns1);
-    const wew = { q_id: trys[1]['qid'] , ans: trys[0]['value'] 
-};
-  }
-  
 
-  // const extendedAns [] = map(extendedTestAns.)
+    useEffect(() => {
+      handleData();
+    }, []);
+
+  const handleData = () => {
+    let newArr =[];
+  for (let i = 0; i < testing1.length; i++) {
+    
+    const extendedAns1 = Object.values(testing1)[i]['data'];
+    let dataObj = { qid: extendedAns1.question.qid, value: extendedAns1.option.value};
+    newArr = [...newArr, dataObj];
+    debugger;
+  }
+  console.warn('arr', newArr);
   debugger;
+}
+
   const handleDataAndNext = () => {
     //dispatch(leadershipSkillAreaActions.postExtendedTest(extendedTestAns.data.question.id));
     debugger;
@@ -95,6 +103,7 @@ const MilestoneSignpost1 = props => {
     </View>
   );
 };
+
 
 export default MilestoneSignpost1;
 
