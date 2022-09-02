@@ -13,7 +13,7 @@ import watchUserSaga from './UserSaga';
 import watchMessagesSaga from './MessagesSaga';
 import watchSurveySaga from './frontliner/SurveySaga';
 import watchLeadershipSkillAreaSaga from './LSASaga';
-import watchCaptureMomentSaga from './CaptueMomentSaga';
+import watchCaptureMomentSaga from './CaptureMomentSaga';
 
 function* watchNetwork() {
   try {

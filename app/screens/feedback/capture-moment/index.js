@@ -12,34 +12,124 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from 'react-native-paper'
+import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
-import CaptureMomentStep1  from './capture-step1';
-import CaptureMomentStep2  from './capture-step2';
-import CaptureMomentStep3  from './capture-step3';
+import CaptureMomentStep1 from './capture-step1';
+import CaptureMomentStep2 from './capture-step2';
+import CaptureMomentStep3 from './capture-step3';
 import CaptureMomentStep4 from './capture-step4';
 import styles from './styles';
 import Images from 'app/assets/images';
 
-const hourPicker = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
+const hourPicker = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
+  '13',
+  '14',
+  '15',
+  '16',
+  '17',
+  '18',
+  '19',
+  '20',
+  '21',
+  '22',
+  '23',
+  '24',
+  '25',
+  '26',
+  '27',
+  '28',
+  '29',
+  '30',
+  '31',
+  '32',
+  '33',
+  '34',
+  '35',
+  '36',
+  '37',
+  '38',
+  '39',
+  '40',
+  '41',
+  '42',
+  '43',
+  '44',
+  '45',
+  '46',
+  '47',
+  '48',
+  '49',
+  '50',
+  '51',
+  '52',
+  '53',
+  '54',
+  '55',
+  '56',
+  '57',
+  '58',
+  '59',
+  '60',
+  '61',
+  '62',
+  '63',
+  '64',
+  '65',
+  '66',
+  '67',
+  '68',
+  '69',
+  '70',
+  '71',
+  '72',
+];
 
 const CaptureFeedbackMoment = props => {
   const { navigation } = props;
   const { height } = Dimensions.get('window');
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => [ '50%', '75%'], []);
+  const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
   const dispatch = useDispatch();
-  const activeStep = useSelector(state => state.captureMoment.get('activeStep'));
+  const activeStep = useSelector(state =>
+    state.captureMoment.get('activeStep'),
+  );
   const maxStep = 4;
-  const staffName = useSelector(state => state.captureMoment.get('step1').data);
-  const layerOneTopics = useSelector(state => state.captureMoment.get('layerOneTopics'));
-  const layerTwoTopics = useSelector(state => state.captureMoment.get('layerTwoTopics'));
+  const staffList = useSelector(state =>
+    state.captureMoment.get('staffMembers'),
+  );
+  const staffName = useSelector(state => state.captureMoment.get('data'));
+  const feedbackType = useSelector(
+    state => state.captureMoment.get('data'),
+  );
+  const layerOneTopics = useSelector(state =>
+    state.captureMoment.get('layerOneTopics'),
+  );
+  const layerTwoTopics = useSelector(state =>
+    state.captureMoment.get('layerTwoTopics'),
+  );
   const [selectedStaff, setSelectedStaff] = useState();
   const [selectedLayerOne, setSelectedLayerOne] = useState(null);
-  const [sheetType, setSheetType] = useState();
+  const [selectedLayerTwo, setSelectedLayerTwo] = useState(null);
+  const [reminderHours, setReminderHours] = useState({
+    value: 0,
+    currentIndex: 3
+  });
+  const [sheetType, setSheetType] = useState('');
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -52,225 +142,383 @@ const CaptureFeedbackMoment = props => {
       });
   }, []);
 
+  // useEffect(() => {
+  //   if (activeStep === 4) return;
+
+  //   if (layerTwoTopics !== null) openSheet();
+  //   else return;
+  // }, [layerTwoTopics]);
+
   useEffect(() => {
-    if (activeStep === 4)
-      return;
-    
-    if (layerTwoTopics !== null)
-    openSheet()
-    else
-    return
-  }, [layerTwoTopics]);
+    dispatch(CaptureMomentActions.fetchStaffMembers());
+  }, []);
+
+  useEffect(() => {
+    if (activeStep === 3) dispatch(CaptureMomentActions.fetchLayerOneTopics());
+  }, [activeStep]);
 
   const handleGoBack = () => {
+    bottomSheetRef.current?.close();
     if (activeStep === 1) navigation.goBack();
     else dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep - 1));
-  }
+  };
 
-  const selectTopic = (item) => {
+  const StaffSelection = () => {
+    return (
+      <View style={styles.listContainer}>
+        {staffList.map((item, i) => (
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => setStaffSelection(item)}
+            style={styles.namesContainer}>
+            <View style={styles.nameAvatar} />
+            <View style={styles.staffNameContainer}>
+              <Text style={styles.staffNameText}>{item.name}</Text>
+              <Text style={styles.emailText}>{item.email}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  };
+
+  const TopicSelection = () => {
+    return (
+      <View style={styles.content}>
+        <View style={styles.mainQuestionHeader}>
+          <Text style={styles.mainQuestionText}>Add topic details to your</Text>
+          <View style={styles.typeContainer}>
+            <Text style={styles.typeText}>{feedbackType.step2.title}</Text>
+          </View>
+          <Text style={styles.mainQuestionText}>feedback</Text>
+        </View>
+        <View style={{ marginTop: 25 }}>
+          <Text style={styles.descriptionText}>
+            Tell us what kind of observation do you want to give to your direct
+            report
+          </Text>
+        </View>
+        <View style={styles.topicContainer}>
+          <Text style={[styles.toText, { marginBottom: 4 }]}>Topic</Text>
+          <TouchableOpacity
+            onPress={() => openSheet('layer one')}
+            style={styles.topicPicker}>
+            <Text style={styles.topicLabel}>
+              {selectedLayerOne
+                ? `${selectedLayerOne.name}`
+                : `*Others (Please specify)`}
+            </Text>
+            <Icon
+              name="chevron-down-outline"
+              style={{ flex: 1, color: '#667080' }}
+              size={24}
+            />
+          </TouchableOpacity>
+          {selectedLayerOne && selectedLayerOne.name !== 'Others' ? (
+            <>
+              <Text style={[styles.toText, { marginTop: 12, marginBottom: 4 }]}>
+                Sub-topic
+              </Text>
+              <TouchableOpacity
+                onPress={() => openSheet('layer two')}
+                style={styles.topicPicker}>
+                <Text style={styles.topicLabel}>
+                  {selectedLayerTwo
+                    ? `${selectedLayerTwo.name}`
+                    : `Select sub-topic`}
+                </Text>
+                <Icon
+                  name="chevron-down-outline"
+                  style={{ flex: 1, color: '#667080' }}
+                  size={24}
+                />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <View style={[styles.topicPicker, { marginTop: 12 }]}>
+              <Text style={styles.topicLabel}>{`Write your own details*`}</Text>
+            </View>
+          )}
+        </View>
+        <View style={styles.btnContainer}>
+          <Button
+            mode="contained"
+            style={styles.button}
+            onPress={() => handleStep3Continue()}>
+            Continue
+          </Button>
+        </View>
+        <View style={styles.spacer} />
+      </View>
+    );
+  };
+
+  const selectTopic = item => {
     setSelectedLayerOne(item);
     setTimeout(() => {
-      dispatch(CaptureMomentActions.fetchLayerTwoTopics(item))
+      dispatch(CaptureMomentActions.fetchLayerTwoTopics(item));
     }, 300);
     bottomSheetRef.current?.close();
-  }
+  };
 
-  const selectSecondLayerTopic = (item) => {
+  const selectSecondLayerTopic = item => {
+    setSelectedLayerTwo(item);
     bottomSheetRef.current?.close();
-    // dispatch(CaptureMomentActions.setCaptureData())
-    dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1))
-  }
-  const openSheet = (type) => {
-    if (type === 'reminder') 
-      setSheetType('reminder');
-    bottomSheetRef.current?.snapToIndex(0);
+  };
+
+  const handleStep3Continue = () => {
+    const step3Data = {
+      selectedLayerOne,
+      selectedLayerTwo,
+    };
+    dispatch(CaptureMomentActions.setCaptureData('step3', step3Data));
+    dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
+    
+  };
+
+  const handleSendFeedback = () => {
+    bottomSheetRef.current?.close();       
+    dispatch(CaptureMomentActions.setCaptureData('step4', reminderHours));
+    dispatch(CaptureMomentActions.postCaptureMoment('reminder'));
   }
 
-  const setStaffSelection = async (item) => {
-    console.log(item);
-    setSelectedStaff(staffName)
-    setTimeout(() => {
-      dispatch(CaptureMomentActions.setCaptureData('step1', item))
-    }, 200);
-    console.log(staffName);
-    console.warn('select',staffName)
+  const openSheet = type => {
+    switch (type) {
+      case 'reminder':
+        setSheetType(type);
+      case 'layer one':
+        setSheetType(type);
+      case 'layer two':
+        setSheetType(type);
+    }
+    bottomSheetRef.current?.snapToIndex(1);
+  };
+
+  const setStaffSelection = async item => {
+    setSelectedStaff(item);
+    dispatch(CaptureMomentActions.setCaptureData('step1', item));
     setTimeout(() => {
       dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
     }, 300);
-  }
+  };
 
   const handleStepContent = () => {
     switch (activeStep) {
       case 1:
-        return <CaptureMomentStep1 
-        onPress={(item) => setStaffSelection(item)}
-        />;
+        return <StaffSelection />;
       case 2:
         return <CaptureMomentStep2 />;
       case 3:
-        return <CaptureMomentStep3 
-          onPress={() => openSheet()}
-        />;
-
+        return <TopicSelection />;
       case 4:
         return <CaptureMomentStep4
-        onPress={() => openSheet('reminder')}
-      />;
+          props={props}
+          onPress={() => openSheet('reminder')} 
+          />;
     }
   };
 
   const handleSheetContent = () => {
     if (sheetType === 'reminder') {
-      return (
-        <View style={{ marginTop: 24, backgroundColor: 'white'}}>
-          <View style={{ alignItems: 'center', }}>
+      return <ReminderSheet />;
+    } else if (sheetType === 'layer one') {
+      return <LayerOneTopicsSheet />;
+    } else if (sheetType === 'layer two') {
+      return <LayerTwoTopicsSheet />;
+    }
+  };
+
+  const ReminderSheet = () => {
+    return (
+      <View style={{ marginTop: 24, backgroundColor: 'white' }}>
+        <View style={{ alignItems: 'center' }}>
           <Image
             source={Images.bellEmoji}
-            resizeMode='contain'
-            style={{ width: 62, height: 62}}
+            resizeMode="contain"
+            style={{ width: 62, height: 62 }}
           />
-          <Text style={{ fontSize: 24, lineHeight: 30, fontWeight: '700', color: '#667080', textAlign: 'center'}}>Set Reminder</Text>
-          <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '400', color: '#667080', textAlign: 'center', marginTop: 4, maxWidth: '80%'}}>How long before we remind you about this feedback?</Text>
+          <Text
+            style={{
+              fontSize: 24,
+              lineHeight: 30,
+              fontWeight: '700',
+              color: '#667080',
+              textAlign: 'center',
+            }}>
+            Set Reminder
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              lineHeight: 22,
+              fontWeight: '400',
+              color: '#667080',
+              textAlign: 'center',
+              marginTop: 4,
+              maxWidth: '80%',
+            }}>
+            How long before we remind you about this feedback?
+          </Text>
         </View>
-          <View style={{ marginTop: 12,height: 175, paddingHorizontal: 24}}>
+        <View style={{ marginTop: 12, height: 175, paddingHorizontal: 24 }}>
           <ScrollPicker
-        dataSource={hourPicker}
-        selectedIndex={3}
-        renderItem={(data, index) => (
-          <View style={{ alignItems: 'center'}}>
-            <Text style={{ fontSize: 24, lineHeight: 28, fontWeight:'400', color: '#667080'}}>{data === '1' ? `${data} hour` : `${data} hours`}</Text>
-          </View>
-          
-      )}
-        onValueChange={(data, selectedIndex) => {
-          //
-        }}
-        wrapperHeight={180}
-        wrapperColor='#FFFFFF'
-        itemHeight={60}
-        highlightColor='black'
-        highlightBorderWidth={1}
-      />
-
-          </View>
-          <View style={{ marginTop: 50, paddingHorizontal: 24}}>
+            dataSource={hourPicker}
+            selectedIndex={reminderHours.currentIndex}
+            renderItem={(data, index) => (
+              <View style={{ alignItems: 'center' }}>
+                <Text
+                  style={{
+                    fontSize: 24,
+                    lineHeight: 28,
+                    fontWeight: '400',
+                    color: '#667080',
+                  }}>
+                  {data === '1' ? `${data} hour` : `${data} hours`}
+                </Text>
+              </View>
+            )}
+            onValueChange={(data, selectedIndex) => {
+              setReminderHours({
+                value: data,
+                currentIndex: selectedIndex
+              });
+            }}
+            wrapperHeight={180}
+            wrapperColor="#FFFFFF"
+            itemHeight={60}
+            highlightColor="black"
+            highlightBorderWidth={1}
+          />
+        </View>
+        <View style={{ marginTop: 50, paddingHorizontal: 24 }}>
           <Button
-          mode='contained'
-          onPress={() => {
-            bottomSheetRef.current?.close()
-            navigation.replace('Home')
-          }}
-          style={[styles.button, { marginBottom: 12 }]}
-        >Confirm</Button>
-         <Button
-          mode='text'
-          onPress={() => bottomSheetRef.current?.close()}
-          style={[styles.button]}
-        >Cancel</Button>
-          </View>
+            mode="contained"
+            onPress={() => handleSendFeedback('reminder')}
+            style={[styles.button, { marginBottom: 12 }]}>
+            Confirm
+          </Button>
+          <Button
+            mode="text"
+            onPress={() => bottomSheetRef.current?.close()}
+            style={[styles.button]}>
+            Cancel
+          </Button>
         </View>
-      )
-    } else {
-      return (
-        <>
-        {selectedLayerOne !== null ?
-          <View style={{ alignItems: 'center', justifyContent: 'center', borderBottomWidth: 0.3, paddingVertical: 12}}>
-          <Text style={{ fontSize: 16, lineHeight: 16, color: '#667080', fontWeight: '700'}}>Sub-topic</Text>
-          <Text style={{ fontSize: 16, lineHeight: 16, color: '#667080', fontWeight: '400'}}>Detailed category about your chosen topic</Text>
-        </View> 
-        :
-        <View style={{ alignItems: 'center', justifyContent: 'center', borderBottomWidth: 0.3, paddingVertical: 12}}>
-          <Text style={{ fontSize: 16, lineHeight: 16, color: '#667080', fontWeight: '700'}}>Topic</Text>
-          <Text style={{ fontSize: 16, lineHeight: 16, color: '#667080', fontWeight: '400'}}>What your feedback is related to</Text>
+      </View>
+    );
+  };
+
+  const LayerOneTopicsSheet = () => {
+    return (
+      <>
+        <View style={styles.sheetTitleContainer}>
+          <Text style={styles.sheetTitleText}>Topic</Text>
+          <Text style={styles.sheetSubtitleText}>
+            What your feedback is related to
+          </Text>
         </View>
-}
-        <View style={{ paddingHorizontal: 16, paddingTop: 20}}>
-          {selectedLayerOne !== null ?
-            layerTwoTopics.map((item, i) => (
-              <TouchableOpacity 
-                onPress={() => selectSecondLayerTopic(item)}
-                style={{ 
+        <View style={styles.sheetTopicsContainer}>
+          {layerOneTopics.map((item, i) => (
+            <TouchableOpacity
+              onPress={() => selectTopic(item)}
+              style={styles.sheetTopicItem}>
+              <Text style={styles.topicNameText}>{item.name}</Text>
+              <View style={styles.sheetTopicButton} />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </>
+    );
+  };
+
+  const LayerTwoTopicsSheet = () => {
+    return (
+      <>
+        <View style={styles.sheetTitleContainer}>
+          <Text style={styles.sheetTitleText}>Sub-topic</Text>
+          <Text style={styles.sheetSubtitleText}>
+            Detailed category about your chosen topic
+          </Text>
+        </View>
+        <View style={styles.sheetTopicsContainer}>
+          {layerTwoTopics.map((item, i) => (
+            <TouchableOpacity
+              onPress={() => selectSecondLayerTopic(item)}
+              style={{
                 height: 48,
                 borderBottomWidth: 0.3,
                 marginBottom: 10,
-                justifyContent: 'center'
+                justifyContent: 'center',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}>
-                <View style={{ flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',}}>
-                <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#667080'}}>{item.name}</Text>
-                <View style={{ width: 20, height: 20, borderRadius: 12, borderWidth: 2, borderColor: '#667080', opacity: 0.3, alignSelf: 'center',}}/>
-                </View>
-                <Text style={{ marginVertical: 4, fontSize: 14, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{item.requires_face_to_face && '*requires Face-to-Face discussion'}</Text>
-              </TouchableOpacity>
-            ))
-          :
-        layerOneTopics.map((item, i) => (
-          <TouchableOpacity 
-            onPress={() => selectTopic(item)}
-            style={{ 
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: 48,
-            borderBottomWidth: 0.3
-            }}>
-            <Text>{item.name}</Text>
-            <View style={{ width: 20, height: 20, borderRadius: 12, borderWidth: 2}}/>
-          </TouchableOpacity>
-        ))
-        }
+                <Text style={styles.topicNameText}>{item.name}</Text>
+                <View style={styles.sheetTopicButton} />
+              </View>
+              <Text style={styles.requiresFaceToFaceText}>
+                {item.requires_face_to_face &&
+                  '*requires Face-to-Face discussion'}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        </>
-      )
-    }
-  }
+      </>
+    );
+  };
 
-  return (<View style={styles.container}>
-    <SafeAreaView>
-      <View style={styles.headerContainer}>
-      <TouchableOpacity
-          accessibilityRole="button"
-          onPress={() => handleGoBack()}
-          style={styles.icon}
-      >
-          <Icon name="chevron-back-outline" size={24} />
-        </TouchableOpacity>
-        <View style={styles.headerTextContainer}>
-        <Text style={styles.headerText}>Give feedback</Text>
+  return (
+    <View style={styles.container}>
+      <SafeAreaView>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            onPress={() => handleGoBack()}
+            style={styles.icon}>
+            <Icon name="chevron-back-outline" size={24} />
+          </TouchableOpacity>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.headerText}>Give feedback</Text>
+          </View>
+          <View style={styles.headerSpacer} />
         </View>
-        <View style={styles.headerSpacer}/>
+        <View style={styles.stepsContainer}>
+          {Array.apply(null, { length: maxStep }).map((item, i) => (
+            <View
+              key={i}
+              style={
+                i + 1 <= activeStep ? styles.activeStep : styles.inactiveStep
+              }
+            />
+          ))}
+        </View>
+      </SafeAreaView>
+      <View style={styles.contentContainer}>
+        {activeStep !== 4 && (
+          <View style={styles.receipientContainer}>
+            <Text style={styles.toText}>To:</Text>
+            {staffName && (
+              <View style={styles.selectedNameContainer}>
+                <View style={styles.selectedAvatar} />
+                <Text style={styles.selectedName}>{staffName.step1.name}</Text>
+              </View>
+            )}
+          </View>
+        )}
+        {handleStepContent()}
       </View>
-      <View style={styles.stepsContainer}>
-        {Array.apply(null, { length: maxStep }).map((item, i) => (
-          <View
-            key={i}
-            style={i + 1 <= activeStep ? styles.activeStep : styles.inactiveStep}
-          />
-        ))}
-      </View>
-    </SafeAreaView>
-    <View style={styles.contentContainer}>
-      {activeStep !== 4 && <View style={styles.receipientContainer}>
-        <Text style={styles.toText}>To:</Text>
-        {selectedStaff &&
-        <View style={styles.selectedNameContainer}>
-          <View style={styles.selectedAvatar}/>
-          <Text style={styles.selectedName}>{selectedStaff.name}</Text></View>
-        }
-      </View>}
-      {handleStepContent()}
-    </View>
-    <BottomSheet
+      <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
-        enablePanDownToClose
-      >
-        <View style={{ flex: 1 }}>
-          {handleSheetContent()}
-        </View></BottomSheet>
-  </View>);
+        enablePanDownToClose>
+        <View style={{ flex: 1 }}>{handleSheetContent()}</View>
+      </BottomSheet>
+    </View>
+  );
 };
 
 export default CaptureFeedbackMoment;

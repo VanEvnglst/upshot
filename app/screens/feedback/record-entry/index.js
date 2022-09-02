@@ -15,17 +15,26 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import CaptureFeedbackMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import Images from 'app/assets/images';
 import styles from './styles';
+import CatchAttentionEntry from './catch-attention';
+import ImpactBehaviorEntry from './impact-behavior';
+import ContinueEntry from './continue-more';
+import DoLessEntry from './do-less';
+import StopDoingEntry from './stop-doing';
+import AddMoreEntry from './add-more';
 import ReviewFeedbackEntry from './review-entry';
 
 const RecordFeedbackEntry = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  let activeStep = 1;
+  const activeStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
   const maxStep = 6;
-
+  const staffName = useSelector(state => state.captureMoment.get('data'));
+  const feedbackType = useSelector(
+    state => state.captureMoment.get('data'),
+  );
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -37,6 +46,10 @@ const RecordFeedbackEntry = props => {
       });
   }, []);
 
+  const handleGoBack = () => {
+    if (activeStep === 1) navigation.goBack();
+    else dispatch(CaptureMomentActions.setEntryActiveStep(activeStep - 1));
+  };
   const EntryQuestion2 = () => {
 
   }
@@ -47,38 +60,18 @@ const RecordFeedbackEntry = props => {
   const handleStepContent = () => {
     switch(activeStep) {
       case 1:
-        return <EntryContainer/>
+        return <CatchAttentionEntry {...props}/>
       case 2:
-        return <ReviewFeedbackEntry/>
+        return <ImpactBehaviorEntry {...props}/>
+      case 3:
+        return <ContinueEntry {...props}/>
+      case 4:
+        return <DoLessEntry {...props}/>
+      case 5:
+        return <AddMoreEntry {...props}/>
+      case 6:
+        return <ReviewFeedbackEntry {...props}/>
     }
-  }
-
-  const EntryContainer = () => {
-    return (<>
-           <View style={styles.selectedNameContainer}>
-          <View style={styles.selectedAvatar} />
-          <Text style={styles.selectedName}>name</Text>
-        </View>
-        <View style={styles.questionContainer}>
-          <Text style={styles.mainQuestionText}>
-            What did your{' '}
-            <Text style={styles.highlightedText}>team member do</Text> that
-            caught your attention?
-          </Text>
-          <Text style={styles.logDateText}>Mon. Aug 23, 2022</Text>
-        </View>
-        <KeyboardAvoidingView style={{marginTop: 24, marginBottom: 50, height: '50%'}}>
-          <TextInput
-            placeholder='Text goes here'
-            multiline
-          />
-        </KeyboardAvoidingView>
-        <Button
-            mode='contained'
-            onPress={() => handleContinue()}
-            style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}
-          >Continue</Button>
-    </>)
   }
 
   return (
@@ -92,7 +85,7 @@ const RecordFeedbackEntry = props => {
           <Icon name="chevron-back-outline" size={24} />
         </TouchableOpacity>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Corrective feedback</Text>
+          <Text style={styles.headerText}>{feedbackType.step2.title} Feedback</Text>
         </View>
         <View style={styles.headerSave}>
           <Text style={styles.saveText}>Save</Text>
@@ -109,6 +102,10 @@ const RecordFeedbackEntry = props => {
         ))}
       </View>
       <View style={styles.contentContainer}>
+      {activeStep !== 6 && <View style={styles.selectedNameContainer}>
+          <View style={styles.selectedAvatar} />
+          <Text style={styles.selectedName}>{staffName.step1.name}</Text>
+        </View>}
         {handleStepContent()}
       </View> 
     </SafeAreaView>

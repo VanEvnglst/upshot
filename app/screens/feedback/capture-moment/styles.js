@@ -55,8 +55,8 @@ export default styles = StyleSheet.create({
     marginTop: 15,
   },
   content: {
-    flex: 1, 
-    marginTop: 36 
+    flex: 1,
+    marginTop: 36,
   },
   receipientContainer: {
     height: 50,
@@ -108,7 +108,7 @@ export default styles = StyleSheet.create({
   mainQuestionHeader: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   mainQuestionText: {
     fontSize: 24,
@@ -156,7 +156,7 @@ export default styles = StyleSheet.create({
     marginTop: 70,
   },
   unselectedText: {
-    opacity: 0.5
+    opacity: 0.5,
   },
   selectionIcon: {
     width: 100,
@@ -167,17 +167,17 @@ export default styles = StyleSheet.create({
   },
   hintContainer: {
     marginTop: 36,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    maxWidth: '60%'
+    maxWidth: '60%',
   },
   hintText: {
     fontSize: 16,
     lineHeight: 22,
     fontWeight: '400',
     color: '#667080',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   btnContainer: {
     flex: 1,
@@ -192,10 +192,10 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   disabledBtn: {
-    backgroundColor: '#EEF1F4'
+    backgroundColor: '#EEF1F4',
   },
   enabledBtn: {
-    backgroundColor: '#667080'
+    backgroundColor: '#667080',
   },
   typeContainer: {
     height: 48,
@@ -211,7 +211,7 @@ export default styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 30,
     fontWeight: '700',
-    color: '#A76AFF'
+    color: '#A76AFF',
   },
   topicContainer: {
     flex: 1,
@@ -255,5 +255,57 @@ export default styles = StyleSheet.create({
     lineHeight: 22,
     fontWeight: '400',
     color: '#667080',
+  },
+  sheetContainer: {},
+  sheetTitleContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 0.3,
+    paddingVertical: 12,
+  },
+  sheetTitleText: {
+    fontSize: 16,
+    lineHeight: 16,
+    color: '#667080',
+    fontWeight: '700',
+  },
+  sheetSubtitleText: {
+    fontSize: 16,
+    lineHeight: 16,
+    color: '#667080',
+    fontWeight: '400',
+  },
+  sheetTopicsContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 20,
+  },
+  sheetTopicItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 48,
+    borderBottomWidth: 0.3,
+  },
+  sheetTopicButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#667080',
+    opacity: 0.3,
+    alignSelf: 'center',
+  },
+  topicNameText: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '700',
+    color: '#667080',
+  },
+  requiresFaceToFaceText: {
+    marginVertical: 4,
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#667080',
+    fontWeight: '400',
   },
 });
