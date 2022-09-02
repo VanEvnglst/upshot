@@ -31,7 +31,10 @@ const RecordFeedbackEntry = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
   const maxStep = 6;
-
+  const staffName = useSelector(state => state.captureMoment.get('data'));
+  const feedbackType = useSelector(
+    state => state.captureMoment.get('data'),
+  );
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -82,7 +85,7 @@ const RecordFeedbackEntry = props => {
           <Icon name="chevron-back-outline" size={24} />
         </TouchableOpacity>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Corrective feedback</Text>
+          <Text style={styles.headerText}>{feedbackType.step2.title} Feedback</Text>
         </View>
         <View style={styles.headerSave}>
           <Text style={styles.saveText}>Save</Text>
@@ -101,7 +104,7 @@ const RecordFeedbackEntry = props => {
       <View style={styles.contentContainer}>
       {activeStep !== 6 && <View style={styles.selectedNameContainer}>
           <View style={styles.selectedAvatar} />
-          <Text style={styles.selectedName}>name</Text>
+          <Text style={styles.selectedName}>{staffName.step1.name}</Text>
         </View>}
         {handleStepContent()}
       </View> 
