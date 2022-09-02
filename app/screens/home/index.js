@@ -100,7 +100,7 @@ const HomeScreen = props => {
     let CARD_SUB_COLOR = '';
     let STATUS_BORDER_COLOR = '';
     switch(item.status) {
-      case 'in progress':
+      case 'in Progress':
         CARD_MAIN_COLOR = '#F99D46';
         CARD_SUB_COLOR = '#FFF2E7';
         STATUS_BORDER_COLOR = '#FDC591';
@@ -174,11 +174,11 @@ const HomeScreen = props => {
       <View style={{ paddingTop: 12, }}>
         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
           <Image
-            source={item.feedbackType === 'Corrective Feedback' ?Images.penEmoji : Images.redHeartEmoji}
+            source={item.type === 'Corrective' ?Images.penEmoji : Images.redHeartEmoji}
             style={{ width: 16, height: 16, marginRight: 12 }}
             resizeMode='contain'
           />
-          <Text style={{ fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}>{item.feedbackType}</Text>
+          <Text style={{ fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}>{item.type} Feedback</Text>
         </View>
         <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center'}}>
           <Image
