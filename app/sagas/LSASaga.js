@@ -98,7 +98,6 @@ export function* postOverviewTest({ data }) {
   
   const response = yield call(api.postOverviewTest, overviewData);
   if (response.ok) {
-    debugger;
     if (response.data.status === 'ok') {
       const results = {
         areasOfImprovement: response.data['Areas_of_Improvement'],

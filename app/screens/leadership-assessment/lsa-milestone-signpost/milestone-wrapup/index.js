@@ -1,4 +1,3 @@
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import React from 'react';
 import {
   View,
@@ -13,32 +12,13 @@ import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
-//import { getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
 
 const MilestoneWrapUp = props => {
   const { navigation } = props;
-  //const categoryActiveStep = useSelector(getCategoryStep);
-  //const categoryMaxStep = useSelector(getCategoryMaxStep);
-
-  // const handleNextCategory = () => {
-  //   if (categoryActiveStep < categoryMaxStep)
-  //   {
-  //     dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
-  //     navigation.navigate('Leadership Assessment Results');
-  //   }
-  //   else if (categoryActiveStep === categoryMaxStep)
-  //     dispatch(LeadershipSkillAreaActions.resetCategoryActiveStep());
-  // }
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        {/* <ProgressBar
-          progress={1}
-          color={'#667080'}
-          style={styles.progressBar}></ProgressBar> */}
-      </SafeAreaView>
-
+      <SafeAreaView/>
       <View style={styles.imageContainer}>
             <Image
                 source={Images.lightningEmoji}
@@ -46,18 +26,17 @@ const MilestoneWrapUp = props => {
                 style={styles.image}
             />
       </View>
-
       <View style={styles.contentContainer}>
         <Text style={styles.titleText}>That was lightning fast! 🎉</Text>
 
         <Text style={styles.descriptionText}>
-          {"Welcome to Upshot! Congratulations on finishing your onboarding!"}
+          Welcome to Upshot! Congratulations on finishing your onboarding!
         </Text>
       </View>
 
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('Leadership Assessment Extended')}
+          onPress={() => navigation.navigate('Home')}
           mode="contained"
           style={styles.button}>
           <Text style={styles.buttonText}>Let's wrap up!</Text>

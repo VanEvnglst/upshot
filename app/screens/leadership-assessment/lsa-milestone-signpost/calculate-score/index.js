@@ -1,5 +1,4 @@
-import { CardStyleInterpolators } from '@react-navigation/stack';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,43 +8,45 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { Button, ProgressBar } from 'react-native-paper';
+import PropTypes from 'prop-types';
+import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 
-const MilestoneSignpost4 = props => {
-    const { navigation } = props;
+const CalculateAssessmentScore = props => {
+  const { navigation } = props;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        {/* <ProgressBar
-          progress={1}
-          color={'#667080'}
-          style={styles.progressBar}></ProgressBar> */}
-      </SafeAreaView>
-
+      <SafeAreaView />
       <View style={styles.imageContainer}>
-            <Image
-                source={Images.purpleHeartEmoji}
-                resizeMode='contain'
-                style={styles.image}
-            />
+        <Image
+          source={isLoading ? Images.magnifierEmoji : Images.hugEmoji}
+          resizeMode="contain"
+          style={styles.image}
+        />
       </View>
-
       <View style={styles.contentContainer}>
-        <Text style={styles.titleText}>A few last questions</Text>
-
-        <Text style={styles.descriptionText}>
-          Fugit consequatur magni. Dolorem illum vitae itaque. Ab laudantium quia et. Excepturi sed sed quisquam. Minima eos aut quis at.
-        </Text>
+        <Text style={styles.titleText}>{isLoading ? 'Calculating your score...' :'Your profile is ready!'}</Text>
+        {!isLoading && <Text style={styles.descriptionText}>
+          Thank you for answering all questionnaires!
+        </Text>}
       </View>
-
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('Assessment break down')}
+          onPress={() => navigation.navigate('Extended Assessment Wrap Up')}
           mode="contained"
+          disabled={isLoading}
           style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>View Leadership Profile</Text>
         </Button>
       </View>
       <View style={styles.spacer} />
@@ -53,7 +54,11 @@ const MilestoneSignpost4 = props => {
   );
 };
 
-export default MilestoneSignpost4;
+export default CalculateAssessmentScore;
+
+CalculateAssessmentScore.propTypes = {};
+
+CalculateAssessmentScore.defaultProps = {};
 
 const styles = StyleSheet.create({
   container: {
@@ -68,16 +73,16 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginTop: 84,
     alignSelf: 'center',
-    width: 200, 
-    height: 200, 
-    backgroundColor: '#F0E0FF', 
-    borderRadius: 100, 
-    justifyContent: 'center', 
-    alignItems: 'center'
+    width: 200,
+    height: 200,
+    backgroundColor: '#FFEFE2',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: 115,
-    height: 115
+    height: 115,
   },
   contentContainer: {
     flex: 1,

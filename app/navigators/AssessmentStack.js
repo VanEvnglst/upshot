@@ -5,17 +5,14 @@ import {
   LeadershipAssessmentGuide,
   AssessmentEndLine,
   LeadershipOverviewResults,
-  MilestoneSignpost1,
-  MilestoneSignpost2,
-  MilestoneSignpost3,
-  MilestoneSignpost4,
-  MilestoneSignpost5,
-  MilestoneWrapUp,
+  ExtendedAssessmentWrapUp,
   BaselineScore,
-  AssessmentBreakDown
+  AssessmentBreakDown,
+  ExtendedAssessmentConfirmation,
+  ExtendedLeadershipAssessment,
+  CalculateAssessmentScore
+} from 'app/screens';
 
-} from '../screens';
-import ExtendedLeadershipAssessment from '../screens/leadership-assessment/extended';
 const AssessmentStack = createStackNavigator();
 export default function AssessmentNavigator() {
   return (
@@ -23,7 +20,6 @@ export default function AssessmentNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      
       <AssessmentStack.Screen
         name={'Leadership Assessment Guide'}
         component={LeadershipAssessmentGuide}
@@ -48,29 +44,17 @@ export default function AssessmentNavigator() {
         name={'Baseline Score'}
         component={BaselineScore}
       />
-       <AssessmentStack.Screen
-        name={'Milestone Signpost1'}
-        component={MilestoneSignpost1}
+      <AssessmentStack.Screen
+        name={'Extended Assessment Confirmation'}
+        component={ExtendedAssessmentConfirmation}
       />
       <AssessmentStack.Screen
-        name={'Milestone Signpost2'}
-        component={MilestoneSignpost2}
+        name={'Calculate Assessment Score'}
+        component={CalculateAssessmentScore}
       />
       <AssessmentStack.Screen
-        name={'Milestone Signpost3'}
-        component={MilestoneSignpost3}
-      />
-      <AssessmentStack.Screen
-        name={'Milestone Signpost4'}
-        component={MilestoneSignpost4}
-      />
-      <AssessmentStack.Screen
-        name={'Milestone Signpost5'}
-        component={MilestoneSignpost5}
-      />
-      <AssessmentStack.Screen
-        name={'Milestone Wrap Up'}
-        component={MilestoneWrapUp}
+        name={'Extended Assessment Wrap Up'}
+        component={ExtendedAssessmentWrapUp}
       />
       <AssessmentStack.Screen
         name={'Assessment break down'}
