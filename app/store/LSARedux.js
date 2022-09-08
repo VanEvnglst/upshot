@@ -15,38 +15,6 @@ export const INITIAL_STATE = Map({
   categoryMaxStep: 5, //
   extendedActiveStep: 1,
   extendedMaxStep: 7,
-  categorySelection: [
-    {
-      id: 1,
-      title: 'empathyList',
-      value: "💓 Empathy",
-      dataValue: 'empathy'
-    },
-    {
-      id: 2,
-      title: 'trustBuildingList',
-      value: "🤝 Trust Building",
-      dataValue: 'trustBuilding'
-    },
-    {
-      id: 3,
-      title: 'authenticityList',
-      value: "👐 Authenticity",
-      dataValue: 'authenticity'
-    },
-    {
-      id: 4,
-      title: 'achievementList',
-      value: "🏅 Achievement-Orientation",
-      dataValue: 'achievement'
-    },
-    {
-      id: 5,
-      title: 'opennessToLearnList',
-      value: "🧠 Openness to Learn",
-      dataValue: 'opennessToLearn'
-    },
-  ],
   overviewQuestions: null,
   extendedQuestions: {
     empathyList: [],

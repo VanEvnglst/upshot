@@ -1,5 +1,5 @@
 import { CardStyleInterpolators } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,9 +12,42 @@ import {
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MilestoneSignpost2 = props => {
     const { navigation } = props;
+    const dispatch = useDispatch();
+
+    const extendedTestAns = useSelector(
+      state => state.leadershipSkillArea.get('extendedData'));
+    const rawExtendedAns = Object.values(extendedTestAns);
+  
+      useEffect(() => {
+        handleData();
+      }, []);
+  
+    const handleData = () => {
+      let newArr =[];
+    for (let i = 0; i < rawExtendedAns.length; i++) {
+      
+      const filteredExtendedAns = Object.values(rawExtendedAns)[i]['data'];
+      let dataObj = { qid: filteredExtendedAns.question.qid, value: filteredExtendedAns.option.value};
+      newArr = [...newArr, dataObj];
+      debugger;
+    }
+    console.warn('arr', newArr);
+    debugger;
+  }
+  
+    const handleDataAndNext = () => {
+      //dispatch(LeadershipSkillAreaActions.postExtendedTest(extendedTestAns.data.question.id));
+      debugger;
+      setTimeout(() => {
+        navigation.navigate('Assessment break down');
+      }, 200);
+    }
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
