@@ -77,23 +77,9 @@ const ExtendedLeadershipAssessment = props => {
   
       }
     else if (extendedActiveStep == extendedMaxStep && categoryActiveStep < categoryMaxStep) {
-      //navigation.navigate('Milestone Signpost1');
+     
       dispatch(LeadershipSkillAreaActions.postExtendedTest(extended));
-      debugger;
-      // switch (categoryActiveStep) { 
-      //   case 1:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost1' });
-      //     break;
-      //   case 2:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost2' });
-      //     break;
-      //   case 3:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost3' });
-      //     break;
-      //   case 4:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost4' });
-      //     break;
-      // }
+      
       dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
       dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
       
