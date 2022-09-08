@@ -1,8 +1,9 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import leadershipSkillAreaActions, {
-  leadershipSkillAreaTypes,
+import LeadershipSkillAreaActions, {
+  LeadershipSkillAreaTypes,
 } from 'app/store/LSARedux';
+import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
 const STATUS_OK = 'ok';
@@ -41,11 +42,11 @@ export function* fetchOverviewQuestions() {
     const arr = randomizeQuestions(questions);
     console.log('question', arr);
     yield put(
-      leadershipSkillAreaActions.fetchOverviewQuestionsSuccess(questions),
+      LeadershipSkillAreaActions.fetchOverviewQuestionsSuccess(questions),
     );
   } else {
     yield put(
-      leadershipSkillAreaActions.fetchOverviewQuestionsFailure(response.data),
+      LeadershipSkillAreaActions.fetchOverviewQuestionsFailure(response.data),
     );
   }
 }
@@ -71,11 +72,46 @@ export function* fetchExtendedQuestions() {
       opennessToLearnList: opennessToLearnQs
     }
 
-    yield put(leadershipSkillAreaActions.fetchExtendedQuestionsSuccess(questions))
+    yield put(LeadershipSkillAreaActions.fetchExtendedQuestionsSuccess(questions))
   } else {
     yield put(
-      leadershipSkillAreaActions.fetchExtendedQuestionsFailure(response.data),
+      LeadershipSkillAreaActions.fetchExtendedQuestionsFailure(response.data),
     );
+  }
+}
+
+export function* postOverviewTest({ data }) {
+  const connected = yield checkInternetConnection();
+  const dataValues = Object.values(data);
+  let dataArr = [];
+  for (let i = 0; i < dataValues.length; i++) {
+    const valueObj = Object.values(dataValues)[i];
+    let dataObj = {
+      q_id: valueObj.question.qid,
+      ans: valueObj.option.value
+     }
+     dataArr = [...dataArr, dataObj];
+  }
+  const overviewData = {
+    answers: dataArr
+  };
+  
+  const response = yield call(api.postOverviewTest, overviewData);
+  if (response.ok) {
+    debugger;
+    if (response.data.status === 'ok') {
+      const results = {
+        areasOfImprovement: response.data['Areas_of_Improvement'],
+        areasOfContinuedDev: response.data['Satisfactory'],
+        promisingAreas: response.data['Promising_Areas']
+      }
+      yield put(LeadershipSkillAreaActions.postOverviewTestSuccess(results))
+      yield NavigationService.navigate('Assessment End Line');
+    } else {
+      yield put(LeadershipSkillAreaActions.postOverviewTestFailure(response.data));
+    }
+  } else {
+    yield put(LeadershipSkillAreaActions.postOverviewTestFailure(response.data));
   }
 }
 
@@ -90,24 +126,27 @@ export function* postExtendedTest({ data }) {
   debugger;
   if (response.ok) {
     debugger;
-    yield put(leadershipSkillAreaActions.postExtendedTestSuccess(extendedData));
+    yield put(LeadershipSkillAreaActions.postExtendedTestSuccess(extendedData));
   }
   else { 
-    yield put(leadershipSkillAreaActions.postExtendedTestFailure(response.data));
+    yield put(LeadershipSkillAreaActions.postExtendedTestFailure(response.data));
   }
 }
 
 function* watchLSAOverviewSaga() {
   yield takeLatest(
-    leadershipSkillAreaTypes.FETCH_OVERVIEW_QUESTIONS,
+    LeadershipSkillAreaTypes.FETCH_OVERVIEW_QUESTIONS,
     fetchOverviewQuestions,
   );
   yield takeLatest(
-    leadershipSkillAreaTypes.FETCH_EXTENDED_QUESTIONS,
+    LeadershipSkillAreaTypes.FETCH_EXTENDED_QUESTIONS,
     fetchExtendedQuestions,
   );
   yield takeLatest(
-    leadershipSkillAreaTypes.POST_EXTENDED_TEST,
+    LeadershipSkillAreaTypes.POST_OVERVIEW_TEST, postOverviewTest
+  );
+  yield takeLatest(
+    LeadershipSkillAreaTypes.POST_EXTENDED_TEST,
     postExtendedTest,
   );
 }
