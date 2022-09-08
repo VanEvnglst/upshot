@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -16,27 +16,35 @@ import LeadershipSkillAreaActions from 'app/store/LSARedux';
 
 const CalculateAssessmentScore = props => {
   const { navigation } = props;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
 
   return (
     <View style={styles.container}>
       <SafeAreaView />
       <View style={styles.imageContainer}>
         <Image
-          source={Images.hugEmoji}
+          source={isLoading ? Images.magnifierEmoji : Images.hugEmoji}
           resizeMode="contain"
           style={styles.image}
         />
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.titleText}>Your profile is ready!</Text>
-        <Text style={styles.descriptionText}>
+        <Text style={styles.titleText}>{isLoading ? 'Calculating your score...' :'Your profile is ready!'}</Text>
+        {!isLoading && <Text style={styles.descriptionText}>
           Thank you for answering all questionnaires!
-        </Text>
+        </Text>}
       </View>
       <View style={styles.btnContainer}>
         <Button
           onPress={() => navigation.navigate('Extended Assessment Wrap Up')}
           mode="contained"
+          disabled={isLoading}
           style={styles.button}>
           <Text style={styles.buttonText}>View Leadership Profile</Text>
         </Button>
