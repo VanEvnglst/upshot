@@ -9,10 +9,10 @@ const defaultState ={
 export const INITIAL_STATE = Map({
   fetching: false,
   error: '',
-  activeStep: 1,
-  maxStep: 15,
-  categoryActiveStep: 1,
-  categoryMaxStep: 5,
+  overviewActiveStep: 1,
+  overviewMaxStep: 15,
+  categoryActiveStep: 1, //
+  categoryMaxStep: 5, //
   extendedActiveStep: 1,
   extendedMaxStep: 7,
   categorySelection: [
@@ -55,29 +55,23 @@ export const INITIAL_STATE = Map({
     trustBuildingList: [],
     achievementList: [],
   },
-  step1: { ...defaultState },
-  step2: { ...defaultState },
-  step3: { ...defaultState },
-  step4: { ...defaultState },
-  step5: { ...defaultState },
-  step6: { ...defaultState },
-  step7: { ...defaultState },
-  step8: { ...defaultState },
-  step9: { ...defaultState },
-  step10: { ...defaultState },
-  step11: { ...defaultState },
-  step12: { ...defaultState },
-  step13: { ...defaultState },
-  step14: { ...defaultState },
-  step15: { ...defaultState },
   overviewTestResults: null,
   overviewData: null,
   extendedData: null,
+  testFinishedCount: 0,
+  //save last step here
+  skillAreaTestSteps: {
+    empathy: null,
+    opennessToLearnList: null,
+    authenticity: null,
+    trustBuilding: null,
+    achievementOrientation: null,
+  }
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
-  setAssessmentActiveStep: ['step'],
+  setAssessmentActiveStep: ['key', 'step'],
   setAssessmentData: ['key', 'data'],
   setExtendedAssessmentData: ['key','data'],
   setAssessmentExtendedActiveStep: ['extendedStep'],
@@ -99,46 +93,47 @@ const { Types, Creators } = createActions({
 
 
 /* ------------- Reducers ------------- */
-export const leadershipSkillAreaTypes = Types;
+export const LeadershipSkillAreaTypes = Types;
 export default Creators;
 
-const setAssessmentActiveStep = (state, { step }) => {
-  if (state.get('activeStep') > state.get('maxStep')) {
-    return state.get('activeStep');
+const setAssessmentActiveStep = (state, { key, step }) => {
+  let maxStep = key === 'overviewActiveStep' ? 'overviewMaxStep' : 'extendedMaxStep';
+  if (state.get(`${key}`) >= state.get(`${maxStep}`)) {
+    return state.get(`${key}`);
   }
   return state.merge({
-    activeStep: step,
+    [key]: step,
   });
 };
 
-const setAssessmentExtendedActiveStep = (state, { extendedStep }) => {
+const setAssessmentExtendedActiveStep = (state, { extendedStep }) => { //
   if (state.get('extendedActiveStep') > state.get('extendedMaxStep')) {
     return state.get('extendedActiveStep');
   }
   return state.merge({
     extendedActiveStep: extendedStep,
   });
-};
+}; //
 
 const resetStep = (state, { key, data }) =>
   state.merge({ [key]: data });
 
-const setAssessmentCategoryActiveStep = (state, { categoryStep }) => {
+const setAssessmentCategoryActiveStep = (state, { categoryStep }) => { //
   if (state.get('categoryActiveStep') > state.get('categoryMaxStep')) {
     return state.get('categoryActiveStep');
   }
   return state.merge({
     categoryActiveStep: categoryStep,
   });
-};
-
-// const resetCategoryActiveStep = (state, { key, categoryStep }) =>
-//   state.merge({ [key]: categoryStep });
+}; //
 
 const setAssessmentData = (state, { key, data }) => 
   state.merge({
-   [key]: { data },
-  })
+    overviewData: {
+      ...state.get('overviewData'),
+      [key]: data ,
+    }
+  });
 
 const setExtendedAssessmentData = (state, { key, data }) => {
   return state.merge({
@@ -200,7 +195,25 @@ const postExtendedTestSuccess = (state, { data }) => state.merge({
 const postExtendedTestFailure = (state, { error }) => state.merge({
   fetching: false,
   error
-}); 
+});
+
+const postOverviewTest = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  })
+
+const postOverviewTestSuccess = (state, { results }) =>
+  state.merge({
+    fetching: false,
+    overviewTestResults: results,
+  })
+
+const postOverviewTestFailure = (state, { error }) => 
+  state.merge({
+    fetching: false,
+    error
+  })
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -220,4 +233,7 @@ export const reducer = createReducer(INITIAL_STATE, {
 [Types.POST_EXTENDED_TEST]: postExtendedTest,
 [Types.POST_EXTENDED_TEST_SUCCESS]: postExtendedTestSuccess,
 [Types.POST_EXTENDED_TEST_FAILURE]: postExtendedTestFailure,
+[Types.POST_OVERVIEW_TEST]: postOverviewTest,
+[Types.POST_OVERVIEW_TEST_SUCCESS]: postOverviewTestSuccess,
+[Types.POST_OVERVIEW_TEST_FAILURE]: postOverviewTestFailure
 });
