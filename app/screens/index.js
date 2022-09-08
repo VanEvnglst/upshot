@@ -1,5 +1,3 @@
-import { forModalPresentationIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
-
 /* ------------- Auth Stack ------------- */
 export { default as SignIn } from './sign-in';
 export { default as Onboarding } from './onboarding';
@@ -16,24 +14,21 @@ export { default as BaselineScore } from './leadership-assessment/lsa-baseline-s
 export { default as AssessmentBreakDown } from './leadership-assessment/lsa-assessment-break-down';
 export { default as ExtendedLeadershipAssessment } from './leadership-assessment/extended';
 export { default as ExtendedAssessmentConfirmation } from './leadership-assessment/lsa-milestone-signpost';
-export { default as MilestoneSignpost1 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost1';
-export { default as MilestoneSignpost2 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost2';
-export { default as MilestoneSignpost3 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost3';
-export { default as MilestoneSignpost4 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost4';
-export { default as MilestoneSignpost5 } from './leadership-assessment/lsa-milestone-signpost/milestone-signpost5';
-export { default as MilestoneWrapUp } from './leadership-assessment/lsa-milestone-signpost/milestone-wrapup';
+export { default as ExtendedAssessmentWrapUp } from './leadership-assessment/lsa-milestone-signpost/milestone-wrapup';
+export { default as CalculateAssessmentScore } from './leadership-assessment/lsa-milestone-signpost/calculate-score';
 
+/* ------------- Feedback Stack ------------- */
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';
 export { default as RecordFeedbackEntry } from './feedback/record-entry';
 export { default as ReviewFeedbackEntry } from './feedback/record-entry/review-entry';
 export { default as EntryConfirmation } from './feedback/record-entry/entry-confirmation';
+
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
 export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
-export { default as ExploreScreen } from './explore'; 
-
+export { default as ExploreScreen } from './explore';
 
 /* ------------- Feedback Stack ------------- */
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
@@ -58,7 +53,7 @@ export { default as DiscussingGuide } from './feedback/discussing/guide';
 export { default as DiscussingMeeting } from './feedback/discussing/meeting';
 export { default as FeedbackDiscussing } from './feedback/discussing';
 export { default as ActionPlanScreen } from './feedback/discussing/action-plan';
-export  { default as DiscussingReview } from './feedback/discussing/discussing-review';
+export { default as DiscussingReview } from './feedback/discussing/discussing-review';
 
 /* ------------- Feedback Reflecting ------------- */
 export { default as ReflectingGuide } from './feedback/reflecting/guide';
