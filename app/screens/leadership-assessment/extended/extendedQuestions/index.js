@@ -49,33 +49,33 @@ const ExtendedStep = props => {
   
       }
     else if (extendedActiveStep == extendedMaxStep && categoryActiveStep < categoryMaxStep) {
-      //navigation.navigate('Milestone Signpost1');
+      navigation.navigate('Milestone Signpost1');
       
-      // switch (categoryActiveStep) { 
-      //   case 1:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost1' });
-      //     break;
-      //   case 2:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost2' });
-      //     break;
-      //   case 3:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost3' });
-      //     break;
-      //   case 4:
-      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost4' });
-      //     break;
-      // }
-      // dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
-      // dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
+      switch (categoryActiveStep) { 
+        case 1:
+          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost1' });
+          break;
+        case 2:
+          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost2' });
+          break;
+        case 3:
+          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost3' });
+          break;
+        case 4:
+          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost4' });
+          break;
+      }
+      dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
+      dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
       
     }
-    // else if (extendedActiveStep == extendedMaxStep && categoryActiveStep == categoryMaxStep) {
-    //   dispatch(LeadershipSkillAreaActions.resetStep('categoryActiveStep', 1));
-    //   dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
-    //   NavigationService.navigate('Assessment', { screen: 'Milestone Signpost5' });
+    else if (extendedActiveStep == extendedMaxStep && categoryActiveStep == categoryMaxStep) {
+      dispatch(LeadershipSkillAreaActions.resetStep('categoryActiveStep', 1));
+      dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
+      NavigationService.navigate('Assessment', { screen: 'Milestone Signpost5' });
       
       
-    // }
+    }
 
   };
 

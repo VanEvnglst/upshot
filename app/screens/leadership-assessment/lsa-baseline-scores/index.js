@@ -32,6 +32,20 @@ const BaselineScore = props => {
   
   const skillList = [
     {
+      id: 3,
+      title: 'Authenticity 👐',
+      score: '40',
+       barColor: '#80DBAA',
+      borderColor: '#80DBAA'
+    },
+    {
+      id: 5,
+      title: 'Trust Building 🤝 ',
+      score: '30',
+       barColor: '#8089DB',
+      borderColor: '#8089DB'
+    },
+    {
       id: 1,
       title: 'Empathy 💓',
       score: '50',
@@ -46,31 +60,18 @@ const BaselineScore = props => {
       borderColor: '#D394EA'
     },
     {
-      id: 3,
-      title: 'Authenticity 👐',
-      score: '40',
-       barColor: '#80DBAA',
-      borderColor: '#80DBAA'
-    },
-    {
       id: 4,
       title: 'Achievement-Orientation 🏅',
       score: '20',
        barColor: '#EDA875',
       borderColor: '#EDA875'
     },
-    {
-      id: 5,
-      title: 'Trust Building 🤝 ',
-      score: '30',
-       barColor: '#8089DB',
-      borderColor: '#8089DB'
-    },
+    
   ]
 
   const [shouldExpand, setShouldExpand] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState({
-    id: 1,
+    id: 3,
     title: '',
     score: '',
   });

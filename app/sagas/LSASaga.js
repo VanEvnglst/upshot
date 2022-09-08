@@ -117,21 +117,31 @@ export function* postOverviewTest({ data }) {
 
 export function* postExtendedTest({ data }) { 
   const connected = yield checkInternetConnection();
-
+  const dataValues = Object.values(data);
+  let dataArr =[];
+  for (let i = 0; i < dataValues.length; i++) {
+    
+    const valueObj = Object.values(dataValues)[i]['data'];
+    let dataObj = { 
+      q_id: valueObj.question.qid, 
+      ans: valueObj.option.value
+    };
+    dataArr = [...dataArr, dataObj];
+  }
   const extendedData = {
-    q_id: data
+    answers: dataArr
   }
 
   const response = yield call(api.postLSAExtendedAnswers, extendedData);
   debugger;
   if (response.ok) {
-    debugger;
     yield put(LeadershipSkillAreaActions.postExtendedTestSuccess(extendedData));
   }
   else { 
     yield put(LeadershipSkillAreaActions.postExtendedTestFailure(response.data));
   }
 }
+
 
 function* watchLSAOverviewSaga() {
   yield takeLatest(

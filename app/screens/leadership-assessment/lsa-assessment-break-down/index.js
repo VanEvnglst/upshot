@@ -12,9 +12,13 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import { CardStyleInterpolators } from '@react-navigation/stack';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
+import lsaTypes from 'app/models/LSATypes';
+
 
 const AssessmentBreakDown = props => {
   const { navigation } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -31,32 +35,49 @@ const AssessmentBreakDown = props => {
 
   }, []);
 
+  const retrieveExtendedQs = async (element) => {
+    // const params = { 
+    //   catergory: title,
+    //   dataValue: value
+    // }
+    await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
+      setTimeout(() => {
+        navigation.navigate('Leadership Assessment Extended', element );
+    }, 300);
+    
+  };
 
-  const SkillAreaItem = ({ title }) => {
-    return (
-      <TouchableOpacity 
-        accessibilityRole='button'
-        style={styles.skillAreaItem}
-        onPress={() => navigation.navigate('Leadership Assessment Guide', { category: title })}  
-      >
-        <View style={styles.stepCounter}>
-          <Text style={styles.stepText}>0/7</Text>
-        </View>
-        <View style={styles.skillTitleContainer}>
-          <Text style={styles.skillTitleText}>{title}</Text>
-          <Text style={styles.completionText}>0% completed</Text>
-        </View>
-        <View
+  const SkillAreaItem = ({element}) => {
+
+      return (
+        <TouchableOpacity 
           accessibilityRole='button'
+          style={styles.skillAreaItem}
+          //onPress={() => navigation.navigate('Leadership Assessment Extended', { category: title, dataValue: value })}  
+          onPress={() => retrieveExtendedQs(element) }
         >
-          <Icon
-            name='chevron-forward-outline'
-            size={24}
-          />
-        </View>
-      </TouchableOpacity>
-    )
-  }
+          <View style={styles.stepCounter}>
+            <Text style={styles.stepText}>0/7</Text>
+          </View>
+          <View style={styles.skillTitleContainer}>
+            <Text style={styles.skillTitleText}>{element.title} {element.icon}</Text>
+            <Text style={styles.completionText}>0% completed</Text>
+          </View>
+          <View
+            accessibilityRole='button'
+          >
+            <Icon
+              name='chevron-forward-outline'
+              size={24}
+            />
+          </View>
+        </TouchableOpacity>
+      )
+
+    }
+    
+    
+  
 
 
   return <SafeAreaView style={styles.container}>
@@ -88,21 +109,37 @@ const AssessmentBreakDown = props => {
       <View style={styles.ringsContainer}/>
     </View>
     <View style={styles.contentContainer}>
-      <SkillAreaItem
+      
+    {lsaTypes.map(element => {
+
+return (
+  <SkillAreaItem
+        element={element}
+      />
+);
+
+})}
+      
+      {/* <SkillAreaItem
         title={'Empathy 💓'}
+        value={'empathyList'}
       />
       <SkillAreaItem
         title={'Openness to Learn 🧠'}
+        value={'opennessToLearnList'}
       />
       <SkillAreaItem
         title={'Authenticity 👐'}
+        value={'authenticityList'}
       />
       <SkillAreaItem
         title={'Achievement-Orientation 🏅'}
+        value={'achievementList'}
       />
       <SkillAreaItem
         title={'Trust Building 🤝'}
-      />
+        value={'trustBuildingList'}
+      /> */}
     </View>
   </SafeAreaView>;
 };
