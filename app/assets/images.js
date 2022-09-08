@@ -73,4 +73,5 @@ export default {
   calendarOutline: require('./images/calendar-outline.png'),
   usersOutline: require('./images/users-outline.png'),
   paperclip: require('./images/paperclip.png'),
+  popperEmoji: require('./images/popper.png'),
 };
