@@ -27,12 +27,18 @@ const AssessmentBreakDown = props => {
       });
   }, []);
 
+  useEffect(() => {
+
+  }, []);
+
 
   const SkillAreaItem = ({ title }) => {
     return (
       <TouchableOpacity 
         accessibilityRole='button'
-        style={styles.skillAreaItem}>
+        style={styles.skillAreaItem}
+        onPress={() => navigation.navigate('Leadership Assessment Guide', { category: title })}  
+      >
         <View style={styles.stepCounter}>
           <Text style={styles.stepText}>0/7</Text>
         </View>

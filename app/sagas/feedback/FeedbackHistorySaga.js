@@ -10,7 +10,6 @@ const STATUS_OK = 'ok';
 export function* fetchActiveJourneys() {
   const response = yield call(api.getFeedbackPortfolio);
   if (response.ok) {
-    debugger;
     if (response.data.status === STATUS_OK) {
       const journeyList = response.data.portfolio;
       yield put(FeedbackHistoryActions.fetchActiveJourneysSuccess(journeyList));

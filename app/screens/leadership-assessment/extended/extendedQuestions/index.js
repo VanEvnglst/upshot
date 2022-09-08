@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import { getOverviewStep, getOverviewMaxStep, getExtendedStep, getExtendedMaxStep, getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
 import containerStyles from 'app/screens/leadership-assessment/styles';
 import lsaOptions from 'app/models/LSAOptionsModel';
@@ -34,9 +34,6 @@ const ExtendedStep = props => {
     value: 0,
   });
 
-  const questionOption = [
-  ];
-
   const handleSelection = option => {
     setOptionSelection(option);
 
@@ -45,41 +42,40 @@ const ExtendedStep = props => {
       question: questionTitle,
     };
     
-    //dispatch(leadershipSkillAreaActions.setAssessmentData('step1', data));
-    dispatch(leadershipSkillAreaActions.setExtendedAssessmentData(`${categorySelection.dataValue}Answer${extendedActiveStep}`, data));
-    //console.log("extended", extendedAnswer);
+    //dispatch(LeadershipSkillAreaActions.setAssessmentData('step1', data));
+    dispatch(LeadershipSkillAreaActions.setExtendedAssessmentData(`${categorySelection.dataValue}Answer${extendedActiveStep}`, data));
     if (extendedActiveStep < extendedMaxStep) {
-      dispatch(leadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep + 1));
+      dispatch(LeadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep + 1));
   
       }
     else if (extendedActiveStep == extendedMaxStep && categoryActiveStep < categoryMaxStep) {
       //navigation.navigate('Milestone Signpost1');
       
-      switch (categoryActiveStep) { 
-        case 1:
-          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost1' });
-          break;
-        case 2:
-          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost2' });
-          break;
-        case 3:
-          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost3' });
-          break;
-        case 4:
-          NavigationService.navigate('Assessment', { screen: 'Milestone Signpost4' });
-          break;
-      }
-      dispatch(leadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
-      dispatch(leadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
+      // switch (categoryActiveStep) { 
+      //   case 1:
+      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost1' });
+      //     break;
+      //   case 2:
+      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost2' });
+      //     break;
+      //   case 3:
+      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost3' });
+      //     break;
+      //   case 4:
+      //     NavigationService.navigate('Assessment', { screen: 'Milestone Signpost4' });
+      //     break;
+      // }
+      // dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
+      // dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
       
     }
-    else if (extendedActiveStep == extendedMaxStep && categoryActiveStep == categoryMaxStep) {
-      dispatch(leadershipSkillAreaActions.resetStep('categoryActiveStep', 1));
-      dispatch(leadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
-      NavigationService.navigate('Assessment', { screen: 'Milestone Signpost5' });
+    // else if (extendedActiveStep == extendedMaxStep && categoryActiveStep == categoryMaxStep) {
+    //   dispatch(LeadershipSkillAreaActions.resetStep('categoryActiveStep', 1));
+    //   dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
+    //   NavigationService.navigate('Assessment', { screen: 'Milestone Signpost5' });
       
       
-    }
+    // }
 
   };
 
@@ -90,7 +86,7 @@ const ExtendedStep = props => {
           {questionTitle.question}
         </Text>
       </View>
-      {questionOption.map(element => {
+      {lsaOptions.map(element => {
         return (
           <Button
             mode="outlined"

@@ -20,8 +20,9 @@ export default containerStyles = StyleSheet.create({
     color: '#667080'
   },
   questionContainer: {
-    minHeight: 120,
+    minHeight: 160,
     marginTop: 24,
+    maxWidth: '90%'
   },
   questionText: {
     fontWeight: '700',
@@ -33,7 +34,7 @@ export default containerStyles = StyleSheet.create({
     marginTop: 24,
     borderRadius: 24,
     height: 40,
-    width: 321,
+    minWidth: 321,
     backgroundColor: '#EEF1F4',
     justifyContent: 'center',
     alignItems: 'center',

@@ -15,14 +15,14 @@ import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 
 const LeadershipOverviewResults = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
   //   const retrieveDataExtended = async () => {
-  //   await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+  //   await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
   //     debugger;
   //     setTimeout(() => {
   //       navigation.navigate('Leadership Assessment Extended');
@@ -101,8 +101,7 @@ const LeadershipOverviewResults = props => {
       <Button
             mode='contained'
             style={styles.button}
-            // onPress={() => retrieveDataExtended()}
-            onPress={() => navigation.navigate('Leadership Assessment Extended')}
+            onPress={() => navigation.navigate('Assessment break down')}
       >Build my Profile</Button>
       <TouchableOpacity
         style={styles.skippable}

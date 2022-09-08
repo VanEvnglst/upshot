@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   BackHandler,
@@ -11,24 +11,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
-import OverviewStep1 from './overview/overviewStep1';
-import OverviewStep2 from './overview/overviewStep2';
-import OverviewStep3 from './overview/overviewStep3';
-import OverviewStep4 from './overview/overviewStep4';
-import OverviewStep5 from './overview/overviewStep5';
-import OverviewStep6 from './overview/overviewStep6';
-import OverviewStep7 from './overview/overviewStep7';
-import OverviewStep8 from './overview/overviewStep8';
-import OverviewStep9 from './overview/overviewStep9';
-import OverviewStep10 from './overview/overviewStep10';
-import OverviewStep11 from './overview/overviewStep11';
-import OverviewStep12 from './overview/overviewStep12';
-import OverviewStep13 from './overview/overviewStep13';
-import OverviewStep14 from './overview/overviewStep14';
-import OverviewStep15 from './overview/overviewStep15';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import OverviewConfirmation from './overview/overview-confirmation';
 import { getOverviewStep, getOverviewMaxStep } from 'app/store/selectors';
+import lsaOptions from 'app/models/LSAOptionsModel';
 import containerStyles from './styles';
 
 const LeadershipAssessment = props => {
@@ -37,6 +23,15 @@ const LeadershipAssessment = props => {
   const activeStep = useSelector(getOverviewStep);
   const maxStep = useSelector(getOverviewMaxStep);
   const indexValue = activeStep / maxStep;
+  const questionTitle = useSelector(
+    state => state.leadershipSkillArea.get('overviewQuestions')[activeStep - 1],
+  );
+  const overview = useSelector(state => state.leadershipSkillArea.get('overviewData'));
+  const [selectedOption, setSelectedOption] = useState({
+    id: 0,
+    title: '',
+    value: '',
+  });
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -51,42 +46,46 @@ const LeadershipAssessment = props => {
 
   const handleGoBack = () => {
     if (activeStep === 1) navigation.goBack();
-    else dispatch(leadershipSkillAreaActions.setAssessmentActiveStep(activeStep - 1));
+    else
+      dispatch(
+        LeadershipSkillAreaActions.setAssessmentActiveStep(
+          'overviewActiveStep',
+          activeStep - 1,
+        ),
+      );
   };
 
-  const handleStepContent = () => {
-    switch (activeStep) {
-      case 1:
-        return <OverviewStep1 />;
-      case 2:
-        return <OverviewStep2 />;
-      case 3:
-        return <OverviewStep3 />;
-      case 4:
-        return <OverviewStep4 />;
-      case 5:
-        return <OverviewStep5 />;
-      case 6:
-        return <OverviewStep6 />;
-      case 7:
-        return <OverviewStep7 />;
-      case 8:
-        return <OverviewStep8 />;
-      case 9:
-        return <OverviewStep9 />;
-      case 10:
-        return <OverviewStep10 />;
-      case 11:
-        return <OverviewStep11 />;
-      case 12:
-        return <OverviewStep12 />;
-      case 13:
-        return <OverviewStep13 />;
-      case 14:
-        return <OverviewStep14 />;
-      case 15:
-        return <OverviewStep15 />;
-    }
+  const handleSelection = item => {
+    setSelectedOption(item);
+    const data = {
+      option: item,
+      question: questionTitle,
+    };
+
+    dispatch(
+      LeadershipSkillAreaActions.setAssessmentData(`step${activeStep}`, data),
+    );
+    setTimeout(() => {
+      setSelectedOption({
+        id: 0,
+        title: '',
+        value: '',
+      })
+    }, 300);
+    if (activeStep === maxStep) 
+    dispatch(LeadershipSkillAreaActions.postOverviewTest(overview))
+    else
+    setTimeout(() => {
+      dispatch(
+        LeadershipSkillAreaActions.setAssessmentActiveStep(
+          'overviewActiveStep',
+          activeStep + 1,
+        ),
+      );
+      
+     
+    }, 500);
+    
   };
 
   return (
@@ -103,14 +102,56 @@ const LeadershipAssessment = props => {
             color={'#667080'}
             style={styles.progressBar}></ProgressBar>
           <View style={containerStyles.questionHeader}>
-            <Text style={containerStyles.guideQuestionText}>
-              Which option sounds more like you? 🤔
-            </Text>
+            <View>
+              <Text style={containerStyles.guideQuestionText}>
+                Which option sounds more like you? 🤔
+              </Text>
+            </View>
           </View>
+          </SafeAreaView>
           <View style={containerStyles.contentContainer}>
-            {handleStepContent()}
+            <View style={containerStyles.questionContainer}>
+              <Text style={containerStyles.questionText}>
+                {questionTitle.question}
+              </Text>
+            </View>
+            {lsaOptions.map(element => {
+              return (
+                <Button
+                  mode="outlined"
+                  onPress={() => handleSelection(element)}
+                  key={element.key}
+                  style={[
+                    containerStyles.optionsButton,
+                    {
+                      borderWidth: element.key === selectedOption.key ? 2 : 1,
+                    },
+                  ]}>
+                  <Text
+                    style={[
+                      containerStyles.optionsText,
+                      {
+                        fontWeight:
+                          element.key === selectedOption.key ? '700' : '400',
+                      },
+                    ]}>
+                    {element.title}
+                  </Text>
+                </Button>
+              );
+            })}
+            <View style={containerStyles.counterContainer}>
+              <Text style={containerStyles.counterGuideText}>Questions</Text>
+              <View style={containerStyles.questionCounterContainer}>
+                <Text style={containerStyles.questionCounterText}>
+                  {activeStep}
+                </Text>
+                <Text style={containerStyles.maxQuestionCounterText}>
+                  {`/${maxStep}`}
+                </Text>
+              </View>
+            </View>
           </View>
-        </SafeAreaView>
       </View>
     </View>
   );

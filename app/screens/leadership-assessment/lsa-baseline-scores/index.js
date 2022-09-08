@@ -14,7 +14,7 @@ import { Button, Card, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import {RadarChart} from 'react-native-charts-wrapper';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
 
 const BaselineScore = props => {
@@ -23,7 +23,7 @@ const BaselineScore = props => {
   const dispatch = useDispatch();
 
   const retrieveDataExtended = async () => {
-    await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+    await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
       debugger;
       setTimeout(() => {
         navigation.navigate('Leadership Assessment Extended');
@@ -40,7 +40,7 @@ const BaselineScore = props => {
     },
     {
       id: 2,
-      title: 'Curiosity 🧠',
+      title: 'Openness to Learn 🧠',
       score: '50',
        barColor: '#D394EA',
       borderColor: '#D394EA'
@@ -81,8 +81,6 @@ const BaselineScore = props => {
     setSelectedSkill(item);
     
   }
-
-  
     return (
       <View style={styles.container}>
     <ScrollView
@@ -190,6 +188,7 @@ const BaselineScore = props => {
                   borderRadius: 12,
                   borderColor: selectedSkill.id === item.id ? item.borderColor : '#667080',
                 }}
+                key={item.id}
               >
                 <View>
                   <View style={{ marginBottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

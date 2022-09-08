@@ -11,15 +11,19 @@ import PropTypes from 'prop-types';
 import { Button, ProgressBar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import styles from './styles';
 
 const LeadershipAssessmentGuide = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(LeadershipSkillAreaActions.fetchOverviewQuestions());
+  }, []);
+
   const retrieveData = async () => {
-    await dispatch(leadershipSkillAreaActions.fetchOverviewQuestions());
+    //await 
     setTimeout(() => {
       navigation.navigate('Leadership Assessment');
     }, 300);
