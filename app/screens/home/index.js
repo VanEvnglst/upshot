@@ -18,7 +18,6 @@ import { getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import styles from './styles';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
 import { HeaderStyleInterpolators } from '@react-navigation/stack';
 const HomeScreen = props => {
   const { homeScreen } = labels;
@@ -28,7 +27,6 @@ const HomeScreen = props => {
 
   useEffect(() => {
     dispatch(FeedbackHistoryActions.fetchActiveJourneys());
-    // dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
   }, []);
 
   const [date, setDate] = useState(new Date(1598051730000));
