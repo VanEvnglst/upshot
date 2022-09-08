@@ -14,7 +14,7 @@ import { Button, Card, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import {RadarChart} from 'react-native-charts-wrapper';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
 
 const BaselineScore = props => {
@@ -23,7 +23,7 @@ const BaselineScore = props => {
   const dispatch = useDispatch();
 
   const retrieveDataExtended = async () => {
-    await dispatch(leadershipSkillAreaActions.fetchExtendedQuestions());
+    await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
       debugger;
       setTimeout(() => {
         navigation.navigate('Leadership Assessment Extended');

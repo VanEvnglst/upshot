@@ -12,7 +12,7 @@ import {
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
-import leadershipSkillAreaActions from 'app/store/LSARedux';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import { useDispatch, useSelector } from 'react-redux';
 //import { getCategoryStep, getCategoryMaxStep } from 'app/store/selectors';
 
@@ -47,7 +47,7 @@ const MilestoneSignpost1 = props => {
 }
 
   const handleDataAndNext = () => {
-    //dispatch(leadershipSkillAreaActions.postExtendedTest(extendedTestAns.data.question.id));
+    //dispatch(LeadershipSkillAreaActions.postExtendedTest(extendedTestAns.data.question.id));
     debugger;
     setTimeout(() => {
       navigation.navigate('Leadership Assessment Extended');
@@ -59,11 +59,11 @@ const MilestoneSignpost1 = props => {
   // const handleNextCategory = () => {
   //   if (categoryActiveStep < categoryMaxStep)
   //   {
-  //     dispatch(leadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
+  //     dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
   //     navigation.navigate('Leadership Assessment Results');
   //   }
   //   else if (categoryActiveStep === categoryMaxStep)
-  //     dispatch(leadershipSkillAreaActions.resetCategoryActiveStep());
+  //     dispatch(LeadershipSkillAreaActions.resetCategoryActiveStep());
   // }
 
   return (
