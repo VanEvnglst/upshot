@@ -22,12 +22,7 @@ const MilestoneSignpost1 = props => {
 
   const extendedTestAns = useSelector(
     state => state.leadershipSkillArea.get('extendedData'));
-  const testing = Object.keys(extendedTestAns);
-  const value = testing.length;
-  const testing1 = Object.values(extendedTestAns);
-  const extendedAns = Object.values(testing1)['data'];
-  //const trial = Object.values(extendedAns);
-    //qid: extendedTestAns.map((data) => { return data.testing.questions.qid })
+  const rawExtendedAns = Object.values(extendedTestAns);
 
     useEffect(() => {
       handleData();
@@ -35,22 +30,22 @@ const MilestoneSignpost1 = props => {
 
   const handleData = () => {
     let newArr =[];
-  for (let i = 0; i < testing1.length; i++) {
+  for (let i = 0; i < rawExtendedAns.length; i++) {
     
-    const extendedAns1 = Object.values(testing1)[i]['data'];
-    let dataObj = { qid: extendedAns1.question.qid, value: extendedAns1.option.value};
+    const filteredExtendedAns = Object.values(rawExtendedAns)[i]['data'];
+    let dataObj = { qid: filteredExtendedAns.question.qid, value: filteredExtendedAns.option.value};
     newArr = [...newArr, dataObj];
-    debugger;
+  
   }
   console.warn('arr', newArr);
-  debugger;
+
 }
 
   const handleDataAndNext = () => {
     //dispatch(LeadershipSkillAreaActions.postExtendedTest(extendedTestAns.data.question.id));
     debugger;
     setTimeout(() => {
-      navigation.navigate('Leadership Assessment Extended');
+      navigation.navigate('Assessment break down');
     }, 200);
   }
   //const categoryActiveStep = useSelector(getCategoryStep);

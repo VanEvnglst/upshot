@@ -42,7 +42,7 @@ const MilestoneSignpost4 = props => {
 
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('Leadership Assessment Extended')}
+          onPress={() => navigation.navigate('Assessment break down')}
           mode="contained"
           style={styles.button}>
           <Text style={styles.buttonText}>Continue</Text>

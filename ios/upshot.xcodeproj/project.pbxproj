@@ -22,7 +22,7 @@
 		C68BDB937AF3E97AAA515609 /* libPods-upshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CDE5DD9A7157988718D835 /* libPods-upshot.a */; };
 		CEC04E34BCD243CD8A16F0B9 /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E052D8B63F984E97A32AB37D /* Raleway-Medium.ttf */; };
 		E09D35E5010B587D97AB9E05 /* libPods-upshot-upshotTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E505F76A6311D5BC36D1E83 /* libPods-upshot-upshotTests.a */; };
-		F8499A3A28B3976700460B6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8499A3928B3976700460B6E /* GoogleService-Info.plist */; };
+		F88021A528C9916500A31FD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F88021A428C9916500A31FD2 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +76,7 @@
 		D9D4D0FFC90243FD8E2C98B7 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		E052D8B63F984E97A32AB37D /* Raleway-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Raleway-Medium.ttf"; path = "../app/assets/fonts/Raleway-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F8499A3928B3976700460B6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F88021A428C9916500A31FD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Library/Mobile Documents/com~apple~CloudDocs/Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9DB5895D1EB4A75A4AD5A17 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		FDCB8FF2D5014CDE8F55D371 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,7 +122,7 @@
 		13B07FAE1A68108700A75B9A /* upshot */ = {
 			isa = PBXGroup;
 			children = (
-				F8499A3928B3976700460B6E /* GoogleService-Info.plist */,
+				F88021A428C9916500A31FD2 /* GoogleService-Info.plist */,
 				87F5E62A26B4018900D22546 /* upshot.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -323,7 +323,7 @@
 				CEC04E34BCD243CD8A16F0B9 /* Raleway-Medium.ttf in Resources */,
 				487C25C40F56420796CC1392 /* Raleway-Regular.ttf in Resources */,
 				9C0241BCF00646EAACDAC2C6 /* Raleway-Thin.ttf in Resources */,
-				F8499A3A28B3976700460B6E /* GoogleService-Info.plist in Resources */,
+				F88021A528C9916500A31FD2 /* GoogleService-Info.plist in Resources */,
 				C1D007670AF14ADFB000A719 /* Raleway-SemiBold.ttf in Resources */,
 				8D5F8687856C494DB417BD30 /* Shrikhand-Regular.ttf in Resources */,
 			);
@@ -669,7 +669,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -734,7 +734,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

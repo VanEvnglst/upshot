@@ -418,7 +418,7 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/lsa_extended_questions`);
+    return upshotAPI.post(`/${uniqueId}/lsa_test_extended`, payload);
   },
   getFeedbackPortfolio: async () => {
     const url = await AsyncStorage.getItem('baseURL');
