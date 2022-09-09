@@ -55,7 +55,8 @@ const ExtendedLeadershipAssessment = props => {
 
   const handleGoBack = () => {
     if (extendedActiveStep === 1) navigation.goBack();
-    else dispatch(LeadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep - 1));
+    else 
+    dispatch(LeadershipSkillAreaActions.setAssessmentActiveStep('extendedActiveStep', extendedActiveStep - 1));
   };
 
   const handleSelection = option => {
@@ -80,7 +81,7 @@ const ExtendedLeadershipAssessment = props => {
       dispatch(LeadershipSkillAreaActions.postExtendedTest(extended));
       dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
       }  else
-      dispatch(LeadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep + 1));
+      dispatch(LeadershipSkillAreaActions.setAssessmentActiveStep('extendedActiveStep', extendedActiveStep + 1));
   };
 
   return (

@@ -11,8 +11,6 @@ export const INITIAL_STATE = Map({
   error: '',
   overviewActiveStep: 1,
   overviewMaxStep: 15,
-  categoryActiveStep: 1, //
-  categoryMaxStep: 5, //
   extendedActiveStep: 1,
   extendedMaxStep: 7,
   overviewQuestions: null,
@@ -44,8 +42,6 @@ const { Types, Creators } = createActions({
   setAssessmentStatus: ['key', 'data'],
   setAssessmentData: ['key', 'data'],
   setExtendedAssessmentData: ['key','data'],
-  setAssessmentExtendedActiveStep: ['extendedStep'],
-  setAssessmentCategoryActiveStep: ['categoryStep'],
   resetStep: ['key', 'data'],
   fetchOverviewQuestions: [],
   fetchOverviewQuestionsSuccess: ['overviewQuestions'],
@@ -59,6 +55,7 @@ const { Types, Creators } = createActions({
   postExtendedTest: ['data'],
   postExtendedTestSuccess: ['data'],
   postExtendedTestFailure: ['error'],
+  
 });
 
 
@@ -76,26 +73,8 @@ const setAssessmentActiveStep = (state, { key, step }) => {
   });
 };
 
-const setAssessmentExtendedActiveStep = (state, { extendedStep }) => { //
-  if (state.get('extendedActiveStep') > state.get('extendedMaxStep')) {
-    return state.get('extendedActiveStep');
-  }
-  return state.merge({
-    extendedActiveStep: extendedStep,
-  });
-}; //
-
 const resetStep = (state, { key, data }) =>
   state.merge({ [key]: data });
-
-const setAssessmentCategoryActiveStep = (state, { categoryStep }) => { //
-  if (state.get('categoryActiveStep') > state.get('categoryMaxStep')) {
-    return state.get('categoryActiveStep');
-  }
-  return state.merge({
-    categoryActiveStep: categoryStep,
-  });
-}; //
 
 const setAssessmentData = (state, { key, data }) => 
   state.merge({
@@ -138,7 +117,7 @@ const fetchOverviewQuestionsFailure = (state, { error }) =>
     error,
   });
 
-  const fetchExtendedQuestions = state =>
+const fetchExtendedQuestions = state =>
   state.merge({
     fetching: true,
     error: '',
@@ -194,9 +173,7 @@ const postOverviewTestFailure = (state, { error }) =>
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
 [Types.SET_ASSESSMENT_ACTIVE_STEP]: setAssessmentActiveStep,
-[Types.SET_ASSESSMENT_EXTENDED_ACTIVE_STEP]: setAssessmentExtendedActiveStep,
 [Types.RESET_STEP]: resetStep,
-[Types.SET_ASSESSMENT_CATEGORY_ACTIVE_STEP]: setAssessmentCategoryActiveStep,
 [Types.SET_ASSESSMENT_DATA]: setAssessmentData,
 [Types.SET_EXTENDED_ASSESSMENT_DATA]: setExtendedAssessmentData,
 [Types.FETCH_OVERVIEW_QUESTIONS]: fetchOverviewQuestions,
