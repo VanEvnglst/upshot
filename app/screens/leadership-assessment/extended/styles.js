@@ -33,7 +33,7 @@ export default containerStyles = StyleSheet.create({
     marginTop: 24,
     borderRadius: 24,
     height: 40,
-    width: 321,
+    minWidth: 321,
     backgroundColor: '#EEF1F4',
     justifyContent: 'center',
     alignItems: 'center',

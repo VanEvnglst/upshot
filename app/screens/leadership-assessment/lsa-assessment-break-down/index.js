@@ -36,10 +36,6 @@ const AssessmentBreakDown = props => {
   }, []);
 
   const retrieveExtendedQs = async (element) => {
-    // const params = { 
-    //   catergory: title,
-    //   dataValue: value
-    // }
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
       setTimeout(() => {
         navigation.navigate('Leadership Assessment Extended', element );

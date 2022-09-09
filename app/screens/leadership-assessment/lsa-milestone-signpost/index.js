@@ -16,7 +16,7 @@ import styles from './styles';
 const ExtendedAssessmentConfirmation = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const completedTests = 5; // should be from selector
+  const completedTests = useSelector(state => state.leadershipSkillArea.get('testFinishedCount'));
   const [content, setContent] = useState({
     id: 0,
     title: '',

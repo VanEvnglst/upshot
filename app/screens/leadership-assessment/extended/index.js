@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
-import ExtendedStep from './extendedQuestions';
-import * as NavigationService from 'app/services/NavigationService';
 import lsaOptions from 'app/models/LSAOptionsModel';
 import lsaTypes from 'app/models/LSATypes';
 
@@ -31,7 +29,6 @@ const ExtendedLeadershipAssessment = props => {
   const categoryActiveStep = useSelector(getCategoryStep);
   const categoryMaxStep = useSelector(getCategoryMaxStep);
   const indexValue = extendedActiveStep / extendedMaxStep;
-  
   const questionTitle = useSelector(
       state => state.leadershipSkillArea.get('extendedQuestions')[route.params.questionValue][extendedActiveStep - 1],
     );
@@ -58,7 +55,8 @@ const ExtendedLeadershipAssessment = props => {
 
   const handleGoBack = () => {
     if (extendedActiveStep === 1) navigation.goBack();
-    else dispatch(LeadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep - 1));
+    else 
+    dispatch(LeadershipSkillAreaActions.setAssessmentActiveStep('extendedActiveStep', extendedActiveStep - 1));
   };
 
   const handleSelection = option => {
@@ -69,52 +67,22 @@ const ExtendedLeadershipAssessment = props => {
       question: questionTitle,
     };
 
-    //dispatch(LeadershipSkillAreaActions.setExtendedAssessmentData(`${categorySelection.dataValue}Answer${extendedActiveStep}`, data));
     dispatch(LeadershipSkillAreaActions.setExtendedAssessmentData(`answer${route.params.title}${extendedActiveStep}`, data));
 
-    if (extendedActiveStep < extendedMaxStep) {
-      dispatch(LeadershipSkillAreaActions.setAssessmentExtendedActiveStep(extendedActiveStep + 1));
-  
-      }
-    else if (extendedActiveStep == extendedMaxStep && categoryActiveStep < categoryMaxStep) {
-     
-      dispatch(LeadershipSkillAreaActions.postExtendedTest(extended));
-      
-      dispatch(LeadershipSkillAreaActions.setAssessmentCategoryActiveStep(categoryActiveStep + 1));
-      dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
-      
-    }
-    else if (extendedActiveStep == extendedMaxStep && categoryActiveStep == categoryMaxStep) {
-      dispatch(LeadershipSkillAreaActions.postExtendedTest(extended));
-      dispatch(LeadershipSkillAreaActions.resetStep('categoryActiveStep', 1));
-      dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
-      //NavigationService.navigate('Assessment', { screen: 'Milestone Signpost5' });
-      
-      
-    }
+    setTimeout(() => {
+      setOptionSelection({
+        id: 0,
+        title: '',
+        value: '',
+      })
+    }, 300);
 
+    if (extendedActiveStep === extendedMaxStep) {
+      dispatch(LeadershipSkillAreaActions.postExtendedTest(extended));
+      dispatch(LeadershipSkillAreaActions.resetStep('extendedActiveStep', 1));
+      }  else
+      dispatch(LeadershipSkillAreaActions.setAssessmentActiveStep('extendedActiveStep', extendedActiveStep + 1));
   };
-
-  // const handleStepContent = () => {
-  //   console.warn('render', route.params.category);
-  //   switch(route.params.category) {
-  //     case "Empathy 💓":
-  //       console.warn('render empathy');
-  //   }
-  //   // handle Content should return questions based on category passed in
-
-
-  //   // if (categoryActiveStep <= categoryMaxStep) {
-  //   //   debugger;
-  //   //   if (extendedActiveStep <= extendedMaxStep)
-  //       // return <ExtendedStep />
-  //   //   else
-  //   //     console.warn('Error-activeStep', extendedActiveStep);
-  //   // }
-  //   // else
-  //   //   console.warn('Error-categoryStep', categoryActiveStep);
-  // };
-
 
   return (
     <View style={containerStyles.container}>
@@ -142,7 +110,6 @@ const ExtendedLeadershipAssessment = props => {
             </Text>
           </View>
           <View style={containerStyles.contentContainer}>
-            {/* {handleStepContent()} */}
             <View style={containerStyles.questionContainer}>
         <Text style={containerStyles.questionText}>
           {questionTitle.question}
@@ -182,7 +149,6 @@ const ExtendedLeadershipAssessment = props => {
           </Text>
         </View>
       </View>
-
           </View>
         </SafeAreaView>
       </View>
