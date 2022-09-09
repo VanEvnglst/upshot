@@ -24,6 +24,7 @@ export const INITIAL_STATE = Map({
     achievementList: [],
   },
   overviewTestResults: null,
+  extendedTestResults: null,
   overviewData: null,
   extendedData: null,
   testFinishedCount: 0,
@@ -40,6 +41,7 @@ export const INITIAL_STATE = Map({
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['key', 'step'],
+  setAssessmentStatus: ['key', 'data'],
   setAssessmentData: ['key', 'data'],
   setExtendedAssessmentData: ['key','data'],
   setAssessmentExtendedActiveStep: ['extendedStep'],
@@ -103,6 +105,11 @@ const setAssessmentData = (state, { key, data }) =>
     }
   });
 
+const setAssessmentStatus = (state, { key, data }) => 
+state.merge({
+  [key]: data
+})
+
 const setExtendedAssessmentData = (state, { key, data }) => {
   return state.merge({
     extendedData: {
@@ -156,7 +163,7 @@ const postExtendedTest = state => state.merge({
 });
 
 const postExtendedTestSuccess = (state, { data }) => state.merge({
-  id: data,
+  extendedTestResults: data, 
   fetching: false,
 });
 
@@ -203,5 +210,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 [Types.POST_EXTENDED_TEST_FAILURE]: postExtendedTestFailure,
 [Types.POST_OVERVIEW_TEST]: postOverviewTest,
 [Types.POST_OVERVIEW_TEST_SUCCESS]: postOverviewTestSuccess,
-[Types.POST_OVERVIEW_TEST_FAILURE]: postOverviewTestFailure
+[Types.POST_OVERVIEW_TEST_FAILURE]: postOverviewTestFailure,
+[Types.SET_ASSESSMENT_STATUS]: setAssessmentStatus
 });
