@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
-import { Button } from 'react-native-paper';
+import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
@@ -21,14 +21,7 @@ const LeadershipOverviewResults = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
-  //   const retrieveDataExtended = async () => {
-  //   await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
-  //     debugger;
-  //     setTimeout(() => {
-  //       navigation.navigate('Leadership Assessment Extended');
-  //   }, 300);
-  // };
-
+  //get selector of data from state
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -53,30 +46,28 @@ const LeadershipOverviewResults = props => {
       showsVerticalScrollIndicator={false}
     >
     <SafeAreaView>
-    <TouchableOpacity
-            accessibilityRole="button"
-            onPress={() => handleGoBack()}>
-            <Icon name="chevron-back-outline" size={24} font-size="6px" />
-          </TouchableOpacity>
+      <ProgressBar
+        progress={1}
+        color={'#667080'}
+        style={styles.progressBar}
+      />
     </SafeAreaView>
-    <View style={styles.userContainer}>
-      <View style={styles.userIcon}>
-        <Image
-          source={Images.smileyAvatar}
-          resizeMode='contain'
-          style={styles.avatarIcon}
-        />
-      </View>
-      <View stlye={styles.userDetailsContainer}>
-        <Text style={styles.userNameText}>Jaykey del Mar</Text>
-        <Text style={styles.userLevelText}>Level 1</Text>
-      </View>
+    <View style={styles.headerContainer}>
+        <Text style={styles.userNameText}>Hi Jaykey del Mar!</Text>
+        <Text style={styles.headerTitleText}>Your results are here. 🎉</Text>
     </View>
     <View style={styles.descriptionContainer}>
-    <Text style={[styles.descriptionText, styles.textAlignStart]}>{`To view your skill area breakdown, you will need to answer a few questions to personalize your leadership profile.\n\nBy building your skills, we can have a baseline`}</Text>
+    <Text style={[styles.descriptionText, styles.textAlignStart]}>Here's a quick view of where each of your leadership skill areas stand.</Text>
     </View>
     <View style={styles.contentContainer}>
-      <View style={styles.improvementContainer}>
+      <View style={{ height: 200, marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={styles.scoreLabel}>Your<Text style={styles.scoreLabelBold}> Empathy </Text>score is under</Text>
+        <View style={styles.areaOfConcernContainer}>
+          <Text style={styles.areaOfConcernLabel}>Area of Concern</Text>
+        </View>
+
+      </View>
+      {/* <View style={styles.improvementContainer}>
         <Text style={[styles.labelText, styles.improvementLabel]}>Areas for Improvement:</Text>
         <View style={styles.content}>
           <View style={styles.skillAreaContainer}>
@@ -87,28 +78,56 @@ const LeadershipOverviewResults = props => {
           </View>
           <View style={styles.skillAreaContainer}><Text style={styles.labelText}>👐 Authenticity</Text></View>
         </View>
-      </View>
-      <View style={styles.satisfactoryContainer}>
+      </View> */}
+      {/* <View style={styles.satisfactoryContainer}>
       <Text style={[styles.labelText, styles.satisfactoryLabel]}>Satisfactory:</Text>
       <View style={styles.skillAreaContainer}><Text style={styles.labelText}>🧠 Curiosity</Text></View>
-      </View>
-      <View style={styles.promisingContainer}>
+      </View> */}
+      {/* <View style={styles.promisingContainer}>
       <Text style={[styles.labelText, styles.promisingLabel]}>Promising Areas:</Text>
       <View style={styles.skillAreaContainer}><Text style={styles.labelText}>🏅 Achievement Orientation</Text></View>
+      </View> */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      >
+      <View style={styles.skillAreaContentContainer}>
+        <View style={styles.contentHeader}>
+          <Text style={styles.contentTitleText}>💓 Empathy</Text>
+        </View>
+        <View style={styles.aboutSkillContent}>
+          <Text style={styles.contentLabelText}>About this Skill Area</Text>
+        </View>
+        <View style={styles.aboutSkillContent}>
+        <Text style={styles.contentLabelText}>What Your Score Means</Text>
+        </View>
       </View>
+      <View style={styles.skillAreaContentContainer}>
+        <View style={styles.contentHeader}>
+          <Text style={styles.contentTitleText}>💓 Empathy</Text>
+        </View>
+        <View style={styles.aboutSkillContent}>
+          <Text style={styles.contentLabelText}>About this Skill Area</Text>
+        </View>
+        <View style={styles.aboutSkillContent}>
+        <Text style={styles.contentLabelText}>What Your Score Means</Text>
+        </View>
+      </View>
+      </ScrollView>
+      <TouchableOpacity
+        accessibilityRole='button'
+        onPress={() => {}}
+      >
+      <Text style={styles.linkText}>Why these 5 Leadership Skill Areas?</Text>
+      </TouchableOpacity>
+      <Text style={styles.descriptionText}>{`To view your detailed skill area breakdown, you will need to answer a few questions to personalize your leadership profile.\n\nBy building your profile, we can have a baseline on your current performance and compare how you progress at any point in time. Your baseline helps us recommend the most useful starting point. `}</Text>
     </View>
     <View style={styles.btnContainer}>
       <Button
             mode='contained'
             style={styles.button}
             onPress={() => navigation.navigate('Assessment break down')}
-      >Build my Profile</Button>
-      <TouchableOpacity
-        style={styles.skippable}
-        onPress={() => handleNavigation()}
-      >
-        <Text style={styles.descriptionText}>Skip Test</Text>
-      </TouchableOpacity>
+      >Start with Skill Areas</Button>
     </View>
     <View style={styles.spacer}/>
     </ScrollView>
@@ -122,10 +141,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24
   },
-  userContainer: {
-    marginTop: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
+  progressBar: {
+    height: 4,
+    borderRadius: 4,
+    marginTop: 20,
+  },
+  headerContainer: {
+    marginTop: 40,
   },
   userIcon: {
     width: 58,
@@ -144,17 +166,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userNameText: {
+    fontSize: 10,
+    lineHeight: 10,
+    fontWeight: '600',
+    color: '#B1B5C3',
+    textTransform: 'uppercase'
+  },
+  headerTitleText: {
     fontSize: 24,
     lineHeight: 30,
     fontWeight: '700',
-    color: '#667080'
-  },
-  userLevelText: {
-    marginTop: 4,
-    color: "#667080",
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    color: '#667080',
+    marginTop: 5,
   },
   descriptionContainer: {
     marginTop: 25,
@@ -240,12 +263,85 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     fontWeight: '400',
-    textAlign: 'center'
   },
   textAlignStart: {
     textAlign: 'left'
   },
   spacer: {
     height: 100
+  },
+  linkText: {
+    marginBottom: 24, 
+    color: '#58A1F2', 
+    fontSize: 14, 
+    textAlign: 'center', 
+    textDecorationLine: 'underline',
+    lineHeight: 22,
+  },
+  skillAreaContentContainer: {
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#BAC0CA',
+    minHeight: 500,
+    padding: 12,
+    borderRadius: 6,
+    width: 325,
+    marginRight: 8
+  },
+  contentHeader: {
+    borderBottomWidth: 1,
+    borderColor: '#BAC0CA',
+    paddingBottom: 12,
+  },
+  contentTitleText: {
+    fontSize: 16,
+    lineHeight: 22,
+    color: '#667080',
+    fontWeight: '700',
+  },
+  contentLabelText: {
+    fontSize: 14,
+    color: '#667080',
+    fontWeight: '700',
+    lineHeight: 22,
+  },
+  aboutSkillContent: {
+    marginTop: 15
+
+  },
+  aboutSkillText: {
+    fontSize: 14,
+    color: '#667080',
+    fontWeight: '400',
+    lineHeight: 22,
+  },
+  scoreLabel: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#667080',
+    lineHeight: 22,
+    maxWidth: 140,
+    marginBottom: 8
+  },
+  scoreLabelBold: {
+    fontWeight: '700'
+  },
+  areaOfConcernContainer: {
+    backgroundColor:'#FFE4EA',
+    borderWidth: 1,
+    borderColor: '#FF9C9C',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+    height: 45
+  },
+  areaOfConcernLabel: {
+    color: '#FF5656',
+    fontSize: 12,
+    lineHeight: 10,
+    fontWeight: '600',
+    paddingTop: 5,
+    textTransform: 'uppercase',
   }
 });
