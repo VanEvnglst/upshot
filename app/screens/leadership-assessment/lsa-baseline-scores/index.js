@@ -21,6 +21,7 @@ const BaselineScore = props => {
   
   const { navigation } = props;
   const dispatch = useDispatch();
+  const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
 
   const retrieveDataExtended = async () => {
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
@@ -34,35 +35,35 @@ const BaselineScore = props => {
     {
       id: 3,
       title: 'Authenticity 👐',
-      score: '40',
+      score: scores.authenticity,
        barColor: '#80DBAA',
       borderColor: '#80DBAA'
     },
     {
       id: 5,
       title: 'Trust Building 🤝 ',
-      score: '30',
+      score: scores.trust_building,
        barColor: '#8089DB',
       borderColor: '#8089DB'
     },
     {
       id: 1,
       title: 'Empathy 💓',
-      score: '50',
+      score: scores.empathy,
       barColor: '#F690A9',
       borderColor: '#F690A9'
     },
     {
       id: 2,
       title: 'Openness to Learn 🧠',
-      score: '50',
+      score: scores.openness_to_learn,
        barColor: '#D394EA',
       borderColor: '#D394EA'
     },
     {
       id: 4,
       title: 'Achievement-Orientation 🏅',
-      score: '20',
+      score: scores.achievement,
        barColor: '#EDA875',
       borderColor: '#EDA875'
     },
@@ -197,7 +198,7 @@ const BaselineScore = props => {
                     <Text>{`${item.score} / 100`}</Text>
                   </View>
                   <ProgressBar
-                    progress={0.5}
+                    progress={(item.score/100)}
                     color={item.barColor}
                     style={{ height: 6, borderRadius: 6 }}
                   />
