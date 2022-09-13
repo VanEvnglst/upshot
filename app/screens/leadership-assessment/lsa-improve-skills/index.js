@@ -49,8 +49,7 @@ const ImproveSkills = props => {
   const dispatch = useDispatch();
 
   const [seTopic, setSeTopic] = useState([]);
-  //const [selectedTopic, setSelectedTopic] = useState([]);
-  console.warn('se', typeof seTopic);
+  const [topicsList, setTopicsList] = useState([]);
 
   const selectedTopicList = useSelector(state => state.leadershipSkillArea.get('topicData'));
 
@@ -59,24 +58,29 @@ const ImproveSkills = props => {
     //dispatch(LeadershipSkillAreaActions.setTopicData('topicData',item.topic));
   };
 
-  const handleSelection = item => {
-    setSeTopic.push(item)
+  const checkSelectedTopic = item => {
+    return topicsList.some(topic => topic.id === item.id);
+  };  
+
+  const handleRemoveSelection = item => {
+    let newTopicList = topicsList;
+
+    newTopicList = newTopicList.filter(newTopic => {return newTopic.id !== item.id});
+    setTopicsList(newTopicList);
   }
 
-  const TopicSelection = () => {
-    return (
-      <View>
-        {selectedTopicList && (
-            <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>{selectedTopicList.data}</Text>
-                </View>
-              </TouchableOpacity>
-        )}
-      </View>
-    );
-debugger;
-  };
+  const handleSelection = item => {
+    let newTopicList = topicsList;
+
+    if(newTopicList.length < 3){
+    if (checkSelectedTopic(item))
+      newTopicList = newTopicList.filter(newTopic => newTopic.id !== item.id);
+    else newTopicList = [...newTopicList, item];
+    setTopicsList(newTopicList);
+    }
+  }
+
+
   return(
     <View style={styles.container}>
       <SafeAreaView>
@@ -108,27 +112,45 @@ debugger;
         <Text style={[styles.descriptionText, {paddingVertical: 29}]}>Rank your goals so Upshot can help you achieve them.</Text>
         <View style={styles.topSkillContainer}>
           <Text>1</Text>
-          {seTopic && (
-            <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8, maxWidth: 150}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>{seTopic[0]}</Text>
-                </View>
-              </TouchableOpacity>
-        )}
+          {topicsList.length > 0 && (
+              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}
+              onPress={() => handleRemoveSelection(topicsList[0])}>
+                   <View style={[styles.skillSelectionContainer, {justifyContent: 'space-between', flexDirection: 'row', width: 300, height: 40, paddingHorizontal: 8}]}>
+                     <Text style={{fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080'}}>{topicsList[0]['topic']}</Text>
+                     <Text style={{fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080'}}>x</Text>
+                   </View>
+                 </TouchableOpacity>
+          )}
         </View>
         <View style={styles.topSkillContainer}>
           <Text>2</Text>
-
+          {topicsList.length > 1 && (
+              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}
+              onPress={() => handleRemoveSelection(topicsList[1])}>
+                   <View style={[styles.skillSelectionContainer, {justifyContent: 'space-between', flexDirection: 'row',width: 300, height: 40, paddingHorizontal: 8}]}>
+                     <Text style={{fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080'}}>{topicsList[1]['topic']}</Text>
+                     <Text style={{fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080'}}>x</Text>
+                   </View>
+                 </TouchableOpacity>
+          )}
         </View>
         <View style={styles.topSkillContainer}>
           <Text>3</Text>
-
+          {topicsList.length > 2 && (
+              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}
+              onPress={() => handleRemoveSelection(topicsList[2])}>
+                   <View style={[styles.skillSelectionContainer, {justifyContent: 'space-between', flexDirection: 'row', width: 300, height: 40, paddingHorizontal: 8}]}>
+                     <Text style={{fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080'}}>{topicsList[2]['topic']}</Text>
+                     <Text style={{fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080'}}>x</Text>
+                   </View>
+                 </TouchableOpacity>
+          )}
         </View>
         <View style={styles.spacer}/>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
               {topicList.map((item, i) =>(
               <TouchableOpacity style={{marginHorizontal: 2, marginVertical: 8}}
-              onPress={() => handleSelection(item.topic)}>
+              onPress={() => handleSelection(item)}>
                 <View style={styles.skillSelectionContainer}>
                   <Text style={styles.skillSelectionText}>{item.topic}</Text>
                 </View>
