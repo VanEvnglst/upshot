@@ -10,8 +10,10 @@ import {
   AssessmentBreakDown,
   ExtendedAssessmentConfirmation,
   ExtendedLeadershipAssessment,
-  CalculateAssessmentScore
+  CalculateAssessmentScore,
+  ImproveSkills
 } from 'app/screens';
+
 
 const AssessmentStack = createStackNavigator();
 export default function AssessmentNavigator() {
@@ -59,6 +61,10 @@ export default function AssessmentNavigator() {
       <AssessmentStack.Screen
         name={'Assessment break down'}
         component={AssessmentBreakDown}
+      />
+      <AssessmentStack.Screen
+        name={'Improve Skills'}
+        component={ImproveSkills}
       />
     </AssessmentStack.Navigator>
   );
