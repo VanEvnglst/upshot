@@ -21,6 +21,7 @@ export const INITIAL_STATE = Map({
     trustBuildingList: [],
     achievementList: [],
   },
+  topicData: null,
   overviewTestResults: null,
   extendedTestResults: null,
   overviewData: null,
@@ -42,6 +43,7 @@ const { Types, Creators } = createActions({
   setAssessmentStatus: ['key', 'data'],
   setAssessmentData: ['key', 'data'],
   setExtendedAssessmentData: ['key','data'],
+  setTopicData: ['topicData'],
   resetStep: ['key', 'data'],
   fetchOverviewQuestions: [],
   fetchOverviewQuestionsSuccess: ['overviewQuestions'],
@@ -49,6 +51,9 @@ const { Types, Creators } = createActions({
   fetchExtendedQuestions: [],
   fetchExtendedQuestionsSuccess: ['extendedQuestions'],
   fetchExtendedQuestionsFailure: ['error'],
+  fetchBaselineScores: [],
+  fetchBaselineScoresSuccess: ['results'],
+  fetchBaselineScoresFailure: ['error'],
   postOverviewTest: ['data'],
   postOverviewTestSuccess: ['results'],
   postOverviewTestFailure: ['error'],
@@ -99,6 +104,15 @@ const setExtendedAssessmentData = (state, { key, data }) => {
   });
 }
 
+const setTopicData = (state, { key, data }) => {
+  return state.merge({
+    data: {
+      ...state.get('topicData'),
+      [key]: data,
+    }
+  });
+}
+
 const fetchOverviewQuestions = state =>
   state.merge({
     fetching: true,
@@ -135,6 +149,23 @@ const fetchExtendedQuestionsFailure = (state, { error }) =>
     error,
   });
 
+const fetchBaselineScores = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchBaselineScoresSuccess = (state, { results }) =>
+  state.merge({
+    fetching: false,
+    extendedTestResults: results,
+  });
+
+const fetchBaselineScoresFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
 
 const postExtendedTest = state => state.merge({
   fetching: true,
@@ -176,12 +207,16 @@ export const reducer = createReducer(INITIAL_STATE, {
 [Types.RESET_STEP]: resetStep,
 [Types.SET_ASSESSMENT_DATA]: setAssessmentData,
 [Types.SET_EXTENDED_ASSESSMENT_DATA]: setExtendedAssessmentData,
+[Types.SET_TOPIC_DATA]: setTopicData,
 [Types.FETCH_OVERVIEW_QUESTIONS]: fetchOverviewQuestions,
 [Types.FETCH_OVERVIEW_QUESTIONS_SUCCESS]: fetchOverviewQuestionsSuccess,
 [Types.FETCH_OVERVIEW_QUESTIONS_FAILURE]: fetchOverviewQuestionsFailure,
 [Types.FETCH_EXTENDED_QUESTIONS]: fetchExtendedQuestions,
 [Types.FETCH_EXTENDED_QUESTIONS_SUCCESS]: fetchExtendedQuestionsSuccess,
 [Types.FETCH_EXTENDED_QUESTIONS_FAILURE]: fetchExtendedQuestionsFailure,
+[Types.FETCH_BASELINE_SCORES]: fetchBaselineScores,
+[Types.FETCH_BASELINE_SCORES_SUCCESS]: fetchBaselineScoresSuccess,
+[Types.FETCH_BASELINE_SCORES_FAILURE]: fetchBaselineScoresFailure,
 [Types.POST_EXTENDED_TEST]: postExtendedTest,
 [Types.POST_EXTENDED_TEST_SUCCESS]: postExtendedTestSuccess,
 [Types.POST_EXTENDED_TEST_FAILURE]: postExtendedTestFailure,
