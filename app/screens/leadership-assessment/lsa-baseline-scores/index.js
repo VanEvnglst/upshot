@@ -21,6 +21,11 @@ const BaselineScore = props => {
   
   const { navigation } = props;
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
+  }, []);
+
   const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
 
   const retrieveDataExtended = async () => {
@@ -198,7 +203,7 @@ const BaselineScore = props => {
                     <Text>{`${item.score} / 100`}</Text>
                   </View>
                   <ProgressBar
-                    progress={(item.score/100)}
+                    progress= {(item.score/100)}
                     color={item.barColor}
                     style={{ height: 6, borderRadius: 6 }}
                   />

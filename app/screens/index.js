@@ -16,6 +16,7 @@ export { default as ExtendedLeadershipAssessment } from './leadership-assessment
 export { default as ExtendedAssessmentConfirmation } from './leadership-assessment/lsa-milestone-signpost';
 export { default as ExtendedAssessmentWrapUp } from './leadership-assessment/lsa-milestone-signpost/milestone-wrapup';
 export { default as CalculateAssessmentScore } from './leadership-assessment/lsa-milestone-signpost/calculate-score';
+export { default as ImproveSkills } from './leadership-assessment/lsa-improve-skills';
 
 /* ------------- Feedback Stack ------------- */
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';

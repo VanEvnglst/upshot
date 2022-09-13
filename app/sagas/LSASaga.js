@@ -80,6 +80,24 @@ export function* fetchExtendedQuestions() {
   }
 }
 
+export function* fetchBaselineScores() {
+  const connected = yield checkInternetConnection();
+  // if (!connected) {
+  // return
+  // }
+  const response = yield call(api.getBaselineScores);
+  
+  if (response.ok) {
+    let scores = response.data.scores;
+
+    yield put(LeadershipSkillAreaActions.fetchBaselineScoresSuccess(scores));
+ 
+  }
+  else{
+    yield put(LeadershipSkillAreaActions.fetchBaselineScoresFailure(response.data))
+  }
+}
+
 export function* postOverviewTest({ data }) {
   const connected = yield checkInternetConnection();
   const dataValues = Object.values(data);
@@ -155,6 +173,10 @@ function* watchLSAOverviewSaga() {
   yield takeLatest(
     LeadershipSkillAreaTypes.FETCH_EXTENDED_QUESTIONS,
     fetchExtendedQuestions,
+  );
+  yield takeLatest(
+    LeadershipSkillAreaTypes.FETCH_BASELINE_SCORES,
+    fetchBaselineScores,
   );
   yield takeLatest(
     LeadershipSkillAreaTypes.POST_OVERVIEW_TEST, postOverviewTest

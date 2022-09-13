@@ -434,5 +434,14 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/lsa_test_overview`, payload);
-  }
+  },
+
+  getBaselineScores: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/get_lsa_scores`, payload);
+  },
+
 };
