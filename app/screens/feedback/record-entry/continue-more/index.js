@@ -4,6 +4,7 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
   KeyboardAvoidingView,
   BackHandler,
   Image,
@@ -21,32 +22,46 @@ import styles from '../styles';
 const ContinueEntry = () => {
   const dispatch = useDispatch();
   const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
+  const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
+  const [doMoreData, setDoMoreData] = useState('');
 
   const handleContinue = () => {
+    dispatch(CaptureMomentActions.setFeedbackMomentData('doMore', doMoreData));
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.mainQuestionText}>
         <Text style={styles.mainQuestionText}>
           I want my team member to{' '}
           <Text style={styles.highlightedText}>continue and do more of</Text>...
         </Text>
-        <Text style={styles.logDateText}>Mon. Aug 23, 2022</Text>
+        <Text style={styles.logDateText}>{dateLogged}</Text>
       </View>
       <KeyboardAvoidingView
-        style={{ marginTop: 24, marginBottom: 50, height: '50%' }}>
-        <TextInput placeholder="Text goes here" multiline />
-      </KeyboardAvoidingView>
+        style={{ marginTop: 24}}>
+        <TextInput 
+          placeholder="Describe what you'd want them to do more of..." 
+          multiline 
+          style={{ marginTop: 24, marginBottom: 25, height: '100%' }}
+          value={doMoreData}
+          onChangeText={newText => setDoMoreData(newText)}
+        />
       <Button
         mode="contained"
         onPress={() => handleContinue()}
         style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
         Continue
       </Button>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 
 export default ContinueEntry;
+
+
+ContinueEntry.propTypes = {};
+
+ContinueEntry.defaultProps = {};

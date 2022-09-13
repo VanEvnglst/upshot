@@ -4,6 +4,7 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
   KeyboardAvoidingView,
   BackHandler,
   Image,
@@ -21,32 +22,48 @@ import styles from '../styles';
 const CatchAttentionEntry = props => {
   const dispatch = useDispatch();
   const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
+  const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged)
+  const [attentionDetail, setAttentionDetail] = useState('');
 
   const handleContinue = () => {
+    dispatch(CaptureMomentActions.setFeedbackMomentData('catchAttention', attentionDetail));
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
   return (
-    <View>
+    <ScrollView
+      keyboardShouldPersistTaps='handled'
+      keyboardDismissMode='on-drag'
+    >
       <View style={styles.mainQuestionText}>
         <Text style={styles.mainQuestionText}>
           What did your{' '}
           <Text style={styles.highlightedText}>team member do</Text> that caught
           your attention?
         </Text>
-        <Text style={styles.logDateText}>Mon. Aug 23, 2022</Text>
+        <Text style={styles.logDateText}>{dateLogged}</Text>
       </View>
-      <KeyboardAvoidingView
-        style={{ marginTop: 24, marginBottom: 50, height: '50%' }}>
-        <TextInput placeholder="Text goes here" multiline />
-      </KeyboardAvoidingView>
+     <KeyboardAvoidingView style={{ marginTop: 24 }}>
+        <TextInput 
+          placeholder="Describe their behavior in detail" 
+          multiline
+          style={{ height: '100%', marginBottom: 25, }}
+          value={attentionDetail}
+          onChangeText={newText => setAttentionDetail(newText)}  
+        />
       <Button
         mode="contained"
         onPress={() => handleContinue()}
         style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
         Continue
       </Button>
-    </View>
+      </KeyboardAvoidingView>
+      </ScrollView>
   );
 };
 
 export default CatchAttentionEntry;
+
+
+CatchAttentionEntry.propTypes = {};
+
+CatchAttentionEntry.defaultProps = {};

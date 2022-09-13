@@ -22,7 +22,13 @@ const ReviewFeedbackEntry = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const activeStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
-  const maxStep = useSelector(state => state.captureMoment.get('entryMaxStep'));;
+  const maxStep = useSelector(state => state.captureMoment.get('entryMaxStep'));
+  const feedbackData = useSelector(state => state.captureMoment.get('data'));
+  const dateLogged = useSelector(
+    state => state.captureMoment.get('data').dateLogged,
+  );
+  const topics = useSelector(state => state.captureMoment.get('data').step3);
+  const entry = useSelector(state => state.captureMoment.get('entryDetails'));
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -71,24 +77,24 @@ const ReviewFeedbackEntry = props => {
         <View style={{ marginTop: 30, marginBottom: 12, flexDirection: 'row', alignItems: 'center'}}>
           <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#667080', opacity: 0.5, marginRight: 12 }}/>
           <View>
-            <Text style={{ fontSize: 24, marginBottom: 4, color: '#667080', fontWeight: '700'}}>Staff Name</Text>
-            <Text style={{ fontSize: 14, lineHeight: 22, color: '#667080', fontWeight: '400'}}>Logged: Date date date</Text>
+            <Text style={{ fontSize: 24, marginBottom: 4, color: '#667080', fontWeight: '700'}}>{feedbackData.step1.name}</Text>
+            <Text style={{ fontSize: 14, lineHeight: 22, color: '#667080', fontWeight: '400'}}>Logged: {dateLogged}</Text>
           </View>
         </View>
         <View style={{ borderWidth: 1, height: 40, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', backgroundColor: '#F6EEFE', borderRadius: 4, borderColor: '#E0CAFF'}}>
           <Image
-            source={Images.penEmoji}
+            source={feedbackData.step2.title === 'Corrective' ? Images.penEmoji : Images.redHeartEmoji}
             resizeMode='contain'
             style={{ width: 24, height: 24, marginRight: 8}}
           />
-          <Text style={{ color: '#A76AFF', fontsize: 14, lineHeight: 22, fontWeight: '400'}}>Corrective Feedback</Text>
+          <Text style={{ color: '#A76AFF', fontsize: 14, lineHeight: 22, fontWeight: '400'}}>{feedbackData.step2.title} Feedback</Text>
         </View>
         <View style={styles.topicContainer}>
         <Text style={[styles.toText, { marginBottom: 4, }]}>Topic</Text>
         <TouchableOpacity 
           onPress={() => onPress()}
         style={styles.topicPicker}>
-          <Text style={styles.topicLabel}>{`*Others (Please specify)`}</Text>
+          <Text style={styles.topicLabel}>{topics.selectedLayerOne.name}</Text>
           <Icon
             name='chevron-down-outline'
             style={{flex: 1, color: '#667080'}}
@@ -96,7 +102,7 @@ const ReviewFeedbackEntry = props => {
           />
         </TouchableOpacity>
         <View style={[styles.topicPicker, { marginTop: 12}]}>
-          <Text style={styles.topicLabel}>{`Write your own details*`}</Text>
+          <Text style={styles.topicLabel}>{topics.selectedLayerTwo.name}</Text>
         </View>
       </View>
       <View style={styles.noteContainer}>
@@ -104,17 +110,37 @@ const ReviewFeedbackEntry = props => {
       </View>
       <View style={styles.entriesContainer}>
         <Text style={styles.topicLabel}>What did your team member do that caught your attention?</Text>
-        <View style={styles.answerContainer}/>
+        <View style={styles.answerContainer}>
+          <Text style={styles.answerText}>{entry.catchAttention}</Text>
+        </View>
         <Text style={styles.topicLabel}>What impact does this behavior have on the business or the team?</Text>
-        <View style={styles.answerContainer}/>
+        <View style={styles.answerContainer}>
+        <Text style={styles.answerText}>{entry.impactBehavior}</Text>
+        </View>
         <Text style={styles.topicLabel}>I want my team member to do more...</Text>
-        <View style={styles.answerContainer}/>
+        <View style={styles.answerContainer}>
+          <Text style={styles.answerText}>{entry.doMore}</Text>
+        </View>
         <Text style={styles.topicLabel}>I want my team member to continue to...</Text>
-        <View style={styles.answerContainer}/>
+        <View style={styles.answerContainer}>
+        <Text style={styles.answerText}>{entry.doMore}</Text>
+        </View>
         <Text style={styles.topicLabel}>I want my team member to do less...</Text>
-        <View style={styles.answerContainer}/>
+        <View style={styles.answerContainer}>
+        <Text style={styles.answerText}>{entry.doLess}</Text>
+        </View>
+        {topics.selectedLayerTwo.requires_face_to_face && (
+          <>
+            <Text style={styles.topicLabel}>I want my team member to stop doing...</Text>
+            <View style={styles.answerContainer}>
+              <Text style={styles.answerText}>{entry.stopDoing}</Text>
+            </View>
+          </>
+        )}
         <Text style={styles.topicLabel}>Anything else to add?</Text>
-        <View style={styles.answerContainer}/>
+        <View style={styles.answerContainer}>
+          <Text style={styles.answerText}>{entry.additionalNotes}</Text>
+        </View>
       </View>
       <Button
             mode='contained'
@@ -307,5 +333,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     minHeight: 160,
     marginBottom: 24,
+  },
+  answerText: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '400',
+    color: '#667080',
+    opacity: 0.7
   }
 });

@@ -1,5 +1,6 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
+import moment from 'moment';
 import CaptureMomentActions, { CaptureMomentTypes } from 'app/store/CaptureFeedbackMomentRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
@@ -60,8 +61,8 @@ export function* postCaptureFeedbackMoment(type) {
    /* if (!connected) {
       return;
     } */
-    const moment = state => state.captureMoment.get('data');
-    const momentData = yield select(moment);
+    const feedbackMoment = state => state.captureMoment.get('data');
+    const momentData = yield select(feedbackMoment);
     
     const { step1, step3, step4 } = momentData;
   const payload ={
@@ -74,8 +75,11 @@ export function* postCaptureFeedbackMoment(type) {
   const response = yield call(api.postCaptureFeedbackMoment, payload);
   if (response.ok) {
     if (response.data.status === 'ok') {
+      const dateLogged = moment(new Date()).format('llll');
+      yield put (CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
       yield put(CaptureMomentActions.postCaptureMomentSuccess(response.data.id));
       yield put(CaptureMomentActions.resetCaptureStep());
+      console.warn('resp', response);
       if(type.data === 'continueFB') {
           yield NavigationService.navigate('Record Feedback Entry')
       } else {
