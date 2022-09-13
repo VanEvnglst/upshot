@@ -4,6 +4,7 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
   KeyboardAvoidingView,
   BackHandler,
   Image,
@@ -18,36 +19,58 @@ import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import Images from 'app/assets/images';
 import styles from '../styles';
 
-
 const DoLessEntry = () => {
   const dispatch = useDispatch();
-  const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
+  const entryStep = useSelector(state =>
+    state.captureMoment.get('entryActiveStep'),
+  );
+  const dateLogged = useSelector(
+    state => state.captureMoment.get('data').dateLogged,
+  );
+  const [doLessData, setDoLessData] = useState('');
 
   const handleContinue = () => {
-    dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
-  }
+    dispatch(
+      CaptureMomentActions.setFeedbackMomentData(
+        'doLess',
+        doLessData,
+      ),
+    );
+    dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1));
+  };
 
   return (
-<View>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag">
       <View style={styles.mainQuestionText}>
         <Text style={styles.mainQuestionText}>
           I want my team member to{' '}
           <Text style={styles.highlightedText}>do less</Text>...
         </Text>
-        <Text style={styles.logDateText}>Mon. Aug 23, 2022</Text>
+        <Text style={styles.logDateText}>{dateLogged}</Text>
       </View>
-      <KeyboardAvoidingView
-        style={{ marginTop: 24, marginBottom: 50, height: '50%' }}>
-        <TextInput placeholder="Text goes here" multiline />
+      <KeyboardAvoidingView style={{ marginTop: 24 }}>
+        <TextInput
+          placeholder="Describe what you'd want them to do less of..."
+          multiline
+          style={{ marginBottom: 25, height: '100%' }}
+          value={doLessData}
+          onChangeText={newText => setDoLessData(newText)}
+        />
+        <Button
+          mode="contained"
+          onPress={() => handleContinue()}
+          style={{
+            height: 48,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          Continue
+        </Button>
       </KeyboardAvoidingView>
-      <Button
-        mode="contained"
-        onPress={() => handleContinue()}
-        style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
-        Continue
-      </Button>
-    </View>
-  )
-}
+    </ScrollView>
+  );
+};
 
 export default DoLessEntry;

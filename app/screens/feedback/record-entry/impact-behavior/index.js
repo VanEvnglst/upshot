@@ -4,6 +4,7 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
   KeyboardAvoidingView,
   BackHandler,
   Image,
@@ -21,32 +22,49 @@ import styles from '../styles';
 const ImpactBehaviorEntry = props => {
   const dispatch = useDispatch();
   const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
+  const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
+  const [impactBehavior, setImpactBehavior] = useState('');
 
   const handleContinue = () => {
+    dispatch(CaptureMomentActions.setFeedbackMomentData('impactBehavior', impactBehavior));
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
 
   return (
-    <View>
+    <ScrollView
+    keyboardShouldPersistTaps='handled'
+    keyboardDismissMode='on-drag'
+    >
     <View style={styles.mainQuestionText}>
       <Text style={styles.mainQuestionText}>
         What {' '}
         <Text style={styles.highlightedText}>impact</Text> does this behavior have on the business or the team?
       </Text>
-      <Text style={styles.logDateText}>Mon. Aug 23, 2022</Text>
+      <Text style={styles.logDateText}>{dateLogged}</Text>
     </View>
     <KeyboardAvoidingView
-      style={{ marginTop: 24, marginBottom: 50, height: '50%' }}>
-      <TextInput placeholder="Text goes here" multiline />
-    </KeyboardAvoidingView>
+      style={{ marginTop: 24,}}>
+      <TextInput 
+        placeholder="Describe the impact to the business"
+        multiline 
+        style={{  marginBottom: 25, height: '100%' }}
+        value={impactBehavior}
+        onChangeText={newText => setImpactBehavior(newText)}
+      />
     <Button
       mode="contained"
       onPress={() => handleContinue()}
       style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
       Continue
     </Button>
-  </View>
+    </KeyboardAvoidingView>
+  </ScrollView>
   )
 }
 
 export default ImpactBehaviorEntry;
+
+
+ImpactBehaviorEntry.propTypes = {};
+
+ImpactBehaviorEntry.defaultProps = {};
