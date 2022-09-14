@@ -316,7 +316,7 @@ export default styles = StyleSheet.create({
     fontWeight: '400',
   },
   topSkillContainer: {
-    // minWidth: 296,
+    //minWidth: 296,
     height: 48,
     borderBottomColor: '#66708033',
     borderBottomWidth: 1,
@@ -325,12 +325,15 @@ export default styles = StyleSheet.create({
     flexDirection: 'row'
   },
   skillSelectionContainer: {
-    borderRadius: 12, 
-    backgroundColor: '#66708033'
+    borderRadius: 8, 
+    backgroundColor: '#66708033',
+    //justifyContent: 'center',
+    alignItems: 'center',
+    padding: 6,
+    height: 32,
+    
   },
   skillSelectionText: {
-    paddingHorizontal: 12, 
-    paddingVertical: 9, 
     color: '#667080', 
     fontWeight: '700',
     fontSize: 14, 
