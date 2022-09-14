@@ -4,6 +4,7 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
   KeyboardAvoidingView,
   BackHandler,
   Image,
@@ -22,31 +23,40 @@ import styles from '../styles';
 const StopDoingEntry = () => {
   const dispatch = useDispatch();
   const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
-
+  const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
+  const [additionalData, setAdditionalData] = useState('');
 
   const handleContinue = () => {
+    dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', additionalData));
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
 
   return (
-<View>
+<ScrollView>
       <View style={styles.mainQuestionText}>
         <Text style={styles.mainQuestionText}>
           Anything else to add?
         </Text>
-        <Text style={styles.logDateText}>Mon. Aug 23, 2022</Text>
+        <Text style={styles.logDateText}>{dateLogged}</Text>
       </View>
       <KeyboardAvoidingView
-        style={{ marginTop: 24, marginBottom: 50, height: '50%' }}>
-        <TextInput placeholder="Text goes here" multiline />
-      </KeyboardAvoidingView>
+        style={{ marginTop: 24}}>
+        <TextInput 
+          placeholder="Text goes here" 
+          multiline
+          style={{ marginBottom: 25, height: '100%' }}
+          value={additionalData}
+          onChangeText={newText => setAdditionalData(newText)}
+        />
+      
       <Button
         mode="contained"
         onPress={() => handleContinue()}
         style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
         Continue
       </Button>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 

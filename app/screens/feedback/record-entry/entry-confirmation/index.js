@@ -18,6 +18,11 @@ import styles from './styles';
 
 const EntryContfirmation = props => {
   const { navigation } = props;
+  const feedbackData = useSelector(state => state.captureMoment.get('data'));
+  const dateLogged = useSelector(
+    state => state.captureMoment.get('data').dateLogged,
+  );
+  const topics = useSelector(state => state.captureMoment.get('data').step3);
 
   const feedbackType = 'Corrective Feedback';
 
@@ -41,17 +46,17 @@ const EntryContfirmation = props => {
               style={styles.nameIcon}
             />
             <View>
-              <Text style={styles.nameText}>Staff name</Text>
-              <Text style={styles.detailsText}>staff@email.com</Text>
+              <Text style={styles.nameText}>{feedbackData.step1.name}</Text>
+              {/* <Text style={styles.detailsText}>staff@email.com</Text> */}
             </View>
           </View>
           <View style={[styles.details, { marginTop: 20}]}>
             <Image
-              source={feedbackType === 'Corrective Feedback' ? Images.penEmoji : Images.redHearEmoji}
+              source={feedbackData.step2.title === 'Corrective Feedback' ? Images.penEmoji : Images.redHeartEmoji}
               resizeMode='contain'
               style={styles.icon}
             />
-            <Text style={styles.detailsText}>{feedbackType}</Text>
+            <Text style={styles.detailsText}>{feedbackData.step2.title} Feedback</Text>
           </View>
           <View style={styles.details}>
             <Image
@@ -59,7 +64,10 @@ const EntryContfirmation = props => {
               style={styles.icon}
               resizeMode='contain'
             />
-            <Text style={styles.detailsText}>Mon. Aug 23, 2022 at 3:20 pm</Text>
+            <View>
+            <Text style={styles.detailsText}>Date Logged</Text>
+            <Text style={{ fontSize: 14, opacity: 0.7, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{dateLogged}</Text>
+            </View>
           </View>
           <View style={styles.details}>
             <Image
@@ -68,8 +76,8 @@ const EntryContfirmation = props => {
               style={styles.icon}
             />
             <View>
-            <Text style={styles.detailsText}>Topics</Text>
-            <Text>sub topic</Text>
+            <Text style={styles.detailsText}>{topics.selectedLayerOne.name}</Text>
+            <Text style={{ fontSize: 14, opacity: 0.7, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{topics.selectedLayerTwo.name}</Text>
             </View>
           </View>
         </View>

@@ -15,16 +15,19 @@ export const INITIAL_STATE = Map({
   layerOneTopics: [],
   layerTwoTopics: [],
   error: '',
-  entryMaxStep: 5,
+  entryMaxStep: 6,
   entryActiveStep: 1,
   feedbackEntryData: null,
   journeyId: null,
+  entryDetails: null,
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
   setCaptureActiveStep: ['step'],
+  setCaptureMaxStep: ['step'],
   setCaptureData: ['key', 'data'],
+  setFeedbackMomentData: ['key', 'data'],
   postCaptureMoment: ['data'],
   postCaptureMomentSuccess: ['journeyId'],
   postCaptureMomentFailure: ['error'],
@@ -53,11 +56,16 @@ const resetCaptureStep = state =>
   });
 
 const setCaptureActiveStep = (state, { step }) => {
-  if (state.get('activeStep') > state.get('maxStep')) {
+  if (state.get('activeStep') >= state.get('maxStep')) {
     return state.get('activeStep');
   }
   return state.merge({ activeStep: step });
 }
+
+const setCaptureMaxStep = (state, { step }) =>
+  state.merge({
+    entryMaxStep: step
+  })
 
 const setCaptureData = (state, { key, data }) => {
   console.warn('here', key, data);
@@ -67,6 +75,15 @@ const setCaptureData = (state, { key, data }) => {
       [key]: data,
     }
   });
+}
+
+const setFeedbackMomentData = (state, { key, data }) => {
+  return state.merge({
+    entryDetails: {
+      ...state.get('entryDetails'),
+      [key]: data,
+    }
+  })
 }
 
 const fetchLayerOneTopics = state => 
@@ -167,5 +184,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_CAPTURE_MOMENT]: postCaptureMoment,
   [Types.POST_CAPTURE_MOMENT_SUCCESS]: postCaptureMomentSuccess,
   [Types.POST_CAPTURE_MOMENT_FAILURE]: postCaptureMomentFailure,
-  [Types.SET_ENTRY_ACTIVE_STEP]: setEntryActiveStep
+  [Types.SET_ENTRY_ACTIVE_STEP]: setEntryActiveStep,
+  [Types.SET_FEEDBACK_MOMENT_DATA]: setFeedbackMomentData,
+  [Types.SET_CAPTURE_MAX_STEP]: setCaptureMaxStep
 });

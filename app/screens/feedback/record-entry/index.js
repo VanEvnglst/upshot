@@ -30,12 +30,14 @@ const RecordFeedbackEntry = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const activeStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
-  const maxStep = 6;
+  const maxStep = useSelector(state => state.captureMoment.get('entryMaxStep'));
   const staffName = useSelector(state => state.captureMoment.get('data'));
   const feedbackType = useSelector(
     state => state.captureMoment.get('data'),
   );
-  useEffect(() => {
+  const layerTwo = useSelector(state => state.captureMoment.get('data').step3);
+
+   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
     });
@@ -44,6 +46,11 @@ const RecordFeedbackEntry = props => {
       BackHandler.removeEventListener('hardwareBackPress', () => {
         return true;
       });
+  }, []);
+  
+  useEffect(() => {
+    if (layerTwo.selectedLayerTwo.requires_face_to_face)
+      dispatch(CaptureMomentActions.setCaptureMaxStep(7));
   }, []);
 
   const handleGoBack = () => {
@@ -58,6 +65,24 @@ const RecordFeedbackEntry = props => {
   }
 
   const handleStepContent = () => {
+    if(maxStep === 7) {
+      switch(activeStep) {
+        case 1:
+          return <CatchAttentionEntry {...props}/>
+        case 2:
+          return <ImpactBehaviorEntry {...props}/>
+        case 3:
+          return <ContinueEntry {...props}/>
+        case 4:
+          return <DoLessEntry {...props}/>
+        case 5:
+          return <StopDoingEntry {...props} />
+        case 6:
+          return <AddMoreEntry {...props}/>
+        case 7:
+          return <ReviewFeedbackEntry {...props}/>
+      }
+    } else 
     switch(activeStep) {
       case 1:
         return <CatchAttentionEntry {...props}/>
