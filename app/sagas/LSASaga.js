@@ -5,6 +5,11 @@ import LeadershipSkillAreaActions, {
 } from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
+import {
+  aboutSkillArea,
+  basisForLSA,
+  lsaScoreDefinition,
+} from 'app/models/LeadershipSkillAreaModel';
 
 const STATUS_OK = 'ok';
 
@@ -28,7 +33,7 @@ export function* fetchOverviewQuestions() {
   // return
   // }
   const response = yield call(api.getLSAOverviewQuestion);
-  
+
   if (response.ok) {
     let questions = [];
     questions.push(
@@ -62,17 +67,21 @@ export function* fetchExtendedQuestions() {
     const trustQs = randomizeQuestions(response.data.trust_building);
     const authenticityQs = randomizeQuestions(response.data.authenticity);
     const achievementQs = randomizeQuestions(response.data.achievement);
-    const opennessToLearnQs = randomizeQuestions(response.data.openness_to_learn)
+    const opennessToLearnQs = randomizeQuestions(
+      response.data.openness_to_learn,
+    );
 
     const questions = {
       empathyList: empathyQs,
       authenticityList: authenticityQs,
       trustBuildingList: trustQs,
       achievementList: achievementQs,
-      opennessToLearnList: opennessToLearnQs
-    }
+      opennessToLearnList: opennessToLearnQs,
+    };
 
-    yield put(LeadershipSkillAreaActions.fetchExtendedQuestionsSuccess(questions))
+    yield put(
+      LeadershipSkillAreaActions.fetchExtendedQuestionsSuccess(questions),
+    );
   } else {
     yield put(
       LeadershipSkillAreaActions.fetchExtendedQuestionsFailure(response.data),
@@ -86,15 +95,15 @@ export function* fetchBaselineScores() {
   // return
   // }
   const response = yield call(api.getBaselineScores);
-  
+
   if (response.ok) {
     let scores = response.data.scores;
 
     yield put(LeadershipSkillAreaActions.fetchBaselineScoresSuccess(scores));
- 
-  }
-  else{
-    yield put(LeadershipSkillAreaActions.fetchBaselineScoresFailure(response.data))
+  } else {
+    yield put(
+      LeadershipSkillAreaActions.fetchBaselineScoresFailure(response.data),
+    );
   }
 }
 
@@ -106,64 +115,189 @@ export function* postOverviewTest({ data }) {
     const valueObj = Object.values(dataValues)[i];
     let dataObj = {
       q_id: valueObj.question.qid,
-      ans: valueObj.option.value
-     }
-     dataArr = [...dataArr, dataObj];
+      ans: valueObj.option.value,
+    };
+    dataArr = [...dataArr, dataObj];
   }
   const overviewData = {
-    answers: dataArr
+    answers: dataArr,
   };
-  
+
   const response = yield call(api.postOverviewTest, overviewData);
   if (response.ok) {
     if (response.data.status === 'ok') {
-      const results = {
-        areasOfImprovement: response.data['Areas_of_Improvement'],
-        areasOfContinuedDev: response.data['Satisfactory'],
-        promisingAreas: response.data['Promising_Areas']
-      }
-      yield put(LeadershipSkillAreaActions.postOverviewTestSuccess(results))
+      const results = [
+        {
+          id: 1,
+          title: 'Authenticity',
+          description: aboutSkillArea[0].description,
+          definition:
+            response.data.skills[2].area === 'Promising Area'
+              ? aboutSkillArea[0].promisingArea.whatScoreMeans
+              : response.data.skills[2].area === 'Area of Continued Development'
+              ? aboutSkillArea[0].areaOfContinuedDevelopment.whatScoreMeans
+              : response.data.skills[2].area === 'Area of Concern'
+              ? aboutSkillArea[0].areaOfConcern.whatScoreMeans
+              : '',
+          skillPoint:
+            response.data.skills[2] === 'Promising Area'
+              ? aboutSkillArea[0].promisingArea.skillPoints
+              : response.data.skills[2].area === 'Area of Continued Development'
+              ? aboutSkillArea[0].areaOfContinuedDevelopment.skillPoints
+              : response.data.skills[2].area === 'Area of Concern'
+              ? aboutSkillArea[0].areaOfConcern.skillPoints
+              : '',
+          ...response.data.skills[2],
+        },
+        
+        {
+          id: 2,
+          title: 'Trust Building',
+          description: aboutSkillArea[1].description,
+          definition:
+            response.data.skills[1].area === 'Promising Area'
+              ? aboutSkillArea[1].promisingArea.whatScoreMeans
+              : response.data.skills[1].area === 'Area of Continued Development'
+              ? aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans
+              : response.data.skills[1].area === 'Area of Concern'
+              ? aboutSkillArea[1].areaOfConcern.whatScoreMeans
+              : '',
+          skillPoint:
+            response.data.skills[1] === 'Promising Area'
+              ? aboutSkillArea[1].promisingArea.skillPoints
+              : response.data.skills[1].area === 'Area of Continued Development'
+              ? aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints
+              : response.data.skills[1].area === 'Area of Concern'
+              ? aboutSkillArea[1].areaOfConcern.skillPoints
+              : '',
+          ...response.data.skills[1],
+        },
+
+        {
+          id: 3,
+          title: 'Empathy',
+          description: aboutSkillArea[2].description,
+          definition:
+            response.data.skills[0].area === 'Promising Area'
+              ? aboutSkillArea[2].promisingArea.whatScoreMeans
+              : response.data.skills[0].area === 'Area of Continued Development'
+              ? aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans
+              : response.data.skills[0].area === 'Area of Concern'
+              ? aboutSkillArea[2].areaOfConcern.whatScoreMeans
+              : '',
+          skillPoint:
+            response.data.skills[0] === 'Promising Area'
+              ? aboutSkillArea[2].promisingArea.skillPoints
+              : response.data.skills[0].area === 'Area of Continued Development'
+              ? aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints
+              : response.data.skills[0].area === 'Area of Concern'
+              ? aboutSkillArea[2].areaOfConcern.skillPoints
+              : '',
+
+          ...response.data.skills[0],
+        },
+
+        {
+          id: 4,
+          title: 'Openness to Learn',
+          description: aboutSkillArea[3].description,
+          definition:
+            response.data.skills[4].area === 'Promising Area'
+              ? aboutSkillArea[3].promisingArea.whatScoreMeans
+              : response.data.skills[4].area === 'Area of Continued Development'
+              ? aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans
+              : response.data.skills[4].area === 'Area of Concern'
+              ? aboutSkillArea[3].areaOfConcern.whatScoreMeans
+              : '',
+          skillPoint:
+            response.data.skills[4].area === 'Promising Area'
+              ? aboutSkillArea[3].promisingArea.skillPoints
+              : response.data.skills[4].area === 'Area of Continued Development'
+              ? aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints
+              : response.data.skills[4].area === 'Area of Concern'
+              ? aboutSkillArea[3].areaOfConcern.skillPoints
+              : '',
+          ...response.data.skills[4],
+        },
+
+        {
+          id: 5,
+          title: 'Achievement Orientation',
+          description: aboutSkillArea[4].description,
+          definition:
+            response.data.skills[3].area === 'Promising Area'
+              ? aboutSkillArea[4].promisingArea.whatScoreMeans
+              : response.data.skills[3].area === 'Area of Continued Development'
+              ? aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans
+              : response.data.skills[3].area === 'Area of Concern'
+              ? aboutSkillArea[4].areaOfConcern.whatScoreMeans
+              : '',
+          skillPoint:
+            response.data.skills[3].area === 'Promising Area'
+              ? aboutSkillArea[4].promisingArea.skillPoints
+              : response.data.skills[4].area === 'Area of Continued Development'
+              ? aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints
+              : response.data.skills[3].area === 'Area of Concern'
+              ? aboutSkillArea[4].areaOfConcern.skillPoints
+              : '',
+          ...response.data.skills[3],
+        },
+      ];
+      debugger;
+      yield put(LeadershipSkillAreaActions.postOverviewTestSuccess(results));
       yield NavigationService.navigate('Assessment End Line');
     } else {
-      yield put(LeadershipSkillAreaActions.postOverviewTestFailure(response.data));
+      yield put(
+        LeadershipSkillAreaActions.postOverviewTestFailure(response.data),
+      );
     }
   } else {
-    yield put(LeadershipSkillAreaActions.postOverviewTestFailure(response.data));
+    yield put(
+      LeadershipSkillAreaActions.postOverviewTestFailure(response.data),
+    );
   }
 }
 
-export function* postExtendedTest({ data }) { 
+export function* postExtendedTest({ data }) {
   const connected = yield checkInternetConnection();
   const testCount = state => state.leadershipSkillArea.get('testFinishedCount');
   const completeTest = yield select(testCount);
 
   const dataValues = Object.values(data);
-  let dataArr =[];
+  let dataArr = [];
   for (let i = 0; i < dataValues.length; i++) {
-    
     const valueObj = Object.values(dataValues)[i]['data'];
-    let dataObj = { 
-      q_id: valueObj.question.qid, 
-      ans: valueObj.option.value
+    let dataObj = {
+      q_id: valueObj.question.qid,
+      ans: valueObj.option.value,
     };
     dataArr = [...dataArr, dataObj];
   }
   const extendedData = {
-    answers: dataArr
-  }
+    answers: dataArr,
+  };
 
   const response = yield call(api.postLSAExtendedAnswers, extendedData);
   if (response.ok) {
-    yield put(LeadershipSkillAreaActions.postExtendedTestSuccess(response.data.scores));
-    yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount',completeTest + 1));
-    yield put(LeadershipSkillAreaActions.setAssessmentStatus('extendedData', null))
-    yield NavigationService.navigate('Extended Assessment Confirmation')
-  }
-  else { 
-    yield put(LeadershipSkillAreaActions.postExtendedTestFailure(response.data));
+    yield put(
+      LeadershipSkillAreaActions.postExtendedTestSuccess(response.data.scores),
+    );
+    yield put(
+      LeadershipSkillAreaActions.setAssessmentStatus(
+        'testFinishedCount',
+        completeTest + 1,
+      ),
+    );
+    yield put(
+      LeadershipSkillAreaActions.setAssessmentStatus('extendedData', null),
+    );
+    yield NavigationService.navigate('Extended Assessment Confirmation');
+  } else {
+    yield put(
+      LeadershipSkillAreaActions.postExtendedTestFailure(response.data),
+    );
   }
 }
-
 
 function* watchLSAOverviewSaga() {
   yield takeLatest(
@@ -179,7 +313,8 @@ function* watchLSAOverviewSaga() {
     fetchBaselineScores,
   );
   yield takeLatest(
-    LeadershipSkillAreaTypes.POST_OVERVIEW_TEST, postOverviewTest
+    LeadershipSkillAreaTypes.POST_OVERVIEW_TEST,
+    postOverviewTest,
   );
   yield takeLatest(
     LeadershipSkillAreaTypes.POST_EXTENDED_TEST,
