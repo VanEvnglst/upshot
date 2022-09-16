@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import ImagePicker from 'react-native-image-crop-picker'
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -142,13 +143,6 @@ const CaptureFeedbackMoment = props => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (activeStep === 4) return;
-
-  //   if (layerTwoTopics !== null) openSheet();
-  //   else return;
-  // }, [layerTwoTopics]);
-
   useEffect(() => {
     dispatch(CaptureMomentActions.fetchStaffMembers());
   }, []);
@@ -184,7 +178,11 @@ const CaptureFeedbackMoment = props => {
 
   const TopicSelection = () => {
     return (
-      <View style={styles.content}>
+      <ScrollView 
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        bounces={false}  
+      >
         <View style={styles.mainQuestionHeader}>
           <Text style={styles.mainQuestionText}>Add topic details to your</Text>
           <View style={styles.typeContainer}>
@@ -240,16 +238,27 @@ const CaptureFeedbackMoment = props => {
             </View>
           )}
         </View>
+        <View style={{ flex: 1, marginVertical: 30 }}>
+          <Text style={styles.toText}>Attachments</Text>
+          <View style={{ marginTop: 12, flexDirection: 'row' }}>
+            <TouchableOpacity 
+              onPress={() => openSheet('attachments')}
+              style={{ width: 72, height: 72, borderRadius: 6, backgroundColor: '#667080', opacity: 0.3,  justifyContent: 'center', alignItems: 'center'}}>
+              <Text>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.btnContainer}>
           <Button
             mode="contained"
+            disabled
             style={styles.button}
             onPress={() => handleStep3Continue()}>
-            Continue
+            Record Feedback
           </Button>
         </View>
         <View style={styles.spacer} />
-      </View>
+      </ScrollView>
     );
   };
 
@@ -290,6 +299,8 @@ const CaptureFeedbackMoment = props => {
         setSheetType(type);
       case 'layer two':
         setSheetType(type);
+      case 'attachments':
+        setSheetType(type);
     }
     bottomSheetRef.current?.snapToIndex(1);
   };
@@ -325,8 +336,64 @@ const CaptureFeedbackMoment = props => {
       return <LayerOneTopicsSheet />;
     } else if (sheetType === 'layer two') {
       return <LayerTwoTopicsSheet />;
+    } else if (sheetType === 'attachments') {
+      return <Attachments />;
     }
   };
+
+  const Attachments = () => {
+    return (
+      <>
+        <View style={styles.sheetTitleContainer}>
+          <Text style={styles.sheetTitleText}>Add Attachment/s</Text>
+          <Text style={[styles.sheetSubtitleText, { textAlign: 'center', lineHeight: 22, paddingBottom: 20, maxWidth: '80%'}]}>Give additional context by adding media in your feedback</Text>
+        </View>
+        <View style={{ marginTop: 15, paddingHorizontal: 22}}>
+          <TouchableOpacity
+            onPress={() => launchCamera()}
+            style={{ borderWidth: 1, borderRadius: 6, borderColor: '#EEF1F4', flexDirection: 'row', alignItems: 'center', height: 50, paddingHorizontal: 12, paddingVertical: 13, marginBottom: 12}}
+          >
+            <Text style={{ fontSize: 16, lineHeight: 22, color: '#667080', fontWeight: '700' }}>Take a photo / video</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => launchGallery()}
+            style={{ borderWidth: 1, borderRadius: 6, borderColor: '#EEF1F4', flexDirection: 'row', alignItems: 'center', height: 50, paddingHorizontal: 12, paddingVertical: 13, marginBottom: 12}}
+          >
+            <Text style={{ fontSize: 16, lineHeight: 22, color: '#667080', fontWeight: '700' }}>Choose from gallery</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ borderWidth: 1, borderRadius: 6, borderColor: '#EEF1F4', flexDirection: 'row', alignItems: 'center', height: 50, paddingHorizontal: 12, paddingVertical: 13, marginBottom: 12}}
+          >
+            <Text style={{ fontSize: 16, lineHeight: 22, color: '#667080', fontWeight: '700' }}>Record audio</Text>
+          </TouchableOpacity>
+        </View>
+      </>
+    )
+  }
+
+
+  const launchCamera = () => {
+    ImagePicker.openCamera({
+      cropping: false,
+      forceJpg: true,
+      mediaType: 'photo',
+    }).then(images => {
+      // const cameraList = [images];
+      // onUploadHandler(cameraList);
+    });
+
+  }
+
+  const launchGallery = () => {
+    ImagePicker.openPicker({
+      cropping: false,
+      multiple: true,
+      mediaType: 'photo',
+    }).then(images => {
+      // onUploadHandler(images);
+    });
+
+  }
 
   const ReminderSheet = () => {
     return (
