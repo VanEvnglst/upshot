@@ -94,15 +94,6 @@ export default styles = StyleSheet.create({
     fontWeight: '700',
     color: '#667080'
   },
-  improvementLabel: {
-    color: '#EF4469'
-  },
-  satisfactoryLabel: {
-    color: '#F18F34'
-  },
-  promisingLabel: {
-    color: '#3AB549'
-  },
   content: {
     marginTop: 24,
     flexDirection: 'row',
@@ -198,7 +189,9 @@ export default styles = StyleSheet.create({
     color: '#667080',
     lineHeight: 22,
     maxWidth: 140,
-    marginBottom: 8
+    marginBottom: 8,
+    maxWidth: '50%',
+    textAlign: 'center'
   },
   scoreLabelBold: {
     fontWeight: '700'
@@ -236,7 +229,7 @@ export default styles = StyleSheet.create({
     borderColor: '#FFB26A',
     backgroundColor: '#FFF0E1'
   },
-  areOfContinuedDevelopmentLabel: {
+  areaOfContinuedDevelopmentLabel: {
     color: '#FF8C21'
   },
   sheetTitleContainer: {
