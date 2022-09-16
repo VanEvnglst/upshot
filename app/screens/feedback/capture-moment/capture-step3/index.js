@@ -62,11 +62,14 @@ const CaptureMomentStep3 = ({ onPress }) => {
           <Text style={styles.topicLabel}>{`Write your own details*`}</Text>
         </View>
       </View>
+      <View style={{ marginTop: 25}}>
+        <Text></Text>
+      </View>
       <View style={styles.btnContainer}>
         <Button
           mode='contained'
           style={[styles.button]}
-        >Continue</Button>
+        >Record Feedback</Button>
       </View>
       <View style={styles.spacer} />
       {/* <BottomSheet
