@@ -47,7 +47,10 @@ const ImpactBehaviorEntry = props => {
       <TextInput 
         placeholder="Describe the impact to the business"
         multiline 
-        style={{  marginBottom: 25, height: '100%' }}
+        numberOfLines={30}
+        textAlignVertical='top'
+        placeholderTextColor='#66708080'
+        style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
         value={impactBehavior}
         onChangeText={newText => setImpactBehavior(newText)}
       />

@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
@@ -44,7 +45,10 @@ const ContinueEntry = () => {
         <TextInput 
           placeholder="Describe what you'd want them to do more of..." 
           multiline 
-          style={{ marginTop: 24, marginBottom: 25, height: '100%' }}
+          numberOfLines={30}
+          textAlignVertical='top'
+          placeholderTextColor='#66708080'
+          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={doMoreData}
           onChangeText={newText => setDoMoreData(newText)}
         />

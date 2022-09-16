@@ -44,7 +44,10 @@ const StopDoingEntry = () => {
         <TextInput 
           placeholder="Text goes here" 
           multiline
-          style={{ marginBottom: 25, height: '100%' }}
+          numberOfLines={30}
+          textAlignVertical='top'
+          placeholderTextColor='#66708080'
+          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={additionalData}
           onChangeText={newText => setAdditionalData(newText)}
         />
