@@ -40,35 +40,35 @@ const BaselineScore = props => {
     {
       id: 3,
       title: 'Authenticity 👐',
-      score: scores.authenticity,
+      score: scores && scores.authenticity,
        barColor: '#80DBAA',
       borderColor: '#80DBAA'
     },
     {
       id: 5,
       title: 'Trust Building 🤝 ',
-      score: scores.trust_building,
+      score: scores && scores.trust_building,
        barColor: '#8089DB',
       borderColor: '#8089DB'
     },
     {
       id: 1,
       title: 'Empathy 💓',
-      score: scores.empathy,
+      score: scores && scores.empathy,
       barColor: '#F690A9',
       borderColor: '#F690A9'
     },
     {
       id: 2,
       title: 'Openness to Learn 🧠',
-      score: scores.openness_to_learn,
+      score: scores && scores.openness_to_learn,
        barColor: '#D394EA',
       borderColor: '#D394EA'
     },
     {
       id: 4,
       title: 'Achievement-Orientation 🏅',
-      score: scores.achievement,
+      score: scores && scores.achievement,
        barColor: '#EDA875',
       borderColor: '#EDA875'
     },
@@ -159,7 +159,7 @@ const BaselineScore = props => {
         }
         xAxis= {
           $set={
-            valueFormatter: [skillList[0].score, skillList[1].score, skillList[2].score, skillList[3].score, skillList[4].score],
+            valueFormatter: [ skillList[0]?.score , skillList[1]?.score, skillList[2]?.score, skillList[3]?.score, skillList[4]?.score],
           }
         }
         yAxis= {
