@@ -17,9 +17,9 @@ export default Creators;
 
 const setUser = (state, { user }) => {
   return state.merge({
-    firstName: user.first_name,
-    lastName: user.last_name,
-    role: user.role_id,
+    userName: user,
+    // lastName: user.last_name,
+    // role: user.role_id,
   });
 };
 const setPassword = state => state.merge({});
