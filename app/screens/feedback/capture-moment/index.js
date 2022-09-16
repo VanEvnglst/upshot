@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   Text,
-  ScrollView,
+  
   SafeAreaView,
   TouchableOpacity,
   BackHandler,
@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import { ScrollView, NativeViewGestureHandler, GestureHandlerRootView} from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker'
@@ -192,8 +193,7 @@ const CaptureFeedbackMoment = props => {
         </View>
         <View style={{ marginTop: 25 }}>
           <Text style={styles.descriptionText}>
-            Tell us what kind of observation do you want to give to your direct
-            report
+            Tell us what kind of observation do you want to give to your team member/s.
           </Text>
         </View>
         <View style={styles.topicContainer}>
@@ -251,7 +251,7 @@ const CaptureFeedbackMoment = props => {
         <View style={styles.btnContainer}>
           <Button
             mode="contained"
-            disabled
+            // disabled
             style={styles.button}
             onPress={() => handleStep3Continue()}>
             Record Feedback
@@ -397,6 +397,7 @@ const CaptureFeedbackMoment = props => {
 
   const ReminderSheet = () => {
     return (
+      <NativeViewGestureHandler disallowInterruption={true}>
       <View style={{ marginTop: 24, backgroundColor: 'white' }}>
         <View style={{ alignItems: 'center' }}>
           <Image
@@ -427,8 +428,10 @@ const CaptureFeedbackMoment = props => {
             How long before we remind you about this feedback?
           </Text>
         </View>
+        
         <View style={{ marginTop: 12, height: 175, paddingHorizontal: 24 }}>
-          <ScrollPicker
+          
+            <ScrollPicker
             dataSource={hourPicker}
             selectedIndex={reminderHours.currentIndex}
             renderItem={(data, index) => (
@@ -455,8 +458,10 @@ const CaptureFeedbackMoment = props => {
             itemHeight={60}
             highlightColor="black"
             highlightBorderWidth={1}
-          />
-        </View>
+              />
+         
+          </View>
+
         <View style={{ marginTop: 50, paddingHorizontal: 24 }}>
           <Button
             mode="contained"
@@ -472,6 +477,7 @@ const CaptureFeedbackMoment = props => {
           </Button>
         </View>
       </View>
+      </NativeViewGestureHandler>
     );
   };
 

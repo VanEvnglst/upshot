@@ -52,7 +52,10 @@ const StopDoingEntry = () => {
         <TextInput 
           placeholder="Describe what you want the team member to stop doing" 
           multiline 
-          style={{  marginBottom: 25, height: '100%' }}
+          numberOfLines={30}
+          textAlignVertical='top'
+          placeholderTextColor='#66708080'
+          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={stopDoingData}
           onChangeText={newText => setStopDoingData(newText)}  
         />

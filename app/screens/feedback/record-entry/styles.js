@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export default styles = StyleSheet.create({
   container: {
@@ -107,4 +107,13 @@ export default styles = StyleSheet.create({
     fontWeight: '400',
     color: '#667080',
   },
+
+  textInputStyle: {
+    ...Platform.select({
+      ios: {
+        height: '100%'
+      }
+    })
+  },
+  
 });

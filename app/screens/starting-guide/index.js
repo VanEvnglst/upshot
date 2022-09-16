@@ -60,7 +60,7 @@ const StartingGuideScreen = props => {
     },
     {
       id: 3,
-      title: 'Sharpen your edge by analyzing your metrics in motion.',
+      title: 'Sharpen your skills based on real time performance scores.',
       subtitle: '',
     },
     {
@@ -174,7 +174,7 @@ const StartingGuideScreen = props => {
                        </View>
                      </View>
                    ) : (
-                     <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity onPress={() => {}}>
                        <Text style={styles.descriptionText}>Skip</Text>
                      </TouchableOpacity>
                    )}

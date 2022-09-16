@@ -54,7 +54,10 @@ const DoLessEntry = () => {
         <TextInput
           placeholder="Describe what you'd want them to do less of..."
           multiline
-          style={{ marginBottom: 25, height: '100%' }}
+          numberOfLines={30}
+          textAlignVertical='top'
+          placeholderTextColor='#66708080'
+          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={doLessData}
           onChangeText={newText => setDoLessData(newText)}
         />

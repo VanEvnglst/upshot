@@ -11,6 +11,7 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
+  Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +19,7 @@ import { Button } from 'react-native-paper';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import Images from 'app/assets/images';
 import styles from '../styles';
+
 
 const CatchAttentionEntry = props => {
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const CatchAttentionEntry = props => {
       keyboardShouldPersistTaps='handled'
       keyboardDismissMode='on-drag'
     >
-      <View style={styles.mainQuestionText}>
+      <View style={styles.questionContainer}>
         <Text style={styles.mainQuestionText}>
           What did your{' '}
           <Text style={styles.highlightedText}>team member do</Text> that caught
@@ -42,22 +44,27 @@ const CatchAttentionEntry = props => {
         </Text>
         <Text style={styles.logDateText}>{dateLogged}</Text>
       </View>
-     <KeyboardAvoidingView style={{ marginTop: 24 }}>
+      
+     <KeyboardAvoidingView style={{ marginTop: 24}}>
         <TextInput 
           placeholder="Describe their behavior in detail" 
           multiline
-          style={{ height: '100%', marginBottom: 25, }}
+          numberOfLines={30}
+          textAlignVertical='top'
+          placeholderTextColor='#66708080'
+          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={attentionDetail}
           onChangeText={newText => setAttentionDetail(newText)}  
         />
       <Button
         mode="contained"
         onPress={() => handleContinue()}
-        style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
+        style={{ height: 48, justifyContent: 'center', alignItems: 'center' ,}}>
         Continue
       </Button>
       </KeyboardAvoidingView>
-      </ScrollView>
+    </ScrollView>
+   
   );
 };
 

@@ -50,9 +50,9 @@ const LeadershipAssessmentGuide = props => {
         </Text>
       </View>
       <View style={styles.btnContainer}>
-        <Text style={styles.noteText}>
+        {/* <Text style={styles.noteText}>
           {"This is based on Daniel Goleman's <source>"}
-        </Text>
+        </Text> */}
         <Button
           onPress={() => retrieveData()}
           mode="contained"
