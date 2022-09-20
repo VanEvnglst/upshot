@@ -39,6 +39,12 @@ const DoLessEntry = () => {
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1));
   };
 
+  const handleTextChange = (newText) => { 
+    setDoLessData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('doLess', newText))
+    }, 300);
+  }
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -59,7 +65,7 @@ const DoLessEntry = () => {
           placeholderTextColor='#66708080'
           style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={doLessData}
-          onChangeText={newText => setDoLessData(newText)}
+          onChangeText={newText => handleTextChange(newText)}
         />
         <Button
           mode="contained"
