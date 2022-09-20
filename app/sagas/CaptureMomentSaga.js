@@ -1,5 +1,5 @@
 import { checkInternetConnection } from 'react-native-offline';
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest, select, take } from 'redux-saga/effects';
 import moment from 'moment';
 import CaptureMomentActions, { CaptureMomentTypes } from 'app/store/CaptureFeedbackMomentRedux';
 import * as NavigationService from 'app/services/NavigationService';
@@ -65,19 +65,21 @@ export function* postCaptureFeedbackMoment(type) {
     const momentData = yield select(feedbackMoment);
     
     const { step1, step3, step4 } = momentData;
-  const payload ={
-    staff_id: step1.user_id,
-    gen_topic_id: step3.selectedLayerOne.id,
-    sub_topic_id: step3.selectedLayerTwo.id,
-    reminder_hours: step4.value,
-  };
+    const payload ={
+      staff_id: step1.user_id,
+      gen_topic_id: step3.selectedLayerOne.id,
+      sub_topic_id: step3.selectedLayerTwo.id,
+      reminder_hours: step4.value,
+    };
   
   const response = yield call(api.postCaptureFeedbackMoment, payload);
+  debugger;
   if (response.ok) {
     if (response.data.status === 'ok') {
       const dateLogged = moment(new Date()).format('llll');
       yield put (CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
       yield put(CaptureMomentActions.postCaptureMomentSuccess(response.data.id));
+      debugger;
       yield put(CaptureMomentActions.resetCaptureStep());
       console.warn('resp', response);
       if(type.data === 'continueFB') {
@@ -111,12 +113,84 @@ export function* fetchStaffMembers() {
     }
 }
 
+export function* postRecordEMEntry(type) {
+  const recordEntry = state => state.captureMoment.get('entryDetails');
+  const journeyID = state => state.captureMoment.get('journeyId');
+  
+  const entry = yield select(recordEntry);
+  
+  const payload = {
+    capture_fb_id: yield select(journeyID),
+    employee_do: entry.catchAttention,
+    impact: entry.impactBehavior,
+    do_more: entry.doMore,
+    continue_doing: '',
+    do_less: entry.doLess,
+    stop_doing: entry.stopDoing,
+    additional_notes: entry.additionalNotes,
+  }
+  
+  const response = yield call(api.postRecordEMEntry, payload);
+  console.warn('journeyID', entry.doMore)
+  console.warn('RecordEM', response)
+  if (response.ok) {
+    yield put(CaptureMomentActions.postRecordEMEntrySuccess(response.data));
+    yield put(CaptureMomentActions.resetEntryStep());
+    console.warn('recordEM', response.ok)
+  }
+  else {
+    yield put(CaptureMomentActions.postRecordEMEntryFailure(response.data))
+  }
+}
+
+export function* postEditEMEntry(type) {
+  const recordEntry = state => state.captureMoment.get('entryDetails');
+  const journeyID = state => state.captureMoment.get('journeyId');
+  const lastStep = state => state.captureMoment.get('entryActiveStep');
+  
+  const entry = yield select(recordEntry);
+  
+  const payload = {
+    capture_fb_id: yield select(journeyID),
+    employee_do: entry.catchAttention,
+    impact: entry.impactBehavior,
+    do_more: entry.doMore,
+    continue_doing: '',
+    do_less: entry.doLess,
+    stop_doing: entry.stopDoing,
+    additional_notes: entry.additionalNotes,
+    last_active_step: yield select(lastStep)
+  }
+  const response = yield call(api.postEditEMEntry, payload);
+  console.log('postEditEM', response);
+
+
+  if (response.ok) {
+    yield put(CaptureMomentActions.postEditEMEntrySuccess(response.data));
+    console.warn('postEdit', response.ok)
+      console.warn('doMore', entry.doMore);
+  }
+  else {
+    yield put(CaptureMomentActions.postEditEMEntryFailure(response.data));
+  }
+}
+
+export function* fetchEMEntry() { 
+  const response = yield call(api.getEMEntry);
+  if (response.ok) {
+
+  }
+  
+}
 
 function* watchCaptureMomentSaga() {
   yield takeLatest(CaptureMomentTypes.FETCH_LAYER_ONE_TOPICS, fetchLayerOneTopics);
   yield takeLatest(CaptureMomentTypes.FETCH_LAYER_TWO_TOPICS, fetchLayerTwoTopics);
   yield takeLatest(CaptureMomentTypes.FETCH_STAFF_MEMBERS, fetchStaffMembers);
+  yield takeLatest(CaptureMomentTypes.FETCH_EM_ENTRY, fetchEMEntry);
   yield takeLatest(CaptureMomentTypes.POST_CAPTURE_MOMENT, postCaptureFeedbackMoment);
+  yield takeLatest(CaptureMomentTypes.POST_RECORD_EM_ENTRY, postRecordEMEntry);
+  yield takeLatest(CaptureMomentTypes.POST_EDIT_EM_ENTRY, postEditEMEntry);
 }
 
 
