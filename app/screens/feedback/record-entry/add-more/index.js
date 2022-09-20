@@ -20,7 +20,7 @@ import Images from 'app/assets/images';
 import styles from '../styles';
 
 
-const StopDoingEntry = () => {
+const AddMoreEntry = () => {
   const dispatch = useDispatch();
   const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
   const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
@@ -29,6 +29,13 @@ const StopDoingEntry = () => {
   const handleContinue = () => {
     dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', additionalData));
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
+  }
+
+  const handleTextChange = (newText) => { 
+    setAdditionalData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', newText))
+    }, 300);
   }
 
   return (
@@ -49,7 +56,7 @@ const StopDoingEntry = () => {
           placeholderTextColor='#66708080'
           style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={additionalData}
-          onChangeText={newText => setAdditionalData(newText)}
+          onChangeText={newText => handleTextChange(newText)}
         />
       
       <Button
@@ -63,4 +70,4 @@ const StopDoingEntry = () => {
   )
 }
 
-export default StopDoingEntry;
+export default AddMoreEntry;
