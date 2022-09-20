@@ -25,6 +25,7 @@ import DoLessEntry from './do-less';
 import StopDoingEntry from './stop-doing';
 import AddMoreEntry from './add-more';
 import ReviewFeedbackEntry from './review-entry';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 
 const RecordFeedbackEntry = props => {
   const { navigation } = props;
@@ -36,7 +37,7 @@ const RecordFeedbackEntry = props => {
     state => state.captureMoment.get('data'),
   );
   const layerTwo = useSelector(state => state.captureMoment.get('data').step3);
-
+  
    useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -99,6 +100,17 @@ const RecordFeedbackEntry = props => {
     }
   }
 
+  const handleSave = () => { 
+    dispatch(CaptureMomentActions.postEditEMEntry('saving'));
+    showMessage({
+      message: "Feedback entry saved!",
+      //type: "success",
+      backgroundColor: "#3AB549", // background color
+      color: "#FFFFFF", // text color
+      icon: props => <Image source={Images.checkmarkEmoji} {...props} />,
+    })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
      
@@ -112,9 +124,15 @@ const RecordFeedbackEntry = props => {
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText}>{feedbackType.step2.title} Feedback</Text>
         </View>
+      
         <View style={styles.headerSave}>
-          <Text style={styles.saveText}>Save</Text>
-        </View>
+          <TouchableOpacity
+          acccessibilityRole='button'
+        onPress={() => handleSave()}> 
+            <Text style={styles.saveText}>Save</Text>
+            </TouchableOpacity>
+          </View>
+          
       </View>
       <View style={styles.stepsContainer}>
         {Array.apply(null, { length: maxStep }).map((item, i) => (
@@ -133,6 +151,7 @@ const RecordFeedbackEntry = props => {
         </View>}
         {handleStepContent()}
       </View> 
+      <FlashMessage position="top" />
     </SafeAreaView>
   );
 };
