@@ -136,7 +136,7 @@ export function* postRecordEMEntry(type) {
   if (response.ok) {
     yield put(CaptureMomentActions.postRecordEMEntrySuccess(response.data));
     yield put(CaptureMomentActions.resetEntryStep());
-    console.warn('recordEM', response.ok)
+    console.warn('recordEM', payload)
   }
   else {
     yield put(CaptureMomentActions.postRecordEMEntryFailure(response.data))
@@ -167,8 +167,7 @@ export function* postEditEMEntry(type) {
 
   if (response.ok) {
     yield put(CaptureMomentActions.postEditEMEntrySuccess(response.data));
-    console.warn('postEdit', response.ok)
-      console.warn('doMore', entry.doMore);
+    console.warn('postEdit', payload)
   }
   else {
     yield put(CaptureMomentActions.postEditEMEntryFailure(response.data));
