@@ -79,7 +79,7 @@ export function* postCaptureFeedbackMoment(type) {
       const dateLogged = moment(new Date()).format('llll');
       yield put (CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
       yield put(CaptureMomentActions.postCaptureMomentSuccess(response.data.id));
-      debugger;
+
       yield put(CaptureMomentActions.resetCaptureStep());
       console.warn('resp', response);
       if(type.data === 'continueFB') {
@@ -131,12 +131,11 @@ export function* postRecordEMEntry(type) {
   }
   
   const response = yield call(api.postRecordEMEntry, payload);
-  console.warn('journeyID', entry.doMore)
-  console.warn('RecordEM', response)
+
   if (response.ok) {
     yield put(CaptureMomentActions.postRecordEMEntrySuccess(response.data));
     yield put(CaptureMomentActions.resetEntryStep());
-    console.warn('recordEM', payload)
+
   }
   else {
     yield put(CaptureMomentActions.postRecordEMEntryFailure(response.data))
@@ -162,12 +161,10 @@ export function* postEditEMEntry(type) {
     last_active_step: yield select(lastStep)
   }
   const response = yield call(api.postEditEMEntry, payload);
-  console.log('postEditEM', response);
 
 
   if (response.ok) {
     yield put(CaptureMomentActions.postEditEMEntrySuccess(response.data));
-    console.warn('postEdit', payload)
   }
   else {
     yield put(CaptureMomentActions.postEditEMEntryFailure(response.data));
