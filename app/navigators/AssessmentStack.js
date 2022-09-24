@@ -11,7 +11,8 @@ import {
   ExtendedAssessmentConfirmation,
   ExtendedLeadershipAssessment,
   CalculateAssessmentScore,
-  ImproveSkills
+  ImproveSkills,
+  OverviewWrapUp
 } from 'app/screens';
 
 
@@ -65,6 +66,10 @@ export default function AssessmentNavigator() {
       <AssessmentStack.Screen
         name={'Improve Skills'}
         component={ImproveSkills}
+      />
+      <AssessmentStack.Screen
+        name={'Assessment Wrap Up'}
+        component={OverviewWrapUp}
       />
     </AssessmentStack.Navigator>
   );
