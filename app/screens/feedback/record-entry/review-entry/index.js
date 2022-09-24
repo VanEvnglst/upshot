@@ -31,6 +31,13 @@ const ReviewFeedbackEntry = props => {
   debugger;
   const entry = useSelector(state => state.captureMoment.get('entryDetails'));
 
+  const [attentionDetail, setAttentionDetail] = useState(entry.catchAttention);
+  const [impactBehavior, setImpactBehavior] = useState(entry.impactBehavior);
+  const [doMoreData, setDoMoreData] = useState(entry.doMore);
+  const [doLessData, setDoLessData] = useState(entry.doLess);
+  const [stopDoingData, setStopDoingData] = useState(entry.stopDoing);
+  const [additionalData, setAdditionalData] = useState(entry.additionalNotes);
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -49,6 +56,48 @@ const ReviewFeedbackEntry = props => {
   const handleSendFeedback = () => { 
     dispatch(CaptureMomentActions.postRecordEMEntry('record'));
     navigation.navigate('Feedback Entry Confirmation')
+  }
+
+  const handleAttentionTextChange = (newText) => { 
+    setAttentionDetail(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('catchAttention', newText))
+    }, 300);
+  }
+
+  const handleImpactTextChange = (newText) => { 
+    setImpactBehavior(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('impactBehavior', newText))
+    }, 300);
+  }
+
+  const handleDoMoreTextChange = (newText) => { 
+    setDoMoreData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('doMore', newText))
+    }, 300);
+  }
+
+  const handleDoLessTextChange = (newText) => { 
+    setDoLessData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('doLess', newText))
+    }, 300);
+  }
+
+  const handleStopDoingTextChange = (newText) => { 
+    setStopDoingData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('stopDoing', newText))
+    }, 300);
+  }
+
+  const handleAdditionalTextChange = (newText) => { 
+    setAdditionalData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', newText))
+    }, 300);
   }
 
   return (
@@ -97,16 +146,16 @@ const ReviewFeedbackEntry = props => {
         </View>
         <View style={styles.topicContainer}>
         <Text style={[styles.toText, { marginBottom: 4, }]}>Topic</Text>
-        <TouchableOpacity 
-          onPress={() => onPress()}
+        <View 
+          // onPress={() => onPress()}
         style={styles.topicPicker}>
               <Text style={styles.topicLabel}>{topics.selectedLayerOne.name}</Text>
-          <Icon
+          {/* <Icon
             name='chevron-down-outline'
             style={{flex: 1, color: '#667080'}}
             size={24}
-          />
-        </TouchableOpacity>
+          /> */}
+        </View>
         <View style={[styles.topicPicker, { marginTop: 12}]}>
               <Text style={styles.topicLabel}>{topics.selectedLayerTwo.name}</Text>
         </View>
@@ -117,35 +166,67 @@ const ReviewFeedbackEntry = props => {
       <View style={styles.entriesContainer}>
         <Text style={styles.topicLabel}>What did your team member do that caught your attention?</Text>
         <View style={styles.answerContainer}>
-          <Text style={styles.answerText}>{entry.catchAttention}</Text>
+        <TextInput style={styles.answerText}
+          multiline
+          numberOfLines={30}
+          textAlignVertical='top'
+          value={attentionDetail}
+          onChangeText={newText => handleAttentionTextChange(newText)}
+        />
         </View>
         <Text style={styles.topicLabel}>What impact does this behavior have on the business or the team?</Text>
         <View style={styles.answerContainer}>
-        <Text style={styles.answerText}>{entry.impactBehavior}</Text>
+        <TextInput style={styles.answerText}
+                multiline
+                numberOfLines={30}
+                textAlignVertical='top'
+                value={impactBehavior}
+                onChangeText={newText => handleImpactTextChange(newText)}
+              />
         </View>
-        <Text style={styles.topicLabel}>I want my team member to do more...</Text>
+        <Text style={styles.topicLabel}>I want my team member to continue and do more...</Text>
         <View style={styles.answerContainer}>
-          <Text style={styles.answerText}>{entry.doMore}</Text>
-        </View>
-        <Text style={styles.topicLabel}>I want my team member to continue to...</Text>
-        <View style={styles.answerContainer}>
-        <Text style={styles.answerText}>{entry.doMore}</Text>
+          <TextInput style={styles.answerText}
+                multiline
+                numberOfLines={30}
+                textAlignVertical='top'
+                value={doMoreData}
+                onChangeText={newText => handleDoMoreTextChange(newText)}
+              />
         </View>
         <Text style={styles.topicLabel}>I want my team member to do less...</Text>
         <View style={styles.answerContainer}>
-        <Text style={styles.answerText}>{entry.doLess}</Text>
+        <TextInput style={styles.answerText}
+                multiline
+                numberOfLines={30}
+                textAlignVertical='top'
+                value={doLessData}
+                onChangeText={newText => handleDoLessTextChange(newText)}
+              />
         </View>
             {topics.selectedLayerTwo.requires_face_to_face && (
           <>
             <Text style={styles.topicLabel}>I want my team member to stop doing...</Text>
             <View style={styles.answerContainer}>
-              <Text style={styles.answerText}>{entry.stopDoing}</Text>
+              <TextInput style={styles.answerText}
+                multiline
+                numberOfLines={30}
+                textAlignVertical='top'
+                value={stopDoingData}
+                onChangeText={newText => handleStopDoingTextChange(newText)}
+              />
             </View>
           </>
         )}
         <Text style={styles.topicLabel}>Anything else to add?</Text>
         <View style={styles.answerContainer}>
-          <Text style={styles.answerText}>{entry.additionalNotes}</Text>
+          <TextInput style={styles.answerText}
+                multiline
+                numberOfLines={30}
+                textAlignVertical='top'
+                value={additionalData}
+                onChangeText={newText => handleAdditionalTextChange(newText)}
+              />
         </View>
       </View>
       <Button
