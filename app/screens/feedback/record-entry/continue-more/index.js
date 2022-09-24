@@ -31,6 +31,13 @@ const ContinueEntry = () => {
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
 
+  const handleTextChange = (newText) => { 
+    setDoMoreData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('doMore', newText))
+    }, 300);
+  }
+
   return (
     <ScrollView>
       <View style={styles.mainQuestionText}>
@@ -50,7 +57,7 @@ const ContinueEntry = () => {
           placeholderTextColor='#66708080'
           style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={doMoreData}
-          onChangeText={newText => setDoMoreData(newText)}
+          onChangeText={newText => handleTextChange(newText)}
         />
       <Button
         mode="contained"

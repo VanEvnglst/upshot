@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import CaptureFeedbackMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import Images from 'app/assets/images';
 
 const ReviewFeedbackEntry = props => {
@@ -28,6 +28,7 @@ const ReviewFeedbackEntry = props => {
     state => state.captureMoment.get('data').dateLogged,
   );
   const topics = useSelector(state => state.captureMoment.get('data').step3);
+  debugger;
   const entry = useSelector(state => state.captureMoment.get('entryDetails'));
 
   useEffect(() => {
@@ -43,6 +44,11 @@ const ReviewFeedbackEntry = props => {
 
   const handleContinue = () => {
     activeStep = activeStep + 1;
+  }
+
+  const handleSendFeedback = () => { 
+    dispatch(CaptureMomentActions.postRecordEMEntry('record'));
+    navigation.navigate('Feedback Entry Confirmation')
   }
 
   return (
@@ -94,7 +100,7 @@ const ReviewFeedbackEntry = props => {
         <TouchableOpacity 
           onPress={() => onPress()}
         style={styles.topicPicker}>
-          <Text style={styles.topicLabel}>{topics.selectedLayerOne.name}</Text>
+              <Text style={styles.topicLabel}>{topics.selectedLayerOne.name}</Text>
           <Icon
             name='chevron-down-outline'
             style={{flex: 1, color: '#667080'}}
@@ -102,7 +108,7 @@ const ReviewFeedbackEntry = props => {
           />
         </TouchableOpacity>
         <View style={[styles.topicPicker, { marginTop: 12}]}>
-          <Text style={styles.topicLabel}>{topics.selectedLayerTwo.name}</Text>
+              <Text style={styles.topicLabel}>{topics.selectedLayerTwo.name}</Text>
         </View>
       </View>
       <View style={styles.noteContainer}>
@@ -129,7 +135,7 @@ const ReviewFeedbackEntry = props => {
         <View style={styles.answerContainer}>
         <Text style={styles.answerText}>{entry.doLess}</Text>
         </View>
-        {topics.selectedLayerTwo.requires_face_to_face && (
+            {topics.selectedLayerTwo.requires_face_to_face && (
           <>
             <Text style={styles.topicLabel}>I want my team member to stop doing...</Text>
             <View style={styles.answerContainer}>
@@ -144,7 +150,7 @@ const ReviewFeedbackEntry = props => {
       </View>
       <Button
             mode='contained'
-            onPress={() => navigation.navigate('Feedback Entry Confirmation')}
+            onPress={() => handleSendFeedback()}
             style={{ marginTop: 24, marginBottom: 30, height: 48, justifyContent: 'center', alignItems: 'center' }}
           >Send Feedback</Button> 
         {/* <View style={styles.selectedNameContainer}>

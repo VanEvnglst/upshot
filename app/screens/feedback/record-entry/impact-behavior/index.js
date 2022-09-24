@@ -30,6 +30,13 @@ const ImpactBehaviorEntry = props => {
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
 
+  const handleTextChange = (newText) => { 
+    setImpactBehavior(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('impactBehavior', newText))
+    }, 300);
+  }
+
   return (
     <ScrollView
     keyboardShouldPersistTaps='handled'
@@ -52,7 +59,7 @@ const ImpactBehaviorEntry = props => {
         placeholderTextColor='#66708080'
         style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
         value={impactBehavior}
-        onChangeText={newText => setImpactBehavior(newText)}
+        onChangeText={newText => handleTextChange(newText)}
       />
     <Button
       mode="contained"

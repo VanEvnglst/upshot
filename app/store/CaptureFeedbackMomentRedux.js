@@ -20,6 +20,8 @@ export const INITIAL_STATE = Map({
   feedbackEntryData: null,
   journeyId: null,
   entryDetails: null,
+  entryRecordDetails: null,
+  entryEditDetails: null,
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -31,6 +33,15 @@ const { Types, Creators } = createActions({
   postCaptureMoment: ['data'],
   postCaptureMomentSuccess: ['journeyId'],
   postCaptureMomentFailure: ['error'],
+  postRecordEMEntry: ['entryDetails'],
+  postRecordEMEntrySuccess: ['entryRecordDetails'],
+  postRecordEMEntryFailure: ['error'],
+  postEditEMEntry: ['entryDetails'],
+  postEditEMEntrySuccess: ['entryEditDetails'],
+  postEditEMEntryFailure: ['error'],
+  fetchEMEntry: [''],
+  fetchEMEntrySuccess: ['entryDetails'],
+  fetchEMEntryFailure: ['error'],
   fetchLayerOneTopics: [''],
   fetchLayerOneTopicsSuccess: ['layerOneList'],
   fetchLayerOneTopicsFailure: ['error'],
@@ -42,6 +53,7 @@ const { Types, Creators } = createActions({
   fetchStaffMembersFailure: ['error'],
   setEntryActiveStep: ['step'],
   resetCaptureStep: null,
+  resetEntryStep: null,
 });
 
 
@@ -158,6 +170,60 @@ const fetchLayerOneTopics = state =>
       error
     });
 
+  const postRecordEMEntry = state => 
+    state.merge({
+      fetching: true,
+      error: '',
+    })
+
+  const postRecordEMEntrySuccess = (state, { entryRecordDetails }) => 
+    state.merge({
+      fetching: false,
+      entryRecordDetails,
+    });
+
+  const postRecordEMEntryFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error
+    });
+
+  const postEditEMEntry = state => 
+    state.merge({
+      fetching: true,
+      error: '',
+    })
+
+  const postEditEMEntrySuccess = (state, { entryEditDetails }) => 
+    state.merge({
+      fetching: false,
+      entryEditDetails,
+    });
+
+  const postEditEMEntryFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error
+    });
+
+  const fetchEMEntry = state => 
+    state.merge({
+      fetching: true,
+      error: '',
+    })
+
+  const fetchEMEntrySuccess = (state, { journeyId }) => 
+    state.merge({
+      fetching: false,
+      journeyId,
+    });
+
+  const fetchEMEntryFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error
+    });
+
   const setEntryActiveStep = (state, { step }) => {
       if (state.get('entryActiveStep') > state.get('entryMaxStep')) {
         return state.get('entryActiveStep');
@@ -165,11 +231,17 @@ const fetchLayerOneTopics = state =>
       return state.merge({ entryActiveStep: step });
   }
 
+  const resetEntryStep = state =>
+  state.merge({
+    entryActiveStep: 1,
+  });
+
 
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.RESET_CAPTURE_STEP]: resetCaptureStep,
+  [Types.RESET_ENTRY_STEP]: resetEntryStep,
   [Types.SET_CAPTURE_ACTIVE_STEP]: setCaptureActiveStep,
   [Types.SET_CAPTURE_DATA]: setCaptureData,
   [Types.FETCH_LAYER_ONE_TOPICS]: fetchLayerOneTopics,
@@ -181,9 +253,18 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_STAFF_MEMBERS]: fetchStaffMembers,
   [Types.FETCH_STAFF_MEMBERS_SUCCESS]: fetchStaffMembersSuccess,
   [Types.FETCH_STAFF_MEMBERS_FAILURE]: fetchStaffMembersFailure,
+  [Types.FETCH_EM_ENTRY]: fetchEMEntry,
+  [Types.FETCH_EM_ENTRY_SUCCESS]: fetchEMEntrySuccess,
+  [Types.FETCH_EM_ENTRY_FAILURE]: fetchEMEntryFailure,
   [Types.POST_CAPTURE_MOMENT]: postCaptureMoment,
   [Types.POST_CAPTURE_MOMENT_SUCCESS]: postCaptureMomentSuccess,
   [Types.POST_CAPTURE_MOMENT_FAILURE]: postCaptureMomentFailure,
+  [Types.POST_RECORD_EM_ENTRY]: postRecordEMEntry,
+  [Types.POST_RECORD_EM_ENTRY_SUCCESS]: postRecordEMEntrySuccess,
+  [Types.POST_RECORD_EM_ENTRY_FAILURE]: postRecordEMEntryFailure,
+  [Types.POST_EDIT_EM_ENTRY]: postEditEMEntry,
+  [Types.POST_EDIT_EM_ENTRY_SUCCESS]: postEditEMEntrySuccess,
+  [Types.POST_EDIT_EM_ENTRY_FAILURE]: postEditEMEntryFailure,
   [Types.SET_ENTRY_ACTIVE_STEP]: setEntryActiveStep,
   [Types.SET_FEEDBACK_MOMENT_DATA]: setFeedbackMomentData,
   [Types.SET_CAPTURE_MAX_STEP]: setCaptureMaxStep
