@@ -36,7 +36,7 @@ const AssessmentEndLine = props => {
         <Text style={styles.titleText}>Off to a good start!</Text>
 
         <Text style={styles.descriptionText}>
-          Good job on finishing your initial assessment! Next, you can see how
+          Good job on finishing your initial questionnaire! Next, you can see how
           you're doing in different leadership skill areas. ☺️
         </Text>
       </View>
@@ -46,7 +46,7 @@ const AssessmentEndLine = props => {
           onPress={() => navigation.navigate('Leadership Assessment Results')}
           mode="contained"
           style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>View Results</Text>
         </Button>
       </View>
       <View style={styles.spacer} />

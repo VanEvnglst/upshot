@@ -55,7 +55,7 @@ const CatchAttentionEntry = props => {
       
      <KeyboardAvoidingView style={{ marginTop: 24}}>
         <TextInput 
-          placeholder="Describe their behavior in detail"
+          placeholder="Describe their actions or behavior in detail"
           multiline
           numberOfLines={30}
           textAlignVertical='top'
