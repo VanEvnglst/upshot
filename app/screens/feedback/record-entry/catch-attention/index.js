@@ -31,6 +31,14 @@ const CatchAttentionEntry = props => {
     dispatch(CaptureMomentActions.setFeedbackMomentData('catchAttention', attentionDetail));
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
   }
+
+  const handleTextChange = (newText) => { 
+    setAttentionDetail(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('catchAttention', newText))
+    }, 300);
+  }
+  
   return (
     <ScrollView
       keyboardShouldPersistTaps='handled'
@@ -47,14 +55,15 @@ const CatchAttentionEntry = props => {
       
      <KeyboardAvoidingView style={{ marginTop: 24}}>
         <TextInput 
-          placeholder="Describe their behavior in detail" 
+          placeholder="Describe their behavior in detail"
           multiline
           numberOfLines={30}
           textAlignVertical='top'
           placeholderTextColor='#66708080'
           style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={attentionDetail}
-          onChangeText={newText => setAttentionDetail(newText)}  
+          onChangeText={newText => handleTextChange(newText)}  
+         
         />
       <Button
         mode="contained"

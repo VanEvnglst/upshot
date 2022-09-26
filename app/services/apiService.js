@@ -2,6 +2,7 @@ import Config from 'react-native-config';
 import { create } from 'apisauce';
 import { upshotDirectory } from 'app/config/ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { set } from 'immutable';
 
 const setAPI = url => {
   const api = create({
@@ -397,6 +398,30 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/capture_fb_moment`, payload);
+  },
+
+  postRecordEMEntry: async payload => { 
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/record_em_entry`, payload);
+  },
+
+  postEditEMEntry: async payload => { 
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/edit_em_entry`, payload);
+  },
+
+  getEMEntry: async payload => { 
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = await setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/get_em_entry`, payload);
   },
 
   getLSAOverviewQuestion: async () => {

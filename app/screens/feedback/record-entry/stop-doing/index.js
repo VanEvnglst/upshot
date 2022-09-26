@@ -36,6 +36,13 @@ const StopDoingEntry = () => {
     dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1));
   };
 
+  const handleTextChange = (newText) => { 
+    setStopDoingData(newText)
+    setTimeout(() => {
+      dispatch(CaptureMomentActions.setFeedbackMomentData('stopDoing', newText))
+    }, 300);
+  }
+
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -57,7 +64,7 @@ const StopDoingEntry = () => {
           placeholderTextColor='#66708080'
           style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
           value={stopDoingData}
-          onChangeText={newText => setStopDoingData(newText)}  
+          onChangeText={newText => handleTextChange(newText)}  
         />
       <Button
         mode="contained"
