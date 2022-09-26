@@ -74,4 +74,5 @@ export default {
   usersOutline: require('./images/users-outline.png'),
   paperclip: require('./images/paperclip.png'),
   popperEmoji: require('./images/popper.png'),
+  bigGrinEmoji: require('./images/big-grin-smiley.png'),
 };

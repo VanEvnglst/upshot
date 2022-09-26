@@ -27,10 +27,10 @@ const MilestoneWrapUp = props => {
             />
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.titleText}>That was lightning fast! 🎉</Text>
+        <Text style={styles.titleText}>Congratulations! 🎉</Text>
 
         <Text style={styles.descriptionText}>
-          Welcome to Upshot! Congratulations on finishing your onboarding!
+          You finished your profile!
         </Text>
       </View>
 
@@ -39,7 +39,7 @@ const MilestoneWrapUp = props => {
           onPress={() => navigation.navigate('Home')}
           mode="contained"
           style={styles.button}>
-          <Text style={styles.buttonText}>Let's wrap up!</Text>
+          <Text style={styles.buttonText}>All done!</Text>
         </Button>
       </View>
       <View style={styles.spacer} />

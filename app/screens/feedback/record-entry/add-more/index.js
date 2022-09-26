@@ -49,7 +49,7 @@ const AddMoreEntry = () => {
       <KeyboardAvoidingView
         style={{ marginTop: 24}}>
         <TextInput 
-          placeholder="Text goes here" 
+          placeholder="Write more details if any" 
           multiline
           numberOfLines={30}
           textAlignVertical='top'
@@ -63,7 +63,7 @@ const AddMoreEntry = () => {
         mode="contained"
         onPress={() => handleContinue()}
         style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
-        Continue
+        Review Details
       </Button>
       </KeyboardAvoidingView>
     </ScrollView>

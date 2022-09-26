@@ -17,6 +17,7 @@ import {RadarChart} from 'react-native-charts-wrapper';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
 
+
 const BaselineScore = props => {
   
   const { navigation } = props;
@@ -27,7 +28,8 @@ const BaselineScore = props => {
   }, []);
 
   const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
-
+  const user = useSelector(state => state.user.userName);
+  debugger;
   const retrieveDataExtended = async () => {
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
       debugger;
@@ -38,11 +40,18 @@ const BaselineScore = props => {
   
   const skillList = [
     {
-      id: 3,
-      title: 'Authenticity 👐',
-      score: scores && scores.authenticity,
-       barColor: '#80DBAA',
-      borderColor: '#80DBAA'
+      id: 4,
+      title: 'Achievement-Orientation 🏅',
+      score: scores && scores.achievement,
+       barColor: '#EDA875',
+      borderColor: '#EDA875'
+    },
+    {
+      id: 2,
+      title: 'Openness to Learn 🧠',
+      score: scores && scores.openness_to_learn,
+       barColor: '#D394EA',
+      borderColor: '#D394EA'
     },
     {
       id: 5,
@@ -59,25 +68,18 @@ const BaselineScore = props => {
       borderColor: '#F690A9'
     },
     {
-      id: 2,
-      title: 'Openness to Learn 🧠',
-      score: scores && scores.openness_to_learn,
-       barColor: '#D394EA',
-      borderColor: '#D394EA'
-    },
-    {
-      id: 4,
-      title: 'Achievement-Orientation 🏅',
-      score: scores && scores.achievement,
-       barColor: '#EDA875',
-      borderColor: '#EDA875'
+      id: 3,
+      title: 'Authenticity 👐',
+      score: scores && scores.authenticity,
+       barColor: '#80DBAA',
+      borderColor: '#80DBAA'
     },
     
   ]
 
   const [shouldExpand, setShouldExpand] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState({
-    id: 3,
+    id: 4,
     title: '',
     score: '',
   });
@@ -106,7 +108,7 @@ const BaselineScore = props => {
           </View>
           </View>
       <View stlye={styles.userDetailsContainer}>
-        <Text style={styles.userNameText}>Jaykey del Mar</Text>
+              <Text style={styles.userNameText}>{ user }</Text>
         <Text style={styles.userLevelText}>Level 1</Text>
       </View>
     </View>

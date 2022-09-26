@@ -286,7 +286,13 @@ const LeadershipOverviewResults = props => {
             Start with Skill Areas
           </Button>
         </View>
+        <TouchableOpacity
+          style={{ alignItems: 'center', margin: 10 }}
+          onPress={() => navigation.navigate('Assessment Wrap Up') }>
+          <Text style={ styles.descriptionText}>Skip</Text>
+        </TouchableOpacity>
         <View style={styles.spacer} />
+        
       </ScrollView>
       {/* <BottomSheet
         index={-1}

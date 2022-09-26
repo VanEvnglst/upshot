@@ -1,4 +1,3 @@
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import React from 'react';
 import {
   View,
@@ -12,41 +11,35 @@ import {
 import { Button, ProgressBar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
+import LeadershipSkillAreaActions from 'app/store/LSARedux';
 
-const AssessmentEndLine = props => {
-    const { navigation } = props;
+const OverviewWrapUp = props => {
+  const { navigation } = props;
+
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        <ProgressBar
-          progress={1}
-          color={'#667080'}
-          style={styles.progressBar}></ProgressBar>
-      </SafeAreaView>
-
+      <SafeAreaView/>
       <View style={styles.imageContainer}>
             <Image
-                source={Images.checkmarkEmoji}
+                source={Images.bigGrinEmoji}
                 resizeMode='contain'
                 style={styles.image}
             />
       </View>
-
       <View style={styles.contentContainer}>
-        <Text style={styles.titleText}>Off to a good start!</Text>
+        <Text style={styles.titleText}>You're good to go! 🎉</Text>
 
         <Text style={styles.descriptionText}>
-          Good job on finishing your initial questionnaire! Next, you can see how
-          you're doing in different leadership skill areas. ☺️
+          Don't worry, you can always continue building your profile later.
         </Text>
       </View>
 
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('Leadership Assessment Results')}
+          onPress={() => navigation.navigate('Home')}
           mode="contained"
           style={styles.button}>
-          <Text style={styles.buttonText}>View Results</Text>
+          <Text style={styles.buttonText}>Continue later</Text>
         </Button>
       </View>
       <View style={styles.spacer} />
@@ -54,7 +47,7 @@ const AssessmentEndLine = props => {
   );
 };
 
-export default AssessmentEndLine;
+export default OverviewWrapUp;
 
 const styles = StyleSheet.create({
   container: {
@@ -71,7 +64,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 200, 
     height: 200, 
-    backgroundColor: '#DAFFE9', 
+    backgroundColor: '#FFF0C3', 
     borderRadius: 100, 
     justifyContent: 'center', 
     alignItems: 'center'
