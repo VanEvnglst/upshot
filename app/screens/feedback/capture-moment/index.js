@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   Text,
-  
   SafeAreaView,
   TouchableOpacity,
   BackHandler,
@@ -10,10 +9,14 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import { ScrollView, NativeViewGestureHandler, GestureHandlerRootView} from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  NativeViewGestureHandler,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import ImagePicker from 'react-native-image-crop-picker'
+import ImagePicker from 'react-native-image-crop-picker';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -115,9 +118,7 @@ const CaptureFeedbackMoment = props => {
     state.captureMoment.get('staffMembers'),
   );
   const staffName = useSelector(state => state.captureMoment.get('data'));
-  const feedbackType = useSelector(
-    state => state.captureMoment.get('data'),
-  );
+  const feedbackType = useSelector(state => state.captureMoment.get('data'));
   const layerOneTopics = useSelector(state =>
     state.captureMoment.get('layerOneTopics'),
   );
@@ -129,9 +130,10 @@ const CaptureFeedbackMoment = props => {
   const [selectedLayerTwo, setSelectedLayerTwo] = useState(null);
   const [reminderHours, setReminderHours] = useState({
     value: 0,
-    currentIndex: 3
+    currentIndex: 3,
   });
   const [sheetType, setSheetType] = useState('');
+  const [attachmentList, setAttachmentList] = useState([]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -179,11 +181,10 @@ const CaptureFeedbackMoment = props => {
 
   const TopicSelection = () => {
     return (
-      <ScrollView 
+      <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
-        bounces={false}  
-      >
+        bounces={false}>
         <View style={styles.mainQuestionHeader}>
           <Text style={styles.mainQuestionText}>Add topic details to your</Text>
           <View style={styles.typeContainer}>
@@ -193,7 +194,8 @@ const CaptureFeedbackMoment = props => {
         </View>
         <View style={{ marginTop: 25 }}>
           <Text style={styles.descriptionText}>
-            Tell us what kind of observation do you want to give to your team member/s.
+            Tell us what kind of observation do you want to give to your team
+            member/s.
           </Text>
         </View>
         <View style={styles.topicContainer}>
@@ -241,11 +243,28 @@ const CaptureFeedbackMoment = props => {
         <View style={{ flex: 1, marginVertical: 30 }}>
           <Text style={styles.toText}>Attachments</Text>
           <View style={{ marginTop: 12, flexDirection: 'row' }}>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => openSheet('attachments')}
-              style={{ width: 72, height: 72, borderRadius: 6, backgroundColor: '#667080', opacity: 0.3,  justifyContent: 'center', alignItems: 'center'}}>
+              style={{
+                width: 72,
+                height: 72,
+                borderRadius: 6,
+                backgroundColor: '#667080',
+                opacity: 0.3,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
               <Text>+</Text>
             </TouchableOpacity>
+            {attachmentList.map((attach, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{ width: 72, height: 72, borderRadius: 6 }}>
+                  <Image source={attach} />
+                </View>
+              );
+            })}
           </View>
         </View>
         <View style={styles.btnContainer}>
@@ -282,14 +301,13 @@ const CaptureFeedbackMoment = props => {
     };
     dispatch(CaptureMomentActions.setCaptureData('step3', step3Data));
     dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
-    
   };
 
   const handleSendFeedback = () => {
-    bottomSheetRef.current?.close();       
+    bottomSheetRef.current?.close();
     dispatch(CaptureMomentActions.setCaptureData('step4', reminderHours));
     dispatch(CaptureMomentActions.postCaptureMoment('reminder'));
-  }
+  };
 
   const openSheet = type => {
     switch (type) {
@@ -322,10 +340,12 @@ const CaptureFeedbackMoment = props => {
       case 3:
         return <TopicSelection />;
       case 4:
-        return <CaptureMomentStep4
-          props={props}
-          onPress={() => openSheet('reminder')} 
-          />;
+        return (
+          <CaptureMomentStep4
+            props={props}
+            onPress={() => openSheet('reminder')}
+          />
+        );
     }
   };
 
@@ -346,43 +366,104 @@ const CaptureFeedbackMoment = props => {
       <>
         <View style={styles.sheetTitleContainer}>
           <Text style={styles.sheetTitleText}>Add Attachment/s</Text>
-          <Text style={[styles.sheetSubtitleText, { textAlign: 'center', lineHeight: 22, paddingBottom: 20, maxWidth: '80%'}]}>Give additional context by adding media in your feedback</Text>
+          <Text
+            style={[
+              styles.sheetSubtitleText,
+              {
+                textAlign: 'center',
+                lineHeight: 22,
+                paddingBottom: 20,
+                maxWidth: '80%',
+              },
+            ]}>
+            Give additional context by adding media in your feedback
+          </Text>
         </View>
-        <View style={{ marginTop: 15, paddingHorizontal: 22}}>
+        <View style={{ marginTop: 15, paddingHorizontal: 22 }}>
           <TouchableOpacity
             onPress={() => launchCamera()}
-            style={{ borderWidth: 1, borderRadius: 6, borderColor: '#EEF1F4', flexDirection: 'row', alignItems: 'center', height: 50, paddingHorizontal: 12, paddingVertical: 13, marginBottom: 12}}
-          >
-            <Text style={{ fontSize: 16, lineHeight: 22, color: '#667080', fontWeight: '700' }}>Take a photo / video</Text>
+            style={{
+              borderWidth: 1,
+              borderRadius: 6,
+              borderColor: '#EEF1F4',
+              flexDirection: 'row',
+              alignItems: 'center',
+              height: 50,
+              paddingHorizontal: 12,
+              paddingVertical: 13,
+              marginBottom: 12,
+            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 22,
+                color: '#667080',
+                fontWeight: '700',
+              }}>
+              Take a photo / video
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => launchGallery()}
-            style={{ borderWidth: 1, borderRadius: 6, borderColor: '#EEF1F4', flexDirection: 'row', alignItems: 'center', height: 50, paddingHorizontal: 12, paddingVertical: 13, marginBottom: 12}}
-          >
-            <Text style={{ fontSize: 16, lineHeight: 22, color: '#667080', fontWeight: '700' }}>Choose from gallery</Text>
+            style={{
+              borderWidth: 1,
+              borderRadius: 6,
+              borderColor: '#EEF1F4',
+              flexDirection: 'row',
+              alignItems: 'center',
+              height: 50,
+              paddingHorizontal: 12,
+              paddingVertical: 13,
+              marginBottom: 12,
+            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 22,
+                color: '#667080',
+                fontWeight: '700',
+              }}>
+              Choose from gallery
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ borderWidth: 1, borderRadius: 6, borderColor: '#EEF1F4', flexDirection: 'row', alignItems: 'center', height: 50, paddingHorizontal: 12, paddingVertical: 13, marginBottom: 12}}
-          >
-            <Text style={{ fontSize: 16, lineHeight: 22, color: '#667080', fontWeight: '700' }}>Record audio</Text>
+            style={{
+              borderWidth: 1,
+              borderRadius: 6,
+              borderColor: '#EEF1F4',
+              flexDirection: 'row',
+              alignItems: 'center',
+              height: 50,
+              paddingHorizontal: 12,
+              paddingVertical: 13,
+              marginBottom: 12,
+            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 22,
+                color: '#667080',
+                fontWeight: '700',
+              }}>
+              Record audio
+            </Text>
           </TouchableOpacity>
         </View>
       </>
-    )
-  }
-
+    );
+  };
 
   const launchCamera = () => {
     ImagePicker.openCamera({
       cropping: false,
       forceJpg: true,
-      mediaType: 'photo',
+      mediaType: 'any',
     }).then(images => {
+      console.warn('cam', images);
       // const cameraList = [images];
       // onUploadHandler(cameraList);
     });
-
-  }
+  };
 
   const launchGallery = () => {
     ImagePicker.openPicker({
@@ -390,93 +471,91 @@ const CaptureFeedbackMoment = props => {
       multiple: true,
       mediaType: 'photo',
     }).then(images => {
+      console.warn('ima', images);
       // onUploadHandler(images);
     });
-
-  }
+  };
 
   const ReminderSheet = () => {
     return (
       <NativeViewGestureHandler disallowInterruption={true}>
-      <View style={{ marginTop: 24, backgroundColor: 'white' }}>
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={Images.bellEmoji}
-            resizeMode="contain"
-            style={{ width: 62, height: 62 }}
-          />
-          <Text
-            style={{
-              fontSize: 24,
-              lineHeight: 30,
-              fontWeight: '700',
-              color: '#667080',
-              textAlign: 'center',
-            }}>
-            Set Reminder
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              lineHeight: 22,
-              fontWeight: '400',
-              color: '#667080',
-              textAlign: 'center',
-              marginTop: 4,
-              maxWidth: '80%',
-            }}>
-            How long before we remind you about this feedback?
-          </Text>
-        </View>
-        
-        <View style={{ marginTop: 12, height: 175, paddingHorizontal: 24 }}>
-          
-            <ScrollPicker
-            dataSource={hourPicker}
-            selectedIndex={reminderHours.currentIndex}
-            renderItem={(data, index) => (
-              <View style={{ alignItems: 'center' }}>
-                <Text
-                  style={{
-                    fontSize: 24,
-                    lineHeight: 28,
-                    fontWeight: '400',
-                    color: '#667080',
-                  }}>
-                  {data === '1' ? `${data} hour` : `${data} hours`}
-                </Text>
-              </View>
-            )}
-            onValueChange={(data, selectedIndex) => {
-              setReminderHours({
-                value: data,
-                currentIndex: selectedIndex
-              });
-            }}
-            wrapperHeight={180}
-            wrapperColor="#FFFFFF"
-            itemHeight={60}
-            highlightColor="black"
-            highlightBorderWidth={1}
-              />
-         
+        <View style={{ marginTop: 24, backgroundColor: 'white' }}>
+          <View style={{ alignItems: 'center' }}>
+            <Image
+              source={Images.bellEmoji}
+              resizeMode="contain"
+              style={{ width: 62, height: 62 }}
+            />
+            <Text
+              style={{
+                fontSize: 24,
+                lineHeight: 30,
+                fontWeight: '700',
+                color: '#667080',
+                textAlign: 'center',
+              }}>
+              Set Reminder
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 22,
+                fontWeight: '400',
+                color: '#667080',
+                textAlign: 'center',
+                marginTop: 4,
+                maxWidth: '80%',
+              }}>
+              How long before we remind you about this feedback?
+            </Text>
           </View>
 
-        <View style={{ marginTop: 50, paddingHorizontal: 24 }}>
-          <Button
-            mode="contained"
-            onPress={() => handleSendFeedback('reminder')}
-            style={[styles.button, { marginBottom: 12 }]}>
-            Confirm
-          </Button>
-          <Button
-            mode="text"
-            onPress={() => bottomSheetRef.current?.close()}
-            style={[styles.button]}>
-            Cancel
-          </Button>
+          <View style={{ marginTop: 12, height: 175, paddingHorizontal: 24 }}>
+            <ScrollPicker
+              dataSource={hourPicker}
+              selectedIndex={reminderHours.currentIndex}
+              renderItem={(data, index) => (
+                <View style={{ alignItems: 'center' }}>
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      lineHeight: 28,
+                      fontWeight: '400',
+                      color: '#667080',
+                    }}>
+                    {data === '1' ? `${data} hour` : `${data} hours`}
+                  </Text>
+                </View>
+              )}
+              onValueChange={(data, selectedIndex) => {
+                setReminderHours({
+                  value: data,
+                  currentIndex: selectedIndex,
+                });
+              }}
+              wrapperHeight={180}
+              wrapperColor="#FFFFFF"
+              itemHeight={60}
+              highlightColor="black"
+              highlightBorderWidth={1}
+            />
+          </View>
+
+          <View style={{ marginTop: 50, paddingHorizontal: 24 }}>
+            <Button
+              mode="contained"
+              onPress={() => handleSendFeedback('reminder')}
+              style={[styles.button, { marginBottom: 12 }]}>
+              Confirm
+            </Button>
+            <Button
+              mode="text"
+              onPress={() => bottomSheetRef.current?.close()}
+              style={[styles.button]}>
+              Cancel
+            </Button>
+          </View>
         </View>
-      </View>
       </NativeViewGestureHandler>
     );
   };
