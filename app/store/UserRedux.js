@@ -2,8 +2,9 @@ import { createReducer, createActions } from 'reduxsauce';
 import { Map } from 'immutable';
 
 export const INITIAL_STATE = Map({
-  firstName: '',
-  lastName: '',
+  userName: '',
+  // firstName: '',
+  // lastName: '',
   role: 0,
 });
 
