@@ -75,4 +75,8 @@ export default {
   paperclip: require('./images/paperclip.png'),
   popperEmoji: require('./images/popper.png'),
   bigGrinEmoji: require('./images/big-grin-smiley.png'),
+  clipboardEmoji: require('./images/clipboard.png'),
+  clockEmoji: require('./images/clock.png'),
+  managingConflict: require('./images/managing-conflict.png'),
+  buildingResilience: require('./images/building-resilience.png'),
 };

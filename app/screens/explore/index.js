@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
+import Images from 'app/assets/images';
 
 
 const ExploreScreen = props => {
@@ -33,19 +34,26 @@ const ExploreScreen = props => {
     }
   ];
 
-  const Card = ({ title, isRecommended, description, mainCard}) => {
+  const Card = ({iconImage, title, isRecommended, description, mainCard}) => {
     return (
-    <TouchableOpacity style={[styles.cardContainer, { maxWidth: mainCard ? '100%' : '70%' }]}>
-    <View style={styles.cardImageContainer}>
-      {isRecommended && <View style={styles.recommendedBadge}>
+    <>
+    {isRecommended && <View style={styles.recommendedBadge}>
         <Text style={styles.recommendedBadgeText}>Recommended for you</Text>
       </View>}
-    </View>
-    <View style={styles.cardContentContainer}>
-      <Text style={styles.cardTitleText}>{title}</Text>
-      <Text style={styles.cardDescriptionText}>{description}</Text>
-    </View>
-  </TouchableOpacity>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.cardImageContainer}>
+            <Image
+              source={iconImage}
+              resizeMethod="contain"
+              style={{height: 99, width: 99}} />
+      
+          </View>
+          <View style={styles.cardContentContainer}>
+            <Text style={styles.cardTitleText}>{title}</Text>
+            <Text style={styles.cardDescriptionText}>{description}</Text>
+          </View>
+        </View>
+    </>
     )
   }
 
@@ -92,70 +100,45 @@ const ExploreScreen = props => {
             </View>
           </View>
         </SafeAreaView>
-        <View style={{ marginTop: 20, flex: 1}}>
+        <TouchableOpacity style={styles.cardContainer}
+        onPress={() => navigation.navigate('Home')}>
+        <View>
           <Card 
+            iconImage={Images.clipboardEmoji}
             title={'Feedback Coaching'}
             description={`Advocating for your employees' growth and optimal performance with feedback`}
             isRecommended
             mainCard
           />
-          <View style={styles.catergoryContainer}>
-            <Text style={styles.categoryTitleText}>Get started</Text>
-            <Text style={styles.categoryDescriptionText}>Learn the basics of leadership and learn more about yourself.</Text>
           </View>
-          <ScrollView 
-            horizontal
-            style={styles.addedMargin}>
-            {activeListeningSample.map((item, i) => (
-              <Card
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </ScrollView>
-          <View style={styles.catergoryContainer}>
-            <Text style={styles.categoryTitleText}>Communicate directly</Text>
-            <Text style={styles.categoryDescriptionText}>Learn the basics of leadership and learn more about yourself.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.cardContainer}>
+        <View>
+          <Card 
+            iconImage={Images.managingConflict}
+            title={'Managing Conflict'}
+            description={`Dealing with conflicts that could affect performance with recommended actions to deal with them`}
+          />
           </View>
-          <ScrollView 
-            horizontal
-            style={styles.addedMargin}>
-            {activeListeningSample.map((item, i) => (
-              <Card
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </ScrollView>
-          <View style={styles.catergoryContainer}>
-            <Text style={styles.categoryTitleText}>Single Exercises</Text>
-            <Text style={styles.categoryDescriptionText}>Learn the basics of leadership and learn more about yourself.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.cardContainer}>
+         <View>
+          <Card 
+            iconImage={Images.buildingResilience}
+            title={'Building Resilience'}
+            description={`Recovering quickly from difficulties and maintaining your overall well-being`}
+          />
           </View>
-          <ScrollView 
-            horizontal
-            style={styles.addedMargin}>
-            {activeListeningSample.map((item, i) => (
-              <Card
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </ScrollView>
-          <View style={styles.catergoryContainer}>
-            <Text style={styles.categoryTitleText}>Articulate clearly</Text>
-            <Text style={styles.categoryDescriptionText}>Learn the basics of leadership and learn more about yourself.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.cardContainer}>
+        <View>
+          <Card 
+            iconImage={Images.clockEmoji}
+            title={'Prioritizing & Delegating'}
+            description={`Practicing techniques for effective team collaboration and empowering team members with the right level of autonomy`}
+          />
           </View>
-          <ScrollView 
-            horizontal
-            style={styles.addedMargin}>
-            {activeListeningSample.map((item, i) => (
-              <Card
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </ScrollView>
-        </View>
+        </TouchableOpacity>
         <View style={styles.viewSpacer} />
       </ScrollView>
     </View>

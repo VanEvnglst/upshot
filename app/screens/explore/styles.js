@@ -41,14 +41,18 @@ cardContainer: {
   borderWidth: 0.5,
   borderColor:PRIMARY_COLOR,
   borderRadius: 6,
-  minHeight: 242
+  minHeight: 124,
+  marginTop: 14
 },
 cardImageContainer: {
-  flex: 2, minHeight: 165
+  minHeight: 99,
+  minWidth: 99,
+  alignItems: 'center',
+  justifyContent: 'center'
 },
 recommendedBadge: { height: 26,
-  backgroundColor: '#727CD9', 
-  alignSelf: 'flex-end', 
+  backgroundColor: '#D394EA', 
+  alignSelf: 'flex-start', 
   minWidth: 150, 
   borderTopRightRadius: 6, 
   borderBottomLeftRadius: 6, 
@@ -62,13 +66,12 @@ recommendedBadgeText: {
   fontSize: 12,
   lineHeight: 22
 },
-cardContentContainer: {
-  flex: 1, 
-  borderTopWidth: 0.5, 
+cardContentContainer: {  
   borderColor: PRIMARY_COLOR, 
   paddingHorizontal: 8, 
   paddingTop: 12, 
   paddingBottom: 8,
+  marginLeft: 10
 },
 cardTitleText: {
   fontSize: 20,
@@ -77,12 +80,12 @@ cardTitleText: {
   color: PRIMARY_COLOR
 },
 cardDescriptionText: {
-  marginTop: 30,
+  marginTop: 4,
   fontSize: 12,
   lineHeight: 18,
   fontWeight: '400',
   color: PRIMARY_COLOR,
-  maxWidth: '90%',
+  maxWidth: '79%',
   paddingBottom: 8,
 },
 catergoryContainer: {
