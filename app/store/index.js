@@ -14,6 +14,7 @@ import { reducer as messages } from './MessagesRedux';
 import { reducer as survey } from './frontliner/SurveyRedux';
 import { reducer as leadershipSkillArea } from './LSARedux';
 import { reducer as captureMoment } from './CaptureFeedbackMomentRedux';
+import { reducer as frontlinerResponse } from './frontliner/ResponseRedux';
 import rootSaga from '../sagas'; 
 
 import configureStore from './createStore';
@@ -34,6 +35,7 @@ export const mainReducer = combineReducers({
   survey,
   leadershipSkillArea,
   captureMoment,
+  frontlinerResponse
 });
 
 export default () => {
