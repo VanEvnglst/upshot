@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  ScrollView
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,6 +16,7 @@ import { CardStyleInterpolators } from '@react-navigation/stack';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import lsaTypes from 'app/models/LSATypes';
 import Images from 'app/assets/images';
+
 
 
 const AssessmentBreakDown = props => {
@@ -36,7 +38,7 @@ const AssessmentBreakDown = props => {
 
   }, []);
 
-  const chkStat = useSelector(state => state.leadershipSkillArea.get('skillAreaTestSteps'));
+  const checkCategoryStatus = useSelector(state => state.leadershipSkillArea.get('skillAreaTestSteps'));
   const completedCnt = useSelector(state => state.leadershipSkillArea.get('testFinishedCount'))
   const retrieveExtendedQs = async (element) => {
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
@@ -50,7 +52,7 @@ const AssessmentBreakDown = props => {
 
     return (
       <>
-        {chkStat[element.categoryStateStat] == 'completed' ?
+        {checkCategoryStatus[element.categoryState] == 'completed' ?
           <TouchableOpacity
             accessibilityRole='button'
             style={styles.skillAreaItem}
@@ -95,12 +97,10 @@ const AssessmentBreakDown = props => {
       )
 
     }
-    
-    
-  
 
 
   return <SafeAreaView style={styles.container}>
+    <ScrollView>
     <View style={styles.headerContainer}>
       <TouchableOpacity
         accessibilityRole='button'
@@ -141,30 +141,24 @@ return (
       />
 );
 
-})}
-      
-      {/* <SkillAreaItem
-        title={'Empathy 💓'}
-        value={'empathyList'}
-      />
-      <SkillAreaItem
-        title={'Openness to Learn 🧠'}
-        value={'opennessToLearnList'}
-      />
-      <SkillAreaItem
-        title={'Authenticity 👐'}
-        value={'authenticityList'}
-      />
-      <SkillAreaItem
-        title={'Achievement-Orientation 🏅'}
-        value={'achievementList'}
-      />
-      <SkillAreaItem
-        title={'Trust Building 🤝'}
-        value={'trustBuildingList'}
-      /> */}
+    })}
+        {completedCnt === 5 ?
+          <TouchableOpacity
+          style={{ marginTop: 36, backgroundColor: '#667080', height: 48, justifyContent: 'center', alignItems: 'center', width: '100%', borderRadius: 6 }}>
+           <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#FFFFFF' }}>Recalculate Indicator Levels</Text>
+          </TouchableOpacity>
+          :
+          <View style={{ marginTop: 36, backgroundColor: '#EEF1F4', height: 48, justifyContent: 'center', alignItems: 'center', width: '100%', borderRadius: 6 }}>
+            <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#66708080' }}>Recalculate Indicator Levels</Text>
+          </View>
+        }
+        <TouchableOpacity style={{marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '400', color: '#667080' }}>Skip for Later</Text>
+        </TouchableOpacity>
+        <View style={{height: 50}} />
     </View>
-  </SafeAreaView>;
+    </ScrollView>
+  </SafeAreaView>
 };
 
 export default AssessmentBreakDown;
