@@ -42,7 +42,7 @@ const CalculateAssessmentScore = props => {
       </View>
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('Extended Assessment Wrap Up')}
+          onPress={() => navigation.navigate('Baseline Score')}
           mode="contained"
           disabled={isLoading}
           style={styles.button}>
