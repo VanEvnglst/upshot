@@ -67,11 +67,11 @@ export { default as FeedbackSharing } from './feedback/sharing';
 export { default as SharingReview } from './feedback/sharing/sharing-review';
 
 /* ------------- Frontliner Stack ------------- */
-export { default as MessageThreadScreen } from './frontliner/message-thread';
 export { default as SurveyDiscussion } from './frontliner/survey/discussion';
 export { default as SurveyGuide } from './frontliner/survey/guide';
 export { default as FrontlinerSurvey } from './frontliner/survey';
 export { default as SurveyConfirmation } from './frontliner/survey/confirmation';
-
+export { default as FeedbackResponse } from './frontliner/feedback-response';
+export { default as ImpactResponse } from './frontliner/feedback-response/impact-response';
 /* ------------- Insights Panel Stack ------------- */
 export { default as InsightsPanel } from './insights';
