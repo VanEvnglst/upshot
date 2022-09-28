@@ -42,6 +42,7 @@ const { Types, Creators } = createActions({
   setAssessmentActiveStep: ['key', 'step'],
   setAssessmentStatus: ['key', 'data'],
   setAssessmentData: ['key', 'data'],
+  setCategoryStatus: ['key', 'data'],
   setExtendedAssessmentData: ['key','data'],
   setTopicData: ['topicData'],
   resetStep: ['key', 'data'],
@@ -93,6 +94,15 @@ const setAssessmentStatus = (state, { key, data }) =>
 state.merge({
   [key]: data
 })
+
+const setCategoryStatus = (state, { key, data }) => {
+return state.merge({
+  skillAreaTestSteps: {
+    ...state.get('skillAreaTestSteps'),
+    [key]: data
+  }
+})
+}
 
 const setExtendedAssessmentData = (state, { key, data }) => {
   return state.merge({
@@ -223,5 +233,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 [Types.POST_OVERVIEW_TEST]: postOverviewTest,
 [Types.POST_OVERVIEW_TEST_SUCCESS]: postOverviewTestSuccess,
 [Types.POST_OVERVIEW_TEST_FAILURE]: postOverviewTestFailure,
-[Types.SET_ASSESSMENT_STATUS]: setAssessmentStatus
+[Types.SET_ASSESSMENT_STATUS]: setAssessmentStatus,
+[Types.SET_CATEGORY_STATUS]: setCategoryStatus
 });
