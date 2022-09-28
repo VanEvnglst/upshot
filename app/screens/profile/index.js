@@ -4,7 +4,7 @@ import PushNotification from 'react-native-push-notification';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Wrapper, InputField } from 'app/components';
-import { BaselineScore, ExtendedLeadershipAssessment } from 'app/screens';
+import { BaselineScore, ExtendedLeadershipAssessment, AssessmentBreakDown } from 'app/screens';
 import { SampleLocalNotif } from 'app/services/notification-service';
 
 const Profile = props => {
@@ -25,8 +25,9 @@ const Profile = props => {
       style={{ flex: 1 }}
     >
 
-    <View style={{ flex: 1}}>
-    <BaselineScore {...props}/>
+      <View style={{ flex: 1 }}>
+        <AssessmentBreakDown {...props} />
+    {/* <BaselineScore {...props}/> */}
     </View>
     
            
