@@ -6,6 +6,8 @@ import AuthenticationActions, {
 import UserActions from 'app/store/UserRedux';
 import api from 'app/services/apiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as NavigationService from 'app/services/NavigationService';
+
 const RESULT_SUCCESS = 'success';
 const RESULT_ERROR = 'error';
 
@@ -92,10 +94,15 @@ export function* signUpUser({ data }) {
   }
 }
 
+export function* signOutUser() {
+  yield NavigationService.navigateAndReset('Auth');
+}
+
 function* watchAuthenticationSaga() {
   yield takeLatest(AuthenticationTypes.SIGN_IN_USER, signInUser);
   yield takeLatest(AuthenticationTypes.FETCH_SERVER, fetchServer);
   yield takeLatest(AuthenticationTypes.SIGN_UP_USER, signUpUser);
+  yield takeLatest(AuthenticationTypes.SIGN_OUT_USER, signOutUser);
 }
 
 export default watchAuthenticationSaga;
