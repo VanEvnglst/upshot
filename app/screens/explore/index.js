@@ -44,7 +44,7 @@ const ExploreScreen = props => {
           <View style={styles.cardImageContainer}>
             <Image
               source={iconImage}
-              resizeMethod="contain"
+              resizeMode="contain"
               style={{height: 99, width: 99}} />
       
           </View>
