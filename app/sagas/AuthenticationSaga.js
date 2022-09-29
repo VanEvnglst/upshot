@@ -96,7 +96,6 @@ export function* signUpUser({ data }) {
 }
 
 export function* signOutUser() {
-  yield NavigationService.navigateAndReset('Auth');
 }
 
 function* watchAuthenticationSaga() {
