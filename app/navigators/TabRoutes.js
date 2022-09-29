@@ -9,6 +9,7 @@ import FeedbackNavigator from './FeedbackStack';
 import MessagesNavigator from './MessagesStack';
 import AssessmentNavigator from './AssessmentStack';
 import { getSignUpState, getSignInState } from 'app/store/selectors';
+import AuthNavigator from './AuthStack';
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -27,6 +28,10 @@ const HomeNavigator = () => {
             name={'Assessment'}
             component={AssessmentNavigator}
           />
+      <HomeStack.Screen
+        name={'Auth'}
+        component={AuthNavigator}
+      />
     </HomeStack.Navigator>
   );
 };
