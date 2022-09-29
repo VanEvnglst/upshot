@@ -244,14 +244,14 @@ const BaselineScore = props => {
               alignItems: 'center'
             }}
             mode="outlined"
-            onPress={() => navigation.navigate('Assessment', { screen: 'Assessment break down' })}>
+            onPress={() => navigation.navigate('Assessment', { screen: 'Extended Assessment Wrap Up' })}>
             <Text style={{
             color: "white",
     fontSize: 16,
     lineHeight: 22,
     fontWeight: '400',
     textAlign: 'center'
-          }}>Complete Assessment</Text>  
+          }}>Finish Building Profile</Text>  
             </Button>
             </View>
         </ScrollView>

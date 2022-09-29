@@ -65,6 +65,7 @@ const ExtendedLeadershipAssessment = props => {
     const data = {
       option,
       question: questionTitle,
+      category: route.params.categoryState
     };
 
     dispatch(LeadershipSkillAreaActions.setExtendedAssessmentData(`answer${route.params.title}${extendedActiveStep}`, data));

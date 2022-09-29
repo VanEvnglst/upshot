@@ -43,7 +43,7 @@ export default styles = StyleSheet.create({
   titleUser: {
     flex: 1,
     height: '100%',
-    maxWidth: '45%',
+    maxWidth: '50%',
   },
   userText: {
     fontSize: 10,
@@ -105,7 +105,6 @@ export default styles = StyleSheet.create({
     marginRight: 12,
     width: 46, 
     height: 46, 
-    borderColor: '#BAC0CA',
     borderWidth: 2,
     borderRadius: 23,
     justifyContent: 'center',
@@ -115,7 +114,6 @@ export default styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     fontWeight: '700',
-    color: '#667080',
   },
   skillTitleContainer: {
     flex: 3
@@ -133,6 +131,25 @@ export default styles = StyleSheet.create({
     fontWeight: '600',
     color: '#B1B5C3',
     textTransform: 'uppercase'
+  },
+  completedText: {
+    margin: 4,
+    fontSize: 10,
+    lineHeight: 10,
+    fontWeight: '600',
+    color: '#3AB549',
+    textTransform: 'uppercase'
+  },
+  completedContainer: {
+    width: 106,
+    height: 18,
+    marginTop: 5,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#92EE9D',
+    color: '#CDF9D2',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
 });
