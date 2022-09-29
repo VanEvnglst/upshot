@@ -8,14 +8,14 @@ import api from 'app/services/apiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as NavigationService from 'app/services/NavigationService';
 
-const RESULT_SUCCESS = 'success';
+const RESULT_OK = 'ok';
 const RESULT_ERROR = 'error';
 
 export function* signInUser({ data }) {
   const auth = { 
     email: data.email,
     password: data.password,
-    // reg_token: data.token,
+    fbase_token: data.token,
   }
   const connected = yield checkInternetConnection();
   if (!connected) {
@@ -23,11 +23,11 @@ export function* signInUser({ data }) {
    // return;
   }
   const authResponse = yield call(api.signIn, auth);
-  debugger;
   if (authResponse.ok) {
-    if (authResponse.data.status === 'ok') {
+    if (authResponse.data.status === RESULT_OK) {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
-      // yield put(UserActions.setUser(authResponse.data.user));
+      yield put(UserActions.setUserName(authResponse.data.name));
+      yield put(UserActions.setUserRole(authResponse.data.role_id))
       yield put(AuthenticationActions.signInUserSuccess());
     } else {
       yield put(
@@ -71,6 +71,7 @@ export function* signUpUser({ data }) {
     name: data.name,
     email: data.email,
     password: data.password,
+    fbase_token: data.token,
   }
   
   const connected = yield checkInternetConnection();
@@ -80,9 +81,9 @@ export function* signUpUser({ data }) {
   }
   const authResponse = yield call(api.signUp, auth);
   if (authResponse.ok) {
-    if (authResponse.data.status === 'ok') {
+    if (authResponse.data.status === RESULT_OK) {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
-      yield put(UserActions.setUser(auth.name));
+      yield put(UserActions.setUserName(auth.name));
       yield put(AuthenticationActions.signUpUserSuccess());
     } else {
       yield put(
