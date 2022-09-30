@@ -12,17 +12,10 @@ export default function MainNavigator() {
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      {userRole === 1 ? (
-        <MainStack.Screen
-          name={'Messages'}
-          component={MessagesNavigator}
-        />
-      ) : (
         <MainStack.Screen
           name={'Home'}
           component={HomeNavigator}
         />
-      )}
     </MainStack.Navigator>
   );
 }

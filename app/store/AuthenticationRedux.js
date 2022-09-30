@@ -46,7 +46,13 @@ const signInUserFailure = (state, { error }) =>
     fetching: false,
     error,
   });
-const signOutUser = state => state.merge({ ...INITIAL_STATE });
+
+const signOutUser = state => state.merge({ 
+    ...state.get('INTIAL_STATE'),
+    fetching: false,
+    newSignUp: false,
+    isSignedIn: false,
+  });
 
 const setUserSignedIn = state =>
   state.merge({

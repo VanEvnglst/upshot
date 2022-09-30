@@ -33,7 +33,7 @@ const LeadershipOverviewResults = props => {
   const skillList = useSelector(state =>
     state.leadershipSkillArea.get('overviewTestResults'),
   );
-  const user = useSelector(state => state.user.userName);
+  const user = useSelector(state => state.user.get('userName'));
   const [sheetType, setSheetType] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [skills, setSkills] = useState([]);
@@ -292,15 +292,14 @@ const LeadershipOverviewResults = props => {
           <Text style={ styles.descriptionText}>Skip</Text>
         </TouchableOpacity>
         <View style={styles.spacer} />
-        
       </ScrollView>
-      {/* <BottomSheet
+      <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         enablePanDownToClose>
         <View style={{ flex: 1}}>{handleSheetContent()}</View>
-      </BottomSheet> */}
+      </BottomSheet>
     </View>
   );
 };
