@@ -262,6 +262,8 @@ export function* postExtendedTest({ data }) {
   const connected = yield checkInternetConnection();
   const testCount = state => state.leadershipSkillArea.get('testFinishedCount');
   const completeTest = yield select(testCount);
+  const checkCategoryStatus = state => state.leadershipSkillArea.get('skillAreaTestSteps');
+  const chkCatStatus = yield select(checkCategoryStatus);
 
   const dataValues = Object.values(data);
   let dataArr = [];
@@ -276,6 +278,7 @@ export function* postExtendedTest({ data }) {
   const extendedData = {
     answers: dataArr,
   };
+  const category = dataValues[1]['data'].category;
 
   const response = yield call(api.postLSAExtendedAnswers, extendedData);
   if (response.ok) {
@@ -288,6 +291,19 @@ export function* postExtendedTest({ data }) {
         completeTest + 1,
       ),
     );
+    yield put(
+      LeadershipSkillAreaActions.setCategoryStatus(
+        category,
+        'completed',
+      ),
+    );
+    yield put(
+      LeadershipSkillAreaActions.resetStep(
+        'extendedData',
+        null,
+      ),
+    );
+    debugger;
     yield put(
       LeadershipSkillAreaActions.setAssessmentStatus('extendedData', null),
     );

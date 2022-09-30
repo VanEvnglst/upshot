@@ -118,7 +118,7 @@ const ExtendedAssessmentConfirmation = props => {
           onPress={() => handleNavigation()}
           style={styles.button}>
           <Text style={styles.buttonText}>
-            {content.id === 5 ? 'Calculate my score' : 'Continue'}
+            {content.id === 5 ? 'Recalculate Indicator Levels' : 'Continue'}
           </Text>
         </Button>
         <Button mode="text" onPress={() => {}} style={{ marginTop: 24 }}>

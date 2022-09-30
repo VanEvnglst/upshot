@@ -4,16 +4,23 @@ import PushNotification from 'react-native-push-notification';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Wrapper, InputField } from 'app/components';
-import { BaselineScore, ExtendedLeadershipAssessment } from 'app/screens';
+import { BaselineScore, ExtendedLeadershipAssessment, AssessmentBreakDown } from 'app/screens';
 import { SampleLocalNotif } from 'app/services/notification-service';
+import AuthenticationActions from 'app/store/AuthenticationRedux';
+import { useDispatch } from 'react-redux';
 
 const Profile = props => {
   const { navigation } = props;
+  const dispatch = useDispatch();
   const [value, setValue] = useState('');
 
   const handleButtonPress = () => {
     SampleLocalNotif();
   };
+
+  const signOut = () => {
+    dispatch(AuthenticationActions.signOutUser());
+  }
 
   const handleNavigation = () => {
     navigation.navigate("Assessment", { screen: 'Leadership Assessment Extended'});
@@ -24,13 +31,14 @@ const Profile = props => {
     <View
       style={{ flex: 1 }}
     >
-
-    <View style={{ flex: 1}}>
-    <BaselineScore {...props}/>
+      <AssessmentBreakDown {...props} />
+    {/* <BaselineScore {...props}/> */}
+    <Button
+      mode='contained'
+      style={{ marginVertical: 30, marginHorizontal: 16 }}
+      onPress={() => signOut()}
+    >Sign out</Button>   
     </View>
-    
-           
-            </View>
   );
 };
 

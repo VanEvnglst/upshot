@@ -14,11 +14,6 @@ export default function Routes() {
   const isSignedIn = useSelector(getSignInState);
   const newSignUp = useSelector(getSignUpState);
 
-  // useEffect(() => {
-  //   console.log('call routes');
-  //   // initPushNotif();
-  // }, []);
-
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

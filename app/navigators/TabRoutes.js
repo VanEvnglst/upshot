@@ -10,6 +10,7 @@ import MessagesNavigator from './MessagesStack';
 import AssessmentNavigator from './AssessmentStack';
 import FrontlinerNavigator from './FrontlinerStack';
 import { getSignUpState, getSignInState } from 'app/store/selectors';
+import AuthNavigator from './AuthStack';
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();

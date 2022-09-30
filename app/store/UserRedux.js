@@ -3,32 +3,34 @@ import { Map } from 'immutable';
 
 export const INITIAL_STATE = Map({
   userName: '',
-  // firstName: '',
-  // lastName: '',
   role: 0,
 });
 
 const { Types, Creators } = createActions({
-  setUser: ['user'],
+  setUserName: ['user'],
+  setUserRole: ['role'],
   setPassword: [''],
 });
 
 export const UserTypes = Types;
 export default Creators;
 
-const setUser = (state, { user }) => {
+const setUserName = (state, { user }) => {
   return state.merge({
     userName: user,
-    // lastName: user.last_name,
-    // role: user.role_id,
   });
 };
+
+const setUserRole = (state, { role }) => {
+  return state.merge({
+    role: role
+  })
+}
 const setPassword = state => state.merge({});
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_PASSWORD]: setPassword,
-  [Types.SET_USER]: setUser,
+  [Types.SET_USER_NAME]: setUserName,
+  [Types.SET_USER_ROLE]: setUserRole,
 });
 
-/* ------------- Selectors ------------- */
-// export const getUser = state => state.user;

@@ -17,6 +17,7 @@ import { getSignInError } from 'app/store/selectors';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import { TextInput } from 'app/components';
 import labels from 'app/locales/en';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUp = props => {
   const { navigation } = props;
@@ -24,6 +25,20 @@ const SignUp = props => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    retrieveToken();
+  }, []);
+
+  const retrieveToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('fcmToken');
+      setToken(value);
+    } catch (e) {
+      console.log('retrieve error');
+    }
+  }
 
   const validate = () => {
     const errors = {};
@@ -46,12 +61,12 @@ const SignUp = props => {
   };
 
   const signUpUser = () => {
-    console.warn('here');
     dispatch(AuthenticationActions.fetchServer({
       name,
-     email,
-     password,
-    type: 'sign up'
+      email,
+      password,
+      token,
+      type: 'sign up'
     }),);
   };
 
