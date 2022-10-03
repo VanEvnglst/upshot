@@ -197,6 +197,8 @@ const HomeScreen = props => {
               paddingHorizontal: 16,
               paddingBottom: 16,
             }}>
+            {/*
+            TODO: Re-evaluate if still needed
             <View
               style={{
                 alignItems: 'center',
@@ -219,8 +221,8 @@ const HomeScreen = props => {
                 }}>
                 190 / 500 pts.
               </Text>
-            </View>
-            <View
+            </View> */}
+            {/* <View
               style={{
                 marginTop: 5,
                 alignItems: 'center',
@@ -236,7 +238,7 @@ const HomeScreen = props => {
                 color={'#F99D46'}
                 style={styles.progressBar}
               />
-            </View>
+            </View> */}
           </View>
         </SafeAreaView>
         <View>
@@ -255,91 +257,6 @@ const HomeScreen = props => {
       />
     </View>
   );
-
-  //   return (
-  //     <Wrapper>
-  //       <ScrollView
-  //         bounces={false}
-  //         showsVerticalScrollIndicator={false}
-  //         contentContainerStyle={styles.container}>
-  //         {/* <View style={{ width: '95%', marginBottom: 20 }}>
-  //           <Text style={{ paddingLeft: 25, marginBottom: 10 }}>Alerts</Text>
-  //           {/* map data for alerts */}
-  //         {/*  <AlertCard />
-  //           <AlertCard />
-  //         </View> */}
-  //         <View>
-  //           <Text
-  //             type="overline"
-  //             style={styles.overlineText}
-  //             testID={'txt-home-journey'}>
-  //             {homeScreen.guidedJourney}
-  //           </Text>
-  //           <LearningCard
-  //             onPress={() => handleNavigation()}
-  //             image={Images.feedbackCoaching}
-  //             headline={'Feedback Coaching'}
-  //             subtitle={
-  //               activeJourneyLength.length > 0
-  //                 ? activeJourneyLength.length > 1
-  //                   ? `${activeJourneyLength.length} feedback journeys in progress`
-  //                   : `${activeJourneyLength.length} feedback journey in progress`
-  //                 : labels.homeScreen.feedbackDesc
-  //             }
-  //             hasInProgress={activeJourneyLength.length > 0}
-  //             mainCard
-  //             testID={'card-home-feedback'}
-  //           />
-  //           {show && (
-  //             <DateTimePicker
-  //               testID="dateTimePicker"
-  //               value={date}
-  //               mode={mode}
-  //               is24Hour={true}
-  //               display="default"
-  //               onChange={onChange}
-  //             />
-  //           )}
-  //           {/* <LearningCard
-  //             onPress={() => console.log('Next time')}
-  //             image={Images.feedbackCoaching}
-  //             headline={'Employee Engagement'}
-  //             subtitle={labels.homeScreen.feedbackDesc}
-  //             mainCard
-  //             style={{ marginTop: 15 }}
-  //           /> */}
-  //         </View>
-  //         <View style={styles.horizontalCardContainer}>
-  //           <Text
-  //             type="overline"
-  //             style={styles.overlineText}
-  //             testID={'txt-home-comingSoon'}>
-  //             {homeScreen.comingSoon}
-  //           </Text>
-  //           <ScrollView
-  //             showsHorizontalScrollIndicator={false}
-  //             horizontal
-  //           >
-  //             <LearningCard
-  //               onPress={() => navigation.navigate('Feedback')}
-  //               image={Images.feedbackCoaching}
-  //               headline={'Prioritizing and Delegating'}
-  //               smallCard
-  //               disabled
-  //               testID={'card-home-comingSoon'}
-  //             />
-  //             <LearningCard
-  //               onPress={() => navigation.navigate('Feedback')}
-  //               image={Images.feedbackCoaching}
-  //               headline={'Coaching Frontline Managers'}
-  //               smallCard
-  //               disabled
-  //             />
-  //           </ScrollView>
-  //         </View>
-  //       </ScrollView>
-  //     </Wrapper>
-  //   );
 };
 
 export default HomeScreen;
