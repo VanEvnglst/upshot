@@ -15,6 +15,7 @@ import { reducer as survey } from './frontliner/SurveyRedux';
 import { reducer as leadershipSkillArea } from './LSARedux';
 import { reducer as captureMoment } from './CaptureFeedbackMomentRedux';
 import { reducer as frontlinerResponse } from './frontliner/ResponseRedux';
+import { reducer as frontlinerFeedback } from './frontliner/FLFeedbackRedux';
 import rootSaga from '../sagas'; 
 
 import configureStore from './createStore';
@@ -35,12 +36,13 @@ export const mainReducer = combineReducers({
   survey,
   leadershipSkillArea,
   captureMoment,
-  frontlinerResponse
+  frontlinerResponse,
+  frontlinerFeedback,
 });
 
 export default () => {
   const retainKeys = ['network'];
-  const LOGOUT_USER = 'LOGOUT_USER';
+  const LOGOUT_USER = 'SIGN_OUT_USER';
   const rootReducer = (state, action) => {
     if (action.type === LOGOUT_USER) {
       const newState = Object.assign({}, state);
