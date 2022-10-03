@@ -168,9 +168,13 @@ const LeadershipOverviewResults = props => {
   }
 
   const handleNavigation = () => {
-    // dispatch(AuthenticationActions.signInUserSuccess());
     navigation.navigate('Assessment break down');
   };
+
+  const handleSkip = () => {
+    dispatch(LeadershipSkillAreaActions.resetOverviewData());
+    navigation.navigate('Assessment Wrap Up');
+  }
 
   const SkillAreaCard = ({ item }) => {
     console.warn('sk', item.skillPoint)
@@ -288,7 +292,7 @@ const LeadershipOverviewResults = props => {
         </View>
         <TouchableOpacity
           style={{ alignItems: 'center', margin: 10 }}
-          onPress={() => navigation.navigate('Assessment Wrap Up') }>
+          onPress={() => handleSkip()}>
           <Text style={ styles.descriptionText}>Skip</Text>
         </TouchableOpacity>
         <View style={styles.spacer} />

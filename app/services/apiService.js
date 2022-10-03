@@ -469,4 +469,19 @@ export default {
     return upshotAPI.post(`/${uniqueId}/get_lsa_scores`, payload);
   },
 
+  getFrontlinerFeedbackList: async () => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/fl_get_all_feedback`);
+  },
+
+  getFrontlinerFeedback: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/fl_get_feedback`, payload);
+  }
 };

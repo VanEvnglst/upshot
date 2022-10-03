@@ -80,7 +80,10 @@ const ExploreScreen = props => {
               size={22}
             />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => navigation.navigate('Frontliner')}
+            >
             <Icon
               name={'notifications-outline'}
               color={'#667080'}

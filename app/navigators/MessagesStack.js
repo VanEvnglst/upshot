@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Messages, MessageThreadScreen, SurveyDiscussion, SurveyGuide, FrontlinerSurvey, SurveyConfirmation } from '../screens';
+import { Messages, SurveyDiscussion, SurveyGuide, FrontlinerSurvey, SurveyConfirmation } from '../screens';
 
 const MessagesStack = createStackNavigator();
 
@@ -26,10 +26,6 @@ export default function MessagesNavigator() {
       <MessagesStack.Screen
         name={'SurveyDiscussion'}
         component={SurveyDiscussion}
-      />
-      <MessagesStack.Screen
-        name={'MessageThreadScreen'}
-        component={MessageThreadScreen}
       />
       <MessagesStack.Screen
         name={'SurveyConfirmation'}

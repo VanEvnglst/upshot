@@ -79,4 +79,5 @@ export default {
   clockEmoji: require('./images/clock.png'),
   managingConflict: require('./images/managing-conflict.png'),
   buildingResilience: require('./images/building-resilience.png'),
+  quotationEmoji: require('./images/quotation.png'),
 };

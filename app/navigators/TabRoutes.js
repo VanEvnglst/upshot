@@ -4,10 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HomeScreen, Messages, Activity, Reminders, ExploreScreen, Profile, InsightsPanel, BaselineScore, ExtendedLeadershipAssessment } from '../screens';
+import { HomeScreen, Messages, Activity, Reminders, ExploreScreen, Profile, InsightsPanel, BaselineScore, FeedbackResponse, ExtendedLeadershipAssessment } from '../screens';
 import FeedbackNavigator from './FeedbackStack';
 import MessagesNavigator from './MessagesStack';
 import AssessmentNavigator from './AssessmentStack';
+import FrontlinerNavigator from './FrontlinerStack';
 import { getSignUpState, getSignInState } from 'app/store/selectors';
 import AuthNavigator from './AuthStack';
 
@@ -29,8 +30,8 @@ const HomeNavigator = () => {
             component={AssessmentNavigator}
           />
       <HomeStack.Screen
-        name={'Auth'}
-        component={AuthNavigator}
+        name={'Frontliner'}
+        component={FrontlinerNavigator}
       />
     </HomeStack.Navigator>
   );
@@ -90,9 +91,9 @@ function TabRoutes() {
           },
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name={'Activity'}
-        component={InsightsPanel}
+        component={FeedbackResponse}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -111,7 +112,7 @@ function TabRoutes() {
             );
           },
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name={'Profile'}
         component={Profile}
