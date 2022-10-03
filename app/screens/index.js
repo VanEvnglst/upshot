@@ -50,21 +50,7 @@ export { default as FeedbackPreparing } from './feedback/preparing';
 export { default as PreparingSchedule } from './feedback/preparing/scheduling';
 export { default as PreparingReview } from './feedback/preparing/preparing-review';
 
-/* ------------- Feedback Discussing ------------- */
-export { default as DiscussingGuide } from './feedback/discussing/guide';
-export { default as DiscussingMeeting } from './feedback/discussing/meeting';
-export { default as FeedbackDiscussing } from './feedback/discussing';
-export { default as ActionPlanScreen } from './feedback/discussing/action-plan';
-export { default as DiscussingReview } from './feedback/discussing/discussing-review';
 
-/* ------------- Feedback Reflecting ------------- */
-export { default as ReflectingGuide } from './feedback/reflecting/guide';
-export { default as FeedbackReflecting } from './feedback/reflecting';
-
-/* ------------- Feedback Sharing ------------- */
-export { default as SharingGuide } from './feedback/sharing/guide';
-export { default as FeedbackSharing } from './feedback/sharing';
-export { default as SharingReview } from './feedback/sharing/sharing-review';
 
 /* ------------- Frontliner Stack ------------- */
 export { default as SurveyDiscussion } from './frontliner/survey/discussion';
@@ -72,6 +58,7 @@ export { default as SurveyGuide } from './frontliner/survey/guide';
 export { default as FrontlinerSurvey } from './frontliner/survey';
 export { default as SurveyConfirmation } from './frontliner/survey/confirmation';
 export { default as FeedbackResponse } from './frontliner/feedback-response';
-export { default as ImpactResponse } from './frontliner/feedback-response/impact-response';
+// export { default as FrontlinerFeedbackList } from './frontliner/feedback-list';
+
 /* ------------- Insights Panel Stack ------------- */
 export { default as InsightsPanel } from './insights';

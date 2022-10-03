@@ -2,28 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
-  FeedbackFlow,
-  FeedbackGuide,
-  FeedbackType,
-  FeedbackDocumenting,
-  DocumentingReview,
-  ActiveFeedbackJourney,
-  FeedbackJourneyList,
-  PreparingGuide,
-  FeedbackPreparing,
-  FeedbackConfirmation,
-  PreparingSchedule,
-  PreparingReview,
-  DiscussingGuide,
-  DiscussingMeeting,
-  ActionPlanScreen,
-  DiscussingReview,
-  FeedbackDiscussing,
-  FeedbackReflecting,
-  ReflectingGuide,
-  SharingGuide,
-  FeedbackSharing,
-  SharingReview,
   CaptureFeedbackMoment,
   RecordFeedbackEntry,
   EntryConfirmation,
@@ -112,40 +90,7 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'DiscussingGuide'}
           component={DiscussingGuide}
-        />
-        <FeedbackStack.Screen
-          name={'DiscussingMeeting'}
-          component={DiscussingMeeting}
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackDiscussing'}
-          component={FeedbackDiscussing}
-        />
-        <FeedbackStack.Screen
-          name={'ActionPlanScreen'}
-          component={ActionPlanScreen}
-        />
-        <FeedbackStack.Screen
-          name={'DiscussingReview'}
-          component={DiscussingReview}
-        />
-        <FeedbackStack.Screen
-          name={'ReflectingGuide'}
-          component={ReflectingGuide}
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackReflecting'}
-          component={FeedbackReflecting}
-        />
-        <FeedbackStack.Screen name={'SharingGuide'} component={SharingGuide} />
-        <FeedbackStack.Screen
-          name={'FeedbackSharing'}
-          component={FeedbackSharing}
-        />
-        <FeedbackStack.Screen
-          name={'SharingReview'}
-          component={SharingReview}
-        /> */}
+        />*/}
       </FeedbackStack.Navigator>
     </>
   );
