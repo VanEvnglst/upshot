@@ -22,6 +22,7 @@ export { default as OverviewWrapUp } from './leadership-assessment/overview/over
 /* ------------- Feedback Stack ------------- */
 export { default as CaptureFeedbackMoment } from './feedback/capture-moment';
 export { default as RecordFeedbackEntry } from './feedback/record-entry';
+export { default as ScheduleDiscussion } from './feedback/schedule';
 export { default as ReviewFeedbackEntry } from './feedback/record-entry/review-entry';
 export { default as EntryConfirmation } from './feedback/record-entry/entry-confirmation';
 
