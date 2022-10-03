@@ -61,7 +61,8 @@ const { Types, Creators } = createActions({
   postExtendedTest: ['data'],
   postExtendedTestSuccess: ['data'],
   postExtendedTestFailure: ['error'],
-  
+  resetOverviewData: [''],
+
 });
 
 
@@ -210,6 +211,12 @@ const postOverviewTestFailure = (state, { error }) =>
     error
   })
 
+const resetOverviewData = state =>
+state.merge({
+  ...state.get('INITIAL_STATE'),
+  overviewActiveStep: 1,
+  overviewData: null,
+});
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -234,5 +241,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 [Types.POST_OVERVIEW_TEST_SUCCESS]: postOverviewTestSuccess,
 [Types.POST_OVERVIEW_TEST_FAILURE]: postOverviewTestFailure,
 [Types.SET_ASSESSMENT_STATUS]: setAssessmentStatus,
-[Types.SET_CATEGORY_STATUS]: setCategoryStatus
+[Types.SET_CATEGORY_STATUS]: setCategoryStatus,
+[Types.RESET_OVERVIEW_DATA]: resetOverviewData,
 });
