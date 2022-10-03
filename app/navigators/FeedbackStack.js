@@ -28,6 +28,7 @@ import {
   RecordFeedbackEntry,
   EntryConfirmation,
   ReviewFeedbackEntry,
+  ScheduleDiscussion,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -54,7 +55,10 @@ export default function FeedbackNavigator() {
           name={'Record Feedback Entry'}
           component={RecordFeedbackEntry}
         />
-
+        <FeedbackStack.Screen
+          name={'Schedule Discussion'}
+          component={ScheduleDiscussion}
+        />
         <FeedbackStack.Screen
           name={'Feedback Entry Confirmation'}
           component={EntryConfirmation}
