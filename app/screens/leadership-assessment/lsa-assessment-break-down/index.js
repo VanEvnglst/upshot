@@ -144,7 +144,8 @@ return (
     })}
         {completedCnt === 5 ?
           <TouchableOpacity
-          style={{ marginTop: 36, backgroundColor: '#667080', height: 48, justifyContent: 'center', alignItems: 'center', width: '100%', borderRadius: 6 }}>
+            style={{ marginTop: 36, backgroundColor: '#667080', height: 48, justifyContent: 'center', alignItems: 'center', width: '100%', borderRadius: 6 }}
+            onPress={() => navigation.navigate('Assessment', { screen: 'Calculate Assessment Score'})}>
            <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#FFFFFF' }}>Recalculate Indicator Levels</Text>
           </TouchableOpacity>
           :
