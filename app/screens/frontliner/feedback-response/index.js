@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Animated, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Animated, Image, BackHandler } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import { GradientBackground, StoryProgress } from 'app/components';
@@ -24,12 +24,27 @@ const FeedbackResponse = props => {
   const [eventClarification, setEventClarification] = useState('');
 
   useEffect(() => {
-    Animated.timing(translation, {
-      toValue: showAnswerContainer ? -650 : 0,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
-  }, [showAnswerContainer]);
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      // if (activeStep === 1) 
+      //   dispatch(ResponseActions.setResponseActiveStep(activeStep - 1));
+      // else
+      //   navigation.goBack();
+      return true;
+    });
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        return true;
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   Animated.timing(translation, {
+  //     toValue: showAnswerContainer ? -650 : 0,
+  //     duration: 250,
+  //     useNativeDriver: true,
+  //   }).start();
+  // }, [showAnswerContainer]);
 
   const handleTextChange = () => {
 
@@ -38,19 +53,19 @@ const FeedbackResponse = props => {
   const handleStepContent = () => {
     switch(activeStep) {
       case 1:
-        return <EventObservationResponse/>;
+        return <EventObservationResponse {...props} />;
       case 2:
-        return <ImpactResponse/>;
+        return <ImpactResponse {...props}/>;
       case 3:
-        return <ContinueResponse />;
+        return <ContinueResponse {...props}/>;
       case 4:
-        return <DoLessResponse />;
+        return <DoLessResponse {...props}/>;
       case 5:
-        return <StopDoingResponse />;
+        return <StopDoingResponse {...props}/>;
       case 6: 
-        return <AdditionalResponse />;
+        return <AdditionalResponse {...props}/>;
       case 7:
-        return <FrontlinerResponseReview />;
+        return <FrontlinerResponseReview {...props}/>;
     }
   }
 
