@@ -23,13 +23,13 @@ const BaselineScore = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   
-  useEffect(() => {
-    dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
+  // }, []);
 
   const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
   const user = useSelector(state => state.user.userName);
-  debugger;
+  
   const retrieveDataExtended = async () => {
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
       debugger;
@@ -41,36 +41,46 @@ const BaselineScore = props => {
   const skillList = [
     {
       id: 4,
-      title: 'Achievement-Orientation 🏅',
-      score: scores && scores.achievement,
+      title: 'Achievement-Orientation',
+      icon: '🏅',
+      score: scores && scores[3].ave,
+      scoreLevel: scores && scores[3].area,
        barColor: '#EDA875',
       borderColor: '#EDA875'
     },
     {
       id: 2,
-      title: 'Openness to Learn 🧠',
-      score: scores && scores.openness_to_learn,
+      title: 'Openness to Learn',
+      icon: '🧠',
+      score: scores && scores[4].ave,
+      scoreLevel: scores && scores[4].area,
        barColor: '#D394EA',
       borderColor: '#D394EA'
     },
     {
       id: 5,
-      title: 'Trust Building 🤝 ',
-      score: scores && scores.trust_building,
+      title: 'Trust Building',
+      icon: '🤝',
+      score: scores && scores[1].ave,
+      scoreLevel: scores && scores[1].area,
        barColor: '#8089DB',
       borderColor: '#8089DB'
     },
     {
       id: 1,
-      title: 'Empathy 💓',
-      score: scores && scores.empathy,
+      title: 'Empathy',
+      icon: '💓',
+      score: scores && scores[0].ave,
+      scoreLevel: scores && scores[0].area,
       barColor: '#F690A9',
       borderColor: '#F690A9'
     },
     {
       id: 3,
-      title: 'Authenticity 👐',
-      score: scores && scores.authenticity,
+      title: 'Authenticity',
+      icon: '👐',
+      score: scores && scores[2].ave,
+      scoreLevel: scores && scores[2].area,
        barColor: '#80DBAA',
       borderColor: '#80DBAA'
     },
@@ -115,7 +125,65 @@ const BaselineScore = props => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
          {/* <View style={{backgroundColor: 'red'}}> */}
         <View style={styles.radarContainer}>
-          <RadarChart style={styles.chart}
+          { scores && scores[0].ave ?
+                <RadarChart style={styles.chart}
+                  //xAxis={valueFormatterPattern ["PRV", "HR", "RR", "O2", "E.A.", "ASI", "PAI"] }
+                  //chartDescription={{ text: "Sample Chart" }}
+                  marker={{ enabled: false, digits: 2, markerColor: processColor('#F0C0FF8C'), textColor: processColor('red'), textSize: 12, textAlign: 'center' }}
+                  legend={{ enabled: false }}
+                  drawWeb={false}
+                  webLineWidth={1}
+                  webLineWidthInner={2}
+                  webAlpha={255}
+                  webColor={processColor("white")}
+                  webColorInner={processColor("white")}
+                  skipWebLineCount={5}
+              
+                  //onChange={event => console.log(event.nativeEvent)}
+                  rotationAngle={-180}
+            
+                  data={
+                    $set = {
+                      dataSets: [
+                        {
+                
+                          values: [
+                            { value: scores[3].ave, marker: '🏅'},
+                            { value: scores[4].ave, marker: '🧠'},
+                            { value: scores[1].ave, marker: '🤝' },
+                            { value: scores[0].ave, marker: '💓' },
+                            { value: scores[2].ave, marker: '👐' }
+                  
+                          ],
+                
+                          config: {
+                            color: processColor("#667080"),
+                            drawFilled: true,
+                            fillColor: processColor("#D9C5C5"),
+                            fillAlpha: 100,
+                            lineWidth: 2,
+                            drawValues: false
+                          }
+                        },
+                      ]
+                    }
+                  }
+                  xAxis={
+                    $set = {
+                      valueFormatter: [skillList[0]?.icon, skillList[1]?.icon, skillList[2]?.icon, skillList[3]?.icon, skillList[4]?.icon],
+                    }
+                  }
+                  yAxis={
+                    $set = {
+                      axisMinimum: 0,
+                      axisMaximum: 5,
+                      centerAxisLabels: true,
+                      enabled: false,
+                    }
+                  }
+                />
+                :
+                <RadarChart style={styles.chart}
             //xAxis={valueFormatterPattern ["PRV", "HR", "RR", "O2", "E.A.", "ASI", "PAI"] }
             //chartDescription={{ text: "Sample Chart" }}
               marker={{ enabled: true, digits: 2 , markerColor: processColor('#F0C0FF8C'), textColor: processColor('red'),textSize: 12, textAlign: 'center'}}
@@ -135,12 +203,14 @@ const BaselineScore = props => {
           $set={
             dataSets: [
               {
-                values: [
-                  { value: .50 , marker: 50},
-                  { value: .50 , marker: 50},
-                  { value: .40 , marker: 40},
-                  { value: .20 , marker: 20},
-                  { value: .30 , marker: 30},
+                
+                values: 
+                  [                          
+                  { value: .50 },
+                  { value: .50 },
+                  { value: .40 },
+                  { value: .20 },
+                  { value: .20}
                   
                 ],
                 
@@ -153,9 +223,6 @@ const BaselineScore = props => {
                   drawValues: false
                 }
               },
-              
-
-              
             ]
           }
         }
@@ -171,18 +238,16 @@ const BaselineScore = props => {
             centerAxisLabels: true,
             enabled: false,
           }
-        }
-      
-        
-
-            
+        }            
               />
+              }
               </View>
 
         </View>
 
-        <View style={{ flex: 1,  alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{fontWeight: '700', fontSize: 16, lineHeight: 30, color: "#667080", marginVertical: 12}}>Points Breakdown</Text>
+        <View style={{ flex: 1}}>
+            <Text style={{ fontWeight: '600', fontSize: 10, lineHeight: 10, color: "#B1B5C3", marginTop: 15, textTransform: 'uppercase', paddingHorizontal: 16 }}>leadership skill areas</Text>
+            <Text style={{fontWeight: '600', fontSize: 24, lineHeight: 30, color: "#667080", marginTop: 4, marginBottom: 24, textTransform: 'uppercase', paddingHorizontal: 16}}>Indicator Levels</Text>
         </View>
           <View style={{ flex: 1, paddingHorizontal: 16, }}>
             {skillList.map((item, i) => (
@@ -190,25 +255,38 @@ const BaselineScore = props => {
                 accessibilityRole='button'
                 onPress={() => handleSkillSelection(item)}
                 style={{
-                  borderWidth: selectedSkill.id === item.id ? 1 : 0.3,
+                  borderWidth: 2 ,
                   padding: 12,
                   minHeight: 56,
                   marginBottom: 12,
                   borderRadius: 12,
-                  borderColor: selectedSkill.id === item.id ? item.borderColor : '#667080',
+                  borderColor: '#B1B5C370',
+                  color: '#FFFFFF'
                 }}
                 key={item.id}
               >
                 <View>
-                  <View style={{ marginBottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text>{item.title}</Text>
-                    <Text>{`${item.score} / 100`}</Text>
+                  <View style={{ marginBottom: 6}}>
+                    <Text>{item.title} {item.icon}</Text>
+                    {/* <Text>{`${item.score} / 100`}</Text> */}
                   </View>
-                  <ProgressBar
-                    progress= {(item.score/100)}
-                    color={item.barColor}
-                    style={{ height: 6, borderRadius: 6 }}
-                  />
+                  { item.scoreLevel === 'Promising Area' ?
+                  <View style={{color: '#D7FFDC', borderColor: '#9EFCAA', borderWidth: 1, height: 20, borderRadius: 4, maxWidth: 120}}>
+                      <Text style={{ textTransform: 'uppercase', color: '#3AB549', fontSize: 11, fontWeight: '600', lineHeight: 10, margin: 4, letterSpacing: 0.05, textAlign: 'center', textAlignVertical: 'center'}}>Promising Area</Text>
+                  </View>
+                    : 
+                    item.scoreLevel === 'Area of Concern' ?
+                  <View style={{color: '#FFE4EA', borderColor: '#FF9C9C', borderWidth: 1, height: 20, borderRadius: 4, maxWidth: 132, }}>
+                    <Text style={{textTransform: 'uppercase', color: '#FF5656', fontSize: 11, fontWeight: '600', lineHeight: 10, margin: 4, letterSpacing: 0.05, textAlign: 'center', textAlignVertical: 'center'}}>Area of concern</Text>
+                  </View>
+                      :
+                      item.scoreLevel === 'Area of Continued Development' ?
+                  <View style={{color: '#FFF0E1', borderColor: '#FFB26A', borderWidth: 1, height: 20, borderRadius: 4, maxWidth: 220}}>
+                    <Text style={{textTransform: 'uppercase', color: '#FF8C21', fontSize: 11, fontWeight: '600', lineHeight: 10, margin: 4, letterSpacing: 0.05, textAlign: 'center', textAlignVertical: 'center'}}>area of continued development</Text>
+                        </View>
+                        :
+                        <></>
+                  }
                 </View>
                 {selectedSkill.id === item.id &&
                   <View style={{ marginTop: 24 }}>
