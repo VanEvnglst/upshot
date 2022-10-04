@@ -3,17 +3,17 @@ import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ResponseActions from 'app/store/frontliner/ResponseRedux';
+import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
 import styles from './styles';
 
 const FrontlinerResponseReview = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const maxStep = useSelector(state => state.frontlinerResponse.get('maxStep'));
-  const activeStep = useSelector(state => state.frontlinerResponse.get('activeStep'));
+  const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
+  const activeStep = useSelector(state => state.frontlinerFeedback.get('activeStep'));
 
   const handleGoBack = () => {
-    dispatch(ResponseActions.setResponseActiveStep(activeStep - 1));
+    dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep - 1));
   }
 
   return (

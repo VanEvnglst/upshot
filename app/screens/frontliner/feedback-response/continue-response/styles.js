@@ -48,6 +48,8 @@ export default StyleSheet.create({
     maxWidth: 300,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
   image: {
     width: 60, 

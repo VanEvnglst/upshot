@@ -17,18 +17,22 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 import { GradientBackground, StoryProgress } from 'app/components';
 import { DeviceUtil } from 'app/utils';
-import ResponseActions from 'app/store/frontliner/ResponseRedux';
+import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
+import { getFLFeedbackData } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from './styles';
 
 const ImpactResponse = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const maxStep = useSelector(state => state.frontlinerResponse.get('maxStep'));
+  const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
   const activeStep = useSelector(state =>
-    state.frontlinerResponse.get('activeStep'),
+    state.frontlinerFeedback.get('activeStep'),
   );
   const user = useSelector(state => state.user.get('userName'));
+  const frontlinerFeedback = useSelector(getFLFeedbackData);
+  const managerName = frontlinerFeedback.em_name.split(" ");
+  const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
   const [showAnswerContainer, setShowAnswerContainer] = useState(false);
   const [storedText, setStoredText] = useState('');
@@ -69,11 +73,12 @@ const ImpactResponse = props => {
   };
 
   const handleGoBack = () => {
-    dispatch(ResponseActions.setResponseActiveStep(activeStep - 1));
+    dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    dispatch(ResponseActions.setResponseActiveStep(activeStep + 1));
+    dispatch(FrontlinerFeedbackActions.setResponseData('impact', impactClarification))
+    dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1));
   };
 
   return (
@@ -99,7 +104,7 @@ const ImpactResponse = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Corrective Feedback</Text>
+                  <Text style={styles.titleText}>{frontlinerFeedback.cor_or_pos} Feedback</Text>
                   <Text style={styles.subtitleText}>Date logged</Text>
                 </View>
                 <View>
@@ -120,16 +125,14 @@ const ImpactResponse = props => {
                     the team...
                   </Text>
                 </View>
-                <View style={{ marginTop: 30 }}>
+                <View style={{ marginTop: 30, minHeight: 300 }}>
                   <Image
                     source={Images.quotationEmoji}
                     resizeMode="contain"
                     style={styles.image}
                   />
                   <Text style={styles.entryText}>
-                    Is everything alright? I noticed that you lacked enthusiasm
-                    when you greeted the customers this morning and don't seem
-                    like your usual self today."
+                  {frontlinerFeedback.employee_impact === '' ? "None provided." : frontlinerFeedback.employee_impact}
                   </Text>
                 </View>
                 <View style={styles.nameContainer}>
@@ -139,12 +142,12 @@ const ImpactResponse = props => {
                       colors={['#C883FF', '#6587FF']}
                       start={{ x: 0.2, y: 0 }}
                       end={{ x: 0.7, y: 1 }}>
-                      <Text style={styles.avatarText}>MN</Text>
+                      <Text style={styles.avatarText}>{managerInitials}</Text>
                     </LinearGradient>
                   </View>
                   <View>
-                    <Text style={styles.managerNameText}>Manager name</Text>
-                    <Text style={styles.descriptionText}>Shift Manager</Text>
+                    <Text style={styles.managerNameText}>{frontlinerFeedback.em_name}</Text>
+                    <Text style={styles.descriptionText}>Manager</Text>
                   </View>
                 </View>
               </View>
