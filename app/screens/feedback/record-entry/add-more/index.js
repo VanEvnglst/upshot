@@ -19,12 +19,13 @@ import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import Images from 'app/assets/images';
 import styles from '../styles';
 
-
-const AddMoreEntry = () => {
+const AddMoreEntry = props => {
+  const { navigation } = props;
   const dispatch = useDispatch();
   const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
   const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
   const [additionalData, setAdditionalData] = useState('');
+  const topics = useSelector(state => state.captureMoment.get('data').step3);
 
   const handleContinue = () => {
     dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', additionalData));
@@ -36,6 +37,10 @@ const AddMoreEntry = () => {
     setTimeout(() => {
       dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', newText))
     }, 300);
+  }
+
+  const handleScheduleDiscussion = () => { 
+    navigation.navigate('Schedule Discussion');
   }
 
   return (
@@ -58,13 +63,22 @@ const AddMoreEntry = () => {
           value={additionalData}
           onChangeText={newText => handleTextChange(newText)}
         />
-      
+        { topics.selectedLayerTwo.requires_face_to_face === true ? 
+      <Button
+        mode="contained"
+        onPress={() => handleScheduleDiscussion()}
+        style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
+        Schedule Discussion
+          </Button>  
+          :
       <Button
         mode="contained"
         onPress={() => handleContinue()}
         style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
         Review Details
       </Button>
+      }
+     
       </KeyboardAvoidingView>
     </ScrollView>
   )
