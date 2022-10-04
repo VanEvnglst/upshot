@@ -29,8 +29,9 @@ const ReviewFeedbackEntry = props => {
   );
   const topics = useSelector(state => state.captureMoment.get('data').step3);
   debugger;
+  const meetingSched = useSelector(state => state.captureMoment.get('entryDetails'))
   const entry = useSelector(state => state.captureMoment.get('entryDetails'));
-
+  console.warn('f2f sched', meetingSched['doLess']);
   const [attentionDetail, setAttentionDetail] = useState(entry.catchAttention);
   const [impactBehavior, setImpactBehavior] = useState(entry.impactBehavior);
   const [doMoreData, setDoMoreData] = useState(entry.doMore);
