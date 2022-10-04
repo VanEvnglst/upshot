@@ -115,6 +115,12 @@ export const getSatisfactionData = state => state.survey.get('overallSatisfactio
 export const getFeelingData = state => state.survey.get('howDidYouFeel');
 export const getManagerName = state => state.survey.get('manager');
 
+/* ------------- Frontliner Feedback Selectors ------------- */
+export const getFLFeedbackId = state => state.frontlinerFeedback.get('selectedFeedback').id;
+export const getFLFeedbackType = state => state.frontlinerFeedback.get('selectedFeedback').cor_or_pos;
+export const getFLFeedbackDate = state => state.frontlinerFeedback.get('selectedFeedback').date;
+export const getFLFeedbackData = state => state.frontlinerFeedback.get('selectedFeedback');
+
 /* ------------- Leadership Assessment Selectors ------------- */
 export const getOverviewStep = state => state.leadershipSkillArea.get('overviewActiveStep');
 export const getOverviewMaxStep = state => state.leadershipSkillArea.get('overviewMaxStep');
