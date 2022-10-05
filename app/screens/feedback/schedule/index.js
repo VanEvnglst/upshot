@@ -20,7 +20,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import styles from './styles';
-import { en } from "react-native-paper-dates";
 
 
 const ScheduleDiscussion = props => { 
