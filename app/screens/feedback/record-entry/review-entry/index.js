@@ -28,10 +28,10 @@ const ReviewFeedbackEntry = props => {
     state => state.captureMoment.get('data').dateLogged,
   );
   const topics = useSelector(state => state.captureMoment.get('data').step3);
-  debugger;
-  const meetingSched = useSelector(state => state.captureMoment.get('entryDetails'))
+  
+  const meetingSched = useSelector(state => state.captureMoment.get('entryDetails')['f2fSchedule'])
   const entry = useSelector(state => state.captureMoment.get('entryDetails'));
-  console.warn('f2f sched', meetingSched['doLess']);
+  
   const [attentionDetail, setAttentionDetail] = useState(entry.catchAttention);
   const [impactBehavior, setImpactBehavior] = useState(entry.impactBehavior);
   const [doMoreData, setDoMoreData] = useState(entry.doMore);
@@ -161,6 +161,48 @@ const ReviewFeedbackEntry = props => {
               <Text style={styles.topicLabel}>{topics.selectedLayerTwo.name}</Text>
         </View>
       </View>
+
+{/* start of added details */}
+{topics.selectedLayerTwo.requires_face_to_face && (
+  <>
+      <View style={{marginTop: 24, borderTopWidth: 1, borderTopColor: '#B1B5C3'}}>
+        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25}}>
+          <Text style={{ color: '#667080', fontWeight: '700', fontSize: 16, lineHeight: 24}}>Schedule Details</Text>
+        </View>
+
+        <View style={{ marginTop: 24 }}>
+          <Text style={{ color: '#667080', fontWeight: '700', fontSize: 12, lineHeight: 12, textTransform: 'uppercase' }}>Date</Text>
+          <View style={{ minWidth: 327, height: 48, flexDirection: 'row', justifyContent: 'space-between', borderWidth: 1, borderColor: '#667080', borderRadius: 12, alignItems: 'center', marginTop: 12}}>
+              <Text style={{ color: '#667080', fontWeight: '500', fontSize: 14, lineHeight: 24, marginLeft: 18 }}>{meetingSched?.date}</Text>
+            
+            </View>
+        </View>
+        </View>
+
+        <View style={{ marginTop: 24, minWidth: 327, flexDirection: 'row', justifyContent: 'flex-start' }}>
+          <View style={{minWidth: 157.5, justifyContent: 'flex-start' }}>
+          <Text style={{ color: '#667080', fontWeight: '700', fontSize: 12, lineHeight: 12, textTransform: 'uppercase', width: 157.5 }}>Start time</Text>
+            
+            <View style={{ height: 48, flexDirection: 'row', justifyContent: 'space-between', borderWidth: 1, borderColor: '#667080', borderRadius: 12, alignItems: 'center', marginTop: 12 }}>
+                <Text style={{ color: '#667080', fontWeight: '500', fontSize: 14, lineHeight: 24, marginLeft: 18 }}>{meetingSched.startTime}</Text>
+            
+              </View>
+              
+          </View>
+          <View style={{minWidth: 157.5, justifyContent: 'flex-start', marginLeft: 12  }}>
+            <Text style={{ color: '#667080', fontWeight: '700', fontSize: 12, lineHeight: 12, textTransform: 'uppercase' }}>End time</Text>
+            
+          <View style={{ height: 48, flexDirection: 'row', justifyContent: 'space-between', borderWidth: 1, borderColor: '#667080', borderRadius: 12, alignItems: 'center', marginTop: 12}}>
+              <Text style={{ color: '#667080', fontWeight: '500', fontSize: 14, lineHeight: 24, marginLeft: 18 }}>{ meetingSched.endTime }</Text>
+            
+              </View>
+              
+          </View>
+          </View>
+          </>
+          )}
+        {/* end of added details */}
+
       <View style={styles.noteContainer}>
         <Text style={styles.noteText}>Check your feedback details before sending it to your team member. You can't edit your feedback once they are sent.</Text>
       </View>
