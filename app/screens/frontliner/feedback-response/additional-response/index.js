@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 import { GradientBackground, StoryProgress } from 'app/components';
 import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
 import { getFLFeedbackData } from 'app/store/selectors';
@@ -30,6 +31,7 @@ const AdditionalResponse = props => {
   const translation = useRef(new Animated.Value(0)).current;
   const user = useSelector(state => state.user.get('userName'));
   const frontlinerFeedback = useSelector(getFLFeedbackData);
+  const dateLogged = moment(frontlinerFeedback.date).format('llll');
   const managerName = frontlinerFeedback.em_name.split(" ");
   const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(0)}`;
   const [showAnswerContainer, setShowAnswerContainer] = useState(false);
@@ -67,6 +69,9 @@ const AdditionalResponse = props => {
 
   const handleTextChange = () => {
     setAdditionalClarification(storedText);
+    setTimeout(() => {
+      setStoredText('');
+    }, 200);
   };
 
   const handleGoBack = () => {
@@ -102,7 +107,7 @@ const AdditionalResponse = props => {
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
                   <Text style={styles.titleText}>{frontlinerFeedback.cor_or_pos} Feedback</Text>
-                  <Text style={styles.subtitleText}>Date logged</Text>
+                  <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -128,9 +133,7 @@ const AdditionalResponse = props => {
                     style={styles.image}
                   />
                   <Text style={styles.entryText}>
-                    Is everything alright? I noticed that you lacked enthusiasm
-                    when you greeted the customers this morning and don't seem
-                    like your usual self today."
+                   {frontlinerFeedback.additional_notes}
                   </Text>
                 </View>
                 <View style={styles.nameContainer}>

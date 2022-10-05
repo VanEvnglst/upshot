@@ -12,6 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { GradientBackground, StoryProgress } from 'app/components';
 import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
@@ -29,6 +30,7 @@ const DoLessResponse = props => {
   );
   const user = useSelector(state => state.user.get('userName'));
   const frontlinerFeedback = useSelector(getFLFeedbackData);
+  const dateLogged = moment(frontlinerFeedback.date).format('llll');
   const managerName = frontlinerFeedback.em_name.split(" ");
   const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
@@ -68,6 +70,9 @@ const DoLessResponse = props => {
 
   const handleTextChange = () => {
     setDoLessClarification(storedText);
+    setTimeout(() => {
+      setStoredText('');
+    }, 200);
   };
 
   const handleGoBack = () => {
@@ -103,7 +108,7 @@ const DoLessResponse = props => {
             </TouchableOpacity>
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>{frontlinerFeedback.cor_or_pos} Feedback</Text>
-              <Text style={styles.subtitleText}>Date logged</Text>
+              <Text style={styles.subtitleText}>{dateLogged}</Text>
             </View>
             <View>
               <TouchableOpacity
@@ -167,7 +172,7 @@ const DoLessResponse = props => {
               onFocus={() => setShowAnswerContainer(true)}
               onBlur={() => Keyboard.dismiss}
               onChangeText={text => setStoredText(text)}
-              value={doLessClarification}
+              value={storedText}
               onSubmitEditing={() => handleTextChange()}
               style={[
                 styles.textInputContainer,

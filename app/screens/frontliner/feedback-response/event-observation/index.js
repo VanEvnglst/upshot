@@ -116,7 +116,7 @@ const EventObservationResponse = props => {
                     The event that I observed...
                   </Text>
                 </View>
-                <View style={{ marginTop: 30, minHeight: 300 }}>
+                <View style={{ marginTop: 30 }}>
                   <Image
                     source={Images.quotationEmoji}
                     resizeMode="contain"
