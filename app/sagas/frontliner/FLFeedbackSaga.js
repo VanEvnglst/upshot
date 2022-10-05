@@ -10,10 +10,9 @@ export function* fetchFLFeedbackList() {
   const connected = yield checkInternetConnection();
 
   const response = yield call(api.getFrontlinerFeedbackList);
-  debugger;
   if(response.ok) {
     if (response.data.status === STATUS_OK) {
-
+      yield put(FrontlinerFeedbackActions.fetchFLFeedbackListSuccess(response.data.all_feedback))
     } else {
       yield put(FrontlinerFeedbackActions.fetchFLFeedbackListFailure(response.data))
     }
@@ -23,16 +22,17 @@ export function* fetchFLFeedbackList() {
 
 } 
 
-export function* fetchFLFeedback({ feedbackId}) {
+export function* fetchFLFeedback(feedbackId) {
   const connected = yield checkInternetConnection();
 
   const payload = { 
-    fb_id: feedbackId
+    fb_id: feedbackId.id
   };
   const response = yield call(api.getFrontlinerFeedback, payload);
+  debugger;
   if(response.ok) {
     if (response.data.status === STATUS_OK) {
-
+      yield put(FrontlinerFeedbackActions.fetchFLFeedbackSuccess(response.data.feedback));
     } else {
       yield put(FrontlinerFeedbackActions.fetchFLFeedbackFailure(response.data))
     }
@@ -41,11 +41,40 @@ export function* fetchFLFeedback({ feedbackId}) {
   }
 }
 
+export function* postFLFeedbackResponse(data) {
+  const connected = yield checkInternetConnection();
+
+  const payload = {
+    capture_fb_id: '',
+    event_clarification: '',
+    impact_clarification: '',
+    continue_clarification: '',
+    do_less_clarification: '',
+    stop_doing_clarification: '',
+    additional_clarification: '',
+    support: [
+      '',
+    ]
+  };
+  const response = yield call(api.postFrontlinerFeedbackResponse, payload);
+  debugger;
+  if(response.ok) {
+    if(response.data.status === STATUS_OK) {
+      yield put(FrontlinerFeedbackActions.postFLFeedbackResponseSuccess());
+    } else {
+      yield put(FrontlinerFeedbackActions.postFLFeedbackResponseFailure(response.data))
+    }
+  } else {
+    yield put(FrontlinerFeedbackActions.postFLFeedbackResponseFailure(response.data));
+  }
+}
+
 
 
 function* watchFrontlinerFeedbackSaga() {
   yield takeLatest(FrontlinerFeedbackTypes.FETCH_FL_FEEDBACK_LIST, fetchFLFeedbackList);
   yield takeLatest(FrontlinerFeedbackTypes.FETCH_FL_FEEDBACK, fetchFLFeedback);
+  yield takeLatest(FrontlinerFeedbackTypes.POST_FL_FEEDBACK_RESPONSE, postFLFeedbackResponse);
 } 
 
 export default watchFrontlinerFeedbackSaga;
