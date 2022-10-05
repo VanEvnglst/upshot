@@ -4,8 +4,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import { GradientBackground, StoryProgress } from 'app/components';
 import PropTypes from 'prop-types';
-import Images from 'app/assets/images';
-import styles from './styles';
 import EventObservationResponse from './event-observation';
 import ImpactResponse from './impact-response';
 import ContinueResponse from './continue-response';
@@ -13,15 +11,17 @@ import DoLessResponse from './do-less-response';
 import StopDoingResponse from './stop-doing-response';
 import AdditionalResponse from './additional-response';
 import FrontlinerResponseReview from '../feedback-response-review';
+import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
+import Images from 'app/assets/images';
+import styles from './styles';
+
 
 const FeedbackResponse = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
-  const maxStep = useSelector(state => state.frontlinerResponse.get('maxStep'));
-  const activeStep = useSelector(state => state.frontlinerResponse.get('activeStep'));
+  const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
+  const activeStep = useSelector(state => state.frontlinerFeedback.get('activeStep'));
   const translation = useRef(new Animated.Value(0)).current;
-  const [showAnswerContainer, setShowAnswerContainer] = useState(false);
-  const [eventClarification, setEventClarification] = useState('');
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -38,17 +38,13 @@ const FeedbackResponse = props => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   Animated.timing(translation, {
-  //     toValue: showAnswerContainer ? -650 : 0,
-  //     duration: 250,
-  //     useNativeDriver: true,
-  //   }).start();
-  // }, [showAnswerContainer]);
-
-  const handleTextChange = () => {
-
-  }
+  useEffect(() => {
+    async function retrieveData() {
+      if(route.params.id)
+      await dispatch(FrontlinerFeedbackActions.fetchFLFeedback(route.params.id));
+    }
+    retrieveData();
+  }, []);
 
   const handleStepContent = () => {
     switch(activeStep) {

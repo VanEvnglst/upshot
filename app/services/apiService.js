@@ -483,5 +483,13 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/fl_get_feedback`, payload);
+  },
+
+  postFrontlinerFeedbackResponse: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/record_fl_response`, payload);
   }
 };
