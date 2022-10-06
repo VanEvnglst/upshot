@@ -62,6 +62,30 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginTop: 30,
   },
+  infoContainer: {
+    alignItems: 'center', 
+    marginVertical: 25.5
+  },
+  nameText: {
+    color: '#FFFFFF',
+    fontWeight: '500',
+    fontSize: 16, 
+    lineHeight: 24
+  },
+  infoHeaderTitle: { 
+    marginTop: 13.5, 
+    color: '#FFFFFF', 
+    fontWeight: '700', 
+    fontSize: 32, 
+    lineHeight: 40
+  },
+  infoSubHeader: {
+    marginTop: 5, 
+    color: '#B1B5C3', 
+    fontWeight: '400', 
+    fontSize: 14, 
+    lineHeight: 24
+  },
   selectedNameContainer: {
     flexDirection: 'row',
     borderWidth: 0.3,
