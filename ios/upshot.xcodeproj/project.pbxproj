@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* upshotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* upshotTests.m */; };
+		03290F8E28EE81E8008D9C55 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03290F8D28EE81E8008D9C55 /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -16,7 +17,6 @@
 		802C3423FD8C4D29A4EBE590 /* Raleway-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0D24BD046D40CFAD596967 /* Raleway-Black.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8713D43B27CF72F500332E01 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8713D43A27CF72F500332E01 /* libswiftWebKit.tbd */; };
-		87CE852B28E2F5D2000746FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87CE852A28E2F5D2000746FF /* GoogleService-Info.plist */; };
 		8D5F8687856C494DB417BD30 /* Shrikhand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44A913D7EC9E43A7BFDAB5CB /* Shrikhand-Regular.ttf */; };
 		9C0241BCF00646EAACDAC2C6 /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2401A06B20D84E50AD0D1B1C /* Raleway-Thin.ttf */; };
 		C1D007670AF14ADFB000A719 /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB3DF6AA419A4EC198D26900 /* Raleway-SemiBold.ttf */; };
@@ -39,6 +39,7 @@
 		00E356EE1AD99517003FC87E /* upshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = upshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* upshotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = upshotTests.m; sourceTree = "<group>"; };
+		03290F8D28EE81E8008D9C55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09443940C8DD44DAA42A028B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		0972E09137EF452890FD1936 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* upshot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = upshot.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,7 +63,6 @@
 		8081940FCAC94A1A86A147A9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = upshot/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8713D43A27CF72F500332E01 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
-		87CE852A28E2F5D2000746FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87F5E62A26B4018900D22546 /* upshot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = upshot.entitlements; path = upshot/upshot.entitlements; sourceTree = "<group>"; };
 		8E505F76A6311D5BC36D1E83 /* libPods-upshot-upshotTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-upshot-upshotTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B44E5E4979D4070A1BA4F20 /* Pods-upshot-upshotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-upshot-upshotTests.release.xcconfig"; path = "Target Support Files/Pods-upshot-upshotTests/Pods-upshot-upshotTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,9 +122,9 @@
 		13B07FAE1A68108700A75B9A /* upshot */ = {
 			isa = PBXGroup;
 			children = (
+				03290F8D28EE81E8008D9C55 /* GoogleService-Info.plist */,
 				87F5E62A26B4018900D22546 /* upshot.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				87CE852A28E2F5D2000746FF /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -323,7 +323,7 @@
 				CEC04E34BCD243CD8A16F0B9 /* Raleway-Medium.ttf in Resources */,
 				487C25C40F56420796CC1392 /* Raleway-Regular.ttf in Resources */,
 				9C0241BCF00646EAACDAC2C6 /* Raleway-Thin.ttf in Resources */,
-				87CE852B28E2F5D2000746FF /* GoogleService-Info.plist in Resources */,
+				03290F8E28EE81E8008D9C55 /* GoogleService-Info.plist in Resources */,
 				C1D007670AF14ADFB000A719 /* Raleway-SemiBold.ttf in Resources */,
 				8D5F8687856C494DB417BD30 /* Shrikhand-Regular.ttf in Resources */,
 			);
