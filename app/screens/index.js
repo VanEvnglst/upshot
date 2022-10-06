@@ -60,6 +60,7 @@ export { default as FrontlinerSurvey } from './frontliner/survey';
 export { default as SurveyConfirmation } from './frontliner/survey/confirmation';
 export { default as FeedbackResponse } from './frontliner/feedback-response';
 export { default as FrontlinerFeedbackList } from './frontliner/feedback-list';
+export { default as FrontlinerResponseConfirmation } from './frontliner/feedback-response/response-confirmation';
 
 /* ------------- Insights Panel Stack ------------- */
 export { default as InsightsPanel } from './insights';
