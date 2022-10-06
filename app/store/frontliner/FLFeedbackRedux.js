@@ -16,6 +16,8 @@ export const INITIAL_STATE = Map({
     doLess: '',
     stopDoing: '',
     additionalNotes: '',
+    support: [],
+    additionalSupport: '',
   },
 });
 
@@ -29,6 +31,7 @@ const { Types, Creators } = createActions({
   fetchFLFeedbackFailure: ['error'],
   setResponseActiveStep: ['step'],
   setResponseData: ['key', 'data'],
+  setResponseStatus: ['key', 'data'],
   resetResponseState: [''],
   postFLFeedbackResponse: ['data'],
   postFLFeedbackResponseSuccess: [],
@@ -85,6 +88,10 @@ const setResponseData = (state, { key, data }) => {
   });
 };
 
+const setResponseStatus = (state, { key, data }) => state.merge({
+  [key]: data
+})
+
 const setResponseActiveStep = (state, { step }) => {
   if (state.get('activeStep' >= state.get('maxStep'))) {
     return;
@@ -118,6 +125,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FL_FEEDBACK_FAILURE]: fetchFLFeedbackFailure,
   [Types.RESET_RESPONSE_STATE]: resetResponseState,
   [Types.SET_RESPONSE_DATA]: setResponseData,
+  [Types.SET_RESPONSE_STATUS]: setResponseStatus,
   [Types.SET_RESPONSE_ACTIVE_STEP]: setResponseActiveStep,
   [Types.POST_FL_FEEDBACK_RESPONSE]: postFLFeedbackResponse,
   [Types.POST_FL_FEEDBACK_RESPONSE_SUCCESS]: postFLFeedbackResponseSuccess,
