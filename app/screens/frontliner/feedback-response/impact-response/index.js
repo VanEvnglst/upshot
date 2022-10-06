@@ -19,17 +19,16 @@ import PropTypes from 'prop-types';
 import { GradientBackground, StoryProgress } from 'app/components';
 import { DeviceUtil } from 'app/utils';
 import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
-import { getFLFeedbackData } from 'app/store/selectors';
+import { getFLFeedbackData,   getFLResponseActiveStep,
+  getFLResponseMaxStep, } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from './styles';
 
 const ImpactResponse = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
-  const activeStep = useSelector(state =>
-    state.frontlinerFeedback.get('activeStep'),
-  );
+  const maxStep = useSelector(getFLResponseMaxStep);
+  const activeStep = useSelector(getFLResponseActiveStep);
   const user = useSelector(state => state.user.get('userName'));
   const frontlinerFeedback = useSelector(getFLFeedbackData);
   const dateLogged = moment(frontlinerFeedback.date).format('llll');

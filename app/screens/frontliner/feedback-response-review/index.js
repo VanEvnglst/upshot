@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,10 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
+import { getFLFeedbackData, getFLResponseData } from 'app/store/selectors';
 import styles from './styles';
 
 const FrontlinerResponseReview = props => {
@@ -21,348 +23,247 @@ const FrontlinerResponseReview = props => {
   const activeStep = useSelector(state =>
     state.frontlinerFeedback.get('activeStep'),
   );
+  const frontlinerFeedback = useSelector(getFLFeedbackData);
+  const frontlinerResponse = useSelector(getFLResponseData);
+  const managerName = frontlinerFeedback.em_name.split(' ');
+  const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(
+    0,
+  )}`;
+  const {
+    employee_do: employeeDo,
+    employee_impact: employeeImpact,
+    employee_do_more: employeeContinue,
+    employee_do_less: employeeDoLess,
+    employee_stop_doing: employeeStopDoing,
+    additional_notes: additionalNotes,
+    requires_face_to_face: requiresF2F,
+  } = frontlinerFeedback;
+  const [state, setState] = useState({
+    eventClarification: frontlinerResponse.event,
+    impactClarification: frontlinerResponse.impact,
+    continueClarification: frontlinerResponse.continue,
+    doLessClarification: frontlinerResponse.doLess,
+    stopDoingClarification: frontlinerResponse.stopDoing,
+    additionalClarification: frontlinerResponse.additionalNotes,
+    supportClarification: frontlinerResponse.support
+  });
 
   const handleGoBack = () => {
     dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep - 1));
   };
 
+  const handleTextChange = (key, data) => {
+    setState({
+      ...state,
+      [key]: data,
+    });
+  };
+
+  const handleSendResponse = () => {
+    const data = {
+      id: frontlinerFeedback.id,
+      ...state,
+    };
+    console.warn('data', data);
+    dispatch(FrontlinerFeedbackActions.postFLFeedbackResponse(data));
+  };
+
+  console.log('state', state);
   return (
-    <ScrollView style={{ backgroundColor: '#FCFCFD' }}>
-      <View
-        style={{
-          marginTop: 70,
-          flexDirection: 'row',
-          borderBottomWidth: 0.3,
-          paddingBottom: 24,
-          paddingHoriztonal: 16,
-        }}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.headerContainer}>
         <TouchableOpacity
           accessibilityRole="button"
-          style={{ marginRight: 16, marginLeft: 16 }}
+          style={styles.backButton}
           onPress={() => handleGoBack()}>
           <Icon name="chevron-back-outline" size={24} color={'#667080'} />
         </TouchableOpacity>
-        <View style={{ flex: 2 }}>
-          <Text
-            style={{
-              fontSize: 24,
-              lineHeight: 30,
-              color: '#667080',
-              fontWeight: '700',
-            }}>
-            Review and Send
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              lineHeight: 18,
-              color: '#667080',
-              fontWeight: '400',
-              marginTop: 5,
-            }}>
+        <View style={styles.reviewHeaderContainer}>
+          <Text style={styles.headerTitleText}>Review and Send</Text>
+          <Text style={styles.headerSubtitleText}>
             Review your responses before sending it to your manager.
           </Text>
         </View>
       </View>
-      <View style={{ marginTop: 24, paddingHorizontal: 24 }}>
-        <View style={{ flexDirection: 'row ' }}></View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
-            The event observed...
-          </Text>
-          {/* <Text style={{ marginTop: 8}}>sdfjsk;ld;gsjdfafadfaf</Text> */}
-          <View style={{ marginTop: 24 }}>
-            <Text
-              style={{
-                color: '#777E90',
-                fontSize: 16,
-                fontWeight: '70',
-                lineHeight: 22,
-                alignSelf: 'flex-end',
-              }}>
-              You replied...
+      <View style={styles.contentContainer}>
+        <View style={styles.avatarContainer}>
+          <View style={styles.nameAvatar}>
+            <LinearGradient
+              style={styles.nameAvatar}
+              colors={['#C883FF', '#6587FF']}
+              start={{ x: 0.2, y: 0 }}
+              end={{ x: 0.7, y: 1 }}>
+              <Text style={styles.avatarText}>{managerInitials}</Text>
+            </LinearGradient>
+          </View>
+          <View>
+            <Text style={styles.managerNameText}>
+              {frontlinerFeedback.em_name}
             </Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
+            <Text style={styles.roleText}>Manager</Text>
           </View>
         </View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>The event observed...</Text>
+          <Text style={styles.cardContentText}>
+            {employeeDo === '' ? 'N/A' : employeeDo}
+          </Text>
+          {employeeDo !== '' && (
+            <View style={styles.replyContainer}>
+              <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+                You replied...
+              </Text>
+              <TextInput
+                style={styles.inputContainer}
+                value={state.eventClarification}
+                onChangeText={text => handleTextChange('eventClarification', text)}
+                textAlignVertical="top"
+                multiline
+              />
+            </View>
+          )}
+        </View>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>
             The impact to the business / team...
           </Text>
-          {/* <Text style={{ marginTop: 8}}>sdfjsk;ld;gsjdfafadfaf</Text> */}
-          <View style={{ marginTop: 24 }}>
-            <Text
-              style={{
-                color: '#777E90',
-                fontSize: 16,
-                fontWeight: '70',
-                lineHeight: 22,
-                alignSelf: 'flex-end',
-              }}>
-              You replied...
-            </Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
-          </View>
+          <Text style={styles.cardContentText}>
+            {employeeImpact === '' ? 'N/A' : employeeImpact}
+          </Text>
+          {employeeImpact !== '' && (
+            <View style={styles.replyContainer}>
+              <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+                You replied...
+              </Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={text => handleTextChange('impactClarification', text)}
+                textAlignVertical="top"
+                multiline
+              />
+            </View>
+          )}
         </View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>
             What to continue / do more of...
           </Text>
-          {/* <Text style={{ marginTop: 8}}>sdfjsk;ld;gsjdfafadfaf</Text> */}
-          <View style={{ marginTop: 24 }}>
-            <Text
-              style={{
-                color: '#777E90',
-                fontSize: 16,
-                fontWeight: '70',
-                lineHeight: 22,
-                alignSelf: 'flex-end',
-              }}>
-              What you need clarified...
+          <Text style={styles.cardContentText}>
+            {employeeContinue === '' ? 'N/A' : employeeContinue}
+          </Text>
+          {employeeContinue !== '' && (
+            <View style={styles.replyContainer}>
+              <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+                What you need clarified...
+              </Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={text => handleTextChange('continueClarification', text)}
+                textAlignVertical="top"
+                multiline
+              />
+            </View>
+          )}
+        </View>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>What to do less of...</Text>
+          <Text style={styles.cardContentText}>
+            {employeeDoLess === '' ? 'N/A' : employeeDoLess}
+          </Text>
+          {employeeDoLess !== '' && (
+            <View style={styles.replyContainer}>
+              <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+                What you need clarified...
+              </Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={text => handleTextChange('doLessClarification', text)}
+                textAlignVertical="top"
+                multiline
+              />
+            </View>
+          )}
+        </View>
+        {requiresF2F && (
+          <View style={styles.cardContainer}>
+            <Text style={styles.cardLabelText}>What to stop doing...</Text>
+            <Text style={styles.cardContentText}>
+              {employeeStopDoing === '' ? 'N/A' : employeeStopDoing}
             </Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
+            {employeeStopDoing !== '' && (
+              <View style={styles.replyContainer}>
+                <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+                  What you need clarified...
+                </Text>
+                <TextInput
+                  style={styles.inputContainer}
+                  onChangeText={text => handleTextChange('stopDoingClarification', text)}
+                  textAlignVertical="top"
+                  multiline
+                />
+              </View>
+            )}
           </View>
-        </View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
-            What to do less of...
+        )}
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>Additional Details</Text>
+          <Text style={styles.cardContentText}>
+            {additionalNotes === '' ? 'N/A' : additionalNotes}
           </Text>
-          {/* <Text style={{ marginTop: 8}}>sdfjsk;ld;gsjdfafadfaf</Text> */}
-          <View style={{ marginTop: 24 }}>
-            <Text
-              style={{
-                color: '#777E90',
-                fontSize: 16,
-                fontWeight: '70',
-                lineHeight: 22,
-                alignSelf: 'flex-end',
-              }}>
-              What you need clarified...
+          {additionalNotes !== '' && (
+            <View style={styles.replyContainer}>
+              <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+                You replied...
+              </Text>
+              <TextInput 
+                style={styles.inputContainer}
+                onChangeText={text => handleTextChange('additionalClarification', text)}
+                textAlignVertical='top'
+                multiline
+              />
+            </View>
+          )}
+        </View>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>How to support you by...</Text>
+          <Text style={styles.cardContentText}>How can I support you to be better?</Text>
+          <View style={styles.replyContainer}>
+            <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+              What you need...
             </Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
+            <View style={styles.inputContainer}>
+              {frontlinerResponse.support.map((item, i) => (
+                <View
+                  key={i}
+                  style={{
+                    marginTop: 16,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                <View
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 4,
+                  backgroundColor: '#667080',
+                  marginRight: 12,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                ><Icon name="checkmark-outline" size={20} color={'white'} /></View>
+                  <Text style={[styles.cardContentText, { maxWidth: '85%'}]}>{item.suggestion}</Text>
+                </View>
+              ))}
+            </View>
+            {/* <TextInput style={styles.inputContainer} /> */}
           </View>
         </View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
-            What to stop doing...
-          </Text>
-          {/* <Text style={{ marginTop: 8}}>sdfjsk;ld;gsjdfafadfaf</Text> */}
-          <View style={{ marginTop: 24 }}>
-            <Text
-              style={{
-                color: '#777E90',
-                fontSize: 16,
-                fontWeight: '70',
-                lineHeight: 22,
-                alignSelf: 'flex-end',
-              }}>
-              What you need clarified...
-            </Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
-          </View>
+        <View style={styles.btnContainer}>
+          <Button mode="contained" onPress={() => handleSendResponse()} style={styles.button}>
+            Send Response
+          </Button>
         </View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
-            Additional Details
-          </Text>
-          {/* <Text style={{ marginTop: 8}}>sdfjsk;ld;gsjdfafadfaf</Text> */}
-          <View style={{ marginTop: 24 }}>
-            <Text
-              style={{
-                color: '#777E90',
-                fontSize: 16,
-                fontWeight: '70',
-                lineHeight: 22,
-                alignSelf: 'flex-end',
-              }}>
-              You replied...
-            </Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            borderRadius: 12,
-            borderWidth: 0.3,
-            paddingHorizontal: 12,
-            paddingVertical: 16,
-          }}>
-          <Text
-            style={{
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
-            How to support you by...
-          </Text>
-          <Text
-            style={{
-              marginTop: 8,
-              color: '#777E90',
-              fontSize: 16,
-              fontWeight: '70',
-              lineHeight: 22,
-            }}>
-            sdfjsk;ld;gsjdfafadfaf
-          </Text>
-          <View style={{ marginTop: 24 }}>
-            <Text style={{ alignSelf: 'flex-end' }}>What you need...</Text>
-            <TextInput
-              style={{
-                marginTop: 8,
-                borderColor: '#E6E8EC',
-                borderRadius: 6,
-                borderWidth: 0.3,
-                backgroundColor: '#F4F6F9',
-                paddingVertical: 13,
-                paddingHorizontal: 12,
-                height: 170,
-              }}
-            />
-          </View>
-        </View>
-        <Button mode="contained" onPress={() => {}}>
-          Send Response
-        </Button>
       </View>
     </ScrollView>
   );
