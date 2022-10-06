@@ -23,9 +23,9 @@ const EntryContfirmation = props => {
     state => state.captureMoment.get('data').dateLogged,
   );
   const topics = useSelector(state => state.captureMoment.get('data').step3);
-
+  const meetingSched = useSelector(state => state.captureMoment.get('entryDetails')['f2fSchedule'])
   const feedbackType = 'Corrective Feedback';
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -52,7 +52,7 @@ const EntryContfirmation = props => {
           </View>
           <View style={[styles.details, { marginTop: 20}]}>
             <Image
-              source={feedbackData.step2.title === 'Corrective Feedback' ? Images.penEmoji : Images.redHeartEmoji}
+              source={feedbackData.step2.title === 'Corrective' ? Images.penEmoji : Images.redHeartEmoji}
               resizeMode='contain'
               style={styles.icon}
             />
@@ -80,6 +80,19 @@ const EntryContfirmation = props => {
             <Text style={{ fontSize: 14, opacity: 0.7, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{topics.selectedLayerTwo.name}</Text>
             </View>
           </View>
+          {topics.selectedLayerTwo.requires_face_to_face && (
+          <View style={styles.details}>
+            <Image
+              source={Images.calendarOutline}
+              resizeMode='contain'
+              style={styles.icon}
+            />
+            <View>
+            <Text style={styles.detailsText}>Meet up on:</Text>
+            <Text style={{ fontSize: 14, opacity: 0.7, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{meetingSched.date} | {meetingSched.startTime}-{meetingSched.endTime}</Text>
+            </View>
+          </View>
+          )}
         </View>
       </View>
       <View style={styles.btnContainer}>
