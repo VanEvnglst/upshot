@@ -205,10 +205,12 @@ export function* postFaceToFaceSchedule() {
   }
 
   const response = yield call(api.postFaceToFaceSchedule, payload);
-  console.warn('sched', response);
   if (response.ok)
   {
-    console.warn('post sched', response)
+    yield put(CaptureMomentActions.postFaceToFaceScheduleSuccess(response.data));
+  }
+  else {
+    yield put(CaptureMomentActions.postFaceToFaceScheduleFailure(response.data));
   }
 }
 
