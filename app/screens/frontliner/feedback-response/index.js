@@ -12,15 +12,18 @@ import StopDoingResponse from './stop-doing-response';
 import AdditionalResponse from './additional-response';
 import FrontlinerResponseReview from '../feedback-response-review';
 import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
+import { getFLFeedbackData, getFLResponseActiveStep, getFLResponseMaxStep } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from './styles';
+import SupportResponse from './support-response';
 
 
 const FeedbackResponse = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
-  const activeStep = useSelector(state => state.frontlinerFeedback.get('activeStep'));
+  const maxStep = useSelector(getFLResponseMaxStep);
+  const activeStep = useSelector(getFLResponseActiveStep);
+  const frontlinerFeedback = useSelector(getFLFeedbackData);
   const translation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -47,6 +50,24 @@ const FeedbackResponse = props => {
   }, []);
 
   const handleStepContent = () => {
+    if (maxStep === 7) {
+      switch(activeStep) {
+        case 1:
+          return <EventObservationResponse {...props} />;
+        case 2:
+          return <ImpactResponse {...props}/>;
+        case 3:
+          return <ContinueResponse {...props}/>;
+        case 4:
+          return <DoLessResponse {...props}/>;
+        case 5:
+          return <AdditionalResponse {...props}/>;
+        case 6: 
+          return <SupportResponse {...props} />;
+        case 7:
+          return <FrontlinerResponseReview {...props}/>;
+    } 
+  } else {
     switch(activeStep) {
       case 1:
         return <EventObservationResponse {...props} />;
@@ -61,8 +82,11 @@ const FeedbackResponse = props => {
       case 6: 
         return <AdditionalResponse {...props}/>;
       case 7:
+        return <SupportResponse {...props} />;
+      case 8: 
         return <FrontlinerResponseReview {...props}/>;
     }
+  }
   }
 
   return (
