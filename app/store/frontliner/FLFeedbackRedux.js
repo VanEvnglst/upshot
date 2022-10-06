@@ -23,7 +23,7 @@ const { Types, Creators } = createActions({
   fetchFLFeedbackList: [''],
   fetchFLFeedbackListSuccess: ['feedbackList'],
   fetchFLFeedbackListFailure: ['error'],
-  //resetFLFeedbackState: [],
+  resetFLFeedbackState: [],
   fetchFLFeedback: ['id'],
   fetchFLFeedbackSuccess: ['data'],
   fetchFLFeedbackFailure: ['error'],
