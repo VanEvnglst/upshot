@@ -120,6 +120,9 @@ export const getFLFeedbackId = state => state.frontlinerFeedback.get('selectedFe
 export const getFLFeedbackType = state => state.frontlinerFeedback.get('selectedFeedback').cor_or_pos;
 export const getFLFeedbackDate = state => state.frontlinerFeedback.get('selectedFeedback').date;
 export const getFLFeedbackData = state => state.frontlinerFeedback.get('selectedFeedback');
+export const getFLResponseData = state => state.frontlinerFeedback.get('clarifications');
+export const getFLResponseMaxStep = state => state.frontlinerFeedback.get('maxStep');
+export const getFLResponseActiveStep = state => state.frontlinerFeedback.get('activeStep');
 
 /* ------------- Leadership Assessment Selectors ------------- */
 export const getOverviewStep = state => state.leadershipSkillArea.get('overviewActiveStep');
