@@ -80,13 +80,24 @@ export function* postCaptureFeedbackMoment(type) {
       yield put (CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
       yield put(CaptureMomentActions.postCaptureMomentSuccess(response.data.id));
 
-      yield put(CaptureMomentActions.resetCaptureStep());
-      console.warn('resp', response);
+      /** updated flow **/
       if(type.data === 'continueFB') {
-          yield NavigationService.navigate('Record Feedback Entry')
-      } else {
-        yield NavigationService.navigate('Home');
-      }
+        yield put(CaptureMomentActions.resetCaptureStep());
+        yield NavigationService.navigate('Record Feedback Entry')
+    } else if(type.data === 'reminder') {
+      yield put(CaptureMomentActions.resetCaptureStep());
+      yield NavigationService.navigate('Home');
+    }
+      /** end of flow **/
+
+      // yield put(CaptureMomentActions.resetCaptureStep());
+      
+      // console.warn('resp', response);
+      // if(type.data === 'continueFB') {
+      //     yield NavigationService.navigate('Record Feedback Entry')
+      // } else {
+      //   yield NavigationService.navigate('Home');
+      // }
     } else {
       yield put(CaptureMomentActions.postCaptureMomentFailure(response.data))
     }
@@ -179,6 +190,28 @@ export function* fetchEMEntry() {
   
 }
 
+export function* postFaceToFaceSchedule() {
+  const meetingSched = state => state.captureMoment.get('entryDetails')['f2fSchedule'];
+  const journeyID = state => state.captureMoment.get('journeyId');
+
+  const scheduleDetails = yield select(meetingSched);
+
+  const payload = {
+    fb_id: yield select(journeyID),
+    scheduled_date: moment(scheduleDetails.date).format('MM/DD/YYYY'),
+    start_time: scheduleDetails.startTime,
+    end_time: scheduleDetails.endTime,
+    location: scheduleDetails.location
+  }
+
+  const response = yield call(api.postFaceToFaceSchedule, payload);
+  console.warn('sched', response);
+  if (response.ok)
+  {
+    console.warn('post sched', response)
+  }
+}
+
 function* watchCaptureMomentSaga() {
   yield takeLatest(CaptureMomentTypes.FETCH_LAYER_ONE_TOPICS, fetchLayerOneTopics);
   yield takeLatest(CaptureMomentTypes.FETCH_LAYER_TWO_TOPICS, fetchLayerTwoTopics);
@@ -187,6 +220,7 @@ function* watchCaptureMomentSaga() {
   yield takeLatest(CaptureMomentTypes.POST_CAPTURE_MOMENT, postCaptureFeedbackMoment);
   yield takeLatest(CaptureMomentTypes.POST_RECORD_EM_ENTRY, postRecordEMEntry);
   yield takeLatest(CaptureMomentTypes.POST_EDIT_EM_ENTRY, postEditEMEntry);
+  yield takeLatest(CaptureMomentTypes.POST_FACE_TO_FACE_SCHEDULE, postFaceToFaceSchedule);
 }
 
 
