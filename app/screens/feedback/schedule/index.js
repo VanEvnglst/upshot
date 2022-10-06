@@ -32,8 +32,8 @@ const ScheduleDiscussion = props => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setShowDate] = useState(moment(dateNow).format('ddd [·] MMM DD, YYYY'));
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-  const [startTime, setStartTime] = useState(moment(nextHour).format('hh:[00]A'));
-  const [endTime, setEndTime] = useState(moment(nextHour).format('hh:[30]A'));
+  const [startTime, setStartTime] = useState(moment(nextHour).format('hh:[00] A'));
+  const [endTime, setEndTime] = useState(moment(nextHour).format('hh:[30] A'));
   const [timePickerID, setTimePickerID] = useState('');
   const [locationDetails, setLocationDetails] = useState('');
 
@@ -113,10 +113,10 @@ const ScheduleDiscussion = props => {
           </View>
       </View>
 
-      <View style={{alignItems: 'center', marginVertical: 25.5}}>
-        <Text style={{color: '#FFFFFF',fontWeight: '500', fontSize: 16, lineHeight: 24}} >Andre Castro</Text>
-        <Text style={{ marginTop: 13.5, color: '#FFFFFF', fontWeight: '700', fontSize: 32, lineHeight: 40}}>Meet in Person</Text>
-        <Text style={{marginTop: 5, color: '#B1B5C3', fontWeight: '400', fontSize: 14, lineHeight: 24}}>Schedule a time to discuss the feedback</Text>
+      <View style={styles.infoContainer}>
+        <Text style={styles.nameText} >Andre Castro</Text>
+        <Text style={styles.infoHeaderTitle}>Set a 1-on-1</Text>
+        <Text style={styles.infoSubHeader}>Schedule a time to discuss the feedback</Text>
       </View>
 
       <View style={{margin: 24, borderTopWidth: 1, borderTopColor: '#B1B5C3'}}>

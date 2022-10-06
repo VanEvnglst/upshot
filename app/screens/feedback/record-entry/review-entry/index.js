@@ -55,6 +55,7 @@ const ReviewFeedbackEntry = props => {
   }
 
   const handleSendFeedback = () => { 
+    dispatch(CaptureMomentActions.postFaceToFaceSchedule());
     dispatch(CaptureMomentActions.postRecordEMEntry('record'));
     navigation.navigate('Feedback Entry Confirmation')
   }

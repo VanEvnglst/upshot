@@ -268,13 +268,24 @@ const CaptureFeedbackMoment = props => {
           </View>
         </View>
         <View style={styles.btnContainer}>
-          <Button
+          {selectedLayerOne && selectedLayerTwo ? (
+        <Button
             mode="contained"
-            // disabled
+            //disabled
             style={styles.button}
             onPress={() => handleStep3Continue()}>
-            Record Feedback
+            Capture Moment
           </Button>
+          )
+          :
+          <Button
+            mode="contained"
+            disabled
+            style={styles.button}
+            onPress={() => handleStep3Continue()}>
+            Capture Moment
+          </Button>
+  }
         </View>
         <View style={styles.spacer} />
       </ScrollView>
@@ -300,6 +311,7 @@ const CaptureFeedbackMoment = props => {
       selectedLayerTwo,
     };
     dispatch(CaptureMomentActions.setCaptureData('step3', step3Data));
+    dispatch(CaptureMomentActions.postCaptureMoment('step3'));
     dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
   };
 

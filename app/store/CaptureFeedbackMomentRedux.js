@@ -22,6 +22,7 @@ export const INITIAL_STATE = Map({
   entryDetails: null,
   entryRecordDetails: null,
   entryEditDetails: null,
+  faceTofaceSchedule: null,
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -39,6 +40,9 @@ const { Types, Creators } = createActions({
   postEditEMEntry: ['entryDetails'],
   postEditEMEntrySuccess: ['entryEditDetails'],
   postEditEMEntryFailure: ['error'],
+  postFaceToFaceSchedule: ['data'],
+  postFaceToFaceScheduleSuccess: ['faceToFaceSchedule'],
+  postFaceToFaceScheduleFailure: ['error'],
   fetchEMEntry: [''],
   fetchEMEntrySuccess: ['entryDetails'],
   fetchEMEntryFailure: ['error'],
@@ -231,12 +235,28 @@ const fetchLayerOneTopics = state =>
       return state.merge({ entryActiveStep: step });
   }
 
+  const postFaceToFaceSchedule = state => 
+    state.merge({
+      fetching: true,
+      error: '',
+    })
+
+  const postFaceToFaceScheduleSuccess = (state, { faceToFaceSchedule }) => 
+    state.merge({
+      fetching: false,
+      faceToFaceSchedule,
+    });
+
+  const postFaceToFaceScheduleFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error
+    });
+
   const resetEntryStep = state =>
   state.merge({
     entryActiveStep: 1,
   });
-
-
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -265,6 +285,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_EDIT_EM_ENTRY]: postEditEMEntry,
   [Types.POST_EDIT_EM_ENTRY_SUCCESS]: postEditEMEntrySuccess,
   [Types.POST_EDIT_EM_ENTRY_FAILURE]: postEditEMEntryFailure,
+  [Types.POST_FACE_TO_FACE_SCHEDULE]: postFaceToFaceSchedule,
+  [Types.POST_FACE_TO_FACE_SCHEDULE_SUCCESS]: postFaceToFaceScheduleSuccess,
+  [Types.POST_FACE_TO_FACE_SCHEDULE_FAILURE]: postFaceToFaceScheduleFailure,
   [Types.SET_ENTRY_ACTIVE_STEP]: setEntryActiveStep,
   [Types.SET_FEEDBACK_MOMENT_DATA]: setFeedbackMomentData,
   [Types.SET_CAPTURE_MAX_STEP]: setCaptureMaxStep
