@@ -133,7 +133,7 @@ const AdditionalResponse = props => {
                     style={styles.image}
                   />
                   <Text style={styles.entryText}>
-                   {frontlinerFeedback.additional_notes}
+                   {frontlinerFeedback.additional_notes === '' ? 'None provided.' : frontlinerFeedback.additional_notes}
                   </Text>
                 </View>
                 <View style={styles.nameContainer}>

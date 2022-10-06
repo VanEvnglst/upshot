@@ -5,12 +5,13 @@ import styles from './styles';
 
 const StoryProgress = props => {
   const { length, activeStep } = props;
+  const ITEM_SIZE = 20;
   return (
     <View style={styles.container}>
     {Array.apply(null, { length: length}).map((item, i) => (
       <View
         key={i}
-        style={[styles.stepContainer, i + 1 <= activeStep ? styles.activeStep : styles.inactiveStep]}
+        style={[styles.stepContainer, i + 1 <= activeStep ? styles.activeStep : styles.inactiveStep, { width: ITEM_SIZE + (2 * length) }]}
       />
     ))}
     </View>

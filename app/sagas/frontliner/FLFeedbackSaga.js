@@ -2,7 +2,7 @@ import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, selct } from 'redux-saga/effects';
 import FrontlinerFeedbackActions, { FrontlinerFeedbackTypes } from 'app/store/frontliner/FLFeedbackRedux';
 import api from 'app/services/apiService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as NavigationService from 'app/services/NavigationService';
 
 const STATUS_OK = 'ok';
 
@@ -29,10 +29,13 @@ export function* fetchFLFeedback(feedbackId) {
     fb_id: feedbackId.id
   };
   const response = yield call(api.getFrontlinerFeedback, payload);
-  debugger;
   if(response.ok) {
     if (response.data.status === STATUS_OK) {
       yield put(FrontlinerFeedbackActions.fetchFLFeedbackSuccess(response.data.feedback));
+      if(response.data.feedback.requires_face_to_face)
+        yield put(FrontlinerFeedbackActions.setResponseStatus('maxStep',8))
+      else
+        yield put(FrontlinerFeedbackActions.setResponseStatus('maxStep',7))
     } else {
       yield put(FrontlinerFeedbackActions.fetchFLFeedbackFailure(response.data))
     }
@@ -41,26 +44,25 @@ export function* fetchFLFeedback(feedbackId) {
   }
 }
 
-export function* postFLFeedbackResponse(data) {
+export function* postFLFeedbackResponse({data}) {
   const connected = yield checkInternetConnection();
+  const supportList = data.supportClarification.map(obj => obj.suggestion);
 
   const payload = {
-    capture_fb_id: '',
-    event_clarification: '',
-    impact_clarification: '',
-    continue_clarification: '',
-    do_less_clarification: '',
-    stop_doing_clarification: '',
-    additional_clarification: '',
-    support: [
-      '',
-    ]
+    capture_fb_id: data.id,
+    event_clarification: data.eventClarification,
+    impact_clarification: data.impactClarification,
+    continue_clarification: data.continueClarification,
+    do_less_clarification: data.doLessClarification,
+    stop_doing_clarification: data.stopDoingClarification,
+    additional_clarification: data.additionalClarification,
+    support: supportList,
   };
   const response = yield call(api.postFrontlinerFeedbackResponse, payload);
-  debugger;
   if(response.ok) {
     if(response.data.status === STATUS_OK) {
       yield put(FrontlinerFeedbackActions.postFLFeedbackResponseSuccess());
+      yield NavigationService.navigate('FL Response Confirmation');
     } else {
       yield put(FrontlinerFeedbackActions.postFLFeedbackResponseFailure(response.data))
     }

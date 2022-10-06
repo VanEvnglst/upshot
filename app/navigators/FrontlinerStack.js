@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FeedbackResponse, FrontlinerFeedbackList } from 'app/screens';
+import { FeedbackResponse, FrontlinerFeedbackList, FrontlinerResponseConfirmation } from 'app/screens';
 
 
 const FrontlinerStack = createStackNavigator();
@@ -18,6 +18,10 @@ export default function FrontlinerNavigator() {
       <FrontlinerStack.Screen
         name={'Feedback Response'}
         component={FeedbackResponse}
+      />
+      <FrontlinerStack.Screen
+        name={'FL Response Confirmation'}
+        component={FrontlinerResponseConfirmation}
       />
     </FrontlinerStack.Navigator>
   )

@@ -102,10 +102,12 @@ const HomeScreen = props => {
               },
             ]}>
             <Text
-              style={[styles.journeyCardStatusText,
+              style={[
+                styles.journeyCardStatusText,
                 {
-                color: CARD_MAIN_COLOR,
-              }]}>
+                  color: CARD_MAIN_COLOR,
+                },
+              ]}>
               {item.status}
             </Text>
           </View>
@@ -115,18 +117,13 @@ const HomeScreen = props => {
             style={styles.iconColor}
           />
         </View>
-        <View
-          style={styles.journeyCardNameContainer}>
-          <View
-            style={styles.avatarIcon}
-          />
+        <View style={styles.journeyCardNameContainer}>
+          <View style={styles.avatarIcon} />
           <View>
-            <Text
-              style={styles.directReportNameText}>
+            <Text style={styles.directReportNameText}>
               {item['direct report']}
             </Text>
-            <Text
-              style={styles.dateText}>
+            <Text style={styles.dateText}>
               {moment(item.datetime).format('llll')}
             </Text>
           </View>
@@ -142,10 +139,7 @@ const HomeScreen = props => {
               style={styles.feedbackTypeIcon}
               resizeMode="contain"
             />
-            <Text
-              style={styles.feedbackTypeText}>
-              {item.type} Feedback
-            </Text>
+            <Text style={styles.feedbackTypeText}>{item.type} Feedback</Text>
           </View>
           <View
             style={{
@@ -178,10 +172,7 @@ const HomeScreen = props => {
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <SafeAreaView>
           <View style={{ paddingHorizontal: 16, marginTop: 30 }}>
-            <Text
-              style={styles.headerTitleText}>
-              Feedback Coaching
-            </Text>
+            <Text style={styles.headerTitleText}>Feedback Coaching</Text>
             <Text
               style={{
                 color: '#667080',
@@ -243,9 +234,7 @@ const HomeScreen = props => {
         </SafeAreaView>
         <View>
           {activeJourneyLength.map((item, i) => (
-            <JourneyCard 
-              key={i}
-              item={item} />
+            <JourneyCard key={i} item={item} />
           ))}
         </View>
         <View style={styles.spacer} />
