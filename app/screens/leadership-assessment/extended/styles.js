@@ -13,6 +13,12 @@ export default containerStyles = StyleSheet.create({
   content: {
     marginTop: 24,
   },
+  progressBar: {
+    marginLeft: 3,
+    borderRadius: 4,
+    paddingRight: 19,
+    marginTop: 12,
+  },
   guideQuestionText: {
     fontSize: 16,
     lineHeight: 22,
