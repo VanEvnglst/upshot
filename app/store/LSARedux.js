@@ -30,7 +30,7 @@ export const INITIAL_STATE = Map({
   //save last step here
   skillAreaTestSteps: {
     empathy: null,
-    opennessToLearnList: null,
+    opennessToLearn: null,
     authenticity: null,
     trustBuilding: null,
     achievementOrientation: null,
