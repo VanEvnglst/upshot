@@ -18,3 +18,4 @@ export { default as MessageItem }  from './message-item';
 export { default as ContentSkeleton } from './content-skeleton';
 export { default as GradientBackground } from './gradient-background';
 export { default as StoryProgress } from './story-progress';
+export { default as UserAvatar } from './user-avatar';
