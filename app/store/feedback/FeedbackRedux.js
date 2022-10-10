@@ -8,29 +8,21 @@ const defaultState = {
 };
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
-  currentJourney: { ...defaultState },
+  fetching: false,
+  error: '',
+  currentJourney: {},
   chosenFlow: {},
   chosenType: {},
   chosenTeamMember: {},
-  feedbackFlow: { ...defaultState },
-  feedbackType: { ...defaultState },
   relatedTopics: { ...defaultState },
   teamMembers: { ...defaultState },
+  responseData: {},
+  exchangeActiveStep: 1,
+  exchangeMaxStep: 7,
 });
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions({
-  fetchFeedbackFlow: [''],
-  fetchFeedbackFlowSuccess: ['feedbackFlowList'],
-  fetchFeedbackFlowFailure: ['error'],
-  fetchFeedbackType: [''],
-  fetchFeedbackTypeSuccess: ['feedbackTypeList'],
-  fetchFeedbackTypeFailure: ['error'],
-  fetchFeedbackTopics: [''],
-  fetchFeedbackTopicsSuccess: ['relatedTopicsList'],
-  fetchFeedbackTopicsFailure: ['error'],
-  setFeedbackFlow: ['chosenFlow'],
-  setFeedbackType: ['chosenType'],
   setTeamMember: ['chosenTeamMember'],
   fetchTeamMembers: [''],
   fetchTeamMembersSuccess: ['teamMembersList'],
@@ -39,104 +31,20 @@ const { Types, Creators } = createActions({
   postFeedbackJourneySuccess: ['id'],
   postFeedbackJourneyFailure: ['error'],
   fetchCurrentFeedback: ['journeyId'],
-  fetchCurrentFeedbackSuccess: ['id'],
+  fetchCurrentFeedbackSuccess: ['fetchedJourney'],
   fetchCurrentFeedbackFailure: ['error'],
   resetFeedbackState: null,
   postCloseFeedbackJourney: ['journeyId'],
   postCloseFeedbackJourneySuccess: null,
   postCloseFeedbackJourneyFailure: ['error'],
+  setExchangeActiveStep: ['step'],
+  setExchangeStatus: ['key', 'data'],
 });
 
 export const FeedbackTypes = Types;
 export default Creators;
 
 /* ------------- Reducers ------------- */
-const fetchFeedbackFlow = state =>
-  state.merge({
-    feedbackFlow: {
-      ...state.get('feedbackFlow'),
-      fetching: true,
-      error: '',
-    },
-  });
-
-const fetchFeedbackFlowSuccess = (state, { feedbackFlowList }) => {
-  return state.merge({
-    feedbackFlow: {
-      fetching: false,
-      data: feedbackFlowList,
-    },
-  });
-};
-
-const fetchFeedbackFlowFailure = (state, { error }) =>
-  state.merge({
-    feedbackFlow: {
-      fetching: false,
-      error,
-    },
-  });
-
-const fetchFeedbackType = state =>
-  state.merge({
-    feedbackType: {
-      ...state.get('feedbackType'),
-      fetching: true,
-      error: '',
-    },
-  });
-
-const fetchFeedbackTypeSuccess = (state, { feedbackTypeList }) => {
-  return state.merge({
-    feedbackType: {
-      fetching: false,
-      data: feedbackTypeList,
-    },
-  });
-};
-
-const fetchFeedbackTypeFailure = (state, { error }) =>
-  state.merge({
-    feedbackType: {
-      fetching: false,
-      error,
-    },
-  });
-
-const fetchFeedbackTopics = state =>
-  state.merge({
-    relatedTopics: {
-      ...state.get('relatedTopics'),
-      fetching: true,
-      error: '',
-    },
-  });
-const fetchFeedbackTopicsSuccess = (state, { relatedTopicsList }) => {
-  return state.merge({
-    relatedTopics: {
-      fetching: false,
-      data: relatedTopicsList,
-    },
-  });
-};
-const fetchFeedbackTopicsFailure = (state, { error }) =>
-  state.merge({
-    relatedTopics: {
-      fetching: false,
-      error,
-    },
-  });
-
-const setFeedbackFlow = (state, { chosenFlow }) =>
-  state.merge({
-    chosenFlow,
-  });
-
-const setFeedbackType = (state, { chosenType }) =>
-  state.merge({
-    chosenType,
-  });
-
 const setTeamMember = (state, { chosenTeamMember }) =>
   state.merge({
     chosenTeamMember,
@@ -194,11 +102,8 @@ const postFeedbackJourneyFailure = (state, { error }) => state.merge({
 
 const fetchCurrentFeedback = state => {
   return state.merge({
-    currentJourney: {
-      ...state.get('currentJourney'),
       fetching: true,
       error: '',
-    },
   });
 };
 
@@ -221,19 +126,14 @@ const postCloseFeedbackJourneySuccess = state =>
 
 const postCloseFeedbackJourneyFailure = (state, { error }) =>
   state.merge({
-    currentJourney: {
       fetching: false,
       error,
-    },
   });
 
-const fetchCurrentFeedbackSuccess = (state, { id }) => {
+const fetchCurrentFeedbackSuccess = (state, { fetchedJourney }) => {
   return state.merge({
-    currentJourney: {
-      ...state.get('currentJourney'),
       fetching: false,
-      data: id,
-    },
+      currentJourney: fetchedJourney
   });
 };
 
@@ -250,20 +150,23 @@ const resetFeedbackState = state =>
     },
   });
 
+const setExchangeActiveStep = (state, { step }) => {
+  if (state.get('exchangeActiveStep') >= state.get('exchangeMaxStep')) {
+    return;
+  }
+   return state.merge({
+    exchangeActiveStep: step
+  })
+}
+
+const setExchangeStatus = (state, { key, data }) =>
+  state.merge({
+    [key]: data
+  })
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const feedbackReducer = createReducer(INITIAL_STATE, {
-  [Types.FETCH_FEEDBACK_FLOW]: fetchFeedbackFlow,
-  [Types.FETCH_FEEDBACK_FLOW_SUCCESS]: fetchFeedbackFlowSuccess,
-  [Types.FETCH_FEEDBACK_FLOW_FAILURE]: fetchFeedbackFlowFailure,
-  [Types.FETCH_FEEDBACK_TYPE]: fetchFeedbackType,
-  [Types.FETCH_FEEDBACK_TYPE_SUCCESS]: fetchFeedbackTypeSuccess,
-  [Types.FETCH_FEEDBACK_TYPE_FAILURE]: fetchFeedbackTypeFailure,
-  [Types.FETCH_FEEDBACK_TOPICS]: fetchFeedbackTopics,
-  [Types.FETCH_FEEDBACK_TOPICS_SUCCESS]: fetchFeedbackTopicsSuccess,
-  [Types.FETCH_FEEDBACK_TOPICS_FAILURE]: fetchFeedbackTopicsFailure,
-  [Types.SET_FEEDBACK_FLOW]: setFeedbackFlow,
-  [Types.SET_FEEDBACK_TYPE]: setFeedbackType,
   [Types.SET_TEAM_MEMBER]: setTeamMember,
   [Types.FETCH_TEAM_MEMBERS]: fetchTeamMembers,
   [Types.FETCH_TEAM_MEMBERS_SUCCESS]: fetchTeamMembersSuccess,
@@ -278,4 +181,6 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.POST_CLOSE_FEEDBACK_JOURNEY]: postCloseFeedbackJourney,
   [Types.POST_CLOSE_FEEDBACK_JOURNEY_SUCCESS]: postCloseFeedbackJourneySuccess,
   [Types.POST_CLOSE_FEEDBACK_JOURNEY_FAILURE]: postCloseFeedbackJourneyFailure,
+  [Types.SET_EXCHANGE_STATUS]: setExchangeStatus,
+  [Types.SET_EXCHANGE_ACTIVE_STEP]: setExchangeActiveStep
 });

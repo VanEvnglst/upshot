@@ -10,18 +10,12 @@ export const getSignInError = state => state.authentication.get('error');
 
 /* ------------- Feedback Selectors ------------- */
 export const getCurrentJourney = state => state.feedback.get('currentJourney');
-export const getFeedbackFlowList = state =>
-  state.feedback.get('feedbackFlow').data;
-export const getFeedbackTypeList = state =>
-  state.feedback.get('feedbackType').data;
-export const getRelatedTopicsList = state =>
-  state.feedback.get('relatedTopics').data;
-export const getChosenFlow = state => state.feedback.get('chosenFlow');
-export const getChosenType = state => state.feedback.get('chosenType');
 export const getStaffList = state => state.feedback.get('teamMembers').data;
 export const getStaffName = state => state.feedback.get('chosenTeamMember');
 export const getActiveJourneyError = state =>
   state.feedback.get('currentJourney').error;
+export const getExchangeMaxStep = state => state.feedback.get('exchangeMaxStep');
+export const getExchangeActiveStep = state => state.feedback.get('exchangeActiveStep');
 
 /* ------------- Feedback History Selectors ------------- */
 export const getActiveJourneys = state =>
