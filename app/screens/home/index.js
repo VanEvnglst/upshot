@@ -12,7 +12,6 @@ import { ProgressBar, FAB } from 'react-native-paper';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { LearningCard, Wrapper, Text } from 'app/components';
-import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
 import { getActiveJourneys } from 'app/store/selectors';
 import labels from 'app/locales/en';
@@ -32,7 +31,6 @@ const HomeScreen = props => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-
   const [isInProgress, setIsInProgress] = useState(true);
 
   const onChange = (event, selectedDate) => {
@@ -62,7 +60,7 @@ const HomeScreen = props => {
     if(item.fb_id)
     navigation.navigate('Feedback', {
       screen: 'Feedback Overview',
-      params: { id: item.fb_id },
+      params: { id: item.fb_id, fl: item['direct report']},
     })
     else
     navigation.navigate('Feedback');
@@ -263,16 +261,10 @@ export default HomeScreen;
 
 HomeScreen.propTypes = {
   activeJourneyLength: PropTypes.array,
-  fetchFeedbackFlow: PropTypes.func,
-  fetchFeedbackType: PropTypes.func,
-  fetchFeedbackTopics: PropTypes.func,
   fetchActiveJourneys: PropTypes.func,
 };
 
 HomeScreen.defaultProps = {
   activeJourneyLength: [],
-  fetchFeedbackFlow: () => {},
   fetchActiveJourneys: () => {},
-  fetchFeedbackType: () => {},
-  fetchFeedbackTopics: () => {},
 };
