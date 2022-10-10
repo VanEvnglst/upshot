@@ -11,11 +11,12 @@ import DoLessResponse from './do-less-response';
 import StopDoingResponse from './stop-doing-response';
 import AdditionalResponse from './additional-response';
 import FrontlinerResponseReview from '../feedback-response-review';
+import SupportResponse from './support-response';
 import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
 import { getFLFeedbackData, getFLResponseActiveStep, getFLResponseMaxStep } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from './styles';
-import SupportResponse from './support-response';
+
 
 
 const FeedbackResponse = props => {
@@ -204,4 +205,4 @@ export default FeedbackResponse;
 
 FeedbackResponse.propTypes = {};
 
-FeedbackResponse.defaultPropst = {};
+FeedbackResponse.defaultProps = {};
