@@ -37,8 +37,16 @@ const Profile = props => {
       mode='contained'
       style={{ marginVertical: 30, marginHorizontal: 16 }}
       onPress={() => signOut()}
-    >Sign out</Button>   
+      >Sign out</Button>   
+      
+      <Button
+        mode='contained'
+        style={{ marginBottom: 5, marginHorizontal: 16 }}
+        onPress={() => navigation.navigate('Frontliner', {screen: 'FL Feedback Assessment'})}
+    >FL Assessment</Button> 
     </View>
+
+    
   );
 };
 
