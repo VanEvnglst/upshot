@@ -3,20 +3,24 @@ import { View, Text, TextInput, TouchableOpacity, Animated, Image, BackHandler }
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import EventObservationExchange from './event-exchange';
+import ImpactExchange from './impact-exchange';
+import ContinueExchange from './continue-exchange';
+import DoLessExchange from './do-less-exchange';
+import StopDoingExchange from './stop-doing-exchange';
+import AdditionalExchange from './additional-exchange';
+import { getExchangeMaxStep, getExchangeActiveStep } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from './styles';
 
 const ResponseExchange = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
+  const maxStep = useSelector(getExchangeMaxStep);
+  const activeStep = useSelector(getExchangeActiveStep);
 
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      // if (activeStep === 1) 
-      //   dispatch(ResponseActions.setResponseActiveStep(activeStep - 1));
-      // else
-      //   navigation.goBack();
       return true;
     });
 
@@ -27,19 +31,37 @@ const ResponseExchange = props => {
   }, []);
 
   const handleStepContent = () => {
-    return 
+    // if (maxStep === 7) {
+      switch(activeStep) {
+        case 1:
+          return <EventObservationExchange {...props} />
+        case 2:
+          return <ImpactExchange {...props} />
+        case 3:
+          return <ContinueExchange {...props} />
+        case 4:
+            return <DoLessExchange {...props} />
+        case 5:
+          return <StopDoingExchange {...props} />
+        case 6:
+          return <AdditionalExchange {...props} />
+      }
+    //}
   }
 
   return (
     <View style={styles.container}>
-      {/* {handleStepContent()} */}
-      <EventObservationExchange {...props}/>
+      {handleStepContent()}
     </View>
   )
 }
 
 export default ResponseExchange;
 
-ResponseExchange.propTypes = {};
+ResponseExchange.propTypes = {
+  navigation: PropTypes.object
+};
 
-ResponseExchange.defaultProps = {};
+ResponseExchange.defaultProps = {
+  navigation: {},
+};
