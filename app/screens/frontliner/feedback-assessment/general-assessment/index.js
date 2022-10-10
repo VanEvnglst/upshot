@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   BackHandler,
@@ -14,6 +14,7 @@ import Slider from "@react-native-community/slider";
 import styles from './styles';
 import FrontlinerFeedbackActions  from "app/store/frontliner/FLFeedbackRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { AssessmentQuestions } from 'app/models/FrontlinerAssessmentModelß';
 
 
 const FrontlinerGeneralAssessment = props => { 
@@ -23,61 +24,20 @@ const FrontlinerGeneralAssessment = props => {
   const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
   const indexValue = activeStep / maxStep;
   const [selectedOption, setSelectedOption] = useState(5);
-  const clarificationStatus = true; //isNaN(['alla', 'kdjf', 'dklf']);
+  const clarificationStatus = true;
   const supportStatus = true;
 
-  const checkerDetails = () => {
-    
+  useEffect(() => {
     if (supportStatus) {
       dispatch(FrontlinerFeedbackActions.setResponseStatus('maxStep', 8));
-    } else { 
+    } else {
       dispatch(FrontlinerFeedbackActions.setResponseStatus('maxStep', 7));
     }
-  }
-  const AssessmentQs = [
-    {
-      //0
-      question: "Overall, how satisfied are you with the feedback Jasmine Diaz gave you?"
-    },
-    {
-      //1
-      question: "How did you feel after receiving feedback?"
-    },
-    {
-      //2
-      question: "My manager gave their feedback soon after the event occurred"
-    },
-    {
-      //3
-      question: "My manager gave specific information about the event that was observed"
-    },
-    {
-      //4
-      question: "My manager gave feedback in a calm, objective and non-judgmental manner"
-    },
-    {
-      //5
-      question: "My manager was clear with the next steps that I need to do"
-    },
-    {
-      //6
-      question: "My manager gave me very helpful feedback"
-    },
-    {
-      question: "My manager offered the kind of support that I requested "
-      //*Show only if FL answered this screen
-    },
-    {
-      question: "My manager clarified the questions I had ",
-      // *Show only if FL gave any feedback
-      // place shoud be after 5
-    },
-  ]
+  }, []);
 
-  const questionTitle = AssessmentQs[activeStep - 1].question;
+  const questionTitle = AssessmentQuestions[activeStep - 1].question;
   
   const handleNext = () => {
-    checkerDetails();
       if (activeStep === maxStep) {
         dispatch(FrontlinerFeedbackActions.setResponseActiveStep(1))
         navigation.navigate('Home');
@@ -90,18 +50,18 @@ const FrontlinerGeneralAssessment = props => {
   
   return (
   <>
-<View style={{ paddingHorizontal: 24, marginTop: 30, paddingBottom: 20, borderBottomWidth: 1 }}>
+<View style={styles.mainContentContainer}>
         <SafeAreaView>
-          <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row'}}>
+          <View style={styles.headerContainer}>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={{}}>
               <Icon name="chevron-back-outline" size={24} font-size="6px" color='#FFFFFF' />
             </TouchableOpacity>
-            <Text style={{fontWeight: '700', fontSize: 16, lineHeight: 22, color: "#FFFFFF", minWidth: 172, textAlign: 'center'}}>Assessment</Text>
+            <Text style={styles.headerText}>Assessment</Text>
             <TouchableOpacity
             accessibilityRole='button'>
-              <Text style={{fontWeight: '500', fontSize: 16, lineHeight: 22, color: "#FFFFFF"}}>Cancel</Text>
+              <Text style={styles.cancelText}>Cancel</Text>
               </TouchableOpacity>
           </View>
           <ProgressBar
@@ -114,14 +74,14 @@ const FrontlinerGeneralAssessment = props => {
         <View style={{borderBottomWidth: 1, paddingBottom: 15}}>      
         <View style={{ flexDirection: 'row' }}>
                 <Icon/>
-                <Text style={{fontSize: 16, fontWeight: '500', lineHeight: 24, color: '#FFFFFF'}}>Jasmine Diaz</Text>
+                <Text style={styles.managerName}>Jasmine Diaz</Text>
               </View>
-              <Text style={{fontWeight: '400', fontSize: 12, lineHeight: 20, color: '#B1B5C3'}}>Corrective Feedback | Attitude | Poor Greetings</Text>
+              <Text style={styles.topicText}>Corrective Feedback | Attitude | Poor Greetings</Text>
             </View>
 
             <View style={{paddingTop: 30}}>
-          <Text style={{ fontWeight: '400', fontSize: 14, lineHeight: 24, color: '#B1B5C3' }}>On a scale of 1 to 10...</Text>
-          <Text style={{ fontWeight: '700', fontSize: 24, lineHeight: 32, marginTop: 8, color: '#FFFFFF' }}>{ questionTitle }</Text>
+          <Text style={styles.ratingText}>On a scale of 1 to 10...</Text>
+          <Text style={styles.questionText}>{ questionTitle }</Text>
         </View>
         
         <View style={{marginTop: 157}}>
@@ -136,15 +96,15 @@ const FrontlinerGeneralAssessment = props => {
             maximumTrackTintColor="#353945"
           />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{fontWeight: '500', fontSize: 14, lineHeight: 24, color: '#FCFCFD'}}>1</Text>
-            <Text style={{fontWeight: '500', fontSize: 14, lineHeight: 24, color: '#FCFCFD'}}>10</Text>
+            <Text style={styles.ratingLabel}>1</Text>
+            <Text style={styles.ratingLabel}>10</Text>
           </View>
         </View>
           <TouchableOpacity
           style={{ backgroundColor: '#FFFFFF', minWidth: 351, height: 48, borderRadius: 12, marginTop: '50%' }}
           onPress={() => handleNext()}>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 16 }}>
-            <Text style={{ fontWeight: '700', fontSize: 16, lineHeight: 16, textAlignVertical: 'center' }}>Next</Text>
+          <View style={styles.btnContainer}>
+            <Text style={styles.btnText}>Next</Text>
             <Icon name='arrow-forward-outline' size={12} />
           </View>
         </TouchableOpacity>
