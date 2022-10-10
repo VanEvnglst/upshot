@@ -116,25 +116,31 @@ export function* postCloseFeedbackJourney({ journeyId }) {
 }
 
 export function* fetchCurrentFeedback({ journeyId }) {
-  const response = yield call(api.getCurrentFeedbackJourney, journeyId);
+  
+  const data = {
+    fb_id: journeyId
+  }
+  const response = yield call(api.getResponseFromFrontliner, data);
+  debugger;
   if (response.data.status === STATUS_OK) {
-    const journeyData = response.data.Journey;
-    const docuData = journeyData.Documenting;
-    const prepData = journeyData.Preparing;
-    const discussData = journeyData.Discussing;
-    const reflectData = journeyData.Reflecting;
-    const shareData = journeyData.Sharing;
+yield put(FeedbackActions.fetchCurrentFeedbackSuccess(response.data.result));
+    // const journeyData = response.data.Journey;
+    // const docuData = journeyData.Documenting;
+    // const prepData = journeyData.Preparing;
+    // const discussData = journeyData.Discussing;
+    // const reflectData = journeyData.Reflecting;
+    // const shareData = journeyData.Sharing;
 
-    if (docuData) yield retrieveDocumentingData(docuData);
-    if (prepData) yield retrievePreparingData(prepData);
-    if (reflectData) yield retrieveReflectingData(reflectData);
-    if (discussData) yield retrieveDiscussingData(discussData);
-    if (shareData) yield retrieveSharingData(shareData);
+    // if (docuData) yield retrieveDocumentingData(docuData);
+    // if (prepData) yield retrievePreparingData(prepData);
+    // if (reflectData) yield retrieveReflectingData(reflectData);
+    // if (discussData) yield retrieveDiscussingData(discussData);
+    // if (shareData) yield retrieveSharingData(shareData);
 
-    yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
-    yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
-    yield setPhaseSteps(journeyData.feedback_flow, journeyData.feedback_type)
-    yield put(FeedbackActions.fetchCurrentFeedbackSuccess(journeyData.id));
+    // yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
+    // yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
+    // yield setPhaseSteps(journeyData.feedback_flow, journeyData.feedback_type)
+    
   } else {
     yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
   }
