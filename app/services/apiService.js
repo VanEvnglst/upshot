@@ -499,6 +499,14 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/schedule_face_to_face`, payload);
+  },
+
+  getResponseFromFrontliner: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/get_feedback_exchange`, payload);
   }
 
 };
