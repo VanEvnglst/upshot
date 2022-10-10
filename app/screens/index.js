@@ -25,6 +25,8 @@ export { default as RecordFeedbackEntry } from './feedback/record-entry';
 export { default as ScheduleDiscussion } from './feedback/schedule';
 export { default as ReviewFeedbackEntry } from './feedback/record-entry/review-entry';
 export { default as EntryConfirmation } from './feedback/record-entry/entry-confirmation';
+export { default as FeedbackOverview} from './feedback/overview';
+export { default as ResponseExchange } from './feedback/response-exchange';
 
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';

@@ -7,6 +7,8 @@ import {
   EntryConfirmation,
   ReviewFeedbackEntry,
   ScheduleDiscussion,
+  FeedbackOverview,
+  ResponseExchange
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -45,7 +47,14 @@ export default function FeedbackNavigator() {
           name={'Review Entry'}
           component={ReviewFeedbackEntry}
         />
-
+        <FeedbackStack.Screen
+          name={'Feedback Overview'}
+          component={FeedbackOverview}
+        />
+        <FeedbackStack.Screen
+          name={'Response Exchange'}
+          component={ResponseExchange}
+        />
         {/* <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
         <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
         {/* Only appears when starting a new journey */}
