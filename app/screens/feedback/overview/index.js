@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Animated,
   ScrollView,
+  Easing,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,9 +22,10 @@ const FeedbackOverview = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
   const feedbackData = useSelector(getCurrentJourney);
+  const scaleValue = useRef(new Animated.Value(0)).current;
   const { ["FB Entry"]: managerInput, ["FL Response"]: frontlinerInput } = feedbackData;
-  const managerName = feedbackData.frontliner.split(" ");
-  const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(0)}`;
+  const senderName = route.params.fl.split(" ");
+  const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const [isObservationActive, setIsObservationActive] = useState(false);
   const [isImpactActive, setIsImpactActive] = useState(false);
   const [isContinueActive, setIsContinueActive] = useState(false);
@@ -31,7 +34,10 @@ const FeedbackOverview = props => {
   const [isAdditionalNotesActive, setIsAdditionalNotesActive] = useState(false);
 
   useEffect(() => {
-    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
+    async function retrieveData() {
+      dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
+    }
+    retrieveData();
   }, []);
 
   const handleGoBack = () => {
@@ -39,7 +45,7 @@ const FeedbackOverview = props => {
   };
 
   const handleNavigation = () => {
-    navigation.navigate('Response Exchange');
+    navigation.navigate('Response Exchange', { sender: feedbackData.frontliner });
   }
 
   return (
@@ -63,22 +69,26 @@ const FeedbackOverview = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.contentContainer}>
-        {managerName && <LinearGradient
+        {senderName && <LinearGradient
           style={styles.nameAvatar}
           colors={['#C883FF', '#6587FF']}
           start={{ x: 0.2, y: 0 }}
           end={{ x: 0.7, y: 1 }}>
-          <Text style={styles.avatarText}>{managerInitials}</Text>
+          <Text style={styles.avatarText}>{senderInitials}</Text>
         </LinearGradient>}
-        <Text style={styles.responderText}>{feedbackData.frontliner}</Text>
+        <Text style={styles.responderText}>{senderName}</Text>
         <Text style={styles.responderDescription}>
           needs clarification on the following:
         </Text>
         <View style={styles.cardContainer}>
-          <View style={styles.card}>
+          <Animated.View 
+            style={styles.card}
+            >
             <TouchableWithoutFeedback
               accessibilityRole="button"
-              onPress={() => setIsObservationActive(!isObservationActive)}>
+              onPress={() =>
+                  setIsObservationActive(!isObservationActive)
+                  }>
               <View style={styles.cardHeader}>
                 <View style={styles.cardStatus}>
                   <Icon
@@ -108,7 +118,7 @@ const FeedbackOverview = props => {
               <Text style={styles.managerInputContent}>{frontlinerInput.event_clarification}</Text>
               </View>
               </View>}
-          </View>
+          </Animated.View>
           <View style={styles.card}>
             <TouchableWithoutFeedback
               accessibilityRole="button"
@@ -317,6 +327,10 @@ const FeedbackOverview = props => {
 
 export default FeedbackOverview;
 
-FeedbackOverview.propTypes = {};
+FeedbackOverview.propTypes = {
+  feedbackData: PropTypes.object
+};
 
-FeedbackOverview.defaultProps = {};
+FeedbackOverview.defaultProps = {
+  feedbackData: {},
+};
