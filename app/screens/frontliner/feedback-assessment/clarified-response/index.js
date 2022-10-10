@@ -41,18 +41,18 @@ const ClarificationResponse = props => {
 
   return(
  <>
-      <View style={{ paddingHorizontal: 24, marginTop: 30, paddingBottom: 20, borderBottomWidth: 1}}>
+      <View style={styles.mainContentContainer}>
         <SafeAreaView>
-          <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row'}}>
+          <View style={styles.headerContainer}>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={{}}>
               <Icon name="chevron-back-outline" size={24} font-size="6px" color='#FFFFFF' />
             </TouchableOpacity>
-            <Text style={{fontWeight: '700', fontSize: 16, lineHeight: 22, color: "#FFFFFF", minWidth: 172, textAlign: 'center'}}>Assessment</Text>
+            <Text style={styles.headerText}>Assessment</Text>
             <TouchableOpacity
             accessibilityRole='button'>
-              <Text style={{fontWeight: '500', fontSize: 16, lineHeight: 22, color: "#FFFFFF"}}>Cancel</Text>
+              <Text style={styles.cancelText}>Cancel</Text>
               </TouchableOpacity>
           </View>
           <ProgressBar
@@ -65,14 +65,14 @@ const ClarificationResponse = props => {
         <View style={{borderBottomWidth: 1, paddingBottom: 15}}>      
         <View style={{ flexDirection: 'row' }}>
                 <Icon/>
-                <Text style={{fontSize: 16, fontWeight: '500', lineHeight: 24, color: '#FFFFFF'}}>Jasmine Diaz</Text>
+                <Text style={styles.managerName}>Jasmine Diaz</Text>
               </View>
-              <Text style={{fontWeight: '400', fontSize: 12, lineHeight: 20, color: '#B1B5C3'}}>Corrective Feedback | Attitude | Poor Greetings</Text>
+              <Text style={styles.topicText}>Corrective Feedback | Attitude | Poor Greetings</Text>
             </View>
 
             <View style={{paddingTop: 30}}>
-          <Text style={{ fontWeight: '400', fontSize: 14, lineHeight: 24, color: '#B1B5C3' }}>On a scale of 1 to 10...</Text>
-          <Text style={{ fontWeight: '700', fontSize: 24, lineHeight: 32, marginTop: 8, color: '#FFFFFF' }}>My manager clarified the questions I had </Text>
+          <Text style={styles.ratingText}>On a scale of 1 to 10...</Text>
+          <Text style={styles.questionText}>My manager clarified the questions I had </Text>
         </View>
         
         <View style={{marginTop: 157}}>
@@ -87,15 +87,15 @@ const ClarificationResponse = props => {
             maximumTrackTintColor="#353945"
           />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{fontWeight: '500', fontSize: 14, lineHeight: 24, color: '#FCFCFD'}}>1</Text>
-            <Text style={{fontWeight: '500', fontSize: 14, lineHeight: 24, color: '#FCFCFD'}}>10</Text>
+            <Text style={styles.ratingLabel}>1</Text>
+            <Text style={styles.ratingLabel}>10</Text>
           </View>
         </View>
         <TouchableOpacity
           style={{ backgroundColor: '#FFFFFF', minWidth: 351, height: 48, borderRadius: 12, marginTop: '50%' }}
           onPress={() => handleNext()}>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 16}}>
-            <Text style={{fontWeight: '700', fontSize: 16, lineHeight: 16, textAlignVertical: 'center'}}>Next</Text>
+          <View style={styles.btnContainer}>
+            <Text style={styles.btnText}>Next</Text>
             <Icon name='arrow-forward-outline' size={12} />
             </View>
         </TouchableOpacity>
