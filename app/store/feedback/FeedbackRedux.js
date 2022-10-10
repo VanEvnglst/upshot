@@ -8,7 +8,9 @@ const defaultState = {
 };
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Map({
-  currentJourney: { ...defaultState },
+  fetching: false,
+  error: '',
+  currentJourney: {},
   chosenFlow: {},
   chosenType: {},
   chosenTeamMember: {},
@@ -39,7 +41,7 @@ const { Types, Creators } = createActions({
   postFeedbackJourneySuccess: ['id'],
   postFeedbackJourneyFailure: ['error'],
   fetchCurrentFeedback: ['journeyId'],
-  fetchCurrentFeedbackSuccess: ['id'],
+  fetchCurrentFeedbackSuccess: ['fetchedJourney'],
   fetchCurrentFeedbackFailure: ['error'],
   resetFeedbackState: null,
   postCloseFeedbackJourney: ['journeyId'],
@@ -194,11 +196,8 @@ const postFeedbackJourneyFailure = (state, { error }) => state.merge({
 
 const fetchCurrentFeedback = state => {
   return state.merge({
-    currentJourney: {
-      ...state.get('currentJourney'),
       fetching: true,
       error: '',
-    },
   });
 };
 
@@ -221,19 +220,14 @@ const postCloseFeedbackJourneySuccess = state =>
 
 const postCloseFeedbackJourneyFailure = (state, { error }) =>
   state.merge({
-    currentJourney: {
       fetching: false,
       error,
-    },
   });
 
-const fetchCurrentFeedbackSuccess = (state, { id }) => {
+const fetchCurrentFeedbackSuccess = (state, { fetchedJourney }) => {
   return state.merge({
-    currentJourney: {
-      ...state.get('currentJourney'),
       fetching: false,
-      data: id,
-    },
+      currentJourney: fetchedJourney
   });
 };
 
