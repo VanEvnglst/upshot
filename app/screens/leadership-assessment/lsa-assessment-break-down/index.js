@@ -35,9 +35,11 @@ const AssessmentBreakDown = props => {
   }, []);
 
   useEffect(() => {
-
+    dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
   }, []);
 
+  const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
+  const user = useSelector(state => state.user.userName);
   const checkCategoryStatus = useSelector(state => state.leadershipSkillArea.get('skillAreaTestSteps'));
   const completedCnt = useSelector(state => state.leadershipSkillArea.get('testFinishedCount'))
   const retrieveExtendedQs = async (element) => {
@@ -47,12 +49,11 @@ const AssessmentBreakDown = props => {
     }, 300);
     
   };
-
   const SkillAreaItem = ({element}) => {
 
     return (
       <>
-        {checkCategoryStatus[element.categoryState] == 'completed' ?
+        {checkCategoryStatus[element.categoryState] == 7 ?
           <TouchableOpacity
             accessibilityRole='button'
             style={styles.skillAreaItem}
@@ -76,8 +77,12 @@ const AssessmentBreakDown = props => {
             //onPress={() => navigation.navigate('Leadership Assessment Extended', { category: title, dataValue: value })}  
             onPress={() => retrieveExtendedQs(element)}
           >
-            <View style={[styles.stepCounter, {borderColor: '#BAC0CA'}]}>
-              <Text style={[styles.stepText, {color: '#667080',}]}>0/7</Text>
+            <View style={[styles.stepCounter, { borderColor: '#BAC0CA' }]}>
+              {checkCategoryStatus[element.categoryState] ?
+                <Text style={[styles.stepText, { color: '#667080', }]}> {checkCategoryStatus[element.categoryState]}/7</Text>
+                :
+                <Text style={[styles.stepText, { color: '#667080', }]}> 0/7</Text>
+              }
             </View>
             <View style={styles.skillTitleContainer}>
               <Text style={styles.skillTitleText}>{element.title} {element.icon}</Text>
