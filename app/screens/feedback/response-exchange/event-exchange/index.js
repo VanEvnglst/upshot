@@ -8,37 +8,42 @@ import {
   Image,
   KeyboardAvoidingView,
   Keyboard,
+  TouchableWithoutFeedback,
   BackHandler,
   ScrollView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { GradientBackground, StoryProgress } from 'app/components';
-import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
-import { getFLFeedbackData } from 'app/store/selectors';
+import { GradientBackground, StoryProgress, UserAvatar } from 'app/components';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+import {
+  getCurrentJourney,
+  getUserName,
+  getExchangeMaxStep,
+  getExchangeActiveStep,
+} from 'app/store/selectors';
 import { DeviceUtil } from 'app/utils';
 import Images from 'app/assets/images';
-import styles from './styles';
+import styles from '../styles';
 
 const EventObservationExchange = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  // const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
-  // const activeStep = useSelector(state =>
-  //   state.frontlinerFeedback.get('activeStep'),
-  // );
-  const user = useSelector(state => state.user.get('userName'));
-  // const frontlinerFeedback = useSelector(getFLFeedbackData);
+  const maxStep = useSelector(getExchangeMaxStep);
+  const activeStep = useSelector(getExchangeActiveStep);
+  const user = useSelector(getUserName);
+  const feedbackData = useSelector(getCurrentJourney);
+  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+    feedbackData;
   // const dateLogged = moment(frontlinerFeedback.date).format('llll');
-  // const managerName = route.params.manager.split(" ");
-  // const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(0)}`;
+  const senderName = route.params.sender.split(' ');
+  const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
   const [showAnswerContainer, setShowAnswerContainer] = useState(false);
   const [storedText, setStoredText] = useState('');
-  const [eventClarification, setEventClarification] = useState('');
+  const [eventResponse, setEventResponse] = useState('');
   const [keyboardStatus, setKeyboardStatus] = useState('didShow');
 
   useEffect(() => {
@@ -70,31 +75,38 @@ const EventObservationExchange = props => {
   }, [showAnswerContainer]);
 
   const handleTextChange = () => {
-    setEventClarification(storedText);
+    setEventResponse(storedText);
+  };
+
+  const handleGoBack = () => {
+    navigation.goBack();
   };
 
   const handleNavigation = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('event', eventClarification))
-    // dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1));
+    // dispatch(FrontlinerFeedbackActions.setResponseData('event', eventResponse))
+    dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
   return (
     <View style={styles.container}>
       <Animated.View
-        style={{
-          height: '88%',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          transform: [{ translateY: translation }],
-        }}>
+        style={[
+          styles.coverCardContainer,
+          {
+            transform: [{ translateY: translation }],
+          },
+        ]}>
         <GradientBackground
           colors={['#E4BCA2', '#F2976A']}
           style={styles.gradientContainer}>
           {!showAnswerContainer && (
             <>
               <View style={styles.headerContainer}>
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  onPress={() => handleGoBack()}>
+                  <Icon name="chevron-back-outline" size={24} color={'white'} />
+                </TouchableOpacity>
                 <View style={styles.titleContainer}>
                   <Text style={styles.titleText}> Feedback</Text>
                   {/* <Text style={styles.subtitleText}>{dateLogged}</Text> */}
@@ -108,54 +120,51 @@ const EventObservationExchange = props => {
                 </View>
               </View>
               <View style={styles.stepContainer}>
-                {/* <StoryProgress length={maxStep} activeStep={activeStep} /> */}
+                <StoryProgress length={maxStep} activeStep={activeStep} />
               </View>
               <View style={styles.contentContainer}>
+                <TouchableWithoutFeedback onPress={() => {}}>
+                  <View style={styles.originalFeedbackContainer}>
+                    <Text style={styles.originalFeedbackText}>
+                      Show your original feedback
+                    </Text>
+                    <Icon
+                      name="chevron-forward-outline"
+                      size={12}
+                      color={'white'}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
-                  <Text style={styles.questionText}>
+                  <Text style={[styles.questionText, { color: '#D88C65' }]}>
                     I need clarity on the observation you gave...
                   </Text>
                 </View>
-                <View style={{ marginTop: 30 }}>
+                <View style={styles.entryContainer}>
                   <Image
                     source={Images.quotationEmoji}
                     resizeMode="contain"
                     style={styles.image}
                   />
                   <Text style={styles.entryText}>
-                   {/* {frontlinerFeedback.employee_do === '' ? "None provided." : frontlinerFeedback.employee_do} */}
+                    {frontlinerInput.event_clarification === ''
+                      ? 'None provided.'
+                      : frontlinerInput.event_clarification}
                   </Text>
                 </View>
                 <View style={styles.nameContainer}>
-                  <View style={styles.nameAvatar}>
-                    <LinearGradient
-                      style={styles.nameAvatar}
-                      colors={['#C883FF', '#6587FF']}
-                      start={{ x: 0.2, y: 0 }}
-                      end={{ x: 0.7, y: 1 }}>
-                      {/* <Text style={styles.avatarText}>{managerInitials}</Text> */}
-                    </LinearGradient>
-                  </View>
-                  <View>
-                    {/* <Text style={styles.managerNameText}>{frontlinerFeedback.em_name}</Text> */}
-                    <Text style={styles.descriptionText}>Team Member</Text>
-                  </View>
+                  <UserAvatar
+                    initials={senderInitials}
+                    name={senderName}
+                    position={'Team Member'}
+                  />
                 </View>
               </View>
             </>
           )}
         </GradientBackground>
       </Animated.View>
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 16,
-          justifyContent: 'center',
-          position: 'absolute',
-          bottom: 30,
-          left: 0,
-          right: 0,
-        }}>
+      <View style={styles.callToActionContainer}>
         <KeyboardAvoidingView behavior={DeviceUtil.isIos() ? 'padding' : null}>
           <View style={styles.actionContainer}>
             <TextInput
@@ -177,14 +186,7 @@ const EventObservationExchange = props => {
             {showAnswerContainer && (
               <TouchableOpacity
                 onPress={() => handleTextChange()}
-                style={{
-                  height: 50,
-                  width: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'white',
-                  borderRadius: 25,
-                }}>
+                style={styles.sendButton}>
                 <Icon
                   name={'arrow-forward-outline'}
                   size={24}
@@ -195,23 +197,8 @@ const EventObservationExchange = props => {
             {!showAnswerContainer && (
               <TouchableOpacity
                 onPress={() => handleNavigation()}
-                style={{
-                  height: 48,
-                  width: 100,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'white',
-                  borderRadius: 12,
-                  flexDirection: 'row',
-                }}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    marginRight: 4,
-                    lineHeight: 16,
-                    fontWeight: '700',
-                    color: '#353945',
-                  }}>{`Next`}</Text>
+                style={styles.nextButton}>
+                <Text style={styles.nextButtonText}>{`Next`}</Text>
                 <Icon
                   style={{ paddingBottom: 3 }}
                   name={'arrow-forward-outline'}
@@ -224,62 +211,12 @@ const EventObservationExchange = props => {
         </KeyboardAvoidingView>
       </View>
       {showAnswerContainer && (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: '30%',
-            flex: 1,
-            zIndex: -1,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              lineHeight: 24,
-              fontWeight: '400',
-              textAlign: 'center',
-              color: 'white',
-              marginBottom: 8,
-            }}>
-            Hi {user},
-          </Text>
-          <Text
-            style={{
-              fontSize: 24,
-              lineHeight: 32,
-              fontWeight: '400',
-              textAlign: 'center',
-              color: 'white',
-            }}>
-            Share your thoughts 
-          </Text>
-          {eventClarification !== '' && (
-            <View
-              style={{
-                flex: 1,
-                alignSelf: 'flex-end',
-                justifyContent: 'flex-start',
-                backgroundColor: '#23262F',
-                borderBottomLeftRadius: 24,
-                borderTopLeftRadius: 24,
-                borderTopRightRadius: 24,
-                maxHeight: 100,
-                width: 320,
-                marginRight: 16,
-                marginTop: 30,
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                marginBottom: 30,
-              }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  lineHeight: 24,
-                  color: 'white',
-                  fontWeight: '400',
-                }}>
-                {eventClarification}
-              </Text>
+        <View style={styles.answerContainer}>
+          <Text style={styles.userGreetingText}>Hi {user},</Text>
+          <Text style={styles.guideQuestionText}>Share your thoughts</Text>
+          {eventResponse !== '' && (
+            <View style={styles.bubbleContainer}>
+              <Text style={styles.bubbleText}>{eventResponse}</Text>
             </View>
           )}
         </View>
