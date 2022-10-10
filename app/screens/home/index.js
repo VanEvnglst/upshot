@@ -54,9 +54,19 @@ const HomeScreen = props => {
     showMode('time');
   };
 
-  const handleNavigation = () => {
+  const captureFeedback = () => {
     navigation.navigate('Feedback');
   };
+
+  const handleNavigation = (item) => {
+    if(item.fb_id)
+    navigation.navigate('Feedback', {
+      screen: 'Feedback Overview',
+      params: { id: item.fb_id },
+    })
+    else
+    navigation.navigate('Feedback');
+  }
 
   const JourneyCard = ({ item }) => {
     let CARD_MAIN_COLOR = '';
@@ -81,11 +91,12 @@ const HomeScreen = props => {
       default:
         CARD_MAIN_COLOR = '#BAC0CA';
     }
-
     return (
       <TouchableOpacity
         accessibilityRole="button"
-        onPress={() => {}}
+        onPress={() =>
+          handleNavigation(item)
+        }
         style={[
           styles.journeyCard,
           {
@@ -241,7 +252,7 @@ const HomeScreen = props => {
       </ScrollView>
       <FAB
         icon="plus"
-        onPress={() => handleNavigation()}
+        onPress={() => captureFeedback()}
         style={styles.floatingAction}
       />
     </View>
