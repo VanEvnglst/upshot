@@ -38,7 +38,6 @@ export { default as ExploreScreen } from './explore';
 /* ------------- Feedback Stack ------------- */
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
 export { default as FeedbackGuide } from './feedback/guide';
-export { default as FeedbackJourneyList } from './feedback/journey-list';
 export { default as FeedbackConfirmation } from './feedback/confirmation';
 
 /* ------------- Feedback Documenting ------------- */
