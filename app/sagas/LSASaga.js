@@ -98,7 +98,36 @@ export function* fetchBaselineScores() {
 
   if (response.ok) {
     let scores = response.data.scores;
+    const testCount = state => state.leadershipSkillArea.get('testFinishedCount');
+    const completeTest = yield select(testCount);
+    
+    let completedCount = 0;
+    const dataValues = Object.values(scores);
+    for (let i = 0; i < dataValues.length; i++) { 
+      let category = dataValues[i]['skill'];
+      const categoryStepCnt = dataValues[i]['ans_count'];
 
+      switch (category) { 
+        case 'trust_building':
+          category = 'trustBuilding';
+          break;
+        case 'achievement':
+          category = 'achievementOrientation';
+          break;
+        case 'openness_to_learn':
+          category = 'opennessToLearn';
+          break;
+      }
+      if (categoryStepCnt === 7) { 
+        completedCount = completedCount + 1
+      }
+      yield put(LeadershipSkillAreaActions.setCategoryStatus(category, categoryStepCnt))
+    }
+    if (completeTest + completedCount <= 5) {
+      yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount', completeTest + completedCount))
+    } else { 
+      yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount', 5))
+    }
     yield put(LeadershipSkillAreaActions.fetchBaselineScoresSuccess(scores));
   } else {
     yield put(
