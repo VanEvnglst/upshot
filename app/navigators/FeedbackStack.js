@@ -21,11 +21,6 @@ export default function FeedbackNavigator() {
     <>
       <FeedbackStack.Navigator
         headerMode="none"
-        // initialRouteName={
-        //   activeJourneyLength.length > 0
-        //     ? 'FeedbackJourneyList'
-        //     : 'FeedbackFlow'
-        // }
       >
         <FeedbackStack.Screen
           name={'Capture Feedback Moment'}
@@ -55,55 +50,6 @@ export default function FeedbackNavigator() {
           name={'Response Exchange'}
           component={ResponseExchange}
         />
-        {/* <FeedbackStack.Screen name={'FeedbackFlow'} component={FeedbackFlow} />
-        <FeedbackStack.Screen name={'FeedbackType'} component={FeedbackType} />
-        {/* Only appears when starting a new journey */}
-        {/* <FeedbackStack.Screen
-          name={'FeedbackGuide'}
-          component={FeedbackGuide}
-        /> */}
-        {/* Shows the user's current journey */}
-        {/* <FeedbackStack.Screen
-          name={'ActiveFeedbackJourney'}
-          component={ActiveFeedbackJourney}
-        /> */}
-        {/* Shows the user's journey list if there are any in progress */}
-        {/* <FeedbackStack.Screen
-          name={'FeedbackJourneyList'}
-          component={FeedbackJourneyList}
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackConfirmation'}
-          component={FeedbackConfirmation}
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackDocumenting'}
-          component={FeedbackDocumenting}
-        />
-        <FeedbackStack.Screen
-          name={'DocumentingReview'}
-          component={DocumentingReview}
-        />
-        <FeedbackStack.Screen
-          name={'PreparingGuide'}
-          component={PreparingGuide}
-        />
-        <FeedbackStack.Screen
-          name={'FeedbackPreparing'}
-          component={FeedbackPreparing}
-        />
-        <FeedbackStack.Screen
-          name={'PreparingSchedule'}
-          component={PreparingSchedule}
-        />
-        <FeedbackStack.Screen
-          name={'PreparingReview'}
-          component={PreparingReview}
-        />
-        <FeedbackStack.Screen
-          name={'DiscussingGuide'}
-          component={DiscussingGuide}
-        />*/}
       </FeedbackStack.Navigator>
     </>
   );
