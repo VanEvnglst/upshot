@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   BackHandler,
@@ -21,20 +21,18 @@ const FrontlinerFeedbackAssessment = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(state => state.frontlinerFeedback.get('activeStep'));
   const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
-  const clarificationStatus = true; //isNaN(['alla', 'kdjf', 'dklf']);
+  const clarificationStatus = true; 
   const supportStatus = true;
 
-  const checkerDetails = () => {
-    
+  useEffect(() => {
     if (supportStatus) {
       dispatch(FrontlinerFeedbackActions.setResponseStatus('maxStep', 8));
-    } else { 
+    } else {
       dispatch(FrontlinerFeedbackActions.setResponseStatus('maxStep', 7));
     }
-  }
+  }, []);
 
   const handleContent = () => { 
-    checkerDetails()
     if (clarificationStatus && activeStep === 6) {
       return <ClarificationResponse {...props} />
     } else { 
