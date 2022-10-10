@@ -16,6 +16,7 @@ import Images from 'app/assets/images';
 import {RadarChart} from 'react-native-charts-wrapper';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import * as NavigationService from 'app/services/NavigationService';
+import { aboutSkillArea } from '../../../models/LeadershipSkillAreaModel';
 
 
 const BaselineScore = props => {
@@ -23,9 +24,9 @@ const BaselineScore = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   
-  // useEffect(() => {
-  //   dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
-  // }, []);
+  useEffect(() => {
+    dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
+  }, []);
 
   const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
   const user = useSelector(state => state.user.userName);
@@ -37,51 +38,116 @@ const BaselineScore = props => {
         navigation.navigate('Leadership Assessment Extended');
     }, 300);
   };
-  
+ 
   const skillList = [
     {
-      id: 4,
+      id: 5,
       title: 'Achievement-Orientation',
       icon: '🏅',
       score: scores && scores[3].ave,
       scoreLevel: scores && scores[3].area,
+      description: aboutSkillArea[0].description,
+      areaOfConcern: {
+        whatScoreMeans: aboutSkillArea[0].areaOfConcern.whatScoreMeans,
+        skillPoints: aboutSkillArea[0].areaOfConcern.skillPoints,
+      },
+      areaOfContinuedDevelopment: {
+        whatScoreMeans: aboutSkillArea[0].areaOfContinuedDevelopment.whatScoreMeans,
+        skillPoints: aboutSkillArea[0].areaOfContinuedDevelopment.skillPoints,
+      },
+      promisingArea: {
+        whatScoreMeans: aboutSkillArea[0].promisingArea.whatScoreMeans,
+        skillPoints: aboutSkillArea[0].promisingArea.skillPoints,
+      },
        barColor: '#EDA875',
       borderColor: '#EDA875'
     },
     {
-      id: 2,
+      id: 4,
       title: 'Openness to Learn',
       icon: '🧠',
       score: scores && scores[4].ave,
       scoreLevel: scores && scores[4].area,
+      description: aboutSkillArea[1].description,
+      areaOfConcern: {
+        whatScoreMeans: aboutSkillArea[1].areaOfConcern.whatScoreMeans,
+        skillPoints: aboutSkillArea[1].areaOfConcern.skillPoints,
+      },
+      areaOfContinuedDevelopment: {
+        whatScoreMeans: aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans,
+        skillPoints: aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints,
+      },
+      promisingArea: {
+        whatScoreMeans: aboutSkillArea[1].promisingArea.whatScoreMeans,
+        skillPoints: aboutSkillArea[1].promisingArea.skillPoints,
+      },
        barColor: '#D394EA',
       borderColor: '#D394EA'
     },
     {
-      id: 5,
+      id: 2,
       title: 'Trust Building',
       icon: '🤝',
       score: scores && scores[1].ave,
       scoreLevel: scores && scores[1].area,
+      description: aboutSkillArea[2].description,
+      areaOfConcern: {
+        whatScoreMeans: aboutSkillArea[2].areaOfConcern.whatScoreMeans,
+        skillPoints: aboutSkillArea[2].areaOfConcern.skillPoints,
+      },
+      areaOfContinuedDevelopment: {
+        whatScoreMeans: aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans,
+        skillPoints: aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints,
+      },
+      promisingArea: {
+        whatScoreMeans: aboutSkillArea[2].promisingArea.whatScoreMeans,
+        skillPoints: aboutSkillArea[2].promisingArea.skillPoints,
+      },
        barColor: '#8089DB',
       borderColor: '#8089DB'
     },
     {
-      id: 1,
+      id: 3,
       title: 'Empathy',
       icon: '💓',
       score: scores && scores[0].ave,
       scoreLevel: scores && scores[0].area,
+      description: aboutSkillArea[3].description,
+      areaOfConcern: {
+        whatScoreMeans: aboutSkillArea[3].areaOfConcern.whatScoreMeans,
+        skillPoints: aboutSkillArea[3].areaOfConcern.skillPoints,
+      },
+      areaOfContinuedDevelopment: {
+        whatScoreMeans: aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans,
+        skillPoints: aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints,
+      },
+      promisingArea: {
+        whatScoreMeans: aboutSkillArea[3].promisingArea.whatScoreMeans,
+        skillPoints: aboutSkillArea[3].promisingArea.skillPoints,
+      },
       barColor: '#F690A9',
       borderColor: '#F690A9'
     },
     {
-      id: 3,
+      id: 1,
       title: 'Authenticity',
       icon: '👐',
       score: scores && scores[2].ave,
       scoreLevel: scores && scores[2].area,
-       barColor: '#80DBAA',
+      description: aboutSkillArea[4].description,
+      areaOfConcern: {
+        whatScoreMeans: aboutSkillArea[4].areaOfConcern.whatScoreMeans,
+        skillPoints: aboutSkillArea[4].areaOfConcern.skillPoints,
+      },
+      areaOfContinuedDevelopment: {
+        whatScoreMeans: aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans,
+        skillPoints: aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints,
+      },
+      promisingArea: {
+        whatScoreMeans: aboutSkillArea[4].promisingArea.whatScoreMeans,
+        skillPoints: aboutSkillArea[4].promisingArea.skillPoints,
+      },
+      barColor: '#80DBAA',
       borderColor: '#80DBAA'
     },
     
@@ -89,7 +155,7 @@ const BaselineScore = props => {
 
   const [shouldExpand, setShouldExpand] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState({
-    id: 4,
+    id: 5,
     title: '',
     score: '',
   });
@@ -289,22 +355,32 @@ const BaselineScore = props => {
                   }
                 </View>
                 {selectedSkill.id === item.id &&
-                  <View style={{ marginTop: 24 }}>
+                  <View style={{ marginTop: 24, marginHorizontal: 15 }}>
                     <View style={{ marginBottom: 16 }}>
-                      <Text style={{fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080"}}>About this Score 💪</Text>
-                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}>The act of putting yourself in someone else's problem in the hopes of understanding</Text>
+                      <Text style={{fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080"}}>About this Indicator 💪</Text>
+                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080' }}>{item.description}</Text>
                     </View>
-                    <View style={{ marginBottom: 16 }}>
-                      <Text style={{fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080"}}>The Higher the Score 🚀</Text>
-                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}>The more committed you are in understanding of how others feel, both emotionally and through action</Text>
+                    {item.scoreLevel === 'Promising Area' ?
+                      <View style={{ marginBottom: 16 }}>
+                        <Text style={{ fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080" }}>{item.promisingArea.whatScoreMeans} 🚀</Text>
+                        <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080', minWidth: 287 }}>{item.promisingArea.skillPoints}</Text>
+                      </View>
+                      :
+                      item.scoreLevel === 'Area of Continued Development' ?
+                      <View style={{ marginBottom: 16 }}>
+                      <Text style={{ fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080" }}>{item.areaOfContinuedDevelopment.whatScoreMeans} 🚀</Text>
+                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080', minWidth: 287 }}>{item.areaOfContinuedDevelopment.skillPoints}</Text>
                     </View>
-                    <View style={{ marginBottom: 16 }}>
-                      <Text style={{fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080"}}>Growth Opportunities 👀</Text>
-                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}><Text style={{ fontSize: 6}}>{'\u2B24'}</Text> Recognize that it's fine to not know how others feel
-                      </Text>
-                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080'}}><Text style={{ fontSize: 6}}>{'\u2B24'}</Text> Practice active listening (make eye contact, listen to the tone of voice etc.)
-                      </Text>
+                        :
+                        item.scoreLevel === 'Area of Concern' ?
+                      <View style={{ marginBottom: 16 }}>
+                      <Text style={{ fontSize: 14, fontWeight: '700', lineHeight: 22, color: "#667080" }}>{item.areaOfConcern.whatScoreMeans}🚀</Text>
+                      <Text style={{ alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 22, fontWeight: '400', color: '#667080', minWidth: 287, }}>{item.areaOfConcern.skillPoints}</Text>
                     </View>
+                          :
+                          <></>
+                    }
+                    
                 
                   </View>}
               </TouchableOpacity>
