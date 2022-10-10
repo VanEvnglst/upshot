@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Animated,
   Image,
   KeyboardAvoidingView,
@@ -11,33 +12,38 @@ import {
   BackHandler,
   ScrollView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { GradientBackground, StoryProgress } from 'app/components';
+import { GradientBackground, StoryProgress, UserAvatar } from 'app/components';
 import { DeviceUtil } from 'app/utils';
-import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
-import { getFLFeedbackData,   getFLResponseActiveStep,
-  getFLResponseMaxStep, } from 'app/store/selectors';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+import {
+  getCurrentJourney,
+  getUserName,
+  getExchangeMaxStep,
+  getExchangeActiveStep,
+} from 'app/store/selectors';
 import Images from 'app/assets/images';
-import styles from './styles';
+import styles from '../styles';
 
 const ImpactExchange = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  // const maxStep = useSelector(getFLResponseMaxStep);
-  // const activeStep = useSelector(getFLResponseActiveStep);
-  const user = useSelector(state => state.user.get('userName'));
-  // const frontlinerFeedback = useSelector(getFLFeedbackData);
+  const maxStep = useSelector(getExchangeMaxStep);
+  const activeStep = useSelector(getExchangeActiveStep);
+  const user = useSelector(getUserName);
+  const feedbackData = useSelector(getCurrentJourney);
+  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+    feedbackData;
   // const dateLogged = moment(frontlinerFeedback.date).format('llll');
-  // const managerName = frontlinerFeedback.em_name.split(" ");
-  // const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(0)}`;
+  const senderName = feedbackData.frontliner.split(' ');
+  const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
   const [showAnswerContainer, setShowAnswerContainer] = useState(false);
   const [storedText, setStoredText] = useState('');
-  const [impactClarification, setImpactClarification] = useState('');
+  const [impactResponse, setImpactResponse] = useState('');
   const [keyboardStatus, setKeyboardStatus] = useState('didShow');
 
   useEffect(() => {
@@ -70,29 +76,27 @@ const ImpactExchange = props => {
   }, [showAnswerContainer]);
 
   const handleTextChange = () => {
-    setImpactClarification(storedText);
+    setImpactResponse(storedText);
   };
 
   const handleGoBack = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep - 1));
+    dispatch(FeedbackActions.setExchangeActiveStep(activeStep - 1));
   };
 
   const handleNext = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('impact', impactClarification))
-    // dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1));
+    // dispatch(FrontlinerFeedbackActions.setResponseData('impact', impactResponse))
+    dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
   return (
     <View style={styles.container}>
       <Animated.View
-        style={{
-          height: '88%',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          transform: [{ translateY: translation }],
-        }}>
+        style={[
+          styles.coverCardContainer,
+          {
+            transform: [{ translateY: translation }],
+          },
+        ]}>
         <GradientBackground
           colors={['#8ED475', '#539B47']}
           style={styles.gradientContainer}>
@@ -105,14 +109,14 @@ const ImpactExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  {/* <Text style={styles.titleText}>{frontlinerFeedback.cor_or_pos} Feedback</Text>
-                  <Text style={styles.subtitleText}>{dateLogged}</Text> */}
+                  <Text style={styles.titleText}>Feedback</Text>
+                  {/*  <Text style={styles.subtitleText}>{dateLogged}</Text> */}
                 </View>
                 <View>
                   <TouchableOpacity
                     accessibilityRole="button"
                     onPress={() => navigation.navigate('Explore')}>
-                   <Icon name={'close-outline'} size={24} color={'white'} />
+                    <Icon name={'close-outline'} size={24} color={'white'} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -120,52 +124,49 @@ const ImpactExchange = props => {
                 <StoryProgress length={maxStep} activeStep={activeStep} />
               </View>
               <View style={styles.contentContainer}>
+                <TouchableWithoutFeedback onPress={() => {}}>
+                  <View style={styles.originalFeedbackContainer}>
+                    <Text style={styles.originalFeedbackText}>
+                      Show your original feedback
+                    </Text>
+                    <Icon
+                      name="chevron-forward-outline"
+                      size={12}
+                      color={'white'}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
-                  <Text style={styles.questionText}>
+                  <Text style={[styles.questionText, { color: '#569E49' }]}>
                     The impact of this observation/behavior to the business or
                     the team...
                   </Text>
                 </View>
-                <View style={{ marginTop: 30 }}>
+                <View style={styles.entryContainer}>
                   <Image
                     source={Images.quotationEmoji}
                     resizeMode="contain"
                     style={styles.image}
                   />
                   <Text style={styles.entryText}>
-                  {/* {frontlinerFeedback.employee_impact === '' ? "None provided." : frontlinerFeedback.employee_impact} */}
+                    {frontlinerInput.impact_clarification === ''
+                      ? 'None provided.'
+                      : frontlinerInput.impact_clarification}
                   </Text>
                 </View>
                 <View style={styles.nameContainer}>
-                  <View style={styles.nameAvatar}>
-                    <LinearGradient
-                      style={styles.nameAvatar}
-                      colors={['#C883FF', '#6587FF']}
-                      start={{ x: 0.2, y: 0 }}
-                      end={{ x: 0.7, y: 1 }}>
-                      {/* <Text style={styles.avatarText}>{managerInitials}</Text> */}
-                    </LinearGradient>
-                  </View>
-                  <View>
-                    {/* <Text style={styles.managerNameText}>{frontlinerFeedback.em_name}</Text> */}
-                    <Text style={styles.descriptionText}>Team Member</Text>
-                  </View>
+                  <UserAvatar
+                    initials={senderInitials}
+                    name={senderName}
+                    position={'Team Member'}
+                  />
                 </View>
               </View>
             </>
           )}
         </GradientBackground>
       </Animated.View>
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 16,
-          justifyContent: 'center',
-          position: 'absolute',
-          bottom: 30,
-          left: 0,
-          right: 0,
-        }}>
+      <View style={styles.callToActionContainer}>
         <KeyboardAvoidingView behavior={DeviceUtil.isIos() ? 'padding' : null}>
           <View style={styles.actionContainer}>
             <TextInput
@@ -187,93 +188,33 @@ const ImpactExchange = props => {
             {showAnswerContainer && (
               <TouchableOpacity
                 onPress={() => handleTextChange()}
-                style={{
-                  height: 50,
-                  width: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'white',
-                  borderRadius: 25,
-                }}>
+                style={styles.sendButton}>
                 <Icon name={'checkmark-sharp'} size={24} color={'black'} />
               </TouchableOpacity>
             )}
             {!showAnswerContainer && (
               <TouchableOpacity
                 onPress={() => handleNext()}
-                style={{
-                  height: 48,
-                  width: 100,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'white',
-                  borderRadius: 12,
-                  flexDirection: 'row',
-                }}>
-                <Text  style={{ fontSize: 16, marginRight: 4, lineHeight: 16, fontWeight: '700', color: '#353945' }}>{`Next`}</Text>
-                <Icon style={{ paddingBottom: 3}} name={'arrow-forward-outline'} size={16} color={'#353945'} />
+                style={styles.nextButton}>
+                <Text style={styles.nextButtonText}>{`Next`}</Text>
+                <Icon
+                  style={{ paddingBottom: 3 }}
+                  name={'arrow-forward-outline'}
+                  size={16}
+                  color={'#353945'}
+                />
               </TouchableOpacity>
             )}
           </View>
         </KeyboardAvoidingView>
       </View>
       {showAnswerContainer && (
-        <View
-          style={{
-            zIndex: -1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: '30%',
-            flex: 1,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              lineHeight: 24,
-              fontWeight: '400',
-              textAlign: 'center',
-              color: 'white',
-              marginBottom: 8,
-            }}>
-            Hi {user},
-          </Text>
-          <Text
-            style={{
-              fontSize: 24,
-              lineHeight: 32,
-              fontWeight: '400',
-              textAlign: 'center',
-              color: 'white',
-            }}>
-            Share your thoughts
-          </Text>
-          {impactClarification !== '' && (
-            <View
-              style={{
-                flex: 1,
-                alignSelf: 'flex-end',
-                justifyContent: 'flex-start',
-                backgroundColor: '#23262F',
-                borderBottomLeftRadius: 24,
-                borderTopLeftRadius: 24,
-                borderTopRightRadius: 24,
-                maxHeight: 100,
-                width: 320,
-                marginRight: 16,
-                marginTop: 30,
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                marginBottom: 30,
-              }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  lineHeight: 24,
-                  color: 'white',
-                  fontWeight: '400',
-                }}>
-                {impactClarification}
-              </Text>
+        <View style={styles.answerContainer}>
+          <Text style={styles.userGreetingText}>Hi {user},</Text>
+          <Text style={styles.guideQuestionText}>Share your thoughts</Text>
+          {impactResponse !== '' && (
+            <View style={styles.bubbleContainer}>
+              <Text style={styles.bubbleText}>{impactResponse}</Text>
             </View>
           )}
         </View>
