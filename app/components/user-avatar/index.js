@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 
 const UserAvatar = props => {
-  const { initials, name, position } = props;
+  const { initials, name, position, textStyle,  } = props;
 
   return (
     <View style={styles.container}>
@@ -17,8 +17,8 @@ const UserAvatar = props => {
         <Text style={styles.initialsText}>{initials}</Text>
       </LinearGradient>
       <View>
-         <Text style={styles.nameText}>{name}</Text>
-         <Text style={styles.positionText}>{position}</Text>
+         <Text style={[styles.nameText, textStyle]}>{name}</Text>
+         <Text style={[styles.positionText, textStyle]}>{position}</Text>
       </View>
     </View>
   );
@@ -30,10 +30,12 @@ UserAvatar.propTypes = {
   initials: PropTypes.string,
   name: PropTypes.string.isRequired,
   position: PropTypes.string,
+  textStyle: PropTypes.object,
 };
 
 UserAvatar.defaultProps = {
   initials: '',
   name: '',
   position: '',
+  textStyle: {},
 };

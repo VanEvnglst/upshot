@@ -95,6 +95,7 @@ const FeedbackExchangeReview = props => {
             initials={memberInitials}
             name={`${memberName[0]} ${memberName[1]}`}
             position='Team Member'
+            textStyle={{ color: '#667080'}}
           />
         </View>
         <View style={styles.cardContainer}>
