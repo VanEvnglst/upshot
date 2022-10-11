@@ -60,7 +60,12 @@ const HomeScreen = props => {
     if(item.fb_id)
     navigation.navigate('Feedback', {
       screen: 'Feedback Overview',
-      params: { id: item.fb_id, fl: item['direct report']},
+      params: { 
+        id: item.fb_id, 
+        frontliner: item['direct report'],
+        feedbackDate: item.datetime,
+        feedbackType: item.type,
+      },
     })
     else
     navigation.navigate('Feedback');
