@@ -24,7 +24,7 @@ const FeedbackOverview = props => {
   const feedbackData = useSelector(getCurrentJourney);
   const scaleValue = useRef(new Animated.Value(0)).current;
   const { ["FB Entry"]: managerInput, ["FL Response"]: frontlinerInput } = feedbackData;
-  const senderName = route.params.fl.split(" ");
+  const senderName = route.params.frontliner.split(" ");
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const [isObservationActive, setIsObservationActive] = useState(false);
   const [isImpactActive, setIsImpactActive] = useState(false);
@@ -45,7 +45,7 @@ const FeedbackOverview = props => {
   };
 
   const handleNavigation = () => {
-    navigation.navigate('Response Exchange', { sender: feedbackData.frontliner });
+    navigation.navigate('Response Exchange', { sender: feedbackData.frontliner, feedbackDate: route.params.feedbackDate, type: route.params.feedbackType });
   }
 
   return (
@@ -76,7 +76,7 @@ const FeedbackOverview = props => {
           end={{ x: 0.7, y: 1 }}>
           <Text style={styles.avatarText}>{senderInitials}</Text>
         </LinearGradient>}
-        <Text style={styles.responderText}>{senderName}</Text>
+        <Text style={styles.responderText}>{route.params.frontliner}</Text>
         <Text style={styles.responderDescription}>
           needs clarification on the following:
         </Text>
