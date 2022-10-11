@@ -14,7 +14,7 @@ import Slider from "@react-native-community/slider";
 import styles from './styles';
 import FrontlinerFeedbackActions  from "app/store/frontliner/FLFeedbackRedux";
 import { useDispatch, useSelector } from "react-redux";
-import { AssessmentQuestions } from 'app/models/FrontlinerAssessmentModelß';
+import { AssessmentQuestions } from 'app/models/FrontlinerAssessmentModel';
 
 
 const FrontlinerGeneralAssessment = props => { 
