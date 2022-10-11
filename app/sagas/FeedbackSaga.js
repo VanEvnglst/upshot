@@ -103,6 +103,35 @@ yield put(FeedbackActions.fetchCurrentFeedbackSuccess(response.data.result));
   }
 }
 
+export function* postFeedbackExchange({ data }) {
+  const connected = yield checkInternetConnection();
+  // if (!connected) {
+  //   return;
+  // }
+  
+  const payload = {
+    capture_fb_id: '',
+    event_clarification: '',
+    impact_clarification: '',
+    continue_clarification: '',
+    do_less_clarification: '',
+    stop_doing_clarification: '',
+    additional_clarification: '',
+    support: [],
+  };
+  
+  const response = yield call(api.postFeedbackExchange, payload);
+  if (response.ok) {
+    if(response.data.status === STATUS_OK) {
+
+    } else {
+      yield put(FeedbackActions.postFeedbackExchangeFailure(response.data))
+    }
+  } else {
+    yield put(FeedbackActions.postFeedbackExchangeFailure(response.data))
+  }
+}
+
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
@@ -111,6 +140,7 @@ function* watchFeedbackSaga() {
     postCloseFeedbackJourney,
   );
   yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
+  yield takeLatest(FeedbackTypes.POST_FEEDBACK_EXCHANGE, postFeedbackExchange); 
 }
 
 export default watchFeedbackSaga;
