@@ -11,14 +11,21 @@ export const INITIAL_STATE = Map({
   fetching: false,
   error: '',
   currentJourney: {},
-  chosenFlow: {},
-  chosenType: {},
   chosenTeamMember: {},
   relatedTopics: { ...defaultState },
   teamMembers: { ...defaultState },
-  responseData: {},
+  exchangeData: {
+    event: '',
+    impact: '',
+    continue: '',
+    doLess: '',
+    stopDoing: '',
+    additionalNotes: '',
+    support: [],
+    additionalSupport: '',
+  },
   exchangeActiveStep: 1,
-  exchangeMaxStep: 7,
+  exchangeMaxStep: 8,
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -39,6 +46,11 @@ const { Types, Creators } = createActions({
   postCloseFeedbackJourneyFailure: ['error'],
   setExchangeActiveStep: ['step'],
   setExchangeStatus: ['key', 'data'],
+  setExchangeData: ['key', 'data'],
+  resetExchangeState: [],
+  postFeedbackExchange: ['data'],
+  postFeedbackExchangeSuccess: [],
+  postFeedbackExchangeFailure: ['error'],
 });
 
 export const FeedbackTypes = Types;
@@ -151,7 +163,7 @@ const resetFeedbackState = state =>
   });
 
 const setExchangeActiveStep = (state, { step }) => {
-  if (state.get('exchangeActiveStep') >= state.get('exchangeMaxStep')) {
+  if (state.get('exchangeActiveStep') > state.get('exchangeMaxStep')) {
     return;
   }
    return state.merge({
@@ -163,6 +175,47 @@ const setExchangeStatus = (state, { key, data }) =>
   state.merge({
     [key]: data
   })
+
+const setExchangeData = (state, { key, data }) => {
+  return state.merge({
+    exchangeData: {
+      ...state.get('exchangeData'),
+      [key]: data
+    }
+  })
+}
+
+const resetExchangeState = state =>
+  state.merge({
+    exchangeActiveStep: 1,
+    exchangeData: {
+    event: '',
+    impact: '',
+    continue: '',
+    doLess: '',
+    stopDoing: '',
+    additionalNotes: '',
+    support: [],
+    additionalSupport: '',
+    }
+  });
+
+const postFeedbackExchange = state => 
+  state.merge({
+    fetching: true,
+    error: '',
+  })
+
+const postFeedbackExchangeSuccess = state =>
+  state.merge({
+    fetching: false
+  })
+
+const postFeedbackExchangeFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error
+  });
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -182,5 +235,10 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.POST_CLOSE_FEEDBACK_JOURNEY_SUCCESS]: postCloseFeedbackJourneySuccess,
   [Types.POST_CLOSE_FEEDBACK_JOURNEY_FAILURE]: postCloseFeedbackJourneyFailure,
   [Types.SET_EXCHANGE_STATUS]: setExchangeStatus,
-  [Types.SET_EXCHANGE_ACTIVE_STEP]: setExchangeActiveStep
+  [Types.SET_EXCHANGE_ACTIVE_STEP]: setExchangeActiveStep,
+  [Types.SET_EXCHANGE_DATA]: setExchangeData,
+  [Types.RESET_EXCHANGE_STATE]: resetExchangeState,
+  [Types.POST_FEEDBACK_EXCHANGE]: postFeedbackExchange,
+  [Types.POST_FEEDBACK_EXCHANGE_SUCCESS]: postFeedbackExchangeSuccess,
+  [Types.POST_FEEDBACK_EXCHANGE_FAILURE]: postFeedbackExchangeFailure,
 });
