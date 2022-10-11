@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -28,7 +27,7 @@ import Images from 'app/assets/images';
 import styles from '../styles';
 
 const AdditionalExchange = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
@@ -37,7 +36,7 @@ const AdditionalExchange = props => {
   const feedbackData = useSelector(getCurrentJourney);
   const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
     feedbackData;
-  // const dateLogged = moment(frontlinerFeedback.date).format('llll');
+  const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = feedbackData.frontliner.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const [showAnswerContainer, setShowAnswerContainer] = useState(false);
@@ -74,7 +73,7 @@ const AdditionalExchange = props => {
   }, [showAnswerContainer]);
 
   const handleTextChange = () => {
-    setadditionalResponse(storedText);
+    setAdditionalResponse(storedText);
     setTimeout(() => {
       setStoredText('');
     }, 200);
@@ -85,7 +84,7 @@ const AdditionalExchange = props => {
   };
 
   const handleNext = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('additionalNotes', additionalResponse))
+    dispatch(FeedbackActions.setExchangeData('additionalNotes', additionalResponse))
     dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
@@ -110,8 +109,8 @@ const AdditionalExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Feedback</Text>
-                  {/* <Text style={styles.subtitleText}>{dateLogged}</Text> */}
+                  <Text style={styles.titleText}>{route.params.type} Feedback</Text>
+                  <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -139,7 +138,7 @@ const AdditionalExchange = props => {
                 </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
                   <Text style={[styles.questionText, { color: '#4EACA6' }]}>
-                    Other things I'd like to tell you
+                    I need clarity on the additional details you provided...
                   </Text>
                 </View>
                 <View style={styles.entryContainer}>
@@ -148,7 +147,7 @@ const AdditionalExchange = props => {
                     resizeMode="contain"
                     style={styles.image}
                   />
-                  <Text style={styles.entryText}>
+                  <Text style={[styles.entryText, frontlinerInput.additional_clarification === '' && styles.noneProvidedText]}>
                     {frontlinerInput.additional_clarification === ''
                       ? 'None provided.'
                       : frontlinerInput.additional_clarification}
@@ -157,7 +156,7 @@ const AdditionalExchange = props => {
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}
-                    name={senderName}
+                    name={`${senderName[0]} ${senderName[1]}`}
                     position="Team Member"
                   />
                 </View>
@@ -228,6 +227,20 @@ const AdditionalExchange = props => {
 
 export default AdditionalExchange;
 
-AdditionalExchange.propTypes = {};
+AdditionalExchange.propTypes = {
+  navigation: PropTypes.object,
+  route: PropTypes.object,
+  maxStep: PropTypes.number,
+  activeStep: PropTypes.number,
+  user: PropTypes.string,
+  feedbackData: PropTypes.object
+};
 
-AdditionalExchange.defaultProps = {};
+AdditionalExchange.defaultProps = {
+  navigation: {},
+  route: {},
+  maxStep: 7,
+  activeStep: 1,
+  user: '',
+  feedbackData: {},
+};

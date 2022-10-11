@@ -28,7 +28,7 @@ import Images from 'app/assets/images';
 import styles from '../styles';
 
 const DoLessExchange = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
@@ -36,7 +36,7 @@ const DoLessExchange = props => {
   const feedbackData = useSelector(getCurrentJourney);
   const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
     feedbackData;
-  // const dateLogged = moment(frontlinerFeedback.date).format('llll');
+  const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = feedbackData.frontliner.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
@@ -75,7 +75,7 @@ const DoLessExchange = props => {
   }, [showAnswerContainer]);
 
   const handleTextChange = () => {
-    setdoLessResponse(storedText);
+    setDoLessResponse(storedText);
     setTimeout(() => {
       setStoredText('');
     }, 200);
@@ -86,7 +86,7 @@ const DoLessExchange = props => {
   };
 
   const handleNext = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('doLess', doLessResponse))
+    dispatch(FeedbackActions.setExchangeData('doLess', doLessResponse))
     dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
@@ -111,8 +111,8 @@ const DoLessExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Feedback</Text>
-                  {/* <Text style={styles.subtitleText}>{dateLogged}</Text> */}
+                  <Text style={styles.titleText}>{route.params.type} Feedback</Text>
+                  <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -139,8 +139,8 @@ const DoLessExchange = props => {
                   </View>
                 </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
-                  <Text style={styles.questionText}>
-                    I would like you to do less...
+                  <Text style={[styles.questionText, { color: '#8141B8'}]}>
+                    I need clarity on the following items I need to do less of:
                   </Text>
                 </View>
                 <View style={styles.entryContainer}>
@@ -149,7 +149,7 @@ const DoLessExchange = props => {
                     resizeMode="contain"
                     style={styles.image}
                   />
-                  <Text style={styles.entryText}>
+                  <Text style={[styles.entryText, frontlinerInput.do_less_clarification === '' && styles.noneProvidedText]}>
                     {frontlinerInput.do_less_clarification === ''
                       ? 'None provided.'
                       : frontlinerInput.do_less_clarification}
@@ -158,7 +158,7 @@ const DoLessExchange = props => {
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}
-                    name={senderName}
+                    name={`${senderName[0]} ${senderName[1]}`}
                     position="Team Member"
                   />
                 </View>
@@ -230,6 +230,20 @@ const DoLessExchange = props => {
 
 export default DoLessExchange;
 
-DoLessExchange.propTypes = {};
+DoLessExchange.propTypes = {
+  navigation: PropTypes.object,
+  route: PropTypes.object,
+  maxStep: PropTypes.number,
+  activeStep: PropTypes.number,
+  user: PropTypes.string,
+  feedbackData: PropTypes.object
+};
 
-DoLessExchange.defaultPropst = {};
+DoLessExchange.defaultPropst = {
+  navigation: {},
+  route: {},
+  maxStep: 7,
+  activeStep: 1,
+  user: '',
+  feedbackData: {},
+};

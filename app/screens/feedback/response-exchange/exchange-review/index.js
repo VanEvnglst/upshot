@@ -8,25 +8,29 @@ import {
   ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
-import { getFLFeedbackData, getFLResponseData } from 'app/store/selectors';
+import { UserAvatar } from 'app/components';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+import { getFeedbackExchange, getFLResponseData,   getCurrentJourney,
+  getUserName,
+  getExchangeMaxStep,
+  getExchangeActiveStep, } from 'app/store/selectors';
+import { DeviceUtil } from 'app/utils';
 import styles from './styles';
 
-const FrontlinerResponseReview = props => {
+const FeedbackExchangeReview = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const maxStep = useSelector(state => state.frontlinerFeedback.get('maxStep'));
-  const activeStep = useSelector(state =>
-    state.frontlinerFeedback.get('activeStep'),
-  );
-  const frontlinerFeedback = useSelector(getFLFeedbackData);
-  const frontlinerResponse = useSelector(getFLResponseData);
-  const managerName = frontlinerFeedback.em_name.split(' ');
-  const managerInitials = `${managerName[0].charAt(0)}${managerName[1].charAt(
+  const maxStep = useSelector(getExchangeMaxStep);
+  const activeStep = useSelector(getExchangeActiveStep);
+  const feedbackData = useSelector(getCurrentJourney);
+  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+  feedbackData;
+  const feedbackExchange = useSelector(getFeedbackExchange);
+  const memberName = feedbackData.frontliner.split(' ');
+  const memberInitials = `${memberName[0].charAt(0)}${memberName[1].charAt(
     0,
   )}`;
   const {
@@ -36,20 +40,20 @@ const FrontlinerResponseReview = props => {
     employee_do_less: employeeDoLess,
     employee_stop_doing: employeeStopDoing,
     additional_notes: additionalNotes,
-    requires_face_to_face: requiresF2F,
-  } = frontlinerFeedback;
+    // requires_face_to_face: requiresF2F,
+  } = frontlinerInput;
   const [state, setState] = useState({
-    eventClarification: frontlinerResponse.event,
-    impactClarification: frontlinerResponse.impact,
-    continueClarification: frontlinerResponse.continue,
-    doLessClarification: frontlinerResponse.doLess,
-    stopDoingClarification: frontlinerResponse.stopDoing,
-    additionalClarification: frontlinerResponse.additionalNotes,
-    supportClarification: frontlinerResponse.support
+    eventResponse: feedbackExchange.event,
+    impactResponse: feedbackExchange.impact,
+    continueResponse: feedbackExchange.continue,
+    doLessResponse: feedbackExchange.doLess,
+    stopDoingResponse: feedbackExchange.stopDoing,
+    additionalResponse: feedbackExchange.additionalNotes,
+    supportResponse: feedbackExchange.support
   });
 
   const handleGoBack = () => {
-    dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep - 1));
+    dispatch(FeedbackActions.setExchangeActiveStep(activeStep - 1));
   };
 
   const handleTextChange = (key, data) => {
@@ -61,11 +65,11 @@ const FrontlinerResponseReview = props => {
 
   const handleSendResponse = () => {
     const data = {
-      id: frontlinerFeedback.id,
+      id: feedbackData.id,
       ...state,
     };
     console.warn('data', data);
-    dispatch(FrontlinerFeedbackActions.postFLFeedbackResponse(data));
+    dispatch(FeedbackActions.postFeedbackExchange(data));
   };
 
   console.log('state', state);
@@ -81,30 +85,20 @@ const FrontlinerResponseReview = props => {
         <View style={styles.reviewHeaderContainer}>
           <Text style={styles.headerTitleText}>Review and Send</Text>
           <Text style={styles.headerSubtitleText}>
-            Review your responses before sending it to your manager.
+            Review your responses before sending it to your team member.
           </Text>
         </View>
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.avatarContainer}>
-          <View style={styles.nameAvatar}>
-            <LinearGradient
-              style={styles.nameAvatar}
-              colors={['#C883FF', '#6587FF']}
-              start={{ x: 0.2, y: 0 }}
-              end={{ x: 0.7, y: 1 }}>
-              <Text style={styles.avatarText}>{managerInitials}</Text>
-            </LinearGradient>
-          </View>
-          <View>
-            <Text style={styles.managerNameText}>
-              {frontlinerFeedback.em_name}
-            </Text>
-            <Text style={styles.roleText}>Manager</Text>
-          </View>
+          <UserAvatar
+            initials={memberInitials}
+            name={`${memberName[0]} ${memberName[1]}`}
+            position='Team Member'
+          />
         </View>
         <View style={styles.cardContainer}>
-          <Text style={styles.cardLabelText}>The event observed...</Text>
+          <Text style={styles.cardLabelText}>Response to the event observed...</Text>
           <Text style={styles.cardContentText}>
             {employeeDo === '' ? 'N/A' : employeeDo}
           </Text>
@@ -115,8 +109,8 @@ const FrontlinerResponseReview = props => {
               </Text>
               <TextInput
                 style={styles.inputContainer}
-                value={state.eventClarification}
-                onChangeText={text => handleTextChange('eventClarification', text)}
+                value={state.eventResponse}
+                onChangeText={text => handleTextChange('eventResponse', text)}
                 textAlignVertical="top"
                 multiline
               />
@@ -125,7 +119,7 @@ const FrontlinerResponseReview = props => {
         </View>
         <View style={styles.cardContainer}>
           <Text style={styles.cardLabelText}>
-            The impact to the business / team...
+            Response to the impact...
           </Text>
           <Text style={styles.cardContentText}>
             {employeeImpact === '' ? 'N/A' : employeeImpact}
@@ -137,7 +131,8 @@ const FrontlinerResponseReview = props => {
               </Text>
               <TextInput
                 style={styles.inputContainer}
-                onChangeText={text => handleTextChange('impactClarification', text)}
+                value={state.impactResponse}
+                onChangeText={text => handleTextChange('impactResponse', text)}
                 textAlignVertical="top"
                 multiline
               />
@@ -146,7 +141,7 @@ const FrontlinerResponseReview = props => {
         </View>
         <View style={styles.cardContainer}>
           <Text style={styles.cardLabelText}>
-            What to continue / do more of...
+            Response to what to continue / do more of...
           </Text>
           <Text style={styles.cardContentText}>
             {employeeContinue === '' ? 'N/A' : employeeContinue}
@@ -154,11 +149,12 @@ const FrontlinerResponseReview = props => {
           {employeeContinue !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
-                What you need clarified...
+                You replied...
               </Text>
               <TextInput
                 style={styles.inputContainer}
-                onChangeText={text => handleTextChange('continueClarification', text)}
+                value={state.continueResponse}
+                onChangeText={text => handleTextChange('continueResponse', text)}
                 textAlignVertical="top"
                 multiline
               />
@@ -166,47 +162,49 @@ const FrontlinerResponseReview = props => {
           )}
         </View>
         <View style={styles.cardContainer}>
-          <Text style={styles.cardLabelText}>What to do less of...</Text>
+          <Text style={styles.cardLabelText}>Response to what to do less of...</Text>
           <Text style={styles.cardContentText}>
             {employeeDoLess === '' ? 'N/A' : employeeDoLess}
           </Text>
           {employeeDoLess !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
-                What you need clarified...
+                You replied...
               </Text>
               <TextInput
                 style={styles.inputContainer}
-                onChangeText={text => handleTextChange('doLessClarification', text)}
+                value={state.doLessResponse}
+                onChangeText={text => handleTextChange('doLessResponse', text)}
                 textAlignVertical="top"
                 multiline
               />
             </View>
           )}
         </View>
-        {requiresF2F && (
+        {/* {requiresF2F && ( */}
           <View style={styles.cardContainer}>
-            <Text style={styles.cardLabelText}>What to stop doing...</Text>
+            <Text style={styles.cardLabelText}>Response to what to stop doing...</Text>
             <Text style={styles.cardContentText}>
               {employeeStopDoing === '' ? 'N/A' : employeeStopDoing}
             </Text>
             {employeeStopDoing !== '' && (
               <View style={styles.replyContainer}>
                 <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
-                  What you need clarified...
+                  You replied...
                 </Text>
                 <TextInput
                   style={styles.inputContainer}
-                  onChangeText={text => handleTextChange('stopDoingClarification', text)}
+                  value={state.stopDoingResponse}
+                  onChangeText={text => handleTextChange('stopDoingResponse', text)}
                   textAlignVertical="top"
                   multiline
                 />
               </View>
             )}
           </View>
-        )}
+        {/* )} */}
         <View style={styles.cardContainer}>
-          <Text style={styles.cardLabelText}>Additional Details</Text>
+          <Text style={styles.cardLabelText}>Response to additional details</Text>
           <Text style={styles.cardContentText}>
             {additionalNotes === '' ? 'N/A' : additionalNotes}
           </Text>
@@ -217,15 +215,16 @@ const FrontlinerResponseReview = props => {
               </Text>
               <TextInput 
                 style={styles.inputContainer}
-                onChangeText={text => handleTextChange('additionalClarification', text)}
+                value={state.additionalResponse}
+                onChangeText={text => handleTextChange('additionalResponse', text)}
                 textAlignVertical='top'
                 multiline
               />
             </View>
           )}
         </View>
-        <View style={styles.cardContainer}>
-          <Text style={styles.cardLabelText}>How to support you by...</Text>
+        {/* <View style={styles.cardContainer}>
+          <Text style={styles.cardLabelText}>May I get help with...</Text>
           <Text style={styles.cardContentText}>How can I support you to be better?</Text>
           <View style={styles.replyContainer}>
             <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
@@ -255,10 +254,10 @@ const FrontlinerResponseReview = props => {
                   <Text style={[styles.cardContentText, { maxWidth: '85%'}]}>{item.suggestion}</Text>
                 </View>
               ))}
-            </View>
+            </View> */}
             {/* <TextInput style={styles.inputContainer} /> */}
-          </View>
-        </View>
+          {/* </View>
+        </View> */}
         <View style={styles.btnContainer}>
           <Button mode="contained" onPress={() => handleSendResponse()} style={styles.button}>
             Send Response
@@ -269,8 +268,8 @@ const FrontlinerResponseReview = props => {
   );
 };
 
-export default FrontlinerResponseReview;
+export default FeedbackExchangeReview;
 
-FrontlinerResponseReview.propTypes = {};
+FeedbackExchangeReview.propTypes = {};
 
-FrontlinerResponseReview.defaultProps = {};
+FeedbackExchangeReview.defaultProps = {};

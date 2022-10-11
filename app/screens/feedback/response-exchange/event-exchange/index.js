@@ -37,7 +37,7 @@ const EventObservationExchange = props => {
   const feedbackData = useSelector(getCurrentJourney);
   const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
     feedbackData;
-  // const dateLogged = moment(frontlinerFeedback.date).format('llll');
+  const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = route.params.sender.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
@@ -76,6 +76,9 @@ const EventObservationExchange = props => {
 
   const handleTextChange = () => {
     setEventResponse(storedText);
+    setTimeout(() => {
+      setStoredText('');
+    }, 200);
   };
 
   const handleGoBack = () => {
@@ -83,7 +86,7 @@ const EventObservationExchange = props => {
   };
 
   const handleNavigation = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('event', eventResponse))
+    dispatch(FeedbackActions.setExchangeData('event', eventResponse))
     dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
@@ -108,8 +111,8 @@ const EventObservationExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}> Feedback</Text>
-                  {/* <Text style={styles.subtitleText}>{dateLogged}</Text> */}
+                  <Text style={styles.titleText}>{route.params.type} Feedback</Text>
+                  <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -146,7 +149,7 @@ const EventObservationExchange = props => {
                     resizeMode="contain"
                     style={styles.image}
                   />
-                  <Text style={styles.entryText}>
+                  <Text style={[styles.entryText, frontlinerInput.event_clarification === '' && styles.noneProvidedText]}>
                     {frontlinerInput.event_clarification === ''
                       ? 'None provided.'
                       : frontlinerInput.event_clarification}
@@ -155,7 +158,7 @@ const EventObservationExchange = props => {
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}
-                    name={senderName}
+                    name={`${senderName[0]} ${senderName[1]}`}
                     position={'Team Member'}
                   />
                 </View>
@@ -227,6 +230,20 @@ const EventObservationExchange = props => {
 
 export default EventObservationExchange;
 
-EventObservationExchange.propTypes = {};
+EventObservationExchange.propTypes = {
+  navigation: PropTypes.object,
+  route: PropTypes.object,
+  maxStep: PropTypes.number,
+  activeStep: PropTypes.number,
+  user: PropTypes.string,
+  feedbackData: PropTypes.object
+};
 
-EventObservationExchange.defaultProps = {};
+EventObservationExchange.defaultProps = {
+  navigation: {},
+  route: {},
+  maxStep: 7,
+  activeStep: 1,
+  user: '',
+  feedbackData: {},
+};

@@ -2,15 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Animated, Image, BackHandler } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import EventObservationExchange from './event-exchange';
 import ImpactExchange from './impact-exchange';
 import ContinueExchange from './continue-exchange';
 import DoLessExchange from './do-less-exchange';
 import StopDoingExchange from './stop-doing-exchange';
 import AdditionalExchange from './additional-exchange';
+import FeedbackExchangeReview from './exchange-review';
 import { getExchangeMaxStep, getExchangeActiveStep } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from './styles';
+import SupportExchange from './support-exchange';
 
 const ResponseExchange = props => {
   const { navigation, route } = props;
@@ -45,6 +48,10 @@ const ResponseExchange = props => {
           return <StopDoingExchange {...props} />
         case 6:
           return <AdditionalExchange {...props} />
+        case 7:
+          return <SupportExchange {...props} />
+        case 8:
+          return <FeedbackExchangeReview {...props} />
       }
     //}
   }

@@ -49,7 +49,7 @@ export default StyleSheet.create({
     marginTop: 80,
   },
   questionContainer: {
-    height: 30,
+    minHeight: 30,
     backgroundColor: 'white',
     borderRadius: 4,
     maxWidth: '100%',
@@ -93,6 +93,7 @@ export default StyleSheet.create({
   },
   entryContainer: {
     marginTop: 30,
+    flex: 1,
   },
   textInputContainer: {
     height: 48,
@@ -111,6 +112,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   nameContainer: {
+    flex: 1,
     marginTop: 30,
     flexDirection: 'row',
     alignItems: 'center',
@@ -218,4 +220,8 @@ export default StyleSheet.create({
     color: 'white',
     fontWeight: '400',
   },
+  noneProvidedText: {
+    fontStyle: 'italic',
+    opacity: 0.5,
+  }
 });

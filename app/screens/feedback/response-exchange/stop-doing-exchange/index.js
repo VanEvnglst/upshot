@@ -10,7 +10,6 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -28,7 +27,7 @@ import Images from 'app/assets/images';
 import styles from '../styles';
 
 const StopDoingExchange = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
@@ -36,7 +35,7 @@ const StopDoingExchange = props => {
   const feedbackData = useSelector(getCurrentJourney);
   const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
     feedbackData;
-  // const dateLogged = moment(frontlinerFeedback.date).format('llll');
+  const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = feedbackData.frontliner.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
@@ -74,7 +73,7 @@ const StopDoingExchange = props => {
   }, [showAnswerContainer]);
 
   const handleTextChange = () => {
-    setstopDoingResponsearification(storedText);
+    setStopDoingResponse(storedText);
     setTimeout(() => {
       setStoredText('');
     }, 200);
@@ -85,7 +84,7 @@ const StopDoingExchange = props => {
   };
 
   const handleNext = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('stopDoing', stopDoingResponsearification))
+    dispatch(FeedbackActions.setExchangeData('stopDoing', stopDoingResponse))
     dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
@@ -110,8 +109,8 @@ const StopDoingExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Feedback</Text>
-                  {/* <Text style={styles.subtitleText}>{dateLogged}</Text> */}
+                  <Text style={styles.titleText}>{route.params.type} Feedback</Text>
+                  <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -139,7 +138,7 @@ const StopDoingExchange = props => {
                 </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
                   <Text style={[styles.questionText, { color: '#BD5E5E' }]}>
-                    I would like you to stop doing...
+                    I need clarity on the following items I need to stop doing:
                   </Text>
                 </View>
                 <View style={styles.entryContainer}>
@@ -148,7 +147,7 @@ const StopDoingExchange = props => {
                     resizeMode="contain"
                     style={styles.image}
                   />
-                  <Text style={styles.entryText}>
+                  <Text style={[styles.entryText, frontlinerInput.stop_doing_clarification === '' && styles.noneProvidedText]}>
                     {frontlinerInput.stop_doing_clarification === ''
                       ? 'None provided.'
                       : frontlinerInput.stop_doing_clarification}
@@ -157,7 +156,7 @@ const StopDoingExchange = props => {
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}
-                    name={senderName}
+                    name={`${senderName[0]} ${senderName[1]}`}
                     position="Team Member"
                   />
                 </View>
@@ -228,6 +227,20 @@ const StopDoingExchange = props => {
 
 export default StopDoingExchange;
 
-StopDoingExchange.propTypes = {};
+StopDoingExchange.propTypes = {
+  navigation: PropTypes.object,
+  route: PropTypes.object,
+  maxStep: PropTypes.number,
+  activeStep: PropTypes.number,
+  user: PropTypes.string,
+  feedbackData: PropTypes.object
+};
 
-StopDoingExchange.defaultPropst = {};
+StopDoingExchange.defaultPropst = {
+  navigation: {},
+  route: {},
+  maxStep: 7,
+  activeStep: 1,
+  user: '',
+  feedbackData: {},
+};

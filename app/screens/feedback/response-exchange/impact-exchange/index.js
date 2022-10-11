@@ -29,7 +29,7 @@ import Images from 'app/assets/images';
 import styles from '../styles';
 
 const ImpactExchange = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
@@ -37,7 +37,7 @@ const ImpactExchange = props => {
   const feedbackData = useSelector(getCurrentJourney);
   const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
     feedbackData;
-  // const dateLogged = moment(frontlinerFeedback.date).format('llll');
+  const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = feedbackData.frontliner.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
@@ -77,6 +77,9 @@ const ImpactExchange = props => {
 
   const handleTextChange = () => {
     setImpactResponse(storedText);
+    setTimeout(() => {
+      setStoredText('');
+    }, 200);
   };
 
   const handleGoBack = () => {
@@ -84,7 +87,7 @@ const ImpactExchange = props => {
   };
 
   const handleNext = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('impact', impactResponse))
+    dispatch(FeedbackActions.setExchangeData('impact', impactResponse))
     dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
@@ -109,8 +112,8 @@ const ImpactExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Feedback</Text>
-                  {/*  <Text style={styles.subtitleText}>{dateLogged}</Text> */}
+                  <Text style={styles.titleText}>{route.params.type} Feedback</Text>
+                   <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -138,8 +141,7 @@ const ImpactExchange = props => {
                 </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
                   <Text style={[styles.questionText, { color: '#569E49' }]}>
-                    The impact of this observation/behavior to the business or
-                    the team...
+                    I need clarity on the impact you stated...
                   </Text>
                 </View>
                 <View style={styles.entryContainer}>
@@ -148,7 +150,7 @@ const ImpactExchange = props => {
                     resizeMode="contain"
                     style={styles.image}
                   />
-                  <Text style={styles.entryText}>
+                  <Text style={[styles.entryText, frontlinerInput.impact_clarification === '' && styles.noneProvidedText]}>
                     {frontlinerInput.impact_clarification === ''
                       ? 'None provided.'
                       : frontlinerInput.impact_clarification}
@@ -157,7 +159,7 @@ const ImpactExchange = props => {
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}
-                    name={senderName}
+                    name={`${senderName[0]} ${senderName[1]}`}
                     position={'Team Member'}
                   />
                 </View>
@@ -225,6 +227,20 @@ const ImpactExchange = props => {
 
 export default ImpactExchange;
 
-ImpactExchange.propTypes = {};
+ImpactExchange.propTypes = {
+  navigation: PropTypes.object,
+  route: PropTypes.object,
+  maxStep: PropTypes.number,
+  activeStep: PropTypes.number,
+  user: PropTypes.string,
+  feedbackData: PropTypes.object
+};
 
-ImpactExchange.defaultProps = {};
+ImpactExchange.defaultProps = {
+  navigation: {},
+  route: {},
+  maxStep: 7,
+  activeStep: 1,
+  user: '',
+  feedbackData: {},
+};
