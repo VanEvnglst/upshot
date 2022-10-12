@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,25 +6,24 @@ import {
   TouchableOpacity,
   Animated,
   ScrollView,
-  Easing,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import { getCurrentJourney } from 'app/store/selectors';
 import { DeviceUtil } from 'app/utils';
 import styles from './styles';
-import { Button } from 'react-native-paper';
 
 const FeedbackOverview = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
   const feedbackData = useSelector(getCurrentJourney);
   const scaleValue = useRef(new Animated.Value(0)).current;
-  const { ["FB Entry"]: managerInput, ["FL Response"]: frontlinerInput } = feedbackData;
-  const senderName = route.params.frontliner.split(" ");
+  const { managerInput, frontlinerInput } = feedbackData;
+  const senderName = route.params.frontliner.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const [isObservationActive, setIsObservationActive] = useState(false);
   const [isImpactActive, setIsImpactActive] = useState(false);
@@ -45,11 +44,15 @@ const FeedbackOverview = props => {
   };
 
   const handleNavigation = () => {
-    navigation.navigate('Response Exchange', { sender: feedbackData.frontliner, feedbackDate: route.params.feedbackDate, type: route.params.feedbackType });
-  }
+    navigation.navigate('Response Exchange', {
+      sender: feedbackData.frontliner,
+      feedbackDate: route.params.feedbackDate,
+      type: route.params.feedbackType,
+    });
+  };
 
   return (
-    <ScrollView 
+    <ScrollView
       showsVerticalScrollIndicator={false}
       bounces={false}
       style={styles.container}>
@@ -69,35 +72,50 @@ const FeedbackOverview = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.contentContainer}>
-        {senderName && <LinearGradient
-          style={styles.nameAvatar}
-          colors={['#C883FF', '#6587FF']}
-          start={{ x: 0.2, y: 0 }}
-          end={{ x: 0.7, y: 1 }}>
-          <Text style={styles.avatarText}>{senderInitials}</Text>
-        </LinearGradient>}
+        {senderName && (
+          <LinearGradient
+            style={styles.nameAvatar}
+            colors={['#C883FF', '#6587FF']}
+            start={{ x: 0.2, y: 0 }}
+            end={{ x: 0.7, y: 1 }}>
+            <Text style={styles.avatarText}>{senderInitials}</Text>
+          </LinearGradient>
+        )}
         <Text style={styles.responderText}>{route.params.frontliner}</Text>
         <Text style={styles.responderDescription}>
           needs clarification on the following:
         </Text>
         <View style={styles.cardContainer}>
-          <Animated.View 
-            style={styles.card}
-            >
+          <Animated.View style={styles.card}>
             <TouchableWithoutFeedback
               accessibilityRole="button"
-              onPress={() =>
-                  setIsObservationActive(!isObservationActive)
-                  }>
+              onPress={() => setIsObservationActive(!isObservationActive)}>
               <View style={styles.cardHeader}>
-                <View style={styles.cardStatus}>
+                <View
+                  style={[
+                    styles.cardStatus,
+                    managerInput.employee_do === ''
+                      ? styles.disabledCardStatus
+                      : styles.enabledCardStatus,
+                  ]}>
                   <Icon
-                    name="checkmark-outline"
-                    size={12}
-                    style={{ color: '#777E90' }}
+                    name={
+                      managerInput.employee_do === ''
+                        ? 'close-outline'
+                        : 'checkmark-outline'
+                    }
+                    size={16}
+                    style={{ color: '#353945' }}
                   />
                 </View>
-                <Text style={styles.cardTitleText}>observation</Text>
+                <Text
+                  style={[
+                    styles.cardTitleText,
+                    managerInput.employee_do === '' &&
+                      styles.disabledCardTitleText,
+                  ]}>
+                  observation
+                </Text>
                 <Icon
                   name={
                     isObservationActive
@@ -109,15 +127,32 @@ const FeedbackOverview = props => {
                 />
               </View>
             </TouchableWithoutFeedback>
-            {isObservationActive &&
-            <View style={styles.inputContainer}>
-              <Text style={styles.managerInputText}>What you wrote...</Text>
-              <Text style={styles.managerInputContent}>{managerInput.employee_do}</Text>
-              <View style={styles.clarificationContainer}>
-              <Text style={styles.managerInputText}>Clarification needed...</Text>
-              <Text style={styles.managerInputContent}>{frontlinerInput.event_clarification}</Text>
+            {isObservationActive && (
+              <View style={styles.inputContainer}>
+                {managerInput.employee_do === '' ? (
+                  <Text style={styles.noneProvidedText}>None provided</Text>
+                ) : (
+                  <>
+                    <Text style={styles.managerInputText}>
+                      What you wrote...
+                    </Text>
+                    <Text style={styles.managerInputContent}>
+                      {managerInput.employee_do}
+                    </Text>
+                    <View style={styles.clarificationContainer}>
+                      <Text style={styles.managerInputText}>
+                        Clarification needed...
+                      </Text>
+                      <Text style={styles.managerInputContent}>
+                        {frontlinerInput.event_clarification === ''
+                          ? 'None provided.'
+                          : frontlinerInput.event_clarification}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
-              </View>}
+            )}
           </Animated.View>
           <View style={styles.card}>
             <TouchableWithoutFeedback
@@ -125,14 +160,30 @@ const FeedbackOverview = props => {
               onPress={() => setIsImpactActive(!isImpactActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View style={styles.cardStatus}>
+                <View
+                  style={[
+                    styles.cardStatus,
+                    managerInput.impact === ''
+                      ? styles.disabledCardStatus
+                      : styles.enabledCardStatus,
+                  ]}>
                   <Icon
-                    name="checkmark-outline"
-                    size={12}
-                    style={{ color: '#777E90' }}
+                    name={
+                      managerInput.impact === ''
+                        ? 'close-outline'
+                        : 'checkmark-outline'
+                    }
+                    size={16}
+                    style={{ color: '#353945' }}
                   />
                 </View>
-                <Text style={styles.cardTitleText}>impact of the behavior</Text>
+                <Text
+                  style={[
+                    styles.cardTitleText,
+                    managerInput.impact === '' && styles.disabledCardTitleText,
+                  ]}>
+                  impact of the behavior
+                </Text>
                 <Icon
                   name={
                     isImpactActive
@@ -144,15 +195,32 @@ const FeedbackOverview = props => {
                 />
               </View>
             </TouchableWithoutFeedback>
-            {isImpactActive &&
-            <View style={styles.inputContainer}>
-              <Text style={styles.managerInputText}>What you wrote...</Text>
-              <Text style={styles.managerInputContent}>{managerInput.impact}</Text>
-              <View style={styles.clarificationContainer}>
-              <Text style={styles.managerInputText}>Clarification needed...</Text>
-              <Text style={styles.managerInputContent}>{frontlinerInput.impact_clarification}</Text>
+            {isImpactActive && (
+              <View style={styles.inputContainer}>
+                {managerInput.impact === '' ? (
+                  <Text style={styles.noneProvidedText}>None provided</Text>
+                ) : (
+                  <>
+                    <Text style={styles.managerInputText}>
+                      What you wrote...
+                    </Text>
+                    <Text style={styles.managerInputContent}>
+                      {managerInput.impact}
+                    </Text>
+                    <View style={styles.clarificationContainer}>
+                      <Text style={styles.managerInputText}>
+                        Clarification needed...
+                      </Text>
+                      <Text style={styles.managerInputContent}>
+                        {frontlinerInput.impact_clarification === ''
+                          ? 'None provided.'
+                          : frontlinerInput.impact_clarification}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
-              </View>}
+            )}
           </View>
           <View style={styles.card}>
             <TouchableWithoutFeedback
@@ -160,14 +228,28 @@ const FeedbackOverview = props => {
               onPress={() => setIsContinueActive(!isContinueActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View style={styles.cardStatus}>
+                <View
+                  style={[
+                    styles.cardStatus,
+                    managerInput.do_more === ''
+                      ? styles.disabledCardStatus
+                      : styles.enabledCardStatus,
+                  ]}>
                   <Icon
-                    name="checkmark-outline"
-                    size={12}
-                    style={{ color: '#777E90' }}
+                    name={
+                      managerInput.do_more === ''
+                        ? 'close-outline'
+                        : 'checkmark-outline'
+                    }
+                    size={16}
+                    style={{ color: '#353945' }}
                   />
                 </View>
-                <Text style={styles.cardTitleText}>
+                <Text
+                  style={[
+                    styles.cardTitleText,
+                    managerInput.do_more === '' && styles.disabledCardTitleText,
+                  ]}>
                   Items to continue and do more of
                 </Text>
                 <Icon
@@ -181,30 +263,63 @@ const FeedbackOverview = props => {
                 />
               </View>
             </TouchableWithoutFeedback>
-            {isContinueActive &&
-            <View style={styles.inputContainer}>
-              <Text style={styles.managerInputText}>What you wrote...</Text>
-              <Text style={styles.managerInputContent}>{managerInput.do_more}</Text>
-              <View style={styles.clarificationContainer}>
-              <Text style={styles.managerInputText}>Clarification needed...</Text>
-              <Text style={styles.managerInputContent}>{frontlinerInput.continue_clarification}</Text>
+            {isContinueActive && (
+              <View style={styles.inputContainer}>
+                {managerInput.do_more === '' ? (
+                  <Text style={styles.noneProvidedText}>None provided</Text>
+                ) : (
+                  <>
+                    <Text style={styles.managerInputText}>
+                      What you wrote...
+                    </Text>
+                    <Text style={styles.managerInputContent}>
+                      {managerInput.do_more}
+                    </Text>
+                    <View style={styles.clarificationContainer}>
+                      <Text style={styles.managerInputText}>
+                        Clarification needed...
+                      </Text>
+                      <Text style={styles.managerInputContent}>
+                        {frontlinerInput.continue_clarification === ''
+                          ? 'None provided.'
+                          : frontlinerInput.continue_clarification}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
-              </View>}
+            )}
           </View>
           <View style={styles.card}>
             <TouchableWithoutFeedback
               accessibilityRole="button"
-              onPress={() =>  setIsDoLessActive(!isDoLessActive)}
+              onPress={() => setIsDoLessActive(!isDoLessActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View style={styles.cardStatus}>
+                <View
+                  style={[
+                    styles.cardStatus,
+                    managerInput.do_less === ''
+                      ? styles.disabledCardStatus
+                      : styles.enabledCardStatus,
+                  ]}>
                   <Icon
-                    name="checkmark-outline"
-                    size={12}
-                    style={{ color: '#777E90' }}
+                    name={
+                      managerInput.do_less === ''
+                        ? 'close-outline'
+                        : 'checkmark-outline'
+                    }
+                    size={16}
+                    style={{ color: '#353945' }}
                   />
                 </View>
-                <Text style={styles.cardTitleText}>Items to do less of...</Text>
+                <Text
+                  style={[
+                    styles.cardTitleText,
+                    managerInput.do_less === '' && styles.disabledCardTitleText,
+                  ]}>
+                  Items to do less of...
+                </Text>
                 <Icon
                   name={
                     isDoLessActive
@@ -216,30 +331,64 @@ const FeedbackOverview = props => {
                 />
               </View>
             </TouchableWithoutFeedback>
-            {isDoLessActive &&
-            <View style={styles.inputContainer}>
-              <Text style={styles.managerInputText}>What you wrote...</Text>
-              <Text style={styles.managerInputContent}>{managerInput.do_less}</Text>
-              <View style={styles.clarificationContainer}>
-              <Text style={styles.managerInputText}>Clarification needed...</Text>
-              <Text style={styles.managerInputContent}>{frontlinerInput.do_less_clarification}</Text>
+            {isDoLessActive && (
+              <View style={styles.inputContainer}>
+                {managerInput.do_less === '' ? (
+                  <Text style={styles.noneProvidedText}>None provided</Text>
+                ) : (
+                  <>
+                    <Text style={styles.managerInputText}>
+                      What you wrote...
+                    </Text>
+                    <Text style={styles.managerInputContent}>
+                      {managerInput.do_less}
+                    </Text>
+                    <View style={styles.clarificationContainer}>
+                      <Text style={styles.managerInputText}>
+                        Clarification needed...
+                      </Text>
+                      <Text style={styles.managerInputContent}>
+                        {frontlinerInput.do_less_clarification === ''
+                          ? 'None provided.'
+                          : frontlinerInput.do_less_clarification}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
-              </View>}
+            )}
           </View>
           <View style={styles.card}>
             <TouchableWithoutFeedback
               accessibilityRole="button"
-              onPress={() =>  setIsStopDoingActive(!isStopDoingActive)}
+              onPress={() => setIsStopDoingActive(!isStopDoingActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View style={styles.cardStatus}>
+                <View
+                  style={[
+                    styles.cardStatus,
+                    managerInput.stop_doing === ''
+                      ? styles.disabledCardStatus
+                      : styles.enabledCardStatus,
+                  ]}>
                   <Icon
-                    name="checkmark-outline"
-                    size={12}
-                    style={{ color: '#777E90' }}
+                    name={
+                      managerInput.stop_doing === ''
+                        ? 'close-outline'
+                        : 'checkmark-outline'
+                    }
+                    size={16}
+                    style={{ color: '#353945' }}
                   />
                 </View>
-                <Text style={styles.cardTitleText}>Items to stop doing</Text>
+                <Text
+                  style={[
+                    styles.cardTitleText,
+                    managerInput.stop_doing === '' &&
+                      styles.disabledCardTitleText,
+                  ]}>
+                  Items to stop doing
+                </Text>
                 <Icon
                   name={
                     isStopDoingActive
@@ -251,30 +400,66 @@ const FeedbackOverview = props => {
                 />
               </View>
             </TouchableWithoutFeedback>
-            {isStopDoingActive &&
-            <View style={styles.inputContainer}>
-              <Text style={styles.managerInputText}>What you wrote...</Text>
-              <Text style={styles.managerInputContent}>{managerInput.stop_doing}</Text>
-              <View style={styles.clarificationContainer}>
-              <Text style={styles.managerInputText}>Clarification needed...</Text>
-              <Text style={styles.managerInputContent}>{frontlinerInput.stop_doing_clarification}</Text>
+            {isStopDoingActive && (
+              <View style={styles.inputContainer}>
+                {managerInput.stop_doing === '' ? (
+                  <Text style={styles.noneProvidedText}>None provided</Text>
+                ) : (
+                  <>
+                    <Text style={styles.managerInputText}>
+                      What you wrote...
+                    </Text>
+                    <Text style={styles.managerInputContent}>
+                      {managerInput.stop_doing}
+                    </Text>
+                    <View style={styles.clarificationContainer}>
+                      <Text style={styles.managerInputText}>
+                        Clarification needed...
+                      </Text>
+                      <Text style={styles.managerInputContent}>
+                        {frontlinerInput.stop_doing_clarification === ''
+                          ? 'None provided.'
+                          : frontlinerInput.stop_doing_clarification}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
-              </View>}
+            )}
           </View>
           <View style={styles.card}>
             <TouchableWithoutFeedback
               accessibilityRole="button"
-              onPress={() => setIsAdditionalNotesActive(!isAdditionalNotesActive)}
+              onPress={() =>
+                setIsAdditionalNotesActive(!isAdditionalNotesActive)
+              }
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View style={styles.cardStatus}>
+                <View
+                  style={[
+                    styles.cardStatus,
+                    managerInput.additional_notes === ''
+                      ? styles.disabledCardStatus
+                      : styles.enabledCardStatus,
+                  ]}>
                   <Icon
-                    name="checkmark-outline"
-                    size={12}
-                    style={{ color: '#777E90' }}
+                    name={
+                      managerInput.additional_notes === ''
+                        ? 'close-outline'
+                        : 'checkmark-outline'
+                    }
+                    size={16}
+                    style={{ color: '#353945' }}
                   />
                 </View>
-                <Text style={styles.cardTitleText}>others</Text>
+                <Text
+                  style={[
+                    styles.cardTitleText,
+                    managerInput.additional_notes === '' &&
+                      styles.disabledCardTitleText,
+                  ]}>
+                  others
+                </Text>
                 <Icon
                   name={
                     isAdditionalNotesActive
@@ -286,40 +471,74 @@ const FeedbackOverview = props => {
                 />
               </View>
             </TouchableWithoutFeedback>
-            {isAdditionalNotesActive &&
-            <View style={styles.inputContainer}>
-              <Text style={styles.managerInputText}>What you wrote...</Text>
-              <Text style={styles.managerInputContent}>{managerInput.additional_notes}</Text>
-              <View style={styles.clarificationContainer}>
-              <Text style={styles.managerInputText}>Clarification needed...</Text>
-              <Text style={styles.managerInputContent}>{frontlinerInput.additional_clarification}</Text>
+            {isAdditionalNotesActive && (
+              <View style={styles.inputContainer}>
+                {managerInput.additional_notes === '' ? (
+                  <Text style={styles.noneProvidedText}>None provided</Text>
+                ) : (
+                  <>
+                    <Text style={styles.managerInputText}>
+                      What you wrote...
+                    </Text>
+                    <Text style={styles.managerInputContent}>
+                      {managerInput.additional_notes}
+                    </Text>
+                    <View style={styles.clarificationContainer}>
+                      <Text style={styles.managerInputText}>
+                        Clarification needed...
+                      </Text>
+                      <Text style={styles.managerInputContent}>
+                        {frontlinerInput.additional_clarification === ''
+                          ? 'None provided.'
+                          : frontlinerInput.additional_clarification}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
-              </View>}
+            )}
           </View>
         </View>
       </View>
-      <View style={{ paddingHorizontal: 24, borderTopWidth: 0.3, borderTopColor: '#777E90',backgroundColor: '#353945', height: 100, justifyContent: 'center', alignItems: 'center', marginTop: 30,}}>
+      <View
+        style={{
+          paddingHorizontal: 24,
+          borderTopWidth: 0.3,
+          borderTopColor: '#777E90',
+          backgroundColor: '#353945',
+          height: 100,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 30,
+        }}>
         <Button
-          mode='contained'
+          mode="contained"
           onPress={() => handleNavigation()}
-          style={{  borderRadius: 12, height: 48, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', width: '100%'}}>
-            <View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center'}}>
+          style={{
+            borderRadius: 12,
+            height: 48,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            width: '100%',
+          }}>
+          <View
+            style={{
+              paddingTop: 5,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             <Text
-                  style={{
-                    fontSize: 16,
-                    lineHeight: 16,
-                    marginRight: 4, 
-                    fontWeight: '700',
-                    color: '#353945',
-                  }}>{`Next`}</Text>
-                <Icon
-                  // style={{ paddingTop: 2 }}
-                  name={'arrow-forward-outline'}
-                  size={16}
-                  color={'#353945'}
-                />
-            </View>
-          </Button>
+              style={{
+                fontSize: 16,
+                lineHeight: 16,
+                marginRight: 4,
+                fontWeight: '700',
+                color: '#353945',
+              }}>{`Next`}</Text>
+            <Icon name={'arrow-forward-outline'} size={16} color={'#353945'} />
+          </View>
+        </Button>
       </View>
     </ScrollView>
   );
@@ -328,7 +547,7 @@ const FeedbackOverview = props => {
 export default FeedbackOverview;
 
 FeedbackOverview.propTypes = {
-  feedbackData: PropTypes.object
+  feedbackData: PropTypes.object,
 };
 
 FeedbackOverview.defaultProps = {
