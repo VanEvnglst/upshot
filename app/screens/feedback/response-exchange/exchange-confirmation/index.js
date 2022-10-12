@@ -19,7 +19,7 @@ const FeedbackExchangeConfirmation = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const feedbackData = useSelector(getCurrentJourney);
-  const memberName = feedbackData.result.frontliner.split(' ');
+  const memberName = feedbackData.frontliner.split(' ');
   const memberInitials = `${memberName[0].charAt(0)}${memberName[1].charAt(
     0,
   )}`;
