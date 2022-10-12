@@ -66,12 +66,17 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   cardStatus: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#3772FF',
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  disabledCardStatus: {
+    backgroundColor: '#68738F',
+  },
+  enabledCardStatus: {
+    backgroundColor: '#3772FF',
   },
   cardTitleText: {
     marginLeft: 14,
@@ -81,6 +86,9 @@ export default StyleSheet.create({
     lineHeight: 12,
     fontWeight: '700',
     color: 'white',
+  },
+  disabledCardTitleText: {
+    color: '#777E90',
   },
   nameAvatar: {
     width: 42,
@@ -111,4 +119,11 @@ export default StyleSheet.create({
   clarificationContainer: {
     marginTop: 12,
   },
+  noneProvidedText: {
+    fontSize: 14,
+    lineHeight: 24,
+    fontWeight: '700',
+    color: '#777E90',
+    marginBottom: 5,
+  }
 });

@@ -509,6 +509,14 @@ export default {
     return upshotAPI.post(`/${uniqueId}/get_feedback_exchange`, payload);
   },
 
+  postFeedbackExchange: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/record_em_response`, payload);
+  },
+
   postRecordingFLAssessment: async payload => { 
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = setAPI(url);

@@ -11,7 +11,6 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -29,15 +28,15 @@ import Images from 'app/assets/images';
 import styles from '../styles';
 
 const ContinueExchange = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const dispatch = useDispatch();
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
   const user = useSelector(getUserName);
   const feedbackData = useSelector(getCurrentJourney);
-  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+  const {  managerInput, frontlinerInput } =
     feedbackData;
-  // const dateLogged = moment(frontlinerFeedback.date).format('llll');
+  const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = feedbackData.frontliner.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const translation = useRef(new Animated.Value(0)).current;
@@ -77,6 +76,9 @@ const ContinueExchange = props => {
 
   const handleTextChange = () => {
     setContinueResponse(storedText);
+    setTimeout(() => {
+      setStoredText('');
+    }, 200);
   };
 
   const handleGoBack = () => {
@@ -84,7 +86,7 @@ const ContinueExchange = props => {
   };
 
   const handleNext = () => {
-    // dispatch(FrontlinerFeedbackActions.setResponseData('continue', continueResponse))
+    dispatch(FeedbackActions.setExchangeData('continue', continueResponse))
     dispatch(FeedbackActions.setExchangeActiveStep(activeStep + 1));
   };
 
@@ -109,8 +111,8 @@ const ContinueExchange = props => {
                   <Icon name="chevron-back-outline" size={24} color={'white'} />
                 </TouchableOpacity>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Feedback</Text>
-                  {/* <Text style={styles.subtitleText}>Date logged</Text> */}
+                  <Text style={styles.titleText}>{route.params.type} Feedback</Text>
+                  <Text style={styles.subtitleText}>{dateLogged}</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -138,7 +140,7 @@ const ContinueExchange = props => {
                 </TouchableWithoutFeedback>
                 <View style={styles.questionContainer}>
                   <Text style={[styles.questionText, { color: '#4577CB' }]}>
-                    I would like you to continue and do more...
+                    I need clarity on the the following items I need to continue and do more of:
                   </Text>
                 </View>
                 <View style={styles.entryContainer}>
@@ -147,7 +149,7 @@ const ContinueExchange = props => {
                     resizeMode="contain"
                     style={styles.image}
                   />
-                  <Text style={styles.entryText}>
+                  <Text style={[styles.entryText, frontlinerInput.continue_clarification === '' && styles.noneProvidedText]}>
                     {frontlinerInput.continue_clarification === ''
                       ? 'None provided.'
                       : frontlinerFeedback.continue_clarification}
@@ -156,7 +158,7 @@ const ContinueExchange = props => {
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}
-                    name={senderName}
+                    name={`${senderName[0]} ${senderName[1]}`}
                     position="Team Member"
                   />
                 </View>
@@ -228,6 +230,20 @@ const ContinueExchange = props => {
 
 export default ContinueExchange;
 
-ContinueExchange.propTypes = {};
+ContinueExchange.propTypes = {
+  navigation: PropTypes.object,
+  route: PropTypes.object,
+  maxStep: PropTypes.number,
+  activeStep: PropTypes.number,
+  user: PropTypes.string,
+  feedbackData: PropTypes.object
+};
 
-ContinueExchange.defaultPropst = {};
+ContinueExchange.defaultPropst = {
+  navigation: {},
+  route: {},
+  maxStep: 7,
+  activeStep: 1,
+  user: '',
+  feedbackData: {},
+};

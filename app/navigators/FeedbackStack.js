@@ -8,7 +8,8 @@ import {
   ReviewFeedbackEntry,
   ScheduleDiscussion,
   FeedbackOverview,
-  ResponseExchange
+  ResponseExchange,
+  FeedbackExchangeConfirmation
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -49,6 +50,10 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'Response Exchange'}
           component={ResponseExchange}
+        />
+        <FeedbackStack.Screen
+          name={'Exchange Confirmation'}
+          component={FeedbackExchangeConfirmation}
         />
       </FeedbackStack.Navigator>
     </>
