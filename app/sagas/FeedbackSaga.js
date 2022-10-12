@@ -87,7 +87,13 @@ export function* fetchCurrentFeedback({ journeyId }) {
   const response = yield call(api.getResponseFromFrontliner, data);
   debugger;
   if (response.data.status === STATUS_OK) {
-yield put(FeedbackActions.fetchCurrentFeedbackSuccess(response.data.result));
+    const feedbackResult = {
+      id: journeyId,
+      managerInput: response.data.result['FB Entry'],
+      frontlinerInput: response.data.result['FL Response'],
+      frontliner: response.data.result.frontliner
+    }
+yield put(FeedbackActions.fetchCurrentFeedbackSuccess(feedbackResult));
     // const journeyData = response.data.Journey;
     // const docuData = journeyData.Documenting;
     // const prepData = journeyData.Preparing;
@@ -110,20 +116,22 @@ export function* postFeedbackExchange({ data }) {
   // }
   
   const payload = {
-    capture_fb_id: '',
-    event_clarification: '',
-    impact_clarification: '',
-    continue_clarification: '',
-    do_less_clarification: '',
-    stop_doing_clarification: '',
-    additional_clarification: '',
-    support: [],
+    capture_fb_id: data.id,
+    event_clarification: data.eventResponse,
+    impact_clarification: data.impactResponse,
+    continue_clarification: data.continueResponse,
+    do_less_clarification: data.doLessResponse,
+    stop_doing_clarification: data.stopDoingResponse,
+    additional_clarification: data.additionalNotes,
+    support: data.supportResponse,
   };
-  
+
   const response = yield call(api.postFeedbackExchange, payload);
+  debugger;
   if (response.ok) {
     if(response.data.status === STATUS_OK) {
-
+      yield put(FeedbackActions.postFeedbackExchangeSuccess());
+      yield NavigationService.navigate('Exchange Confirmation');
     } else {
       yield put(FeedbackActions.postFeedbackExchangeFailure(response.data))
     }
