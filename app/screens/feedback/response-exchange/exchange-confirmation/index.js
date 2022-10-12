@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  SafeAreaView
-} from 'react-native';
+import { View, Text, Image, SafeAreaView } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -20,24 +15,22 @@ const FeedbackExchangeConfirmation = props => {
   const dispatch = useDispatch();
   const feedbackData = useSelector(getCurrentJourney);
   const memberName = feedbackData.frontliner.split(' ');
-  const memberInitials = `${memberName[0].charAt(0)}${memberName[1].charAt(
-    0,
-  )}`;
+  const memberInitials = `${memberName[0].charAt(0)}${memberName[1].charAt(0)}`;
   const dateLogged = moment(new Date()).format('llll');
 
   const handleNavigation = () => {
     navigation.navigate('Home');
     setTimeout(() => {
-      dispatch(FrontlinerFeedbackActions.resetExchangeState());
+      dispatch(FeedbackActions.resetExchangeState());
     }, 300);
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           source={Images.deliveredEmoji}
-          resizeMode='contain'
+          resizeMode="contain"
           style={styles.image}
         />
       </View>
@@ -49,14 +42,14 @@ const FeedbackExchangeConfirmation = props => {
             <UserAvatar
               initials={memberInitials}
               name={`${memberName[0]} ${memberName[1]}`}
-              position='Team Member'
-              textStyle={{ color: '#667080'}}
+              position="Team Member"
+              textStyle={{ color: '#667080' }}
             />
           </View>
-          <View style={[styles.details, { marginTop: 20}]}>
+          <View style={[styles.details, { marginTop: 20 }]}>
             <Image
               source={Images.penEmoji}
-              resizeMode='contain'
+              resizeMode="contain"
               style={styles.icon}
             />
             <Text style={styles.detailsText}> Feedback</Text>
@@ -65,11 +58,20 @@ const FeedbackExchangeConfirmation = props => {
             <Image
               source={Images.calendarOutline}
               style={styles.icon}
-              resizeMode='contain'
+              resizeMode="contain"
             />
             <View>
-            <Text style={styles.detailsText}>Response sent:</Text>
-            <Text style={{ fontSize: 14, opacity: 0.7, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{dateLogged}</Text>
+              <Text style={styles.detailsText}>Response sent:</Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  opacity: 0.7,
+                  lineHeight: 22,
+                  color: '#667080',
+                  fontWeight: '400',
+                }}>
+                {dateLogged}
+              </Text>
             </View>
           </View>
         </View>
@@ -85,7 +87,7 @@ const FeedbackExchangeConfirmation = props => {
       <View style={styles.spacer} />
     </SafeAreaView>
   );
-}
+};
 
 export default FeedbackExchangeConfirmation;
 
