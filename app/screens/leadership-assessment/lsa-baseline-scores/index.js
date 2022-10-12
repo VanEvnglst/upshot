@@ -29,7 +29,7 @@ const BaselineScore = props => {
   }, []);
 
   const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
-  const user = useSelector(state => state.user.userName);
+  const user = useSelector(state => state.user.get('userName'));
   
   const retrieveDataExtended = async () => {
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
@@ -184,8 +184,8 @@ const BaselineScore = props => {
           </View>
           </View>
       <View stlye={styles.userDetailsContainer}>
-              <Text style={styles.userNameText}>{ user }</Text>
-        <Text style={styles.userLevelText}>Level 1</Text>
+              <Text style={styles.userNameText}>Hi { user }</Text>
+        <Text style={styles.userLevelText}>Here is your Leadership Profile Results! 🎉</Text>
       </View>
     </View>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
