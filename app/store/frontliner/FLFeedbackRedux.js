@@ -19,6 +19,7 @@ export const INITIAL_STATE = Map({
     support: [],
     additionalSupport: '',
   },
+  assessmentRating: null,
 });
 
 const { Types, Creators } = createActions({
@@ -32,10 +33,14 @@ const { Types, Creators } = createActions({
   setResponseActiveStep: ['step'],
   setResponseData: ['key', 'data'],
   setResponseStatus: ['key', 'data'],
+  setAssessmentRating: ['key', 'data'],
   resetResponseState: [''],
   postFLFeedbackResponse: ['data'],
   postFLFeedbackResponseSuccess: [],
   postFLFeedbackResponseFailure: ['error'],
+  postFLAssessment: ['data'],
+  postFLAssessmentSuccess: [],
+  postFLAssessmentFailure: ['error'],
 });
 
 export const FrontlinerFeedbackTypes = Types;
@@ -116,6 +121,33 @@ const postFLFeedbackResponseFailure = (state, { error }) =>
     error,
   });
 
+const setAssessmentRating = (state, { key, data }) => {
+  return state.merge({
+    assessmentRating: {
+      ...state.get('assessmentRating'),
+      [key]: data,
+    }
+  });
+};
+
+  const postFLAssessment = state =>
+    state.merge({
+      fetching: true,
+      error: '',
+    });
+  
+  const postFLAssessmentSuccess = state => 
+  state.merge({
+    fetching: false,
+  });
+
+  const postFLAssessmentFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
+
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FL_FEEDBACK_LIST]: fetchFLFeedbackList,
   [Types.FETCH_FL_FEEDBACK_LIST_SUCCESS]: fetchFLFeedbackListSuccess,
@@ -127,7 +159,11 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_RESPONSE_DATA]: setResponseData,
   [Types.SET_RESPONSE_STATUS]: setResponseStatus,
   [Types.SET_RESPONSE_ACTIVE_STEP]: setResponseActiveStep,
+  [Types.SET_ASSESSMENT_RATING]: setAssessmentRating,
   [Types.POST_FL_FEEDBACK_RESPONSE]: postFLFeedbackResponse,
   [Types.POST_FL_FEEDBACK_RESPONSE_SUCCESS]: postFLFeedbackResponseSuccess,
   [Types.POST_FL_FEEDBACK_RESPONSE_FAILURE]: postFLFeedbackResponseFailure,
+  [Types.POST_FL_ASSESSMENT]: postFLAssessment,
+  [Types.POST_FL_ASSESSMENT_SUCCESS]: postFLAssessmentSuccess,
+  [Types.POST_FL_ASSESSMENT_FAILURE]: postFLAssessmentFailure,
 });

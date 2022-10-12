@@ -14,8 +14,7 @@ import Slider from "@react-native-community/slider";
 import styles from './styles';
 import FrontlinerFeedbackActions  from "app/store/frontliner/FLFeedbackRedux";
 import { useDispatch, useSelector } from "react-redux";
-import { AssessmentQuestions } from 'app/models/FrontlinerAssessmentModelß';
-
+import { AssessmentQuestions } from 'app/models/FrontlinerAssessmentModel';
 
 const FrontlinerGeneralAssessment = props => { 
   const { navigation } = props;
@@ -38,15 +37,18 @@ const FrontlinerGeneralAssessment = props => {
   const questionTitle = AssessmentQuestions[activeStep - 1].question;
   
   const handleNext = () => {
-      if (activeStep === maxStep) {
-        dispatch(FrontlinerFeedbackActions.setResponseActiveStep(1))
-        navigation.navigate('Home');
-      }
-      else {
-        dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1));
-      }
+
+    const ratingDetail = {
+      question: questionTitle,
+      answer: selectedOption
+    }
+    dispatch(FrontlinerFeedbackActions.setAssessmentRating(`Q${activeStep}`, ratingDetail));
+    dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1));
   }
 
+  const handleValueChange = (newValue) => { 
+    setSelectedOption(newValue);
+  }
   
   return (
   <>
@@ -118,4 +120,4 @@ export default FrontlinerGeneralAssessment;
 
 FrontlinerGeneralAssessment.propTypes = {};
 
-FrontlinerGeneralAssessment.defaultPropst = {};
+FrontlinerGeneralAssessment.defaultProps = {};

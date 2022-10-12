@@ -71,12 +71,41 @@ export function* postFLFeedbackResponse({data}) {
   }
 }
 
+export function* postFLAssessment({ data }) { 
+  const connected = yield checkInternetConnection();
+  const dataValues = Object.values(data);
+  let dataArr = [];
+  for (let i = 0; i < dataValues.length; i++) {
+    let ratingDetails = {
+      question: dataValues[i].question,
+      answer: dataValues[i].answer
+    };
+    dataArr = [...dataArr, ratingDetails];
+  };
+
+  const payload = {
+    fb_id: 237, //sample only still don't know where the Assessment will come from
+    ratings: dataArr,
+  }
+  const response = yield call(api.postRecordingFLAssessment, payload);
+  if (response.ok) {
+    yield put(FrontlinerFeedbackActions.setResponseStatus('assessmentRating', null));
+    yield put(FrontlinerFeedbackActions.setResponseStatus('activeStep', 1));
+    yield put(FrontlinerFeedbackActions.postFLAssessmentSuccess(response.data));
+    yield NavigationService.navigate('Home');
+  } else { 
+    yield put(FrontlinerFeedbackActions.postFLAssessmentFailure(response.data));
+  }
+  debugger;
+
+}
 
 
 function* watchFrontlinerFeedbackSaga() {
   yield takeLatest(FrontlinerFeedbackTypes.FETCH_FL_FEEDBACK_LIST, fetchFLFeedbackList);
   yield takeLatest(FrontlinerFeedbackTypes.FETCH_FL_FEEDBACK, fetchFLFeedback);
   yield takeLatest(FrontlinerFeedbackTypes.POST_FL_FEEDBACK_RESPONSE, postFLFeedbackResponse);
+  yield takeLatest(FrontlinerFeedbackTypes.POST_FL_ASSESSMENT, postFLAssessment);
 } 
 
 export default watchFrontlinerFeedbackSaga;

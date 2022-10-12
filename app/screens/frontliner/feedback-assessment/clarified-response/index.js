@@ -14,6 +14,7 @@ import Slider from "@react-native-community/slider";
 import styles from './styles';
 import FrontlinerFeedbackActions  from "app/store/frontliner/FLFeedbackRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { AssessmentQuestions } from 'app/models/FrontlinerAssessmentModel';
 
 
 const ClarificationResponse = props => {
@@ -24,17 +25,16 @@ const ClarificationResponse = props => {
   const indexValue = activeStep / maxStep;
   const [selectedOption, setSelectedOption] = useState(5);
   
- 
+  const questionTitle = AssessmentQuestions[8].question;
   const handleNext = () => {
-        if (activeStep === maxStep) {
-          dispatch(FrontlinerFeedbackActions.setResponseActiveStep(1))
-          navigation.navigate('Home');
-        }
-        else {
-          dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1))
-        }
-      }
-    
+    const ratingDetail = {
+      question: questionTitle,
+      answer: selectedOption
+    }
+    dispatch(FrontlinerFeedbackActions.setAssessmentRating(`QClarification`, ratingDetail));
+    dispatch(FrontlinerFeedbackActions.setResponseActiveStep(activeStep + 1));
+  }
+  
   const handleValueChange = (newValue) => { 
     setSelectedOption(newValue)
   }
@@ -72,7 +72,7 @@ const ClarificationResponse = props => {
 
             <View style={{paddingTop: 30}}>
           <Text style={styles.ratingText}>On a scale of 1 to 10...</Text>
-          <Text style={styles.questionText}>My manager clarified the questions I had </Text>
+          <Text style={styles.questionText}>{questionTitle}</Text>
         </View>
         
         <View style={{marginTop: 157}}>
@@ -109,4 +109,4 @@ export default ClarificationResponse;
 
 ClarificationResponse.propTypes = {};
 
-ClarificationResponse.defaultPropst = {};
+ClarificationResponse.defaultProps = {};
