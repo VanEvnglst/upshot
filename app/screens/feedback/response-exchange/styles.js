@@ -223,5 +223,27 @@ export default StyleSheet.create({
   noneProvidedText: {
     fontStyle: 'italic',
     opacity: 0.5,
+  },
+  supportItemContainer: {
+    marginTop: 16,
+    flexDirection: 'row',
+  },
+  supportMarker: {
+    width: 24,
+    height: 24,
+    borderRadius: 4,
+    backgroundColor: '#667080',
+    marginRight: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+
+  supportItemText:{ 
+    fontSize: 24,
+    lineHeight: 32,
+    fontWeight: '400',
+    color: 'white',
+    maxWidth: '85%'
   }
 });
