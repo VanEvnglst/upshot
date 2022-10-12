@@ -35,7 +35,7 @@ const EventObservationExchange = props => {
   const activeStep = useSelector(getExchangeActiveStep);
   const user = useSelector(getUserName);
   const feedbackData = useSelector(getCurrentJourney);
-  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+  const { managerInput, frontlinerInput } =
     feedbackData;
   const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = route.params.sender.split(' ');

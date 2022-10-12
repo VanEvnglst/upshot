@@ -32,7 +32,7 @@ const SupportExchange = props => {
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
   const feedbackData = useSelector(getCurrentJourney);
-  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+  const { managerInput, frontlinerInput } =
     feedbackData;
   const user = useSelector(getUserName);
   const senderName = feedbackData.frontliner.split(' ');
@@ -115,12 +115,22 @@ const SupportExchange = props => {
                 <StoryProgress length={maxStep} activeStep={activeStep} />
               </View>
               <View style={styles.contentContainer}>
-                <View style={styles.questionContainer}>
+                <View style={[styles.questionContainer, { width: '60%'}]}>
                   <Text style={[styles.questionText, { color: '#23262F' }]}>
                     May I get help with...
                   </Text>
                 </View>
-                <View style={{ marginTop: 60 }}></View>
+                <View style={{ marginTop: 60 }}>
+                <View
+                  // key={i}
+                  style={styles.supportItemContainer}
+                >
+                <View
+                style={styles.supportMarker}
+                ><Icon name="checkmark-outline" size={18} color={'#23262F'} /></View>
+                  <Text style={styles.supportItemText}>{frontlinerInput.support}</Text>
+                </View>
+                </View>
                 <View style={styles.nameContainer}>
                   <UserAvatar
                     initials={senderInitials}

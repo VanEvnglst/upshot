@@ -26,7 +26,7 @@ const FeedbackExchangeReview = props => {
   const maxStep = useSelector(getExchangeMaxStep);
   const activeStep = useSelector(getExchangeActiveStep);
   const feedbackData = useSelector(getCurrentJourney);
-  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+  const { managerInput, frontlinerInput } =
   feedbackData;
   const feedbackExchange = useSelector(getFeedbackExchange);
   const memberName = feedbackData.frontliner.split(' ');
@@ -34,12 +34,13 @@ const FeedbackExchangeReview = props => {
     0,
   )}`;
   const {
-    employee_do: employeeDo,
-    employee_impact: employeeImpact,
-    employee_do_more: employeeContinue,
-    employee_do_less: employeeDoLess,
-    employee_stop_doing: employeeStopDoing,
-    additional_notes: additionalNotes,
+    event_clarification: eventClarification,
+    impact_clarification: impactClarification,
+    continue_clarification: continueClarification,
+    do_less_clarification: doLessClarification,
+    stop_doing_clarification: stopDoingClarification,
+    additional_clarification: additionalClarification,
+    support: supportClarification,
     // requires_face_to_face: requiresF2F,
   } = frontlinerInput;
   const [state, setState] = useState({
@@ -101,9 +102,9 @@ const FeedbackExchangeReview = props => {
         <View style={styles.cardContainer}>
           <Text style={styles.cardLabelText}>Response to the event observed...</Text>
           <Text style={styles.cardContentText}>
-            {employeeDo === '' ? 'N/A' : employeeDo}
+            {eventClarification === '' ? 'N/A' : eventClarification}
           </Text>
-          {employeeDo !== '' && (
+          {eventClarification !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
                 You replied...
@@ -123,9 +124,9 @@ const FeedbackExchangeReview = props => {
             Response to the impact...
           </Text>
           <Text style={styles.cardContentText}>
-            {employeeImpact === '' ? 'N/A' : employeeImpact}
+            {impactClarification === '' ? 'N/A' : impactClarification}
           </Text>
-          {employeeImpact !== '' && (
+          {impactClarification !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
                 You replied...
@@ -145,9 +146,9 @@ const FeedbackExchangeReview = props => {
             Response to what to continue / do more of...
           </Text>
           <Text style={styles.cardContentText}>
-            {employeeContinue === '' ? 'N/A' : employeeContinue}
+            {continueClarification === '' ? 'N/A' : continueClarification}
           </Text>
-          {employeeContinue !== '' && (
+          {continueClarification !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
                 You replied...
@@ -165,9 +166,9 @@ const FeedbackExchangeReview = props => {
         <View style={styles.cardContainer}>
           <Text style={styles.cardLabelText}>Response to what to do less of...</Text>
           <Text style={styles.cardContentText}>
-            {employeeDoLess === '' ? 'N/A' : employeeDoLess}
+            {doLessClarification === '' ? 'N/A' : doLessClarification}
           </Text>
-          {employeeDoLess !== '' && (
+          {doLessClarification !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
                 You replied...
@@ -186,9 +187,9 @@ const FeedbackExchangeReview = props => {
           <View style={styles.cardContainer}>
             <Text style={styles.cardLabelText}>Response to what to stop doing...</Text>
             <Text style={styles.cardContentText}>
-              {employeeStopDoing === '' ? 'N/A' : employeeStopDoing}
+              {stopDoingClarification === '' ? 'N/A' : stopDoingClarification}
             </Text>
-            {employeeStopDoing !== '' && (
+            {stopDoingClarification !== '' && (
               <View style={styles.replyContainer}>
                 <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
                   You replied...
@@ -207,9 +208,9 @@ const FeedbackExchangeReview = props => {
         <View style={styles.cardContainer}>
           <Text style={styles.cardLabelText}>Response to additional details</Text>
           <Text style={styles.cardContentText}>
-            {additionalNotes === '' ? 'N/A' : additionalNotes}
+            {additionalClarification === '' ? 'N/A' : additionalClarification}
           </Text>
-          {additionalNotes !== '' && (
+          {additionalClarification !== '' && (
             <View style={styles.replyContainer}>
               <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
                 You replied...
@@ -224,17 +225,11 @@ const FeedbackExchangeReview = props => {
             </View>
           )}
         </View>
-        {/* <View style={styles.cardContainer}>
+        <View style={styles.cardContainer}>
           <Text style={styles.cardLabelText}>May I get help with...</Text>
-          <Text style={styles.cardContentText}>How can I support you to be better?</Text>
-          <View style={styles.replyContainer}>
-            <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
-              What you need...
-            </Text>
-            <View style={styles.inputContainer}>
-              {frontlinerResponse.support.map((item, i) => (
-                <View
-                  key={i}
+          {supportClarification !== '' && (
+          <View
+                  // key={i}
                   style={{
                     marginTop: 16,
                     flexDirection: 'row',
@@ -243,22 +238,34 @@ const FeedbackExchangeReview = props => {
                 >
                 <View
                 style={{
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                   borderRadius: 4,
                   backgroundColor: '#667080',
                   marginRight: 12,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                ><Icon name="checkmark-outline" size={20} color={'white'} /></View>
-                  <Text style={[styles.cardContentText, { maxWidth: '85%'}]}>{item.suggestion}</Text>
+                ><Icon name="checkmark-outline" size={16} color={'white'} /></View>
+                  <Text style={[styles.cardContentText, { maxWidth: '85%'}]}>{supportClarification}</Text>
                 </View>
-              ))}
-            </View> */}
-            {/* <TextInput style={styles.inputContainer} /> */}
-          {/* </View>
-        </View> */}
+                )}
+          {/* {frontlinerResponse.support.map((item, i) => (
+               
+              ))} */}
+          <View style={styles.replyContainer}>
+            <Text style={[styles.cardLabelText, styles.labelAlignEnd]}>
+              You replied...
+            </Text>
+            <TextInput 
+              style={styles.inputContainer}
+              value={state.supportResponse}
+              onChangeText={text => handleTextChange('supportResponse', text)}
+              textAlignVertical='top'
+              multiline
+            />
+          </View>
+        </View>
         <View style={styles.btnContainer}>
           <Button mode="contained" onPress={() => handleSendResponse()} style={styles.button}>
             Send Response

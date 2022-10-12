@@ -11,7 +11,6 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -35,7 +34,7 @@ const ContinueExchange = props => {
   const activeStep = useSelector(getExchangeActiveStep);
   const user = useSelector(getUserName);
   const feedbackData = useSelector(getCurrentJourney);
-  const { ['FB Entry']: managerInput, ['FL Response']: frontlinerInput } =
+  const {  managerInput, frontlinerInput } =
     feedbackData;
   const dateLogged = moment(route.params.feedbackDate).format('llll');
   const senderName = feedbackData.frontliner.split(' ');
