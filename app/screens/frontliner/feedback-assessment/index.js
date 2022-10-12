@@ -16,6 +16,7 @@ import FrontlinerFeedbackActions  from "app/store/frontliner/FLFeedbackRedux";
 import { useDispatch, useSelector } from "react-redux";
 import ClarificationResponse from "./clarified-response";
 import FrontlinerGeneralAssessment from "./general-assessment";
+import FeedbackAssessmentSignPost from './assessment-signpost';
 
 const FrontlinerFeedbackAssessment = props => {
   const dispatch = useDispatch();
@@ -35,7 +36,9 @@ const FrontlinerFeedbackAssessment = props => {
   const handleContent = () => { 
     if (clarificationStatus && activeStep === 6) {
       return <ClarificationResponse {...props} />
-    } else { 
+    } else if (activeStep === maxStep) { 
+      return <FeedbackAssessmentSignPost {...props}/>
+    }else { 
       return <FrontlinerGeneralAssessment {...props} />
     }
     }
