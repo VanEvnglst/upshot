@@ -129,12 +129,12 @@ export function* postFeedbackExchange({ data }) {
   const response = yield call(api.postFeedbackExchange, payload);
   debugger;
   if (response.ok) {
-    if(response.data.status === STATUS_OK) {
+    // if(response.data.status === STATUS_OK) {
       yield put(FeedbackActions.postFeedbackExchangeSuccess());
       yield NavigationService.navigate('Exchange Confirmation');
-    } else {
+    // } else {
       yield put(FeedbackActions.postFeedbackExchangeFailure(response.data))
-    }
+    // }
   } else {
     yield put(FeedbackActions.postFeedbackExchangeFailure(response.data))
   }
