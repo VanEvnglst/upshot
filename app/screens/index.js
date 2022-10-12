@@ -27,6 +27,11 @@ export { default as ReviewFeedbackEntry } from './feedback/record-entry/review-e
 export { default as EntryConfirmation } from './feedback/record-entry/entry-confirmation';
 export { default as FeedbackOverview} from './feedback/overview';
 export { default as ResponseExchange } from './feedback/response-exchange';
+export { default as FeedbackExchangeConfirmation } from './feedback/response-exchange/exchange-confirmation';
+
+export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
+export { default as FeedbackGuide } from './feedback/guide';
+export { default as FeedbackConfirmation } from './feedback/confirmation';
 
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
@@ -34,11 +39,6 @@ export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as Reminders } from './reminder';
 export { default as ExploreScreen } from './explore';
-
-/* ------------- Feedback Stack ------------- */
-export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
-export { default as FeedbackGuide } from './feedback/guide';
-export { default as FeedbackConfirmation } from './feedback/confirmation';
 
 /* ------------- Feedback Documenting ------------- */
 export { default as FeedbackFlow } from './feedback/flow';
