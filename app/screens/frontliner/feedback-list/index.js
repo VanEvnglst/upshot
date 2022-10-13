@@ -19,7 +19,7 @@ const FrontlinerFeedbackList = props => {
   }, []);
 
   const handleNavigation = item => {
-    navigation.navigate('Feedback Response', {
+    navigation.navigate('FL Response To Clarification', {
       id: item.fb_id,
       manager: item.em_name,
     });
