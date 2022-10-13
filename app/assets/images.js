@@ -80,4 +80,5 @@ export default {
   managingConflict: require('./images/managing-conflict.png'),
   buildingResilience: require('./images/building-resilience.png'),
   quotationEmoji: require('./images/quotation.png'),
+  fileCheckIcon: require('./images/file-check.png'),
 };
