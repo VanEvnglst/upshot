@@ -159,5 +159,7 @@ export default StyleSheet.create({
   readIcon: {
     width: 14,
     height: 14,
+    marginRight: 12,
+    marginBottom: 3,
   }
 });

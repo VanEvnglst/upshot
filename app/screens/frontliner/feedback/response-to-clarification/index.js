@@ -22,9 +22,9 @@ import styles from './styles';
 const FLResponseToClarification = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  const feedbackData = useSelector(getCurrentJourney);
-  const { managerInput, frontlinerInput } = feedbackData;
-  const senderName = route.params.frontliner.split(' ');
+  // const feedbackData = useSelector(getCurrentJourney);
+  // const { managerInput, frontlinerInput } = feedbackData;
+  const senderName = route.params.manager.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const [isObservationActive, setIsObservationActive] = useState(false);
   const [isImpactActive, setIsImpactActive] = useState(false);
@@ -33,23 +33,19 @@ const FLResponseToClarification = props => {
   const [isStopDoingActive, setIsStopDoingActive] = useState(false);
   const [isAdditionalNotesActive, setIsAdditionalNotesActive] = useState(false);
 
-  useEffect(() => {
-    async function retrieveData() {
-      dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
-    }
-    retrieveData();
-  }, []);
+  // useEffect(() => {
+  //   async function retrieveData() {
+  //     dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
+  //   }
+  //   retrieveData();
+  // }, []);
 
   const handleGoBack = () => {
     navigation.goBack();
   };
 
-  const handleNavigation = () => {
-    navigation.navigate('Response Exchange', {
-      sender: feedbackData.frontliner,
-      feedbackDate: route.params.feedbackDate,
-      type: route.params.feedbackType,
-    });
+  const handleMarkAsRead = () => {
+    navigation.navigate('Frontliner Feedback List');
   };
 
   return (
@@ -64,7 +60,7 @@ const FLResponseToClarification = props => {
           <Icon name="chevron-back-outline" size={24} color={'white'} />
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
-          <Text style={styles.headerTitleText}>Overview</Text>
+          <Text style={styles.headerTitleText}>Response to Clarifications</Text>
         </View>
         <TouchableOpacity
           accessibilityRole="button"
@@ -82,7 +78,7 @@ const FLResponseToClarification = props => {
             <Text style={styles.avatarText}>{senderInitials}</Text>
           </LinearGradient>
         )}
-        <Text style={styles.responderText}>{route.params.frontliner}</Text>
+        <Text style={styles.responderText}>{route.params.manager}</Text>
         <Text style={styles.responderDescription}>
           responded to your clarification requests:
         </Text>
@@ -92,7 +88,7 @@ const FLResponseToClarification = props => {
               accessibilityRole="button"
               onPress={() => setIsObservationActive(!isObservationActive)}>
               <View style={styles.cardHeader}>
-                <View
+                {/* <View
                   style={[
                     styles.cardStatus,
                     managerInput.employee_do === ''
@@ -108,15 +104,15 @@ const FLResponseToClarification = props => {
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View>
-                <Text
+                </View> */}
+                {/* <Text
                   style={[
                     styles.cardTitleText,
                     managerInput.employee_do === '' &&
                       styles.disabledCardTitleText,
                   ]}>
                   observation
-                </Text>
+                </Text> */}
                 <Icon
                   name={
                     isObservationActive
@@ -130,7 +126,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isObservationActive && (
               <View style={styles.inputContainer}>
-                {managerInput.employee_do === '' ? (
+                {/* {managerInput.employee_do === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -151,7 +147,7 @@ const FLResponseToClarification = props => {
                       </Text>
                     </View>
                   </>
-                )}
+                )} */}
               </View>
             )}
           </Animated.View>
@@ -161,7 +157,7 @@ const FLResponseToClarification = props => {
               onPress={() => setIsImpactActive(!isImpactActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View
+                {/* <View
                   style={[
                     styles.cardStatus,
                     managerInput.impact === ''
@@ -177,14 +173,14 @@ const FLResponseToClarification = props => {
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View>
-                <Text
+                </View> */}
+                {/* <Text
                   style={[
                     styles.cardTitleText,
                     managerInput.impact === '' && styles.disabledCardTitleText,
                   ]}>
                   impact of the behavior
-                </Text>
+                </Text> */}
                 <Icon
                   name={
                     isImpactActive
@@ -198,7 +194,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isImpactActive && (
               <View style={styles.inputContainer}>
-                {managerInput.impact === '' ? (
+                {/* {managerInput.impact === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -219,7 +215,7 @@ const FLResponseToClarification = props => {
                       </Text>
                     </View>
                   </>
-                )}
+                )} */}
               </View>
             )}
           </View>
@@ -229,7 +225,7 @@ const FLResponseToClarification = props => {
               onPress={() => setIsContinueActive(!isContinueActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View
+                {/* <View
                   style={[
                     styles.cardStatus,
                     managerInput.do_more === ''
@@ -245,14 +241,14 @@ const FLResponseToClarification = props => {
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View>
-                <Text
+                </View> */}
+                {/* <Text
                   style={[
                     styles.cardTitleText,
                     managerInput.do_more === '' && styles.disabledCardTitleText,
                   ]}>
                   Items to continue and do more of
-                </Text>
+                </Text> */}
                 <Icon
                   name={
                     isContinueActive
@@ -266,7 +262,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isContinueActive && (
               <View style={styles.inputContainer}>
-                {managerInput.do_more === '' ? (
+                {/* {managerInput.do_more === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -287,7 +283,7 @@ const FLResponseToClarification = props => {
                       </Text>
                     </View>
                   </>
-                )}
+                )} */}
               </View>
             )}
           </View>
@@ -297,7 +293,7 @@ const FLResponseToClarification = props => {
               onPress={() => setIsDoLessActive(!isDoLessActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View
+                {/* <View
                   style={[
                     styles.cardStatus,
                     managerInput.do_less === ''
@@ -313,14 +309,14 @@ const FLResponseToClarification = props => {
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View>
-                <Text
+                </View> */}
+                {/* <Text
                   style={[
                     styles.cardTitleText,
                     managerInput.do_less === '' && styles.disabledCardTitleText,
                   ]}>
                   Items to do less of...
-                </Text>
+                </Text> */}
                 <Icon
                   name={
                     isDoLessActive
@@ -334,7 +330,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isDoLessActive && (
               <View style={styles.inputContainer}>
-                {managerInput.do_less === '' ? (
+                {/* {managerInput.do_less === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -355,7 +351,7 @@ const FLResponseToClarification = props => {
                       </Text>
                     </View>
                   </>
-                )}
+                )} */}
               </View>
             )}
           </View>
@@ -365,7 +361,7 @@ const FLResponseToClarification = props => {
               onPress={() => setIsStopDoingActive(!isStopDoingActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View
+                {/* <View
                   style={[
                     styles.cardStatus,
                     managerInput.stop_doing === ''
@@ -381,15 +377,15 @@ const FLResponseToClarification = props => {
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View>
-                <Text
+                </View> */}
+                {/* <Text
                   style={[
                     styles.cardTitleText,
                     managerInput.stop_doing === '' &&
                       styles.disabledCardTitleText,
                   ]}>
                   Items to stop doing
-                </Text>
+                </Text> */}
                 <Icon
                   name={
                     isStopDoingActive
@@ -403,7 +399,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isStopDoingActive && (
               <View style={styles.inputContainer}>
-                {managerInput.stop_doing === '' ? (
+                {/* {managerInput.stop_doing === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -424,7 +420,7 @@ const FLResponseToClarification = props => {
                       </Text>
                     </View>
                   </>
-                )}
+                )} */}
               </View>
             )}
           </View>
@@ -436,7 +432,7 @@ const FLResponseToClarification = props => {
               }
               style={styles.card}>
               <View style={styles.cardHeader}>
-                <View
+                {/* <View
                   style={[
                     styles.cardStatus,
                     managerInput.additional_notes === ''
@@ -452,15 +448,15 @@ const FLResponseToClarification = props => {
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View>
-                <Text
+                </View> */}
+                {/* <Text
                   style={[
                     styles.cardTitleText,
                     managerInput.additional_notes === '' &&
                       styles.disabledCardTitleText,
                   ]}>
                   others
-                </Text>
+                </Text> */}
                 <Icon
                   name={
                     isAdditionalNotesActive
@@ -474,7 +470,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isAdditionalNotesActive && (
               <View style={styles.inputContainer}>
-                {managerInput.additional_notes === '' ? (
+                {/* {managerInput.additional_notes === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -495,7 +491,7 @@ const FLResponseToClarification = props => {
                       </Text>
                     </View>
                   </>
-                )}
+                )} */}
               </View>
             )}
           </View>
@@ -527,9 +523,13 @@ const FLResponseToClarification = props => {
 export default FLResponseToClarification;
 
 FLResponseToClarification.propTypes = {
-  feedbackData: PropTypes.object,
+  navigation: PropTypes.object,
+  route: PropTypes.object
+  // feedbackData: PropTypes.object,
 };
 
 FLResponseToClarification.defaultProps = {
-  feedbackData: {},
+  navigation: {},
+  route: {},
+  // feedbackData: {},
 };
