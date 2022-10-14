@@ -118,6 +118,7 @@ export const getFLFeedbackData = state => state.frontlinerFeedback.get('selected
 export const getFLResponseData = state => state.frontlinerFeedback.get('clarifications');
 export const getFLResponseMaxStep = state => state.frontlinerFeedback.get('maxStep');
 export const getFLResponseActiveStep = state => state.frontlinerFeedback.get('activeStep');
+export const getManagerFeedbackResponse = state => state.frontlinerFeedback.get('managerResponse');
 
 /* ------------- Leadership Assessment Selectors ------------- */
 export const getOverviewStep = state => state.leadershipSkillArea.get('overviewActiveStep');
