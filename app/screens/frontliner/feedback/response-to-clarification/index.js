@@ -13,8 +13,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import FeedbackActions from 'app/store/feedback/FeedbackRedux';
-import { getCurrentJourney } from 'app/store/selectors';
+import FrontlinerFeedbackActions from 'app/store/frontliner/FLFeedbackRedux';
+import { getManagerFeedbackResponse } from 'app/store/selectors';
 import { DeviceUtil } from 'app/utils';
 import Images from 'app/assets/images';
 import styles from './styles';
@@ -22,7 +22,7 @@ import styles from './styles';
 const FLResponseToClarification = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  // const feedbackData = useSelector(getCurrentJourney);
+  // const feedbackData = useSelector(getManagerFeedbackResponse);
   // const { managerInput, frontlinerInput } = feedbackData;
   const senderName = route.params.manager.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
@@ -33,12 +33,12 @@ const FLResponseToClarification = props => {
   const [isStopDoingActive, setIsStopDoingActive] = useState(false);
   const [isAdditionalNotesActive, setIsAdditionalNotesActive] = useState(false);
 
-  // useEffect(() => {
-  //   async function retrieveData() {
-  //     dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
-  //   }
-  //   retrieveData();
-  // }, []);
+  useEffect(() => {
+    async function retrieveData() {
+      dispatch(FrontlinerFeedbackActions.fetchManagerFeedbackResponse(route.params.id));
+    }
+    retrieveData();
+  }, []);
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -501,7 +501,7 @@ const FLResponseToClarification = props => {
         style={styles.btnContainer}>
         <Button
           mode="contained"
-          onPress={() => handleNavigation()}
+          onPress={() => handleMarkAsRead()}
           style={styles.button}>
           <View
             style={styles.btnContent}>
@@ -512,7 +512,6 @@ const FLResponseToClarification = props => {
               />
             <Text
               style={styles.buttonText}>{`Mark as Read`}</Text>
-           
           </View>
         </Button>
       </View>
