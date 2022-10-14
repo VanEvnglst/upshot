@@ -19,6 +19,7 @@ export const INITIAL_STATE = Map({
     support: [],
     additionalSupport: '',
   },
+  managerResponse: {},
   assessmentRating: null,
 });
 
@@ -41,6 +42,9 @@ const { Types, Creators } = createActions({
   postFLAssessment: ['data'],
   postFLAssessmentSuccess: [],
   postFLAssessmentFailure: ['error'],
+  fetchManagerFeedbackResponse: ['id'],
+  fetchManagerFeedbackResponseSuccess: [''],
+  fetchManagerFeedbackResponseFailure: ['error'],
 });
 
 export const FrontlinerFeedbackTypes = Types;
@@ -147,6 +151,24 @@ const setAssessmentRating = (state, { key, data }) => {
     error,
   });
 
+  const fetchManagerFeedbackResponse = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchManagerFeedbackResponseSuccess = (state, { data }) =>
+  state.merge({
+    fetching: false,
+    managerResponse: data,
+  });
+
+const fetchManagerFeedbackResponseFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error,
+  });
+
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_FL_FEEDBACK_LIST]: fetchFLFeedbackList,
@@ -166,4 +188,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_FL_ASSESSMENT]: postFLAssessment,
   [Types.POST_FL_ASSESSMENT_SUCCESS]: postFLAssessmentSuccess,
   [Types.POST_FL_ASSESSMENT_FAILURE]: postFLAssessmentFailure,
+  [Types.FETCH_MANAGER_FEEDBACK_RESPONSE]: fetchManagerFeedbackResponse,
+  [Types.FETCH_MANAGER_FEEDBACK_RESPONSE_SUCCESS]: fetchManagerFeedbackResponseSuccess,
+  [Types.FETCH_MANAGER_FEEDBACK_RESPONSE_FAILURE]: fetchManagerFeedbackResponseFailure
 });
