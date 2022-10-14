@@ -37,9 +37,11 @@ const LeadershipOverviewResults = props => {
   const [sheetType, setSheetType] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [skills, setSkills] = useState([]);
-
+  debugger;
   const { width } = Dimensions.get('screen');
   const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.72 : width * 0.82;
+  console.warn('screen size', width)
+  console.warn('ios screen', ITEM_SIZE)
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -53,37 +55,46 @@ const LeadershipOverviewResults = props => {
 
   useEffect(() => {
     setSkills(
-    {
-      id: 2,
-      title: '',
-      area: skillList[1].area,
-      description: aboutSkillArea[1].description,
-      definition: skillList[1].area === 'Promising Area' ? aboutSkillArea[1].promisingArea.whatScoreMeans : skillList[1].area === 'Area of Continued Development' ? aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans : skillList[1].area === 'Area of Concern' ? aboutSkillArea[1].areaOfConcern.whatScoreMeans : '',
-      skillPoint: skillList[1].area === 'Promising Area' ? aboutSkillArea[1].promisingArea.skillPoints : skillList[1].area === 'Area of Continued Development' ? aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints : skillList[1].area === 'Area of Concern' ? aboutSkillArea[1].areaOfConcern.skillPoints : '',
-  },
-  {
-    id: 3,
-    title: 'Empathy',
-    area: skillList[2].area,
-    description: aboutSkillArea[2].description,
-    definition: skillList[2].area === 'Promising Area' ? aboutSkillArea[2].promisingArea.whatScoreMeans : skillList[2].area === 'Area of Continued Development' ? aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans : skillList[2].area === 'Area of Concern' ? aboutSkillArea[2].areaOfConcern.whatScoreMeans : '',
-    skillPoint: skillList[2].area === 'Promising Area' ? aboutSkillArea[2].promisingArea.skillPoints : skillList[2].area === 'Area of Continued Development' ? aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints : skillList[2].area === 'Area of Concern' ? aboutSkillArea[2].areaOfConcern.skillPoints : '',
-},{
-  id: 4,
-  title: 'Openness to Learn',
-  area: skillList[3].area,
-  description: aboutSkillArea[3].description,
-  definition: skillList[3].area === 'Promising Area' ? aboutSkillArea[3].promisingArea.whatScoreMeans : skillList[3].area === 'Area of Continued Development' ? aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans : skillList[3].area === 'Area of Concern' ? aboutSkillArea[3].areaOfConcern.whatScoreMeans : '',
-  skillPoint: skillList[3].area === 'Promising Area' ? aboutSkillArea[3].promisingArea.skillPoints : skillList[3].area === 'Area of Continued Development' ? aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints : skillList[3].area === 'Area of Concern' ? aboutSkillArea[3].areaOfConcern.skillPoints : '',
-},
-{
-  id: 5,
-  title: 'Achievement Orientation',
-  area: skillList[4].area,
-  description: aboutSkillArea[4].description,
-  definition: skillList[4].area === 'Promising Area' ? aboutSkillArea[4].promisingArea.whatScoreMeans : skillList[4].area === 'Area of Continued Development' ? aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans : skillList[4].area === 'Area of Concern' ? aboutSkillArea[4].areaOfConcern.whatScoreMeans : '',
-  skillPoint: skillList[4].area === 'Promising Area' ? aboutSkillArea[4].promisingArea.skillPoints : skillList[4].area === 'Area of Continued Development' ? aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints : skillList[4].area === 'Area of Concern' ? aboutSkillArea[4].areaOfConcern.skillPoints : '',
-}
+      {
+        id: 5,
+        title: 'Achievement Orientation',
+        area: skillList[4].area,
+        description: aboutSkillArea[0].description,
+        definition: skillList[4].area === 'Promising Area' ? aboutSkillArea[0].promisingArea.whatScoreMeans : skillList[4].area === 'Area of Continued Development' ? aboutSkillArea[0].areaOfContinuedDevelopment.whatScoreMeans : skillList[4].area === 'Area of Concern' ? aboutSkillArea[0].areaOfConcern.whatScoreMeans : '',
+        skillPoint: skillList[4].area === 'Promising Area' ? aboutSkillArea[0].promisingArea.skillPoints : skillList[4].area === 'Area of Continued Development' ? aboutSkillArea[0].areaOfContinuedDevelopment.skillPoints : skillList[4].area === 'Area of Concern' ? aboutSkillArea[0].areaOfConcern.skillPoints : '',
+      },
+      {
+        id: 4,
+        title: 'Openness to Learn',
+        area: skillList[3].area,
+        description: aboutSkillArea[1].description,
+        definition: skillList[3].area === 'Promising Area' ? aboutSkillArea[1].promisingArea.whatScoreMeans : skillList[3].area === 'Area of Continued Development' ? aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans : skillList[3].area === 'Area of Concern' ? aboutSkillArea[1].areaOfConcern.whatScoreMeans : '',
+        skillPoint: skillList[3].area === 'Promising Area' ? aboutSkillArea[1].promisingArea.skillPoints : skillList[3].area === 'Area of Continued Development' ? aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints : skillList[3].area === 'Area of Concern' ? aboutSkillArea[1].areaOfConcern.skillPoints : '',
+      },
+      {
+        id: 2,
+        title: 'Trust Building',
+        area: skillList[1].area,
+        description: aboutSkillArea[2].description,
+        definition: skillList[1].area === 'Promising Area' ? aboutSkillArea[2].promisingArea.whatScoreMeans : skillList[1].area === 'Area of Continued Development' ? aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans : skillList[1].area === 'Area of Concern' ? aboutSkillArea[2].areaOfConcern.whatScoreMeans : '',
+        skillPoint: skillList[1].area === 'Promising Area' ? aboutSkillArea[2].promisingArea.skillPoints : skillList[1].area === 'Area of Continued Development' ? aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints : skillList[1].area === 'Area of Concern' ? aboutSkillArea[2].areaOfConcern.skillPoints : '',
+      },
+      {
+        id: 3,
+        title: 'Empathy',
+        area: skillList[2].area,
+        description: aboutSkillArea[3].description,
+        definition: skillList[2].area === 'Promising Area' ? aboutSkillArea[3].promisingArea.whatScoreMeans : skillList[2].area === 'Area of Continued Development' ? aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans : skillList[2].area === 'Area of Concern' ? aboutSkillArea[3].areaOfConcern.whatScoreMeans : '',
+        skillPoint: skillList[2].area === 'Promising Area' ? aboutSkillArea[3].promisingArea.skillPoints : skillList[2].area === 'Area of Continued Development' ? aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints : skillList[2].area === 'Area of Concern' ? aboutSkillArea[3].areaOfConcern.skillPoints : '',
+      },
+      {
+        id: 1,
+        title: 'Authenticity',
+        area: skillList[0].area,
+        description: aboutSkillArea[4].description,
+        definition: skillList[0].area === 'Promising Area' ? aboutSkillArea[4].promisingArea.whatScoreMeans : skillList[0].area === 'Area of Continued Development' ? aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans : skillList[0].area === 'Area of Concern' ? aboutSkillArea[4].areaOfConcern.whatScoreMeans : '',
+        skillPoint: skillList[0].area === 'Promising Area' ? aboutSkillArea[4].promisingArea.skillPoints : skillList[0].area === 'Area of Continued Development' ? aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints : skillList[0].area === 'Area of Concern' ? aboutSkillArea[4].areaOfConcern.skillPoints : '',
+      },
     )
   }, []);
 
@@ -162,7 +173,7 @@ const LeadershipOverviewResults = props => {
   };
 
   const handleScroll = (event) => {
-    console.log('currentScreenIndex', parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width));
+    console.warn('currentScreenIndex', parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width));
     setCurrentIndex(parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width))
 
   }
@@ -177,6 +188,7 @@ const LeadershipOverviewResults = props => {
   }
 
   const SkillAreaCard = ({ item }) => {
+    console.warn('item', item)
     console.warn('sk', item.skillPoint)
     return (
       <View style={styles.skillAreaContentContainer}>
@@ -260,7 +272,7 @@ const LeadershipOverviewResults = props => {
           </View>
           <ScrollView
             horizontal
-            showsHorizontalScrollIndicator={false}
+            showsHorizontalScrollIndicator={true}
             snapToAlignment='center'
             bounces={false}
             pagingEnabled
