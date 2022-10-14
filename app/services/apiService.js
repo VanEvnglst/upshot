@@ -523,5 +523,13 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/fl_fb_assessment`, payload);
+  },
+
+  getManagerFeedbackResponse: async payload => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/get_em_and_fl_responses`, payload);
   }
 };
