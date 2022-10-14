@@ -101,11 +101,38 @@ export function* postFLAssessment({ data }) {
 }
 
 
+export function* fetchManagerFeedbackResponse(feedbackId) {
+  const connected = yield checkInternetConnection();
+
+  const payload = {
+    fb_id: feedbackId.id
+  }
+  debugger;
+  const response = yield call(api.getManagerFeedbackResponse, payload);
+  debugger;
+  if(response.ok) {
+    if (response.data.status === STATUS_OK) {
+      const feedbackResult = {
+        id: response.data.result.fb_id,
+        frontlinerInput: response.data.result['fl response'],
+        managerInput: response.data.result['em response'],
+      }
+      yield put(FrontlinerFeedbackActions.fetchManagerFeedbackResponseSuccess(feedbackResult));
+    } else {
+      yield put(FrontlinerFeedbackActions.fetchManagerFeedbackResponseFailure(response.data))
+    }
+  } else {
+    yield put(FrontlinerFeedbackActions.fetchManagerFeedbackResponseFailure(response.data))
+  }
+}
+
+
 function* watchFrontlinerFeedbackSaga() {
   yield takeLatest(FrontlinerFeedbackTypes.FETCH_FL_FEEDBACK_LIST, fetchFLFeedbackList);
   yield takeLatest(FrontlinerFeedbackTypes.FETCH_FL_FEEDBACK, fetchFLFeedback);
   yield takeLatest(FrontlinerFeedbackTypes.POST_FL_FEEDBACK_RESPONSE, postFLFeedbackResponse);
   yield takeLatest(FrontlinerFeedbackTypes.POST_FL_ASSESSMENT, postFLAssessment);
+  yield takeLatest(FrontlinerFeedbackTypes.FETCH_MANAGER_FEEDBACK_RESPONSE,  fetchManagerFeedbackResponse);
 } 
 
 export default watchFrontlinerFeedbackSaga;
