@@ -155,124 +155,121 @@ export function* postOverviewTest({ data }) {
   const response = yield call(api.postOverviewTest, overviewData);
   if (response.ok) {
     if (response.data.status === 'ok') {
+      let definitionAuthenticity, skillPointAuthenticity, definitionTrust, skillPointTrust, definitionEmpathy, skillPointEmpathy, definitionOpenness, skillPointOpenness, definitionAchievement, skillPointAchievement;
+      let authenticityArr, trustArr, empathyArr, opennessArr, achievementArr = [];
+      for (let i = 0; i < response.data.skills.length; i++) { 
+       
+        switch (response.data.skills[i].name) { 
+          case 'authenticity':
+            if (response.data.skills[i].area === 'Promising Area') {
+              definitionAuthenticity = aboutSkillArea[4].promisingArea.whatScoreMeans;
+              skillPointAuthenticity = aboutSkillArea[4].promisingArea.skillPoints;
+            } else if (response.data.skills[i].area === 'Area of Continued Development') {
+              definitionAuthenticity = aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans;
+              skillPointAuthenticity = aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints
+            } else if (response.data.skills[i].area === 'Area of Concern') { 
+              definitionAuthenticity = aboutSkillArea[4].areaOfConcern.whatScoreMeans
+              skillPointAuthenticity = aboutSkillArea[4].areaOfConcern.skillPoints
+            } 
+            authenticityArr =  response.data.skills[i];
+            break;
+            case 'trust_building':
+              if (response.data.skills[i].area === 'Promising Area') {
+                definitionTrust = aboutSkillArea[2].promisingArea.whatScoreMeans;
+                skillPointTrust = aboutSkillArea[2].promisingArea.skillPoints;
+              } else if (response.data.skills[i].area === 'Area of Continued Development') {
+                definitionTrust = aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans;
+                skillPointTrust = aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints
+              } else if (response.data.skills[i].area === 'Area of Concern') { 
+                definitionTrust = aboutSkillArea[2].areaOfConcern.whatScoreMeans
+                skillPointTrust = aboutSkillArea[2].areaOfConcern.skillPoints
+              } 
+              trustArr =  response.data.skills[i];
+              break;
+          case 'empathy': 
+            if (response.data.skills[i].area === 'Promising Area') {
+              definitionEmpathy = aboutSkillArea[3].promisingArea.whatScoreMeans;
+              skillPointEmpathy = aboutSkillArea[3].promisingArea.skillPoints;
+            } else if (response.data.skills[i].area === 'Area of Continued Development') {
+              definitionEmpathy = aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans;
+              skillPointEmpathy = aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints
+            } else if (response.data.skills[i].area === 'Area of Concern') { 
+              definitionEmpathy = aboutSkillArea[3].areaOfConcern.whatScoreMeans
+              skillPointEmpathy = aboutSkillArea[3].areaOfConcern.skillPoints
+            } 
+            empathyArr =  response.data.skills[i];
+            break;
+            case 'openness_to_learn': 
+            if (response.data.skills[i].area === 'Promising Area') {
+              definitionOpenness = aboutSkillArea[1].promisingArea.whatScoreMeans;
+              skillPointOpenness = aboutSkillArea[1].promisingArea.skillPoints;
+            } else if (response.data.skills[i].area === 'Area of Continued Development') {
+              definitionOpenness = aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans;
+              skillPointOpenness = aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints
+            } else if (response.data.skills[i].area === 'Area of Concern') { 
+              definitionOpenness = aboutSkillArea[1].areaOfConcern.whatScoreMeans
+              skillPointOpenness = aboutSkillArea[1].areaOfConcern.skillPoints
+            } 
+            opennessArr =  response.data.skills[i];
+            break;
+            case 'achievement': 
+            if (response.data.skills[i].area === 'Promising Area') {
+              definitionAchievement = aboutSkillArea[0].promisingArea.whatScoreMeans;
+              skillPointAchievement = aboutSkillArea[0].promisingArea.skillPoints;
+            } else if (response.data.skills[i].area === 'Area of Continued Development') {
+              definitionAchievement = aboutSkillArea[0].areaOfContinuedDevelopment.whatScoreMeans;
+              skillPointAchievement = aboutSkillArea[0].areaOfContinuedDevelopment.skillPoints
+            } else if (response.data.skills[i].area === 'Area of Concern') { 
+              definitionAchievement = aboutSkillArea[0].areaOfConcern.whatScoreMeans
+              skillPointAchievement = aboutSkillArea[0].areaOfConcern.skillPoints
+            } 
+            achievementArr =  response.data.skills[i];
+            break;
+          
+        }
+      }
       const results = [
         {
           id: 1,
-          title: 'Authenticity',
-          description: aboutSkillArea[0].description,
-          definition:
-            response.data.skills[2].area === 'Promising Area'
-              ? aboutSkillArea[0].promisingArea.whatScoreMeans
-              : response.data.skills[2].area === 'Area of Continued Development'
-              ? aboutSkillArea[0].areaOfContinuedDevelopment.whatScoreMeans
-              : response.data.skills[2].area === 'Area of Concern'
-              ? aboutSkillArea[0].areaOfConcern.whatScoreMeans
-              : '',
-          skillPoint:
-            response.data.skills[2] === 'Promising Area'
-              ? aboutSkillArea[0].promisingArea.skillPoints
-              : response.data.skills[2].area === 'Area of Continued Development'
-              ? aboutSkillArea[0].areaOfContinuedDevelopment.skillPoints
-              : response.data.skills[2].area === 'Area of Concern'
-              ? aboutSkillArea[0].areaOfConcern.skillPoints
-              : '',
-          ...response.data.skills[2],
+          title: 'Authencity',
+          description: aboutSkillArea[4].description,
+          definition: definitionAuthenticity,
+          skillPoint: skillPointAuthenticity,
+          ...authenticityArr,
         },
-        
         {
           id: 2,
           title: 'Trust Building',
-          description: aboutSkillArea[1].description,
-          definition:
-            response.data.skills[1].area === 'Promising Area'
-              ? aboutSkillArea[1].promisingArea.whatScoreMeans
-              : response.data.skills[1].area === 'Area of Continued Development'
-              ? aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans
-              : response.data.skills[1].area === 'Area of Concern'
-              ? aboutSkillArea[1].areaOfConcern.whatScoreMeans
-              : '',
-          skillPoint:
-            response.data.skills[1] === 'Promising Area'
-              ? aboutSkillArea[1].promisingArea.skillPoints
-              : response.data.skills[1].area === 'Area of Continued Development'
-              ? aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints
-              : response.data.skills[1].area === 'Area of Concern'
-              ? aboutSkillArea[1].areaOfConcern.skillPoints
-              : '',
-          ...response.data.skills[1],
+          description: aboutSkillArea[2].description,
+          definition: definitionTrust,
+          skillPoint: skillPointTrust,
+          ...trustArr,
         },
-
         {
           id: 3,
           title: 'Empathy',
-          description: aboutSkillArea[2].description,
-          definition:
-            response.data.skills[0].area === 'Promising Area'
-              ? aboutSkillArea[2].promisingArea.whatScoreMeans
-              : response.data.skills[0].area === 'Area of Continued Development'
-              ? aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans
-              : response.data.skills[0].area === 'Area of Concern'
-              ? aboutSkillArea[2].areaOfConcern.whatScoreMeans
-              : '',
-          skillPoint:
-            response.data.skills[0] === 'Promising Area'
-              ? aboutSkillArea[2].promisingArea.skillPoints
-              : response.data.skills[0].area === 'Area of Continued Development'
-              ? aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints
-              : response.data.skills[0].area === 'Area of Concern'
-              ? aboutSkillArea[2].areaOfConcern.skillPoints
-              : '',
-
-          ...response.data.skills[0],
+          description: aboutSkillArea[3].description,
+          definition: definitionEmpathy,
+          skillPoint: skillPointEmpathy,
+          ...empathyArr,
         },
-
         {
           id: 4,
           title: 'Openness to Learn',
-          description: aboutSkillArea[3].description,
-          definition:
-            response.data.skills[4].area === 'Promising Area'
-              ? aboutSkillArea[3].promisingArea.whatScoreMeans
-              : response.data.skills[4].area === 'Area of Continued Development'
-              ? aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans
-              : response.data.skills[4].area === 'Area of Concern'
-              ? aboutSkillArea[3].areaOfConcern.whatScoreMeans
-              : '',
-          skillPoint:
-            response.data.skills[4].area === 'Promising Area'
-              ? aboutSkillArea[3].promisingArea.skillPoints
-              : response.data.skills[4].area === 'Area of Continued Development'
-              ? aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints
-              : response.data.skills[4].area === 'Area of Concern'
-              ? aboutSkillArea[3].areaOfConcern.skillPoints
-              : '',
-          ...response.data.skills[4],
+          description: aboutSkillArea[1].description,
+          definition: definitionOpenness,
+          skillPoint: skillPointOpenness,
+          ...opennessArr,
         },
-
         {
           id: 5,
-          title: 'Achievement Orientation',
-          description: aboutSkillArea[4].description,
-          definition:
-            response.data.skills[3].area === 'Promising Area'
-              ? aboutSkillArea[4].promisingArea.whatScoreMeans
-              : response.data.skills[3].area === 'Area of Continued Development'
-              ? aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans
-              : response.data.skills[3].area === 'Area of Concern'
-              ? aboutSkillArea[4].areaOfConcern.whatScoreMeans
-              : '',
-          skillPoint:
-            response.data.skills[3].area === 'Promising Area'
-              ? aboutSkillArea[4].promisingArea.skillPoints
-              : response.data.skills[4].area === 'Area of Continued Development'
-              ? aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints
-              : response.data.skills[3].area === 'Area of Concern'
-              ? aboutSkillArea[4].areaOfConcern.skillPoints
-              : '',
-          ...response.data.skills[3],
+          title: 'Achievement',
+          description: aboutSkillArea[0].description,
+          definition: definitionAchievement,
+          skillPoint: skillPointAchievement,
+          ...achievementArr,
         },
       ];
-      debugger;
       yield put(LeadershipSkillAreaActions.postOverviewTestSuccess(results));
       yield NavigationService.navigate('Assessment End Line');
     } else {
