@@ -130,35 +130,31 @@ const ReviewFeedbackEntry = props => {
         ))}
       </View> */}
       <View>
-        <Text style={{ fontWeight: '400', fontSize: 16, lineHeight: 22, color: '#667080', marginTop: 20}}>Are these feedback details correct?</Text>
-        <View style={{ marginTop: 30, marginBottom: 12, flexDirection: 'row', alignItems: 'center'}}>
-          <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#667080', opacity: 0.5, marginRight: 12 }}/>
+        <View style={{marginBottom: 12, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: "#B1B5C3", paddingBottom: 20}}>
+          <View style={{ width: 24, height: 24, borderRadius: 32, backgroundColor: '#667080', opacity: 0.5, marginRight: 12}}/>
           <View>
-            <Text style={{ fontSize: 24, marginBottom: 4, color: '#667080', fontWeight: '700'}}>{feedbackData.step1.name}</Text>
-            <Text style={{ fontSize: 14, lineHeight: 22, color: '#667080', fontWeight: '400'}}>Logged: {dateLogged}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 4, color: '#667080', fontWeight: '700', lineHeight: 22}}>{feedbackData.step1.name}</Text>
+            <Text style={{ fontSize: 14, lineHeight: 22, color: '#667080', fontWeight: '400'}}>{dateLogged}</Text>
           </View>
-        </View>
-        <View style={{ borderWidth: 1, height: 40, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', backgroundColor: '#F6EEFE', borderRadius: 4, borderColor: '#E0CAFF'}}>
+          </View>
+          <View style={styles.topicContainer}>
+            <Text style={{fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#667080'}}>Feedback Details</Text>
+          <Text style={[styles.topicLabel, { marginBottom: 4, marginTop: 12 }]}>Type</Text>
+        <View style={styles.topicPicker}>
           <Image
             source={feedbackData.step2.title === 'Corrective' ? Images.penEmoji : Images.redHeartEmoji}
             resizeMode='contain'
             style={{ width: 24, height: 24, marginRight: 8}}
           />
-          <Text style={{ color: '#A76AFF', fontsize: 14, lineHeight: 22, fontWeight: '400'}}>{feedbackData.step2.title} Feedback</Text>
+          <Text style={styles.topicLabel}>{feedbackData.step2.title} Feedback</Text>
         </View>
-        <View style={styles.topicContainer}>
-        <Text style={[styles.toText, { marginBottom: 4, }]}>Topic</Text>
-        <View 
-          // onPress={() => onPress()}
-        style={styles.topicPicker}>
+        
+        <Text style={[styles.topicLabel, { marginBottom: 4, marginTop: 12 }]}>Topic</Text>
+        <View style={styles.topicPicker}>
               <Text style={styles.topicLabel}>{topics.selectedLayerOne.name}</Text>
-          {/* <Icon
-            name='chevron-down-outline'
-            style={{flex: 1, color: '#667080'}}
-            size={24}
-          /> */}
-        </View>
-        <View style={[styles.topicPicker, { marginTop: 12}]}>
+            </View>
+            <Text style={[styles.topicLabel, { marginBottom: 4, marginTop: 12}]}>Sub-topic</Text>
+        <View style={styles.topicPicker}>
               <Text style={styles.topicLabel}>{topics.selectedLayerTwo.name}</Text>
         </View>
       </View>
@@ -180,7 +176,7 @@ const ReviewFeedbackEntry = props => {
         </View>
         </View>
 
-        <View style={{ marginTop: 24, minWidth: 327, flexDirection: 'row', justifyContent: 'flex-start' }}>
+        <View style={{ marginTop: 24, minWidth: 327, flexDirection: 'row', justifyContent: 'flex-start', paddingBottom: 30, borderBottomWidth: 1, borderBottomColor: "#B1B5C3"}}>
           <View style={{minWidth: 157.5, justifyContent: 'flex-start' }}>
           <Text style={{ color: '#667080', fontWeight: '700', fontSize: 12, lineHeight: 12, textTransform: 'uppercase', width: 157.5 }}>Start time</Text>
             
@@ -203,7 +199,7 @@ const ReviewFeedbackEntry = props => {
           </>
           )}
         {/* end of added details */}
-
+        <Text style={{fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#667080', marginTop: 16}}>Feedback Details</Text>
       <View style={styles.noteContainer}>
         <Text style={styles.noteText}>Check your feedback details before sending it to your team member. You can't edit your feedback once they are sent.</Text>
       </View>
@@ -420,7 +416,6 @@ const styles = StyleSheet.create({
 
   topicContainer: {
     flex: 1,
-    marginTop: 40,
   },
   topicPicker: {
     borderWidth: 1,
