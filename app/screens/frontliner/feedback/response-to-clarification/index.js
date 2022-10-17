@@ -22,8 +22,8 @@ import styles from './styles';
 const FLResponseToClarification = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  // const feedbackData = useSelector(getManagerFeedbackResponse);
-  // const { managerInput, frontlinerInput } = feedbackData;
+  const feedbackData = useSelector(getManagerFeedbackResponse);
+  const { managerInput, frontlinerInput } = feedbackData;
   const senderName = route.params.manager.split(' ');
   const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
   const [isObservationActive, setIsObservationActive] = useState(false);
@@ -45,7 +45,7 @@ const FLResponseToClarification = props => {
   };
 
   const handleMarkAsRead = () => {
-    navigation.navigate('Frontliner Feedback List');
+    navigation.replace('Frontliner Feedback List');
   };
 
   return (
@@ -88,31 +88,31 @@ const FLResponseToClarification = props => {
               accessibilityRole="button"
               onPress={() => setIsObservationActive(!isObservationActive)}>
               <View style={styles.cardHeader}>
-                {/* <View
+                <View
                   style={[
                     styles.cardStatus,
-                    managerInput.employee_do === ''
+                    frontlinerInput.event_clarification === ''
                       ? styles.disabledCardStatus
                       : styles.enabledCardStatus,
                   ]}>
                   <Icon
                     name={
-                      managerInput.employee_do === ''
+                      frontlinerInput.event_clarification === ''
                         ? 'close-outline'
                         : 'checkmark-outline'
                     }
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View> */}
-                {/* <Text
+                </View>
+                <Text
                   style={[
                     styles.cardTitleText,
-                    managerInput.employee_do === '' &&
+                    frontlinerInput.event_clarification === '' &&
                       styles.disabledCardTitleText,
                   ]}>
                   observation
-                </Text> */}
+                </Text>
                 <Icon
                   name={
                     isObservationActive
@@ -126,7 +126,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isObservationActive && (
               <View style={styles.inputContainer}>
-                {/* {managerInput.employee_do === '' ? (
+                {frontlinerInput.event_clarification === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -134,20 +134,20 @@ const FLResponseToClarification = props => {
                       What you asked...
                     </Text>
                     <Text style={styles.managerInputContent}>
-                      {managerInput.employee_do}
+                      {frontlinerInput.event_clarification}
                     </Text>
                     <View style={styles.clarificationContainer}>
                       <Text style={styles.managerInputText}>
                         Your manager replied...
                       </Text>
                       <Text style={styles.managerInputContent}>
-                        {frontlinerInput.event_clarification === ''
+                        {managerInput.event_clarification === ''
                           ? 'None provided.'
-                          : frontlinerInput.event_clarification}
+                          : managerInput.event_clarification}
                       </Text>
                     </View>
                   </>
-                )} */}
+                )}
               </View>
             )}
           </Animated.View>
@@ -157,30 +157,30 @@ const FLResponseToClarification = props => {
               onPress={() => setIsImpactActive(!isImpactActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                {/* <View
+                <View
                   style={[
                     styles.cardStatus,
-                    managerInput.impact === ''
+                    frontlinerInput.impact_clarification === ''
                       ? styles.disabledCardStatus
                       : styles.enabledCardStatus,
                   ]}>
                   <Icon
                     name={
-                      managerInput.impact === ''
+                      frontlinerInput.impact_clarification === ''
                         ? 'close-outline'
                         : 'checkmark-outline'
                     }
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View> */}
-                {/* <Text
+                </View>
+                <Text
                   style={[
                     styles.cardTitleText,
-                    managerInput.impact === '' && styles.disabledCardTitleText,
+                    frontlinerInput.impact_clarification === '' && styles.disabledCardTitleText,
                   ]}>
                   impact of the behavior
-                </Text> */}
+                </Text>
                 <Icon
                   name={
                     isImpactActive
@@ -194,7 +194,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isImpactActive && (
               <View style={styles.inputContainer}>
-                {/* {managerInput.impact === '' ? (
+                {frontlinerInput.impact_clarification === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -202,20 +202,20 @@ const FLResponseToClarification = props => {
                       What you asked...
                     </Text>
                     <Text style={styles.managerInputContent}>
-                      {managerInput.impact}
+                      {frontlinerInput.impact_clarification}
                     </Text>
                     <View style={styles.clarificationContainer}>
                       <Text style={styles.managerInputText}>
                         Your manager replied...
                       </Text>
                       <Text style={styles.managerInputContent}>
-                        {frontlinerInput.impact_clarification === ''
+                        {managerInput.impact_clarification === ''
                           ? 'None provided.'
-                          : frontlinerInput.impact_clarification}
+                          : managerInput.impact_clarification}
                       </Text>
                     </View>
                   </>
-                )} */}
+                )}
               </View>
             )}
           </View>
@@ -225,30 +225,30 @@ const FLResponseToClarification = props => {
               onPress={() => setIsContinueActive(!isContinueActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                {/* <View
+                <View
                   style={[
                     styles.cardStatus,
-                    managerInput.do_more === ''
+                    frontlinerInput.continue_clarification === ''
                       ? styles.disabledCardStatus
                       : styles.enabledCardStatus,
                   ]}>
                   <Icon
                     name={
-                      managerInput.do_more === ''
+                      frontlinerInput.continue_clarification === ''
                         ? 'close-outline'
                         : 'checkmark-outline'
                     }
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View> */}
-                {/* <Text
+                </View>
+                <Text
                   style={[
                     styles.cardTitleText,
-                    managerInput.do_more === '' && styles.disabledCardTitleText,
+                    frontlinerInput.continue_clarification === '' && styles.disabledCardTitleText,
                   ]}>
                   Items to continue and do more of
-                </Text> */}
+                </Text>
                 <Icon
                   name={
                     isContinueActive
@@ -262,7 +262,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isContinueActive && (
               <View style={styles.inputContainer}>
-                {/* {managerInput.do_more === '' ? (
+                {frontlinerInput.continue_clarification === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -270,20 +270,20 @@ const FLResponseToClarification = props => {
                       Clarification you needed...
                     </Text>
                     <Text style={styles.managerInputContent}>
-                      {managerInput.do_more}
+                      {frontlinerInput.continue_clarification}
                     </Text>
                     <View style={styles.clarificationContainer}>
                       <Text style={styles.managerInputText}>
                         Your manager replied...
                       </Text>
                       <Text style={styles.managerInputContent}>
-                        {frontlinerInput.continue_clarification === ''
+                        {managerInput.continue_clarification === ''
                           ? 'None provided.'
-                          : frontlinerInput.continue_clarification}
+                          : managerInput.continue_clarification}
                       </Text>
                     </View>
                   </>
-                )} */}
+                )}
               </View>
             )}
           </View>
@@ -293,30 +293,30 @@ const FLResponseToClarification = props => {
               onPress={() => setIsDoLessActive(!isDoLessActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                {/* <View
+                <View
                   style={[
                     styles.cardStatus,
-                    managerInput.do_less === ''
+                    frontlinerInput.do_less_clarification === ''
                       ? styles.disabledCardStatus
                       : styles.enabledCardStatus,
                   ]}>
                   <Icon
                     name={
-                      managerInput.do_less === ''
+                      frontlinerInput.do_less_clarification === ''
                         ? 'close-outline'
                         : 'checkmark-outline'
                     }
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View> */}
-                {/* <Text
+                </View>
+                <Text
                   style={[
                     styles.cardTitleText,
-                    managerInput.do_less === '' && styles.disabledCardTitleText,
+                    frontlinerInput.do_less_clarification === '' && styles.disabledCardTitleText,
                   ]}>
                   Items to do less of...
-                </Text> */}
+                </Text>
                 <Icon
                   name={
                     isDoLessActive
@@ -330,7 +330,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isDoLessActive && (
               <View style={styles.inputContainer}>
-                {/* {managerInput.do_less === '' ? (
+                {frontlinerInput.do_less_clarification === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -338,20 +338,20 @@ const FLResponseToClarification = props => {
                       Clarification you needed...
                     </Text>
                     <Text style={styles.managerInputContent}>
-                      {managerInput.do_less}
+                      {frontlinerInput.do_less_clarification}
                     </Text>
                     <View style={styles.clarificationContainer}>
                       <Text style={styles.managerInputText}>
                         Your manager replied...
                       </Text>
                       <Text style={styles.managerInputContent}>
-                        {frontlinerInput.do_less_clarification === ''
+                        {managerInput.do_less_clarification === ''
                           ? 'None provided.'
-                          : frontlinerInput.do_less_clarification}
+                          : managerInput.do_less_clarification}
                       </Text>
                     </View>
                   </>
-                )} */}
+                )}
               </View>
             )}
           </View>
@@ -361,31 +361,31 @@ const FLResponseToClarification = props => {
               onPress={() => setIsStopDoingActive(!isStopDoingActive)}
               style={styles.card}>
               <View style={styles.cardHeader}>
-                {/* <View
+                <View
                   style={[
                     styles.cardStatus,
-                    managerInput.stop_doing === ''
+                    frontlinerInput.stop_doing_clarification === ''
                       ? styles.disabledCardStatus
                       : styles.enabledCardStatus,
                   ]}>
                   <Icon
                     name={
-                      managerInput.stop_doing === ''
+                      frontlinerInput.stop_doing_clarification === ''
                         ? 'close-outline'
                         : 'checkmark-outline'
                     }
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View> */}
-                {/* <Text
+                </View>
+                <Text
                   style={[
                     styles.cardTitleText,
-                    managerInput.stop_doing === '' &&
+                    frontlinerInput.stop_doing_clarification === '' &&
                       styles.disabledCardTitleText,
                   ]}>
                   Items to stop doing
-                </Text> */}
+                </Text>
                 <Icon
                   name={
                     isStopDoingActive
@@ -399,7 +399,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isStopDoingActive && (
               <View style={styles.inputContainer}>
-                {/* {managerInput.stop_doing === '' ? (
+                {frontlinerInput.stop_doing_clarification === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -407,20 +407,20 @@ const FLResponseToClarification = props => {
                       Clarification you needed...
                     </Text>
                     <Text style={styles.managerInputContent}>
-                      {managerInput.stop_doing}
+                      {frontlinerInput.stop_doing_clarification}
                     </Text>
                     <View style={styles.clarificationContainer}>
                       <Text style={styles.managerInputText}>
                         Your manager replied...
                       </Text>
                       <Text style={styles.managerInputContent}>
-                        {frontlinerInput.stop_doing_clarification === ''
+                        {managerInput.stop_doing_clarification === ''
                           ? 'None provided.'
-                          : frontlinerInput.stop_doing_clarification}
+                          : managerInput.stop_doing_clarification}
                       </Text>
                     </View>
                   </>
-                )} */}
+                )}
               </View>
             )}
           </View>
@@ -432,31 +432,31 @@ const FLResponseToClarification = props => {
               }
               style={styles.card}>
               <View style={styles.cardHeader}>
-                {/* <View
+                <View
                   style={[
                     styles.cardStatus,
-                    managerInput.additional_notes === ''
+                    frontlinerInput.additional_clarification === ''
                       ? styles.disabledCardStatus
                       : styles.enabledCardStatus,
                   ]}>
                   <Icon
                     name={
-                      managerInput.additional_notes === ''
+                      frontlinerInput.additional_clarification === ''
                         ? 'close-outline'
                         : 'checkmark-outline'
                     }
                     size={16}
                     style={{ color: '#353945' }}
                   />
-                </View> */}
-                {/* <Text
+                </View>
+                <Text
                   style={[
                     styles.cardTitleText,
-                    managerInput.additional_notes === '' &&
+                    frontlinerInput.additional_clarification === '' &&
                       styles.disabledCardTitleText,
                   ]}>
                   others
-                </Text> */}
+                </Text>
                 <Icon
                   name={
                     isAdditionalNotesActive
@@ -470,7 +470,7 @@ const FLResponseToClarification = props => {
             </TouchableWithoutFeedback>
             {isAdditionalNotesActive && (
               <View style={styles.inputContainer}>
-                {/* {managerInput.additional_notes === '' ? (
+                {frontlinerInput.additional_clarification === '' ? (
                   <Text style={styles.noneProvidedText}>None provided</Text>
                 ) : (
                   <>
@@ -478,20 +478,20 @@ const FLResponseToClarification = props => {
                       What you asked...
                     </Text>
                     <Text style={styles.managerInputContent}>
-                      {managerInput.additional_notes}
+                      {frontlinerInput.additional_clarification}
                     </Text>
                     <View style={styles.clarificationContainer}>
                       <Text style={styles.managerInputText}>
                         Your manager replied...
                       </Text>
                       <Text style={styles.managerInputContent}>
-                        {frontlinerInput.additional_clarification === ''
+                        {managerInput.additional_clarification === ''
                           ? 'None provided.'
-                          : frontlinerInput.additional_clarification}
+                          : managerInput.additional_clarification}
                       </Text>
                     </View>
                   </>
-                )} */}
+                )}
               </View>
             )}
           </View>
@@ -523,12 +523,12 @@ export default FLResponseToClarification;
 
 FLResponseToClarification.propTypes = {
   navigation: PropTypes.object,
-  route: PropTypes.object
-  // feedbackData: PropTypes.object,
+  route: PropTypes.object,
+  feedbackData: PropTypes.object,
 };
 
 FLResponseToClarification.defaultProps = {
   navigation: {},
   route: {},
-  // feedbackData: {},
+  feedbackData: {},
 };
