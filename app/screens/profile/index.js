@@ -42,8 +42,8 @@ const Profile = props => {
       <Button
         mode='contained'
         style={{ marginBottom: 5, marginHorizontal: 16 }}
-        onPress={() => navigation.navigate('Frontliner', {screen: 'FL Feedback Assessment'})}
-    >FL Assessment</Button> 
+        onPress={() => navigation.navigate('Feedback', {screen: 'Capture Feedback Recap'})}
+    >Feedback Recap</Button> 
     </View>
 
     

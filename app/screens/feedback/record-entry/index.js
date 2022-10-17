@@ -153,7 +153,23 @@ const RecordFeedbackEntry = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-     
+      {activeStep === maxStep ? 
+        <>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', borderBottomWidth: 1, borderBottomColor: "#B1B5C3", paddingBottom: 20}}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={() => handleGoBack()}
+          style={{paddingLeft: 24, color: '#667080'}}>
+          <Icon name="chevron-back-outline" size={24} />
+        </TouchableOpacity>
+        <View>
+              <Text style={{fontSize: 24, lineHeight: 30, fontWeight: '700', color: '#667080', paddingTop: 20}}>Review Details</Text>
+              <Text style={styles.selectedName}>Are these feedback details correct?</Text>
+            </View>
+            </View>
+        </>
+      :
+        <>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           accessibilityRole="button"
@@ -183,9 +199,11 @@ const RecordFeedbackEntry = props => {
             }
           />
         ))}
-      </View>
+          </View>
+          </>
+      }
       <View style={styles.contentContainer}>
-      {activeStep !== 6 && <View style={styles.selectedNameContainer}>
+      {activeStep !== maxStep && <View style={styles.selectedNameContainer}>
           <View style={styles.selectedAvatar} />
           <Text style={styles.selectedName}>{staffName.step1.name}</Text>
         </View>}
