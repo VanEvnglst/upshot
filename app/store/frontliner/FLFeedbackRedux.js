@@ -43,7 +43,7 @@ const { Types, Creators } = createActions({
   postFLAssessmentSuccess: [],
   postFLAssessmentFailure: ['error'],
   fetchManagerFeedbackResponse: ['id'],
-  fetchManagerFeedbackResponseSuccess: [''],
+  fetchManagerFeedbackResponseSuccess: ['feedbackData'],
   fetchManagerFeedbackResponseFailure: ['error'],
 });
 
@@ -157,10 +157,10 @@ const setAssessmentRating = (state, { key, data }) => {
     error: '',
   });
 
-const fetchManagerFeedbackResponseSuccess = (state, { data }) =>
+const fetchManagerFeedbackResponseSuccess = (state, { feedbackData }) =>
   state.merge({
     fetching: false,
-    managerResponse: data,
+    managerResponse: feedbackData,
   });
 
 const fetchManagerFeedbackResponseFailure = (state, { error }) =>
