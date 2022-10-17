@@ -9,7 +9,8 @@ import {
   ScheduleDiscussion,
   FeedbackOverview,
   ResponseExchange,
-  FeedbackExchangeConfirmation
+  FeedbackExchangeConfirmation,
+  CaptureFeedbackRecap
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -26,6 +27,10 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'Capture Feedback Moment'}
           component={CaptureFeedbackMoment}
+        />
+        <FeedbackStack.Screen
+          name={'Capture Feedback Recap'}
+          component={CaptureFeedbackRecap}
         />
         <FeedbackStack.Screen
           name={'Record Feedback Entry'}
