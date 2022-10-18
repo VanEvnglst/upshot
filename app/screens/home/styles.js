@@ -3,72 +3,19 @@ import Colors from 'app/theme/colors';
 
 export default styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
-    justifyContent: 'flex-start',
+    flex: 1,
+    backgroundColor: '#141416',
   },
-  journeyCard: {
-    marginHorizontal: 24,
-    marginTop: 20,
-    minHeight: 172,
-    borderWidth: 1,
-    borderRadius: 6,
-    borderColor: '#BAC0CA',
+  headerContainer: {
     paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 24,
-    borderTopWidth: 5,
-  },
-  journeyCardStatusContainer: {
+    marginTop: 70,
+    paddingVertical: 13,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  journeyCardStatus: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 4,
-    borderWidth: 1,
-    borderRadius: 4,
-  },
-  journeyCardStatusText: {
-    fontSize: 10,
-    lineHeight: 10,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-  },
-  iconColor: {
-    color: '#667080',
-  },
-  journeyCardNameContainer: {
-    flexDirection: 'row',
-    marginTop: 12,
-    borderBottomWidth: 0.3,
-    paddingBottom: 12,
-  },
-  directReportNameText: {
-    color: '#667080',
-    fontWeight: '700',
-    fontSize: 16,
-    lineHeight: 14,
-    paddingTop: 3,
-  },
-  dateText: {
-    color: '#667080',
-    marginTop: 8,
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 14,
-  },
-  feedbackTypeIcon: {
-    width: 16,
-    height: 16,
-    marginRight: 12,
-  },
-  feedbackTypeText: {
-    fontSize: 14,
-    lineHeight: 22,
-    fontWeight: '400',
-    color: '#667080',
+    borderBottomWidth: 1,
+    borderColor: '#353945',
+    backgroundColor: '#141416',
   },
   avatarIcon: {
     width: 24,
@@ -79,41 +26,220 @@ export default styles = StyleSheet.create({
     marginRight: 12,
   },
   headerTitleText: {
-    fontSize: 32,
-                lineHeight: 36,
-                fontWeight: '700',
-                color: '#667080',
-                marginBottom: 8,
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    marginBottom: 8,
+  },
+  headerIcon: {
+    width: 24,
+    height: 24,
   },
   floatingAction: {
     position: 'absolute',
-          bottom: 20,
-          right: 28,
-          backgroundColor: '#DBE3FF',
-          borderWidth: 1,
-          borderColor: '#A0B3F3',
-          width: 50,
-          height: 50,
-          borderRadius: 12,
-          justifyContent: 'center',
-          alignItems: 'center',
+    bottom: 20,
+    right: 28,
+    backgroundColor: '#DBE3FF',
+    borderWidth: 1,
+    borderColor: '#A0B3F3',
+    width: 50,
+    height: 50,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   progressBar: {
-    width: 340,
+    width: '100%',
     height: 6,
     marginLeft: 3,
     borderRadius: 4,
     paddingRight: 19,
   },
   spacer: {
-    height: 100
+    height: 100,
   },
-  // overlineText: {
-  //   alignSelf: 'flex-start',
-  //   paddingLeft: 5,
-  //   marginBottom: 10,
-  // },
-  // horizontalCardContainer: {
-  //   marginTop: 20,
-  // }
+  greetingText: {
+    fontSize: 12,
+    lineHeight: 20,
+    fontWeight: '400',
+    color: 'white',
+  },
+  subHeaderContainer: {
+    marginTop: 24,
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomWidth: 1,
+    borderColor: '#353945',
+  },
+  welcomeText: {
+    fontSize: 32,
+    lineHeight: 40,
+    fontWeight: '700',
+    color: 'white',
+  },
+  welcomeDescriptionText: {
+    fontSize: 14,
+    lineHeight: 24,
+    fontWeight: '400',
+    color: '#777E90',
+    maxWidth: '90%',
+  },
+  startNowButton: {
+    height: 40,
+    backgroundColor: '#6200EE',
+    borderRadius: 90,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 24
+  },
+  buttonText: {
+    fontSize: 14,
+    lineHeight: 16,
+    fontWeight: '700',
+    color: 'white',
+    textTransform: 'capitalize'
+  },
+  contentContainer: {
+    marginTop: 24,
+    paddingHorizontal: 20,
+  },
+  assessmentProgressContainer: {
+    height: 90, 
+    padding: 12, 
+    borderRadius: 12, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    backgroundColor: 'rgba(110, 217, 98, 0.08)', 
+    borderColor: 'rgba(58, 181, 73, 0.3)',
+    borderWidth: 1, 
+  },
+  profileProgress: {
+    width: 46, 
+    height: 46, 
+    borderWidth: 2, 
+    borderRadius: 23, 
+    marginRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  profileProgressText: {
+    fontSize: 12,
+    lineHeight: 12,
+    fontWeight: '700',
+    color: 'white'
+  },
+  profileTextContainer: {
+    maxWidth: '80%'
+  },
+  profileHeaderText: {
+    color: 'white',
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight:'700'
+  },
+  profileDescriptionText: {
+    fontSize: 12,
+    lineHeight: 20,
+    color: '#B1B5C3',
+    fontWeight: '400'
+  },
+  cardContainer: {
+    marginBottom: 8, 
+    minHeight: 65, 
+    borderRadius: 16, 
+    padding: 8, 
+    flexDirection: 'row',
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    backgroundColor: '#23262F'
+  },
+  progressIcon: {
+    width: 32,
+    height: 32
+  },
+  homeLabelText: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '700',
+    color: 'white',
+  },
+  journeyDataGradient: {
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    marginRight: 12,
+  },
+  forwardIcon: {
+    marginLeft: 12,
+    paddingRight: 9,
+    color: '#777E90'
+  },
+  alignStart: {
+    flex: 1,
+  },
+  descriptionText: {
+    fontSize: 14,
+    lineHeight: 24,
+    fontWeight: '500',
+    color: '#777E90',
+  },
+  highlightedDescText: {
+    color: 'white',
+    fontWeight: '700'
+  },
+  subDescText: {
+    fontSize: 12,
+    lineHeight: 20,
+    fontWeight: '400',
+    color: '#777E90'
+  },
+  feedbackTypeContainer: {
+    height: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 16,
+    maxWidth: '70%',
+  },
+  feedbackTypeText: {
+    fontSize: 10,
+    lineHeight: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  correctiveContainer: {
+    borderColor: '#rgba(240, 98, 147, 0.5)',
+    backgroundColor: 'rgba(240, 98, 147, 0.1)',
+  },
+  correctiveText: {
+    color: '#F06293',
+  },
+  positiveContainer: {
+    borderColor: 'rgba(58, 181, 73, 0.5)',
+    backgroundColor: 'rgba(58, 181, 73, 0.1)',
+  },
+  positiveText: {
+    color: '#3AB549'
+  },
+  journeyCardContainer: {
+    borderRadius: 12,
+    padding: 16,
+    backgroundColor: 'rgba(119, 126, 145, 0.1)',
+    borderWidth: 1,
+    borderColor: '#353945',
+    width: 320,
+    marginRight: 12,
+  },
+  journeyDescriptionText: {
+    fontSize: 12,
+    lineHeight: 20,
+    fontWeight: '400',
+    color: '#B1B5C3'
+  }
 });
