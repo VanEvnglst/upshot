@@ -81,4 +81,13 @@ export default {
   buildingResilience: require('./images/building-resilience.png'),
   quotationEmoji: require('./images/quotation.png'),
   fileCheckIcon: require('./images/file-check.png'),
+  dashboardIcon: require('./images/home-dashboard.png'),
+  insightsIcon: require('./images/insights-icon.png'),
+  notificationIcon: require('./images/notification.png'),
+  profileIcon: require('./images/user-profile.png'),
+  upshotLogo: require('./images/upshotLogo.png'),
+  starIcon: require('./images/star.png'),
+  fileManagerIcon: require('./images/file-manager.png'),
+  thoughtsIcon: require('./images/thought-bubble.png'),
+  memoIcon: require('./images/memo.png'),
 };
