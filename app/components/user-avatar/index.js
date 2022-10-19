@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 
 const UserAvatar = props => {
-  const { initials, name, position, textStyle,  } = props;
+  const { initials, name, position, textStyle, style } = props;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <LinearGradient
         style={styles.nameAvatar}
         colors={['#C883FF', '#6587FF']}
@@ -28,14 +28,16 @@ export default UserAvatar;
 
 UserAvatar.propTypes = {
   initials: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   position: PropTypes.string,
   textStyle: PropTypes.object,
+  style: PropTypes.object,
 };
 
 UserAvatar.defaultProps = {
-  initials: '',
+  initials: 'IE',
   name: '',
   position: '',
   textStyle: {},
+  style: {},
 };
