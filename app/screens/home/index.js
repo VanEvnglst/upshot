@@ -12,7 +12,7 @@ import { ProgressBar, Button } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LearningCard, Wrapper, Text, BackgroundView } from 'app/components';
+import { LearningCard, Wrapper, Text, BackgroundView, UserAvatar } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
 import { getActiveJourneys, getUserName } from 'app/store/selectors';
 import labels from 'app/locales/en';
@@ -59,17 +59,17 @@ const HomeScreen = props => {
   };
 
   const handleNavigation = item => {
-    if (item.fb_id)
-      navigation.navigate('Feedback', {
-        screen: 'Feedback Overview',
-        params: {
-          id: item.fb_id,
-          frontliner: item['direct report'],
-          feedbackDate: item.datetime,
-          feedbackType: item.type,
-        },
-      });
-    else navigation.navigate('Feedback');
+    // if (item.fb_id)
+    //   navigation.navigate('Feedback', {
+    //     screen: 'Feedback Overview',
+    //     params: {
+    //       id: item.fb_id,
+    //       frontliner: item['direct report'],
+    //       feedbackDate: item.datetime,
+    //       feedbackType: item.type,
+    //     },
+    //   });
+    // else navigation.navigate('Feedback');
   };
 
   // const JourneyCard = ({ item }) => {
@@ -188,10 +188,10 @@ const HomeScreen = props => {
         accessibilityRole='button'
         onPress={() => console.log('go to details')}
         style={styles.journeyCardContainer}>
-        <View style={[styles.feedbackTypeContainer, styles.correctiveContainer]}>
+        <View style={[styles.feedbackTypeContainer, styles.correctiveContainer, { width: '50%'}]}>
           <Text style={[styles.feedbackTypeText, styles.correctiveText]}>Corrective Feedback</Text>
         </View>
-        <Text style={styles.headerTitleText}>Almost finished! 🤯</Text>
+        <Text style={[styles.headerTitleText, { marginTop: 8}]}>Almost finished! 🤯</Text>
         <Text style={styles.journeyDescriptionText}>
           Complete your feedback journey for Team member by accomplishing your
           self-reflection.
@@ -217,11 +217,15 @@ const HomeScreen = props => {
       </TouchableOpacity>
     );
   };
+
   const UpcomingDiscussionCard = () => {
     return (
-      <View style={styles.cardContainer}>
-        <View
-          style={{ borderWidth: 1, width: 54, height: 54, marginRight: 12, borderRadius: 27 }}
+      <TouchableOpacity
+        accessibilityRole='button'
+        onPress={() => console.log('upcoming discsussion')}
+        style={styles.cardContainer}>
+        <UserAvatar
+          style={styles.discussionAvatar}
         />
         <View style={{ flex: 1 }}>
           <View style={[styles.feedbackTypeContainer, styles.correctiveContainer]}>
@@ -240,7 +244,7 @@ const HomeScreen = props => {
           size={20}
           style={styles.forwardIcon}
         />
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
@@ -299,7 +303,10 @@ const HomeScreen = props => {
             <Text style={[styles.homeLabelText, { marginBottom: 12 }]}>
               Your Progress
             </Text>
-            <View style={styles.cardContainer}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => handleNavigation('Ongoing Journeys List')}
+              style={styles.cardContainer}>
               <LinearGradient
                 style={styles.journeyDataGradient}
                 colors={['#FFC77E', '#FFEBA2']}
@@ -324,8 +331,11 @@ const HomeScreen = props => {
                   style={styles.forwardIcon}
                 />
               </View>
-            </View>
-            <View style={styles.cardContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => handleNavigation('Scheduled Discussion List')}
+              style={styles.cardContainer}>
               <LinearGradient
                 style={styles.journeyDataGradient}
                 colors={['#3772FF', '#6F94ED']}
@@ -350,8 +360,11 @@ const HomeScreen = props => {
                   style={styles.forwardIcon}
                 />
               </View>
-            </View>
-            <View style={styles.cardContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => handleNavigation('Completed Journey List')}
+              style={styles.cardContainer}>
               <LinearGradient
                 style={styles.journeyDataGradient}
                 colors={['#3AB549', '#BDDEB9']}
@@ -376,8 +389,11 @@ const HomeScreen = props => {
                   style={styles.forwardIcon}
                 />
               </View>
-            </View>
-            <View style={styles.cardContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => handleNavigation('Total Journey List')}
+              style={styles.cardContainer}>
               <LinearGradient
                 style={styles.journeyDataGradient}
                 colors={['#9757D7', '#CEABF1']}
@@ -402,7 +418,7 @@ const HomeScreen = props => {
                   style={styles.forwardIcon}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
 

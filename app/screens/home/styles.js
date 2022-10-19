@@ -205,7 +205,7 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 16,
-    maxWidth: '70%',
+    maxWidth: '65%',
   },
   feedbackTypeText: {
     fontSize: 10,
@@ -241,5 +241,11 @@ export default styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '400',
     color: '#B1B5C3'
+  },
+  discussionAvatar: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    marginRight: 12
   }
 });
