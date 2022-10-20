@@ -11,7 +11,8 @@ import {
   ResponseExchange,
   FeedbackExchangeConfirmation,
   CaptureFeedbackRecap,
-  EMJourneyCloseout
+  EMJourneyCloseout,
+  JourneyDetails,
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -64,6 +65,10 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'EM Journey Closeout'}
           component={EMJourneyCloseout}
+          />
+        <FeedbackStack.Screen
+          name={'Journey Details'}
+          component={JourneyDetails}
         />
       </FeedbackStack.Navigator>
     </>
