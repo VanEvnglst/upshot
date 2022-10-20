@@ -186,12 +186,12 @@ const HomeScreen = props => {
     return (
       <TouchableOpacity 
         accessibilityRole='button'
-        onPress={() => console.log('go to details')}
+        onPress={() => navigation.navigate('Feedback', { screen: 'Journey Details'})}
         style={styles.journeyCardContainer}>
         <View style={[styles.feedbackTypeContainer, styles.correctiveContainer, { width: '50%'}]}>
           <Text style={[styles.feedbackTypeText, styles.correctiveText]}>Corrective Feedback</Text>
         </View>
-        <Text style={[styles.headerTitleText, { marginTop: 8}]}>Almost finished! 🤯</Text>
+        <Text style={[styles.headerTitleText, { marginTop: 8 }]}>Almost finished! 🤯</Text>
         <Text style={styles.journeyDescriptionText}>
           Complete your feedback journey for Team member by accomplishing your
           self-reflection.
