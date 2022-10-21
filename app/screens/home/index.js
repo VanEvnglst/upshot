@@ -12,9 +12,24 @@ import { ProgressBar, Button } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LearningCard, Wrapper, Text, BackgroundView, UserAvatar } from 'app/components';
+import {
+  LearningCard,
+  Wrapper,
+  Text,
+  BackgroundView,
+  UserAvatar,
+} from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
-import { getActiveJourneys, getUserName } from 'app/store/selectors';
+import {
+  getActiveJourneys,
+  getUserName,
+  getAssessmentProgress,
+  getUpcomingDiscussions,
+  getOngoingJourneysCount,
+  getScheduledCount,
+  getCompletedJourneysCount,
+  getTotalJourneysCount,
+} from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';
 import styles from './styles';
@@ -24,10 +39,16 @@ const HomeScreen = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const user = useSelector(getUserName);
-  const activeJourneyLength = useSelector(getActiveJourneys);
+  const assessment = useSelector(getAssessmentProgress);
+  const upcomingDiscussions = useSelector(getUpcomingDiscussions);
+  const activeJourneys = useSelector(getActiveJourneys);
+  const ongoingJourneys = useSelector(getOngoingJourneysCount);
+  const scheduledDiscs = useSelector(getScheduledCount);
+  const completedJourneys = useSelector(getCompletedJourneysCount);
+  const totalJourneys = useSelector(getTotalJourneysCount);
 
   useEffect(() => {
-    dispatch(FeedbackHistoryActions.fetchActiveJourneys());
+    dispatch(FeedbackHistoryActions.fetchUserActivity());
   }, []);
 
   // const [date, setDate] = useState(new Date(1598051730000));
@@ -184,14 +205,25 @@ const HomeScreen = props => {
 
   const FeedbackJourneyCard = () => {
     return (
-      <TouchableOpacity 
-        accessibilityRole='button'
-        onPress={() => navigation.navigate('Feedback', { screen: 'Journey Details'})}
+      <TouchableOpacity
+        accessibilityRole="button"
+        onPress={() =>
+          navigation.navigate('Feedback', { screen: 'Journey Details' })
+        }
         style={styles.journeyCardContainer}>
-        <View style={[styles.feedbackTypeContainer, styles.correctiveContainer, { width: '50%'}]}>
-          <Text style={[styles.feedbackTypeText, styles.correctiveText]}>Corrective Feedback</Text>
+        <View
+          style={[
+            styles.feedbackTypeContainer,
+            styles.correctiveContainer,
+            { width: '50%' },
+          ]}>
+          <Text style={[styles.feedbackTypeText, styles.correctiveText]}>
+            Corrective Feedback
+          </Text>
         </View>
-        <Text style={[styles.headerTitleText, { marginTop: 8 }]}>Almost finished! 🤯</Text>
+        <Text style={[styles.headerTitleText, { marginTop: 8 }]}>
+          Almost finished! 🤯
+        </Text>
         <Text style={styles.journeyDescriptionText}>
           Complete your feedback journey for Team member by accomplishing your
           self-reflection.
@@ -221,14 +253,13 @@ const HomeScreen = props => {
   const UpcomingDiscussionCard = () => {
     return (
       <TouchableOpacity
-        accessibilityRole='button'
+        accessibilityRole="button"
         onPress={() => console.log('upcoming discsussion')}
         style={styles.cardContainer}>
-        <UserAvatar
-          style={styles.discussionAvatar}
-        />
+        <UserAvatar style={styles.discussionAvatar} />
         <View style={{ flex: 1 }}>
-          <View style={[styles.feedbackTypeContainer, styles.correctiveContainer]}>
+          <View
+            style={[styles.feedbackTypeContainer, styles.correctiveContainer]}>
             <Text style={[styles.feedbackTypeText, styles.correctiveText]}>
               Corrective Feedback
             </Text>
@@ -275,7 +306,7 @@ const HomeScreen = props => {
         <View style={styles.contentContainer}>
           <View style={styles.assessmentProgressContainer}>
             <View style={styles.profileProgress}>
-              <Text style={styles.profileProgressText}>25%</Text>
+              <Text style={styles.profileProgressText}>{assessment}</Text>
             </View>
             <View style={styles.profileTextContainer}>
               <Text style={styles.profileHeaderText}>
@@ -286,17 +317,32 @@ const HomeScreen = props => {
               </Text>
             </View>
           </View>
+          {activeJourneys.length > 1 ? (
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={{ marginTop: 12, flex: 1 }}>
-            <FeedbackJourneyCard />
-            <FeedbackJourneyCard />
+            {activeJourneys.map((item, i) => (
+              <FeedbackJourneyCard 
+                key={i}
+              />
+            ))}
           </ScrollView>
-          <View style={{ marginTop: 20}}>
-            <Text style={[styles.homeLabelText, { marginBottom: 12 }]}>Upcoming 1-on-1s</Text>
-            <UpcomingDiscussionCard/>
-            <UpcomingDiscussionCard/>
+          ): null}
+          <View style={{ marginTop: 20 }}>
+            {upcomingDiscussions.length > 1 ? (
+              <>
+                <Text style={[styles.homeLabelText, { marginBottom: 12 }]}>
+                  Upcoming 1-on-1s
+                </Text>
+                {upcomingDiscussions.map((item, i) => (
+                  <UpcomingDiscussionCard
+                    key={i}
+                    item={item}
+                  />
+                ))}
+              </>
+            ) : null}
           </View>
 
           <View style={{ marginTop: 20 }}>
@@ -304,7 +350,7 @@ const HomeScreen = props => {
               Your Progress
             </Text>
             <TouchableOpacity
-              accessibilityRole='button'
+              accessibilityRole="button"
               onPress={() => handleNavigation('Ongoing Journeys List')}
               style={styles.cardContainer}>
               <LinearGradient
@@ -323,7 +369,7 @@ const HomeScreen = props => {
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[styles.homeLabelText, { color: '#F9954D' }]}>
-                  0
+                  {ongoingJourneys}
                 </Text>
                 <Icon
                   name="chevron-forward-outline"
@@ -333,7 +379,7 @@ const HomeScreen = props => {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              accessibilityRole='button'
+              accessibilityRole="button"
               onPress={() => handleNavigation('Scheduled Discussion List')}
               style={styles.cardContainer}>
               <LinearGradient
@@ -352,7 +398,7 @@ const HomeScreen = props => {
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[styles.homeLabelText, { color: '#3772FF' }]}>
-                  0
+                  {scheduledDiscs}
                 </Text>
                 <Icon
                   name="chevron-forward-outline"
@@ -362,7 +408,7 @@ const HomeScreen = props => {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              accessibilityRole='button'
+              accessibilityRole="button"
               onPress={() => handleNavigation('Completed Journey List')}
               style={styles.cardContainer}>
               <LinearGradient
@@ -381,7 +427,7 @@ const HomeScreen = props => {
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[styles.homeLabelText, { color: '#3AB549' }]}>
-                  0
+                  {completedJourneys}
                 </Text>
                 <Icon
                   name="chevron-forward-outline"
@@ -391,7 +437,7 @@ const HomeScreen = props => {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              accessibilityRole='button'
+              accessibilityRole="button"
               onPress={() => handleNavigation('Total Journey List')}
               style={styles.cardContainer}>
               <LinearGradient
@@ -410,7 +456,7 @@ const HomeScreen = props => {
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[styles.homeLabelText, { color: '#9757D7' }]}>
-                  0
+                  {totalJourneys}
                 </Text>
                 <Icon
                   name="chevron-forward-outline"
