@@ -531,5 +531,13 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/get_em_and_fl_responses`, payload);
+  },
+
+  getUserActivity: async () => {
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/get_home_stats`);
   }
 };
