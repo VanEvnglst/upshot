@@ -33,6 +33,7 @@ export { default as FeedbackExchangeConfirmation } from './feedback/response-exc
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
 export { default as FeedbackGuide } from './feedback/guide';
 export { default as FeedbackConfirmation } from './feedback/confirmation';
+export { default as EMJourneyCloseout } from './feedback/journey-closeout';
 
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
@@ -65,5 +66,6 @@ export { default as FrontlinerFeedbackList } from './frontliner/feedback-list';
 export { default as FrontlinerResponseConfirmation } from './frontliner/feedback-response/response-confirmation';
 export { default as FLResponseToClarification } from './frontliner/feedback/response-to-clarification';
 export { default as FrontlinerFeedbackAssessment } from './frontliner/feedback-assessment';
+export { default as FLJourneyCloseout } from './frontliner/feedback-closeout';
 /* ------------- Insights Panel Stack ------------- */
 export { default as InsightsPanel } from './insights';

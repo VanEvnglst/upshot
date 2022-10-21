@@ -5,8 +5,10 @@ import {
   FrontlinerFeedbackList,
   FrontlinerResponseConfirmation,
   FrontlinerFeedbackAssessment,
-  FLResponseToClarification
+  FLResponseToClarification,
+  FLJourneyCloseout
 } from 'app/screens';
+
 
 
 
@@ -38,6 +40,10 @@ export default function FrontlinerNavigator() {
       <FrontlinerStack.Screen
         name={'FL Response To Clarification'}
         component={FLResponseToClarification}
+      />
+      <FrontlinerStack.Screen
+        name={'FL Journey Closeout'}
+        component={FLJourneyCloseout}
       />
     </FrontlinerStack.Navigator>
   )

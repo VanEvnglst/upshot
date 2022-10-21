@@ -90,4 +90,5 @@ export default {
   fileManagerIcon: require('./images/file-manager.png'),
   thoughtsIcon: require('./images/thought-bubble.png'),
   memoIcon: require('./images/memo.png'),
+  starstruckEmoji: require('./images/starstruck-emoji.png'),
 };
