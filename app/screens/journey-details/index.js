@@ -535,7 +535,7 @@ const JourneyDetails = props => {
         <View style={styles.headerContainer}>
           <TouchableOpacity
             accessibility="button"
-            onPress={() => navigation.goBack()}>
+            onPress={() => navigation.replace('Home')}>
             <Icon
               name="chevron-back-outline"
               size={20}
