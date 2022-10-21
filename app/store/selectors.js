@@ -24,6 +24,12 @@ export const getActiveJourneys = state =>
 export const getRecentJourneys = state =>
   state.feedbackHistory.get('recentJourneyList');
 export const getJourneyError = state => state.feedbackHistory.get('error');
+export const getAssessmentProgress = state => state.feedbackHistory.get('assessmentProgress');
+export const getUpcomingDiscussions = state => state.feedbackHistory.get('upcomingDiscussions');
+export const getOngoingJourneysCount = state => state.feedbackHistory.get('ongoingJourneys');
+export const getScheduledCount = state => state.feedbackHistory.get('scheduledDiscussions');
+export const getCompletedJourneysCount = state => state.feedbackHistory.get('completedJourneys');
+export const getTotalJourneysCount = state => state.feedbackHistory.get('totalJourneys');
 
 /* ------------- Feedback Documenting Selectors ------------- */
 // export const getDocumenting = state => state.documenting;

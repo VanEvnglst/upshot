@@ -37,6 +37,28 @@ export function* fetchRecentJourneys() {
   }
 }
 
+
+export function* fetchUserActivity() {
+  const response = yield call(api.getUserActivity);
+  debugger;
+  if (response.ok) {
+    if (response.data.status == STATUS_OK) {
+      const assessment = response.data.result.assessment_progress.replace('.00%', '%');
+      console.log('',assessment);
+      
+      const userActivity = {
+        assessmentProgress: assessment,
+        ...response.data.result
+      }
+      yield put(FeedbackHistoryActions.fetchUserActivitySuccess(userActivity));
+    } else {
+      yield put(FeedbackHistoryActions.fetchUserActivityFailure(response.data));
+    }
+  } else {
+    yield put (FeedbackHistoryActions.fetchUserActivityFailure(response.data));
+  }
+}
+
 function* watchFeedbackHistorySaga() {
   yield takeLatest(
     FeedbackHistoryTypes.FETCH_ACTIVE_JOURNEYS,
@@ -46,6 +68,9 @@ function* watchFeedbackHistorySaga() {
     FeedbackHistoryTypes.FETCH_RECENT_JOURNEYS,
     fetchRecentJourneys,
   );
+  yield takeLatest(
+    FeedbackHistoryTypes.FETCH_USER_ACTIVITY, fetchUserActivity
+  )
 }
 
 export default watchFeedbackHistorySaga;
