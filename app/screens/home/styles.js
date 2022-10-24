@@ -4,7 +4,7 @@ import Colors from 'app/theme/colors';
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#141416',
+    backgroundColor: Colors.neutral1,
   },
   headerContainer: {
     paddingHorizontal: 16,
@@ -14,9 +14,9 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: '#353945',
-    backgroundColor: '#141416',
-    height: '10%'
+    borderColor: Colors.neutral3,
+    backgroundColor: Colors.neutral1,
+    height: '10%',
   },
   avatarIcon: {
     width: 24,
@@ -27,9 +27,6 @@ export default styles = StyleSheet.create({
     marginRight: 12,
   },
   headerTitleText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 8,
   },
@@ -61,9 +58,6 @@ export default styles = StyleSheet.create({
     height: 100,
   },
   greetingText: {
-    fontSize: 12,
-    lineHeight: 20,
-    fontWeight: '400',
     color: 'white',
   },
   subHeaderContainer: {
@@ -74,16 +68,10 @@ export default styles = StyleSheet.create({
     borderColor: '#353945',
   },
   welcomeText: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontWeight: '700',
     color: 'white',
   },
   welcomeDescriptionText: {
-    fontSize: 14,
-    lineHeight: 24,
-    fontWeight: '400',
-    color: '#777E90',
+    color: Colors.neutral4,
     maxWidth: '90%',
   },
   startNowButton: {
@@ -93,78 +81,63 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 24
+    marginTop: 24,
   },
   buttonText: {
-    fontSize: 14,
-    lineHeight: 16,
-    fontWeight: '700',
-    color: 'white',
-    textTransform: 'capitalize'
+    color: Colors.white,
+    textTransform: 'capitalize',
   },
   contentContainer: {
     marginTop: 24,
     paddingHorizontal: 20,
   },
   assessmentProgressContainer: {
-    height: 90, 
-    padding: 12, 
-    borderRadius: 12, 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    backgroundColor: 'rgba(110, 217, 98, 0.08)', 
+    height: 90,
+    padding: 12,
+    borderRadius: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(110, 217, 98, 0.08)',
     borderColor: 'rgba(58, 181, 73, 0.3)',
-    borderWidth: 1, 
+    borderWidth: 1,
   },
   profileProgress: {
-    width: 46, 
-    height: 46, 
-    borderWidth: 2, 
-    borderRadius: 23, 
+    width: 46,
+    height: 46,
+    borderWidth: 2,
+    borderRadius: 23,
     marginRight: 16,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   profileProgressText: {
-    fontSize: 12,
-    lineHeight: 12,
-    fontWeight: '700',
-    color: 'white'
+    color: Colors.white,
   },
   profileTextContainer: {
-    maxWidth: '80%'
+    maxWidth: '80%',
   },
   profileHeaderText: {
-    color: 'white',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight:'700'
+    color: Colors.white,
   },
   profileDescriptionText: {
-    fontSize: 12,
-    lineHeight: 20,
-    color: '#B1B5C3',
-    fontWeight: '400'
+    color: Colors.neutral5,
   },
   cardContainer: {
-    marginBottom: 8, 
-    minHeight: 65, 
-    borderRadius: 16, 
-    padding: 8, 
+    marginBottom: 8,
+    minHeight: 65,
+    borderRadius: 16,
+    padding: 8,
     flexDirection: 'row',
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
-    backgroundColor: '#23262F'
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#23262F',
   },
   progressIcon: {
     width: 32,
-    height: 32
+    height: 32,
   },
   homeLabelText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '700',
-    color: 'white',
+    color: Colors.white,
   },
   journeyDataGradient: {
     width: 48,
@@ -177,26 +150,19 @@ export default styles = StyleSheet.create({
   forwardIcon: {
     marginLeft: 12,
     paddingRight: 9,
-    color: '#777E90'
+    color: Colors.neutral4,
   },
   alignStart: {
     flex: 1,
   },
   descriptionText: {
-    fontSize: 14,
-    lineHeight: 24,
-    fontWeight: '500',
-    color: '#777E90',
+    color: Colors.neutral4,
   },
   highlightedDescText: {
-    color: 'white',
-    fontWeight: '700'
+    color: Colors.white,
   },
   subDescText: {
-    fontSize: 12,
-    lineHeight: 20,
-    fontWeight: '400',
-    color: '#777E90'
+    color: Colors.neutral4,
   },
   feedbackTypeContainer: {
     height: 20,
@@ -209,9 +175,6 @@ export default styles = StyleSheet.create({
     maxWidth: '65%',
   },
   feedbackTypeText: {
-    fontSize: 10,
-    lineHeight: 12,
-    fontWeight: '700',
     textTransform: 'uppercase',
   },
   correctiveContainer: {
@@ -226,27 +189,24 @@ export default styles = StyleSheet.create({
     backgroundColor: 'rgba(58, 181, 73, 0.1)',
   },
   positiveText: {
-    color: '#3AB549'
+    color: '#3AB549',
   },
   journeyCardContainer: {
     borderRadius: 12,
     padding: 16,
     backgroundColor: 'rgba(119, 126, 145, 0.1)',
     borderWidth: 1,
-    borderColor: '#353945',
+    borderColor: Colors.neutral3,
     width: 320,
     marginRight: 12,
   },
   journeyDescriptionText: {
-    fontSize: 12,
-    lineHeight: 20,
-    fontWeight: '400',
-    color: '#B1B5C3'
+    color: Colors.neutral5,
   },
   discussionAvatar: {
     width: 54,
     height: 54,
     borderRadius: 27,
-    marginRight: 12
-  }
+    marginRight: 12,
+  },
 });
