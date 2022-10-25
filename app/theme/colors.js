@@ -29,4 +29,13 @@ export default {
   secondary800: '#017374',
   secondary900: '#005457',
   secondaryDark: '#018786',
+  neutral1: '#141416',
+  neutral2: '#23262F',
+  neutral3: '#353945',
+  neutral4: '#777E90',
+  neutral5: '#B1B5C4',
+  neutral8: '#FCFCFD',
+  positiveFeedback: '#3AB549',
+  correctiveFeedback: '#F06293',
+  blue100: '#3772FF'
 };

@@ -3,26 +3,31 @@ import { Text as TextComponent } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 
-const Text = ({ children, style, type, testID }) => {
+const Text = ({ children, style, type, weight, testID }) => {
   return (
     <TextComponent
       testID={testID}
       style={[
         style,
         styles.text,
+        type === 'hero' && styles.hero,
         type === 'h1' && styles.h1,
         type === 'h2' && styles.h2,
         type === 'h3' && styles.h3,
         type === 'h4' && styles.h4,
-        type === 'h5' && styles.h5,
-        type === 'h6' && styles.h6,
-        type === 'subtitle1' && styles.subtitle1,
-        type === 'subtitle2' && styles.subtitle2,
         type === 'body1' && styles.body1,
         type === 'body2' && styles.body2,
         type === 'button' && styles.button,
-        type === 'caption' && styles.caption,
-        type === 'overline' && styles.overline,
+        type === 'smallButton' && styles.smallButton,
+        type === 'caption1' && styles.caption1,
+        type === 'caption2' && styles.caption2,
+        type === 'caption3' && styles.caption3,
+        type === 'hairlineLarge' && styles.hairlineLarge,
+        type === 'hairlineSmall' && styles.hairlineSmall,
+        weight === 'bold' && styles.boldWeight,
+        weight === 'semiBold' && styles.semiBoldWeight,
+        weight === 'medium' && styles.mediumWeight,
+        weight === 'regular' && styles.regularWeight,
       ]}>
       {children}
     </TextComponent>
@@ -35,10 +40,14 @@ Text.propTypes = {
   children: PropTypes.any.isRequired,
   type: PropTypes.string.isRequired,
   testID: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  weight: PropTypes.string.isRequired,
 };
 
 Text.defaultProps = {
   children: '',
   type: '',
   testID: '',
+  style: {},
+  weight: '',
 };

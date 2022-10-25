@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
-import { UserAvatar } from 'app/components';
+import { UserAvatar, Text } from 'app/components';
 import Images from 'app/assets/images';
 import styles from './styles';
 
@@ -127,7 +127,9 @@ const JourneyDetails = props => {
         {/* This should be date completed  */}
         <View style={styles.dateContainer}>
           {captureFeedback.done ? (
-            <Text style={styles.progressText}>Oct 20, 5:00 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 5:00 PM
+            </Text>
           ) : null}
         </View>
         <View style={styles.signPostContainer}>
@@ -149,25 +151,37 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {captureFeedback.inProgress ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
-              <Text style={styles.taskTitleText}>Capture Feedback</Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
+              <Text type="body2" weight="medium" style={styles.taskTitleText}>
+                Capture Feedback
+              </Text>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Complete your feedback by including additional details.
               </Text>
               <Button
                 mode="contained"
                 onPress={() => capture()}
                 style={styles.continueButton}>
-                <Text style={styles.continueText}>Continue</Text>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  Continue
+                </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button>
             </>
           ) : captureFeedback.done ? (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You finished capturing feedback for Ivan Evangelista.
             </Text>
           ) : (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You finished capturing feedback for Ivan Evangelista.
             </Text>
           )}
@@ -182,7 +196,9 @@ const JourneyDetails = props => {
         {/* This should be date completed  */}
         <View style={styles.dateContainer}>
           {recordEntry.done ? (
-            <Text style={styles.progressText}>Oct 20, 5:15 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 5:15 PM
+            </Text>
           ) : null}
         </View>
         <View style={styles.signPostContainer}>
@@ -204,25 +220,37 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {recordEntry.inProgress ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
-              <Text style={styles.taskTitleText}>Record Entries</Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
+              <Text type="body2" weight="medium" style={styles.taskTitleText}>
+                Record Entries
+              </Text>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Complete your feedback by including additional details.
               </Text>
               <Button
                 mode="contained"
                 onPress={() => record()}
                 style={styles.continueButton}>
-                <Text style={styles.continueText}>Continue</Text>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  Continue
+                </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button>
             </>
           ) : recordEntry.done ? (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You completed your feedback document by recording entries.
             </Text>
           ) : (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You record additional entries to your feedback.
             </Text>
           )}
@@ -237,7 +265,9 @@ const JourneyDetails = props => {
         {/* This should be date completed  */}
         <View style={styles.dateContainer}>
           {reviewFeedback.done ? (
-            <Text style={styles.progressText}>Oct 20, 5:25 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 5:25 PM
+            </Text>
           ) : null}
         </View>
         <View style={styles.signPostContainer}>
@@ -259,9 +289,20 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {reviewFeedback.inProgress ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
-              <Text style={styles.taskTitleText}>{`Review & Submit`}</Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
+              <Text
+                type="body2"
+                weight="medium"
+                style={styles.taskTitleText}>{`Review & Submit`}</Text>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Review your whole feedback and submit it for Ivan Evangelista to
                 read.
               </Text>
@@ -269,23 +310,27 @@ const JourneyDetails = props => {
                 mode="contained"
                 onPress={() => receive()}
                 style={styles.continueButton}>
-                <Text style={styles.continueText}>Continue</Text>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  Continue
+                </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button>
               <Button
                 mode="contained"
                 onPress={() => needsClarify()}
                 style={styles.continueButton}>
-                <Text style={styles.continueText}>Clarify</Text>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  Clarify
+                </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button>
             </>
           ) : reviewFeedback.done ? (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You reviewed your feedback and sent it for submission.
             </Text>
           ) : (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You review and submit feedback entries.
             </Text>
           )}
@@ -300,7 +345,9 @@ const JourneyDetails = props => {
         {/* This should be date completed  */}
         <View style={styles.dateContainer}>
           {feedbackReceived.done ? (
-            <Text style={styles.progressText}>Oct 20, 5:45 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 5:45 PM
+            </Text>
           ) : null}
           {/**/}
         </View>
@@ -334,21 +381,31 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {feedbackReceived.inProgress ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
-              <Text style={styles.taskTitleText}>Waiting for response...</Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
+              <Text type="body2" weight="medium" style={styles.taskTitleText}>
+                Waiting for response...
+              </Text>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Wait for Ivan Evangelista to view the feedback you sent them to
                 know the next steps.
               </Text>
             </>
           ) : feedbackReceived.done ? (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               {feedbackReceived.needsClarification
                 ? 'Ivan Evangelista viewed your feedback.'
                 : 'Ivan Evangelista viewed and understood your feedback.'}
             </Text>
           ) : (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               Ivan Evangelista receives your feedback.
             </Text>
           )}
@@ -358,12 +415,13 @@ const JourneyDetails = props => {
   };
 
   const WaitingForResponseProgress = () => {
-    console.log('return here');
     return (
       <View style={{ flexDirection: 'row' }}>
         <View style={styles.dateContainer}>
           {respondClarification.done ? (
-            <Text style={styles.progressText}>Oct 20, 6:15 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 6:15 PM
+            </Text>
           ) : null}
         </View>
         <View style={styles.signPostContainer}>
@@ -401,19 +459,27 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {respondClarification.clarified && !respondClarification.done ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
               <Text style={styles.taskTitleText}>Waiting for response...</Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Wait for Ivan Evangelista to view the feedback you sent them to
                 know the next steps.
               </Text>
             </>
           ) : respondClarification.done ? (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               Ivan Evangelista viewed your response.
             </Text>
           ) : (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               Ivan Evangelista viewed your response.
             </Text>
           )}
@@ -428,7 +494,9 @@ const JourneyDetails = props => {
         {/* This should be date completed  */}
         <View style={styles.dateContainer}>
           {respondClarification.done ? (
-            <Text style={styles.progressText}>Oct 20, 6:00 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 6:00 PM
+            </Text>
           ) : null}
           {/**/}
         </View>
@@ -452,23 +520,33 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {respondClarification.inProgress ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
-              <Text style={styles.taskTitleText}>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
+              <Text type="body2" weight="medium" style={styles.taskTitleText}>
                 Respond to Clarifications
               </Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Answer to Ivan Evangelista's request for clarity.
               </Text>
               <Button
                 mode="contained"
                 onPress={() => respond()}
                 style={styles.continueButton}>
-                <Text style={styles.continueText}>View Responses</Text>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  View Responses
+                </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button>
             </>
           ) : respondClarification.done ? (
-            <Text style={styles.progressText}>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
               You responded to Ivan Evangelista's request for clarity.
             </Text>
           ) : null}
@@ -483,7 +561,9 @@ const JourneyDetails = props => {
         {/* This should be date completed  */}
         <View style={styles.dateContainer}>
           {reflectDiscussion.done ? (
-            <Text style={styles.progressText}>Oct 20, 5:00 PM</Text>
+            <Text type="caption2" weight="regular" style={styles.progressText}>
+              Oct 20, 5:00 PM
+            </Text>
           ) : null}
           {/**/}
         </View>
@@ -510,16 +590,28 @@ const JourneyDetails = props => {
         <View style={styles.progressContent}>
           {reflectDiscussion.inProgress ? (
             <>
-              <Text style={styles.inProgressLabel}>In Progress</Text>
-              <Text style={styles.taskTitleText}>Reflect on Discussion</Text>
-              <Text style={styles.progressText}>
+              <Text
+                type="caption3"
+                weight="bold"
+                style={styles.inProgressLabel}>
+                In Progress
+              </Text>
+              <Text type="body2" weight="medium" style={styles.taskTitleText}>
+                Reflect on Discussion
+              </Text>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
                 Proceed to the post discussion reflection checklist.
               </Text>
               <Button
                 mode="contained"
                 onPress={() => console.log('continue')}
                 style={styles.transparentButton}>
-                <Text style={styles.continueText}>Continue</Text>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  Continue
+                </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button>
             </>
@@ -536,14 +628,11 @@ const JourneyDetails = props => {
           <TouchableOpacity
             accessibility="button"
             onPress={() => navigation.replace('Home')}>
-            <Icon
-              name="chevron-back-outline"
-              size={20}
-              color={'white'}
-              // style={styles.iconColor}
-            />
+            <Icon name="chevron-back-outline" size={20} color={'white'} />
           </TouchableOpacity>
-          <Text style={styles.headerTitleText}>Feedback Session</Text>
+          <Text type="body2" weight="bold" style={styles.headerTitleText}>
+            Feedback Session
+          </Text>
           <Image
             source={Images.upshotLogo}
             resizeMode="contain"
@@ -558,8 +647,12 @@ const JourneyDetails = props => {
             paddingTop: 24,
           }}>
           <UserAvatar style={{ width: 62, height: 62 }} />
-          <Text style={styles.memberNameText}>Ivan Evangelista</Text>
-          <Text style={styles.roleText}>Team Member</Text>
+          <Text type="h4" weight="bold" style={styles.memberNameText}>
+            Ivan Evangelista
+          </Text>
+          <Text type="caption1" weight="medium" style={styles.roleText}>
+            Team Member
+          </Text>
           <View style={styles.feedbackStatusContainer}>
             <View
               style={[
@@ -567,12 +660,20 @@ const JourneyDetails = props => {
                 styles.correctiveContainer,
                 { marginRight: 4 },
               ]}>
-              <Text style={[styles.typeText, styles.correctiveText]}>
+              <Text
+                type="hairline"
+                weight="bold"
+                style={[styles.typeText, styles.correctiveText]}>
                 Corrective Feedback
               </Text>
             </View>
             <View style={[styles.typeContainer, styles.ongoingContainer]}>
-              <Text style={[styles.typeText, styles.ongoingText]}>Ongoing</Text>
+              <Text
+                type="hairline"
+                weight="bold"
+                style={[styles.typeText, styles.ongoingText]}>
+                Ongoing
+              </Text>
             </View>
           </View>
         </View>

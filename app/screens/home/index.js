@@ -51,16 +51,14 @@ const HomeScreen = props => {
     dispatch(FeedbackHistoryActions.fetchUserActivity());
   }, []);
 
-  // const [date, setDate] = useState(new Date(1598051730000));
-  // const [mode, setMode] = useState('date');
-  // const [show, setShow] = useState(false);
-  // const [isInProgress, setIsInProgress] = useState(true);
+  
+  
 
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate || date;
-  //   setShow(Platform.OS === 'ios');
-  //   setDate(currentDate);
-  // };
+  
+  
+  
+  
+  
 
   // const showMode = currentMode => {
   //   setShow(true);
@@ -203,7 +201,8 @@ const HomeScreen = props => {
   //   );
   // };
 
-  const FeedbackJourneyCard = () => {
+  const FeedbackJourneyCard = ({item}) => {
+    console.log('log', item);
     return (
       <TouchableOpacity
         accessibilityRole="button"
@@ -214,34 +213,43 @@ const HomeScreen = props => {
         <View
           style={[
             styles.feedbackTypeContainer,
-            styles.correctiveContainer,
+            item.feedback_type === 'Corrective' ? styles.correctiveContainer : styles.positiveContainer,
             { width: '50%' },
           ]}>
-          <Text style={[styles.feedbackTypeText, styles.correctiveText]}>
-            Corrective Feedback
+          <Text
+            type="caption3"
+            weight="bold"
+            style={[styles.feedbackTypeText, 
+            item.feedback_type === 'Corrective' ? styles.correctiveText : styles.positiveText ]}>
+            {item.feedback_type} Feedback
           </Text>
         </View>
-        <Text style={[styles.headerTitleText, { marginTop: 8 }]}>
-          Almost finished! 🤯
+        <Text
+          type="body2"
+          weight="bold"
+          style={[styles.headerTitleText, { marginTop: 8 }]}>
+            Feedback for {item.frontliner_name}
+          {/* Almost finished! 🤯 */}
         </Text>
-        <Text style={styles.journeyDescriptionText}>
+        <Text
+          type="caption2"
+          weight="regular"
+          style={styles.journeyDescriptionText}>
           Complete your feedback journey for Team member by accomplishing your
           self-reflection.
         </Text>
         <View style={{ marginTop: 24 }}>
           <Text
+            type="hairlineSmall"
+            weight="bold"
             style={{
-              fontSize: 12,
-              lineHeight: 12,
-              fontWeight: '700',
               color: '#777E90',
-              textTransform: 'uppercase',
               marginBottom: 8,
             }}>
-            3/4 steps completed
+            {item.steps_completed} /4 steps completed
           </Text>
           <ProgressBar
-            progress={3 / 4}
+            progress={`${item.steps_completed}` / 4}
             color={'#45B26B'}
             style={styles.progressBar}
           />
@@ -260,15 +268,25 @@ const HomeScreen = props => {
         <View style={{ flex: 1 }}>
           <View
             style={[styles.feedbackTypeContainer, styles.correctiveContainer]}>
-            <Text style={[styles.feedbackTypeText, styles.correctiveText]}>
+            <Text
+              type="caption3"
+              weight="bold"
+              style={[styles.feedbackTypeText, styles.correctiveText]}>
               Corrective Feedback
             </Text>
           </View>
-          <Text style={styles.descriptionText}>
+          <Text type="caption1" weight="medium" style={styles.descriptionText}>
             1-on-1 with{' '}
-            <Text style={styles.highlightedDescText}>Lily Cheong</Text>
+            <Text
+              type="caption1"
+              weight="bold"
+              style={styles.highlightedDescText}>
+              Lily Cheong
+            </Text>
           </Text>
-          <Text style={styles.subDescText}>15 Oct at 10:00 AM</Text>
+          <Text type="caption2" weight="regular" style={styles.subDescText}>
+            15 Oct at 10:00 AM
+          </Text>
         </View>
         <Icon
           name="chevron-forward-outline"
@@ -278,75 +296,118 @@ const HomeScreen = props => {
       </TouchableOpacity>
     );
   };
+
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         {/* <BackgroundView> */}
         <View style={styles.headerContainer}>
-          <Text style={styles.headerTitleText}>Dashboard</Text>
+          <Text 
+            type="body2" weight="bold" style={styles.headerTitleText}>
+            Dashboard
+          </Text>
           <Image
             source={Images.upshotLogo}
             resizeMode="contain"
             style={styles.headerIcon}
           />
         </View>
+        {activeJourneys.length >= 1 ?
+        (
+          <View style={styles.welcomeSubHeader}>
+            <Text
+              type='h4'
+              weight='bold'
+              style={styles.welcomeText}
+            >Hello,</Text>
+            <Text
+              type='h4'
+              weight='bold'
+              style={styles.welcomeText}
+            >{user} 👋</Text>
+          </View>
+        )
+        : (
         <View style={styles.subHeaderContainer}>
-          <Text style={styles.greetingText}>Hello {user},</Text>
-          <Text style={styles.welcomeText}>Welcome to Upshot 👋</Text>
-          <Text style={styles.welcomeDescriptionText}>
+          <Text type="caption2" weight="regular" style={styles.greetingText}>
+            Hello {user},
+          </Text>
+          <Text type="h4" weight="bold" style={styles.welcomeText}>
+            Welcome to Upshot 👋
+          </Text>
+          <Text
+            type="caption1"
+            weight="regular"
+            style={styles.welcomeDescriptionText}>
             Start your leadership journey by completing your first session!
           </Text>
           <Button
             mode="contained"
             onPress={() => {}}
             style={styles.startNowButton}>
-            <Text style={styles.buttonText}>Start Now</Text>
+            <Text type="button" weight="bold" style={styles.buttonText}>
+              Start Now
+            </Text>
           </Button>
         </View>
+        )}
+        
         <View style={styles.contentContainer}>
           <View style={styles.assessmentProgressContainer}>
             <View style={styles.profileProgress}>
-              <Text style={styles.profileProgressText}>{assessment}</Text>
+              <Text
+                type="caption2"
+                weight="bold"
+                style={styles.profileProgressText}>
+                {assessment}
+              </Text>
             </View>
             <View style={styles.profileTextContainer}>
-              <Text style={styles.profileHeaderText}>
+              <Text type="body2" weight="bold" style={styles.profileHeaderText}>
                 Complete your Profile
               </Text>
-              <Text style={styles.profileDescriptionText}>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.profileDescriptionText}>
                 By building your profile, you will see where your strength lies.
               </Text>
             </View>
           </View>
-          {activeJourneys.length > 1 ? (
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ marginTop: 12, flex: 1 }}>
-            {activeJourneys.map((item, i) => (
-              <FeedbackJourneyCard 
-                key={i}
-              />
-            ))}
-          </ScrollView>
-          ): null}
+          {activeJourneys.length >= 1 ? (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ marginTop: 12, flex: 1 }}>
+              {activeJourneys.map((item, i) => (
+                <FeedbackJourneyCard key={i} 
+                item={item}
+                />
+              ))}
+            </ScrollView>
+          ) : null}
           <View style={{ marginTop: 20 }}>
             {upcomingDiscussions.length > 1 ? (
               <>
-                <Text style={[styles.homeLabelText, { marginBottom: 12 }]}>
+                <Text
+                  type="body2"
+                  weight="bold"
+                  style={[styles.homeLabelText, { marginBottom: 12 }]}>
                   Upcoming 1-on-1s
                 </Text>
                 {upcomingDiscussions.map((item, i) => (
-                  <UpcomingDiscussionCard
-                    key={i}
-                    item={item}
-                  />
+                  <UpcomingDiscussionCard key={i} item={item} />
                 ))}
               </>
             ) : null}
           </View>
 
           <View style={{ marginTop: 20 }}>
-            <Text style={[styles.homeLabelText, { marginBottom: 12 }]}>
+            <Text
+              type="body2"
+              weight="bold"
+              style={[styles.homeLabelText, { marginBottom: 12 }]}>
               Your Progress
             </Text>
             <TouchableOpacity
@@ -364,11 +425,17 @@ const HomeScreen = props => {
                   resizeMode="contain"
                 />
               </LinearGradient>
-              <Text style={[styles.homeLabelText, styles.alignStart]}>
+              <Text
+                type="body2"
+                weight="bold"
+                style={[styles.homeLabelText, styles.alignStart]}>
                 Ongoing
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={[styles.homeLabelText, { color: '#F9954D' }]}>
+                <Text
+                  type="body2"
+                  weight="bold"
+                  style={[styles.homeLabelText, { color: '#F9954D' }]}>
                   {ongoingJourneys}
                 </Text>
                 <Icon
@@ -393,11 +460,17 @@ const HomeScreen = props => {
                   resizeMode="contain"
                 />
               </LinearGradient>
-              <Text style={[styles.homeLabelText, styles.alignStart]}>
+              <Text
+                type="body2"
+                weight="bold"
+                style={[styles.homeLabelText, styles.alignStart]}>
                 Scheduled discussions
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={[styles.homeLabelText, { color: '#3772FF' }]}>
+                <Text
+                  type="body2"
+                  weight="bold"
+                  style={[styles.homeLabelText, { color: '#3772FF' }]}>
                   {scheduledDiscs}
                 </Text>
                 <Icon
@@ -422,11 +495,17 @@ const HomeScreen = props => {
                   resizeMode="contain"
                 />
               </LinearGradient>
-              <Text style={[styles.homeLabelText, styles.alignStart]}>
+              <Text
+                type="body2"
+                weight="bold"
+                style={[styles.homeLabelText, styles.alignStart]}>
                 Completed
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={[styles.homeLabelText, { color: '#3AB549' }]}>
+                <Text
+                  type="body2"
+                  weight="bold"
+                  style={[styles.homeLabelText, { color: '#3AB549' }]}>
                   {completedJourneys}
                 </Text>
                 <Icon
@@ -451,11 +530,17 @@ const HomeScreen = props => {
                   resizeMode="contain"
                 />
               </LinearGradient>
-              <Text style={[styles.homeLabelText, styles.alignStart]}>
+              <Text
+                type="body2"
+                weight="bold"
+                style={[styles.homeLabelText, styles.alignStart]}>
                 Total journeys
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={[styles.homeLabelText, { color: '#9757D7' }]}>
+                <Text
+                  type="body2"
+                  weight="bold"
+                  style={[styles.homeLabelText, { color: '#9757D7' }]}>
                   {totalJourneys}
                 </Text>
                 <Icon
@@ -467,13 +552,6 @@ const HomeScreen = props => {
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* </BackgroundView> */}
-        {/* <View>
-          {activeJourneyLength.map((item, i) => (
-            <JourneyCard key={i} item={item} />
-          ))}
-        </View> */}
         <View style={styles.spacer} />
       </ScrollView>
     </View>
