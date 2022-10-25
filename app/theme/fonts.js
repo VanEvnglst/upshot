@@ -12,11 +12,11 @@ const size = {
 };
 
 const letterSpacing = {
-  hero: '-0.02em',
-  h1: '-0.02em',
-  h2: '-0.02em',
-  h3: '-0.01em',
-  h4: '-0.01em',
+  hero: -0.02,
+  h1: -0.02,
+  h2: -0.02,
+  h3: -0.01,
+  h4: -0.01,
 };
 
 const lineHeight = {
