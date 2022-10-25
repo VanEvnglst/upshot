@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { DynamicColorIOS, StyleSheet } from 'react-native';
+import Colors from 'app/theme/colors';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#141416',
+    backgroundColor: Colors.neutral1,
   },
   headerContainer: {
     paddingHorizontal: 16,
@@ -13,15 +14,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: '#353945',
-    backgroundColor: '#141416',
-    // height: '25%'
+    borderColor: Colors.netural3,
+    backgroundColor: Colors.neutral1,
   },
   headerTitleText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.white,
     marginBottom: 8,
   },
   headerIcon: {
@@ -29,22 +26,16 @@ export default StyleSheet.create({
     height: 24,
   },
   memberNameText: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontWeight: '700',
-    color: 'white',
-    marginTop: 12
+    color: Colors.white,
+    marginTop: 12,
   },
   roleText: {
-    fontSize: 14,
-    lineHeight: 24,
-    fontWeight: '500',
-    color: '#777E90',
+    color: Colors.neutral4,
   },
   feedbackStatusContainer: {
     marginTop: 8,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   typeContainer: {
     justifyContent: 'center',
@@ -55,13 +46,10 @@ export default StyleSheet.create({
     borderWidth: 1,
   },
   typeText: {
-    fontSize: 12,
-    lineHeight: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   correctiveText: {
-    color: '#F06293',
+    color: Colors.correctiveFeedback,
   },
   correctiveContainer: {
     borderColor: '#rgba(240, 98, 147, 0.5)',
@@ -72,32 +60,29 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(58, 181, 73, 0.1)',
   },
   positiveText: {
-    color: '#3AB549'
+    color: Colors.positiveFeedback,
   },
   ongoingContainer: {
     borderColor: 'rgba(55, 114, 255, 0.5)',
-    backgroundColor: 'rgba(55, 114, 255, 0.1)'
+    backgroundColor: 'rgba(55, 114, 255, 0.1)',
   },
   ongoingText: {
-    color: '#3772FF'
+    color: Colors.blue100,
   },
   contentContainer: {
-    flex: 1, 
-    paddingHorizontal: 16, 
-    marginTop: 24
+    flex: 1,
+    paddingHorizontal: 16,
+    marginTop: 24,
   },
   progressText: {
-    fontSize: 12,
-    lineHeight: 20,
-    fontWeight: '400',
-    color: '#777E90'
+    color: Colors.neutral4,
   },
   dateContainer: {
-    width: '26%'
+    width: '26%',
   },
   signPostContainer: {
-    alignItems: 'center', 
-    marginHorizontal: 14 
+    alignItems: 'center',
+    marginHorizontal: 14,
   },
   signPost: {
     width: 20,
@@ -105,11 +90,11 @@ export default StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#777E90',
+    backgroundColor: Colors.neutral4,
   },
   postLine: {
     width: 3,
-    backgroundColor: '#777E90',
+    backgroundColor: Colors.neutral4,
     minHeight: 52,
     flexGrow: 1,
     opacity: 0.5,
@@ -120,7 +105,7 @@ export default StyleSheet.create({
     borderWidth: 1,
   },
   completedTaskPost: {
-    backgroundColor: '#3AB549',
+    backgroundColor: Colors.positiveFeedback,
   },
   progressContent: {
     width: '55%',
@@ -128,22 +113,16 @@ export default StyleSheet.create({
     paddingBottom: 24,
   },
   inProgressTaskPost: {
-    backgroundColor: '#3772FF',
+    backgroundColor: Colors.blue100,
     borderWidth: 2,
     borderColor: 'rgba(55, 114, 255, 0.5)',
   },
   inProgressLabel: {
-    color: '#3772FF',
-    fontSize: 10,
-    lineHeight: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase'
+    color: Colors.blue100,
+    textTransform: 'uppercase',
   },
   taskTitleText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '500',
-    color: '#FCFCFD'
+    color: Colors.neutral8,
   },
   continueButton: {
     marginTop: 16,
@@ -153,18 +132,15 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 4,
     paddingHorizontal: 12,
-    backgroundColor: '#3772FF',
+    backgroundColor: Colors.blue100,
     height: 42,
   },
   continueText: {
-    fontSize: 14,
-    lineHeight: 16,
-    fontWeight: '700',
-    color: '#FCFCFD',
+    color: Colors.neutral8,
     marginRight: 12,
   },
   transparentButton: {
-    backgroundColor: '#141416',
+    backgroundColor: Colors.neutral1,
     marginTop: 16,
     borderRadius: 90,
     flexDirection: 'row',
@@ -174,6 +150,6 @@ export default StyleSheet.create({
     paddingHorizontal: 12,
     height: 42,
     borderWidth: 1,
-    borderColor: 'white'
-  }
+    borderColor: Colors.white,
+  },
 });
