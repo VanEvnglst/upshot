@@ -35,4 +35,7 @@ export default {
   neutral4: '#777E90',
   neutral5: '#B1B5C4',
   neutral8: '#FCFCFD',
+  positiveFeedback: '#3AB549',
+  correctiveFeedback: '#F06293',
+  blue100: '#3772FF'
 };
