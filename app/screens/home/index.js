@@ -51,16 +51,14 @@ const HomeScreen = props => {
     dispatch(FeedbackHistoryActions.fetchUserActivity());
   }, []);
 
-  // const [date, setDate] = useState(new Date(1598051730000));
-  // const [mode, setMode] = useState('date');
-  // const [show, setShow] = useState(false);
-  // const [isInProgress, setIsInProgress] = useState(true);
+  
+  
 
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate || date;
-  //   setShow(Platform.OS === 'ios');
-  //   setDate(currentDate);
-  // };
+  
+  
+  
+  
+  
 
   // const showMode = currentMode => {
   //   setShow(true);
@@ -203,7 +201,8 @@ const HomeScreen = props => {
   //   );
   // };
 
-  const FeedbackJourneyCard = () => {
+  const FeedbackJourneyCard = ({item}) => {
+    console.log('log', item);
     return (
       <TouchableOpacity
         accessibilityRole="button"
@@ -214,21 +213,23 @@ const HomeScreen = props => {
         <View
           style={[
             styles.feedbackTypeContainer,
-            styles.correctiveContainer,
+            item.feedback_type === 'Corrective' ? styles.correctiveContainer : styles.positiveContainer,
             { width: '50%' },
           ]}>
           <Text
             type="caption3"
             weight="bold"
-            style={[styles.feedbackTypeText, styles.correctiveText]}>
-            Corrective Feedback
+            style={[styles.feedbackTypeText, 
+            item.feedback_type === 'Corrective' ? styles.correctiveText : styles.positiveText ]}>
+            {item.feedback_type} Feedback
           </Text>
         </View>
         <Text
           type="body2"
           weight="bold"
           style={[styles.headerTitleText, { marginTop: 8 }]}>
-          Almost finished! 🤯
+            Feedback for {item.frontliner_name}
+          {/* Almost finished! 🤯 */}
         </Text>
         <Text
           type="caption2"
@@ -242,12 +243,13 @@ const HomeScreen = props => {
             type="hairlineSmall"
             weight="bold"
             style={{
+              color: '#777E90',
               marginBottom: 8,
             }}>
-            3/4 steps completed
+            {item.steps_completed} /4 steps completed
           </Text>
           <ProgressBar
-            progress={3 / 4}
+            progress={`${item.steps_completed}` / 4}
             color={'#45B26B'}
             style={styles.progressBar}
           />
@@ -294,12 +296,15 @@ const HomeScreen = props => {
       </TouchableOpacity>
     );
   };
+
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         {/* <BackgroundView> */}
         <View style={styles.headerContainer}>
-          <Text type="body2" weight="bold" style={styles.headerTitleText}>
+          <Text 
+            type="body2" weight="bold" style={styles.headerTitleText}>
             Dashboard
           </Text>
           <Image
@@ -308,6 +313,22 @@ const HomeScreen = props => {
             style={styles.headerIcon}
           />
         </View>
+        {activeJourneys.length >= 1 ?
+        (
+          <View style={styles.welcomeSubHeader}>
+            <Text
+              type='h4'
+              weight='bold'
+              style={styles.welcomeText}
+            >Hello,</Text>
+            <Text
+              type='h4'
+              weight='bold'
+              style={styles.welcomeText}
+            >{user} 👋</Text>
+          </View>
+        )
+        : (
         <View style={styles.subHeaderContainer}>
           <Text type="caption2" weight="regular" style={styles.greetingText}>
             Hello {user},
@@ -330,6 +351,8 @@ const HomeScreen = props => {
             </Text>
           </Button>
         </View>
+        )}
+        
         <View style={styles.contentContainer}>
           <View style={styles.assessmentProgressContainer}>
             <View style={styles.profileProgress}>
@@ -352,13 +375,15 @@ const HomeScreen = props => {
               </Text>
             </View>
           </View>
-          {activeJourneys.length > 1 ? (
+          {activeJourneys.length >= 1 ? (
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               style={{ marginTop: 12, flex: 1 }}>
               {activeJourneys.map((item, i) => (
-                <FeedbackJourneyCard key={i} />
+                <FeedbackJourneyCard key={i} 
+                item={item}
+                />
               ))}
             </ScrollView>
           ) : null}

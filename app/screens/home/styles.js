@@ -9,14 +9,13 @@ export default styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: 16,
     paddingTop: 70,
-    paddingVertical: 13,
+    paddingBottom: 13,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderColor: Colors.neutral3,
     backgroundColor: Colors.neutral1,
-    height: '10%',
   },
   avatarIcon: {
     width: 24,
@@ -27,48 +26,33 @@ export default styles = StyleSheet.create({
     marginRight: 12,
   },
   headerTitleText: {
-    color: '#FFFFFF',
+    color: Colors.white,
     marginBottom: 8,
   },
   headerIcon: {
     width: 24,
     height: 24,
+    marginBottom: 10,
   },
-  // floatingAction: {
-  //   position: 'absolute',
-  //   bottom: 20,
-  //   right: 28,
-  //   backgroundColor: '#DBE3FF',
-  //   borderWidth: 1,
-  //   borderColor: '#A0B3F3',
-  //   width: 50,
-  //   height: 50,
-  //   borderRadius: 12,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-  // progressBar: {
-  //   width: '100%',
-  //   height: 6,
-  //   marginLeft: 3,
-  //   borderRadius: 4,
-  //   paddingRight: 19,
-  // },
   spacer: {
     height: 100,
   },
   greetingText: {
-    color: 'white',
+    color: Colors.white,
   },
   subHeaderContainer: {
     marginTop: 24,
     paddingHorizontal: 20,
     paddingBottom: 24,
     borderBottomWidth: 1,
-    borderColor: '#353945',
+    borderColor: Colors.neutral3,
+  },
+  welcomeSubHeader: {
+    marginTop: 24,
+    paddingHorizontal: 20,
   },
   welcomeText: {
-    color: 'white',
+    color: Colors.white,
   },
   welcomeDescriptionText: {
     color: Colors.neutral4,
@@ -76,7 +60,7 @@ export default styles = StyleSheet.create({
   },
   startNowButton: {
     height: 40,
-    backgroundColor: '#6200EE',
+    backgroundColor: Colors.primary,
     borderRadius: 90,
     paddingHorizontal: 16,
     justifyContent: 'center',
@@ -104,7 +88,8 @@ export default styles = StyleSheet.create({
   profileProgress: {
     width: 46,
     height: 46,
-    borderWidth: 2,
+    borderWidth: 3,
+    borderColor: Colors.neutral3,
     borderRadius: 23,
     marginRight: 16,
     justifyContent: 'center',
@@ -130,7 +115,7 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#23262F',
+    backgroundColor: Colors.neutral2,
   },
   progressIcon: {
     width: 32,
@@ -165,7 +150,7 @@ export default styles = StyleSheet.create({
     color: Colors.neutral4,
   },
   feedbackTypeContainer: {
-    height: 20,
+    height: 25,
     paddingHorizontal: 8,
     paddingVertical: 4,
     justifyContent: 'center',
@@ -182,14 +167,14 @@ export default styles = StyleSheet.create({
     backgroundColor: 'rgba(240, 98, 147, 0.1)',
   },
   correctiveText: {
-    color: '#F06293',
+    color: Colors.correctiveFeedback,
   },
   positiveContainer: {
     borderColor: 'rgba(58, 181, 73, 0.5)',
     backgroundColor: 'rgba(58, 181, 73, 0.1)',
   },
   positiveText: {
-    color: '#3AB549',
+    color: Colors.positiveFeedback,
   },
   journeyCardContainer: {
     borderRadius: 12,
