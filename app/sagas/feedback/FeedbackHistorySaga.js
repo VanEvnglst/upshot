@@ -40,12 +40,9 @@ export function* fetchRecentJourneys() {
 
 export function* fetchUserActivity() {
   const response = yield call(api.getUserActivity);
-  debugger;
   if (response.ok) {
     if (response.data.status == STATUS_OK) {
       const assessment = response.data.result.assessment_progress.replace('.00%', '%');
-      console.log('',assessment);
-      
       const userActivity = {
         assessmentProgress: assessment,
         ...response.data.result
