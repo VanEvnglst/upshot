@@ -355,7 +355,7 @@ const HomeScreen = props => {
           {assessment !== '100%' ? (
             <TouchableOpacity 
             accessibilityRole='button'
-            onPress={() => navigation.navigate('Assessment', { screen: 'Leadership Baseline Score' })}
+            onPress={() => navigation.navigate('Assessment', { screen: 'Assessment break down' })}
             style={styles.assessmentProgressContainer}>
             <View style={styles.profileProgress}>
               <Text
