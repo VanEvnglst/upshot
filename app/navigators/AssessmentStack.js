@@ -44,7 +44,7 @@ export default function AssessmentNavigator() {
         component={ExtendedLeadershipAssessment}
       />
        <AssessmentStack.Screen
-        name={'Baseline Score'}
+        name={'Leadership Baseline Score'}
         component={BaselineScore}
       />
       <AssessmentStack.Screen

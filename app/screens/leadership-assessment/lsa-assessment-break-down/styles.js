@@ -43,7 +43,7 @@ export default styles = StyleSheet.create({
   titleUser: {
     flex: 1,
     height: '100%',
-    maxWidth: '50%',
+    // maxWidth: '50%',
   },
   userText: {
     fontSize: 10,

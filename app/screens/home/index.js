@@ -202,7 +202,6 @@ const HomeScreen = props => {
   // };
 
   const FeedbackJourneyCard = ({item}) => {
-    console.log('log', item);
     return (
       <TouchableOpacity
         accessibilityRole="button"
@@ -352,9 +351,12 @@ const HomeScreen = props => {
           </Button>
         </View>
         )}
-        
         <View style={styles.contentContainer}>
-          <View style={styles.assessmentProgressContainer}>
+          {assessment !== '100%' ? (
+            <TouchableOpacity 
+            accessibilityRole='button'
+            onPress={() => navigation.navigate('Assessment', { screen: 'Assessment break down' })}
+            style={styles.assessmentProgressContainer}>
             <View style={styles.profileProgress}>
               <Text
                 type="caption2"
@@ -374,7 +376,11 @@ const HomeScreen = props => {
                 By building your profile, you will see where your strength lies.
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
+          )
+            :
+            null
+          }
           {activeJourneys.length >= 1 ? (
             <ScrollView
               horizontal
