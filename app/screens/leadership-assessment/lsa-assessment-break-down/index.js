@@ -11,12 +11,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
-import styles from './styles';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
+import { getUserName, getCompletedCount, getExtendedTestResults, getCategoryStatus } from 'app/store/selectors';
 import lsaTypes from 'app/models/LSATypes';
 import Images from 'app/assets/images';
-
+import styles from './styles';
 
 
 const AssessmentBreakDown = props => {
@@ -38,10 +37,11 @@ const AssessmentBreakDown = props => {
     dispatch(LeadershipSkillAreaActions.fetchBaselineScores());
   }, []);
 
-  const scores = useSelector(state => state.leadershipSkillArea.get('extendedTestResults'));
-  const user = useSelector(state => state.user.get('userName'));
-  const checkCategoryStatus = useSelector(state => state.leadershipSkillArea.get('skillAreaTestSteps'));
-  const completedCnt = useSelector(state => state.leadershipSkillArea.get('testFinishedCount'))
+  const scores = useSelector(getExtendedTestResults);
+  const user = useSelector(getUserName);
+  const checkCategoryStatus = useSelector(getCategoryStatus);
+  const completedCnt = useSelector(getCompletedCount);
+
   const retrieveExtendedQs = async (element) => {
     await dispatch(LeadershipSkillAreaActions.fetchExtendedQuestions());
       setTimeout(() => {
@@ -50,7 +50,6 @@ const AssessmentBreakDown = props => {
     
   };
   const SkillAreaItem = ({element}) => {
-
     return (
       <>
         {checkCategoryStatus[element.categoryState] - 3 === 7 ?
@@ -109,6 +108,7 @@ const AssessmentBreakDown = props => {
     <View style={styles.headerContainer}>
       <TouchableOpacity
         accessibilityRole='button'
+        onPress={() => navigation.goBack()}
         style={styles.icon}
       >
         <Icon
@@ -125,7 +125,6 @@ const AssessmentBreakDown = props => {
     </View>
     <View style={styles.titleContainer}>
       <View style={styles.titleUser}>
-        {/* <Text style={styles.userText}>Hi Jaykey Del Mar</Text> */}
         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
         <Text style={styles.levelText}>Let's get started </Text>
           <Image source={Images.bigGrinEmoji} style={{ height: 16, width: 16 }} />
@@ -134,7 +133,7 @@ const AssessmentBreakDown = props => {
         <Text style={styles.completedLabelText}>Completed Tests</Text>
         <Text style={styles.completedTestText}>{ completedCnt }/5</Text>
       </View>
-      <View style={styles.ringsContainer}/>
+      {/* <View style={styles.ringsContainer}/> */}
     </View>
     <View style={styles.contentContainer}>
       
@@ -147,7 +146,7 @@ return (
 );
 
     })}
-        {completedCnt === 5 ?
+        {/* {completedCnt === 5 ?
           <TouchableOpacity
             style={{ marginTop: 36, backgroundColor: '#667080', height: 48, justifyContent: 'center', alignItems: 'center', width: '100%', borderRadius: 6 }}
             onPress={() => navigation.navigate('Assessment', { screen: 'Calculate Assessment Score'})}>
@@ -157,7 +156,7 @@ return (
           <View style={{ marginTop: 36, backgroundColor: '#EEF1F4', height: 48, justifyContent: 'center', alignItems: 'center', width: '100%', borderRadius: 6 }}>
             <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '700', color: '#66708080' }}>Recalculate Indicator Levels</Text>
           </View>
-        }
+        } */}
         <TouchableOpacity style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center' }}
           onPress={() => navigation.navigate('Home')}>
           <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '400', color: '#667080' }}>Skip for Later</Text>
