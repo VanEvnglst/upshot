@@ -5,38 +5,97 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 import { UserAvatar, Text } from 'app/components';
+import JourneyProgressTab from './progress-tab';
+import JourneyDetailsTab from './details-tab';
 import Images from 'app/assets/images';
 import styles from './styles';
 
 const JourneyDetails = props => {
   const { navigation, route } = props;
   const dispatch = useDispatch();
-  const [captureFeedback, setCaptureFeedback] = useState({
-    inProgress: true,
-    done: false,
-  });
-  const [recordEntry, setRecordEntry] = useState({
-    inProgress: false,
-    done: false,
-  });
-  const [reviewFeedback, setReviewFeedback] = useState({
-    inProgress: false,
-    done: false,
-  });
-  const [feedbackReceived, setFeedbackReceived] = useState({
-    inProgress: false,
-    done: false,
-    needsClarification: false,
-  });
-  const [respondClarification, setRespondClarification] = useState({
-    inProgress: false,
-    done: false,
-  });
-  const [reflectDiscussion, setReflectDiscussion] = useState({
-    inProgress: false,
-    done: false,
-  });
+  // const [captureFeedback, setCaptureFeedback] = useState({
+  //   inProgress: true,
+  //   done: false,
+  // });
+  // const [recordEntry, setRecordEntry] = useState({
+  //   inProgress: false,
+  //   done: false,
+  // });
+  // const [reviewFeedback, setReviewFeedback] = useState({
+  //   inProgress: false,
+  //   done: false,
+  // });
+  // const [feedbackReceived, setFeedbackReceived] = useState({
+  //   inProgress: false,
+  //   done: false,
+  //   needsClarification: false,
+  // });
+  // const [respondClarification, setRespondClarification] = useState({
+  //   inProgress: false,
+  //   done: false,
+  // });
+  // const [reflectDiscussion, setReflectDiscussion] = useState({
+  //   inProgress: false,
+  //   done: false,
+  // });
+  const [activeTab, setActiveTab] = useState('Progress');
 
+  const journeySteps = [
+    {
+      id: 1,
+      title: 'Capture Feedback',
+      description: 'Complete your feedback by including additional details.',
+      doneDescription:
+        'You completed your feedback document by recording entries.',
+      inProgressDescription: 'You record additional entries to your feedback.',
+      date: 'Oct 20, 5:00 PM',
+      done: false,
+      inProgress: true,
+    },
+    {
+      id: 2,
+      title: 'Record Entries',
+      description: 'Complete your feedback by including additional details.',
+      doneDescription:
+        'You completed your feedback document by recording entries.',
+      inProgressDescription: 'You record additional entries to your feedback.',
+      date: 'Oct 20, 5:00 PM',
+      done: false,
+      inProgress: true,
+    },
+    {
+      id: 3,
+      title: 'Review & Submit',
+      description:
+        'Review your whole feedback and submit it for Ivan Evangelista to read.',
+      doneDescription: 'You reviewed your feedback and sent it for submission.',
+      inProgressDescription: 'You review and submit feedback entries.',
+      date: 'Oct 20, 5:00 PM',
+      done: false,
+      inProgress: true,
+    },
+    {
+      id: 4,
+      title: 'Waiting for response...',
+      description:
+        'Wait for Ivan Evangelista to view the feedback you sent them to know the next steps.',
+      doneDescription: 'Ivan Evangelista viewed and understood your feedback.',
+      inProgressDescription: 'Ivan Evangelista receives your feedback.',
+      date: 'Oct 20, 5:00 PM',
+      done: false,
+      inProgress: true,
+    },
+    {
+      id: 5,
+      title: 'Reflect on Discussion',
+      description: 'Proceed to the post discussion reflection checklist.',
+      doneDescription: 'You reviewed your feedback and sent it for submission.',
+      inProgressDescription: 'You review and submit feedback entries.',
+      date: 'Oct 20, 5:00 PM',
+      done: false,
+      inProgress: true,
+    },
+  ];
   const resetValue = () => {
     setCaptureFeedback({ inProgress: true, done: false });
     setRecordEntry({ inProgress: false, done: false });
@@ -677,30 +736,50 @@ const JourneyDetails = props => {
             </View>
           </View>
         </View>
+        <View style={styles.tabContentContainer}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            onPress={() => setActiveTab('Progress')}
+            style={[
+              styles.tabContainer,
+              activeTab === 'Progress' && styles.activeTabContainer,
+            ]}>
+            <Text type="caption1" weight="bold" style={styles.taskTitleText}>
+              Progress
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            accessibilityRole="button"
+            onPress={() => setActiveTab('Details')}
+            style={[
+              styles.tabContainer,
+              activeTab === 'Details' && styles.activeTabContainer,
+            ]}>
+            <Text type="caption1" weight="bold" style={styles.taskTitleText}>
+              Details
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.contentContainer}>
-          <CaptureFeedbackProgress />
-          <RecordEntriesProgress />
-          <ReviewAndSubmitProgress />
-          <ReceiveFeedbackProgress />
-          {feedbackReceived.done && feedbackReceived.needsClarification ? (
+          {activeTab === 'Progress' ? (
             <>
-              <RespondClarificationsProgress />
-              <WaitingForResponseProgress />
+              {journeySteps.map((item, i) => (
+                <JourneyProgressTab key={item.id} item={item} />
+              ))}
             </>
-          ) : null}
-          {(feedbackReceived.done && !feedbackReceived.needsClarification) ||
-          (respondClarification.done && respondClarification.clarified) ? (
-            <ReflectDiscussionProgress />
-          ) : null}
-          {true ? (
+          ) : (
+            <JourneyDetailsTab />
+          )}
+          {activeTab !== 'Details' ? (
             <Button
               mode="contained"
               onPress={() => resetValue()}
-              style={styles.continueButton}>
+              style={[styles.button, styles.continueButton]}>
               Close feedback
             </Button>
           ) : null}
         </View>
+        <View style={{ height: 100 }} />
       </ScrollView>
     </View>
   );
