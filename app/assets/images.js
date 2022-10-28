@@ -91,4 +91,5 @@ export default {
   thoughtsIcon: require('./images/thought-bubble.png'),
   memoIcon: require('./images/memo.png'),
   starstruckEmoji: require('./images/starstruck-emoji.png'),
+  documentIcon: require('./images/document.png'),
 };
