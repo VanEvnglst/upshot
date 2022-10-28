@@ -1,5 +1,6 @@
 import { DynamicColorIOS, StyleSheet } from 'react-native';
 import Colors from 'app/theme/colors';
+import { DeviceUtil } from 'app/utils';
 
 export default StyleSheet.create({
   container: {
@@ -7,43 +8,46 @@ export default StyleSheet.create({
     backgroundColor: Colors.neutral1,
   },
   headerContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 70,
-    paddingVertical: 13,
+    paddingHorizontal: DeviceUtil.normalize(16),
+    paddingTop: DeviceUtil.normalize(70),
+    paddingVertical: DeviceUtil.normalize(13),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
+    borderBottomWidth: DeviceUtil.normalize(1),
     borderColor: Colors.netural3,
     backgroundColor: Colors.neutral1,
   },
   headerTitleText: {
     color: Colors.white,
-    marginBottom: 8,
+    marginBottom: DeviceUtil.normalize(8),
   },
   headerIcon: {
-    width: 24,
-    height: 24,
+    width: DeviceUtil.normalize(24),
+    height: DeviceUtil.normalize(24),
   },
   memberNameText: {
     color: Colors.white,
-    marginTop: 12,
+    marginTop: DeviceUtil.normalize(12),
   },
   roleText: {
     color: Colors.neutral4,
   },
+  progressContainer: {
+    flexDirection: 'row'
+  },
   feedbackStatusContainer: {
-    marginTop: 8,
+    marginTop: DeviceUtil.normalize(8),
     flexDirection: 'row',
     alignItems: 'center',
   },
   typeContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 8,
-    borderRadius: 16,
-    height: 28,
-    borderWidth: 1,
+    padding: DeviceUtil.normalize(8),
+    borderRadius: DeviceUtil.normalize(16),
+    height: DeviceUtil.normalize(32),
+    borderWidth: DeviceUtil.normalize(1),
   },
   typeText: {
     textTransform: 'uppercase',
@@ -82,20 +86,20 @@ export default StyleSheet.create({
   },
   signPostContainer: {
     alignItems: 'center',
-    marginHorizontal: 14,
+    marginHorizontal: DeviceUtil.normalize(14),
   },
   signPost: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: DeviceUtil.normalize(20),
+    height: DeviceUtil.normalize(20),
+    borderRadius: DeviceUtil.normalize(10),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.neutral4,
   },
   postLine: {
-    width: 3,
+    width: DeviceUtil.normalize(3),
     backgroundColor: Colors.neutral4,
-    minHeight: 52,
+    minHeight: DeviceUtil.normalize(52),
     flexGrow: 1,
     opacity: 0.5,
   },
@@ -110,11 +114,11 @@ export default StyleSheet.create({
   progressContent: {
     width: '55%',
     flex: 2,
-    paddingBottom: 24,
+    paddingBottom: DeviceUtil.normalize(24),
   },
   inProgressTaskPost: {
     backgroundColor: Colors.blue100,
-    borderWidth: 2,
+    borderWidth: DeviceUtil.normalize(2),
     borderColor: 'rgba(55, 114, 255, 0.5)',
   },
   inProgressLabel: {
@@ -124,32 +128,90 @@ export default StyleSheet.create({
   taskTitleText: {
     color: Colors.neutral8,
   },
-  continueButton: {
-    marginTop: 16,
-    borderRadius: 90,
+  button: {
+    marginTop: DeviceUtil.normalize(16),
+    borderRadius: DeviceUtil.normalize(90),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    backgroundColor: Colors.blue100,
-    height: 42,
+    paddingHorizontal: DeviceUtil.normalize(12),
+    height: DeviceUtil.normalize(42),
+  },
+  continueButton: {
+     backgroundColor: Colors.primary,
   },
   continueText: {
     color: Colors.neutral8,
-    marginRight: 12,
+    marginRight: DeviceUtil.normalize(12),
   },
   transparentButton: {
     backgroundColor: Colors.neutral1,
-    marginTop: 16,
-    borderRadius: 90,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    height: 42,
-    borderWidth: 1,
+    borderWidth: DeviceUtil.normalize(1),
     borderColor: Colors.white,
   },
+  tabContentContainer: {
+    marginTop: DeviceUtil.normalize(32), 
+    marginHorizontal: DeviceUtil.normalize(16), 
+    backgroundColor: Colors.neutral2, 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    padding: DeviceUtil.normalize(8), 
+    height: DeviceUtil.normalize(45), 
+    borderRadius: DeviceUtil.normalize(12)
+  },
+  tabContainer: {
+    width: '50%',
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    paddingVertical: DeviceUtil.normalize(4),
+    height: DeviceUtil.normalize(35),
+    borderRadius: DeviceUtil.normalize(12),
+
+  },
+  activeTabContainer: {
+    backgroundColor: Colors.primary, 
+  },
+  labelContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center' 
+  },
+  labelIcon: {
+    width: DeviceUtil.normalize(24), 
+    height: DeviceUtil.normalize(24), 
+    marginRight: DeviceUtil.normalize(12)
+  },
+  labelText: {
+    color: Colors.neutral8
+  },
+  overlineLabel: {
+    color: Colors.neutral5,
+    marginBottom: DeviceUtil.normalize(12),
+  },
+  detailContainer: {
+    marginBottom: DeviceUtil.normalize(12), 
+    marginTop: DeviceUtil.normalize(24) 
+  },
+  details: {
+    borderWidth: 2,
+    borderColor: Colors.neutral3,
+    borderRadius: DeviceUtil.normalize(12), 
+    paddingVertical: DeviceUtil.normalize(12), 
+    paddingLeft: DeviceUtil.normalize(16), 
+    height: DeviceUtil.normalize(48), 
+    marginBottom: DeviceUtil.normalize(12)
+  },
+  detailsText: {
+    color: Colors.neutral8
+  },
+  timeContainer: {
+    marginTop: DeviceUtil.normalize(12),
+    marginBottom: DeviceUtil.normalize(24),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  timeContainerWidth: {
+    width: '48%'
+  }
 });
