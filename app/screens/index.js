@@ -34,6 +34,7 @@ export { default as ActiveFeedbackJourney } from './feedback/active-journey-post
 export { default as FeedbackGuide } from './feedback/guide';
 export { default as FeedbackConfirmation } from './feedback/confirmation';
 export { default as EMJourneyCloseout } from './feedback/journey-closeout';
+export { default as FeedbackChecklist } from './feedback/checklist';
 
 /* ------------- Home Stack ------------- */
 export { default as HomeScreen } from './home';
