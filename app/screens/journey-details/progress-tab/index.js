@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import styles from '../styles';
 
-const JourneyProgressTab = ({ item }) => {
+const JourneyProgressTab = ({ item, onPress }) => {
   const { title, done, inProgress, description } = item;
   
   return (
@@ -58,7 +58,7 @@ const JourneyProgressTab = ({ item }) => {
               </Text>
               <Button
                 mode="contained"
-                onPress={() => capture()}
+                onPress={onPress}
                 style={[
                   styles.button,
                   item.title === 'Reflect on Discussion' ? styles.transparentButton : styles.continueButton,

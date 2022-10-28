@@ -13,7 +13,7 @@ const BottomTabBar = ({ state, descriptors, navigation }) => {
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
 
-        console.warn('props', state.routes);
+        // console.warn('props', state.routes);
         const isFocused = state.index === index;
 
         const onPress = () => {
