@@ -6,13 +6,15 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import { Button } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import Images from 'app/assets/images';
 import Icon from 'react-native-vector-icons/Ionicons'
 import styles from "./styles";
 
 
-const EMJourneyCloseout = props => { 
+const EMJourneyCloseout = props => {
+  const { navigation } = props;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -75,9 +77,12 @@ const EMJourneyCloseout = props => {
        
       </View>
       <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btnStyle}>
+          <Button
+            mode='contained'
+            onPress={() => navigation.replace('Home')}
+            style={styles.btnStyle}>
             <Text style={styles.btnText}>Close Out</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
     </SafeAreaView>
   );
