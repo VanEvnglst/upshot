@@ -180,6 +180,13 @@ const JourneyDetails = props => {
     });
   };
 
+  const handleContinue = (item) => {
+    if (item.title === 'Reflect on Discussion')
+      navigation.navigate('Feedback', { screen: 'Feedback Checklist' });
+
+
+  };
+
   const CaptureFeedbackProgress = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -764,7 +771,8 @@ const JourneyDetails = props => {
           {activeTab === 'Progress' ? (
             <>
               {journeySteps.map((item, i) => (
-                <JourneyProgressTab key={item.id} item={item} />
+                <JourneyProgressTab key={item.id} item={item} 
+                onPress={() => handleContinue(item)} />
               ))}
             </>
           ) : (
