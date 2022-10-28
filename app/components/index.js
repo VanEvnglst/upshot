@@ -21,3 +21,4 @@ export { default as StoryProgress } from './story-progress';
 export { default as UserAvatar } from './user-avatar';
 export { default as BottomTabBar } from './bottom-tab-bar';
 export { default as BackgroundView } from './background-view';
+export { default as TopTabBar} from './top-tab-bar';
