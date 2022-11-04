@@ -131,115 +131,116 @@ export default {
     const upshotAPI = await setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
   
-    const payload = {
-      journey_id: journeyId
-    };
-    return upshotAPI.post(`/${uniqueId}/feedback/journey/get`, payload);
+    // const payload = {
+    //   journey_id: journeyId
+    // };
+    return upshotAPI.post(`/${uniqueId}/get_current_journey`, journeyId);
+    // return upshotAPI.post(`/${uniqueId}/feedback/journey/get`, payload);
   },
 
-  getCurrentDocumenting: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // getCurrentDocumenting: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/documenting/get`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/documenting/get`, payload);
+  // },
 
-  postFeedbackPreparing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postFeedbackPreparing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/preparing`, payload);
+  // },
 
-  getCurrentPreparing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // getCurrentPreparing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing/get`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/preparing/get`, payload);
+  // },
 
-  updateFeedbackPreparing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // updateFeedbackPreparing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing/edit`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/preparing/edit`, payload);
+  // },
 
-  postClosePreparing: async params => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postClosePreparing: async params => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/preparing/close`, params);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/preparing/close`, params);
+  // },
 
-  postFeedbackDiscussing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postFeedbackDiscussing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/discussing/`, payload);
+  // },
 
-  getCurrentDiscussing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // getCurrentDiscussing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/get`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/discussing/get`, payload);
+  // },
 
-  updateFeedbackDiscussing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // updateFeedbackDiscussing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/edit`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/discussing/edit`, payload);
+  // },
 
-  postCloseDiscussing: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postCloseDiscussing: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/discussing/close`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/discussing/close`, payload);
+  // },
 
-  postFeedbackReflecting: async payload => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postFeedbackReflecting: async payload => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/`, payload);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/reflecting/`, payload);
+  // },
 
-  getCurrentReflecting: async params => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // getCurrentReflecting: async params => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get`, params);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/reflecting/get`, params);
+  // },
 
-  updateFeedbackReflecting: async params => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // updateFeedbackReflecting: async params => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/edit`, params);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/reflecting/edit`, params);
+  // },
 
-  postCloseReflecting: async params => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postCloseReflecting: async params => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/reflecting/close`, params);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/reflecting/close`, params);
+  // },
 
   getStaffRatings: async params => {
     const url = await AsyncStorage.getItem('baseURL');
@@ -263,21 +264,21 @@ export default {
     );
   },
 
-  postFeedbackSharing: async params => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // postFeedbackSharing: async params => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/sharing`, params);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/sharing`, params);
+  // },
 
-  getCurrentSharing: async params => {
-    const url = await AsyncStorage.getItem('baseURL');
-    const upshotAPI = await setAPI(url);
-    const uniqueId = await AsyncStorage.getItem('uniqueId');
+  // getCurrentSharing: async params => {
+  //   const url = await AsyncStorage.getItem('baseURL');
+  //   const upshotAPI = await setAPI(url);
+  //   const uniqueId = await AsyncStorage.getItem('uniqueId');
 
-    return upshotAPI.post(`/${uniqueId}/feedback/sharing/get`, params);
-  },
+  //   return upshotAPI.post(`/${uniqueId}/feedback/sharing/get`, params);
+  // },
 
   updateFeedbackSharing: async params => {
     const url = await AsyncStorage.getItem('baseURL');
