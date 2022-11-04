@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import BottomSheet from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { UserAvatar, Text } from 'app/components';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import JourneyProgressTab from './progress-tab';
 import JourneyDetailsTab from './details-tab';
 import Images from 'app/assets/images';
@@ -12,7 +14,9 @@ import styles from './styles';
 
 const JourneyDetails = props => {
   const { navigation, route } = props;
+  
   const dispatch = useDispatch();
+  const journey = useSelector(state => state.feedback.get('currentJourney'));
   // const [captureFeedback, setCaptureFeedback] = useState({
   //   inProgress: true,
   //   done: false,
@@ -96,6 +100,15 @@ const JourneyDetails = props => {
       inProgress: true,
     },
   ];
+
+  useLayoutEffect(() => { 
+    retrieveData();
+  }, []);
+
+  const retrieveData = async () => {
+    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId))
+  };
+
   const resetValue = () => {
     setCaptureFeedback({ inProgress: true, done: false });
     setRecordEntry({ inProgress: false, done: false });
@@ -776,7 +789,7 @@ const JourneyDetails = props => {
               ))}
             </>
           ) : (
-            <JourneyDetailsTab />
+            <JourneyDetailsTab {...journey}/>
           )}
           {activeTab !== 'Details' ? (
             <Button
