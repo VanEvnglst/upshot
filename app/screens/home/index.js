@@ -51,15 +51,6 @@ const HomeScreen = props => {
     dispatch(FeedbackHistoryActions.fetchUserActivity());
   }, []);
 
-  
-  
-
-  
-  
-  
-  
-  
-
   // const showMode = currentMode => {
   //   setShow(true);
   //   setMode(currentMode);
@@ -201,25 +192,36 @@ const HomeScreen = props => {
   //   );
   // };
 
-  const FeedbackJourneyCard = ({item}) => {
+  const FeedbackJourneyCard = ({ item }) => {
     return (
       <TouchableOpacity
         accessibilityRole="button"
         onPress={() =>
-          navigation.navigate('Feedback', { screen: 'Journey Details' })
+          navigation.navigate('Feedback', {
+            screen: 'Journey Details',
+            params: { 
+              journeyId: item.journey_id,
+            },
+          })
         }
         style={styles.journeyCardContainer}>
         <View
           style={[
             styles.feedbackTypeContainer,
-            item.feedback_type === 'Corrective' ? styles.correctiveContainer : styles.positiveContainer,
+            item.feedback_type === 'Corrective'
+              ? styles.correctiveContainer
+              : styles.positiveContainer,
             { width: '50%' },
           ]}>
           <Text
             type="caption3"
             weight="bold"
-            style={[styles.feedbackTypeText, 
-            item.feedback_type === 'Corrective' ? styles.correctiveText : styles.positiveText ]}>
+            style={[
+              styles.feedbackTypeText,
+              item.feedback_type === 'Corrective'
+                ? styles.correctiveText
+                : styles.positiveText,
+            ]}>
             {item.feedback_type} Feedback
           </Text>
         </View>
@@ -227,7 +229,7 @@ const HomeScreen = props => {
           type="body2"
           weight="bold"
           style={[styles.headerTitleText, { marginTop: 8 }]}>
-            Feedback for {item.frontliner_name}
+          Feedback for {item.frontliner_name}
           {/* Almost finished! 🤯 */}
         </Text>
         <Text
@@ -296,14 +298,12 @@ const HomeScreen = props => {
     );
   };
 
-
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         {/* <BackgroundView> */}
         <View style={styles.headerContainer}>
-          <Text 
-            type="body2" weight="bold" style={styles.headerTitleText}>
+          <Text type="body2" weight="bold" style={styles.headerTitleText}>
             Dashboard
           </Text>
           <Image
@@ -312,84 +312,81 @@ const HomeScreen = props => {
             style={styles.headerIcon}
           />
         </View>
-        {activeJourneys.length >= 1 ?
-        (
+        {activeJourneys.length >= 1 ? (
           <View style={styles.welcomeSubHeader}>
-            <Text
-              type='h4'
-              weight='bold'
-              style={styles.welcomeText}
-            >Hello,</Text>
-            <Text
-              type='h4'
-              weight='bold'
-              style={styles.welcomeText}
-            >{user} 👋</Text>
-          </View>
-        )
-        : (
-        <View style={styles.subHeaderContainer}>
-          <Text type="caption2" weight="regular" style={styles.greetingText}>
-            Hello {user},
-          </Text>
-          <Text type="h4" weight="bold" style={styles.welcomeText}>
-            Welcome to Upshot 👋
-          </Text>
-          <Text
-            type="caption1"
-            weight="regular"
-            style={styles.welcomeDescriptionText}>
-            Start your leadership journey by completing your first session!
-          </Text>
-          <Button
-            mode="contained"
-            onPress={() => {}}
-            style={styles.startNowButton}>
-            <Text type="button" weight="bold" style={styles.buttonText}>
-              Start Now
+            <Text type="h4" weight="bold" style={styles.welcomeText}>
+              Hello,
             </Text>
-          </Button>
-        </View>
+            <Text type="h4" weight="bold" style={styles.welcomeText}>
+              {user} 👋
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.subHeaderContainer}>
+            <Text type="caption2" weight="regular" style={styles.greetingText}>
+              Hello {user},
+            </Text>
+            <Text type="h4" weight="bold" style={styles.welcomeText}>
+              Welcome to Upshot 👋
+            </Text>
+            <Text
+              type="caption1"
+              weight="regular"
+              style={styles.welcomeDescriptionText}>
+              Start your leadership journey by completing your first session!
+            </Text>
+            <Button
+              mode="contained"
+              onPress={() => {}}
+              style={styles.startNowButton}>
+              <Text type="button" weight="bold" style={styles.buttonText}>
+                Start Now
+              </Text>
+            </Button>
+          </View>
         )}
         <View style={styles.contentContainer}>
           {assessment !== '100%' ? (
-            <TouchableOpacity 
-            accessibilityRole='button'
-            onPress={() => navigation.navigate('Assessment', { screen: 'Assessment break down' })}
-            style={styles.assessmentProgressContainer}>
-            <View style={styles.profileProgress}>
-              <Text
-                type="caption2"
-                weight="bold"
-                style={styles.profileProgressText}>
-                {assessment}
-              </Text>
-            </View>
-            <View style={styles.profileTextContainer}>
-              <Text type="body2" weight="bold" style={styles.profileHeaderText}>
-                Complete your Profile
-              </Text>
-              <Text
-                type="caption2"
-                weight="regular"
-                style={styles.profileDescriptionText}>
-                By building your profile, you will see where your strength lies.
-              </Text>
-            </View>
-          </TouchableOpacity>
-          )
-            :
-            null
-          }
+            <TouchableOpacity
+              accessibilityRole="button"
+              onPress={() =>
+                navigation.navigate('Assessment', {
+                  screen: 'Assessment break down',
+                })
+              }
+              style={styles.assessmentProgressContainer}>
+              <View style={styles.profileProgress}>
+                <Text
+                  type="caption2"
+                  weight="bold"
+                  style={styles.profileProgressText}>
+                  {assessment}
+                </Text>
+              </View>
+              <View style={styles.profileTextContainer}>
+                <Text
+                  type="body2"
+                  weight="bold"
+                  style={styles.profileHeaderText}>
+                  Complete your Profile
+                </Text>
+                <Text
+                  type="caption2"
+                  weight="regular"
+                  style={styles.profileDescriptionText}>
+                  By building your profile, you will see where your strength
+                  lies.
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
           {activeJourneys.length >= 1 ? (
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               style={{ marginTop: 12, flex: 1 }}>
               {activeJourneys.map((item, i) => (
-                <FeedbackJourneyCard key={i} 
-                item={item}
-                />
+                <FeedbackJourneyCard key={i} item={item} />
               ))}
             </ScrollView>
           ) : null}
