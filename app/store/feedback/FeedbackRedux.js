@@ -51,6 +51,9 @@ const { Types, Creators } = createActions({
   postFeedbackExchange: ['data'],
   postFeedbackExchangeSuccess: [],
   postFeedbackExchangeFailure: ['error'],
+  fetchCurrentJourney: ['journeyId'],
+  fetchCurrentJourneySuccess: ['currentJourney'],
+  fetchCurrentJourneyFailure: ['error'],
 });
 
 export const FeedbackTypes = Types;
@@ -216,6 +219,16 @@ const postFeedbackExchangeFailure = (state, { error }) =>
     fetching: false,
     error
   });
+
+const fetchCurrentJourney = state => state.merge({
+  fetching: true,
+  error: '',
+});
+
+
+const fetchCurrentJourneySuccess = (state, {currentJourney} ) => state.merge({
+  fetching: false,
+})
 
 
 /* ------------- Hookup Reducers To Types ------------- */
