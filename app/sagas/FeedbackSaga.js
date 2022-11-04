@@ -84,26 +84,18 @@ export function* fetchCurrentFeedback({ journeyId }) {
   const data = {
     fb_id: journeyId
   }
-  const response = yield call(api.getResponseFromFrontliner, data);
+  const response = yield call(api.getCurrentFeedbackJourney, data);
+  //getResponseFromFrontliner
   debugger;
   if (response.data.status === STATUS_OK) {
     const feedbackResult = {
       id: journeyId,
-      managerInput: response.data.result['FB Entry'],
-      frontlinerInput: response.data.result['FL Response'],
-      frontliner: response.data.result.frontliner
+      ...response.data.data.journey,
+    //   managerInput: response.data.result['FB Entry'],
+    //   frontlinerInput: response.data.result['FL Response'],
+    //   frontliner: response.data.result.frontliner
     }
 yield put(FeedbackActions.fetchCurrentFeedbackSuccess(feedbackResult));
-    // const journeyData = response.data.Journey;
-    // const docuData = journeyData.Documenting;
-    // const prepData = journeyData.Preparing;
-    // const discussData = journeyData.Discussing;
-    // const reflectData = journeyData.Reflecting;
-    // const shareData = journeyData.Sharing;
-    // yield put(FeedbackActions.setFeedbackFlow(journeyData.feedback_flow));
-    // yield put(FeedbackActions.setFeedbackType(journeyData.feedback_type));
-    // yield setPhaseSteps(journeyData.feedback_flow, journeyData.feedback_type)
-    
   } else {
     yield put(FeedbackActions.fetchCurrentFeedbackFailure(response.data));
   }
