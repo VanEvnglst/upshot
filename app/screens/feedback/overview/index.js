@@ -32,12 +32,12 @@ const FeedbackOverview = props => {
   const [isStopDoingActive, setIsStopDoingActive] = useState(false);
   const [isAdditionalNotesActive, setIsAdditionalNotesActive] = useState(false);
 
-  useEffect(() => {
-    async function retrieveData() {
-      dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
-    }
-    retrieveData();
-  }, []);
+  // useEffect(() => {
+  //   async function retrieveData() {
+  //     dispatch(FeedbackActions.fetchCurrentFeedback(route.params.id));
+  //   }
+  //   retrieveData();
+  // }, []);
 
   const handleGoBack = () => {
     navigation.goBack();
