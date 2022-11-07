@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeNavigator from './TabRoutes';
+import HomeNavigator from './HomeStack';
 import MessagesNavigator from './MessagesStack';
 import { getUserRole } from 'app/store/selectors';
 
@@ -12,10 +12,7 @@ export default function MainNavigator() {
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        <MainStack.Screen
-          name={'Home'}
-          component={HomeNavigator}
-        />
+      <MainStack.Screen name={'Home'} component={HomeNavigator} />
     </MainStack.Navigator>
   );
 }
