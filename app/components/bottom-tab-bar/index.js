@@ -7,13 +7,17 @@ import styles from './styles';
 
 const BottomTabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
+
+  if (focusedOptions.tabBarVisible === false) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
     <View style={styles.tabBarContainer}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
 
-        // console.warn('props', state.routes);
         const isFocused = state.index === index;
 
         const onPress = () => {
