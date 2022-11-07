@@ -263,7 +263,7 @@ export function* postOverviewTest({ data }) {
         },
         {
           id: 5,
-          title: 'Achievement',
+          title: 'Achievement Orientation',
           description: aboutSkillArea[0].description,
           definition: definitionAchievement,
           skillPoint: skillPointAchievement,

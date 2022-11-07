@@ -52,7 +52,7 @@ const ImpactBehaviorEntry = props => {
     <KeyboardAvoidingView
       style={{ marginTop: 24,}}>
       <TextInput 
-        placeholder="Describe the impact to the business"
+        placeholder="Describe how this would affect the organization"
         multiline 
         numberOfLines={30}
         textAlignVertical='top'

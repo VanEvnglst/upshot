@@ -242,7 +242,7 @@ const LeadershipOverviewResults = props => {
               alignItems: 'center',
             }}>
             <Text style={styles.scoreLabel}>
-              Your<Text style={styles.scoreLabelBold}> {skillList[currentIndex].title} </Text>score is
+              Your<Text style={styles.scoreLabelBold}> {skillList[currentIndex].title} </Text>indicator is
               under
             </Text>
             <TouchableOpacity
@@ -292,14 +292,14 @@ const LeadershipOverviewResults = props => {
           <Text
             style={
               styles.descriptionText
-            }>{`To view your detailed skill area breakdown, you will need to answer a few questions to personalize your leadership profile.\n\nBy building your profile, we can have a baseline on your current performance and compare how you progress at any point in time. Your baseline helps us recommend the most useful starting point. `}</Text>
+            }>{`Find this interesting? You can learn more by completing the next set of questions.`}</Text>
         </View>
         <View style={styles.btnContainer}>
           <Button
             mode="contained"
             style={styles.button}
             onPress={() => handleNavigation()}>
-            Start with Skill Areas
+            Complete Your Profile
           </Button>
         </View>
         <TouchableOpacity

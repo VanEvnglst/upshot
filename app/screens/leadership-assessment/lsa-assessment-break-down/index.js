@@ -78,14 +78,14 @@ const AssessmentBreakDown = props => {
           >
             <View style={[styles.stepCounter, { borderColor: '#BAC0CA' }]}>
               {checkCategoryStatus[element.categoryState] ?
-                <Text style={[styles.stepText, { color: '#667080', }]}> {checkCategoryStatus[element.categoryState] - 3}/7</Text>
+                <Text style={[styles.stepText, { color: '#667080', }]}> {checkCategoryStatus[element.categoryState]}/10</Text>
                 :
                 <Text style={[styles.stepText, { color: '#667080', }]}> 0/7</Text>
               }
             </View>
             <View style={styles.skillTitleContainer}>
               <Text style={styles.skillTitleText}>{element.title} {element.icon}</Text>
-             <Text style={styles.completionText}>0% completed</Text>
+             <Text style={styles.completionText}>30% completed</Text>
             </View>
             <View
               accessibilityRole='button'
@@ -130,7 +130,7 @@ const AssessmentBreakDown = props => {
           <Image source={Images.bigGrinEmoji} style={{ height: 16, width: 16 }} />
           </View>
         <Text style={styles.descriptionText}>Your Upshot journey awaits. With a little jump start, you will see where your strength lies by answering these areas.</Text>
-        <Text style={styles.completedLabelText}>Completed Tests</Text>
+        <Text style={styles.completedLabelText}>Completed Areas</Text>
         <Text style={styles.completedTestText}>{ completedCnt }/5</Text>
       </View>
       {/* <View style={styles.ringsContainer}/> */}

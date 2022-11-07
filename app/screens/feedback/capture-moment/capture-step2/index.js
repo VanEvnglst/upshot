@@ -52,7 +52,7 @@ const CaptureMomentStep2 = () => {
   return (
     <View style={styles.content}>
       <Text style={styles.mainQuestionText}>What kind of feedback do you want to give?</Text>
-      <Text style={styles.descriptionText}>Tell us what kind of observation do you want to give to your direct report.</Text>
+      <Text style={styles.descriptionText}>Tell us what kind of observation do you want to give to your team member/s.</Text>
       <View style={styles.selectionContainer}>
         <View style={styles.selections}>
           {options.map((item, index) => (

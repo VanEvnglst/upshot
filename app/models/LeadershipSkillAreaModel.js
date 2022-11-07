@@ -25,28 +25,28 @@ export const aboutSkillArea = [
     title: "Achievement Orientation",
     description: "It is the drive to meet/exceed an internal standard of excellence; to make a meaningful contribtion and grow your scope of responsibility and influence",
     areaOfConcern: {
-      whatScoreMeans: "Low scores in Achievement-Orientation indicate you may...",
+      whatScoreMeans: "Low indicators in Achievement-Orientation implies you may...",
       skillPoints:
-        `• Lack enthusiasm and focus to do your best
-• Not notice or care about opportunities to learn and grow
-• Treat mistakes as things that happen but don't motivate you to improve
-• Not have a vision of what you would like to become`
+        `• Lack motivation in doing your best work
+• Not notice or care about growth opportunities
+• May not be motivated to improve from your mistakes
+• Not have a clear vision of what you would like to become`
     },
     areaOfContinuedDevelopment: {
-      whatScoreMeans: "Moderate scores in Achievement-Orientation indicate you may...",
+      whatScoreMeans: "Moderate indicator in Achievement-Orientation implies you may...",
       skillPoints:
-       `• Have goals and standards for your own performance but lack consistency
-• Sometimes seek opportunities to learn and grow but may fail to follow through
-• Have energy and drive to contribute more when it is easy but can lose motivation when difficulties arise`
+       `• Set goals but have difficulty finishing them
+• Look for opportunities to grow but have difficulty following through
+• Have difficulty staying motivated when things get difficult`
     },
     promisingArea: {
-      whatScoreMeans: "High scores in Achievement-Orientation indicate that you likely are...",
+      whatScoreMeans: "High indicator in Achievement-Orientation implies that you likely are...",
       skillPoints:
-        `• A person on a mission to grow in achievement and influence
-• On the lookout for opportunities that will further your career
-• Interested in and seek feedback about your performance and then act on it
+        `• Always looking for opportunities to further your career
+• A person who strives  to grow in achievement and influence
+• Seeking feedback about your performance and acting on it
 • Hard on yourself when you underperform
-• Sometimes overly demanding of others who are not motivated like you`
+• Sometimes overly demanding of others who are less motivated`
     }
     
   },
@@ -55,29 +55,29 @@ export const aboutSkillArea = [
     title: "Openness to Learn",
     description: "It is the strong desire to know or learn about what goes on around you. Such as, the way things work, why things are the way they are, what other's experiences and interests or motivations are",
     areaOfConcern: {
-      whatScoreMeans: "Low scores in Openness to Learn indicate you may not...",
+      whatScoreMeans: "Low indicator in Openness to Learn implies you may not...",
       skillPoints:
-        `•Be interested in the reasons why work is organized as it is
+        `• Be interested in the reasons work is done a certain way
+• Look for better ways to do things
+• Be open to try learning new things
 • Care about another's reasons for things
-• Engage in opportunities to learn new skills
-• Wonder about the business' performance and future vision
-• Seek to find better ways to do things`
+• Care about the business' performance and future vision
+• Think about the company's vision for the future`
     },
     areaOfContinuedDevelopment: {
-      whatScoreMeans: "Moderate scores in Openness to Learn indicate that you may...",
+      whatScoreMeans: "Moderate indicator in Openness to Learn implies that you may...",
       skillPoints:
-        `• Show some interest in the business as a whole but don't try to learn more
-• Ask some questions to understand the reasons for things but not enough to take action
-• Notice opportunities for improving things but are content with things as they are
-• Be interested enough to follow others who are curious but not lead`
+        `• Mostly stick to what you know
+• Show interest in how things are done but not enough to try improving them
+• Be interested enough to follow along with others who are curious but not lead`
     },
     promisingArea: {
-      whatScoreMeans: "High scores in Openness to Learn indicate that you likely are...",
+      whatScoreMeans: "High indicator in Openness to Learn indicate that you likely are...",
       skillPoints:
-        `• Quick to notice things that you want to learn more about
+        `• Often looking for new things to learn
 • Interested in the thoughts, motivations, and concerns of others
-• Often wanting to know more about why the business operates the way it does
-• To want to find ways to contribute more or improve things`
+• Willing to suggest ways to improve things
+• Often trying to know more about why things are done`
     }
    
   },
@@ -86,32 +86,33 @@ export const aboutSkillArea = [
     title: "Trust Building",
     description: "Demonstrating good character and trustworthiness both by being authentic and socially intelligent, which shows up as honesty, openness, consistency,compassion, and caring connection",
     areaOfConcern: {
-      whatScoreMeans: "Low scores in Trust Building indicate you may...",
+      whatScoreMeans: "Low indicator in Trust Building implies you may...",
       skillPoints:
-        `• Be unwilling to admit why you do what you do
-• Sometimes take advantage of a situation to benfit yourself
+        `• Sometimes take advantage of a situation to benefit yourself
+• Have a tendency to gossip
+• Be rude or unkind when you don't like someone
 • Be blame-seeking or fault-finding of others
-• Have a tendency to talk about issues and others in ways that are not open or inclusive
-• Be rude or unkind when you don't like someone`
+• Be unwilling to admit why you do what you do`
 
     },
     areaOfContinuedDevelopment: {
-      whatScoreMeans: "Moderate scores in Trust Building indicate that you may...",
+      whatScoreMeans: "Moderate indicator in Trust Building implies that you may...",
       skillPoints:
-        `• Be inconsistent in your behavior to avoid blame or conflict
-• Admit your own mistakes when confronted but not readily
-• Be consicious of the perspectives and needs of others but not act on them if it is difficult
-• Not be offensive, rude or unkind but do not confront others for being so
-• Try to ensure everyone is included in the work or conversation but not advocate for those who are ignored`
+        `• Seek to avoid blame or deal with conflict
+• Admit your own mistakes only when confronted
+• Know the  needs of others but not act on it them if it is difficult
+• Let others get away with being rude and offensive
+• Try to include everyone  but not advocate for those who are ignored`
     },
     promisingArea: {
-      whatScoreMeans: "High scores in Trust Building indicate that you likely are...",
+      whatScoreMeans: "High indicator in Trust Building implies that you likely are...",
       skillPoints:
-        `• Supportive of the needs of others and will advocate for them if needed
-• Quick to admit mistakes and take responsibility
-• Willing to see the failings of others as opportunities to help them grow
-• Always expects open conversation that includes those should be
-• Open about why you think and act and are willing to accept criticism`
+        `• Supportive of the needs of others; advocating for them if needed
+• Honest about the mistakes you make
+• Take responsibility for your actions
+• Open about how you think and act and willing to hear criticism
+• Encouraging people to learn and grow when they fail at something
+• Supporting open conversation that includes those who should be`
     }
   },
   {
@@ -119,30 +120,29 @@ export const aboutSkillArea = [
     title: 'Empathy',
     description: "The act of putting yourself in someone else's shoes or perspective to gain an understanding of another's feelings and thoughts",
     areaOfConcern: {
-      whatScoreMeans: `Low scores in Empathy indicate that you may have difficulty...`,
+      whatScoreMeans: `Low indicator in Empathy implies that you may have difficulty...`,
       skillPoints:
-        `• Seeing things from different perspective than your own
-• Sensing the emotional state of others
-• Being able to imagine what is like to be in another's shoes
-• Accepting feedback from others that conflicts with your sense of yourself
-• Listening deeply to others when you disagree`
+        `• Listening attentively to other people's opinions
+• Understanding other people's perspectives
+• Knowing how other people feel
+• Accepting negative feedback you don't agree with`
     },
     areaOfContinuedDevelopment: {
-      whatScoreMeans: "Moderate scores in Empathy indicate that you may...",
+      whatScoreMeans: "Moderate indicator in Empathy implies that you may...",
       skillPoints:
-        `• Be forgetful of what matters to others
-• Be insensitive to the depth of emotions others face when in stress
-• Seek to try to solve other people's problems even before they have asked for help
-• Not be able to quickly see and/or accept why people give you critical feedback for your behavior
-• Have trouble understanding the reasons behind both sides of a disagreement`
+        `• Sometimes have a good idea of how other people feel
+• Try to solve other people's problems instead of listening first
+• Sometimes be insensitive to the emotions others have
+• Find it hard to see or accept why people give you critical feedback
+• Find it difficult to understand both sides of a disagreement`
     },
     promisingArea: {
-      whatScoreMeans: "High scores in Empathy indicate that you likely are...",
+      whatScoreMeans: "High indicator in Empathy implies that you likely are...",
       skillPoints: 
-        `• Good at being patient and fully present when another really needs you to listen
-• Able to put into your own words what another means when they say something to you
-• Able to notice and put into words what another is feeling based on their expression, posture or sound of their voice
-• Perceive the likely reasons person's behavior`
+        `• Patient and focused when someone needs you to listen
+• Able to understand the reasons behind other people's actions
+• Very good at understanding and describing what people are feeling
+• Able to describe what another means when they say something`
     },
   },
   {
@@ -151,30 +151,31 @@ export const aboutSkillArea = [
     title: "Authenticity",
     description: `The alignment between what you say you believe in and/or is important to you and your actions; sometimes referred to as living one's core values or "walking the talk"`,
     areaOfConcern: {
-      whatScoreMeans: "Low scores in Authenticity indicate you may not...",
+      whatScoreMeans: "Low indicator in Authenticity implies you may not...",
       skillPoints:
-      `• Act according to what you say is important to you
-• Speak your opinion when it might cause tension
+      `• Do what you think is right
+• Give your opinion when it could get awkward
 • Admit when you have made mistakes
 • Treat everyone the same according to your values
 • Accept your part in a difficult relationship`
     },
     areaOfContinuedDevelopment: {
-      whatScoreMeans: "Moderate scores in Authenticity indicate that you may...",
+      whatScoreMeans: "Moderate indicator in Authenticity implies that you may...",
       skillPoints:
-        `• Confuse others about what your values are when you act differently from what you believe
-• Not reflect on the reasons you do and say what you do in different environments
-• Become vague when faced with a diffcult decision
-• Have a tendency to behave differently with different people in order to "fit in"`
+        `• Confuse others when you act differently from what you believe
+• Become vague when faced with a difficult decision
+• Have a tendency to behave in ways just to fit in
+• Not reflect on the reasons you do and say what you do`
     },
     promisingArea: {
-      whatScoreMeans: "High score in Authenticity indicate that you likely are...",
+      whatScoreMeans: "High indicator in Authenticity implies that you likely are...",
       skillPoints:
-        `• The same person in different circumstances
-• Predictable in the way you make decisions
-• Open and clear with others about your values
-• Are willing to be held accountable to "walking your talk" and when you make mistakes
-• Honest with yourself about your strengths and needs for development`
+        `• The same person with different people
+• Able to stick to your values in difficult situations
+• Open and clear about what you believe in
+• Able to admit and face the consequences of your actions
+• Honest with yourself about your strengths and development needs
+• Predictable in the way you make decisions`
     }
   },
   

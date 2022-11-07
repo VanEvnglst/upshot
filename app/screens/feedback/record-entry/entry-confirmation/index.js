@@ -100,7 +100,7 @@ const EntryContfirmation = props => {
           onPress={() => navigation.navigate('Home')}
           mode="contained"
           style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>Done</Text>
         </Button>
       </View>
       <View style={styles.spacer} />
