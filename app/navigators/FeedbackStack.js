@@ -19,14 +19,14 @@ import { getActiveJourneys } from 'app/store/selectors';
 
 const FeedbackStack = createStackNavigator();
 
-export default function FeedbackNavigator() {
+const FeedbackNavigator = () => {
   const activeJourneyLength = useSelector(getActiveJourneys);
 
   return (
     <>
       <FeedbackStack.Navigator
         headerMode="none"
-      >
+        >
         <FeedbackStack.Screen
           name={'Capture Feedback Moment'}
           component={CaptureFeedbackMoment}
@@ -66,7 +66,7 @@ export default function FeedbackNavigator() {
         <FeedbackStack.Screen
           name={'EM Journey Closeout'}
           component={EMJourneyCloseout}
-          />
+        />
         <FeedbackStack.Screen
           name={'Journey Details'}
           component={JourneyDetails}
@@ -78,4 +78,6 @@ export default function FeedbackNavigator() {
       </FeedbackStack.Navigator>
     </>
   );
-}
+};
+
+export default FeedbackNavigator;
