@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen, Messages, Activity, Reminders, ExploreScreen, Profile, InsightsPanel, BaselineScore, FeedbackResponse, ExtendedLeadershipAssessment } from '../screens';
@@ -16,7 +17,7 @@ import { BottomTabBar} from 'app/components';
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
-const HomeNavigator = () => {
+const HomeNavigator = ({ navigation, route }) => {
   const newSignUp = useSelector(getSignUpState);
   const isSignedIn = useSelector(getSignInState);
   
@@ -25,12 +26,11 @@ const HomeNavigator = () => {
       screenOptions={{ 
         headerShown: false,
       }}
-      initialRouteName={newSignUp && !isSignedIn ? 'Assessment' : 'Home'}
+      initialRouteName={'Home'}
     >
       <HomeStack.Screen
         name={'Home'} 
         component={TabRoutes} />
-      {/* <HomeStack.Screen name={'Feedback'} component={FeedbackNavigator} /> */}
       <HomeStack.Screen
             name={'Assessment'}
             component={AssessmentNavigator}
@@ -46,7 +46,8 @@ const HomeNavigator = () => {
 function TabRoutes() {
   return (
     <BottomTab.Navigator
-      tabBar={props => <BottomTabBar {...props} />}
+      tabBar={props => <BottomTabBar {...props} />
+      }
       initialRouteName="Home">
       <BottomTab.Screen
         name={'Home'}
@@ -59,6 +60,7 @@ function TabRoutes() {
       <BottomTab.Screen
         name={'Feedback'}
         component={FeedbackNavigator}
+        options ={{ tabBarVisible: false }}
       />
       <BottomTab.Screen
         name={'Notifications'}
