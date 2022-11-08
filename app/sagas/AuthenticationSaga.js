@@ -84,6 +84,7 @@ export function* signUpUser({ data }) {
     if (authResponse.data.status === RESULT_OK) {
       yield AsyncStorage.setItem('uniqueId', authResponse.data.uuid);
       yield put(UserActions.setUserName(auth.name));
+      yield put(UserActions.setUserRole(authResponse.data.role_id));
       yield put(AuthenticationActions.signUpUserSuccess());
     } else {
       yield put(
