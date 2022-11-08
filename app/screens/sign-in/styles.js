@@ -1,20 +1,23 @@
 import { StyleSheet } from 'react-native';
 import Colors from 'app/theme/colors';
+import { DeviceUtil } from 'app/utils';
+
+const { normalize } = DeviceUtil;
 
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   headerContainer: {
-    marginTop: 20,
+    marginTop: normalize(20),
     borderBottomWidth: 0.5, 
-    paddingBottom: 15
+    paddingBottom: normalize(15)
   },
   headerOptions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24
+    paddingHorizontal: normalize(24)
   },
   logoContainer: {
     flex: 2,
@@ -34,9 +37,9 @@ export default styles = StyleSheet.create({
     fontWeight: '500'
   },
   formContainer: {
-    marginTop: 50, 
-    paddingHorizontal: 24
-    // backgroundColor: Colors.white,
+    flex: 1,
+    marginTop: normalize(50), 
+    paddingHorizontal: normalize(24)
   },
   form: {
     marginTop: 30,
@@ -45,22 +48,41 @@ export default styles = StyleSheet.create({
   },
   inputField: {
     height: 48,
-    paddingHorizontal: 10,
+    paddingHorizontal: normalize(10),
     width: '100%',
-    marginBottom: 24,
+    marginBottom: normalize(24),
+    borderWidth: 0.5,
+    borderColor: Colors.neutral4,
+    borderRadius: 6,
   },
   labelText: {
     marginBottom: 4,
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 22,
-    color: '#667080'
+    color: Colors.neutral3
+  },
+  btnContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginBottom: normalize(50),
   },
   button: {
     width: '100%',
-    marginTop: 30,
+    marginTop: normalize(30),
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  disabledBtn: {
+    backgroundColor: Colors.neutral5
+  },
+  enabledBtn: {
+    backgroundColor: Colors.neutral3
+  },
+  disabledButtonText: {
+    color: Colors.neutral3,
+    textTransform: 'capitalize'
+  },
+  enabledBtnText: {
+    color: Colors.white,
+    textTransform: 'capitalize'
   },
 });
