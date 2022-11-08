@@ -33,7 +33,7 @@ const SignUp = props => {
   }, []);
 
   useEffect(() => {
-    if (name.length !== 0 && email.length !== 0 && password.length < 8)
+    if (name.length !== 0 && email.length !== 0 && password.length >= 8)
     setDetailsComplete(true);
     else
     setDetailsComplete(false);
