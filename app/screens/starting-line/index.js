@@ -56,7 +56,7 @@ const StartingLineScreen = props => {
       </View>
       <View style={{ flex: 2 }} />
       <View
-        style={styles.actionContainer}>
+        style={[styles.actionContainer, { zIndex: -1}]}>
         <Button
           mode="contained"
           onPress={() => navigation.navigate('Starting guide')}

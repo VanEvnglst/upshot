@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
