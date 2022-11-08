@@ -1,28 +1,29 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
-  TextInput,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import BottomSheet from '@gorhom/bottom-sheet';
+import Icon from 'react-native-vector-icons/Ionicons';
+import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { getSignInError } from 'app/store/selectors';
+import { Text } from 'app/components';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import labels from 'app/locales/en';
 import styles from './styles';
+import SignIn from '../sign-in';
 
 const StartingLineScreen = props => {
   const { navigation } = props;
   const bottomSheetRef = useRef(null);
   const dispatch = useDispatch();
   const { height } = Dimensions.get('window');
-  const snapPoints = useMemo(() => ['90%'], []);
+  const snapPoints = useMemo(() => ['95%'], []);
   const signInError = useSelector(getSignInError);
   const [sheetType, setSheetType] = useState('');
   const [email, setEmail] = useState('');
@@ -60,6 +61,7 @@ const StartingLineScreen = props => {
   }
 
   const openSheet = type => {
+    console.warn('call');
     setSheetType(type);
     bottomSheetRef.current?.snapToIndex(0);
   };
@@ -75,7 +77,7 @@ const StartingLineScreen = props => {
     return (
       <View style={{ marginBottom: 24,}}>
         <Text style={{ marginBottom: 4 }}>{label}</Text>
-        <TextInput
+        <BottomSheetTextInput
           {...props}
           // secureTextEntry={type==='password'}
           placeholder={placeholder}
@@ -89,84 +91,6 @@ const StartingLineScreen = props => {
         />
         {error && error.length !== 0 && <Text>{error}</Text>}
       </View>
-    );
-  };
-
-  const SignInContainer = () => {
-    return (
-      <>
-          <Formik
-            initialValues={{
-              email,
-              password,
-            }}
-            // validate={() => validate()}
-            onSubmit={() => signInUser()}>
-            {({ errors, handleSubmit }) => {
-              return (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      height: '25%',
-                      paddingLeft: 18,
-                      paddingRight: 12,
-                      borderBottomWidth: 1,
-                    }}>
-                    <TouchableOpacity
-                    onPress={() => navigation.navigate('Leadership Assessment Guide')}
-                    >
-                      <Text>X</Text>
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        lineHeight: 22,
-                        fontWeight: '700',
-                        paddingLeft: 30,
-                      }}>
-                      Log in
-                    </Text>
-                    <TouchableOpacity onPress={() => setSheetType('sign up')}>
-                      <Text>Sign up</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={{ paddingHorizontal: 22, marginTop: 30 }}>
-                    <InputField
-                      label={'Email'}
-                      placeholder={'name@work-email.com'}
-                      value={email}
-                      onChangeText={email => setEmail(email)}
-                      error={errors.emailError}
-                    />
-                    <InputField
-                      label={'Password'}
-                      placeholder={'8+ characters'}
-                      secureTextEntry
-                      value={password}
-                      onChangeText={password => setPassword(password)}
-                      error={errors.passwordError}
-                    />
-                    <Button
-                      mode="contained"
-                      style={{
-                        marginTop: 30,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 58,
-                      }}
-                      onPress={() => handleSubmit()}  
-                    >
-                      <Text>Sign in</Text>
-                    </Button>
-                  </View>
-                </>
-              );
-            }}
-          </Formik>
-      </>
     );
   };
 
@@ -290,47 +214,56 @@ const StartingLineScreen = props => {
         <Button
           mode="contained"
           onPress={() => navigation.navigate('Starting guide')}
-          style={{
-            height: 55,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          style={styles.button}>
           <Text>tell me more</Text>
         </Button>
         <Button
           mode="contained"
           onPress={() => navigation.navigate('Sign up')}
-          style={{
-            marginTop: 8,
-            borderWidth: 1,
-            height: 55,
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          style={[styles.button, styles.newAccountButton]}>
           <Text style={{ color: 'black' }}>Sign up</Text>
         </Button>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+      <View style={styles.oldAccountContainer}>
         <Text>Already have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Sign in')}>
-          <Text style={{ textDecorationLine: 'underline', marginLeft: 4 }}>
+        <TouchableOpacity onPress={() => openSheet('sign in')}>
+          <Text style={styles.logInText}>
             Log in
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ height: 100 }} />
-      {/* <BottomSheet
+      <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         enablePanDownToClose
-        containerHeight={height}>
-        <KeyboardAvoidingView>
-          {sheetType === 'sign in' && <SignInContainer />}
-          {sheetType === 'sign up' && <SignUpContainer />}
-        </KeyboardAvoidingView>
-      </BottomSheet> */}
+        containerHeight={height}
+        >
+        <View style={styles.container}>
+          <View style={styles.bottomSheetHeader}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => {}}
+            >
+              <Icon name='close-outline'
+                size={24}
+                color={'#353945'}
+                style={styles.container}
+              />
+            </TouchableOpacity>
+            <Text type='body2' weight='bold' style={styles.bottomSheetTitle}>{sheetType === 'sign in' ? 'Log In' : 'Sign Up'}</Text>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => {}}
+            >
+            <Text type='body2' weight='medium' style={styles.bottomSheetOption}>{sheetType === 'sign in' ? 'Sign Up' : 'Log In'}</Text>
+            </TouchableOpacity>
+          </View>
+           {sheetType === 'sign in' && <SignIn/>}
+          {/* {sheetType === 'sign up' && <SignUpContainer />} */}
+        </View>
+      </BottomSheet>
+      <View style={styles.spacer} />
     </View>
   );
 };
