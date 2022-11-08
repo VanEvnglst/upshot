@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
-  SafeAreaView,
-  StyleSheet
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
+import { Text } from 'app/components';
 import { getSignInError } from 'app/store/selectors';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import { TextInput } from 'app/components';
 import labels from 'app/locales/en';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './styles';
 
 const SignUp = props => {
   const { navigation } = props;
@@ -26,10 +26,18 @@ const SignUp = props => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
+  const [detailsComplete, setDetailsComplete] = useState(false);
 
   useEffect(() => {
     retrieveToken();
   }, []);
+
+  useEffect(() => {
+    if (name.length !== 0 && email.length !== 0 && password.length < 8)
+    setDetailsComplete(true);
+    else
+    setDetailsComplete(false);
+  }, [name, email, password])
 
   const retrieveToken = async () => {
     try {
@@ -72,27 +80,8 @@ const SignUp = props => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, }}
+      style={styles.container}
       behavior={DeviceUtil.isIos() ? 'padding' : null}>
-      <SafeAreaView>
-      <View style={styles.headerContainer}>
-        <View style={styles.headerOptions}>
-          <TouchableOpacity
-          onPress={() => navigation.navigate('Starting line')}
-          >
-        <Text>X</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Sign up</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Sign in')}
-        >
-        <Text style={styles.buttonRightText}>Log in</Text>
-        </TouchableOpacity>
-        </View>
-
-      </View>
-      </SafeAreaView>
-      <View>
         <Formik
           initialValues={{
             name,
@@ -106,24 +95,33 @@ const SignUp = props => {
           {({ errors, handleSubmit }) => {
             return (
               <View style={styles.formContainer}>
-                <Text style={styles.labelText}>Name</Text>
-                <TextInput
+                <Text 
+                  type='caption1'
+                  weight='regular'
+                style={styles.labelText}>Name</Text>
+                <BottomSheetTextInput
                     placeholder={'John Doe'}
                     style={styles.inputField}
                     value={name}
                     onChangeText={name => setName(name)}
                     error={errors.nameError}
                   />
-                <Text style={styles.labelText}>Email</Text>
-                <TextInput
+                <Text 
+                  type='caption1'
+                  weight='regular'
+                style={styles.labelText}>Email</Text>
+                <BottomSheetTextInput
                     placeholder={'name@work-email.com'}
                     style={styles.inputField}
                     value={email}
                     onChangeText={email => setEmail(email)}
                     error={errors.emailError}
                   />
-                <Text style={styles.labelText}>Password</Text>
-                  <TextInput
+                <Text 
+                  type='caption1'
+                  weight='regular'
+                style={styles.labelText}>Password</Text>
+                  <BottomSheetTextInput
                     placeholder={'8+ characters'}
                     style={styles.inputField}
                     secureTextEntry
@@ -131,67 +129,26 @@ const SignUp = props => {
                     onChangeText={password => setPassword(password)}
                     error={errors.passwordError}
                   />
+                  <View style={styles.btnContainer}>
                    <Button
                     mode="contained"
-                    style={styles.button}
+                    style={[styles.button, detailsComplete ? styles.enabledBtn : styles.disabledBtn]}
+                disabled={!detailsComplete}
                     onPress={() => handleSubmit()}>
-                    Create account
+                    <Text type='body2' weight='bold' style={detailsComplete ? styles.enabledBtnText : styles.disabledButtonText}>
+                  Create Account
+                  </Text>
                   </Button>
+                  </View>
               </View>
             )
           }}
         </Formik>
-      </View>
     </KeyboardAvoidingView>
   );
 };
 export default SignUp;
 
-const styles = StyleSheet.create({
-  headerContainer: {
-    marginTop: 20,
-    borderBottomWidth: 0.5, 
-    paddingBottom: 15
-  },
-  headerOptions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 24
-  },
-  headerText: {
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '700',
-    paddingLeft: 30,
-  },
-  buttonRightText: {
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '500'
-  },
-  formContainer: { 
-    marginTop: 50, 
-    paddingHorizontal: 24
-  },
-  inputField: {
-    height: 48,
-    paddingHorizontal: 10,
-    width: '100%',
-    marginBottom: 24,
-  },
-  labelText: {
-    marginBottom: 4,
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 22,
-    color: '#667080'
-  },
-  button: {
-    width: '100%',
-    marginTop: 30,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
+SignUp.propTypes = {};
+
+SignUp.defaultProps = {};
