@@ -84,10 +84,8 @@ const fetchServerFailure = (state, { error }) =>
 
 const signUpUserSuccess = state =>
   state.merge({
-    ...state.get('newSignUp'),
     fetching: false,
     isSignedIn: true,
-    newSignUp: true,
     error: '',
   });
 

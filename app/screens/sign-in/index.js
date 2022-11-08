@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, Platform } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -22,10 +23,18 @@ const SignIn = props => {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [errorVisible, setErrorVisible] = useState(false);
+  const [detailsComplete, setDetailsComplete] = useState(false);
 
   useEffect(() => {
     retrieveToken();
   }, []);
+
+  useEffect(() => {
+    if (email.length !== 0 && password.length !== 0)
+    setDetailsComplete(true);
+    else
+    setDetailsComplete(false);
+  }, [email, password])
 
   // useEffect(() => {
   //   if (signInError !== '') setErrorVisible(true);
@@ -69,84 +78,67 @@ const SignIn = props => {
       }),
     );
   };
-  
+
   return (
     <KeyboardAvoidingView
-      style={styles.container}
-      behavior={DeviceUtil.isIos() ? 'padding' : null}>
- <SafeAreaView>
-      <View style={styles.headerContainer}>
-        <View style={styles.headerOptions}>
-          <TouchableOpacity
-          onPress={() => navigation.navigate('Starting line')}
-          >
-        <Text>X</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Log in</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Sign up')}
-        >
-        <Text style={styles.buttonRightText}>Sign up</Text>
-        </TouchableOpacity>
-        </View>
-
-      </View>
-      </SafeAreaView>
-        <View>
-          <Formik
-            initialValues={{
-              email,
-              password,
-            }}
-            validate={() => validate()}
-            validateOnChange={true}
-            onSubmit={() => signInUser()}>
-            {({ errors, handleSubmit }) => {
-              return (
-                <View style={styles.formContainer}>
-                  <Text style={styles.labelText}>Email</Text>
-                  <TextInput
-                    placeholder={'name@work-email.com'}
-                    style={styles.inputField}
-                    value={email}
-                    onChangeText={email => setEmail(email)}
-                    error={errors.emailError}
-                  />
-                  <Text style={styles.labelText}>Password</Text>
-                  <TextInput
-                    placeholder={'Password'}
-                    style={styles.inputField}
-                    secureTextEntry
-                    value={password}
-                    onChangeText={password => setPassword(password)}
-                    error={errors.passwordError}
-                  />
-                  <Button
-                    mode="contained"
-                    style={styles.button}
-                    onPress={() => handleSubmit()}>
-                    {labels.common.logIn}
-                  </Button>
+     style={styles.container}
+     behavior={DeviceUtil.isIos() ? 'padding' : null}
+     >
+      <Formik
+        initialValues={{
+          email,
+          password,
+        }}
+        validate={() => validate()}
+        validateOnChange={true}
+        onSubmit={() => signInUser()}>
+        {({ errors, handleSubmit }) => {
+          return (
+            <View style={styles.formContainer}>
+              <Text 
+                type='caption1'
+                weight='regular'
+                style={styles.labelText}>
+                Email
+              </Text>
+              <BottomSheetTextInput
+                placeholder={'name@work-email.com'}
+                style={styles.inputField}
+                value={email}
+                onChangeText={email => setEmail(email)}
+                error={errors.emailError}
+              />
+              <Text
+                type='caption1'
+                weight='regular'
+                style={styles.labelText}>
+                  Password
+                </Text>
+                <BottomSheetTextInput
+                placeholder={'Password'}
+                style={styles.inputField}
+                value={password}
+                onChangeText={password => setPassword(password)}
+                secureTextEntry
+                error={errors.passwordError}
+              />
+              <View style={styles.btnContainer}>
+              <Button
+                mode='contained'
+                style={[styles.button, detailsComplete ? styles.enabledBtn : styles.disabledBtn]}
+                disabled={!detailsComplete}
+                onPress={() => handleSubmit()}>
+                <Text type='body2' weight='bold' style={detailsComplete ? styles.enabledBtnText : styles.disabledButtonText}>
+                  {labels.common.logIn}
+                  </Text>
+                </Button>
                 </View>
-              );
-            }}
-          </Formik>
-        </View>
-        <Snackbar 
-          visible={errorVisible} 
-          onDismiss={dismissSnackbar}
-          action={{
-            label: 'Ok',
-            onPress: () => {
-              dismissSnackbar()
-            }
-          }}
-        >
-        <Text>{signInError}</Text>
-      </Snackbar>
-        {/* {isLoading && <Loader />} */}
+            </View>
+          )
+        }}
+        </Formik>
     </KeyboardAvoidingView>
-  );
+  )
 };
 
 export default SignIn;

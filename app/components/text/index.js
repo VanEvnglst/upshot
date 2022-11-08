@@ -40,7 +40,7 @@ Text.propTypes = {
   children: PropTypes.any.isRequired,
   type: PropTypes.string.isRequired,
   testID: PropTypes.string.isRequired,
-  style: PropTypes.object,
+  style: PropTypes.any,
   weight: PropTypes.string.isRequired,
 };
 

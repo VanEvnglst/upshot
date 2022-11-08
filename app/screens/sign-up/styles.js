@@ -1,50 +1,17 @@
 import { StyleSheet } from 'react-native';
-import Colors from 'app/theme/colors';
 import { DeviceUtil } from 'app/utils';
+import Colors from 'app/theme/colors';
 
 const { normalize } = DeviceUtil;
 
-export default styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-  },
-  headerContainer: {
-    marginTop: normalize(20),
-    borderBottomWidth: 0.5, 
-    paddingBottom: normalize(15)
-  },
-  headerOptions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: normalize(24)
-  },
-  logoContainer: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
-  },
-  headerText: {
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '700',
-    paddingLeft: 30,
-  },
-  buttonRightText: {
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '500'
   },
   formContainer: {
     flex: 1,
     marginTop: normalize(50), 
     paddingHorizontal: normalize(24)
-  },
-  form: {
-    marginTop: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   inputField: {
     height: 48,
