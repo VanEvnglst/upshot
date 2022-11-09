@@ -4,10 +4,11 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import { BottomSheetTextInput} from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -81,7 +82,8 @@ const SignUp = props => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={DeviceUtil.isIos() ? 'padding' : null}>
+      behavior={DeviceUtil.isIos() ? 'padding' : null}
+      >
         <Formik
           initialValues={{
             name,
@@ -93,7 +95,7 @@ const SignUp = props => {
           onSubmit={() => signUpUser()}
         >
           {({ errors, handleSubmit }) => {
-            return (
+            return ( 
               <View style={styles.formContainer}>
                 <Text 
                   type='caption1'
@@ -143,7 +145,7 @@ const SignUp = props => {
               </View>
             )
           }}
-        </Formik>
+        </Formik> 
     </KeyboardAvoidingView>
   );
 };
