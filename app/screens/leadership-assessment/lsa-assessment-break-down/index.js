@@ -49,6 +49,7 @@ const AssessmentBreakDown = props => {
     }, 300);
     
   };
+
   const SkillAreaItem = ({element}) => {
     return (
       <>
@@ -60,7 +61,7 @@ const AssessmentBreakDown = props => {
             
           >
             <View style={[styles.stepCounter, {borderColor: element.color}]}>
-              <Text style={[styles.stepText, {color: element.color,}]}>7/7</Text>
+              <Text style={[styles.stepText, { color: element.color, }]}>{checkCategoryStatus[element.categoryState]}/10</Text>
             </View>
             <View style={styles.skillTitleContainer}>
               <Text style={styles.skillTitleText}>{element.title} {element.icon}</Text>
@@ -77,15 +78,11 @@ const AssessmentBreakDown = props => {
             onPress={() => retrieveExtendedQs(element)}
           >
             <View style={[styles.stepCounter, { borderColor: '#BAC0CA' }]}>
-              {checkCategoryStatus[element.categoryState] ?
-                <Text style={[styles.stepText, { color: '#667080', }]}> {checkCategoryStatus[element.categoryState]}/10</Text>
-                :
-                <Text style={[styles.stepText, { color: '#667080', }]}> 0/7</Text>
-              }
+                <Text style={[styles.stepText, { color: '#667080', }]}> {checkCategoryStatus[element.categoryState] === null ? 0 : checkCategoryStatus[element.categoryState]}/10</Text>
             </View>
             <View style={styles.skillTitleContainer}>
               <Text style={styles.skillTitleText}>{element.title} {element.icon}</Text>
-             <Text style={styles.completionText}>30% completed</Text>
+              <Text style={styles.completionText}>{(checkCategoryStatus[element.categoryState]/10)*100}% completed</Text>
             </View>
             <View
               accessibilityRole='button'
