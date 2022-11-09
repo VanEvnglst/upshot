@@ -308,4 +308,10 @@ export default styles = StyleSheet.create({
     color: '#667080',
     fontWeight: '400',
   },
+  dateTimeText: {
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 22,
+    color: '#667080',
+  },
 });
