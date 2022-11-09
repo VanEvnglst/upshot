@@ -3,10 +3,11 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import styles from './styles';
@@ -17,7 +18,7 @@ const StartingLineScreen = props => {
   const { navigation } = props;
   const bottomSheetRef = useRef(null);
   const { height } = Dimensions.get('window');
-  const snapPoints = useMemo(() => ['95%'], []);
+  const snapPoints = useMemo(() => ['85%'], []);
   const [sheetType, setSheetType] = useState('');
 
   const openSheet = type => {
@@ -28,6 +29,7 @@ const StartingLineScreen = props => {
   const closeSheet = () => {
     setSheetType('');
     bottomSheetRef.current?.close();
+    Keyboard.dismiss();
   }
 
   const handleSheets = () => {
@@ -87,6 +89,9 @@ const StartingLineScreen = props => {
         snapPoints={snapPoints}
         enablePanDownToClose
         containerHeight={height}
+        backdropComponent={BottomSheetBackdrop}
+        keyboardBehavior="fillParent"
+        keyboardBlurBehavior="restore"
         >
         <View style={styles.container}>
           <View style={styles.bottomSheetHeader}>

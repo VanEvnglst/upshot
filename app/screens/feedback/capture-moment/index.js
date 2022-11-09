@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useLayoutEffect, useEffect, useRef, useMemo } from 'react';
 import {
   View,
-  Text,
   SafeAreaView,
   TouchableOpacity,
   BackHandler,
@@ -12,96 +11,26 @@ import {
 import {
   ScrollView,
   NativeViewGestureHandler,
-  GestureHandlerRootView,
 } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
+import { Text } from 'app/components';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
-import CaptureMomentStep1 from './capture-step1';
+import { getActiveCaptureStep, getMaxCaptureStep, getStaffList, getCaptureData, getMainTopics, getSubTopics } from 'app/store/selectors';
+import StaffSelection from './capture-step1';
 import CaptureMomentStep2 from './capture-step2';
 import CaptureMomentStep3 from './capture-step3';
 import CaptureMomentStep4 from './capture-step4';
-import styles from './styles';
 import Images from 'app/assets/images';
+import styles from './styles';
 
 const hourPicker = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
-  '13',
-  '14',
-  '15',
-  '16',
-  '17',
-  '18',
-  '19',
-  '20',
-  '21',
-  '22',
-  '23',
-  '24',
-  '25',
-  '26',
-  '27',
-  '28',
-  '29',
-  '30',
-  '31',
-  '32',
-  '33',
-  '34',
-  '35',
-  '36',
-  '37',
-  '38',
-  '39',
-  '40',
-  '41',
-  '42',
-  '43',
-  '44',
-  '45',
-  '46',
-  '47',
-  '48',
-  '49',
-  '50',
-  '51',
-  '52',
-  '53',
-  '54',
-  '55',
-  '56',
-  '57',
-  '58',
-  '59',
-  '60',
-  '61',
-  '62',
-  '63',
-  '64',
-  '65',
-  '66',
-  '67',
-  '68',
-  '69',
-  '70',
-  '71',
-  '72',
+  
 ];
 
 const CaptureFeedbackMoment = props => {
@@ -110,21 +39,14 @@ const CaptureFeedbackMoment = props => {
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
   const dispatch = useDispatch();
-  const activeStep = useSelector(state =>
-    state.captureMoment.get('activeStep'),
-  );
-  const maxStep = 4;
-  const staffList = useSelector(state =>
-    state.captureMoment.get('staffMembers'),
-  );
-  const staffName = useSelector(state => state.captureMoment.get('data'));
-  const feedbackType = useSelector(state => state.captureMoment.get('data'));
-  const layerOneTopics = useSelector(state =>
-    state.captureMoment.get('layerOneTopics'),
-  );
-  const layerTwoTopics = useSelector(state =>
-    state.captureMoment.get('layerTwoTopics'),
-  );
+  const activeStep = useSelector(getActiveCaptureStep);
+  const maxStep = useSelector(getMaxCaptureStep);
+  const staffList = useSelector(getStaffList);
+  const captureData = useSelector(getCaptureData);
+  const staffName = captureData && captureData.step1;
+  const feedbackType = captureData && captureData.step2;
+  const layerOneTopics = useSelector(getMainTopics);
+  const layerTwoTopics = useSelector(getSubTopics);
   const [selectedStaff, setSelectedStaff] = useState();
   const [selectedLayerOne, setSelectedLayerOne] = useState(null);
   const [selectedLayerTwo, setSelectedLayerTwo] = useState(null);
@@ -146,7 +68,7 @@ const CaptureFeedbackMoment = props => {
       });
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(CaptureMomentActions.fetchStaffMembers());
   }, []);
 
@@ -160,24 +82,24 @@ const CaptureFeedbackMoment = props => {
     else dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep - 1));
   };
 
-  const StaffSelection = () => {
-    return (
-      <View style={styles.listContainer}>
-        {staffList.map((item, i) => (
-          <TouchableOpacity
-            key={item.id}
-            onPress={() => setStaffSelection(item)}
-            style={styles.namesContainer}>
-            <View style={styles.nameAvatar} />
-            <View style={styles.staffNameContainer}>
-              <Text style={styles.staffNameText}>{item.name}</Text>
-              <Text style={styles.emailText}>{item.email}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
-  };
+  // const StaffSelection = () => {
+  //   return (
+  //     <View style={styles.listContainer}>
+  //       {staffList.map((item, i) => (
+  //         <TouchableOpacity
+  //           key={item.id}
+  //           onPress={() => setStaffSelection(item)}
+  //           style={styles.namesContainer}>
+  //           <View style={styles.nameAvatar} />
+  //           <View style={styles.staffNameContainer}>
+  //             <Text style={styles.staffNameText}>{item.name}</Text>
+  //             <Text style={styles.emailText}>{item.email}</Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       ))}
+  //     </View>
+  //   );
+  // };
 
   const TopicSelection = () => {
     return (
@@ -188,7 +110,7 @@ const CaptureFeedbackMoment = props => {
         <View style={styles.mainQuestionHeader}>
           <Text style={styles.mainQuestionText}>Add topic details to your</Text>
           <View style={styles.typeContainer}>
-            <Text style={styles.typeText}>{feedbackType.step2.title}</Text>
+            <Text style={styles.typeText}>{feedbackType.title}</Text>
           </View>
           <Text style={styles.mainQuestionText}>feedback</Text>
         </View>
@@ -667,7 +589,7 @@ const CaptureFeedbackMoment = props => {
             {staffName && (
               <View style={styles.selectedNameContainer}>
                 <View style={styles.selectedAvatar} />
-                <Text style={styles.selectedName}>{staffName.step1.name}</Text>
+                <Text style={styles.selectedName}>{staffName.name}</Text>
               </View>
             )}
           </View>
