@@ -10,7 +10,7 @@ export const getSignInError = state => state.authentication.get('error');
 
 /* ------------- Feedback Selectors ------------- */
 export const getCurrentJourney = state => state.feedback.get('currentJourney');
-export const getStaffList = state => state.feedback.get('teamMembers').data;
+// export const getStaffList = state => state.feedback.get('teamMembers').data;
 export const getStaffName = state => state.feedback.get('chosenTeamMember');
 export const getActiveJourneyError = state =>
   state.feedback.get('currentJourney').error;
@@ -31,22 +31,17 @@ export const getScheduledCount = state => state.feedbackHistory.get('scheduledDi
 export const getCompletedJourneysCount = state => state.feedbackHistory.get('completedJourneys');
 export const getTotalJourneysCount = state => state.feedbackHistory.get('totalJourneys');
 
-/* ------------- Feedback Documenting Selectors ------------- */
-
-/* ------------- Feedback Preparing Selectors ------------- */
-
-
-/* ------------- Feedback Discussing Selectors ------------- */
-
-
-/* ------------- Feedback Reflecting Selectors ------------- */
-
-
-/* ------------- Feedback Sharing Selectors ------------- */
 
 
 
-/* ------------- Messages  Selectors ------------- */
+/* ------------- Capture Feedback Moment Selectors ------------- */
+export const getActiveCaptureStep = state =>
+state.captureMoment.get('activeStep');
+export const getMaxCaptureStep = state => state.captureMoment.get('maxStep');
+export const getStaffList = state => state.captureMoment.get('staffMembers');
+export const getCaptureData = state => state.captureMoment.get('data');
+export const getMainTopics = state => state.captureMoment.get('layerOneTopics');
+export const getSubTopics = state => state.captureMoment.get('layerTwoTopics');
 
 
 
