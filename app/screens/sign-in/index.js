@@ -30,7 +30,7 @@ const SignIn = props => {
   }, []);
 
   useEffect(() => {
-    if (email.length !== 0 && password.length !== 0)
+    if (email.length !== 0 && password.length >= 8)
     setDetailsComplete(true);
     else
     setDetailsComplete(false);
@@ -81,7 +81,7 @@ const SignIn = props => {
 
   return (
     <KeyboardAvoidingView
-     style={styles.container}
+    style={styles.container}
      behavior={DeviceUtil.isIos() ? 'padding' : null}
      >
       <Formik
