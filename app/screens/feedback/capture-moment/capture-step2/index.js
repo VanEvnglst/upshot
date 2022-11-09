@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import Images from 'app/assets/images';
 import styles from '../styles';
@@ -19,7 +20,8 @@ import styles from '../styles';
 
 const CaptureMomentStep2 = () => {
   const dispatch = useDispatch();
-  const activeStep  = useSelector(state => state.captureMoment.get('activeStep'));
+  const activeStep = useSelector(state => state.captureMoment.get('activeStep'));
+  const dateEntry = moment(new Date().format('ddd. MMM DD, YYYY [at] hh:mm a'))
   const [typeSelection, setTypeSelection] = useState({
     id: 0,
     icon: '',
@@ -52,6 +54,7 @@ const CaptureMomentStep2 = () => {
   return (
     <View style={styles.content}>
       <Text style={styles.mainQuestionText}>What kind of feedback do you want to give?</Text>
+      <Text style={styles.dateTimeText}>{dateEntry}</Text>
       <Text style={styles.descriptionText}>Tell us what kind of observation do you want to give to your team member/s.</Text>
       <View style={styles.selectionContainer}>
         <View style={styles.selections}>

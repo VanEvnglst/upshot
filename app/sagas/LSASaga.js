@@ -98,9 +98,8 @@ export function* fetchBaselineScores() {
 
   if (response.ok) {
     let scores = response.data.scores;
-    const testCount = state => state.leadershipSkillArea.get('testFinishedCount');
-    const completeTest = yield select(testCount);
-    
+    //const testCount = state => state.leadershipSkillArea.get('testFinishedCount');
+    //const completeTest = yield select(testCount);
     let completedCount = 0;
     const dataValues = Object.values(scores);
     for (let i = 0; i < dataValues.length; i++) { 
@@ -118,16 +117,17 @@ export function* fetchBaselineScores() {
           category = 'opennessToLearn';
           break;
       }
-      if (categoryStepCnt === 7) { 
+      if (categoryStepCnt === 10) { 
         completedCount = completedCount + 1
       }
       yield put(LeadershipSkillAreaActions.setCategoryStatus(category, categoryStepCnt))
     }
-    if (completeTest + completedCount <= 5) {
-      yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount', completeTest + completedCount))
-    } else { 
-      yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount', 5))
+    if (completedCount <= 5) {
+      yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount', completedCount))
     }
+    // else { 
+    //   yield put(LeadershipSkillAreaActions.setAssessmentStatus('testFinishedCount', 5))
+    // }
     yield put(LeadershipSkillAreaActions.fetchBaselineScoresSuccess(scores));
   } else {
     yield put(
@@ -154,6 +154,7 @@ export function* postOverviewTest({ data }) {
 
   const response = yield call(api.postOverviewTest, overviewData);
   if (response.ok) {
+    debugger;
     if (response.data.status === 'ok') {
       let definitionAuthenticity, skillPointAuthenticity, definitionTrust, skillPointTrust, definitionEmpathy, skillPointEmpathy, definitionOpenness, skillPointOpenness, definitionAchievement, skillPointAchievement;
       let authenticityArr, trustArr, empathyArr, opennessArr, achievementArr = [];
@@ -308,19 +309,34 @@ export function* postExtendedTest({ data }) {
 
   const response = yield call(api.postLSAExtendedAnswers, extendedData);
   if (response.ok) {
+    let scores = response.data.scores;
+    switch (category) { 
+      case 'empathy':
+        index = 0;
+      case 'trustBuilding':
+        index = 1;
+      case 'authencity':
+        index = 2;
+      case 'achievementOrientation':
+        index = 3;
+      case 'opennessToLearn':
+        index = 4;
+    }
     yield put(
       LeadershipSkillAreaActions.postExtendedTestSuccess(response.data.scores),
     );
-    yield put(
-      LeadershipSkillAreaActions.setAssessmentStatus(
-        'testFinishedCount',
-        completeTest + 1,
-      ),
-    );
+    if (scores[index]['ans_count'] === 10) {
+      yield put(
+        LeadershipSkillAreaActions.setAssessmentStatus(
+          'testFinishedCount',
+          completeTest + 1,
+        ),
+      );
+    }
     yield put(
       LeadershipSkillAreaActions.setCategoryStatus(
         category,
-        'completed',
+        scores[index]['ans_count'],
       ),
     );
     yield put(
@@ -329,7 +345,6 @@ export function* postExtendedTest({ data }) {
         null,
       ),
     );
-    debugger;
     yield put(
       LeadershipSkillAreaActions.setAssessmentStatus('extendedData', null),
     );
