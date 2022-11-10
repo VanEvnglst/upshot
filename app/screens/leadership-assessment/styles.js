@@ -1,4 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { DeviceUtil } from 'app/utils';
+
+const { normalize } = DeviceUtil;
 
 export default containerStyles = StyleSheet.create({
   container: {
@@ -20,7 +23,7 @@ export default containerStyles = StyleSheet.create({
     color: '#667080'
   },
   questionContainer: {
-    minHeight: 160,
+    minHeight: normalize(160),
     marginTop: 24,
     maxWidth: '90%'
   },
@@ -33,8 +36,8 @@ export default containerStyles = StyleSheet.create({
   optionsButton: {
     marginTop: 24,
     borderRadius: 24,
-    height: 40,
-    minWidth: 321,
+    height: normalize(40),
+    minWidth: normalize(321),
     backgroundColor: '#EEF1F4',
     justifyContent: 'center',
     alignItems: 'center',
@@ -44,7 +47,7 @@ export default containerStyles = StyleSheet.create({
     color: '#667080',
   },
   counterContainer: {
-    height: 60,
+    height: normalize(60),
     marginTop: 63,
     alignItems: 'center',
   },

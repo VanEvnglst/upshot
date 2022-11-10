@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { DeviceUtil } from 'app/utils';
 
+const { normalize } = DeviceUtil;
 
 export default styles = StyleSheet.create({
   container: {
@@ -9,7 +11,7 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 20,
+    paddingBottom: normalize(20),
     borderBottomWidth: 0.3,
   },
   icon: {
@@ -33,8 +35,8 @@ export default styles = StyleSheet.create({
   },
   titleContainer: {
     marginTop: 20,
-    paddingHorizontal: 24,
-    paddingVertical: 20,
+    paddingHorizontal: normalize(24),
+    paddingVertical: normalize(20),
     borderBottomWidth: 0.3,
     flexDirection: 'row',
     alignItems: 'center',
@@ -103,8 +105,8 @@ export default styles = StyleSheet.create({
   },
   stepCounter: {
     marginRight: 12,
-    width: 46, 
-    height: 46, 
+    width: normalize(46), 
+    height: normalize(46), 
     borderWidth: 2,
     borderRadius: 23,
     justifyContent: 'center',
@@ -141,8 +143,8 @@ export default styles = StyleSheet.create({
     textTransform: 'uppercase'
   },
   completedContainer: {
-    width: 106,
-    height: 18,
+    width: normalize(106),
+    height: normalize(18),
     marginTop: 5,
     borderRadius: 4,
     borderWidth: 1,
