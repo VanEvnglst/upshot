@@ -33,7 +33,6 @@ export function* fetchOverviewQuestions() {
   // return
   // }
   const response = yield call(api.getLSAOverviewQuestion);
-
   if (response.ok) {
     let questions = [];
     questions.push(
@@ -232,22 +231,33 @@ export function* postOverviewTest({ data }) {
       const results = [
         {
           id: 1,
-          title: 'Authencity',
-          description: aboutSkillArea[4].description,
-          definition: definitionAuthenticity,
-          skillPoint: skillPointAuthenticity,
-          ...authenticityArr,
+          title: 'Achievement Orientation',
+          description: aboutSkillArea[0].description,
+          definition: definitionAchievement,
+          skillPoint: skillPointAchievement,
+          ...achievementArr,
+         
         },
         {
           id: 2,
+          title: 'Openness to Learn',
+          description: aboutSkillArea[1].description,
+          definition: definitionOpenness,
+          skillPoint: skillPointOpenness,
+          ...opennessArr,
+         
+        },
+        {
+          id: 3,
           title: 'Trust Building',
           description: aboutSkillArea[2].description,
           definition: definitionTrust,
           skillPoint: skillPointTrust,
           ...trustArr,
+         
         },
         {
-          id: 3,
+          id: 4,
           title: 'Empathy',
           description: aboutSkillArea[3].description,
           definition: definitionEmpathy,
@@ -255,20 +265,12 @@ export function* postOverviewTest({ data }) {
           ...empathyArr,
         },
         {
-          id: 4,
-          title: 'Openness to Learn',
-          description: aboutSkillArea[1].description,
-          definition: definitionOpenness,
-          skillPoint: skillPointOpenness,
-          ...opennessArr,
-        },
-        {
           id: 5,
-          title: 'Achievement Orientation',
-          description: aboutSkillArea[0].description,
-          definition: definitionAchievement,
-          skillPoint: skillPointAchievement,
-          ...achievementArr,
+          title: 'Authenticity',
+          description: aboutSkillArea[4].description,
+          definition: definitionAuthenticity,
+          skillPoint: skillPointAuthenticity,
+          ...authenticityArr,
         },
       ];
       yield put(LeadershipSkillAreaActions.postOverviewTestSuccess(results));
