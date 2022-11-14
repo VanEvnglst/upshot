@@ -352,6 +352,7 @@ const HomeScreen = props => {
               onPress={() =>
                 navigation.navigate('Assessment', {
                   screen: 'Assessment break down',
+                  //  Leadership Assessment Guide
                 })
               }
               style={styles.assessmentProgressContainer}>
@@ -391,7 +392,7 @@ const HomeScreen = props => {
             </ScrollView>
           ) : null}
           <View style={{ marginTop: 20 }}>
-            {upcomingDiscussions.length > 1 ? (
+            {upcomingDiscussions?.length > 1 ? (
               <>
                 <Text
                   type="body2"
