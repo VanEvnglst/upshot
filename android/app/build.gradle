@@ -96,7 +96,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true //set to true for releases
+def enableProguardInReleaseBuilds = false //set to true for releases
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -122,20 +122,23 @@ def enableHermes = project.ext.react.get("enableHermes", true); // set to true f
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-
+    
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+          abortOnError false
+      }
 
     defaultConfig {
         applicationId "com.upshot"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 36
-        versionName "2.0.24"
+        versionCode 37
+        versionName "2.0.25"
         vectorDrawables.useSupportLibrary = true 
     }
     splits {
@@ -196,7 +199,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    
+    implementation project (':react-native-push-notification')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01"
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-analytics'
