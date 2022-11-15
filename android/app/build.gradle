@@ -137,8 +137,8 @@ android {
         applicationId "com.upshot"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 37
-        versionName "2.0.25"
+        versionCode 39
+        versionName "2.0.27"
         vectorDrawables.useSupportLibrary = true 
     }
     splits {
