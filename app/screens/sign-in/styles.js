@@ -54,6 +54,7 @@ export default styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: Colors.neutral4,
     borderRadius: 6,
+    color: '#667080'
   },
   labelText: {
     marginBottom: 4,
