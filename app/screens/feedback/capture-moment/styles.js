@@ -115,7 +115,7 @@ export default styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: '700',
     color: '#667080',
-    marginBottom: 24,
+    marginBottom: 8,
   },
   descriptionText: {
     fontSize: 16,
@@ -313,5 +313,7 @@ export default styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 22,
     color: '#667080',
+    marginBottom: 24,
+    opacity: 0.5,
   },
 });

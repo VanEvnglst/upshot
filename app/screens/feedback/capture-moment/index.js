@@ -19,6 +19,7 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
+import moment from 'moment';
 import { Text } from 'app/components';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import { getActiveCaptureStep, getMaxCaptureStep, getStaffList, getCaptureData, getMainTopics, getSubTopics } from 'app/store/selectors';
@@ -56,6 +57,7 @@ const CaptureFeedbackMoment = props => {
   });
   const [sheetType, setSheetType] = useState('');
   const [attachmentList, setAttachmentList] = useState([]);
+  const dateEntry = moment(new Date()).format('ddd. MMM DD, YYYY [at] hh:mm a');
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -113,6 +115,7 @@ const CaptureFeedbackMoment = props => {
             <Text style={styles.typeText}>{feedbackType.title}</Text>
           </View>
           <Text style={styles.mainQuestionText}>feedback</Text>
+          <Text style={styles.dateTimeText}>{dateEntry}</Text>
         </View>
         <View style={{ marginTop: 25 }}>
           <Text style={styles.descriptionText}>
@@ -233,7 +236,7 @@ const CaptureFeedbackMoment = props => {
       selectedLayerTwo,
     };
     dispatch(CaptureMomentActions.setCaptureData('step3', step3Data));
-    dispatch(CaptureMomentActions.postCaptureMoment('step3'));
+    //dispatch(CaptureMomentActions.postCaptureMoment('step3'));
     dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
   };
 

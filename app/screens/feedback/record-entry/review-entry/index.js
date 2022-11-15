@@ -55,7 +55,9 @@ const ReviewFeedbackEntry = props => {
   }
 
   const handleSendFeedback = () => { 
-    dispatch(CaptureMomentActions.postFaceToFaceSchedule());
+    if (topics.selectedLayerTwo.requires_face_to_face) {
+      dispatch(CaptureMomentActions.postFaceToFaceSchedule());
+    }
     dispatch(CaptureMomentActions.postRecordEMEntry('record'));
     navigation.navigate('Feedback Entry Confirmation')
   }

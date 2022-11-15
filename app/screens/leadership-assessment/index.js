@@ -108,7 +108,8 @@ const LeadershipAssessment = props => {
               </Text>
             </View>
           </View>
-          </SafeAreaView>
+        </SafeAreaView>
+        <ScrollView>
           <View style={containerStyles.contentContainer}>
             <View style={containerStyles.questionContainer}>
               <Text style={containerStyles.questionText}>
@@ -152,6 +153,7 @@ const LeadershipAssessment = props => {
               </View>
             </View>
           </View>
+          </ScrollView>
       </View>
     </View>
   );
