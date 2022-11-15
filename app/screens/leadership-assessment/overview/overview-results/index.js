@@ -1,12 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from 'react';
 import {
   View,
   BackHandler,
-  Text,
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
   Dimensions,
+  Animated,
+  FlatList,
   Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,13 +23,14 @@ import { Button, ProgressBar } from 'react-native-paper';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { DeviceUtil } from 'app/utils';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Images from 'app/assets/images';
+import { Text } from 'app/components';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import {
   aboutSkillArea,
   basisForLSA,
   lsaScoreDefinition,
 } from 'app/models/LeadershipSkillAreaModel';
+import Images from 'app/assets/images';
 import styles from './styles';
 
 const LeadershipOverviewResults = props => {
@@ -30,6 +38,9 @@ const LeadershipOverviewResults = props => {
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['45%', '90%'], []);
+  const { width } = Dimensions.get('screen');
+  const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.8 : width * 0.85;
+  const scrollX = useRef(new Animated.Value(0)).current;
   const skillList = useSelector(state =>
     state.leadershipSkillArea.get('overviewTestResults'),
   );
@@ -37,11 +48,9 @@ const LeadershipOverviewResults = props => {
   const [sheetType, setSheetType] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [skills, setSkills] = useState([]);
-  debugger;
-  const { width } = Dimensions.get('screen');
-  const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.72 : width * 0.82;
-  console.warn('screen size', width)
-  console.warn('ios screen', ITEM_SIZE)
+  const [skillIndicator, setSkillIndicator] = useState();
+
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -53,66 +62,128 @@ const LeadershipOverviewResults = props => {
       });
   }, []);
 
-  useEffect(() => {
-    setSkills(
-      {
-        id: 5,
-        title: 'Achievement Orientation',
-        area: skillList[4].area,
-        description: aboutSkillArea[0].description,
-        definition: skillList[4].area === 'Promising Area' ? aboutSkillArea[0].promisingArea.whatScoreMeans : skillList[4].area === 'Area of Continued Development' ? aboutSkillArea[0].areaOfContinuedDevelopment.whatScoreMeans : skillList[4].area === 'Area of Concern' ? aboutSkillArea[0].areaOfConcern.whatScoreMeans : '',
-        skillPoint: skillList[4].area === 'Promising Area' ? aboutSkillArea[0].promisingArea.skillPoints : skillList[4].area === 'Area of Continued Development' ? aboutSkillArea[0].areaOfContinuedDevelopment.skillPoints : skillList[4].area === 'Area of Concern' ? aboutSkillArea[0].areaOfConcern.skillPoints : '',
-      },
-      {
-        id: 4,
-        title: 'Openness to Learn',
-        area: skillList[3].area,
-        description: aboutSkillArea[1].description,
-        definition: skillList[3].area === 'Promising Area' ? aboutSkillArea[1].promisingArea.whatScoreMeans : skillList[3].area === 'Area of Continued Development' ? aboutSkillArea[1].areaOfContinuedDevelopment.whatScoreMeans : skillList[3].area === 'Area of Concern' ? aboutSkillArea[1].areaOfConcern.whatScoreMeans : '',
-        skillPoint: skillList[3].area === 'Promising Area' ? aboutSkillArea[1].promisingArea.skillPoints : skillList[3].area === 'Area of Continued Development' ? aboutSkillArea[1].areaOfContinuedDevelopment.skillPoints : skillList[3].area === 'Area of Concern' ? aboutSkillArea[1].areaOfConcern.skillPoints : '',
-      },
-      {
-        id: 2,
-        title: 'Trust Building',
-        area: skillList[1].area,
-        description: aboutSkillArea[2].description,
-        definition: skillList[1].area === 'Promising Area' ? aboutSkillArea[2].promisingArea.whatScoreMeans : skillList[1].area === 'Area of Continued Development' ? aboutSkillArea[2].areaOfContinuedDevelopment.whatScoreMeans : skillList[1].area === 'Area of Concern' ? aboutSkillArea[2].areaOfConcern.whatScoreMeans : '',
-        skillPoint: skillList[1].area === 'Promising Area' ? aboutSkillArea[2].promisingArea.skillPoints : skillList[1].area === 'Area of Continued Development' ? aboutSkillArea[2].areaOfContinuedDevelopment.skillPoints : skillList[1].area === 'Area of Concern' ? aboutSkillArea[2].areaOfConcern.skillPoints : '',
-      },
-      {
-        id: 3,
-        title: 'Empathy',
-        area: skillList[2].area,
-        description: aboutSkillArea[3].description,
-        definition: skillList[2].area === 'Promising Area' ? aboutSkillArea[3].promisingArea.whatScoreMeans : skillList[2].area === 'Area of Continued Development' ? aboutSkillArea[3].areaOfContinuedDevelopment.whatScoreMeans : skillList[2].area === 'Area of Concern' ? aboutSkillArea[3].areaOfConcern.whatScoreMeans : '',
-        skillPoint: skillList[2].area === 'Promising Area' ? aboutSkillArea[3].promisingArea.skillPoints : skillList[2].area === 'Area of Continued Development' ? aboutSkillArea[3].areaOfContinuedDevelopment.skillPoints : skillList[2].area === 'Area of Concern' ? aboutSkillArea[3].areaOfConcern.skillPoints : '',
-      },
-      {
-        id: 1,
-        title: 'Authenticity',
-        area: skillList[0].area,
-        description: aboutSkillArea[4].description,
-        definition: skillList[0].area === 'Promising Area' ? aboutSkillArea[4].promisingArea.whatScoreMeans : skillList[0].area === 'Area of Continued Development' ? aboutSkillArea[4].areaOfContinuedDevelopment.whatScoreMeans : skillList[0].area === 'Area of Concern' ? aboutSkillArea[4].areaOfConcern.whatScoreMeans : '',
-        skillPoint: skillList[0].area === 'Promising Area' ? aboutSkillArea[4].promisingArea.skillPoints : skillList[0].area === 'Area of Continued Development' ? aboutSkillArea[4].areaOfContinuedDevelopment.skillPoints : skillList[0].area === 'Area of Concern' ? aboutSkillArea[4].areaOfConcern.skillPoints : '',
-      },
-    )
-  }, []);
-
+    // function that sets which type of sheet is opened
   const handleSheetOpen = type => {
-    snapTo = null;
+    let snapTo = null;
     if (type === 'skill area') {
       snapTo = 0;
       setSheetType(type);
-    } else {
+    } else if (type === 'LSA basis') {
       snapTo = 1;
       setSheetType(type);
+    } else if (type === 'result value') {
+      snapTo = 0;
     }
     bottomSheetRef.current?.snapToIndex(snapTo);
   };
 
+  // function that handles which type of sheet is opened
   const handleSheetContent = () => {
-    if (sheetType === 'skill area') return <SkillAreaDefinition />;
-    else return <BasisForLSA />;
+    if (sheetType === 'skill area') {
+      return <SkillAreaDefinition />;
+    } else if (sheetType === 'LSA basis') {
+      return <BasisForLSA />;
+    } else if (sheetType === 'result value') {
+      return <ResultIndicator />;
+    }
+  };
+
+  // handles scrolling event and updates values being shown on header
+  const handleScroll = event => {
+    setCurrentIndex(
+      Math.ceil(
+        event.nativeEvent.contentOffset.x / Dimensions.get('window').width,
+      ),
+    );
+  };
+
+  const handleNavigation = () => {
+    navigation.navigate('Assessment break down');
+  };
+
+  const handleSkip = () => {
+    dispatch(LeadershipSkillAreaActions.resetOverviewData());
+    navigation.navigate('Assessment Wrap Up');
+  };
+
+  // opens up bottom sheet to show what area indicator mean
+  const showResultsIndicator = item => {
+    setSkillIndicator(item);
+    setSheetType('result value');
+    setTimeout(() => {
+      handleSheetOpen('result value');
+    }, 300);
+  };
+
+  const ResultIndicator = () => {
+    const promising = skillIndicator.area === 'Promising Area';
+    const continueDev =  skillIndicator.area === 'Area of Continued Development';
+    const concern =  skillIndicator.area === 'Area of Concern';
+
+    return (
+      <View style={styles.resultSheetContainer}>
+        <View style={styles.resultSheetHeader}>
+          <Text type="body1" weight="bold" style={styles.skillIndicatorTitle}>
+            {skillIndicator.title}
+          </Text>
+          <View
+            style={[
+              styles.resultAreaContainer,
+              promising &&
+                styles.promisingAreaContainer,
+              continueDev &&
+                styles.areaOfContinuedDevelopmentContainer,
+              concern &&
+                styles.areaOfConcernContainer,
+            ]}>
+            <Text
+              type="caption2"
+              weight="medium"
+              style={[
+                styles.resultAreaText,
+                promising &&
+                  styles.promisingAreaLabel,
+                continueDev &&
+                  styles.areaOfContinuedDevelopmentLabel,
+                concern &&
+                  styles.areaOfConcernLabel,
+              ]}>
+              {skillIndicator.area}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.resultAreaContent}>
+          <View style={styles.skillPointView}>
+            <View
+              style={[
+                styles.skillAreaDefinitionPoint,
+                {
+                  backgroundColor:
+                    promising
+                      ? '#42EE57'
+                      : continueDev
+                      ? '#FFB26A'
+                      : concern
+                      ? styles.areaOfConcernLabel
+                      : '#667080',
+                },
+              ]}
+            />
+            <Text type="body2" weight="bold" style={{ color: '#667080' }}>
+              {skillIndicator.definition}
+            </Text>
+          </View>
+          <View style={{ marginTop: 16, width: '95%' }}>
+            <Text
+              type="caption1"
+              weight="regular"
+              style={styles.aboutSkillText}>
+              {skillIndicator.skillPoint}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   const SkillAreaDefinition = () => {
@@ -172,47 +243,27 @@ const LeadershipOverviewResults = props => {
     );
   };
 
-  const handleScroll = (event) => {
-    console.warn('currentScreenIndex', parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width));
-    setCurrentIndex(parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width))
-
-  }
-
-  const handleNavigation = () => {
-    navigation.navigate('Assessment break down');
-  };
-
-  const handleSkip = () => {
-    dispatch(LeadershipSkillAreaActions.resetOverviewData());
-    navigation.navigate('Assessment Wrap Up');
-  }
-
   const SkillAreaCard = ({ item }) => {
-    console.warn('item', item)
-    console.warn('sk', item.skillPoint)
     return (
-      <View style={styles.skillAreaContentContainer}>
+      <View key={item.id} style={styles.skillAreaContentContainer}>
         <View style={styles.contentHeader}>
           <Text style={styles.contentTitleText}>{item.title}</Text>
         </View>
         <View style={styles.aboutSkillContent}>
           <Text style={styles.contentLabelText}>About this Skill Area 💪</Text>
-          <Text style={styles.aboutSkillText}>
-            {item.description}
-          </Text>
+          <Text style={styles.aboutSkillText}>{item.description}</Text>
         </View>
-        <View style={styles.aboutSkillContent}>
-          <Text style={styles.contentLabelText}>What Your Score Means 🎯</Text>
-          <Text style={styles.aboutSkillText}>
-            {item.definition}
-          </Text>
-          <View style={{ minHeight: 200,}}>
-              <Text style={styles.aboutSkillText}>{item.skillPoint}</Text>
-              </View>
-        </View>
+        <Button
+          mode="outlined"
+          style={styles.resultButton}
+          onPress={() => showResultsIndicator(item)}>
+          <Text style={styles.resultText}>View Results</Text>
+        </Button>
       </View>
     );
   };
+
+  
 
   return (
     <View style={styles.container}>
@@ -229,7 +280,7 @@ const LeadershipOverviewResults = props => {
           <Text style={styles.headerTitleText}>Your results are here. 🎉</Text>
         </View>
         <View style={styles.descriptionContainer}>
-          <Text style={[styles.descriptionText, styles.textAlignStart]}>
+          <Text type='body2' weight='regular' style={[styles.descriptionText, styles.textAlignStart]}>
             Here's a quick view of where each of your leadership skill areas
             stand.
           </Text>
@@ -241,9 +292,13 @@ const LeadershipOverviewResults = props => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={styles.scoreLabel}>
-              Your<Text style={styles.scoreLabelBold}> {skillList[currentIndex].title} </Text>indicator is
-              under
+            <Text type="body2" weight="regular" style={styles.scoreLabel}>
+              Your
+              <Text type="body2" weight="bold">
+                {' '}
+                {skillList[currentIndex].title}{' '}
+              </Text>
+              indicator is under
             </Text>
             <TouchableOpacity
               accessibilityRole="button"
@@ -251,37 +306,55 @@ const LeadershipOverviewResults = props => {
               style={[
                 styles.skillAreaContainer,
                 skillList[currentIndex].area === 'Promising Area' &&
-                styles.promisingAreaContainer,
-                skillList[currentIndex].area === 'Area of Continued Development' &&
-                styles.areaOfContinuedDevelopmentContainer, 
-                skillList[currentIndex].area === 'Area of Concern' && 
-                styles.areaOfConcernContainer,
+                  styles.promisingAreaContainer,
+                skillList[currentIndex].area ===
+                  'Area of Continued Development' &&
+                  styles.areaOfContinuedDevelopmentContainer,
+                skillList[currentIndex].area === 'Area of Concern' &&
+                  styles.areaOfConcernContainer,
               ]}>
               <Text
-                style={[styles.skillAreaLabelText, 
-                
+                weight="medium"
+                style={[
+                  styles.skillAreaLabelText,
                   skillList[currentIndex].area === 'Promising Area' &&
-                  styles.promisingAreaLabel,
-                  skillList[currentIndex].area === 'Area of Continued Development' &&
-                  styles.areaOfContinuedDevelopmentLabel,
-                  skillList[currentIndex].area === 'Area of Concern' && 
-                styles.areaOfConcernLabel]}>
+                    styles.promisingAreaLabel,
+                  skillList[currentIndex].area ===
+                    'Area of Continued Development' &&
+                    styles.areaOfContinuedDevelopmentLabel,
+                  skillList[currentIndex].area === 'Area of Concern' &&
+                    styles.areaOfConcernLabel,
+                ]}>
                 {skillList[currentIndex].area}
               </Text>
             </TouchableOpacity>
           </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={true}
-            snapToAlignment='center'
-            bounces={false}
-            pagingEnabled
-            onScroll={e => handleScroll(e)}
-          >
-            {skillList.map((item, i) => {
-              return (<SkillAreaCard item={item} key={item.id} />);
-            })}
-          </ScrollView>
+          <View style={{ marginHorizontal: 10 }}>
+            <Animated.FlatList
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                {
+                  useNativeDriver: true,
+                  listener: (event, gestureState) => handleScroll(event),
+                },
+              )}
+              snapToInterval={ITEM_SIZE}
+              snapToAlignment="start"
+              decelerationRate={0}
+              bounces={false}
+              data={skillList}
+              keyExtractor={item => item.key}
+              pagingEnabled
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                if (!item.title) {
+                  return <View style={styles.cardSpacer} />;
+                }
+                return <SkillAreaCard item={item} />;
+              }}
+            />
+          </View>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={() => handleSheetOpen('LSA basis')}>
@@ -290,6 +363,8 @@ const LeadershipOverviewResults = props => {
             </Text>
           </TouchableOpacity>
           <Text
+            type="body2"
+            weight="regular"
             style={
               styles.descriptionText
             }>{`Find this interesting? You can learn more by completing the next set of questions.`}</Text>
@@ -305,7 +380,7 @@ const LeadershipOverviewResults = props => {
         <TouchableOpacity
           style={{ alignItems: 'center', margin: 10 }}
           onPress={() => handleSkip()}>
-          <Text style={ styles.descriptionText}>Skip</Text>
+          <Text style={styles.descriptionText}>Skip</Text>
         </TouchableOpacity>
         <View style={styles.spacer} />
       </ScrollView>
@@ -314,7 +389,7 @@ const LeadershipOverviewResults = props => {
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         enablePanDownToClose>
-        <View style={{ flex: 1}}>{handleSheetContent()}</View>
+        <View style={{ flex: 1 }}>{handleSheetContent()}</View>
       </BottomSheet>
     </View>
   );
