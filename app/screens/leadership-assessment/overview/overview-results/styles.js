@@ -5,7 +5,7 @@ import Colors from 'app/theme/colors';
 const { normalize } = DeviceUtil;
 
 const { width } = Dimensions.get('screen');
-const SPACING = 10;
+const SPACING = normalize(10);
 const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.77 : width * 0.85;
 const ITEM_HEIGHT = ITEM_SIZE * 1.6;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
@@ -25,17 +25,17 @@ export default styles = StyleSheet.create({
     paddingHorizontal: normalize(24)
   },
   userIcon: {
-    width: 58,
-    height: 58,
-    borderRadius: 58/2,
+    width: normalize(58),
+    height: normalize(58),
+    borderRadius: normalize(58/2),
     backgroundColor: '#FFF3D4',
-    marginRight: 12,
+    marginRight: normalize(12),
     justifyContent: 'center',
     alignItems: 'center'
   },
   avatarIcon: {
-    width: 38,
-    height: 38
+    width: normalize(38),
+    height: normalize(38)
   },
   userDetailsContainer: {
     flex: 1,
