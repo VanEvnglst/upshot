@@ -1,20 +1,11 @@
-import React, { useState } from 'react';
-import {
-  View,
-  ScrollView,
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Text } from 'app/components';
+import { Text, UserAvatar } from 'app/components';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import {
   getActiveCaptureStep,
-  getMaxCaptureStep,
   getStaffList,
 } from 'app/store/selectors';
 import styles from '../styles';
@@ -23,10 +14,8 @@ const StaffSelection = ({ onPress }) => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getActiveCaptureStep);
   const staffList = useSelector(getStaffList);
-  const [selectedStaff, setSelectedStaff] = useState();
 
   const handleSelection = item => {
-    console.log('step 1', item);
     dispatch(CaptureMomentActions.setCaptureData('step1', item));
     setTimeout(() => {
       dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
@@ -35,24 +24,48 @@ const StaffSelection = ({ onPress }) => {
 
   return (
     <View style={styles.listContainer}>
-      {staffList.map((item, i) => (
-        <TouchableOpacity
-          key={item.id}
-          onPress={() => handleSelection(item)}
-          style={styles.namesContainer}>
-          <View style={styles.nameAvatar} />
-          <View style={styles.staffNameContainer}>
-            <Text style={styles.staffNameText}>{item.name}</Text>
-            <Text style={styles.emailText}>{item.email}</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
+      {staffList.map((item, i) => {
+        const staffName = item.name.split(' ');
+        const staffInitials =
+          staffName.length === 3 ?
+          `${staffName[0].charAt(0)}${staffName[2].charAt(0)}`
+          : staffName.length > 1
+            ? `${staffName[0].charAt(0)}${staffName[1].charAt(0)}`
+            : `${staffName[0].charAt(0)}`;
+        return (
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => handleSelection(item)}
+            style={styles.namesContainer}>
+            <UserAvatar initials={staffInitials} />
+            <View>
+              <Text type="body2" weight="medium" style={styles.staffNameText}>
+                {item.name}
+              </Text>
+              <Text type="caption1" weight="regular" style={styles.emailText}>
+                {item.email}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
 
 export default StaffSelection;
 
-StaffSelection.propTypes = {};
+StaffSelection.propTypes = {
+  setCaptureData: PropTypes.func,
+  setCaptureActiveStep: PropTypes.func,
+  staffList: PropTypes.array,
+  activeStep: PropTypes.number,
+};
 
-StaffSelection.defaultProps = {};
+StaffSelection.defaultProps = {
+  setCaptureData: () => {},
+  setCaptureActiveStep: () => {},
+  staffList: [],
+  activeStep: 1,
+
+};

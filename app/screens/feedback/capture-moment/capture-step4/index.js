@@ -32,8 +32,8 @@ const CaptureMomentStep4 = ({props, onPress}) => {
   })
 
   const handleContinueFeedback = () => {
-    dispatch(CaptureMomentActions.setCaptureData('step4', reminderHours));
-    dispatch(CaptureMomentActions.postCaptureMoment('continueFB'));
+    dispatch(CaptureMomentActions.resetCaptureStep());
+    navigation.navigate('Record Feedback Entry')
   }
 
   return (
@@ -48,8 +48,7 @@ const CaptureMomentStep4 = ({props, onPress}) => {
       <Text style={{ marginTop: 8, fontSize: 32, color: '#667080', fontWeight: '700', textAlign: 'center'}}>Continue adding details?</Text>
       <Text style={{ marginTop: 32, fontSize: 16, color: '#667080', fontWeight: '400', textAlign: 'center'}}>You can always set a reminder if you want to put this off for later.</Text>
       </View>
-
-      <View style={styles.btnContainer}>
+      <View style={[styles.btnContainer, { zIndex: -1 }]}>
         <Button
           mode='outlined'
           onPress={() => onPress()}
