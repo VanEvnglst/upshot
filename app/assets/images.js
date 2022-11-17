@@ -92,4 +92,7 @@ export default {
   memoIcon: require('./images/memo.png'),
   starstruckEmoji: require('./images/starstruck-emoji.png'),
   documentIcon: require('./images/document.png'),
+  thoughtCloudEmoji: require('./images/thought-cloud.png'),
+  questionMarkEmoji: require('./images/question-mark.png'),
+  warningEmoji: require('./images/warning.png'),
 };
