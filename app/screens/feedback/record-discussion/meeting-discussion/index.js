@@ -22,8 +22,15 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
   OutputFormatAndroidType,
 } from 'react-native-audio-recorder-player';
+import { DeviceUtil } from 'app/utils';
+
+
+
+const audioRecorderPlayer = new AudioRecorderPlayer();
 
 const AudioRecording = props => { 
+  const { normalize } = DeviceUtil;
+
   const [recordSecs, setRecordSecs] = useState(0);
   const [recordTime, setRecordTime] = useState('00:00:00');
   const [currentPositionSec, setCurrentPositionSec] = useState(0);
@@ -31,13 +38,15 @@ const AudioRecording = props => {
   const [playTime, setPlayTime] = useState('00:00:00');
   const [duration, setDuration] = useState('00:00:00');
   const [isLoggingIn, setStatus] = useState(false);
+  const [isRecording, setRecordingStatus] = useState(false);
+  const [pauseRecording, setPauseRecordingStatus] = useState(false);
 
   const path = Platform.select({
     ios: undefined,
     android: undefined,
   });
 
-  const audioRecorderPlayer = new AudioRecorderPlayer();
+ 
   audioRecorderPlayer.setSubscriptionDuration(0.1);
 
   const onStartRecord = async () => {
@@ -77,6 +86,10 @@ const AudioRecording = props => {
     }
   };
 
+  const onResumeRecord = async () => {
+    await audioRecorderPlayer.resumeRecorder();
+  };
+
   const onStartPlay = async () => {
     console.log('onStartPlay');
     const msg = await audioRecorderPlayer.startPlayer();
@@ -99,12 +112,30 @@ const AudioRecording = props => {
     audioRecorderPlayer.removePlayBackListener();
   };
 
+  const handleRecording = () => { 
+    if (isRecording === false && recordTime === '00:00:00') {
+      console.log("recording status", isRecording)
+      setRecordingStatus(!isRecording);
+      return onStartRecord();
+    } else if (isRecording === true && recordTime != '00:00:00') {
+      console.log("recording status is pause", isRecording)
+      setRecordingStatus(!isRecording);
+      return onPauseRecord();
+    } else if (isRecording === false && recordTime != '00:00:00') { 
+      console.log("recording status is resume", isRecording)
+      setRecordingStatus(!isRecording);
+      return onResumeRecord();
+    }
+
+  }
+
   return (
     <>
+      <ScrollView>
     <View style={{justifyContent: 'center', alignItems: 'center'}}>
 
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height: 100, width: 200, marginTop: 150}}>
-          <View style={[styles.avatarIcon, {position: 'absolute', left: 30}]}>
+        <View style={styles.iconContainer}>
+          <View style={[styles.avatarIcon, {position: 'absolute', left: normalize(30)}]}>
                     <LinearGradient
               style={[styles.avatarIcon, {borderColor: '#FFFFFF', borderWidth: 1,}]}
                       colors={['#C883FF', '#6587FF']}
@@ -113,7 +144,7 @@ const AudioRecording = props => {
                       <Text style={styles.avatarTextIcon}>AC</Text>
                     </LinearGradient>
           </View>
-          <View style={[styles.avatarIcon, {position: 'absolute', top: 2, left: 100}]}>
+          <View style={[styles.avatarIcon, {position: 'absolute', top: normalize(40), left: normalize(100)}]}>
                     <LinearGradient
               style={[styles.avatarIcon, {borderColor: '#FFFFFF', borderWidth: 1,}]}
                       colors={['#C883FF', '#6587FF']}
@@ -124,32 +155,44 @@ const AudioRecording = props => {
           </View>
         </View>
 
-        <View style={{marginTop: 160, minWidth: 266, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{ fontSize: 24, fontWeight: '700', lineHeight: 32, color: '#FFFFFF' }}>Record your meeting</Text>
-          <Text style={{ fontSize: 16, fontWeight: '400', lineHeight: 24, color: '#777E90'}}>Tap to start recording</Text>
+        <View style={styles.recordingTitleContainer}>
+          <Text style={styles.recordingTitle}>Record your meeting</Text>
+          <Text style={styles.recordingSubtitle}>Tap to start recording</Text>
         </View>
 
-        <View style={{ marginTop: 50 }}>
-          <View style={{marginVertical: 20}}>
+        <View style={styles.recordingBtnContainer}>
+          <View style={{marginVertical: 20, justifyContent: 'center', alignItems: 'center'}}>
             <Text style={{marginTop: 32, color: 'white', fontSize: 20, textAlignVertical: 'center', fontWeight: '200', fontFamily: 'Helvetica Neue', letterSpacing: 3,}}>{recordTime}</Text>
-          </View>
+            </View>
+            <View style={styles.recordingStatusContainer}>
+              <View style={styles.recordingIconBorder}>
+                <TouchableOpacity style={[styles.recordingIconContainer, !isRecording ? { backgroundColor: '#9763F0' } : null]}
+                onPress={() => handleRecording()}>
+                  <Icon name={isRecording ? "pause" : "mic"} size={20} color={isRecording ? "#9763F0" : 'black'} />
+                </TouchableOpacity>
+
+              </View>
+            </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Button onPress={() => onStartRecord()}>Start Record</Button>
+            {/* <Button onPress={() => onStartRecord()}>Start Record</Button> */}
             <Button style={{ marginLeft: 10 }}
               onPress={() => onStopRecord()}>Stop Record</Button>
-            <Button style={{ marginLeft: 10 }}
-            onPress={() => onPauseRecord()}>Pause Record</Button>
+            {/* <Button style={{ marginLeft: 10 }}
+                onPress={() => onPauseRecord()}>Pause Record</Button>
+              <Button style={{ marginLeft: 10 }}
+            onPress={() => onResumeRecord()}>Resume Record</Button> */}
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+          {/* <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
             <Button onPress={() => onStartPlay()}>Play</Button>
             <Button onPress={() => onPausePlay()}>Pause</Button>
             <Button onPress={() => onStopPlay()}>Stop</Button>
-          </View>
+          </View> */}
         </View>
-        <View>
+        {/* <View>
             <Text style={{ marginTop: 32, color: 'white', fontSize: 20, textAlignVertical: 'center', fontWeight: '200', fontFamily: 'Helvetica Neue', letterSpacing: 3, }}>{playTime} / {duration}</Text>
-          </View>
-      </View>
+          </View> */}
+        </View>
+        </ScrollView>
       </>
   )
 }
