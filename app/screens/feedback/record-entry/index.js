@@ -53,7 +53,7 @@ const RecordFeedbackEntry = props => {
   }, []);
   
   useEffect(() => {
-    if (layerTwo.selectedLayerTwo.requires_face_to_face)
+    if (feedbackType.step2.title === 'Corrective')
       dispatch(CaptureMomentActions.setCaptureMaxStep(7));
   }, []);
 

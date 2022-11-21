@@ -19,6 +19,7 @@ import { InputUtil, DeviceUtil } from 'app/utils';
 import { TextInput } from 'app/components';
 import labels from 'app/locales/en';
 import styles from './styles';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const SignUp = props => {
   const { navigation } = props;
@@ -28,6 +29,7 @@ const SignUp = props => {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [detailsComplete, setDetailsComplete] = useState(false);
+  const [passwordVisible, setPasswordVisibility] = useState(false);
 
   useEffect(() => {
     retrieveToken();
@@ -79,6 +81,10 @@ const SignUp = props => {
     }),);
   };
 
+  const handlePasswordVisibility = () => { 
+    setPasswordVisibility(!passwordVisible);
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -126,11 +132,31 @@ const SignUp = props => {
                   <BottomSheetTextInput
                     placeholder={'8+ characters'}
                     style={styles.inputField}
-                    secureTextEntry
+                    secureTextEntry={!passwordVisible}
                     value={password}
                     onChangeText={password => setPassword(password)}
                     error={errors.passwordError}
-                  />
+                />
+                <View style={{height: 50, position: 'absolute', left: 325, top: 230}}>
+              {passwordVisible ?
+                <TouchableOpacity style={{ margin: 10, width: 30, height: 30}}
+                  onPress={() => handlePasswordVisibility()}>
+                  <Icon
+                      name={'eye-outline'}
+                      size={24}
+                      color={'#667080'}
+                    ></Icon>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity style={{margin: 10, width: 30, height: 30}}
+                onPress={()=> handlePasswordVisibility()}>
+                  <Icon
+                      name={'eye-off-outline'}
+                      size={24}
+                      color={'#667080'}
+                    ></Icon>
+                </TouchableOpacity>}
+                </View>
                   <View style={styles.btnContainer}>
                    <Button
                     mode="contained"

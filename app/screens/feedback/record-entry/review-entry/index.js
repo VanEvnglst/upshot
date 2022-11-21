@@ -246,7 +246,7 @@ const ReviewFeedbackEntry = props => {
                 onChangeText={newText => handleDoLessTextChange(newText)}
               />
         </View>
-            {topics.selectedLayerTwo.requires_face_to_face && (
+            {feedbackData.step2.title === 'Corrective' && (
           <>
             <Text style={styles.topicLabel}>I want my team member to stop doing...</Text>
             <View style={styles.answerContainer}>
