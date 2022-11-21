@@ -29,6 +29,7 @@ export { default as EntryConfirmation } from './feedback/record-entry/entry-conf
 export { default as FeedbackOverview} from './feedback/overview';
 export { default as ResponseExchange } from './feedback/response-exchange';
 export { default as FeedbackExchangeConfirmation } from './feedback/response-exchange/exchange-confirmation';
+export { default as RecordDiscussion } from './feedback/record-discussion';
 
 export { default as ActiveFeedbackJourney } from './feedback/active-journey-post';
 export { default as FeedbackGuide } from './feedback/guide';
