@@ -1,4 +1,7 @@
 import { StyleSheet, Platform } from 'react-native';
+import { DeviceUtil } from 'app/utils';
+
+const { normalize } = DeviceUtil;
 
 export default styles = StyleSheet.create({
   container: {
@@ -74,8 +77,8 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatarIcon: {
-    width: 100,
-    height: 100,
+    width: normalize(100),
+    height: normalize(100),
     borderRadius: 100, 
     marginRight: 10, 
     justifyContent: 'center',
@@ -115,7 +118,7 @@ export default styles = StyleSheet.create({
     marginTop: 32,
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 327,
+    minWidth: normalize(327),
   },
   questionText: {
     fontSize: 24,
@@ -125,8 +128,8 @@ export default styles = StyleSheet.create({
     textAlign: 'center',
   },
   btnContainer: {
-    height: 56,
-    minWidth: 327,
+    height: normalize(56),
+    minWidth: normalize(327),
     borderRadius: 24,
     borderColor: '#777E9080',
     borderWidth: 1,
@@ -138,6 +141,56 @@ export default styles = StyleSheet.create({
     fontWeight: '500',
     lineHeight: 24,
     color: '#FCFCFD',
+  },
+  iconContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: normalize(100),
+    width: normalize(200),
+    marginTop: 150,
+  },
+  recordingTitleContainer: {
+    marginTop: 160,
+    minWidth: normalize(266),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  recordingTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    lineHeight: 32,
+    color: '#FFFFFF',
+  },
+  recordingSubtitle: {
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 24,
+    color: '#777E90',
+  },
+  recordingBtnContainer: {
+    marginTop: 50,
+    maxWidth: normalize(350),
+  },
+  recordingStatusContainer: {
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  recordingIconBorder: {
+    height: normalize(64),
+    width: normalize(64),
+    borderRadius: 32,
+    borderWidth: 2,
+    borderColor: '#9763F0',
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
+  recordingIconContainer: {
+    height: normalize(54),
+    width: normalize(54),
+    borderRadius: 27,
+    justifyContent: 'center',
+    alignItems: 'center' ,
   }
-  
 });

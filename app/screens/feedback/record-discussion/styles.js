@@ -1,4 +1,7 @@
 import { StyleSheet, Platform } from 'react-native';
+import { DeviceUtil } from 'app/utils';
+
+const { normalize } = DeviceUtil;
 
 export default styles = StyleSheet.create({
   container: {
@@ -57,8 +60,8 @@ export default styles = StyleSheet.create({
   },
   progressBar: {
     margin: 16,
-    height: 4,
-    maxWidth: 343,
+    height: normalize(4),
+    maxWidth: normalize(343),
   },
   detailsContainer: {
     margin: 24,
@@ -74,8 +77,8 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatarIcon: {
-    width: 19,
-    height: 19,
+    width: normalize(19),
+    height: normalize(19),
     borderRadius: 9.5, 
     marginRight: 10, 
     justifyContent: 'center',
@@ -125,8 +128,8 @@ export default styles = StyleSheet.create({
     textAlign: 'center',
   },
   btnContainer: {
-    height: 56,
-    minWidth: 327,
+    height: normalize(56),
+    minWidth: normalize(327),
     borderRadius: 24,
     borderColor: '#777E9080',
     borderWidth: 1,
@@ -143,7 +146,7 @@ export default styles = StyleSheet.create({
     marginTop: 32,
   },
   card: {
-    minHeight: 56,
+    minHeight: normalize(56),
     backgroundColor: '#353945',
     borderWidth: 0.5,
     borderColor: '#777E90',
@@ -158,8 +161,8 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardStatus: {
-    width: 22,
-    height: 22,
+    width: normalize(22),
+    height: normalize(22),
     borderRadius: 11,
     justifyContent: 'center',
     alignItems: 'center',
