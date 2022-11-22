@@ -7,16 +7,18 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { UserAvatar, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+import { getCurrentJourney } from 'app/store/selectors';
 import JourneyProgressTab from './progress-tab';
 import JourneyDetailsTab from './details-tab';
 import Images from 'app/assets/images';
 import styles from './styles';
+import { DataUtil } from 'app/utils';
 
 const JourneyDetails = props => {
   const { navigation, route } = props;
   
   const dispatch = useDispatch();
-  const journey = useSelector(state => state.feedback.get('currentJourney'));
+  const journey = useSelector(getCurrentJourney); 
   // const [captureFeedback, setCaptureFeedback] = useState({
   //   inProgress: true,
   //   done: false,
@@ -196,8 +198,15 @@ const JourneyDetails = props => {
   const handleContinue = (item) => {
     if (item.title === 'Reflect on Discussion')
       navigation.navigate('Feedback', { screen: 'Feedback Checklist' });
-
-
+    if (item.title === 'Record Entries') {
+      navigation.navigate('Feedback', { 
+        screen: 'Record Feedback Entry'
+      })
+    }
+    if (item.title === 'Waiting for response...')
+      navigation.navigate('Feedback', {
+        screen: 'Feedback Overview',
+      });
   };
 
   const CaptureFeedbackProgress = () => {
@@ -725,9 +734,11 @@ const JourneyDetails = props => {
             flex: 1,
             paddingTop: 24,
           }}>
-          <UserAvatar style={{ width: 62, height: 62 }} />
+          <UserAvatar 
+            initials={DataUtil.parseInitials(journey.frontliner)}
+            style={{ width: 62, height: 62 }} />
           <Text type="h4" weight="bold" style={styles.memberNameText}>
-            Ivan Evangelista
+            {journey.frontliner}
           </Text>
           <Text type="caption1" weight="medium" style={styles.roleText}>
             Team Member
@@ -736,14 +747,16 @@ const JourneyDetails = props => {
             <View
               style={[
                 styles.typeContainer,
-                styles.correctiveContainer,
+                journey.feedback_type ==='Corrective' ?styles.correctiveContainer : styles.positiveContainer,
                 { marginRight: 4 },
               ]}>
               <Text
                 type="hairline"
                 weight="bold"
-                style={[styles.typeText, styles.correctiveText]}>
-                Corrective Feedback
+                style={[styles.typeText, 
+                journey.feedback_type === 'Corrective' ?
+                styles.correctiveText : styles.positiveText]}>
+                {journey.feedback_type} Feedback
               </Text>
             </View>
             <View style={[styles.typeContainer, styles.ongoingContainer]}>
