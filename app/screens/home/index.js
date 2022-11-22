@@ -20,6 +20,7 @@ import {
   UserAvatar,
 } from 'app/components';
 import FeedbackHistoryActions from 'app/store/feedback/FeedbackHistoryRedux';
+import UserActions from 'app/store/UserRedux';
 import {
   getActiveJourneys,
   getUserName,
@@ -192,17 +193,20 @@ const HomeScreen = props => {
   //   );
   // };
 
+  const navigateJourneyCard = (item) => {
+    navigation.navigate('Feedback', {
+      screen: 'Journey Details',
+      params: { 
+        journeyId: item.journey_id,
+      },
+    })
+  }
+
   const FeedbackJourneyCard = ({ item }) => {
     return (
       <TouchableOpacity
         accessibilityRole="button"
-        onPress={() =>
-          navigation.navigate('Feedback', {
-            screen: 'Journey Details',
-            params: { 
-              journeyId: item.journey_id,
-            },
-          })
+        onPress={() => navigateJourneyCard(item)
         }
         style={styles.journeyCardContainer}>
         <View
