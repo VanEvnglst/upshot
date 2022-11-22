@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CaptureFeedbackMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import * as NavigationService from 'app/services/NavigationService';
 import Images from 'app/assets/images';
 import styles from './styles';
 
@@ -97,7 +98,7 @@ const EntryContfirmation = props => {
       </View>
       <View style={styles.btnContainer}>
         <Button
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => NavigationService.navigateAndReset('Home')}
           mode="contained"
           style={styles.button}>
           <Text style={styles.buttonText}>Done</Text>
