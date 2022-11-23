@@ -296,6 +296,7 @@ export default styles = StyleSheet.create({
   dateTimeText: {
     color: '#667080',
     marginBottom: normalize(24),
+    marginTop: normalize(10),
     opacity: 0.5,
   },
   subTopicItem: {

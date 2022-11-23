@@ -137,7 +137,7 @@ const SignUp = props => {
                     onChangeText={password => setPassword(password)}
                     error={errors.passwordError}
                 />
-                <View style={{height: 50, position: 'absolute', left: 325, top: 230}}>
+                <View style={styles.showPasswordContainer}>
               {passwordVisible ?
                 <TouchableOpacity style={{ margin: 10, width: 30, height: 30}}
                   onPress={() => handlePasswordVisibility()}>
