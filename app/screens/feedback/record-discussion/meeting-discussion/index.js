@@ -12,7 +12,8 @@ import {
   ScrollView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {ProgressBar, Button } from "react-native-paper";
+import { ProgressBar, Button } from "react-native-paper";
+import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from "./styles";
 import AudioRecorderPlayer, {
@@ -22,6 +23,7 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
   OutputFormatAndroidType,
 } from 'react-native-audio-recorder-player';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import { DeviceUtil } from 'app/utils';
 
 
@@ -30,6 +32,7 @@ const audioRecorderPlayer = new AudioRecorderPlayer();
 
 const AudioRecording = props => { 
   const { normalize } = DeviceUtil;
+  const dispatch = useDispatch();
 
   const [recordSecs, setRecordSecs] = useState(0);
   const [recordTime, setRecordTime] = useState('00:00:00');
@@ -75,6 +78,20 @@ const AudioRecording = props => {
     audioRecorderPlayer.removeRecordBackListener();
     setRecordSecs(0);
     console.log(result);
+    
+    // added part //
+    setRecordingStatus(false);
+    const lastIndexMarker = result.lastIndexOf('/');
+    const filePath = result.substring(0, lastIndexMarker);
+    const fileName = result.substring(lastIndexMarker + 1);
+    const startPath = result.replace('file://', 'file:');
+    
+    console.log("filepath", filePath);
+    console.log('filename', fileName);
+    console.log('startpath', startPath);
+
+    dispatch(FeedbackActions.postFileUpload( result, fileName));
+
   };
 
   const onPauseRecord = async () => {
@@ -128,6 +145,7 @@ const AudioRecording = props => {
     }
 
   }
+
 
   return (
     <>
