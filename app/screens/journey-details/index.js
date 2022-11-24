@@ -10,6 +10,7 @@ import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import { getCurrentJourney } from 'app/store/selectors';
 import JourneyProgressTab from './progress-tab';
 import JourneyDetailsTab from './details-tab';
+import { asyncProgressSteps, faceToFaceSteps } from 'app/models/ProgressStepsModel';
 import Images from 'app/assets/images';
 import styles from './styles';
 import { DataUtil } from 'app/utils';
@@ -45,63 +46,6 @@ const JourneyDetails = props => {
   //   done: false,
   // });
   const [activeTab, setActiveTab] = useState('Progress');
-
-  const journeySteps = [
-    {
-      id: 1,
-      title: 'Capture Feedback',
-      description: 'Complete your feedback by including additional details.',
-      doneDescription:
-        'You completed your feedback document by recording entries.',
-      inProgressDescription: 'You record additional entries to your feedback.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 2,
-      title: 'Record Entries',
-      description: 'Complete your feedback by including additional details.',
-      doneDescription:
-        'You completed your feedback document by recording entries.',
-      inProgressDescription: 'You record additional entries to your feedback.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 3,
-      title: 'Review & Submit',
-      description:
-        'Review your whole feedback and submit it for Ivan Evangelista to read.',
-      doneDescription: 'You reviewed your feedback and sent it for submission.',
-      inProgressDescription: 'You review and submit feedback entries.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 4,
-      title: 'Waiting for response...',
-      description:
-        'Wait for Ivan Evangelista to view the feedback you sent them to know the next steps.',
-      doneDescription: 'Ivan Evangelista viewed and understood your feedback.',
-      inProgressDescription: 'Ivan Evangelista receives your feedback.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 5,
-      title: 'Reflect on Discussion',
-      description: 'Proceed to the post discussion reflection checklist.',
-      doneDescription: 'You reviewed your feedback and sent it for submission.',
-      inProgressDescription: 'You review and submit feedback entries.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-  ];
 
   useLayoutEffect(() => { 
     retrieveData();
