@@ -626,13 +626,13 @@ const CaptureFeedbackMoment = props => {
         )}
         {handleStepContent()}
       </View>
-      {/* <BottomSheet
+      <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         enablePanDownToClose>
         <View style={{ flex: 1 }}>{handleSheetContent()}</View>
-      </BottomSheet> */}
+      </BottomSheet>
     </View>
   );
 };
