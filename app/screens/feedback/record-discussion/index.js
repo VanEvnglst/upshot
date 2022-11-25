@@ -39,6 +39,8 @@ const RecordDiscussion = props => {
   const [isDoLessActive, setIsDoLessActive] = useState(false);
   const [isStopDoingActive, setIsStopDoingActive] = useState(false);
   const [isAdditionalNotesActive, setIsAdditionalNotesActive] = useState(false);
+  const [headerDisplay, setHeaderDisplay] = useState('default');
+  const [headerDisplayContent, setHeaderDisplayContent] = useState('');
   const x = useSharedValue(0);
   const y = useSharedValue(0);
   // const onGestureEvent = useAnimatedGestureHandler <PanGestureHandlerGestureEvent, {x, y}> ({
@@ -765,7 +767,7 @@ const RecordDiscussion = props => {
         return recordPermission();
       case 'Audio Recording':
         bottomSheetRef.current?.close()
-        return <AudioRecording />;
+        return <AudioRecording/>;
       case 'End Discussion':
         return endDiscussion();
     }
@@ -810,7 +812,7 @@ const RecordDiscussion = props => {
           </View>
           <View style={styles.bottomSheetBtnContainer}>
             <TouchableOpacity style={styles.bottomSheetBtn}
-              onPress={() => setContentDisplay('Audio Recording')}>
+              onPress={() => handleRecordingDisplay()}>
               <Text style={styles.bottomSheetBtnText}>I got permission</Text>
             </TouchableOpacity>
           </View>
@@ -818,6 +820,11 @@ const RecordDiscussion = props => {
 
       </>
     )
+  }
+
+  const handleRecordingDisplay = () => { 
+    setContentDisplay('Audio Recording');
+    setHeaderDisplay('start recording');
   }
 
   const openSheet = type => { 
@@ -837,10 +844,19 @@ const RecordDiscussion = props => {
     }
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-     
-      <View style={styles.headerContainer}>
+  const handleHeaderDisplay = () => { 
+    if (headerDisplay === 'start recording') {
+      return recordingHeader();
+    } else { 
+      return defaultHeader();
+    }
+
+  }
+
+  const defaultHeader = () => { 
+    return (
+      <>
+        <View style={styles.headerContainer}>
         <TouchableOpacity
           accessibilityRole="button"
           onPress={() => { }}
@@ -865,6 +881,66 @@ const RecordDiscussion = props => {
           progress={25 / 100}
           color={'#FFFFFF'}/>
       </View>
+      </>
+    )
+  }
+
+  const recordingHeader = () => { 
+    return (
+      <>
+        <View style={styles.headerContainer}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={() => { }}
+          style={styles.icon}>
+          <Icon name="chevron-back-outline" size={24} color='#FFFFFF' />
+          </TouchableOpacity>
+          {headerDisplayContent === 'recording' ?
+            <>
+        <View style={styles.headerTextContainer}>
+            <View style={{ height: 8, width: 8, borderRadius: 8, backgroundColor: '#EF466F', marginRight: 4 }}></View>
+            <Text style={styles.headerText}>Recording</Text>
+        </View>
+      
+        <View style={styles.headerCancel}>
+          <TouchableOpacity
+              acccessibilityRole='button'
+              style={{height: 30, width: 68, borderRadius: 90 ,backgroundColor: '#6200EE', justifyContent: 'center', alignItems: 'center'}}
+        > 
+            <Text style={styles.cancelText}>Done</Text>
+            </TouchableOpacity>
+            </View>
+            </>
+            : headerDisplayContent === 'pause' ?
+            <>
+            <View style={styles.headerTextContainer}>
+            <View style={{ height: 8, width: 8, borderRadius: 8, backgroundColor: '#777E90', marginRight: 4 }}></View>
+            <Text style={styles.headerText}>Paused</Text>
+        </View>
+      
+        <View style={styles.headerCancel}>
+          <TouchableOpacity
+              acccessibilityRole='button'
+              style={{height: 30, width: 68, borderRadius: 90 ,backgroundColor: '#6200EE', justifyContent: 'center', alignItems: 'center'}}
+        > 
+            <Text style={styles.cancelText}>Done</Text>
+            </TouchableOpacity>
+                </View></>
+              :
+              <></>
+        }
+      </View>
+        <View style={{margin: 16, height: 10, borderBottomWidth: 1, borderBottomColor: '#777E904D'}}>
+      
+      </View>
+      </>
+    )
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+     
+      { handleHeaderDisplay()} 
       
      
         {handleContentDisplay()}

@@ -20,6 +20,7 @@ export default styles = StyleSheet.create({
   headerTextContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row'
   },
   headerText: {
     fontSize: 16,
