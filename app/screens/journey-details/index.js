@@ -140,17 +140,26 @@ const JourneyDetails = props => {
   };
 
   const handleContinue = (item) => {
-    if (item.title === 'Reflect on Discussion')
-      navigation.navigate('Feedback', { screen: 'Feedback Checklist' });
-    if (item.title === 'Record Entries') {
-      navigation.navigate('Feedback', { 
-        screen: 'Record Feedback Entry'
-      })
+    let screenName = '';
+    switch(item.title) {
+      case 'Record Entries':
+      screenName = 'Record Feedback Entry';
+      break;
+      case 'Reflect on Discussion':
+        screenName = 'Feedback Checklist';
+      case 'Awaiting Response':
+        screenName = 'Feedback Overview';
+      case 'Respond to Clarifications':
+        screenName = '';
+      case 'Set a 1-on-1 Discussion':
+        screenName = '';
+      case '1-on-1 Discussion':
+        screenName = '';
     }
-    if (item.title === 'Waiting for response...')
-      navigation.navigate('Feedback', {
-        screen: 'Feedback Overview',
-      });
+    console.log(screenName);
+    navigation.navigate('Feedback', {
+      screen: screenName,
+    });
   };
 
   const CaptureFeedbackProgress = () => {
@@ -740,8 +749,9 @@ const JourneyDetails = props => {
         <View style={styles.contentContainer}>
           {activeTab === 'Progress' ? (
             <>
-              {journeySteps.map((item, i) => (
-                <JourneyProgressTab key={item.id} item={item} 
+              {asyncProgressSteps.map((item, i) => (
+                <JourneyProgressTab key={item.id} item={item}
+                teamMember={journey.frontliner}
                 onPress={() => handleContinue(item)} />
               ))}
             </>
