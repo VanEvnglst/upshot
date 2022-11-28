@@ -149,7 +149,6 @@ export function* postFileUpload({ filePath, fileName }) {
   const response = yield call(api.postFileUpload, data);
   console.log('result api', response);
   console.log('status', response.status);
-  debugger;
 
   if (response.ok) {
     yield put(FeedbackActions.postFileUploadSuccess(response.data));
