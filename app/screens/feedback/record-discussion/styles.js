@@ -20,6 +20,7 @@ export default styles = StyleSheet.create({
   headerTextContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row'
   },
   headerText: {
     fontSize: 16,
@@ -64,12 +65,12 @@ export default styles = StyleSheet.create({
     maxWidth: normalize(343),
   },
   detailsContainer: {
-    margin: 24,
+    margin: normalize(24),
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#777E904D',
-    paddingBottom: 14,
+    paddingBottom: normalize(14),
   },
   nameContainer: {
     flexDirection: 'row',
@@ -80,7 +81,7 @@ export default styles = StyleSheet.create({
     width: normalize(19),
     height: normalize(19),
     borderRadius: 9.5, 
-    marginRight: 10, 
+    marginRight: normalize(10), 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -97,7 +98,7 @@ export default styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   titleContainer: {
-    marginTop: 14,
+    marginTop: normalize(14),
     alignItems: 'center',
     justifyContent: 'center', 
   },
@@ -114,11 +115,11 @@ export default styles = StyleSheet.create({
     color: '#B1B5C3',
   },
   selectionContainer: {
-    marginHorizontal: 24,
-    marginTop: 32,
+    marginHorizontal: normalize(24),
+    marginTop: normalize(32),
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 327,
+    minWidth: normalize(327),
   },
   questionText: {
     fontSize: 24,
@@ -143,7 +144,7 @@ export default styles = StyleSheet.create({
     color: '#FCFCFD',
   },
   cardContainer: {
-    marginTop: 32,
+    marginTop: normalize(32),
   },
   card: {
     minHeight: normalize(56),
@@ -151,10 +152,10 @@ export default styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#777E90',
     borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: normalize(12),
+    paddingHorizontal: normalize(16),
     justifyContent: 'center',
-    marginTop: 8,
+    marginTop: normalize(8),
   },
   cardHeader: {
     flexDirection: 'row',
@@ -174,7 +175,7 @@ export default styles = StyleSheet.create({
     backgroundColor: '#3772FF',
   },
   cardTitleText: {
-    marginLeft: 14,
+    marginLeft: normalize(14),
     flex: 8,
     textTransform: 'uppercase',
     fontSize: 12,
@@ -190,7 +191,7 @@ export default styles = StyleSheet.create({
     lineHeight: 24,
     fontWeight: '400',
     color: '#777E90',
-    marginBottom: 5,
+    marginBottom: normalize(5),
   },
   managerInputContent: {
     fontSize: 14,
@@ -201,6 +202,106 @@ export default styles = StyleSheet.create({
   inputContainer: {
     marginTop: 18,
   },
+  bottomSheetContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#353945'
+  },
+  bottomSheetImage: {
+    height: normalize(80),
+    width: normalize(80)
+  },
+  bottomSheetTextContainer: {
+    marginTop: normalize(24),
+    marginHorizontal: normalize(21),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  bottomSheetTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    lineHeight: 32,
+    color: '#FFFFFF',
+    marginBottom: normalize(12)
+  },
+  bottomSheetSubtitle: {
+    fontSize: 18,
+    fontWeight: '400',
+    lineHeight: 24,
+    color: '#B1B5C3',
+    textAlign: 'center'
+  },
+  bottomSheetBtnContainer: {
+    marginTop: normalize(62),
+    marginBottom: normalize(40)
+  },
+  bottomSheetBtn: {
+    minWidth: normalize(351),
+    height: normalize(48),
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center' 
+  },
+  bottomSheetBtnText: {
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 16,
+    color: '#353945'
+  },
+  endDiscussionContainer: {
+    flex: 1,
+    marginHorizontal: normalize(24),
+  },
+  imageContainer: {
+    marginTop: normalize(132),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageStyle: {
+    height: normalize(72),
+    width: normalize(72)
+  },
+  screenTextContainer: {
+    marginTop: normalize(12),
+    maxWidth: normalize(327),
+    justifyContent: 'center',
+    alignItems: 'center' 
+  },
+  screenTitleText: {
+    fontSize: 24,
+    fontWeight: '400',
+    lineHeight: 32,
+    color: '#FFFFFF',
+    textAlign: 'center'
+  },
+  screenSubtitleContainer: {
+    marginTop: normalize(52),
+    maxWidth: normalize(289),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  screenSubtitleText: {
+    fontSize: 14,
+    lineHeight: 24,
+    color: '#B1B5C3',
+    textAlign: 'center' 
+  },
+  endDiscussionBtnContainer: {
+    marginTop: normalize(72)
+  },
+  endDiscussionBtn: {
+    height: normalize(48),
+    justifyContent: 'center',
+    alignItems: 'center' 
+  },
+  endDiscussionBtnText: {
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 16,
+    color: '#FCFCFD'
+  }
   
 });
 

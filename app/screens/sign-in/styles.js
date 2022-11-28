@@ -86,4 +86,11 @@ export default styles = StyleSheet.create({
     color: Colors.white,
     textTransform: 'capitalize'
   },
+  showPasswordContainer: {
+    height: normalize(50),
+    position: 'relative',
+    left: normalize(280),
+    bottom: normalize(65),
+    width: normalize(50),
+  },
 });

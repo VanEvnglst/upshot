@@ -54,6 +54,9 @@ const { Types, Creators } = createActions({
   fetchCurrentJourney: ['journeyId'],
   fetchCurrentJourneySuccess: ['currentJourney'],
   fetchCurrentJourneyFailure: ['error'],
+  postFileUpload: ['filePath', 'fileName'],
+  postFileUploadSuccess: [],
+  postFileUploadFailure: ['error'],
 });
 
 export const FeedbackTypes = Types;
@@ -230,6 +233,24 @@ const fetchCurrentJourneySuccess = (state, {currentJourney} ) => state.merge({
   fetching: false,
 })
 
+const postFileUpload = state => 
+  state.merge({
+    fetching: true,
+    error: '',
+  })
+
+const postFileUploadSuccess = state =>
+  state.merge({
+    fetching: false
+  })
+
+const postFileUploadFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error
+  });
+
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 export const feedbackReducer = createReducer(INITIAL_STATE, {
@@ -254,4 +275,7 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.POST_FEEDBACK_EXCHANGE]: postFeedbackExchange,
   [Types.POST_FEEDBACK_EXCHANGE_SUCCESS]: postFeedbackExchangeSuccess,
   [Types.POST_FEEDBACK_EXCHANGE_FAILURE]: postFeedbackExchangeFailure,
+  [Types.POST_FILE_UPLOAD]: postFileUpload,
+  [Types.POST_FILE_UPLOAD_SUCCESS]: postFileUploadSuccess,
+  [Types.POST_FILE_UPLOAD_FAILURE]: postFileUploadFailure,
 });

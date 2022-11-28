@@ -10,6 +10,7 @@ import DiscussingActions from 'app/store/feedback/DiscussingRedux';
 import SharingActions from 'app/store/feedback/SharingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
+import moment from 'moment';
 
 const STATUS_OK = 'ok';
 
@@ -132,6 +133,31 @@ export function* postFeedbackExchange({ data }) {
   }
 }
 
+export function* postFileUpload({ filePath, fileName }) {
+  /** For audio recording in meeting discussion screen **/
+  
+  const data = new FormData();
+  const dateToday = moment(new Date()).format('MMDDYYYYhhmma')
+  data.append('file', {
+    uri: filePath,
+    name: fileName + '_' + dateToday,
+    type: 'audio/mp4'
+  });
+  console.log("file path", filePath)
+  console.log("data uploading", data)
+
+  const response = yield call(api.postFileUpload, data);
+  console.log('result api', response);
+  console.log('status', response.status);
+
+  if (response.ok) {
+    yield put(FeedbackActions.postFileUploadSuccess(response.data));
+  } else { 
+    yield put(FeedbackActions.postFileUploadFailure(response.data));
+  }
+
+}
+
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
@@ -141,6 +167,7 @@ function* watchFeedbackSaga() {
   );
   yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_EXCHANGE, postFeedbackExchange); 
+  yield takeLatest(FeedbackTypes.POST_FILE_UPLOAD, postFileUpload);
 }
 
 export default watchFeedbackSaga;

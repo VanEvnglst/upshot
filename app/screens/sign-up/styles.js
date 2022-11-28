@@ -11,7 +11,7 @@ export default StyleSheet.create({
   formContainer: {
     flex: 1,
     marginTop: normalize(50), 
-    paddingHorizontal: normalize(24)
+    paddingHorizontal: normalize(24),
   },
   inputField: {
     height: 48,
@@ -22,6 +22,7 @@ export default StyleSheet.create({
     borderColor: Colors.neutral4,
     borderRadius: 6,
     color: '#667080',
+    position: 'relative',
   },
   labelText: {
     marginBottom: 4,
@@ -52,5 +53,12 @@ export default StyleSheet.create({
   enabledBtnText: {
     color: Colors.white,
     textTransform: 'capitalize'
+  },
+  showPasswordContainer: {
+    height: normalize(50),
+    position: 'relative',
+    left: normalize(280),
+    bottom: normalize(65),
+    width: normalize(50),
   },
 });

@@ -129,7 +129,7 @@ const SignIn = props => {
                 secureTextEntry={!passwordVisible}
                 error={errors.passwordError}
               />
-              <View style={{height: 50, position: 'absolute', left: 325, top: 130}}>
+              <View style={styles.showPasswordContainer}>
               {passwordVisible ?
                 <TouchableOpacity style={{ margin: 10, width: 30, height: 30}}
                   onPress={() => handlePasswordVisibility()}>

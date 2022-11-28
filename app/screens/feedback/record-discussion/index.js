@@ -39,6 +39,8 @@ const RecordDiscussion = props => {
   const [isDoLessActive, setIsDoLessActive] = useState(false);
   const [isStopDoingActive, setIsStopDoingActive] = useState(false);
   const [isAdditionalNotesActive, setIsAdditionalNotesActive] = useState(false);
+  const [headerDisplay, setHeaderDisplay] = useState('default');
+  const [headerDisplayContent, setHeaderDisplayContent] = useState('');
   const x = useSharedValue(0);
   const y = useSharedValue(0);
   // const onGestureEvent = useAnimatedGestureHandler <PanGestureHandlerGestureEvent, {x, y}> ({
@@ -170,7 +172,8 @@ const RecordDiscussion = props => {
               onPress={() => openSheet('record reminder')}>
             <Text style={styles.btnText}>Yes, I will record our discussion</Text>
           </TouchableOpacity>
-            <TouchableOpacity style={[styles.btnContainer, { marginTop: 16 }]}>
+            <TouchableOpacity style={[styles.btnContainer, { marginTop: 16 }]}
+            onPress={() => setContentDisplay('End Discussion')}>
             <Text style={styles.btnText}>No need</Text>
             </TouchableOpacity>
             
@@ -722,6 +725,34 @@ const RecordDiscussion = props => {
     )
   }
 
+  const endDiscussion = () => { 
+    return (
+      <>
+        <View style={styles.endDiscussionContainer}>
+          <View style={styles.imageContainer}>
+            <Image source={Images.thoughtsIcon}
+              style={styles.imageStyle} />
+          </View>
+          <View style={styles.screenTextContainer}>
+            <Text style={styles.screenTitleText}>Are you done with your 1-on-1 discussion?</Text>
+          <View style={styles.screenSubtitleContainer}>
+              <Text style={[styles.screenSubtitleText, {fontWeight: '400'}]}>By ending this meeting, you confirm that you have completed your discussion with 
+                <Text style={[styles.screenSubtitleText, {fontWeight: '700'}]}> Andre Castro.</Text> </Text>
+            </View>
+            </View>
+          <View style={styles.endDiscussionBtnContainer}>
+            <TouchableOpacity style={[styles.endDiscussionBtn, { borderRadius: 90, backgroundColor: '#EF466F'}]}>
+              <Text style={styles.endDiscussionBtnText}>End Meeting</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.endDiscussionBtn, {marginTop: 16}]}>
+              <Text style={styles.endDiscussionBtnText}>Back</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </>
+    )
+  }
+
   const handleContentDisplay = () => { 
     switch (contentDisplay) { 
       case 'Discussion Guide':
@@ -736,7 +767,9 @@ const RecordDiscussion = props => {
         return recordPermission();
       case 'Audio Recording':
         bottomSheetRef.current?.close()
-        return <AudioRecording />;
+        return <AudioRecording/>;
+      case 'End Discussion':
+        return endDiscussion();
     }
   }
 
@@ -748,17 +781,17 @@ const RecordDiscussion = props => {
   const jotDownDetailsSheet = () => { 
     return (
       <>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#353945'}}>
+        <View style={styles.bottomSheetContainer}>
           <Image source={Images.memoIcon}
-            style={{height: 80, width: 80}} />
-          <View style={{marginTop: 24, marginHorizontal: 21, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 24, fontWeight: '700', lineHeight: 32, color: '#FFFFFF', marginBottom: 12}}>Jot down details</Text>
-            <Text style={{fontSize: 18, fontWeight: '400', lineHeight: 24, color: '#B1B5C3', textAlign: 'center'}}>Please don't forget to write down the details of your discussion after your meeting. This will help you later. </Text>
+            style={styles.bottomSheetImage} />
+          <View style={styles.bottomSheetTextContainer}>
+          <Text style={styles.bottomSheetTitle}>Jot down details</Text>
+            <Text style={styles.bottomSheetSubtitle}>Please don't forget to write down the details of your discussion after your meeting. This will help you later. </Text>
           </View>
-          <View style={{marginTop: 62, marginBottom: 40}}>
-            <TouchableOpacity style={{ minWidth: 351, height: 48, backgroundColor: '#FFFFFF', borderRadius: 12, justifyContent: 'center', alignItems: 'center' }}
+          <View style={styles.bottomSheetBtnContainer}>
+            <TouchableOpacity style={styles.bottomSheetBtn}
               onPress={() => handleBottomSheetAction()}>
-              <Text style={{fontSize: 16, fontWeight: '700', lineHeight: 16, color: '#353945'}}>Alright!</Text>
+              <Text style={styles.bottomSheetBtnText}>Alright!</Text>
             </TouchableOpacity>
           </View>
           </View>
@@ -770,23 +803,28 @@ const RecordDiscussion = props => {
   const recordReminderSheet = () => { 
     return (
       <>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#353945'}}>
+        <View style={styles.bottomSheetContainer}>
           <Image source={Images.warningEmoji}
-            style={{height: 80, width: 80}} />
-          <View style={{marginTop: 24, marginHorizontal: 21, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 24, fontWeight: '700', lineHeight: 32, color: '#FFFFFF', marginBottom: 12}}>Before you proceed...</Text>
-            <Text style={{fontSize: 18, fontWeight: '400', lineHeight: 24, color: '#B1B5C3', textAlign: 'center'}}>Ensure that you have asked permission to record from your team member. 😊 </Text>
+            style={styles.bottomSheetImage} />
+          <View style={styles.bottomSheetTextContainer}>
+          <Text style={styles.bottomSheetTitle}>Before you proceed...</Text>
+            <Text style={styles.bottomSheetSubtitle}>Ensure that you have asked permission to record from your team member. 😊 </Text>
           </View>
-          <View style={{marginTop: 62, marginBottom: 40}}>
-            <TouchableOpacity style={{ minWidth: 351, height: 48, backgroundColor: '#FFFFFF', borderRadius: 12, justifyContent: 'center', alignItems: 'center' }}
-              onPress={() => setContentDisplay('Audio Recording')}>
-              <Text style={{fontSize: 16, fontWeight: '700', lineHeight: 16, color: '#353945'}}>I got permission</Text>
+          <View style={styles.bottomSheetBtnContainer}>
+            <TouchableOpacity style={styles.bottomSheetBtn}
+              onPress={() => handleRecordingDisplay()}>
+              <Text style={styles.bottomSheetBtnText}>I got permission</Text>
             </TouchableOpacity>
           </View>
           </View>
 
       </>
     )
+  }
+
+  const handleRecordingDisplay = () => { 
+    setContentDisplay('Audio Recording');
+    setHeaderDisplay('start recording');
   }
 
   const openSheet = type => { 
@@ -806,10 +844,19 @@ const RecordDiscussion = props => {
     }
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-     
-      <View style={styles.headerContainer}>
+  const handleHeaderDisplay = () => { 
+    if (headerDisplay === 'start recording') {
+      return recordingHeader();
+    } else { 
+      return defaultHeader();
+    }
+
+  }
+
+  const defaultHeader = () => { 
+    return (
+      <>
+        <View style={styles.headerContainer}>
         <TouchableOpacity
           accessibilityRole="button"
           onPress={() => { }}
@@ -834,6 +881,66 @@ const RecordDiscussion = props => {
           progress={25 / 100}
           color={'#FFFFFF'}/>
       </View>
+      </>
+    )
+  }
+
+  const recordingHeader = () => { 
+    return (
+      <>
+        <View style={styles.headerContainer}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={() => { }}
+          style={styles.icon}>
+          <Icon name="chevron-back-outline" size={24} color='#FFFFFF' />
+          </TouchableOpacity>
+          {headerDisplayContent === 'recording' ?
+            <>
+        <View style={styles.headerTextContainer}>
+            <View style={{ height: 8, width: 8, borderRadius: 8, backgroundColor: '#EF466F', marginRight: 4 }}></View>
+            <Text style={styles.headerText}>Recording</Text>
+        </View>
+      
+        <View style={styles.headerCancel}>
+          <TouchableOpacity
+              acccessibilityRole='button'
+              style={{height: 30, width: 68, borderRadius: 90 ,backgroundColor: '#6200EE', justifyContent: 'center', alignItems: 'center'}}
+        > 
+            <Text style={styles.cancelText}>Done</Text>
+            </TouchableOpacity>
+            </View>
+            </>
+            : headerDisplayContent === 'pause' ?
+            <>
+            <View style={styles.headerTextContainer}>
+            <View style={{ height: 8, width: 8, borderRadius: 8, backgroundColor: '#777E90', marginRight: 4 }}></View>
+            <Text style={styles.headerText}>Paused</Text>
+        </View>
+      
+        <View style={styles.headerCancel}>
+          <TouchableOpacity
+              acccessibilityRole='button'
+              style={{height: 30, width: 68, borderRadius: 90 ,backgroundColor: '#6200EE', justifyContent: 'center', alignItems: 'center'}}
+        > 
+            <Text style={styles.cancelText}>Done</Text>
+            </TouchableOpacity>
+                </View></>
+              :
+              <></>
+        }
+      </View>
+        <View style={{margin: 16, height: 10, borderBottomWidth: 1, borderBottomColor: '#777E904D'}}>
+      
+      </View>
+      </>
+    )
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+     
+      { handleHeaderDisplay()} 
       
      
         {handleContentDisplay()}

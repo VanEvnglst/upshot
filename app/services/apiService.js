@@ -540,5 +540,13 @@ export default {
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/get_home_stats`);
-  }
+  },
+
+  postFileUpload: async payload => { 
+    const url = await AsyncStorage.getItem('baseURL');
+    const upshotAPI = setAPI(url);
+    const uniqueId = await AsyncStorage.getItem('uniqueId');
+
+    return upshotAPI.post(`/${uniqueId}/upload-file`, payload);
+  },
 };
