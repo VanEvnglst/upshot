@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import styles from '../styles';
 
-const JourneyProgressTab = ({ item, onPress }) => {
+const JourneyProgressTab = ({ item, onPress, teamMember }) => {
   const { title, done, inProgress, description } = item;
   
   return (
