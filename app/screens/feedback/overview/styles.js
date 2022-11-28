@@ -65,7 +65,7 @@ export default StyleSheet.create({
     backgroundColor: '#68738F',
   },
   enabledCardStatus: {
-    backgroundColor: '#3772FF',
+    backgroundColor: Colors.blue100,
   },
   cardTitleText: {
     marginLeft: normalize(14),
