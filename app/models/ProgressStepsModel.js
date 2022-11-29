@@ -6,8 +6,8 @@ export const asyncProgressSteps = [
     doneDescription: 'You finished capturing feedback for ',
     inProgressDescription: 'Continue adding feedback details for ',
     date: 'Oct 20, 5:00 PM',
-    done: false,
-    inProgress: true,
+    done: true,
+    inProgress: false,
   },
   {
     id: 2,
