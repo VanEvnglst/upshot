@@ -68,10 +68,12 @@ const FeedbackNavigator = () => {
           name={'EM Journey Closeout'}
           component={EMJourneyCloseout}
         />
+        {/* Journey Details screen */}
         <FeedbackStack.Screen
           name={'Journey Details'}
           component={JourneyDetails}
         />
+        {/* Checklist screen before closeout */}
         <FeedbackStack.Screen
           name={'Feedback Checklist'}
           component={FeedbackChecklist}

@@ -8,6 +8,7 @@ import {
   getActiveCaptureStep,
   getStaffList,
 } from 'app/store/selectors';
+import { DataUtil } from 'app/utils';
 import styles from '../styles';
 
 const StaffSelection = ({ onPress }) => {
@@ -24,20 +25,13 @@ const StaffSelection = ({ onPress }) => {
 
   return (
     <View style={styles.listContainer}>
-      {staffList.map((item, i) => {
-        const staffName = item.name.split(' ');
-        const staffInitials =
-          staffName.length === 3 ?
-          `${staffName[0].charAt(0)}${staffName[2].charAt(0)}`
-          : staffName.length > 1
-            ? `${staffName[0].charAt(0)}${staffName[1].charAt(0)}`
-            : `${staffName[0].charAt(0)}`;
-        return (
+      {staffList.map((item, i) => (
           <TouchableOpacity
             key={item.id}
             onPress={() => handleSelection(item)}
             style={styles.namesContainer}>
-            <UserAvatar initials={staffInitials} />
+            <UserAvatar 
+              initials={DataUtil.parseInitials(item.name)} />
             <View>
               <Text type="body2" weight="medium" style={styles.staffNameText}>
                 {item.name}
@@ -47,8 +41,8 @@ const StaffSelection = ({ onPress }) => {
               </Text>
             </View>
           </TouchableOpacity>
-        );
-      })}
+        )
+      )}
     </View>
   );
 };

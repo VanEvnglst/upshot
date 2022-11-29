@@ -63,31 +63,32 @@ export function* postCaptureFeedbackMoment(type) {
     } */
     const feedbackMoment = state => state.captureMoment.get('data');
     const momentData = yield select(feedbackMoment);
-    
+    console.log('moment', momentData);
     const { step1, step3, step4 } = momentData;
     const payload ={
       staff_id: step1.user_id,
       gen_topic_id: step3.selectedLayerOne.id,
       sub_topic_id: step3.selectedLayerTwo.id,
-      reminder_hours: step4.value,
+      // reminder_hours: step4.value,
     };
-  
+    console.log('payload', payload);
   const response = yield call(api.postCaptureFeedbackMoment, payload);
   debugger;
+  console.log('res', response.data);
   if (response.ok) {
     if (response.data.status === 'ok') {
       const dateLogged = moment(new Date()).format('llll');
-      yield put (CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
+      yield put(CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
       yield put(CaptureMomentActions.postCaptureMomentSuccess(response.data.id));
 
       /** updated flow **/
-      if(type.data === 'continueFB') {
-        yield put(CaptureMomentActions.resetCaptureStep());
-        yield NavigationService.navigate('Record Feedback Entry')
-    } else if(type.data === 'reminder') {
-      yield put(CaptureMomentActions.resetCaptureStep());
-      yield NavigationService.navigate('Home');
-    }
+    //   if(type.data === 'continueFB') {
+    //     yield put(CaptureMomentActions.resetCaptureStep());
+    //     yield NavigationService.navigate('Record Feedback Entry')
+    // } else if(type.data === 'reminder') {
+    //   yield put(CaptureMomentActions.resetCaptureStep());
+    //   yield NavigationService.navigate('Home');
+    // }
       /** end of flow **/
 
       // yield put(CaptureMomentActions.resetCaptureStep());
@@ -103,6 +104,35 @@ export function* postCaptureFeedbackMoment(type) {
     }
   } else {
     yield put(CaptureMomentActions.postCaptureMomentFailure(response.data))
+  }
+}
+
+export function* setReminderHours() {
+  const connected = yield checkInternetConnection();
+   /* if (!connected) {
+      return;
+    } */
+
+
+    const feedbackMoment = state => state.captureMoment.get('data');
+    const momentData = yield select(feedbackMoment);
+
+    const payload = {
+      fb_id: '',
+      reminder_hours: '',
+    }
+
+    const response = yield call(api.postCaptureFeedbackMoment, payload);
+    if (response.ok) {
+      if (response.data.status === 'ok') {
+        yield put(CaptureMomentActions.setReminderHoursSuccess())
+        // yield put(CaptureMomentActions.resetCaptureStep());
+        //   yield NavigationService.navigate('Home');
+    } else {
+      yield put(CaptureMomentActions.setReminderHoursFailure())
+    }
+  } else {
+    yield put(CaptureMomentActions.setReminderHoursFailure())
   }
 }
 
