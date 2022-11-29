@@ -7,15 +7,16 @@ import { Text } from 'app/components';
 import styles from '../styles';
 
 const JourneyProgressTab = ({ item, onPress, teamMember }) => {
-  const { title, done, inProgress, description } = item;
-  
+  const { title, done, inProgress, description, date } = item;
+  const captureDesc = done ? `${item.doneDescription} ${teamMember}` : inProgress ? `${item.inProgressDescription} ${teamMember}` : description;
+
   return (
     <View style={styles.progressContainer}>
         <View style={styles.dateContainer}>
           {done ? (
           <Text type='caption2' weight='regular'
             style={styles.progressText}>
-              Oct 20, 5:00 PM
+              {date}
             </Text>
           ) : null}
         </View>
@@ -24,7 +25,7 @@ const JourneyProgressTab = ({ item, onPress, teamMember }) => {
             style={[
               styles.signPost,
               inProgress && styles.inProgressTaskPost,
-              done && completedTaskPost
+              done && styles.completedTaskPost
             ]}
           >
             <Icon name={ done ? 'checkmark-sharp' : 'remove-outline'} size={14} color={'#141416'} />
@@ -56,7 +57,7 @@ const JourneyProgressTab = ({ item, onPress, teamMember }) => {
                 style={styles.progressText}>
                 {description}
               </Text>
-              <Button
+              {title !== 'Awaiting Response' && (<Button
                 mode="contained"
                 onPress={onPress}
                 style={[
@@ -67,11 +68,11 @@ const JourneyProgressTab = ({ item, onPress, teamMember }) => {
                   Continue
                 </Text>
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
-              </Button>
+              </Button> )}
             </>
           ) : done ? (
             <Text type="caption2" weight="regular" style={styles.progressText}>
-              {item.doneDescription}
+              {title === 'Capture Feedback' ? captureDesc : item.doneDescription}
              </Text>
           ) : (
              <Text type="caption2" weight="regular" style={styles.progressText}>
