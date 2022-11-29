@@ -28,7 +28,7 @@ const Profile = props => {
 
   return (
     <View
-      style={{ flex: 1 }}
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
     >
     <Button
       mode='contained'
