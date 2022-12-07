@@ -52,7 +52,7 @@ const JourneyDetails = props => {
   }, []);
 
   const retrieveData = async () => {
-    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId))
+    await dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId))
   };
 
   const resetValue = () => {
@@ -107,39 +107,40 @@ const JourneyDetails = props => {
     }, 5000);
   };
 
-  const needsClarify = () => {
-    setReviewFeedback({ inProgress: false, done: true });
-    setFeedbackReceived({
-      ...feedbackReceived,
-      inProgress: true,
-    });
+  // const needsClarify = () => {
+  //   setReviewFeedback({ inProgress: false, done: true });
+  //   setFeedbackReceived({
+  //     ...feedbackReceived,
+  //     inProgress: true,
+  //   });
 
-    setTimeout(() => {
-      setFeedbackReceived({
-        inProgress: false,
-        done: true,
-        needsClarification: true,
-      });
-      setRespondClarification({
-        ...respondClarification,
-        inProgress: true,
-      });
-    }, 5000);
-  };
+  //   setTimeout(() => {
+  //     setFeedbackReceived({
+  //       inProgress: false,
+  //       done: true,
+  //       needsClarification: true,
+  //     });
+  //     setRespondClarification({
+  //       ...respondClarification,
+  //       inProgress: true,
+  //     });
+  //   }, 5000);
+  // };
 
-  const respond = () => {
-    setRespondClarification({
-      inProgress: false,
-      clarified: true,
-      done: true,
-    });
-    setReflectDiscussion({
-      ...reflectDiscussion,
-      inProgress: true,
-    });
-  };
+  // const respond = () => {
+  //   setRespondClarification({
+  //     inProgress: false,
+  //     clarified: true,
+  //     done: true,
+  //   });
+  //   setReflectDiscussion({
+  //     ...reflectDiscussion,
+  //     inProgress: true,
+  //   });
+  // };
 
   const handleContinue = (item) => {
+    console.log('continue', item);
     let screenName = '';
     switch(item.title) {
       case 'Record Entries':
@@ -147,14 +148,19 @@ const JourneyDetails = props => {
       break;
       case 'Reflect on Discussion':
         screenName = 'Feedback Checklist';
+        break;
       case 'Awaiting Response':
         screenName = 'Feedback Overview';
+        break;
       case 'Respond to Clarifications':
         screenName = '';
+        break;
       case 'Set a 1-on-1 Discussion':
         screenName = '';
+        break;
       case '1-on-1 Discussion':
         screenName = '';
+        break;
     }
     console.log(screenName);
     navigation.navigate('Feedback', {
@@ -690,7 +696,7 @@ const JourneyDetails = props => {
           <UserAvatar 
             initials={DataUtil.parseInitials(journey.frontliner)}
             style={{ width: 62, height: 62 }} />
-          <Text type="h4" weight="bold" style={styles.memberNameText}>
+           <Text type="h4" weight="bold" style={styles.memberNameText}>
             {journey.frontliner}
           </Text>
           <Text type="caption1" weight="medium" style={styles.roleText}>
