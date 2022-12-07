@@ -24,7 +24,7 @@ import styles from '../styles';
 const CaptureMomentStep2 = () => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getActiveCaptureStep);
-  const dateEntry = moment(new Date()).format('ddd. MMM DD, YYYY [at] hh:mm a');
+  const dateEntry = useSelector(state => state.captureMoment.get('data').dateLogged);
   const [typeSelection, setTypeSelection] = useState({
     id: 0,
     icon: '',

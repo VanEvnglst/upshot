@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo} from 'react';
 import {
   View,
-  Text,
+  
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
@@ -15,6 +15,9 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+import { getCaptureData } from 'app/store/selectors';
+import { Text } from 'app/components';
 import Images from 'app/assets/images';
 import styles from '../styles';
 import * as NavigationService from 'app/services/NavigationService';
@@ -22,7 +25,6 @@ import * as NavigationService from 'app/services/NavigationService';
 
 const CaptureMomentStep4 = ({props, onPress}) => {
   const { navigation } = props;
-  console.warn('prop', props);
   const dispatch = useDispatch();
   const snapPoints = useMemo(() => [ '25%','50%'], []);
   const { height } = Dimensions.get('window');
@@ -30,10 +32,19 @@ const CaptureMomentStep4 = ({props, onPress}) => {
     value: 0,
     currentIndex: 3
   })
+  const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
+  const captureMoment = useSelector(getCaptureData);
 
+  console.warn('data', captureMoment);
   const handleContinueFeedback = () => {
-    dispatch(CaptureMomentActions.resetCaptureStep());
-    navigation.navigate('Record Feedback Entry')
+    dispatch(CaptureMomentActions.resetCaptureStep());    
+    setTimeout(() => {
+      console.warn('start record');
+      dispatch(CaptureMomentActions.postRecordEMEntry());
+3
+      navigation.navigate('Record Feedback Entry')
+    }, 300);
+    
   }
 
   return (
@@ -66,3 +77,9 @@ const CaptureMomentStep4 = ({props, onPress}) => {
 }
 
 export default CaptureMomentStep4;
+
+
+CaptureMomentStep4.propTypes = {};
+
+
+CaptureMomentStep4.defaultProps = {};

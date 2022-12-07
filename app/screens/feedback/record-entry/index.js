@@ -1,24 +1,20 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
-  Text,
   SafeAreaView,
-  StyleSheet,
   KeyboardAvoidingView,
   BackHandler,
   Image,
-  Dimensions,
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import BottomSheet from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Text } from 'app/components';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
-import Images from 'app/assets/images';
-import styles from './styles';
 import CatchAttentionEntry from './catch-attention';
 import ImpactBehaviorEntry from './impact-behavior';
 import ContinueEntry from './continue-more';
@@ -26,20 +22,23 @@ import DoLessEntry from './do-less';
 import StopDoingEntry from './stop-doing';
 import AddMoreEntry from './add-more';
 import ReviewFeedbackEntry from './review-entry';
-import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { getRecordEntryActiveStep, getRecordEntryMaxStep,getCurrentJourney } from 'app/store/selectors';
+import Images from 'app/assets/images';
+import styles from './styles';
+
 
 const RecordFeedbackEntry = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const activeStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
-  const maxStep = useSelector(state => state.captureMoment.get('entryMaxStep'));
-  const staffName = useSelector(state => state.captureMoment.get('data'));
+  const activeStep = useSelector(getRecordEntryActiveStep);
+  const maxStep = useSelector(getRecordEntryMaxStep);
+  const journey = useSelector(getCurrentJourney);
   const feedbackType = useSelector(
     state => state.captureMoment.get('data'),
   );
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
-  const layerTwo = useSelector(state => state.captureMoment.get('data').step3);
+  // const layerTwo = useSelector(state => state.captureMoment.get('data').step3);
   
    useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -61,6 +60,7 @@ const RecordFeedbackEntry = props => {
     if (activeStep === 1) navigation.goBack();
     else dispatch(CaptureMomentActions.setEntryActiveStep(activeStep - 1));
   };
+
   const EntryQuestion2 = () => {
 
   }
@@ -115,7 +115,6 @@ const RecordFeedbackEntry = props => {
     bottomSheetRef.current?.close();
   }
 
-  
 
   const openSheet = () => { 
     bottomSheetRef.current?.snapToIndex(1);
@@ -205,7 +204,7 @@ const RecordFeedbackEntry = props => {
       <View style={styles.contentContainer}>
       {activeStep !== maxStep && <View style={styles.selectedNameContainer}>
           <View style={styles.selectedAvatar} />
-          <Text style={styles.selectedName}>{staffName.step1.name}</Text>
+          <Text style={styles.selectedName}>{journey.frontliner}</Text>
         </View>}
         {handleStepContent()}
       </View> 
