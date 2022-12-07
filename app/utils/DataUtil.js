@@ -1,5 +1,6 @@
 
 function parseInitials(name) {
+  if (name === undefined) return ''; 
   const nameArr = name.split(' ');
   const nameLength = nameArr.length;
   let initials = '';
