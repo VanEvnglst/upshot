@@ -32,8 +32,6 @@ export const getCompletedJourneysCount = state => state.feedbackHistory.get('com
 export const getTotalJourneysCount = state => state.feedbackHistory.get('totalJourneys');
 
 
-
-
 /* ------------- Capture Feedback Moment Selectors ------------- */
 export const getActiveCaptureStep = state =>
 state.captureMoment.get('activeStep');
@@ -43,9 +41,10 @@ export const getCaptureData = state => state.captureMoment.get('data');
 export const getMainTopics = state => state.captureMoment.get('layerOneTopics');
 export const getSubTopics = state => state.captureMoment.get('layerTwoTopics');
 
+/* ------------- Record Entries Selectors ------------- */
+export const getRecordEntryActiveStep = state => state.captureMoment.get('entryActiveStep');
+export const getRecordEntryMaxStep = state => state.captureMoment.get('entryMaxStep');
 
-
-/* ------------- Direct Report Survey Selectors ------------- */
 
 /* ------------- Frontliner Feedback Selectors ------------- */
 export const getFLFeedbackId = state => state.frontlinerFeedback.get('selectedFeedback').id;
