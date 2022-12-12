@@ -47,6 +47,8 @@ import CaptureMomentStep4 from './capture-step4';
 import reminderHoursData from 'app/models/ReminderModel';
 import Images from 'app/assets/images';
 import styles from './styles';
+import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+
 
 const hourPicker = reminderHoursData;
 
@@ -289,6 +291,7 @@ const CaptureFeedbackMoment = props => {
             pressSubTopic={() => openSheet('layer two')}
             selectedLayerOne={selectedLayerOne}
             selectedLayerTwo={selectedLayerTwo}
+            pressAttachment={() => openSheet('attachments')}
           />
         );
       case 4:
@@ -424,9 +427,16 @@ const CaptureFeedbackMoment = props => {
       mediaType: 'photo',
     }).then(images => {
       console.warn('ima', images);
-      // onUploadHandler(images);
+      //dispatch(FeedbackActions.postCaptureAttachment(images));
+      onUploadHandler(images);
     });
   };
+
+  const onUploadHandler = files => { 
+    console.log('attach', files);
+    // commented the post capture attachment first - need to connect it properly
+    //dispatch(FeedbackActions.postCaptureAttachment(files));
+  }
 
   const ReminderSheet = () => {
     return (
