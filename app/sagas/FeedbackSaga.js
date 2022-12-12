@@ -11,6 +11,7 @@ import SharingActions from 'app/store/feedback/SharingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 import moment from 'moment';
+import { DeviceUtil } from 'app/utils';
 
 const STATUS_OK = 'ok';
 
@@ -140,7 +141,7 @@ export function* postFileUpload({ filePath, fileName }) {
   const dateToday = moment(new Date()).format('MMDDYYYYhhmma')
   data.append('file', {
     uri: filePath,
-    name: fileName + '_' + dateToday,
+    name: dateToday + '_' + fileName,
     type: 'audio/mp4'
   });
   console.log("file path", filePath)
@@ -158,6 +159,31 @@ export function* postFileUpload({ filePath, fileName }) {
 
 }
 
+export function* postCaptureAttachment({ attachment }) {
+  const data = new FormData();
+  const path = DeviceUtil.isIos() ? 'sourceURL' : 'path';
+  const dateToday = moment(new Date()).format('MMDDYYYYhhmma')
+  
+  data.append('fb_id', 298); //temporary fb_id
+  for (let i = 0; i < attachment.length; i++) {
+    const uriPath = attachment[i][path]
+    const lastIndexMarker = uriPath.lastIndexOf('/');
+    const fileName = uriPath.substring(lastIndexMarker + 1)
+    data.append('file'+ i , {
+      uri: uriPath,
+      name: dateToday + '_' + i + fileName,
+      type: attachment[i]['mime'],
+    })
+
+  }
+  
+  const response = yield call(api.postCaptureAttachment, data)
+  console.log('data', data);
+  console.log('result api', response);
+ 
+
+}
+
 function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_TEAM_MEMBERS, fetchTeamMembers);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_JOURNEY, postFeedbackJourney);
@@ -168,6 +194,7 @@ function* watchFeedbackSaga() {
   yield takeLatest(FeedbackTypes.FETCH_CURRENT_FEEDBACK, fetchCurrentFeedback);
   yield takeLatest(FeedbackTypes.POST_FEEDBACK_EXCHANGE, postFeedbackExchange); 
   yield takeLatest(FeedbackTypes.POST_FILE_UPLOAD, postFileUpload);
+  yield takeLatest(FeedbackTypes.POST_CAPTURE_ATTACHMENT, postCaptureAttachment);
 }
 
 export default watchFeedbackSaga;
