@@ -80,6 +80,8 @@ export function* postCaptureFeedbackMoment(type) {
       const dateLogged = moment(new Date()).format('llll');
       yield put(CaptureMomentActions.setCaptureData('dateLogged', dateLogged));
       yield put(CaptureMomentActions.postCaptureMomentSuccess(response.data.id));
+     
+      //to be placed the postCaptureAttachment
 
       /** updated flow **/
     //   if(type.data === 'continueFB') {
