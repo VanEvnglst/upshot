@@ -9,6 +9,7 @@ import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 
 const feedbackType = state => state.captureMoment.get('data').step2;
+
 export function* fetchLayerOneTopics() {
   /* const connected = yield checkInternetConnection();
     if (!connected) {
@@ -65,41 +66,21 @@ export function* postCaptureFeedbackMoment() {
     } */
   const feedbackMoment = state => state.captureMoment.get('data');
   const momentData = yield select(feedbackMoment);
-  console.log('moment', momentData);
+
   const { step1, step3, step4 } = momentData;
   const payload = {
     staff_id: step1.user_id,
     gen_topic_id: step3.selectedLayerOne.id,
     sub_topic_id: step3.selectedLayerTwo.id,
   };
-  console.log('payload', payload);
+  
   const response = yield call(api.postCaptureFeedbackMoment, payload);
-  console.log('res', response.data);
   if (response.ok) {
     if (response.data.status === 'ok') {
       yield put(
         CaptureMomentActions.postCaptureMomentSuccess(response.data.id),
       );
       yield put(CaptureMomentActions.postCloseCaptureMoment(response.data.id));
-
-      /** updated flow **/
-      //   if(type.data === 'continueFB') {
-      //     yield put(CaptureMomentActions.resetCaptureStep());
-      //     yield NavigationService.navigate('Record Feedback Entry')
-      // } else if(type.data === 'reminder') {
-      //   yield put(CaptureMomentActions.resetCaptureStep());
-      //   yield NavigationService.navigate('Home');
-      // }
-      /** end of flow **/
-
-      // yield put(CaptureMomentActions.resetCaptureStep());
-
-      // console.warn('resp', response);
-      // if(type.data === 'continueFB') {
-      //     yield NavigationService.navigate('Record Feedback Entry')
-      // } else {
-      //   yield NavigationService.navigate('Home');
-      // }
     } else {
       yield put(CaptureMomentActions.postCaptureMomentFailure(response.data));
     }
@@ -222,6 +203,7 @@ export function* postRecordEMEntry() {
 
   if (response.ok) {
     yield put(CaptureMomentActions.postRecordEMEntrySuccess(response.data));
+    yield put(CaptureMomentActions.postCloseRecordEntry(yield select(journeyID)));
     yield put(CaptureMomentActions.resetEntryStep());
   } else {
     yield put(CaptureMomentActions.postRecordEMEntryFailure(response.data));
@@ -252,6 +234,29 @@ export function* postEditEMEntry(type) {
     yield put(CaptureMomentActions.postEditEMEntrySuccess(response.data));
   } else {
     yield put(CaptureMomentActions.postEditEMEntryFailure(response.data));
+  }
+}
+
+export function* postCloseRecordEntry(journeyId) {
+  const connected = yield checkInternetConnection();
+  /* if (!connected) {
+    return;
+  } */
+
+  const payload = {
+    fb_id: journeyId.journeyId,
+  };
+
+  const response = yield call(api.postCloseRecordEntry, payload);
+  console.log('close', response);
+  if (response.ok) {
+    if (response.data.status === 'ok') {
+      yield put(CaptureMomentActions.postCloseRecordEntrySuccess());
+    } else {
+      yield put(CaptureMomentActions.postCloseRecordEntryFailure(response.data))
+    }
+  } else {
+    yield put(CaptureMomentActions.postCloseRecordEntryFailure(response.data));
   }
 }
 
@@ -312,6 +317,9 @@ function* watchCaptureMomentSaga() {
   yield takeLatest(
     CaptureMomentTypes.POST_CLOSE_CAPTURE_MOMENT,
     postCloseCaptureMoment,
+  );
+  yield takeLatest(
+    CaptureMomentTypes.POST_CLOSE_RECORD_ENTRY, postCloseRecordEntry
   );
 }
 
