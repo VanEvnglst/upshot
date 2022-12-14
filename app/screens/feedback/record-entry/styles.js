@@ -20,10 +20,7 @@ export default styles = StyleSheet.create({
   },
   headerText: {
     flex: 2,
-    fontSize: 16,
-    lineHeight: 22,
     color: '#667080',
-    fontWeight: '700',
   },
   headerSave: {
     flex: 1,
@@ -31,8 +28,6 @@ export default styles = StyleSheet.create({
     paddingRight: 24,
   },
   saveText: {
-    fontSize: 16,
-    lineHeight: 22,
     color: '#667080',
   },
   stepsContainer: {
