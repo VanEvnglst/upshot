@@ -76,7 +76,8 @@ export function* postCaptureFeedbackMoment() {
   const response = yield call(api.postCaptureFeedbackMoment, payload);
   console.log('res', response.data);
   if (response.ok) {
-    if (response.data.status === 'ok') {
+    if (response.data.status === 'ok') {     
+      //to be placed the postCaptureAttachment
       yield put(
         CaptureMomentActions.postCaptureMomentSuccess(response.data.id),
       );
