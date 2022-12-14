@@ -420,7 +420,7 @@ const HomeScreen = props => {
             </Text>
             <TouchableOpacity
               accessibilityRole="button"
-              onPress={() => handleNavigation('Ongoing Journeys List')}
+              onPress={() => navigation.navigate('Feedback', { screen: 'Ongoing Journeys List', params: {title: 'Ongoing Journey'} })}
               style={styles.cardContainer}>
               <LinearGradient
                 style={styles.journeyDataGradient}
@@ -455,7 +455,7 @@ const HomeScreen = props => {
             </TouchableOpacity>
             <TouchableOpacity
               accessibilityRole="button"
-              onPress={() => handleNavigation('Scheduled Discussion List')}
+              // onPress={() => navigation.navigate('Feedback', { screen: 'Ongoing Journeys List', params: {title: 'Scheduled Discussion List'} })}
               style={styles.cardContainer}>
               <LinearGradient
                 style={styles.journeyDataGradient}
