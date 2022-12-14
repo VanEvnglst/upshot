@@ -7,7 +7,7 @@ import { Text } from 'app/components';
 import styles from '../styles';
 
 const JourneyProgressTab = ({ item, onPress, teamMember }) => {
-  const { title, done, inProgress, description, date } = item;
+  const { title, done, inProgress, shouldStart, description, dateFinished } = item;
   const captureDesc = done ? `${item.doneDescription} ${teamMember}` : inProgress ? `${item.inProgressDescription} ${teamMember}` : description;
 
   return (
@@ -16,7 +16,7 @@ const JourneyProgressTab = ({ item, onPress, teamMember }) => {
           {done ? (
           <Text type='caption2' weight='regular'
             style={styles.progressText}>
-              {date}
+              {dateFinished}
             </Text>
           ) : null}
         </View>
@@ -70,7 +70,35 @@ const JourneyProgressTab = ({ item, onPress, teamMember }) => {
                 <Icon name={'arrow-forward'} size={14} color={'white'} />
               </Button> )}
             </>
-          ) : done ? (
+          ) :  
+          shouldStart && !done ? (
+            <>
+            <Text type="body2" weight="medium" style={styles.taskTitleText}>
+                {title}
+              </Text>
+              <Text
+                type="caption2"
+                weight="regular"
+                style={styles.progressText}>
+                {description}
+              </Text>
+              <Button
+                mode="contained"
+                onPress={onPress}
+                style={[
+                  styles.button,
+                  styles.continueButton,
+                ]}>
+                <Text type="caption1" weight="bold" style={styles.continueText}>
+                  Start Entries
+                </Text>
+                <Icon name={'arrow-forward'} size={14} color={'white'} />
+              </Button> 
+            </>
+          )
+          
+          
+          : done ? (
             <Text type="caption2" weight="regular" style={styles.progressText}>
               {title === 'Capture Feedback' ? captureDesc : item.doneDescription}
              </Text>
@@ -88,8 +116,12 @@ export default JourneyProgressTab;
 
 JourneyProgressTab.propTypes = {
   item: PropTypes.object.isRequired,
+  onPress: PropTypes.func.isRequired,
+  teamMember: PropTypes.string,
 };
 
 JourneyProgressTab.defaultProps = {
   item: {},
+  onPress: () => {},
+  teamMember: ''
 };
