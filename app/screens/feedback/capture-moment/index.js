@@ -60,7 +60,6 @@ const CaptureFeedbackMoment = props => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getActiveCaptureStep);
   const maxStep = useSelector(getMaxCaptureStep);
-  const staffList = useSelector(getStaffList);
   const captureData = useSelector(getCaptureData);
   const staffName = captureData && captureData.step1;
   const feedbackType = captureData && captureData.step2;
@@ -75,7 +74,7 @@ const CaptureFeedbackMoment = props => {
   });
   const [sheetType, setSheetType] = useState('');
   const [attachmentList, setAttachmentList] = useState([]);
-  const dateEntry = moment(new Date()).format('ddd. MMM DD, YYYY [at] hh:mm a');
+  const dateEntry = moment(new Date()).format('ddd. MMM DD, YYYY [at] hh:mm a'); 
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -102,139 +101,6 @@ const CaptureFeedbackMoment = props => {
     else dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep - 1));
   };
 
-  // const StaffSelection = () => {
-  //   return (
-  //     <View style={styles.listContainer}>
-  //       {staffList.map((item, i) => (
-  //         <TouchableOpacity
-  //           key={item.id}
-  //           onPress={() => setStaffSelection(item)}
-  //           style={styles.namesContainer}>
-  //           <View style={styles.nameAvatar} />
-  //           <View style={styles.staffNameContainer}>
-  //             <Text style={styles.staffNameText}>{item.name}</Text>
-  //             <Text style={styles.emailText}>{item.email}</Text>
-  //           </View>
-  //         </TouchableOpacity>
-  //       ))}
-  //     </View>
-  //   );
-  // };
-
-  // const TopicSelection = () => {
-  //   return (
-  //     <ScrollView
-  //       style={styles.content}
-  //       showsVerticalScrollIndicator={false}
-  //       bounces={false}>
-  //       <View style={styles.mainQuestionHeader}>
-  //         <Text style={styles.mainQuestionText}>Add topic details to your</Text>
-  //         <View style={styles.typeContainer}>
-  //           <Text style={styles.typeText}>{feedbackType.title}</Text>
-  //         </View>
-  //         <Text style={styles.mainQuestionText}>feedback</Text>
-  //         <Text style={styles.dateTimeText}>{dateEntry}</Text>
-  //       </View>
-  //       <View style={{ marginTop: 25 }}>
-  //         <Text style={styles.descriptionText}>
-  //           Tell us what kind of observation do you want to give to your team
-  //           member/s.
-  //         </Text>
-  //       </View>
-  //       <View style={styles.topicContainer}>
-  //         <Text style={[styles.toText, { marginBottom: 4 }]}>Topic</Text>
-  //         <TouchableOpacity
-  //           onPress={() => openSheet('layer one')}
-  //           style={styles.topicPicker}>
-  //           <Text style={styles.topicLabel}>
-  //             {selectedLayerOne
-  //               ? `${selectedLayerOne.name}`
-  //               : `*Others (Please specify)`}
-  //           </Text>
-  //           <Icon
-  //             name="chevron-down-outline"
-  //             style={{ flex: 1, color: '#667080' }}
-  //             size={24}
-  //           />
-  //         </TouchableOpacity>
-  //         {selectedLayerOne && selectedLayerOne.name !== 'Others' ? (
-  //           <>
-  //             <Text style={[styles.toText, { marginTop: 12, marginBottom: 4 }]}>
-  //               Sub-topic
-  //             </Text>
-  //             <TouchableOpacity
-  //               onPress={() => openSheet('layer two')}
-  //               style={styles.topicPicker}>
-  //               <Text style={styles.topicLabel}>
-  //                 {selectedLayerTwo
-  //                   ? `${selectedLayerTwo.name}`
-  //                   : `Select sub-topic`}
-  //               </Text>
-  //               <Icon
-  //                 name="chevron-down-outline"
-  //                 style={{ flex: 1, color: '#667080' }}
-  //                 size={24}
-  //               />
-  //             </TouchableOpacity>
-  //           </>
-  //         ) : (
-  //           <View style={[styles.topicPicker, { marginTop: 12 }]}>
-  //             <Text style={styles.topicLabel}>{`Write your own details*`}</Text>
-  //           </View>
-  //         )}
-  //       </View>
-  //       <View style={{ flex: 1, marginVertical: 30 }}>
-  //         <Text style={styles.toText}>Attachments</Text>
-  //         <View style={{ marginTop: 12, flexDirection: 'row' }}>
-  //           <TouchableOpacity
-  //             onPress={() => openSheet('attachments')}
-  //             style={{
-  //               width: 72,
-  //               height: 72,
-  //               borderRadius: 6,
-  //               backgroundColor: '#667080',
-  //               opacity: 0.3,
-  //               justifyContent: 'center',
-  //               alignItems: 'center',
-  //             }}>
-  //             <Text>+</Text>
-  //           </TouchableOpacity>
-  //           {attachmentList.map((attach, index) => {
-  //             return (
-  //               <View
-  //                 key={index}
-  //                 style={{ width: 72, height: 72, borderRadius: 6 }}>
-  //                 <Image source={attach} />
-  //               </View>
-  //             );
-  //           })}
-  //         </View>
-  //       </View>
-  //       <View style={styles.btnContainer}>
-  //         {selectedLayerOne && selectedLayerTwo ? (
-  //       <Button
-  //           mode="contained"
-  //           //disabled
-  //           style={styles.button}
-  //           onPress={() => handleStep3Continue()}>
-  //           Capture Moment
-  //         </Button>
-  //         )
-  //         :
-  //         <Button
-  //           mode="contained"
-  //           disabled
-  //           style={styles.button}
-  //           onPress={() => handleStep3Continue()}>
-  //           Capture Moment
-  //         </Button>
-  // }
-  //       </View>
-  //       <View style={styles.spacer} />
-  //     </ScrollView>
-  //   );
-  // };
-
   const selectTopic = item => {
     setSelectedLayerOne(item);
     setTimeout(() => {
@@ -247,16 +113,6 @@ const CaptureFeedbackMoment = props => {
     setSelectedLayerTwo(item);
     bottomSheetRef.current?.close();
   };
-
-  // const handleStep3Continue = () => {
-  //   const step3Data = {
-  //     selectedLayerOne,
-  //     selectedLayerTwo,
-  //   };
-  //   dispatch(CaptureMomentActions.setCaptureData('step3', step3Data));
-  //   //dispatch(CaptureMomentActions.postCaptureMoment('step3'));
-  //   dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
-  // };
 
   const handleSendFeedback = () => {
     bottomSheetRef.current?.close();
@@ -596,12 +452,14 @@ const CaptureFeedbackMoment = props => {
     <View style={styles.container}>
       <SafeAreaView>
         <View style={styles.headerContainer}>
+          {activeStep !== 4 && (
           <TouchableOpacity
             accessibilityRole="button"
             onPress={() => handleGoBack()}
             style={styles.icon}>
             <Icon name="chevron-back-outline" size={24} color={'#667080'} />
           </TouchableOpacity>
+          )}
           <View style={styles.headerTextContainer}>
             <Text type="body2" weight="bold" style={styles.headerText}>
               Give feedback

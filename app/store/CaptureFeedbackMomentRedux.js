@@ -34,7 +34,10 @@ const { Types, Creators } = createActions({
   postCaptureMoment: ['data'],
   postCaptureMomentSuccess: ['journeyId'],
   postCaptureMomentFailure: ['error'],
-  postRecordEMEntry: ['entryDetails'],
+  postCloseCaptureMoment: ['journeyId'],
+  postCloseCaptureMomentSuccess: [''],
+  postCloseCaptureMomentFailure: ['error'],
+  postRecordEMEntry: [''],
   postRecordEMEntrySuccess: ['entryRecordDetails'],
   postRecordEMEntryFailure: ['error'],
   postEditEMEntry: ['entryDetails'],
@@ -174,6 +177,23 @@ const fetchLayerOneTopics = state =>
       error
     });
 
+  const postCloseCaptureMoment = state =>
+    state.merge({
+      fetching: true,
+      error: '',
+    });
+
+  const postCloseCaptureMomentSuccess = state => 
+    state.merge({
+      fetching: false,
+    });
+
+  const postCloseCaptureMomentFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error,
+    })
+
   const postRecordEMEntry = state => 
     state.merge({
       fetching: true,
@@ -279,6 +299,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_CAPTURE_MOMENT]: postCaptureMoment,
   [Types.POST_CAPTURE_MOMENT_SUCCESS]: postCaptureMomentSuccess,
   [Types.POST_CAPTURE_MOMENT_FAILURE]: postCaptureMomentFailure,
+  [Types.POST_CLOSE_CAPTURE_MOMENT]: postCloseCaptureMoment,
+  [Types.POST_CLOSE_CAPTURE_MOMENT_SUCCESS]: postCloseCaptureMomentSuccess,
+  [Types.POST_CLOSE_CAPTURE_MOMENT_FAILURE]: postCloseCaptureMomentFailure,
   [Types.POST_RECORD_EM_ENTRY]: postRecordEMEntry,
   [Types.POST_RECORD_EM_ENTRY_SUCCESS]: postRecordEMEntrySuccess,
   [Types.POST_RECORD_EM_ENTRY_FAILURE]: postRecordEMEntryFailure,

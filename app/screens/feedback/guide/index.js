@@ -8,7 +8,6 @@ import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import { getChosenFlow, getChosenType } from 'app/store/selectors';
 import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
-import onTheSpotSteps from 'app/models/OnTheSpotSteps';
 import labels from 'app/locales/en';
 import styles from './styles';
 
@@ -43,10 +42,10 @@ const FeedbackGuide = props => {
         })
       }
     } else {
-      setSignPostHeader({
-        title: feedbackSignPost.onTheSpotTitle,
-      });
-      content = onTheSpotSteps;
+      // setSignPostHeader({
+      //   title: feedbackSignPost.onTheSpotTitle,
+      // });
+      // content = onTheSpotSteps;
     }
     setSignPost(content);
   };

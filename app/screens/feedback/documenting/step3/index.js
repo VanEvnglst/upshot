@@ -118,10 +118,10 @@ const DocumentingStep3 = props => {
     // dispatch(DocumentingActions.updateFeedbackDocumenting(params));
   };
 
-  const handleContent = () => {
-    if (flow.id === 1) return <ScheduledContent />;
-    else return <OnTheSpotContent />;
-  };
+  // const handleContent = () => {
+  //   if (flow.id === 1) return <ScheduledContent />;
+  //   else return <OnTheSpotContent />;
+  // };
 
   const ScheduledContent = () => {
     return (

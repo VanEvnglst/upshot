@@ -13,7 +13,6 @@ import {
 } from 'app/components';
 import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
-import onTheSpotSteps from 'app/models/OnTheSpotSteps';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import PreparingActions from 'app/store/feedback/PreparingRedux';

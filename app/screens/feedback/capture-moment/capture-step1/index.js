@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Text, UserAvatar } from 'app/components';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import {
@@ -15,9 +16,11 @@ const StaffSelection = ({ onPress }) => {
   const dispatch = useDispatch();
   const activeStep = useSelector(getActiveCaptureStep);
   const staffList = useSelector(getStaffList);
+  const dateEntry = moment(new Date()).format('ddd. MMM DD, YYYY [at] hh:mm a'); 
 
   const handleSelection = item => {
     dispatch(CaptureMomentActions.setCaptureData('step1', item));
+    dispatch(CaptureMomentActions.setCaptureData('dateLogged', dateEntry));
     setTimeout(() => {
       dispatch(CaptureMomentActions.setCaptureActiveStep(activeStep + 1));
     }, 500);
