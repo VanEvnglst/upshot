@@ -30,7 +30,7 @@ export const getOngoingJourneysCount = state => state.feedbackHistory.get('ongoi
 export const getScheduledCount = state => state.feedbackHistory.get('scheduledDiscussions');
 export const getCompletedJourneysCount = state => state.feedbackHistory.get('completedJourneys');
 export const getTotalJourneysCount = state => state.feedbackHistory.get('totalJourneys');
-
+export const getOngoingJourneysList = state => state.feedbackHistory.get('ongoingJourneysList');
 
 /* ------------- Capture Feedback Moment Selectors ------------- */
 export const getActiveCaptureStep = state =>
