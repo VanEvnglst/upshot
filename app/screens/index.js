@@ -43,6 +43,7 @@ export { default as Messages } from './messages';
 export { default as Profile } from './profile';
 export { default as ExploreScreen } from './explore';
 export { default as JourneyDetails } from './journey-details';
+export { default as OngoingJourneyList } from './ongoing-journey-list';
 
 /* ------------- Feedback Documenting ------------- */
 // export { default as FeedbackFlow } from './feedback/flow';
