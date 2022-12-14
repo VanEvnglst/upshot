@@ -52,9 +52,14 @@ const RecordFeedbackEntry = props => {
   }, []);
   
   useEffect(() => {
-    if (feedbackType.step2.title === 'Corrective')
-      dispatch(CaptureMomentActions.setCaptureMaxStep(7));
+    if (feedbackType.step2.title === 'Corrective') {
+      dispatch(CaptureMomentActions.setCaptureMaxStep(7))
+    } else { 
+      dispatch(CaptureMomentActions.setCaptureMaxStep(6))
+    };
   }, []);
+
+  console.log('feedback type', feedbackType.step2.title + ", " + maxStep)
 
   const handleGoBack = () => {
     if (activeStep === 1) navigation.goBack();
