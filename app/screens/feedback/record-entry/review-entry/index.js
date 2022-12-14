@@ -107,30 +107,6 @@ const ReviewFeedbackEntry = props => {
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView>
-      {/* <View style={styles.headerContainer}>
-        <TouchableOpacity
-          accessibilityRole="button"
-          onPress={() => navigation.goBack()}
-          style={styles.icon}>
-          <Icon name="chevron-back-outline" size={24} />
-        </TouchableOpacity>
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Corrective feedback</Text>
-        </View>
-        <View style={styles.headerSave}>
-          <Text style={styles.saveText}>Save</Text>
-        </View>
-      </View>
-      <View style={styles.stepsContainer}>
-        {Array.apply(null, { length: maxStep }).map((item, i) => (
-          <View
-            key={i}
-            style={
-              i + 1 <= activeStep ? styles.activeStep : styles.inactiveStep
-            }
-          />
-        ))}
-      </View> */}
       <View>
         <View style={{marginBottom: 12, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: "#B1B5C3", paddingBottom: 20}}>
           <View style={{ width: 24, height: 24, borderRadius: 32, backgroundColor: '#667080', opacity: 0.5, marginRight: 12}}/>
