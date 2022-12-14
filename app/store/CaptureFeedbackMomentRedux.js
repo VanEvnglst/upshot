@@ -43,6 +43,9 @@ const { Types, Creators } = createActions({
   postEditEMEntry: ['entryDetails'],
   postEditEMEntrySuccess: ['entryEditDetails'],
   postEditEMEntryFailure: ['error'],
+  postCloseRecordEntry: ['journeyId'],
+  postCloseRecordEntrySuccess: [''],
+  postCloseRecordEntryFailure: ['error'],
   postFaceToFaceSchedule: ['data'],
   postFaceToFaceScheduleSuccess: ['faceToFaceSchedule'],
   postFaceToFaceScheduleFailure: ['error'],
@@ -230,6 +233,23 @@ const fetchLayerOneTopics = state =>
       error
     });
 
+    const postCloseRecordEntry = state =>
+    state.merge({
+      fetching: true,
+      error: '',
+    });
+
+  const postCloseRecordEntrySuccess = state => 
+    state.merge({
+      fetching: false,
+    });
+
+  const postCloseRecordEntryFailure = (state, { error }) =>
+    state.merge({
+      fetching: false,
+      error,
+    })
+
   const fetchEMEntry = state => 
     state.merge({
       fetching: true,
@@ -308,6 +328,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_EDIT_EM_ENTRY]: postEditEMEntry,
   [Types.POST_EDIT_EM_ENTRY_SUCCESS]: postEditEMEntrySuccess,
   [Types.POST_EDIT_EM_ENTRY_FAILURE]: postEditEMEntryFailure,
+  [Types.POST_CLOSE_RECORD_ENTRY]: postCloseRecordEntry,
+  [Types.POST_CLOSE_RECORD_ENTRY_SUCCESS]: postCloseRecordEntrySuccess,
+  [Types.POST_CLOSE_RECORD_ENTRY_FAILURE]: postCloseRecordEntryFailure,
   [Types.POST_FACE_TO_FACE_SCHEDULE]: postFaceToFaceSchedule,
   [Types.POST_FACE_TO_FACE_SCHEDULE_SUCCESS]: postFaceToFaceScheduleSuccess,
   [Types.POST_FACE_TO_FACE_SCHEDULE_FAILURE]: postFaceToFaceScheduleFailure,

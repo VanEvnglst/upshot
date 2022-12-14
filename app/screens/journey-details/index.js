@@ -723,7 +723,7 @@ const JourneyDetails = props => {
                 type="hairline"
                 weight="bold"
                 style={[styles.typeText, styles.ongoingText]}>
-                Ongoing
+                {journey.status}
               </Text>
             </View>
           </View>
@@ -755,10 +755,12 @@ const JourneyDetails = props => {
         <View style={styles.contentContainer}>
           {activeTab === 'Progress' ? (
             <>
-              {asyncProgressSteps.map((item, i) => (
-                <JourneyProgressTab key={item.id} item={item}
-                teamMember={journey.frontliner}
-                onPress={() => handleContinue(item)} />
+              {journey.progress.map((item, i) => (
+                <JourneyProgressTab 
+                  key={item.id} 
+                  item={item}
+                  teamMember={journey.frontliner}
+                  onPress={() => handleContinue(item)} />
               ))}
             </>
           ) : (

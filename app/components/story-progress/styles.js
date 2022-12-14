@@ -21,5 +21,12 @@ activeStep: {
 inactiveStep: {
   opacity: 0.5,
   backgroundColor: 'white',
+},
+lightActiveStep: {
+  backgroundColor: '#BAC0CA'
+},
+lightInactiveStep: {
+  backgroundColor: '#BAC0CA',
+  opacity: 0.5,
 }
 });

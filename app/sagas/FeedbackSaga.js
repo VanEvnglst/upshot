@@ -1,17 +1,15 @@
 import { checkInternetConnection } from 'react-native-offline';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
+import moment from 'moment';
 import FeedbackActions, {
   FeedbackTypes,
 } from 'app/store/feedback/FeedbackRedux';
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
-import PreparingActions from 'app/store/feedback/PreparingRedux';
-import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import DiscussingActions from 'app/store/feedback/DiscussingRedux';
-import SharingActions from 'app/store/feedback/SharingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 import moment from 'moment';
 import { DeviceUtil } from 'app/utils';
+import { asyncProgressSteps, faceToFaceSteps } from 'app/models/ProgressStepsModel';
 
 const STATUS_OK = 'ok';
 
@@ -90,9 +88,69 @@ export function* fetchCurrentFeedback({ journeyId }) {
   //getResponseFromFrontliner
   debugger;
   if (response.data.status === STATUS_OK) {
+    const { requires_face_to_face, frontliner, feedback_type, status, meeting_date,
+      meeting_time,
+      meeting_location,
+      progress, details } = response.data.data.journey;
+
+    const progressArr = [];
     const feedbackResult = {
       id: journeyId,
-      ...response.data.data.journey,
+      requires_face_to_face,
+      frontliner,
+      feedback_type,
+      status,
+      meeting_date,
+      meeting_time,
+      meeting_location,
+      progress: [
+        {
+          id: progress[0].phase_id,
+          title: progress[0].title,
+          inProgress: progress[0].is_started,
+          done: progress[0].is_done,
+          shouldStart: !progress[0].is_started && !progress[0].is_done,
+          dateFinished: progress[0].date_finished,
+          description: asyncProgressSteps[0].description,
+          doneDescription: asyncProgressSteps[0].doneDescription,
+          inProgressDescription: asyncProgressSteps[0].inProgressDescription,
+        },
+        {
+          id: progress[1].phase_id,
+          title: progress[1].title,
+          inProgress: progress[1].is_started,
+          done: progress[1].is_done,
+          shouldStart: !progress[1].is_started && progress[0].is_done,
+          dateFinished: progress[1].date_finished,
+          description: asyncProgressSteps[1].description,
+          doneDescription: asyncProgressSteps[1].doneDescription,
+          inProgressDescription: asyncProgressSteps[1].inProgressDescription,
+        },
+        {
+          id: progress[2].phase_id,
+          title: progress[2].title,
+          inProgress: progress[2].is_started,
+          done: progress[2].is_done,
+          shouldStart: !progress[2].is_started && progress[1].is_done,
+          dateFinished: progress[2].date_finished,
+          description: asyncProgressSteps[2].description,
+          doneDescription: asyncProgressSteps[2].doneDescription,
+          inProgressDescription: asyncProgressSteps[2].inProgressDescription,
+        },
+        {
+          id: progress[3].phase_id,
+          title: progress[3].title,
+          inProgress: progress[3].is_started,
+          done: progress[3].is_done,
+          shouldStart: !progress[3].is_started && progress[2].is_done,
+          dateFinished: progress[3].date_finished,
+          description: asyncProgressSteps[3].description,
+          doneDescription: asyncProgressSteps[3].doneDescription,
+          inProgressDescription: asyncProgressSteps[3].inProgressDescription,
+        }
+      ],
+      details,
+      // ...response.data.data.journey,
     //   managerInput: response.data.result['FB Entry'],
     //   frontlinerInput: response.data.result['FL Response'],
     //   frontliner: response.data.result.frontliner
