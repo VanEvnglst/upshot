@@ -13,6 +13,7 @@ export const INITIAL_STATE = Map({
   ongoingJourneys: null,
   completedJourneys: null,
   recentJourneys: [],
+  ongoingJourneysList: [],
 });
 
 /* ------------- Types and Action Creators ------------- */
@@ -26,6 +27,9 @@ const { Types, Creators } = createActions({
   fetchUserActivity: [''],
   fetchUserActivitySuccess: ['userActivity'],
   fetchUserActivityFailure: ['error'],
+  fetchOngoingJourney: [''],
+  fetchOngoingJourneySuccess: ['ongoingJourneysList'],
+  fetchOngoingJourneyFailure: ['error'],
 });
 
 export const FeedbackHistoryTypes = Types;
@@ -101,6 +105,24 @@ const fetchUserActivityFailure = (state, { error }) =>
     error
   });
 
+  const fetchOngoingJourney = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const fetchOngoingJourneySuccess = (state, { ongoingJourneysList }) =>
+  state.merge({
+    fetching: false,
+    ongoingJourneysList
+  });
+
+  const fetchOngoingJourneyFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error
+  });
+
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_ACTIVE_JOURNEYS]: fetchActiveJourneys,
@@ -112,4 +134,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_USER_ACTIVITY]: fetchUserActivity,
   [Types.FETCH_USER_ACTIVITY_SUCCESS]: fetchUserActivitySuccess,
   [Types.FETCH_USER_ACTIVITY_FAILURE]: fetchUserActivityFailure,
+  [Types.FETCH_ONGOING_JOURNEY]: fetchOngoingJourney,
+  [Types.FETCH_ONGOING_JOURNEY_SUCCESS]: fetchOngoingJourneySuccess,
+  [Types.FETCH_ONGOING_JOURNEY_FAILURE]: fetchOngoingJourneyFailure,
 });

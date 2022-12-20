@@ -56,6 +56,21 @@ export function* fetchUserActivity() {
   }
 }
 
+export function* fetchOngoingJourney() { 
+  const response = yield call(api.getOngoingJourney);
+
+  if (response.ok) { 
+    if (response.data.status === STATUS_OK) {
+      const ongoingJourneysList = response.data.active_ongoing_journeys;
+      yield put(FeedbackHistoryActions.fetchOngoingJourneySuccess(ongoingJourneysList));
+    } else { 
+      yield put(FeedbackHistoryActions.fetchOngoingJourneyFailure(response.data));
+    }
+  } else { 
+    yield put(FeedbackHistoryActions.fetchOngoingJourneyFailure(response.data));
+  }
+}
+
 function* watchFeedbackHistorySaga() {
   yield takeLatest(
     FeedbackHistoryTypes.FETCH_ACTIVE_JOURNEYS,
@@ -67,7 +82,10 @@ function* watchFeedbackHistorySaga() {
   );
   yield takeLatest(
     FeedbackHistoryTypes.FETCH_USER_ACTIVITY, fetchUserActivity
-  )
+  );
+  yield takeLatest(
+    FeedbackHistoryTypes.FETCH_ONGOING_JOURNEY, fetchOngoingJourney
+  );
 }
 
 export default watchFeedbackHistorySaga;

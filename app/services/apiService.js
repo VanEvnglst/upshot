@@ -269,10 +269,20 @@ export default {
   },
 
   postCaptureAttachment: async payload => { 
+
     const url = await AsyncStorage.getItem('baseURL');
     const upshotAPI = setAPI(url);
     const uniqueId = await AsyncStorage.getItem('uniqueId');
 
     return upshotAPI.post(`/${uniqueId}/post_capture_fb_media`, payload);
+  },
+  
+  getOngoingJourney: async () => {
+  
+  const url = await AsyncStorage.getItem('baseURL');
+  const upshotAPI = setAPI(url);
+  const uniqueId = await AsyncStorage.getItem('uniqueId');
+  
+  return upshotAPI.post(`/${uniqueId}/get_all_journey_status`);
   },
 };
