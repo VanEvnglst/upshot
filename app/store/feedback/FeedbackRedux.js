@@ -57,6 +57,9 @@ const { Types, Creators } = createActions({
   postFileUpload: ['filePath', 'fileName'],
   postFileUploadSuccess: [],
   postFileUploadFailure: ['error'],
+  postCaptureAttachment: ['attachment'],
+  postCaptureAttachmentSuccess: [],
+  postCaptureAttachmentFailure: ['error'],
   setCurrentJourney: ['journey'],
 });
 
@@ -250,6 +253,23 @@ const postFileUploadFailure = (state, { error }) =>
     fetching: false,
     error
   });
+  
+const postCaptureAttachment = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const postCaptureAttachmentSuccess = state =>
+  state.merge({
+    fetching: false
+  });
+
+const postCaptureAttachmentFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error
+  });
 
 const setCurrentJourney = (state, { journey }) => {
   console.log('set data', state, journey);
@@ -257,6 +277,7 @@ const setCurrentJourney = (state, { journey }) => {
     currentJourney: journey
   });
 }
+
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -285,5 +306,8 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.POST_FILE_UPLOAD]: postFileUpload,
   [Types.POST_FILE_UPLOAD_SUCCESS]: postFileUploadSuccess,
   [Types.POST_FILE_UPLOAD_FAILURE]: postFileUploadFailure,
+  [Types.POST_CAPTURE_ATTACHMENT]: postCaptureAttachment,
+  [Types.POST_CAPTURE_ATTACHMENT_SUCCESS]: postCaptureAttachmentSuccess,
+  [Types.POST_CAPTURE_ATTACHMENT_FAILURE]: postCaptureAttachmentFailure,
   [Types.SET_CURRENT_JOURNEY]: setCurrentJourney
 });

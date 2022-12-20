@@ -143,6 +143,7 @@ export default StyleSheet.create({
   continueText: {
     color: Colors.neutral8,
     marginRight: DeviceUtil.normalize(12),
+    textTransform: 'capitalize'
   },
   transparentButton: {
     backgroundColor: Colors.neutral1,

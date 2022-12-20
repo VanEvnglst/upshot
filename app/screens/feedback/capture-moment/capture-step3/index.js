@@ -32,6 +32,7 @@ const CaptureMomentStep3 = ({
   pressSubTopic,
   selectedLayerOne,
   selectedLayerTwo,
+  pressAttachment
 }) => {
   const dispatch = useDispatch();
   const bottomSheetRef = useRef(null);
@@ -130,10 +131,10 @@ const CaptureMomentStep3 = ({
         )}
       </View>
       <View style={{ flex: 1, marginVertical: 30 }}>
-        {/*   <Text style={styles.toText}>Attachments</Text>
+          <Text style={styles.toText}>Attachments</Text>
           <View style={{ marginTop: 12, flexDirection: 'row' }}>
             <TouchableOpacity
-              onPress={() => openSheet('attachments')}
+              onPress={pressAttachment}
               style={{
                 width: 72,
                 height: 72,
@@ -154,7 +155,7 @@ const CaptureMomentStep3 = ({
                 </View>
               );
             })}
-          </View> */}
+          </View>
       </View>
       <View style={styles.btnContainer}>
         {topicsSelected ? (

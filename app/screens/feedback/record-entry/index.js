@@ -13,7 +13,7 @@ import { Button } from 'react-native-paper';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import BottomSheet from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Text } from 'app/components';
+import { Text, StoryProgress } from 'app/components';
 import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
 import CatchAttentionEntry from './catch-attention';
 import ImpactBehaviorEntry from './impact-behavior';
@@ -182,27 +182,24 @@ const RecordFeedbackEntry = props => {
           <Icon name="chevron-back-outline" size={24} />
         </TouchableOpacity>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>{feedbackType.step2.title} Feedback</Text>
+          <Text type='body2' weight='bold' style={styles.headerText}>{feedbackType.step2.title} Feedback</Text>
         </View>
       
         <View style={styles.headerSave}>
           <TouchableOpacity
           acccessibilityRole='button'
         onPress={() => openSheet()}> 
-            <Text style={styles.saveText}>Cancel</Text>
+            <Text type='body2' weight='regular' style={styles.saveText}>Cancel</Text>
             </TouchableOpacity>
           </View>
           
       </View>
       <View style={styles.stepsContainer}>
-        {Array.apply(null, { length: maxStep }).map((item, i) => (
-          <View
-            key={i}
-            style={
-              i + 1 <= activeStep ? styles.activeStep : styles.inactiveStep
-            }
-          />
-        ))}
+        <StoryProgress
+          length={maxStep}
+          activeStep={activeStep}
+          type={'light'}
+        />
           </View>
           </>
       }
@@ -214,13 +211,13 @@ const RecordFeedbackEntry = props => {
         {handleStepContent()}
       </View> 
       <FlashMessage position="top" />
-      <BottomSheet
+      {/* <BottomSheet
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         enablePanDownToClose>
         <View style={{ flex: 1 }}>{handleSheetContent()}</View>
-      </BottomSheet>
+      </BottomSheet> */}
     </SafeAreaView>
   );
 };
