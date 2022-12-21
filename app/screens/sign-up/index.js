@@ -8,12 +8,12 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
-import { Text, BottomsheetTextInput } from 'app/components';
+import { Text, BottomSheetTextInput } from 'app/components';
 import { getSignInError } from 'app/store/selectors';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import { TextInput } from 'app/components';
@@ -110,7 +110,7 @@ const SignUp = props => {
                   type='caption1'
                   weight='regular'
                 style={styles.labelText}>Name</Text>
-                <BottomsheetTextInput
+                <BottomSheetTextInput
                     placeholder={'John Doe'}
                     style={styles.inputField}
                     value={name}
@@ -121,7 +121,7 @@ const SignUp = props => {
                   type='caption1'
                   weight='regular'
                 style={styles.labelText}>Email</Text>
-                <BottomsheetTextInput
+                <BottomSheetTextInput
                     placeholder={'name@work-email.com'}
                     style={styles.inputField}
                     value={email}
@@ -132,7 +132,7 @@ const SignUp = props => {
                   type='caption1'
                   weight='regular'
                 style={styles.labelText}>Password</Text>
-                  <BottomsheetTextInput
+                  <BottomSheetTextInput
                     placeholder={'8+ characters'}
                     style={styles.inputField}
                     secureTextEntry={!passwordVisible}

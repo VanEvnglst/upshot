@@ -35,7 +35,7 @@ export function* signInUser({ data }) {
       );
     }
   } else {
-    yield put(AuthenticationActions.signInUserFailure(authResponse.data));
+    yield put(AuthenticationActions.signInUserFailure(authResponse.data.reason));
   }
 }
 

@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import {
-  View,
-  TextInput as Input
-} from 'react-native';
+import { View } from 'react-native';
+import { BottomSheetTextInput as BottomInput } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Text } from 'app/components';
 import Colors from 'app/theme/colors';
 import styles from './styles';
 
 
-const BottomsheetTextInput = props => {
+const BottomSheetTextInput = props => {
   const { label, placeholder, description, error } = props;
   const [isFocused, setFocus] = useState(false);
   return (
     <View style={styles.container}>
-      <Input
+      <BottomInput
         type="flat"
         textAlignVertical={'top'}
         {...props}
@@ -34,9 +32,9 @@ const BottomsheetTextInput = props => {
   );
 };
 
-export default BottomsheetTextInput;
+export default BottomSheetTextInput;
 
-BottomsheetTextInput.propTypes = {
+BottomSheetTextInput.propTypes = {
   label: PropTypes.any,
   placeholder: PropTypes.any,
   description: PropTypes.any,
@@ -44,7 +42,7 @@ BottomsheetTextInput.propTypes = {
 };
 
 
-BottomsheetTextInput.defaultProps = {
+BottomSheetTextInput.defaultProps = {
   label: null,
   placeholder: null,
   description: null,

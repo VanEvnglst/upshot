@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
-import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { getAuthLoading, getSignInError } from 'app/store/selectors';
-import { TextInput, Loader, Text, BottomsheetTextInput } from 'app/components';
+import { TextInput, Loader, Text, BottomSheetTextInput } from 'app/components';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import Images from 'app/assets/images';
 import styles from './styles';
@@ -110,7 +110,7 @@ console.log('sign in', errorMessage)
                 style={styles.labelText}>
                 Email
               </Text>
-              <BottomsheetTextInput
+              <BottomSheetTextInput
                 placeholder={'name@work-email.com'}
                 style={styles.inputField}
                 value={email}
@@ -124,7 +124,7 @@ console.log('sign in', errorMessage)
                   Password
               </Text>
               
-                <BottomsheetTextInput
+                <BottomSheetTextInput
                 placeholder={'Password'}
                 style={[styles.inputField, ]}
                 value={password}
