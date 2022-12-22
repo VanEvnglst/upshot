@@ -8,18 +8,19 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
-import { Text } from 'app/components';
+import { Text, BottomSheetTextInput } from 'app/components';
 import { getSignInError } from 'app/store/selectors';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import { TextInput } from 'app/components';
 import labels from 'app/locales/en';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from 'app/theme/colors'
 
 const SignUp = props => {
   const { navigation } = props;
@@ -30,6 +31,8 @@ const SignUp = props => {
   const [token, setToken] = useState('');
   const [detailsComplete, setDetailsComplete] = useState(false);
   const [passwordVisible, setPasswordVisibility] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
+  const errorMessage = useSelector(state => state.authentication.get('error'));
 
   useEffect(() => {
     retrieveToken();
@@ -37,10 +40,10 @@ const SignUp = props => {
 
   useEffect(() => {
     if (name.length !== 0 && email.length !== 0 && password.length >= 8)
-    setDetailsComplete(true);
+      setDetailsComplete(true);
     else
-    setDetailsComplete(false);
-  }, [name, email, password])
+      setDetailsComplete(false);
+  }, [name, email, password]);
 
   const retrieveToken = async () => {
     try {
@@ -137,6 +140,7 @@ const SignUp = props => {
                     onChangeText={password => setPassword(password)}
                     error={errors.passwordError}
                 />
+                
                 <View style={styles.showPasswordContainer}>
               {passwordVisible ?
                 <TouchableOpacity style={{ margin: 10, width: 30, height: 30}}
@@ -155,8 +159,12 @@ const SignUp = props => {
                       size={24}
                       color={'#667080'}
                     ></Icon>
-                </TouchableOpacity>}
+                    </TouchableOpacity>}
                 </View>
+                {errorMessage !== '' && errorMessage.length !== 0 ?
+                  <Text style={{color: Colors.error }}>*{errorMessage}</Text>
+                  : 
+                <></>}
                   <View style={styles.btnContainer}>
                    <Button
                     mode="contained"
