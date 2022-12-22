@@ -17,6 +17,7 @@ import {
 import {
   ScrollView,
   NativeViewGestureHandler,
+  GestureHandlerRootView
 } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -56,7 +57,7 @@ const CaptureFeedbackMoment = props => {
   const { navigation } = props;
   const { height } = Dimensions.get('window');
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
+  const snapPoints = useMemo(() => ['50%', '75%', '90%'], []);
   const dispatch = useDispatch();
   const activeStep = useSelector(getActiveCaptureStep);
   const maxStep = useSelector(getMaxCaptureStep);
@@ -131,7 +132,11 @@ const CaptureFeedbackMoment = props => {
       case 'attachments':
         setSheetType(type);
     }
-    bottomSheetRef.current?.snapToIndex(1);
+    if (type === 'reminder') {
+      bottomSheetRef.current?.snapToIndex(1);
+    } else { 
+      bottomSheetRef.current?.snapToIndex(0);
+    }
   };
 
   const handleStepContent = () => {
@@ -297,6 +302,7 @@ const CaptureFeedbackMoment = props => {
   const ReminderSheet = () => {
     return (
       // <NativeViewGestureHandler disallowInterruption={true}>
+      <GestureHandlerRootView>
       <View style={{ marginTop: 24, backgroundColor: 'white' }}>
         <View style={{ alignItems: 'center' }}>
           <Image
@@ -376,7 +382,8 @@ const CaptureFeedbackMoment = props => {
             Cancel
           </Button>
         </View>
-      </View>
+        </View>
+        </GestureHandlerRootView>
       //  </NativeViewGestureHandler>
     );
   };
@@ -498,7 +505,8 @@ const CaptureFeedbackMoment = props => {
         index={-1}
         ref={bottomSheetRef}
         snapPoints={snapPoints}
-        enablePanDownToClose>
+        enablePanDownToClose
+        enableContentPanningGesture={false}>
         <View style={{ flex: 1 }}>{handleSheetContent()}</View>
       </BottomSheet>
     </View>
