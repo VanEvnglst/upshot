@@ -7,7 +7,6 @@ import FeedbackActions, {
 import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
-import moment from 'moment';
 import { DeviceUtil } from 'app/utils';
 import { asyncProgressSteps, faceToFaceSteps } from 'app/models/ProgressStepsModel';
 
