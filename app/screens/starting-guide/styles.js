@@ -1,64 +1,82 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
+import { DeviceUtil } from 'app/utils';
+import Colors from 'app/theme/colors';
 const { width } = Dimensions.get('screen');
+
+const { normalize } = DeviceUtil;
 
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   stepsContainer: {
-    marginTop: 30,
+    marginTop: normalize(30),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 20,
-    paddingHorizontal: 24,
+    paddingBottom: normalize(20),
+    paddingHorizontal: normalize(24),
   },
   activeStep: {
     backgroundColor: '#BAC0CA',
-    height: 4,
-    borderRadius: 4,
-    width: 80,
+    height: normalize(4),
+    borderRadius: normalize(4),
+    width: normalize(80),
   },
   inactiveStep: {
     opacity: 0.5,
     backgroundColor: '#BAC0CA',
-    height: 4,
-    borderRadius: 4,
-    width: 80,
+    height: normalize(4),
+    borderRadius: normalize(4),
+    width: normalize(80),
   },
   guideContainer: {
-    width: width, 
-    paddingHorizontal: 22, 
-    paddingTop: 50
+    width: width,
+    paddingHorizontal: normalize(22),
+    paddingTop: normalize(50),
   },
   headerContainer: {
-    flex: 1, 
-    // justifyContent: 'center', 
-    // alignItems: 'center'
+    flex: 1,
   },
   titleText: {
-    fontSize: 32,
-    lineHeight: 36,
-    fontWeight: '700',
     color: '#667080',
   },
   centeredText: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   guideImageContainer: {
-    flex: 3, 
+    flex: 3,
   },
   skipContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30
+    marginBottom: 30,
   },
   descriptionText: {
-    fontSize: 15,
-    lineHeight: 22,
-    fontWeight: '400',
     color: '#667080',
-  }
+  },
+  bottomSheetHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: normalize(18),
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.neutral5,
+    paddingVertical: normalize(20),
+  },
+  bottomSheetTitle: {
+    paddingLeft: normalize(40),
+    flex: 3,
+    textAlign: 'center',
+    color: Colors.neutral3,
+  },
+  signUpButton: {
+    marginTop: normalize(8),
+    borderWidth: 1,
+    height: normalize(55),
+    backgroundColor: '#667080',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: normalize(15),
+  },
 });
