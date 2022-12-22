@@ -10,8 +10,8 @@ export default styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    marginTop: 70,
-    paddingLeft: 25,
+    marginTop: normalize(70),
+    paddingLeft: normalize(25),
     maxWidth: '70%',
   },
   headerTitle: {
@@ -23,12 +23,12 @@ export default styles = StyleSheet.create({
   },
   actionContainer: {
     flex: 1,
-    paddingLeft: 25,
-    paddingRight: 18,
-    marginBottom: 15,
+    paddingLeft: normalize(25),
+    paddingRight: normalize(18),
+    marginBottom: normalize(15),
   },
   button: {
-    height: 55,
+    height: normalize(55),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.neutral4,
@@ -37,8 +37,8 @@ export default styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 8,
-    borderWidth: 2,
+    marginTop: normalize(8),
+    borderWidth: normalize(2),
     borderColor: Colors.neutral4,
   },
   oldAccountContainer: {
@@ -47,7 +47,7 @@ export default styles = StyleSheet.create({
   },
   logInText: {
     textDecorationLine: 'underline',
-    marginLeft: 4,
+    marginLeft: normalize(4),
     color: Colors.neutral4,
   },
   bottomSheetHeader: {
@@ -81,6 +81,6 @@ export default styles = StyleSheet.create({
     color: Colors.neutral4,
   },
   spacer: {
-    height: 100,
+    height: normalize(100),
   },
 });
