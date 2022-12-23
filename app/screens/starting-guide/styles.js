@@ -51,7 +51,7 @@ export default styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: normalize(30),
   },
   descriptionText: {
     color: '#667080',

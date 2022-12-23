@@ -32,15 +32,27 @@ const Profile = props => {
     >
     <Button
       mode='contained'
-      style={{ marginVertical: 30, marginHorizontal: 16 }}
+      style={{ marginBottom: 20, width: '90%',marginHorizontal: 16 }}
       onPress={() => signOut()}
       >Sign out</Button>   
       
       <Button
         mode='contained'
-        style={{ marginBottom: 5, marginHorizontal: 16 }}
+        style={{ marginBottom: 20, width: '90%',marginHorizontal: 16 }}
         onPress={() => navigation.navigate('Feedback', {screen: 'Capture Feedback Recap'})}
     >Feedback Recap</Button> 
+
+<Button
+        mode='contained'
+        style={{ marginBottom: 20, width: '90%',marginHorizontal: 16 }}
+        onPress={() => navigation.navigate('Assessment', {screen: 'Leadership Assessment Guide'})}
+    >Initial LSA Test</Button>
+
+<Button
+        mode='contained'
+        style={{ marginBottom: 20, width: '90%',marginHorizontal: 16 }}
+        onPress={() => navigation.navigate('Assessment', {screen: 'Assessment break down'})}
+    >LSA Profile</Button>
     </View>
 
     
