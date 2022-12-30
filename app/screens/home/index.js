@@ -52,19 +52,6 @@ const HomeScreen = props => {
     dispatch(FeedbackHistoryActions.fetchUserActivity());
   }, []);
 
-  // const showMode = currentMode => {
-  //   setShow(true);
-  //   setMode(currentMode);
-  // };
-
-  // const showDatepicker = () => {
-  //   showMode('date');
-  // };
-
-  // const showTimepicker = () => {
-  //   showMode('time');
-  // };
-
   const captureFeedback = () => {
     navigation.navigate('Feedback');
   };
@@ -82,116 +69,6 @@ const HomeScreen = props => {
     //   });
     // else navigation.navigate('Feedback');
   };
-
-  // const JourneyCard = ({ item }) => {
-  //   let CARD_MAIN_COLOR = '';
-  //   let CARD_SUB_COLOR = '';
-  //   let STATUS_BORDER_COLOR = '';
-  //   switch (item.status) {
-  //     case 'in Progress':
-  //       CARD_MAIN_COLOR = '#F99D46';
-  //       CARD_SUB_COLOR = '#FFF2E7';
-  //       STATUS_BORDER_COLOR = '#FDC591';
-  //       break;
-  //     case 'feedback sent':
-  //       CARD_MAIN_COLOR = '#4990FB';
-  //       CARD_SUB_COLOR = '#DDEBFF';
-  //       STATUS_BORDER_COLOR = '#8EBBFF';
-  //       break;
-  //     case 'completed':
-  //       CARD_MAIN_COLOR = '#3AB549';
-  //       CARD_SUB_COLOR = '#ECF5ED';
-  //       STATUS_BORDER_COLOR = '#97DEA0';
-  //       break;
-  //     default:
-  //       CARD_MAIN_COLOR = '#BAC0CA';
-  //   }
-  //   return (
-  //     <TouchableOpacity
-  //       accessibilityRole="button"
-  //       onPress={() =>
-  //         handleNavigation(item)
-  //       }
-  //       style={[
-  //         styles.journeyCard,
-  //         {
-  //           borderTopColor: CARD_MAIN_COLOR,
-  //         },
-  //       ]}>
-  //       <View style={styles.journeyCardStatusContainer}>
-  //         <View
-  //           style={[
-  //             styles.journeyCardStatus,
-  //             {
-  //               backgroundColor: CARD_SUB_COLOR,
-  //               borderColor: STATUS_BORDER_COLOR,
-  //             },
-  //           ]}>
-  //           <Text
-  //             style={[
-  //               styles.journeyCardStatusText,
-  //               {
-  //                 color: CARD_MAIN_COLOR,
-  //               },
-  //             ]}>
-  //             {item.status}
-  //           </Text>
-  //         </View>
-  //         <Icon
-  //           name="chevron-forward-outline"
-  //           size={20}
-  //           style={styles.iconColor}
-  //         />
-  //       </View>
-  //       <View style={styles.journeyCardNameContainer}>
-  //         <View style={styles.avatarIcon} />
-  //         <View>
-  //           <Text style={styles.directReportNameText}>
-  //             {item['direct report']}
-  //           </Text>
-  //           <Text style={styles.dateText}>
-  //             {moment(item.datetime).format('llll')}
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <View style={{ paddingTop: 12 }}>
-  //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //           <Image
-  //             source={
-  //               item.type === 'Corrective'
-  //                 ? Images.penEmoji
-  //                 : Images.redHeartEmoji
-  //             }
-  //             style={styles.feedbackTypeIcon}
-  //             resizeMode="contain"
-  //           />
-  //           <Text style={styles.feedbackTypeText}>{item.type} Feedback</Text>
-  //         </View>
-  //         <View
-  //           style={{
-  //             marginTop: 12,
-  //             flexDirection: 'row',
-  //             alignItems: 'center',
-  //           }}>
-  //           <Image
-  //             source={Images.targetEmoji}
-  //             style={{ width: 16, height: 16, marginRight: 12 }}
-  //             resizeMode="contain"
-  //           />
-  //           <Text
-  //             style={{
-  //               fontSize: 14,
-  //               lineHeight: 22,
-  //               fontWeight: '400',
-  //               color: '#667080',
-  //             }}>
-  //             Next step: <Text style={{ opacity: 0.5 }}>{item.nextStep}</Text>
-  //           </Text>
-  //         </View>
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
-  // };
 
   const navigateJourneyCard = (item) => {
     navigation.navigate('Feedback', {
@@ -355,8 +232,9 @@ const HomeScreen = props => {
               accessibilityRole="button"
               onPress={() =>
                 navigation.navigate('Assessment', {
-                  screen: 'Assessment break down',
-                  //  Leadership Assessment Guide
+                  screen: 'Assessment break down', params: {
+                    root: 'home'
+                  },
                 })
               }
               style={styles.assessmentProgressContainer}>
