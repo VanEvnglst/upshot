@@ -32,7 +32,7 @@ import BottomSheet, {
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
 import moment from 'moment';
 import { Text } from 'app/components';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/feedback/CaptureFeedbackMomentRedux';
 import {
   getActiveCaptureStep,
   getMaxCaptureStep,
