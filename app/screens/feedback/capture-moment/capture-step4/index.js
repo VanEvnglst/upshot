@@ -14,7 +14,7 @@ import { Button } from 'react-native-paper';
 import BottomSheet from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/feedback/CaptureFeedbackMomentRedux';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import { getCaptureData } from 'app/store/selectors';
 import { Text } from 'app/components';
