@@ -42,8 +42,8 @@ export const getMainTopics = state => state.captureMoment.get('layerOneTopics');
 export const getSubTopics = state => state.captureMoment.get('layerTwoTopics');
 
 /* ------------- Record Entries Selectors ------------- */
-export const getRecordEntryActiveStep = state => state.captureMoment.get('entryActiveStep');
-export const getRecordEntryMaxStep = state => state.captureMoment.get('entryMaxStep');
+export const getRecordEntryActiveStep = state => state.recordEntry.get('activeStep');
+export const getRecordEntryMaxStep = state => state.recordEntry.get('maxStep');
 
 
 /* ------------- Frontliner Feedback Selectors ------------- */
