@@ -10,7 +10,6 @@ import {
   DateTimePicker,
   Text,
 } from 'app/components';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import {
   getStep4Data,
   getStep2Data,
