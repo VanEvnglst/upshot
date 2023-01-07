@@ -3,8 +3,6 @@ import { View, TouchableOpacity, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper, Text, MessageItem, Loader } from 'app/components';
-import MessagesActions from 'app/store/MessagesRedux';
-import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import { getMessagesFetching, getMessages } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import styles from './styles';

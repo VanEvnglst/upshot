@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
-  Text,
+  
   SafeAreaView,
   ScrollView,
   BackHandler,
@@ -11,7 +11,8 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import CaptureFeedbackMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import { Text,} from 'app/components';
+import CaptureFeedbackMomentActions from 'app/store/feedback/CaptureFeedbackMomentRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import Images from 'app/assets/images';
 import styles from './styles';

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FAB as FloatingAction } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Wrapper, Text, Header, SignPostIndicator } from 'app/components';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
+// import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import { getChosenFlow, getChosenType } from 'app/store/selectors';
 import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';

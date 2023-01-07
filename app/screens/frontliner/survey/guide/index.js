@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Header, Wrapper } from 'app/components';
-import SurveyActions from 'app/store/frontliner/SurveyRedux';
+// import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import { getSurveyId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Images from 'app/assets/images';

@@ -13,7 +13,6 @@ import {
   getStep5Data,
   getDocumentingFetching,
 } from 'app/store/selectors';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import styles from './styles';
 
 const DocumentingReview = props => {

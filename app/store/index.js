@@ -5,10 +5,9 @@ import { feedbackReducer as feedback } from './feedback/FeedbackRedux';
 import { reducer as feedbackHistory } from './feedback/FeedbackHistoryRedux';
 import { reducer as user } from './UserRedux';
 import { reducer as onboarding } from './OnboardingRedux';
-import { reducer as messages } from './MessagesRedux';
-import { reducer as survey } from './frontliner/SurveyRedux';
 import { reducer as leadershipSkillArea } from './LSARedux';
-import { reducer as captureMoment } from './CaptureFeedbackMomentRedux';
+import { reducer as captureMoment } from './feedback/CaptureFeedbackMomentRedux';
+import { reducer as recordEntry } from './feedback/RecordEntryRedux';
 import { reducer as frontlinerFeedback } from './frontliner/FLFeedbackRedux';
 import rootSaga from '../sagas'; 
 
@@ -21,10 +20,9 @@ export const mainReducer = combineReducers({
   feedback,
   feedbackHistory,
   user,
-  messages,
-  survey,
   leadershipSkillArea,
   captureMoment,
+  recordEntry,
   frontlinerFeedback,
 });
 

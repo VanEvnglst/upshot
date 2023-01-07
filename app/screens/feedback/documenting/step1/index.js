@@ -5,7 +5,6 @@ import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { Text, Chip } from 'app/components';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import {
   getStaffList,
   getDocumentingStep,

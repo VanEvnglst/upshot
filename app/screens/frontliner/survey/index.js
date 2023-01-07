@@ -8,7 +8,7 @@ import OverallSatisfaction from './overall-satisfaction';
 import FeelingQuestion from './feeling-question';
 import ManagerEvaluation from './manager-evaluation';
 import FrontlinerEvaluation from './frontliner-evaluation';
-import SurveyActions from 'app/store/frontliner/SurveyRedux';
+// import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import { getSurveyStep, getSurveyMaxStep, getSurveyFetching, getSurveyId } from 'app/store/selectors';
 import labels from 'app/locales/en';
 import Colors from 'app/theme/colors';

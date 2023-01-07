@@ -4,7 +4,7 @@ import moment from 'moment';
 import FeedbackActions, {
   FeedbackTypes,
 } from 'app/store/feedback/FeedbackRedux';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
+// import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
 import { DeviceUtil } from 'app/utils';

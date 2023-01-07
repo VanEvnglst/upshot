@@ -15,11 +15,8 @@ export const INITIAL_STATE = Map({
   layerOneTopics: [],
   layerTwoTopics: [],
   error: '',
-  entryMaxStep: 6,
-  entryActiveStep: 1,
   feedbackEntryData: null,
   journeyId: null,
-  entryDetails: null,
   entryRecordDetails: null,
   entryEditDetails: null,
   faceTofaceSchedule: null,
@@ -37,15 +34,6 @@ const { Types, Creators } = createActions({
   postCloseCaptureMoment: ['journeyId'],
   postCloseCaptureMomentSuccess: [''],
   postCloseCaptureMomentFailure: ['error'],
-  postRecordEMEntry: [''],
-  postRecordEMEntrySuccess: ['entryRecordDetails'],
-  postRecordEMEntryFailure: ['error'],
-  postEditEMEntry: ['entryDetails'],
-  postEditEMEntrySuccess: ['entryEditDetails'],
-  postEditEMEntryFailure: ['error'],
-  postCloseRecordEntry: ['journeyId'],
-  postCloseRecordEntrySuccess: [''],
-  postCloseRecordEntryFailure: ['error'],
   postFaceToFaceSchedule: ['data'],
   postFaceToFaceScheduleSuccess: ['faceToFaceSchedule'],
   postFaceToFaceScheduleFailure: ['error'],
@@ -63,7 +51,7 @@ const { Types, Creators } = createActions({
   fetchStaffMembersFailure: ['error'],
   setEntryActiveStep: ['step'],
   resetCaptureStep: null,
-  resetEntryStep: null,
+
 });
 
 
@@ -197,59 +185,6 @@ const fetchLayerOneTopics = state =>
       error,
     })
 
-  const postRecordEMEntry = state => 
-    state.merge({
-      fetching: true,
-      error: '',
-    })
-
-  const postRecordEMEntrySuccess = (state, { entryRecordDetails }) => 
-    state.merge({
-      fetching: false,
-      entryRecordDetails,
-    });
-
-  const postRecordEMEntryFailure = (state, { error }) =>
-    state.merge({
-      fetching: false,
-      error
-    });
-
-  const postEditEMEntry = state => 
-    state.merge({
-      fetching: true,
-      error: '',
-    })
-
-  const postEditEMEntrySuccess = (state, { entryEditDetails }) => 
-    state.merge({
-      fetching: false,
-      entryEditDetails,
-    });
-
-  const postEditEMEntryFailure = (state, { error }) =>
-    state.merge({
-      fetching: false,
-      error
-    });
-
-    const postCloseRecordEntry = state =>
-    state.merge({
-      fetching: true,
-      error: '',
-    });
-
-  const postCloseRecordEntrySuccess = state => 
-    state.merge({
-      fetching: false,
-    });
-
-  const postCloseRecordEntryFailure = (state, { error }) =>
-    state.merge({
-      fetching: false,
-      error,
-    })
-
   const fetchEMEntry = state => 
     state.merge({
       fetching: true,
@@ -267,13 +202,6 @@ const fetchLayerOneTopics = state =>
       fetching: false,
       error
     });
-
-  const setEntryActiveStep = (state, { step }) => {
-      if (state.get('entryActiveStep') > state.get('entryMaxStep')) {
-        return state.get('entryActiveStep');
-      }
-      return state.merge({ entryActiveStep: step });
-  }
 
   const postFaceToFaceSchedule = state => 
     state.merge({
@@ -293,15 +221,9 @@ const fetchLayerOneTopics = state =>
       error
     });
 
-  const resetEntryStep = state =>
-  state.merge({
-    entryActiveStep: 1,
-  });
-
 /* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.RESET_CAPTURE_STEP]: resetCaptureStep,
-  [Types.RESET_ENTRY_STEP]: resetEntryStep,
   [Types.SET_CAPTURE_ACTIVE_STEP]: setCaptureActiveStep,
   [Types.SET_CAPTURE_DATA]: setCaptureData,
   [Types.FETCH_LAYER_ONE_TOPICS]: fetchLayerOneTopics,
@@ -322,19 +244,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_CLOSE_CAPTURE_MOMENT]: postCloseCaptureMoment,
   [Types.POST_CLOSE_CAPTURE_MOMENT_SUCCESS]: postCloseCaptureMomentSuccess,
   [Types.POST_CLOSE_CAPTURE_MOMENT_FAILURE]: postCloseCaptureMomentFailure,
-  [Types.POST_RECORD_EM_ENTRY]: postRecordEMEntry,
-  [Types.POST_RECORD_EM_ENTRY_SUCCESS]: postRecordEMEntrySuccess,
-  [Types.POST_RECORD_EM_ENTRY_FAILURE]: postRecordEMEntryFailure,
-  [Types.POST_EDIT_EM_ENTRY]: postEditEMEntry,
-  [Types.POST_EDIT_EM_ENTRY_SUCCESS]: postEditEMEntrySuccess,
-  [Types.POST_EDIT_EM_ENTRY_FAILURE]: postEditEMEntryFailure,
-  [Types.POST_CLOSE_RECORD_ENTRY]: postCloseRecordEntry,
-  [Types.POST_CLOSE_RECORD_ENTRY_SUCCESS]: postCloseRecordEntrySuccess,
-  [Types.POST_CLOSE_RECORD_ENTRY_FAILURE]: postCloseRecordEntryFailure,
   [Types.POST_FACE_TO_FACE_SCHEDULE]: postFaceToFaceSchedule,
   [Types.POST_FACE_TO_FACE_SCHEDULE_SUCCESS]: postFaceToFaceScheduleSuccess,
   [Types.POST_FACE_TO_FACE_SCHEDULE_FAILURE]: postFaceToFaceScheduleFailure,
-  [Types.SET_ENTRY_ACTIVE_STEP]: setEntryActiveStep,
   [Types.SET_FEEDBACK_MOMENT_DATA]: setFeedbackMomentData,
   [Types.SET_CAPTURE_MAX_STEP]: setCaptureMaxStep
 });

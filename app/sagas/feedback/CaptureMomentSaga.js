@@ -3,7 +3,7 @@ import { call, put, takeLatest, select, take } from 'redux-saga/effects';
 import moment from 'moment';
 import CaptureMomentActions, {
   CaptureMomentTypes,
-} from 'app/store/CaptureFeedbackMomentRedux';
+} from 'app/store/feedback/CaptureFeedbackMomentRedux';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import * as NavigationService from 'app/services/NavigationService';
 import api from 'app/services/apiService';
@@ -181,85 +181,86 @@ export function* fetchStaffMembers() {
   }
 }
 
-export function* postRecordEMEntry() {
-  const recordEntry = state => state.captureMoment.get('entryDetails');
-  const journeyID = state => state.captureMoment.get('journeyId');
+// export function* postRecordEMEntry() {
+//   const recordEntry = state => state.captureMoment.get('entryDetails');
+//   const journeyID = state => state.captureMoment.get('journeyId');
 
-  const entry = yield select(recordEntry);
+//   const entry = yield select(recordEntry);
 
-  const payload = {
-    capture_fb_id: yield select(journeyID),
-    employee_do: entry?.catchAttention,
-    impact: entry?.impactBehavior,
-    do_more: entry?.doMore,
-    continue_doing: '',
-    do_less: entry?.doLess,
-    stop_doing: entry?.stopDoing,
-    additional_notes: entry?.additionalNotes,
-  };
+//   const payload = {
+//     capture_fb_id: yield select(journeyID),
+//     employee_do: entry?.catchAttention,
+//     impact: entry?.impactBehavior,
+//     do_more: entry?.doMore,
+//     continue_doing: '',
+//     do_less: entry?.doLess,
+//     stop_doing: entry?.stopDoing,
+//     additional_notes: entry?.additionalNotes,
+//   };
 
-  const response = yield call(api.postRecordEMEntry, payload);
+//   const response = yield call(api.postRecordEMEntry, payload);
 
-  console.log('record res', response);
+//   console.log('record res', response);
 
-  if (response.ok) {
-    yield put(CaptureMomentActions.postRecordEMEntrySuccess(response.data));
-    yield put(CaptureMomentActions.postCloseRecordEntry(yield select(journeyID)));
-    yield put(CaptureMomentActions.resetEntryStep());
-  } else {
-    yield put(CaptureMomentActions.postRecordEMEntryFailure(response.data));
-  }
-}
+//   if (response.ok) {
+//     yield put(CaptureMomentActions.postRecordEMEntrySuccess(response.data));
+//     yield put(CaptureMomentActions.postCloseRecordEntry(yield select(journeyID)));
+//     yield put(CaptureMomentActions.resetEntryStep());
+//     yield  NavigationService.navigate('Feedback Entry Confirmation');
+//   } else {
+//     yield put(CaptureMomentActions.postRecordEMEntryFailure(response.data));
+//   }
+// }
 
-export function* postEditEMEntry(type) {
-  const recordEntry = state => state.captureMoment.get('entryDetails');
-  const journeyID = state => state.captureMoment.get('journeyId');
-  const lastStep = state => state.captureMoment.get('entryActiveStep');
+// export function* postEditEMEntry(type) {
+//   const recordEntry = state => state.captureMoment.get('entryDetails');
+//   const journeyID = state => state.captureMoment.get('journeyId');
+//   const lastStep = state => state.captureMoment.get('entryActiveStep');
 
-  const entry = yield select(recordEntry);
+//   const entry = yield select(recordEntry);
 
-  const payload = {
-    capture_fb_id: yield select(journeyID),
-    employee_do: entry.catchAttention,
-    impact: entry.impactBehavior,
-    do_more: entry.doMore,
-    continue_doing: '',
-    do_less: entry.doLess,
-    stop_doing: entry.stopDoing,
-    additional_notes: entry.additionalNotes,
-    last_active_step: yield select(lastStep),
-  };
-  const response = yield call(api.postEditEMEntry, payload);
+//   const payload = {
+//     capture_fb_id: yield select(journeyID),
+//     employee_do: entry.catchAttention,
+//     impact: entry.impactBehavior,
+//     do_more: entry.doMore,
+//     continue_doing: '',
+//     do_less: entry.doLess,
+//     stop_doing: entry.stopDoing,
+//     additional_notes: entry.additionalNotes,
+//     last_active_step: yield select(lastStep),
+//   };
+//   const response = yield call(api.postEditEMEntry, payload);
 
-  if (response.ok) {
-    yield put(CaptureMomentActions.postEditEMEntrySuccess(response.data));
-  } else {
-    yield put(CaptureMomentActions.postEditEMEntryFailure(response.data));
-  }
-}
+//   if (response.ok) {
+//     yield put(CaptureMomentActions.postEditEMEntrySuccess(response.data));
+//   } else {
+//     yield put(CaptureMomentActions.postEditEMEntryFailure(response.data));
+//   }
+// }
 
-export function* postCloseRecordEntry(journeyId) {
-  const connected = yield checkInternetConnection();
-  /* if (!connected) {
-    return;
-  } */
+// export function* postCloseRecordEntry(journeyId) {
+//   const connected = yield checkInternetConnection();
+//   /* if (!connected) {
+//     return;
+//   } */
 
-  const payload = {
-    fb_id: journeyId.journeyId,
-  };
+//   const payload = {
+//     fb_id: journeyId.journeyId,
+//   };
 
-  const response = yield call(api.postCloseRecordEntry, payload);
-  console.log('close', response);
-  if (response.ok) {
-    if (response.data.status === 'ok') {
-      yield put(CaptureMomentActions.postCloseRecordEntrySuccess());
-    } else {
-      yield put(CaptureMomentActions.postCloseRecordEntryFailure(response.data))
-    }
-  } else {
-    yield put(CaptureMomentActions.postCloseRecordEntryFailure(response.data));
-  }
-}
+//   const response = yield call(api.postCloseRecordEntry, payload);
+//   console.log('close', response);
+//   if (response.ok) {
+//     if (response.data.status === 'ok') {
+//       yield put(CaptureMomentActions.postCloseRecordEntrySuccess());
+//     } else {
+//       yield put(CaptureMomentActions.postCloseRecordEntryFailure(response.data))
+//     }
+//   } else {
+//     yield put(CaptureMomentActions.postCloseRecordEntryFailure(response.data));
+//   }
+// }
 
 export function* fetchEMEntry() {
   const response = yield call(api.getEMEntry);
@@ -309,8 +310,8 @@ function* watchCaptureMomentSaga() {
     CaptureMomentTypes.POST_CAPTURE_MOMENT,
     postCaptureFeedbackMoment,
   );
-  yield takeLatest(CaptureMomentTypes.POST_RECORD_EM_ENTRY, postRecordEMEntry);
-  yield takeLatest(CaptureMomentTypes.POST_EDIT_EM_ENTRY, postEditEMEntry);
+  // yield takeLatest(CaptureMomentTypes.POST_RECORD_EM_ENTRY, postRecordEMEntry);
+  // yield takeLatest(CaptureMomentTypes.POST_EDIT_EM_ENTRY, postEditEMEntry);
   yield takeLatest(
     CaptureMomentTypes.POST_FACE_TO_FACE_SCHEDULE,
     postFaceToFaceSchedule,
@@ -319,9 +320,9 @@ function* watchCaptureMomentSaga() {
     CaptureMomentTypes.POST_CLOSE_CAPTURE_MOMENT,
     postCloseCaptureMoment,
   );
-  yield takeLatest(
-    CaptureMomentTypes.POST_CLOSE_RECORD_ENTRY, postCloseRecordEntry
-  );
+  // yield takeLatest(
+  //   CaptureMomentTypes.POST_CLOSE_RECORD_ENTRY, postCloseRecordEntry
+  // );
 }
 
 export default watchCaptureMomentSaga;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Text, UserAvatar } from 'app/components';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/feedback/CaptureFeedbackMomentRedux';
 import {
   getActiveCaptureStep,
   getStaffList,

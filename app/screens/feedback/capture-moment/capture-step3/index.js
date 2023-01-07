@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Text } from 'app/components';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/feedback/CaptureFeedbackMomentRedux';
 import {
   getActiveCaptureStep,
   getMaxCaptureStep,
