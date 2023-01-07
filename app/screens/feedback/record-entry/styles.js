@@ -1,4 +1,8 @@
 import { StyleSheet, Platform } from 'react-native';
+import Colors from 'app/theme/colors';
+import { DeviceUtil } from 'app/utils';
+
+const { normalize } = DeviceUtil;
 
 export default styles = StyleSheet.create({
   container: {
@@ -11,7 +15,7 @@ export default styles = StyleSheet.create({
   },
   icon: {
     flex: 1,
-    paddingLeft: 24,
+    paddingLeft: normalize(24),
   },
   headerTextContainer: {
     justifyContent: 'center',
@@ -19,29 +23,24 @@ export default styles = StyleSheet.create({
   },
   headerText: {
     flex: 2,
-    fontSize: 16,
-    lineHeight: 22,
     color: '#667080',
-    fontWeight: '700',
   },
   headerSave: {
     flex: 1,
     alignItems: 'flex-end',
-    paddingRight: 24,
+    paddingRight: normalize(24),
   },
   saveText: {
-    fontSize: 16,
-    lineHeight: 22,
     color: '#667080',
   },
   stepsContainer: {
-    marginTop: 20,
+    marginTop: normalize(20),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 20,
-    paddingHorizontal: 24,
-    borderBottomWidth: 0.3,
+    paddingBottom: normalize(20),
+    paddingHorizontal: normalize(24),
+    borderBottomWidth: normalize(0.3),
   },
   activeStep: {
     backgroundColor: '#BAC0CA',
@@ -115,5 +114,28 @@ export default styles = StyleSheet.create({
       }
     })
   },
+  bottomSheetContainer: {
+    marginTop: normalize(24),
+    marginHorizontal: normalize(25)
+  },
+  bottomSheetHeaderText: {
+
+  },
+  bottomSheetDescriptionText: {
+    marginTop: normalize(12),
+  },
+  bottomSheetOption: {
+    height: normalize(48),
+    borderWidth: normalize(2),
+    borderColor: '#667080',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  optionText: {
+    marginLeft: normalize(5),
+    color: '#667080'
+  }
+
   
 });

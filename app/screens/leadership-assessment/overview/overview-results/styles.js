@@ -1,30 +1,41 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+import { DeviceUtil } from 'app/utils';
+import Colors from 'app/theme/colors';
+
+const { normalize } = DeviceUtil;
+
+const { width } = Dimensions.get('screen');
+const SPACING = normalize(10);
+const ITEM_SIZE = DeviceUtil.isIos() ? width * 0.77 : width * 0.85;
+const ITEM_HEIGHT = ITEM_SIZE * 1.6;
+const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24
   },
   progressBar: {
-    height: 4,
-    borderRadius: 4,
-    marginTop: 20,
+    height: normalize(4),
+    borderRadius: normalize(4),
+    marginTop: normalize(20),
+    marginHorizontal: normalize(24),
   },
   headerContainer: {
-    marginTop: 40,
+    marginTop: normalize(40),
+    paddingHorizontal: normalize(24)
   },
   userIcon: {
-    width: 58,
-    height: 58,
-    borderRadius: 58/2,
+    width: normalize(58),
+    height: normalize(58),
+    borderRadius: normalize(58/2),
     backgroundColor: '#FFF3D4',
-    marginRight: 12,
+    marginRight: normalize(12),
     justifyContent: 'center',
     alignItems: 'center'
   },
   avatarIcon: {
-    width: 38,
-    height: 38
+    width: normalize(38),
+    height: normalize(38)
   },
   userDetailsContainer: {
     flex: 1,
@@ -45,6 +56,7 @@ export default styles = StyleSheet.create({
   },
   descriptionContainer: {
     marginTop: 25,
+    paddingHorizontal: 24
   },
   contentContainer: {
     marginTop: 25,
@@ -95,17 +107,18 @@ export default styles = StyleSheet.create({
     color: '#667080'
   },
   content: {
-    marginTop: 24,
+    marginTop: normalize(24),
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   btnContainer: {
-    marginTop: 40,
+    marginTop: normalize(40),
+    marginHorizontal: normalize(24)
   },
   button: {
-    height: 48,
+    height: normalize(48),
     backgroundColor: '#667080',
     justifyContent: 'center',
     alignItems: 'center'
@@ -115,9 +128,7 @@ export default styles = StyleSheet.create({
   },
   descriptionText: {
     color: "#667080",
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '400',
+    marginHorizontal: normalize(24)
   },
   textAlignStart: {
     textAlign: 'left'
@@ -137,12 +148,12 @@ export default styles = StyleSheet.create({
     marginBottom: 24,
     borderWidth: 1,
     borderColor: '#BAC0CA',
-    minHeight: 500,
+    height: normalize(280),
     padding: 12,
     paddingBottom: 20,
     borderRadius: 6,
-    width: 325,
-    marginRight: 8
+    width: ITEM_SIZE,
+    marginHorizontal: SPACING,
   },
   contentHeader: {
     borderBottomWidth: 1,
@@ -163,7 +174,8 @@ export default styles = StyleSheet.create({
     marginBottom: 5,
   },
   aboutSkillContent: {
-    marginTop: 15
+    marginTop: 15,
+    flex: 1
   },
   aboutSkillText: {
     fontSize: 14,
@@ -173,7 +185,7 @@ export default styles = StyleSheet.create({
     width: '90%'
   },
   skillPointView: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   bullet: {
     width: 6, 
@@ -184,17 +196,10 @@ export default styles = StyleSheet.create({
     marginRight: 4 
   },
   scoreLabel: {
-    fontSize: 16,
-    fontWeight: '400',
     color: '#667080',
-    lineHeight: 22,
-    maxWidth: 140,
-    marginBottom: 8,
-    maxWidth: '50%',
+    marginBottom: normalize(8),
+    maxWidth: '70%',
     textAlign: 'center'
-  },
-  scoreLabelBold: {
-    fontWeight: '700'
   },
   skillAreaContainer: {
     borderWidth: 1,
@@ -207,8 +212,7 @@ export default styles = StyleSheet.create({
   skillAreaLabelText: {
     fontSize: 12,
     lineHeight: 10,
-    fontWeight: '600',
-    paddingTop: 5,
+    paddingTop: normalize(5),
     textTransform: 'uppercase',
   },
   areaOfConcernContainer: {
@@ -258,11 +262,56 @@ export default styles = StyleSheet.create({
     fontWeight: '700'
   },
   skillAreaDefinitionPoint: {
-    width: 12,
-    height: 12,
+    width: normalize(12),
+    height: normalize(12),
     borderRadius: 6,
-    marginTop: 5, 
-    marginRight: 8 
+    marginTop: normalize(5), 
+    marginRight: normalize(8),
   },
-
+  cardSpacer: {
+    width: EMPTY_ITEM_SIZE,
+  },
+  resultButton: {
+    borderRadius: normalize(90),
+    backgroundColor: Colors.white,
+    borderWidth: 2,
+    borderColor: '#E6E8EC',
+    height: normalize(40),
+  },
+  resultText: {
+    textTransform: 'capitalize',
+    color: '#667080'
+  },
+  resultSheetContainer: {
+    flex: 1,
+  },
+  resultSheetHeader: {
+    marginTop: normalize(24), 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    paddingBottom: normalize(24),
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.neutral5,
+  },
+  resultAreaContainer: {
+    marginTop: normalize(8),
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    borderWidth: 1, 
+    borderRadius: 4, 
+    width: normalize(150),
+    height: normalize(38),
+    paddingHorizontal: normalize(12),
+    paddingVertical: normalize(8),
+  },
+  skillIndicatorTitle: {
+    color: '#667080',
+  },
+  resultAreaText: {
+    textTransform: 'uppercase'
+  },
+  resultAreaContent: {
+    paddingHorizontal: normalize(24),
+    marginTop: normalize(24),
+  }
 });

@@ -14,6 +14,8 @@ import {
   EMJourneyCloseout,
   JourneyDetails,
   FeedbackChecklist,
+  RecordDiscussion,
+  OngoingJourneyList
 } from '../screens';
 import { getActiveJourneys } from 'app/store/selectors';
 
@@ -67,13 +69,24 @@ const FeedbackNavigator = () => {
           name={'EM Journey Closeout'}
           component={EMJourneyCloseout}
         />
+        {/* Journey Details screen */}
         <FeedbackStack.Screen
           name={'Journey Details'}
           component={JourneyDetails}
         />
+        {/* Ongoing journey list screen */}
+        <FeedbackStack.Screen
+          name={'Ongoing Journeys List'}
+          component={OngoingJourneyList}
+        />
+        {/* Checklist screen before closeout */}
         <FeedbackStack.Screen
           name={'Feedback Checklist'}
           component={FeedbackChecklist}
+        />
+         <FeedbackStack.Screen
+          name={'Record Discussion'}
+          component={RecordDiscussion}
         />
       </FeedbackStack.Navigator>
     </>

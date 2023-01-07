@@ -31,11 +31,11 @@ export function* signInUser({ data }) {
       yield put(AuthenticationActions.signInUserSuccess());
     } else {
       yield put(
-        AuthenticationActions.signInUserFailure(authResponse.data.details),
+        AuthenticationActions.signInUserFailure(authResponse.data.reason),
       );
     }
   } else {
-    AuthenticationActions.signInUserFailure(authResponse.data);
+    yield put(AuthenticationActions.signInUserFailure(authResponse.data.reason));
   }
 }
 
@@ -92,7 +92,7 @@ export function* signUpUser({ data }) {
       );
     }
   } else {
-    AuthenticationActions.signUpUserFailure(authResponse.data);
+    yield put(AuthenticationActions.signUpUserFailure(authResponse.data));
   }
 }
 

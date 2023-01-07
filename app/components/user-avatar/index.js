@@ -35,7 +35,7 @@ UserAvatar.propTypes = {
 };
 
 UserAvatar.defaultProps = {
-  initials: 'IE',
+  initials: '',
   name: '',
   position: '',
   textStyle: {},

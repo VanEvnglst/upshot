@@ -7,16 +7,19 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { UserAvatar, Text } from 'app/components';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
+import { getCurrentJourney } from 'app/store/selectors';
 import JourneyProgressTab from './progress-tab';
 import JourneyDetailsTab from './details-tab';
+import { asyncProgressSteps, faceToFaceSteps } from 'app/models/ProgressStepsModel';
 import Images from 'app/assets/images';
 import styles from './styles';
+import { DataUtil } from 'app/utils';
 
 const JourneyDetails = props => {
   const { navigation, route } = props;
   
   const dispatch = useDispatch();
-  const journey = useSelector(state => state.feedback.get('currentJourney'));
+  const journey = useSelector(getCurrentJourney); 
   // const [captureFeedback, setCaptureFeedback] = useState({
   //   inProgress: true,
   //   done: false,
@@ -44,69 +47,12 @@ const JourneyDetails = props => {
   // });
   const [activeTab, setActiveTab] = useState('Progress');
 
-  const journeySteps = [
-    {
-      id: 1,
-      title: 'Capture Feedback',
-      description: 'Complete your feedback by including additional details.',
-      doneDescription:
-        'You completed your feedback document by recording entries.',
-      inProgressDescription: 'You record additional entries to your feedback.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 2,
-      title: 'Record Entries',
-      description: 'Complete your feedback by including additional details.',
-      doneDescription:
-        'You completed your feedback document by recording entries.',
-      inProgressDescription: 'You record additional entries to your feedback.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 3,
-      title: 'Review & Submit',
-      description:
-        'Review your whole feedback and submit it for Ivan Evangelista to read.',
-      doneDescription: 'You reviewed your feedback and sent it for submission.',
-      inProgressDescription: 'You review and submit feedback entries.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 4,
-      title: 'Waiting for response...',
-      description:
-        'Wait for Ivan Evangelista to view the feedback you sent them to know the next steps.',
-      doneDescription: 'Ivan Evangelista viewed and understood your feedback.',
-      inProgressDescription: 'Ivan Evangelista receives your feedback.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-    {
-      id: 5,
-      title: 'Reflect on Discussion',
-      description: 'Proceed to the post discussion reflection checklist.',
-      doneDescription: 'You reviewed your feedback and sent it for submission.',
-      inProgressDescription: 'You review and submit feedback entries.',
-      date: 'Oct 20, 5:00 PM',
-      done: false,
-      inProgress: true,
-    },
-  ];
-
   useLayoutEffect(() => { 
     retrieveData();
   }, []);
 
   const retrieveData = async () => {
-    dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId))
+    await dispatch(FeedbackActions.fetchCurrentFeedback(route.params.journeyId))
   };
 
   const resetValue = () => {
@@ -161,43 +107,65 @@ const JourneyDetails = props => {
     }, 5000);
   };
 
-  const needsClarify = () => {
-    setReviewFeedback({ inProgress: false, done: true });
-    setFeedbackReceived({
-      ...feedbackReceived,
-      inProgress: true,
-    });
+  // const needsClarify = () => {
+  //   setReviewFeedback({ inProgress: false, done: true });
+  //   setFeedbackReceived({
+  //     ...feedbackReceived,
+  //     inProgress: true,
+  //   });
 
-    setTimeout(() => {
-      setFeedbackReceived({
-        inProgress: false,
-        done: true,
-        needsClarification: true,
-      });
-      setRespondClarification({
-        ...respondClarification,
-        inProgress: true,
-      });
-    }, 5000);
-  };
+  //   setTimeout(() => {
+  //     setFeedbackReceived({
+  //       inProgress: false,
+  //       done: true,
+  //       needsClarification: true,
+  //     });
+  //     setRespondClarification({
+  //       ...respondClarification,
+  //       inProgress: true,
+  //     });
+  //   }, 5000);
+  // };
 
-  const respond = () => {
-    setRespondClarification({
-      inProgress: false,
-      clarified: true,
-      done: true,
-    });
-    setReflectDiscussion({
-      ...reflectDiscussion,
-      inProgress: true,
-    });
-  };
+  // const respond = () => {
+  //   setRespondClarification({
+  //     inProgress: false,
+  //     clarified: true,
+  //     done: true,
+  //   });
+  //   setReflectDiscussion({
+  //     ...reflectDiscussion,
+  //     inProgress: true,
+  //   });
+  // };
 
   const handleContinue = (item) => {
-    if (item.title === 'Reflect on Discussion')
-      navigation.navigate('Feedback', { screen: 'Feedback Checklist' });
-
-
+    console.log('continue', item);
+    let screenName = '';
+    switch(item.title) {
+      case 'Record Entries':
+      screenName = 'Record Feedback Entry';
+      break;
+      case 'Reflect on Discussion':
+        screenName = 'Feedback Checklist';
+        break;
+      case 'Awaiting Response':
+        screenName = 'Feedback Overview';
+        break;
+      case 'Respond to Clarifications':
+        screenName = '';
+        break;
+      case 'Set a 1-on-1 Discussion':
+        screenName = '';
+        break;
+      case '1-on-1 Discussion':
+        screenName = '';
+        break;
+    }
+    console.log(screenName);
+    navigation.navigate('Feedback', {
+      screen: screenName,
+    });
   };
 
   const CaptureFeedbackProgress = () => {
@@ -725,9 +693,11 @@ const JourneyDetails = props => {
             flex: 1,
             paddingTop: 24,
           }}>
-          <UserAvatar style={{ width: 62, height: 62 }} />
-          <Text type="h4" weight="bold" style={styles.memberNameText}>
-            Ivan Evangelista
+          <UserAvatar 
+            initials={DataUtil.parseInitials(journey.frontliner)}
+            style={{ width: 62, height: 62 }} />
+           <Text type="h4" weight="bold" style={styles.memberNameText}>
+            {journey.frontliner}
           </Text>
           <Text type="caption1" weight="medium" style={styles.roleText}>
             Team Member
@@ -736,14 +706,16 @@ const JourneyDetails = props => {
             <View
               style={[
                 styles.typeContainer,
-                styles.correctiveContainer,
+                journey.feedback_type ==='Corrective' ?styles.correctiveContainer : styles.positiveContainer,
                 { marginRight: 4 },
               ]}>
               <Text
                 type="hairline"
                 weight="bold"
-                style={[styles.typeText, styles.correctiveText]}>
-                Corrective Feedback
+                style={[styles.typeText, 
+                journey.feedback_type === 'Corrective' ?
+                styles.correctiveText : styles.positiveText]}>
+                {journey.feedback_type} Feedback
               </Text>
             </View>
             <View style={[styles.typeContainer, styles.ongoingContainer]}>
@@ -751,7 +723,7 @@ const JourneyDetails = props => {
                 type="hairline"
                 weight="bold"
                 style={[styles.typeText, styles.ongoingText]}>
-                Ongoing
+                {journey.status}
               </Text>
             </View>
           </View>
@@ -783,9 +755,12 @@ const JourneyDetails = props => {
         <View style={styles.contentContainer}>
           {activeTab === 'Progress' ? (
             <>
-              {journeySteps.map((item, i) => (
-                <JourneyProgressTab key={item.id} item={item} 
-                onPress={() => handleContinue(item)} />
+              {journey.progress.map((item, i) => (
+                <JourneyProgressTab 
+                  key={item.id} 
+                  item={item}
+                  teamMember={journey.frontliner}
+                  onPress={() => handleContinue(item)} />
               ))}
             </>
           ) : (

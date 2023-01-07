@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   TouchableOpacity,
   Animated,
   ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
 import { getCurrentJourney } from 'app/store/selectors';
-import { DeviceUtil } from 'app/utils';
+import { DataUtil } from 'app/utils';
+import { UserAvatar, Text } from 'app/components';
 import styles from './styles';
 
 const FeedbackOverview = props => {
@@ -22,9 +21,7 @@ const FeedbackOverview = props => {
   const dispatch = useDispatch();
   const feedbackData = useSelector(getCurrentJourney);
   const scaleValue = useRef(new Animated.Value(0)).current;
-  const { managerInput, frontlinerInput } = feedbackData;
-  const senderName = route.params.frontliner.split(' ');
-  const senderInitials = `${senderName[0].charAt(0)}${senderName[1].charAt(0)}`;
+  // const { managerInput, frontlinerInput } = feedbackData;
   const [isObservationActive, setIsObservationActive] = useState(false);
   const [isImpactActive, setIsImpactActive] = useState(false);
   const [isContinueActive, setIsContinueActive] = useState(false);
@@ -63,7 +60,9 @@ const FeedbackOverview = props => {
           <Icon name="chevron-back-outline" size={24} color={'white'} />
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
-          <Text style={styles.headerTitleText}>Overview</Text>
+          <Text type="body2" weight="bold" style={styles.headerTitleText}>
+            Overview
+          </Text>
         </View>
         <TouchableOpacity
           accessibilityRole="button"
@@ -72,17 +71,14 @@ const FeedbackOverview = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.contentContainer}>
-        {senderName && (
-          <LinearGradient
-            style={styles.nameAvatar}
-            colors={['#C883FF', '#6587FF']}
-            start={{ x: 0.2, y: 0 }}
-            end={{ x: 0.7, y: 1 }}>
-            <Text style={styles.avatarText}>{senderInitials}</Text>
-          </LinearGradient>
-        )}
-        <Text style={styles.responderText}>{route.params.frontliner}</Text>
-        <Text style={styles.responderDescription}>
+        <UserAvatar
+          style={styles.nameAvatar}
+          initials={DataUtil.parseInitials(feedbackData.frontliner)}
+        />
+        <Text type="body1" weight="bold" style={styles.responderText}>
+          {feedbackData.frontliner}
+        </Text>
+        <Text type="body2" weight="regular" style={styles.responderDescription}>
           needs clarification on the following:
         </Text>
         <View style={styles.cardContainer}>
@@ -109,6 +105,8 @@ const FeedbackOverview = props => {
                   />
                 </View>
                 <Text
+                  type="caption2"
+                  weight="bold"
                   style={[
                     styles.cardTitleText,
                     managerInput.employee_do === '' &&
@@ -130,20 +128,37 @@ const FeedbackOverview = props => {
             {isObservationActive && (
               <View style={styles.inputContainer}>
                 {managerInput.employee_do === '' ? (
-                  <Text style={styles.noneProvidedText}>None provided</Text>
+                  <Text
+                    type="caption1"
+                    weight="bold"
+                    style={styles.noneProvidedText}>
+                    None provided
+                  </Text>
                 ) : (
                   <>
-                    <Text style={styles.managerInputText}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputText}>
                       What you wrote...
                     </Text>
-                    <Text style={styles.managerInputContent}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputContent}>
                       {managerInput.employee_do}
                     </Text>
                     <View style={styles.clarificationContainer}>
-                      <Text style={styles.managerInputText}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputText}>
                         Clarification needed...
                       </Text>
-                      <Text style={styles.managerInputContent}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputContent}>
                         {frontlinerInput.event_clarification === ''
                           ? 'None provided.'
                           : frontlinerInput.event_clarification}
@@ -178,6 +193,8 @@ const FeedbackOverview = props => {
                   />
                 </View>
                 <Text
+                  type="caption2"
+                  weight="bold"
                   style={[
                     styles.cardTitleText,
                     managerInput.impact === '' && styles.disabledCardTitleText,
@@ -198,20 +215,37 @@ const FeedbackOverview = props => {
             {isImpactActive && (
               <View style={styles.inputContainer}>
                 {managerInput.impact === '' ? (
-                  <Text style={styles.noneProvidedText}>None provided</Text>
+                  <Text
+                    type="caption1"
+                    weight="bold"
+                    style={styles.noneProvidedText}>
+                    None provided
+                  </Text>
                 ) : (
                   <>
-                    <Text style={styles.managerInputText}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputText}>
                       What you wrote...
                     </Text>
-                    <Text style={styles.managerInputContent}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputContent}>
                       {managerInput.impact}
                     </Text>
                     <View style={styles.clarificationContainer}>
-                      <Text style={styles.managerInputText}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputText}>
                         Clarification needed...
                       </Text>
-                      <Text style={styles.managerInputContent}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputContent}>
                         {frontlinerInput.impact_clarification === ''
                           ? 'None provided.'
                           : frontlinerInput.impact_clarification}
@@ -246,6 +280,8 @@ const FeedbackOverview = props => {
                   />
                 </View>
                 <Text
+                  type="caption2"
+                  weight="bold"
                   style={[
                     styles.cardTitleText,
                     managerInput.do_more === '' && styles.disabledCardTitleText,
@@ -266,20 +302,37 @@ const FeedbackOverview = props => {
             {isContinueActive && (
               <View style={styles.inputContainer}>
                 {managerInput.do_more === '' ? (
-                  <Text style={styles.noneProvidedText}>None provided</Text>
+                  <Text
+                    type="caption1"
+                    weight="bold"
+                    style={styles.noneProvidedText}>
+                    None provided
+                  </Text>
                 ) : (
                   <>
-                    <Text style={styles.managerInputText}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputText}>
                       What you wrote...
                     </Text>
-                    <Text style={styles.managerInputContent}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputContent}>
                       {managerInput.do_more}
                     </Text>
                     <View style={styles.clarificationContainer}>
-                      <Text style={styles.managerInputText}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputText}>
                         Clarification needed...
                       </Text>
-                      <Text style={styles.managerInputContent}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputContent}>
                         {frontlinerInput.continue_clarification === ''
                           ? 'None provided.'
                           : frontlinerInput.continue_clarification}
@@ -314,6 +367,8 @@ const FeedbackOverview = props => {
                   />
                 </View>
                 <Text
+                  type="caption2"
+                  weight="bold"
                   style={[
                     styles.cardTitleText,
                     managerInput.do_less === '' && styles.disabledCardTitleText,
@@ -334,20 +389,37 @@ const FeedbackOverview = props => {
             {isDoLessActive && (
               <View style={styles.inputContainer}>
                 {managerInput.do_less === '' ? (
-                  <Text style={styles.noneProvidedText}>None provided</Text>
+                  <Text
+                    type="caption1"
+                    weight="bold"
+                    style={styles.noneProvidedText}>
+                    None provided
+                  </Text>
                 ) : (
                   <>
-                    <Text style={styles.managerInputText}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputText}>
                       What you wrote...
                     </Text>
-                    <Text style={styles.managerInputContent}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputContent}>
                       {managerInput.do_less}
                     </Text>
                     <View style={styles.clarificationContainer}>
-                      <Text style={styles.managerInputText}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputText}>
                         Clarification needed...
                       </Text>
-                      <Text style={styles.managerInputContent}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputContent}>
                         {frontlinerInput.do_less_clarification === ''
                           ? 'None provided.'
                           : frontlinerInput.do_less_clarification}
@@ -382,6 +454,8 @@ const FeedbackOverview = props => {
                   />
                 </View>
                 <Text
+                  type="caption2"
+                  weight="bold"
                   style={[
                     styles.cardTitleText,
                     managerInput.stop_doing === '' &&
@@ -403,20 +477,37 @@ const FeedbackOverview = props => {
             {isStopDoingActive && (
               <View style={styles.inputContainer}>
                 {managerInput.stop_doing === '' ? (
-                  <Text style={styles.noneProvidedText}>None provided</Text>
+                  <Text
+                    type="caption1"
+                    weight="bold"
+                    style={styles.noneProvidedText}>
+                    None provided
+                  </Text>
                 ) : (
                   <>
-                    <Text style={styles.managerInputText}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputText}>
                       What you wrote...
                     </Text>
-                    <Text style={styles.managerInputContent}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputContent}>
                       {managerInput.stop_doing}
                     </Text>
                     <View style={styles.clarificationContainer}>
-                      <Text style={styles.managerInputText}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputText}>
                         Clarification needed...
                       </Text>
-                      <Text style={styles.managerInputContent}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputContent}>
                         {frontlinerInput.stop_doing_clarification === ''
                           ? 'None provided.'
                           : frontlinerInput.stop_doing_clarification}
@@ -453,6 +544,8 @@ const FeedbackOverview = props => {
                   />
                 </View>
                 <Text
+                  type="caption2"
+                  weight="bold"
                   style={[
                     styles.cardTitleText,
                     managerInput.additional_notes === '' &&
@@ -474,20 +567,37 @@ const FeedbackOverview = props => {
             {isAdditionalNotesActive && (
               <View style={styles.inputContainer}>
                 {managerInput.additional_notes === '' ? (
-                  <Text style={styles.noneProvidedText}>None provided</Text>
+                  <Text
+                    type="caption1"
+                    weight="bold"
+                    style={styles.noneProvidedText}>
+                    None provided
+                  </Text>
                 ) : (
                   <>
-                    <Text style={styles.managerInputText}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputText}>
                       What you wrote...
                     </Text>
-                    <Text style={styles.managerInputContent}>
+                    <Text
+                      type="caption1"
+                      weight="regular"
+                      style={styles.managerInputContent}>
                       {managerInput.additional_notes}
                     </Text>
                     <View style={styles.clarificationContainer}>
-                      <Text style={styles.managerInputText}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputText}>
                         Clarification needed...
                       </Text>
-                      <Text style={styles.managerInputContent}>
+                      <Text
+                        type="caption1"
+                        weight="regular"
+                        style={styles.managerInputContent}>
                         {frontlinerInput.additional_clarification === ''
                           ? 'None provided.'
                           : frontlinerInput.additional_clarification}
@@ -500,42 +610,16 @@ const FeedbackOverview = props => {
           </View>
         </View>
       </View>
-      <View
-        style={{
-          paddingHorizontal: 24,
-          borderTopWidth: 0.3,
-          borderTopColor: '#777E90',
-          backgroundColor: '#353945',
-          height: 100,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 30,
-        }}>
+      <View style={styles.btnCotnainer}>
         <Button
           mode="contained"
           onPress={() => handleNavigation()}
-          style={{
-            borderRadius: 12,
-            height: 48,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            width: '100%',
-          }}>
-          <View
-            style={{
-              paddingTop: 5,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+          style={styles.button}>
+          <View style={styles.buttonContent}>
             <Text
-              style={{
-                fontSize: 16,
-                lineHeight: 16,
-                marginRight: 4,
-                fontWeight: '700',
-                color: '#353945',
-              }}>{`Next`}</Text>
+              type="body2"
+              weight="bold"
+              style={styles.buttonText}>{`Next`}</Text>
             <Icon name={'arrow-forward-outline'} size={16} color={'#353945'} />
           </View>
         </Button>

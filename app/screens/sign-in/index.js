@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import AuthenticationActions from 'app/store/AuthenticationRedux';
 import { getAuthLoading, getSignInError } from 'app/store/selectors';
-import { TextInput, Loader, Text } from 'app/components';
+import { TextInput, Loader, Text, BottomSheetTextInput } from 'app/components';
 import { InputUtil, DeviceUtil } from 'app/utils';
 import Images from 'app/assets/images';
 import styles from './styles';
 import labels from '../../locales/en';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from 'app/theme/colors'
 
 const SignIn = props => {
   const { navigation } = props;
@@ -24,6 +26,8 @@ const SignIn = props => {
   const [token, setToken] = useState('');
   const [errorVisible, setErrorVisible] = useState(false);
   const [detailsComplete, setDetailsComplete] = useState(false);
+  const [passwordVisible, setPasswordVisibility] = useState(false);
+  const errorMessage = useSelector(state => state.authentication.get('error'));
 
   useEffect(() => {
     retrieveToken();
@@ -49,6 +53,7 @@ const SignIn = props => {
     }
   };
 
+
   const dismissSnackbar = () => setErrorVisible(false);
 
   const validate = () => {
@@ -67,7 +72,7 @@ const SignIn = props => {
 
     return errors;
   };
-
+console.log('sign in', errorMessage)
   const signInUser = () => {
     dispatch(
       AuthenticationActions.fetchServer({
@@ -78,6 +83,10 @@ const SignIn = props => {
       }),
     );
   };
+
+  const handlePasswordVisibility = () => { 
+    setPasswordVisibility(!passwordVisible);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -113,15 +122,41 @@ const SignIn = props => {
                 weight='regular'
                 style={styles.labelText}>
                   Password
-                </Text>
+              </Text>
+              
                 <BottomSheetTextInput
                 placeholder={'Password'}
-                style={styles.inputField}
+                style={[styles.inputField, ]}
                 value={password}
                 onChangeText={password => setPassword(password)}
-                secureTextEntry
+                secureTextEntry={!passwordVisible}
                 error={errors.passwordError}
               />
+              <View style={styles.showPasswordContainer}>
+              {passwordVisible ?
+                <TouchableOpacity style={{ margin: 10, width: 30, height: 30}}
+                  onPress={() => handlePasswordVisibility()}>
+                  <Icon
+                      name={'eye-outline'}
+                      size={24}
+                      color={'#667080'}
+                    ></Icon>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity style={{margin: 10, width: 30, height: 30}}
+                onPress={()=> handlePasswordVisibility()}>
+                  <Icon
+                      name={'eye-off-outline'}
+                      size={24}
+                      color={'#667080'}
+                    ></Icon>
+                </TouchableOpacity>}
+              </View>
+              
+              {errorMessage !== ''  ?
+                  <Text style={{color: Colors.error }}>*{errorMessage}</Text>
+                  : 
+                <></>}
               <View style={styles.btnContainer}>
               <Button
                 mode='contained'

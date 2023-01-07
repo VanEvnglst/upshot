@@ -15,73 +15,95 @@ import {
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import RecordEntryActions from 'app/store/feedback/RecordEntryRedux';
+import { getRecordEntryActiveStep, getRecordEntryMaxStep} from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from '../styles';
 
 const AddMoreEntry = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
-  const entryStep = useSelector(state => state.captureMoment.get('entryActiveStep'));
-  const dateLogged = useSelector(state => state.captureMoment.get('data').dateLogged);
+  const activeStep = useSelector(getRecordEntryActiveStep);
+  const dateLogged = useSelector(
+    state => state.captureMoment.get('data').dateLogged,
+  );
   const [additionalData, setAdditionalData] = useState('');
   const topics = useSelector(state => state.captureMoment.get('data').step3);
 
   const handleContinue = () => {
-    dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', additionalData));
-    dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1))
-  }
+    dispatch(
+      RecordEntryActions.setEntryData(
+        'additionalNotes',
+        additionalData,
+      ),
+    );
+    dispatch(RecordEntryActions.setEntryActiveStep(activeStep + 1));
+  };
 
-  const handleTextChange = (newText) => { 
-    setAdditionalData(newText)
+  const handleTextChange = newText => {
+    setAdditionalData(newText);
     setTimeout(() => {
-      dispatch(CaptureMomentActions.setFeedbackMomentData('additionalNotes', newText))
+      dispatch(
+        RecordEntryActions.setEntryData('additionalNotes', newText),
+      );
     }, 300);
-  }
+  };
 
-  const handleScheduleDiscussion = () => { 
+  const handleScheduleDiscussion = () => {
     navigation.navigate('Schedule Discussion');
-  }
+  };
 
   return (
-<ScrollView>
+    <ScrollView>
       <View style={styles.mainQuestionText}>
-        <Text style={styles.mainQuestionText}>
-          Anything else to add?
-        </Text>
+        <Text style={styles.mainQuestionText}>Anything else to add?</Text>
         <Text style={styles.logDateText}>{dateLogged}</Text>
       </View>
-      <KeyboardAvoidingView
-        style={{ marginTop: 24}}>
-        <TextInput 
-          placeholder="Write more details if any" 
+      <KeyboardAvoidingView style={{ marginTop: 24 }}>
+        <TextInput
+          placeholder="Write more details if any"
           multiline
           numberOfLines={30}
-          textAlignVertical='top'
-          placeholderTextColor='#66708080'
-          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
+          textAlignVertical="top"
+          placeholderTextColor="#66708080"
+          style={[
+            styles.textInputStyle,
+            { marginBottom: 25, color: '#667080' },
+          ]}
           value={additionalData}
           onChangeText={newText => handleTextChange(newText)}
         />
-        { topics.selectedLayerTwo.requires_face_to_face === true ? 
-      <Button
-        mode="contained"
-        onPress={() => handleScheduleDiscussion()}
-        style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
-        Schedule Discussion
-          </Button>  
-          :
-      <Button
-        mode="contained"
-        onPress={() => handleContinue()}
-        style={{ height: 48, justifyContent: 'center', alignItems: 'center' }}>
-        Review Details
-      </Button>
-      }
-     
+        {topics.selectedLayerTwo.requires_face_to_face === true ? (
+          <Button
+            mode="contained"
+            onPress={() => handleScheduleDiscussion()}
+            style={{
+              height: 48,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            Schedule Discussion
+          </Button>
+        ) : (
+          <Button
+            mode="contained"
+            onPress={() => handleContinue()}
+            style={{
+              height: 48,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            Review Details
+          </Button>
+        )}
       </KeyboardAvoidingView>
     </ScrollView>
-  )
-}
+  );
+};
 
 export default AddMoreEntry;
+
+
+AddMoreEntry.propTypes = {};
+
+AddMoreEntry.defaultProps = {};

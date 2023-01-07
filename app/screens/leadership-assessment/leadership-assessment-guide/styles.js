@@ -1,58 +1,48 @@
 import { StyleSheet } from 'react-native';
+import { DeviceUtil } from 'app/utils';
+import Colors from 'app/theme/colors';
+
+const { normalize } = DeviceUtil;
 
 
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    paddingHorizontal: 24,
+    marginTop: normalize(20),
+    paddingHorizontal: normalize(24),
   },
   progressBar: {
-    marginLeft: 3,
-    borderRadius: 4,
-    paddingRight: 19,
-    marginTop: 12,
+    marginLeft: normalize(3),
+    borderRadius: normalize(4),
+    paddingRight: normalize(19),
+    marginTop: normalize(12),
   },
   imageContainer: {
     flex: 1,
-    marginTop: 30,
+    marginTop: normalize(30),
   },
   contentContainer: {
     flex: 1,
   },
   guideTitleText: {
-    fontSize: 32,
     color: '#667080',
-    fontWeight: '700',
-    lineHeight: 36,
   },
   guideDescriptionText: {
     color: '#667080',
-    marginTop: 27,
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 22,
+    marginTop: normalize(27),
   },
   btnContainer: {
-    marginBottom: 30,
+    marginBottom: normalize(30),
   },
   button: {
-    marginTop: 12,
+    marginTop: normalize(12),
     backgroundColor: '#667080',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  noteText: {
-    fontSize: 12,
-    fontWeight: '400',
-    lineHeight: 16,
-    color: '#667080',
-    textAlign: 'center',
-  },
   buttonText: {
-    fontSize: 16,
-    fontWeight: '700',
+    textTransform: 'capitalize',
     color: '#FFFFFF',
   },
-  spacer: { height: 50 }
+  spacer: { height: normalize(50) }
 });

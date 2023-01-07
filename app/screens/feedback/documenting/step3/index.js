@@ -17,7 +17,6 @@ import {
   getStep3Data,
   getDocumentingStep,
 } from 'app/store/selectors';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
 import containerStyles from '../styles';
@@ -118,10 +117,10 @@ const DocumentingStep3 = props => {
     // dispatch(DocumentingActions.updateFeedbackDocumenting(params));
   };
 
-  const handleContent = () => {
-    if (flow.id === 1) return <ScheduledContent />;
-    else return <OnTheSpotContent />;
-  };
+  // const handleContent = () => {
+  //   if (flow.id === 1) return <ScheduledContent />;
+  //   else return <OnTheSpotContent />;
+  // };
 
   const ScheduledContent = () => {
     return (

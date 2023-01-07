@@ -13,13 +13,7 @@ import {
 } from 'app/components';
 import scheduledCorrectiveSteps from 'app/models/ScheduledCorrectiveSteps';
 import scheduledPositiveSteps from 'app/models/ScheduledPositiveSteps';
-import onTheSpotSteps from 'app/models/OnTheSpotSteps';
 import FeedbackActions from 'app/store/feedback/FeedbackRedux';
-import DocumentingActions from 'app/store/feedback/DocumentingRedux';
-import PreparingActions from 'app/store/feedback/PreparingRedux';
-import DiscussingActions from 'app/store/feedback/DiscussingRedux';
-import ReflectingActions from 'app/store/feedback/ReflectingRedux';
-import SharingActions from 'app/store/feedback/SharingRedux';
 import {
   getStaffName,
   getCurrentJourney,

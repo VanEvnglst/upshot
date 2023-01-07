@@ -54,6 +54,13 @@ const { Types, Creators } = createActions({
   fetchCurrentJourney: ['journeyId'],
   fetchCurrentJourneySuccess: ['currentJourney'],
   fetchCurrentJourneyFailure: ['error'],
+  postFileUpload: ['filePath', 'fileName'],
+  postFileUploadSuccess: [],
+  postFileUploadFailure: ['error'],
+  postCaptureAttachment: ['attachment'],
+  postCaptureAttachmentSuccess: [],
+  postCaptureAttachmentFailure: ['error'],
+  setCurrentJourney: ['journey'],
 });
 
 export const FeedbackTypes = Types;
@@ -220,15 +227,57 @@ const postFeedbackExchangeFailure = (state, { error }) =>
     error
   });
 
-const fetchCurrentJourney = state => state.merge({
-  fetching: true,
-  error: '',
-});
+// const fetchCurrentJourney = state => state.merge({
+//   fetching: true,
+//   error: '',
+// });
 
 
-const fetchCurrentJourneySuccess = (state, {currentJourney} ) => state.merge({
-  fetching: false,
-})
+// const fetchCurrentJourneySuccess = (state, {currentJourney} ) => state.merge({
+//   fetching: false,
+// })
+
+const postFileUpload = state => 
+  state.merge({
+    fetching: true,
+    error: '',
+  })
+
+const postFileUploadSuccess = state =>
+  state.merge({
+    fetching: false
+  })
+
+const postFileUploadFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error
+  });
+  
+const postCaptureAttachment = state =>
+  state.merge({
+    fetching: true,
+    error: '',
+  });
+
+const postCaptureAttachmentSuccess = state =>
+  state.merge({
+    fetching: false
+  });
+
+const postCaptureAttachmentFailure = (state, { error }) =>
+  state.merge({
+    fetching: false,
+    error
+  });
+
+const setCurrentJourney = (state, { journey }) => {
+  console.log('set data', state, journey);
+  return state.merge({
+    currentJourney: journey
+  });
+}
+
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -254,4 +303,11 @@ export const feedbackReducer = createReducer(INITIAL_STATE, {
   [Types.POST_FEEDBACK_EXCHANGE]: postFeedbackExchange,
   [Types.POST_FEEDBACK_EXCHANGE_SUCCESS]: postFeedbackExchangeSuccess,
   [Types.POST_FEEDBACK_EXCHANGE_FAILURE]: postFeedbackExchangeFailure,
+  [Types.POST_FILE_UPLOAD]: postFileUpload,
+  [Types.POST_FILE_UPLOAD_SUCCESS]: postFileUploadSuccess,
+  [Types.POST_FILE_UPLOAD_FAILURE]: postFileUploadFailure,
+  [Types.POST_CAPTURE_ATTACHMENT]: postCaptureAttachment,
+  [Types.POST_CAPTURE_ATTACHMENT_SUCCESS]: postCaptureAttachmentSuccess,
+  [Types.POST_CAPTURE_ATTACHMENT_FAILURE]: postCaptureAttachmentFailure,
+  [Types.SET_CURRENT_JOURNEY]: setCurrentJourney
 });

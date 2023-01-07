@@ -54,6 +54,7 @@ export default styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: Colors.neutral4,
     borderRadius: 6,
+    color: '#667080'
   },
   labelText: {
     marginBottom: 4,
@@ -84,5 +85,12 @@ export default styles = StyleSheet.create({
   enabledBtnText: {
     color: Colors.white,
     textTransform: 'capitalize'
+  },
+  showPasswordContainer: {
+    height: normalize(50),
+    position: 'relative',
+    left: normalize(280),
+    bottom: normalize(65),
+    width: normalize(50),
   },
 });

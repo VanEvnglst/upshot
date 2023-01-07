@@ -1,4 +1,4 @@
-const reminderModel = [
+const reminderHours = [
   '1',
   '2',
   '3',
@@ -73,4 +73,4 @@ const reminderModel = [
   '72',
 ];
 
-export default reminderModel;
+export default reminderHours;

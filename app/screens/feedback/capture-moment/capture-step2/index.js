@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   ScrollView,
   Image,
   TouchableOpacity,
@@ -13,15 +12,19 @@ import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import CaptureMomentActions from 'app/store/feedback/CaptureFeedbackMomentRedux';
+import { Text } from 'app/components';
+import {
+  getActiveCaptureStep,
+} from 'app/store/selectors';
 import Images from 'app/assets/images';
 import styles from '../styles';
 
 
 const CaptureMomentStep2 = () => {
   const dispatch = useDispatch();
-  const activeStep = useSelector(state => state.captureMoment.get('activeStep'));
-  const dateEntry = moment(new Date().format('ddd. MMM DD, YYYY [at] hh:mm a'))
+  const activeStep = useSelector(getActiveCaptureStep);
+  const dateEntry = useSelector(state => state.captureMoment.get('data').dateLogged);
   const [typeSelection, setTypeSelection] = useState({
     id: 0,
     icon: '',
@@ -52,10 +55,21 @@ const CaptureMomentStep2 = () => {
     }, 200);
   }
   return (
-    <View style={styles.content}>
-      <Text style={styles.mainQuestionText}>What kind of feedback do you want to give?</Text>
-      <Text style={styles.dateTimeText}>{dateEntry}</Text>
-      <Text style={styles.descriptionText}>Tell us what kind of observation do you want to give to your team member/s.</Text>
+    <ScrollView 
+      showsVerticalScrollIndicator={false}
+      style={styles.content}>
+      <Text 
+        type='body1'
+        weight='bold'
+        style={styles.mainQuestionText}>What kind of feedback do you want to give?</Text>
+      <Text 
+        type='caption1'
+        weight='regular'
+        style={styles.dateTimeText}>{dateEntry}</Text>
+      <Text 
+        type='body2'
+        weight='regular'
+        style={styles.descriptionText}>Tell us what kind of observation do you want to give to your team member/s.</Text>
       <View style={styles.selectionContainer}>
         <View style={styles.selections}>
           {options.map((item, index) => (
@@ -69,12 +83,18 @@ const CaptureMomentStep2 = () => {
                 resizeMode="contain"
                 style={styles.selectionIcon}
               />
-              <Text style={[styles.selectionText, typeSelection.id !== item.id && styles.unselectedText]}>{item.title}</Text>
+              <Text 
+                type='body2'
+                weight='bold'
+                style={[styles.selectionText, typeSelection.id !== item.id && styles.unselectedText]}>{item.title}</Text>
             </TouchableOpacity>
           ))}
         </View>
         <View style={styles.hintContainer}>
-          <Text style={styles.hintText}>{typeSelection.hint}</Text>
+          <Text 
+            type='body2'
+            weight='regular'
+            style={styles.hintText}>{typeSelection.hint}</Text>
         </View>
       </View>
       <View style={styles.btnContainer}>
@@ -82,11 +102,23 @@ const CaptureMomentStep2 = () => {
           mode='contained'
           onPress={() => selectFeedbackType()}
           style={[styles.button, typeSelection.id === 0 ? styles.disabledBtn : styles.enabledBtn]}
-        ><Text style={{ color: typeSelection.id === 0 ? '#667070' : 'white' }}>Continue</Text></Button>
+        ><Text 
+          style={[typeSelection.id === 0 ? styles.disabledBtnText : styles.enableBtnText]}>Continue</Text></Button>
       </View>
       <View style={styles.spacer} />
-    </View>
+    </ScrollView>
   )
 }
 
 export default CaptureMomentStep2;
+
+CaptureMomentStep2.propTypes = {
+  setCaptureData: PropTypes.func,
+  setCaptureActiveStep: PropTypes.func
+};
+
+
+CaptureMomentStep2.defaultProps = {
+  setCaptureActiveStep: () => {},
+  setCaptureData: () => {},
+};

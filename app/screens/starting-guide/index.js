@@ -1,51 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   SafeAreaView,
   Animated,
   Dimensions,
   BackHandler,
-  FlatList,
-  Text,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
+import { Text } from 'app/components';
+import SignIn from 'app/screens/sign-in';
+import SignUp from 'app/screens/sign-up';
 import styles from './styles';
-import {
-  useSharedValue,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useAnimatedProps,
-} from 'react-native-reanimated';
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
+
 const StartingGuideScreen = props => {
   const { navigation } = props;
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatlistRef = useRef(null);
-  const totalSteps = 4;
-  const currentIndex = 1;
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ['85%'], []);
   const [index, setIndex] = useState(0);
-  const isScrolling = useSharedValue(false);
-  const lastContentOffset = useSharedValue(0);
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      return true;
-    });
-
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', () => {
-        return true;
-      });
-  }, []);
-
-  // useEffect(() => {
-  //   scrollX.addEventListener(({ value }) => {
-  //     console.warn('va', value)
-  //   })
-  // }, []);
+  const [sheetType, setSheetType] = useState('');
 
   const guideList = [
     {
@@ -75,6 +56,36 @@ const StartingGuideScreen = props => {
         isCentered: false,
     },
   ];
+
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        return true;
+      });
+  }, []);
+
+  const openSheet = type => {
+    setSheetType(type);
+    bottomSheetRef.current?.snapToIndex(0);
+  };
+
+  const closeSheet = () => {
+    setSheetType('');
+    bottomSheetRef.current?.close();
+    Keyboard.dismiss();
+  }
+
+  const handleSheets = () => {
+    if(sheetType === 'sign in')
+      setSheetType('sign up')
+    else
+      setSheetType('sign in')
+  }
 
   const skipToLast = index => {
     setIndex(index);
@@ -128,11 +139,13 @@ const StartingGuideScreen = props => {
           return (
             <View key={item.id} style={styles.guideContainer}>
             <View style={styles.headerContainer}>
-              <Text style={[styles.titleText, item.isCentered && styles.centeredText]}>
+              <Text type='h4' weight='bold' style={[styles.titleText, item.isCentered && styles.centeredText]}>
                 {item.title}
               </Text>
               {item.description && (
                 <Text
+                type='body2'
+                weight='regular'
                   style={[
                     styles.descriptionText,
                     { maxWidth: '80%', marginTop: 30 },
@@ -143,20 +156,12 @@ const StartingGuideScreen = props => {
             </View>
             <View style={styles.guideImageContainer} />
             <View style={styles.skipContainer}>
-              {index === 3 ? (
+              {item.title === 'Welcome to Upshot' ? (
                 <View style={{ width: '100%' }}>
                   <Button
                     mode="contained"
-                    onPress={() => navigation.navigate('Sign up')}
-                    style={{
-                      marginTop: 8,
-                      borderWidth: 1,
-                      height: 55,
-                      backgroundColor: '#667080',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: 15,
-                    }}>
+                    onPress={() => openSheet('sign up')}
+                    style={styles.signUpButton}>
                     <Text style={{ color: 'white' }}>Sign up</Text>
                   </Button>
                   <View
@@ -168,8 +173,10 @@ const StartingGuideScreen = props => {
                       Already have an account?
                     </Text>
                     <TouchableOpacity
-                      onPress={() => navigation.navigate('Sign in')}>
+                      onPress={() => openSheet('sign in')}>
                       <Text
+                      type='body2'
+                      weight='regular'
                         style={[
                           styles.descriptionText,
                           {
@@ -184,7 +191,7 @@ const StartingGuideScreen = props => {
                 </View>
               ) : (
                 <TouchableOpacity onPress={() => skipToLast(3)}>
-                  <Text style={styles.descriptionText}>Skip</Text>
+                  <Text type='body2' weight='regular' style={styles.descriptionText}>Skip</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -192,6 +199,40 @@ const StartingGuideScreen = props => {
           )
         }}
         />
+        <BottomSheet
+        index={-1}
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        enablePanDownToClose
+        containerHeight={height}
+        backdropComponent={BottomSheetBackdrop}
+        keyboardBehavior="fillParent"
+        keyboardBlurBehavior="restore"
+        >
+        <View style={styles.container}>
+          <View style={styles.bottomSheetHeader}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => closeSheet()}
+            >
+              <Icon name='close-outline'
+                size={24}
+                color={'#353945'}
+                style={styles.container}
+              />
+            </TouchableOpacity>
+            <Text type='body2' weight='bold' style={styles.bottomSheetTitle}>{sheetType === 'sign in' ? 'Log In' : 'Sign Up'}</Text>
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={() => handleSheets()}
+            >
+            <Text type='body2' weight='medium' style={styles.bottomSheetOption}>{sheetType === 'sign in' ? 'Sign Up' : 'Log In'}</Text>
+            </TouchableOpacity>
+          </View>
+           {sheetType === 'sign in' && <SignIn/>}
+          {sheetType === 'sign up' && <SignUp/>}
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   );
 };

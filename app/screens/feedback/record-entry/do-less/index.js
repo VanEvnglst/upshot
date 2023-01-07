@@ -1,50 +1,38 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
-  BackHandler,
-  Image,
-  Dimensions,
-  TouchableOpacity,
   TextInput,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
-import CaptureMomentActions from 'app/store/CaptureFeedbackMomentRedux';
+import RecordEntryActions from 'app/store/feedback/RecordEntryRedux';
+import { getRecordEntryActiveStep } from 'app/store/selectors';
+import { Text } from 'app/components';
 import Images from 'app/assets/images';
 import styles from '../styles';
 
 const DoLessEntry = () => {
   const dispatch = useDispatch();
-  const entryStep = useSelector(state =>
-    state.captureMoment.get('entryActiveStep'),
-  );
+  const activeStep = useSelector(getRecordEntryActiveStep);
   const dateLogged = useSelector(
     state => state.captureMoment.get('data').dateLogged,
   );
   const [doLessData, setDoLessData] = useState('');
 
   const handleContinue = () => {
-    dispatch(
-      CaptureMomentActions.setFeedbackMomentData(
-        'doLess',
-        doLessData,
-      ),
-    );
-    dispatch(CaptureMomentActions.setEntryActiveStep(entryStep + 1));
+    dispatch(RecordEntryActions.setEntryData('doLess', doLessData));
+    dispatch(RecordEntryActions.setEntryActiveStep(entryStep + 1));
   };
 
-  const handleTextChange = (newText) => { 
-    setDoLessData(newText)
+  const handleTextChange = newText => {
+    setDoLessData(newText);
     setTimeout(() => {
-      dispatch(CaptureMomentActions.setFeedbackMomentData('doLess', newText))
+      dispatch(RecordEntryActions.setEntryData('doLess', newText));
     }, 300);
-  }
+  };
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -61,9 +49,12 @@ const DoLessEntry = () => {
           placeholder="Describe what you'd want them to do less of..."
           multiline
           numberOfLines={30}
-          textAlignVertical='top'
-          placeholderTextColor='#66708080'
-          style={[styles.textInputStyle, { marginBottom: 25, color: '#667080' }]}
+          textAlignVertical="top"
+          placeholderTextColor="#66708080"
+          style={[
+            styles.textInputStyle,
+            { marginBottom: 25, color: '#667080' },
+          ]}
           value={doLessData}
           onChangeText={newText => handleTextChange(newText)}
         />
@@ -83,3 +74,9 @@ const DoLessEntry = () => {
 };
 
 export default DoLessEntry;
+
+
+DoLessEntry.propTypes = {};
+
+
+DoLessEntry.defaultProps = {};

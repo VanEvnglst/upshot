@@ -11,7 +11,7 @@ import {
   ButtonSelection,
   HintIndicator,
 } from 'app/components';
-import SurveyActions from 'app/store/frontliner/SurveyRedux';
+// import SurveyActions from 'app/store/frontliner/SurveyRedux';
 import { getManagerName } from 'app/store/selectors';
 import Images from 'app/assets/images';
 import labels from 'app/locales/en';
