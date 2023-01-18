@@ -72,7 +72,7 @@ const SignIn = props => {
 
     return errors;
   };
-console.log('sign in', errorMessage)
+  
   const signInUser = () => {
     dispatch(
       AuthenticationActions.fetchServer({
