@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import lsaOptions from 'app/models/LSAOptionsModel';
@@ -22,7 +23,6 @@ import containerStyles from './styles';
 
 const ExtendedLeadershipAssessment = props => {
   const { navigation, route } = props;
-  //route.params.category
   const dispatch = useDispatch();
   const extendedActiveStep = useSelector(getExtendedStep);
   const extendedMaxStep = useSelector(getExtendedMaxStep);
@@ -169,3 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
+
+ExtendedLeadershipAssessment.propTypes = {};
+
+ExtendedLeadershipAssessment.defaultProps = {};

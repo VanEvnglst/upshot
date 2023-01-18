@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { Button, ProgressBar } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Images from 'app/assets/images';
 
@@ -122,3 +123,8 @@ const styles = StyleSheet.create({
     height: 100,
   },
 });
+
+AssessmentEndLine.propTypes = {};
+
+AssessmentEndLine.defaultProps = {};
+

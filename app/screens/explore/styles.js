@@ -33,9 +33,24 @@ viewSpacer: {
   height: 100
 },
 searchContainer: {
-  marginTop: 16, height: 40, borderWidth: 0.5, borderColor: '#667080', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 6, marginBottom: 20,
+  marginTop: 16, 
+  height: 40, 
+  borderWidth: 0.5, 
+  borderColor: '#667080', 
+  flexDirection: 'row', 
+  alignItems: 'center', 
+  paddingHorizontal: 14, 
+  paddingVertical: 8, 
+  borderRadius: 6, 
+  marginBottom: 20,
 },
-searchText: {marginLeft: 12, fontSize: 16, lineHeight: 22, fontWeight: '400', color: '#667080' },
+searchText: {
+  marginLeft: 12, 
+  fontSize: 16, 
+  lineHeight: 22, 
+  fontWeight: '400', 
+  color: '#667080' 
+},
 cardContainer: {
   marginHorizontal: 16,
   borderWidth: 0.5,
@@ -50,10 +65,10 @@ cardImageContainer: {
   alignItems: 'center',
   justifyContent: 'center'
 },
-recommendedBadge: { height: 26,
+recommendedBadge: { 
+  height: 26,
   backgroundColor: '#D394EA', 
   alignSelf: 'flex-start', 
-  minWidth: 150, 
   borderTopRightRadius: 6, 
   borderBottomLeftRadius: 6, 
   justifyContent: 'center',
@@ -61,10 +76,7 @@ recommendedBadge: { height: 26,
   paddingHorizontal: 8,
 },
 recommendedBadgeText: {
-  fontWeight: '700',
   color: 'white',
-  fontSize: 12,
-  lineHeight: 22
 },
 cardContentContainer: {  
   borderColor: PRIMARY_COLOR, 
@@ -89,12 +101,23 @@ cardDescriptionText: {
   paddingBottom: 8,
 },
 catergoryContainer: {
-  marginTop: 20, borderTopWidth: 0.5, borderColor: PRIMARY_COLOR, paddingHorizontal: 16, paddingTop: 20
+  marginTop: 20, 
+  borderTopWidth: 0.5, 
+  borderColor: PRIMARY_COLOR, 
+  paddingHorizontal: 16, 
+  paddingTop: 20
 },
 categoryTitleText: {
-  fontSize: 24, color: PRIMARY_COLOR, lineHeight: 30, fontWeight: '700', marginBottom: 4
+  fontSize: 24, 
+  color: PRIMARY_COLOR, 
+  lineHeight: 30, 
+  fontWeight: '700', 
+  marginBottom: 4
 },
 categoryDescriptionText: {
-  color: PRIMARY_COLOR, fontWeight: '400', fontSize: 16, lineHeight: 22,
+  color: PRIMARY_COLOR, 
+  fontWeight: '400', 
+  fontSize: 16, 
+  lineHeight: 22,
 }
 });

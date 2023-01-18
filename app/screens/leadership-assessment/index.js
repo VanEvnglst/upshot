@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LeadershipSkillAreaActions from 'app/store/LSARedux';
 import OverviewConfirmation from './overview/overview-confirmation';
@@ -26,7 +27,9 @@ const LeadershipAssessment = props => {
   const questionTitle = useSelector(
     state => state.leadershipSkillArea.get('overviewQuestions')[activeStep - 1],
   );
-  const overview = useSelector(state => state.leadershipSkillArea.get('overviewData'));
+  const overview = useSelector(state =>
+    state.leadershipSkillArea.get('overviewData'),
+  );
   const [selectedOption, setSelectedOption] = useState({
     id: 0,
     title: '',
@@ -70,22 +73,19 @@ const LeadershipAssessment = props => {
         id: 0,
         title: '',
         value: '',
-      })
+      });
     }, 300);
-    if (activeStep === maxStep) 
-    dispatch(LeadershipSkillAreaActions.postOverviewTest(overview))
+    if (activeStep === maxStep)
+      dispatch(LeadershipSkillAreaActions.postOverviewTest(overview));
     else
-    setTimeout(() => {
-      dispatch(
-        LeadershipSkillAreaActions.setAssessmentActiveStep(
-          'overviewActiveStep',
-          activeStep + 1,
-        ),
-      );
-      
-     
-    }, 500);
-    
+      setTimeout(() => {
+        dispatch(
+          LeadershipSkillAreaActions.setAssessmentActiveStep(
+            'overviewActiveStep',
+            activeStep + 1,
+          ),
+        );
+      }, 500);
   };
 
   return (
@@ -153,7 +153,7 @@ const LeadershipAssessment = props => {
               </View>
             </View>
           </View>
-          </ScrollView>
+        </ScrollView>
       </View>
     </View>
   );
@@ -171,3 +171,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
+
+LeadershipAssessment.propTypes = {};
+
+LeadershipAssessment.defaultProps = {};

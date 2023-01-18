@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import { View, ScrollView, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Text } from 'app/components';
 import styles from './styles';
 import Images from 'app/assets/images';
 
@@ -11,34 +12,11 @@ const ExploreScreen = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
-  const activeListeningSample = [
-    {
-      id: 1,
-      title: 'Active listening',
-      description: `Advocating for your employees' growth and optimal performance with feedback`,
-    },
-    {
-      id: 2,
-      title: 'Active listening',
-      description: `Advocating for your employees' growth and optimal performance with feedback`,
-    },
-    {
-      id: 3,
-      title: 'Active listening',
-      description: `Advocating for your employees' growth and optimal performance with feedback`,
-    },
-    {
-      id: 4,
-      title: 'Active listening',
-      description: `Advocating for your employees' growth and optimal performance with feedback`,
-    }
-  ];
-
   const Card = ({iconImage, title, isRecommended, description, mainCard}) => {
     return (
     <>
     {isRecommended && <View style={styles.recommendedBadge}>
-        <Text style={styles.recommendedBadgeText}>Recommended for you</Text>
+        <Text type='caption2' weight='bold' style={styles.recommendedBadgeText}>Recommended for you</Text>
       </View>}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.cardImageContainer}>

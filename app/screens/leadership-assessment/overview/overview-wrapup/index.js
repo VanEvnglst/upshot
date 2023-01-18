@@ -1,35 +1,34 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-} from 'react-native';
-import { Button, ProgressBar } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, SafeAreaView, Image } from 'react-native';
+import { Button } from 'react-native-paper';
+import PropTypes from 'prop-types';
+import { Text } from 'app/components';
 import Images from 'app/assets/images';
-import LeadershipSkillAreaActions from 'app/store/LSARedux';
+import styles from './styles';
 
 const OverviewWrapUp = props => {
   const { navigation } = props;
-
   return (
     <View style={styles.container}>
-      <SafeAreaView/>
+      <SafeAreaView />
       <View style={styles.imageContainer}>
-            <Image
-                source={Images.bigGrinEmoji}
-                resizeMode='contain'
-                style={styles.image}
-            />
+        <Image
+          source={Images.bigGrinEmoji}
+          resizeMode="contain"
+          style={styles.image}
+        />
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.titleText}>You're good to go! 🎉</Text>
+        <Text 
+          type='h4' 
+          weight='bold' 
+          style={styles.titleText}
+        >You're good to go! 🎉</Text>
 
-        <Text style={styles.descriptionText}>
+        <Text 
+          type='caption1'
+          weight='regular'
+        style={styles.descriptionText}>
           Don't worry, you can always continue building your profile later.
         </Text>
       </View>
@@ -39,7 +38,10 @@ const OverviewWrapUp = props => {
           onPress={() => navigation.navigate('Home')}
           mode="contained"
           style={styles.button}>
-          <Text style={styles.buttonText}>Continue later</Text>
+          <Text 
+            type='body2'
+            weight='bold'
+          style={styles.buttonText}>Continue later</Text>
         </Button>
       </View>
       <View style={styles.spacer} />
@@ -49,69 +51,10 @@ const OverviewWrapUp = props => {
 
 export default OverviewWrapUp;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-  progressBar: {
-    height: 4,
-    borderRadius: 4,
-    marginTop: 20,
-  },
-  imageContainer: {
-    marginTop: 84,
-    alignSelf: 'center',
-    width: 200, 
-    height: 200, 
-    backgroundColor: '#FFF0C3', 
-    borderRadius: 100, 
-    justifyContent: 'center', 
-    alignItems: 'center'
-  },
-  image: {
-    width: 115,
-    height: 115
-  },
-  contentContainer: {
-    flex: 1,
-    marginTop: 84,
-    alignItems: 'center',
-  },
-  titleText: {
-    fontSize: 32,
-    fontWeight: '700',
-    lineHeight: 36,
-    color: '#667080',
-  },
-  descriptionText: {
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 22,
-    marginTop: 12,
-    color: '#667080',
-    maxWidth: '90%',
-    textAlign: 'center',
-  },
-  btnContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginLeft: 5,
-    backgroundColor: '#667080',
-    width: '100%',
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-  spacer: {
-    height: 100,
-  },
-});
+OverviewWrapUp.propTypes = {
+  navigation: PropTypes.object
+};
+
+OverviewWrapUp.defaultProps = {
+  navigation: {}
+};

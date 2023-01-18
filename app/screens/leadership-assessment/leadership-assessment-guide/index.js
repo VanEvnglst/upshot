@@ -75,3 +75,6 @@ const LeadershipAssessmentGuide = props => {
 export default LeadershipAssessmentGuide;
 
 
+LeadershipAssessmentGuide.propTypes = {};
+
+LeadershipAssessmentGuide.defaultProps = {};

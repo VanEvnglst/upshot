@@ -6,7 +6,8 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from 'react-native';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -156,32 +157,6 @@ const ImproveSkills = props => {
                 </View>
               </TouchableOpacity>
               ))}
-              
-              {/* <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>Communicate directly</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>Understanding others</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>Articulating clearly</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>Avoiding blame</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={{marginHorizontal: 4, marginVertical: 8}}>
-                <View style={styles.skillSelectionContainer}>
-                  <Text style={styles.skillSelectionText}>Supporting the individual</Text>
-                </View>
-              </TouchableOpacity> */}
         </View>
         </View>
         <View style={{marginVertical: 15}}>
@@ -196,3 +171,6 @@ const ImproveSkills = props => {
 
 export default ImproveSkills;
 
+ImproveSkills.propTypes = {};
+
+ImproveSkills.defaultProps = {};
