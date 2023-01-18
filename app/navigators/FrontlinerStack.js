@@ -10,9 +10,6 @@ import {
 } from 'app/screens';
 
 
-
-
-
 const FrontlinerStack = createStackNavigator();
 export default function FrontlinerNavigator() {
   return (

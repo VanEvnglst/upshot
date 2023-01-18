@@ -60,7 +60,7 @@ export default function AssessmentNavigator() {
         component={ExtendedAssessmentWrapUp}
       />
       <AssessmentStack.Screen
-        name={'Assessment break down'}
+        name={'Assessment Break Down'}
         component={AssessmentBreakDown}
       />
       <AssessmentStack.Screen

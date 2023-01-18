@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   CaptureFeedbackMoment,
@@ -16,14 +15,10 @@ import {
   FeedbackChecklist,
   RecordDiscussion,
   OngoingJourneyList
-} from '../screens';
-import { getActiveJourneys } from 'app/store/selectors';
+} from 'app/screens';
 
 const FeedbackStack = createStackNavigator();
-
 const FeedbackNavigator = () => {
-  const activeJourneyLength = useSelector(getActiveJourneys);
-
   return (
     <>
       <FeedbackStack.Navigator
@@ -69,17 +64,14 @@ const FeedbackNavigator = () => {
           name={'EM Journey Closeout'}
           component={EMJourneyCloseout}
         />
-        {/* Journey Details screen */}
         <FeedbackStack.Screen
           name={'Journey Details'}
           component={JourneyDetails}
         />
-        {/* Ongoing journey list screen */}
         <FeedbackStack.Screen
           name={'Ongoing Journeys List'}
           component={OngoingJourneyList}
         />
-        {/* Checklist screen before closeout */}
         <FeedbackStack.Screen
           name={'Feedback Checklist'}
           component={FeedbackChecklist}
